@@ -286,6 +286,8 @@ git add * // Para agregar todos los archivos al seguimiento
 
 git status // Muestra el estado actual de la rama, como los cambios que hay sin commitear.
 
+git status -s // Muestra el estado de los archivos del proyecto, si estan sin agregar o fueron modificados
+
 git branch // Lista todas las ramas locales.
 
 git branch -a // Lista todas las ramas locales y remotas.
@@ -396,7 +398,21 @@ git commit -m "Comentario" // Leer seccion de comandos git
 git push origin master // Este comando es para subir el proyecto directamente al repo de nuestra cuenta en 
 github, cabe mencionar que en el directorio .git descargado, en el archivo config estará por defecto
 escrita la URL de nuestro repo lo que facilita subir los proyectos y los cambios directamente, por ello 
-el paso de la clonacion del repo
+el paso de la clonacion del repo.
+
+// Antes de subir los cambios nos pedira el user y pass de la cuenta github para realizar la autenticacion
+cenditel@debian:~/GuiasLenguajes$ git push origin master
+Username for 'https://github.com': user
+Password for 'https://user@github.com': *****
+Counting objects: 14, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (13/13), done.
+Writing objects: 100% (13/13), 45.99 KiB, done.
+Total 13 (delta 0), reused 0 (delta 0)
+To https://github.com/user/proyecto.git
+   af47064..228246e  master -> master
+
+//Listo ya deberias porder ver tu proyecto en github
 
 ########## Terminal Terminator ##########
 
