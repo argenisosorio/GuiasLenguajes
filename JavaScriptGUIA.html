@@ -1,0 +1,1258 @@
+<!-- Guía JavaScript by dM -->
+
+<script type="text/javascript">
+
+-------------------------------------
+
+//Comentarios de línea
+
+/* Comentarios de
+multiple línea*/
+
+-------------------------------------
+
+// Saber el largo de una cadena
+"cadena".length 
+6
+
+-------------------------------------
+
+// Se pueden realizar operaciones aritmeticas en la consola de js
+//El resultado es mostrado en la consola
+2 + 2
+3 + 7
+8 * 4
+10 / 3
+
+-------------------------------------
+
+//Estas cajas de diálogos pueden usarse para que los usuarios confirmen acciones.
+//En la consola js se vera si es true o false la confirmacion, util para alertar  
+confirm("Estoy listo para continuar.");
+confirm("El contenido será borrado")
+confirm("Los cambios no han sido guardados")
+
+-------------------------------------
+
+//Pedir al usuario que ingrese datos mediante un prompt.
+//Los datos introducidos se mostraran en la consola
+prompt("Cual es su país");
+prompt("Cual es su nombre?");
+
+-------------------------------------
+
+//Compara si la cadena es mayor que un numero
+"Cadena de texto larga".length > 10
+true 
+"Cadena".length > 10
+false
+
+-------------------------------------
+
+//El comando console.log() toma lo que está entre paréntesis y lo registra en la pantalla debajo de tu código; ¡por eso es que se llama console.log() (registro de pantalla)!
+//Realiza operaciones sin mostrar ninguna alerta o mensaje
+console.log(2 * 5)
+console.log("Hola")
+
+-------------------------------------
+
+var miPais="Venezuela" // Declará una variable en la línea 2 que se llame miPais y dale un valor de cadena.
+
+console.log(miPais.length); //Usá console.log para mostrar el largo de la variable miPais
+
+console.log(miPais.substring(0,3)); //Usá console.log para mostrar las tres primeras letras de miPais
+
+-------------------------------------
+</script>
+
+-------------------------------------
+
+<!-- Declaracion de variables, asignacion y reasignacion de valor -->
+<html>
+    <meta charset="utf-8"/>
+<body>
+    <script type="text/javascript">    
+        var nombre; //declaramos la variable    
+        nombre="Argenis"; //asignamos el valor Morris a la variable    
+        document.write(nombre); //imprimimos la variable
+        document.write("<br />");
+        nombre="Rafael"; //asignamos otro valor a la variable    
+        document.write(nombre); //imprimimos la variable
+    </script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Escribir html en un documento a traves de js -->
+<html>
+<body>
+	<script type="text/javascript">    
+	    document.write("<h1>Encabezado</h1>");
+	    document.write("<p>Parrafo 1</p>");
+	    document.write("<p>Parrafo 2</p>");    
+	    document.write("<h3>Encabezado</h3>");
+	</script>
+
+	<script type="text/javascript">
+	    document.write("hola mundo");
+	</script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Mostrar alerta en la pagina, se muestra al cargar la pagina -->
+<script type="text/javascript">
+	alert("Ejemplo de alerta con JavaScript");
+</script>
+
+-------------------------------------
+
+<!-- Activar una funcion mostrando una alerta -->
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <script type="text/javascript">
+        function miFuncion() {
+            alert("Activaste la funcion miFuncion()");
+        }
+    </script>
+</head>
+<body>
+    <form>
+        <input type="button" onclick="miFuncion()" value="Activar Función">
+    </form>
+<p>Presiona el botón y saldra una alerta contenida dentro de una función.</p>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Llamada de dos funciones diferentes -->
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <script type="text/javascript">
+            function miFuncion1() {
+                alert("Activaste la funcion 1");
+            }
+            function miFuncion2() {
+                alert("Activaste la funcion 2");
+            }
+        </script>
+    </head>
+<body>
+    <form>
+        <input type="button" onclick="miFuncion1()" value="Activar Función 1">
+        <input type="button" onclick="miFuncion2()" value="Activar Función 2">
+    </form>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Activar 2 o mas funciones con un boton -->
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <script type="text/javascript">
+        function Funcion1() {
+            alert("Activaste la funcion 1");
+        }
+        function Funcion2() {
+            alert("Activaste la funcion Funcion 2");
+        }
+        function Funcion3() {
+            alert("Activaste la funcion Funcion 3");
+        }
+    </script>
+</head>
+<body>
+    <form>
+        <input type="button" onclick="Funcion1(),Funcion2(),Funcion3()" value="Activar Función">
+    </form>
+<p>Presiona el botón y saldra una alerta contenida dentro de una función.</p>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Pasar parametros a una funcion -->
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <script type="text/javascript">
+            function sumar(a,b) {
+                var suma;
+                suma = a + b;                
+                return suma;                
+            }
+            function restar(a,b) {
+                var resta;
+                resta = a - b;                
+                return resta;                
+            }
+            //var operacion;
+            operacion = sumar(6,4); // Variable que le asignamos la llamada de la funcion y parametros
+            alert(operacion); // Mostramos el resultado en una alerta
+            operacion = restar(20,18);
+            alert(operacion);
+        </script>
+    </head>    
+<body>    
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Recoger un dato por teclado y visualizarlo -->
+<!doctype html>
+<html>
+<head>
+<title></title>
+</head>
+<body>
+    <script type="text/javascript">        
+        //var nom;        
+        nom=prompt("Por favor escriba su nombre","nombre");
+            alert("Mucho gusto "+nom);
+    </script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- ciclo while con js -->
+<html>
+<meta charset="utf-8">
+<body>
+    <script type="text/javascript">
+        var i= 0;
+        while (i<=5){
+            document.write("El número es " + i + "<br />");
+            i=i+1;
+        }
+    </script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- if en JS -->
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <script type="text/javascript">
+            if (1 < 2) {
+                alert("Verdadero");
+            }
+            else {
+                alert("Falso");
+            }
+        </script>
+    </head>
+    
+<body>    
+</body>
+</html>
+
+-------------------------------------
+
+<html>
+    <meta charset="utf-8"/>
+<body>
+    <script type="text/javascript">    
+        confirm("Estoy listo para continuar.");
+        var edad;        
+        edad = prompt("¡Cuántos años tienes?");        
+        if (edad <= 13) {
+            //console.log("Juega! con cuidado...");
+            alert("Juega! con cuidado...");
+        }
+        else {
+            //console.log("Juega!!!");
+            alert("Juega!!!");
+        }
+    </script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Ejempo de if -->
+<html>
+    <meta charset="utf-8"/>
+<body>
+    <script type="text/javascript">
+        var nombre; //declaramos la variable
+        var a = 3        
+        function miFuncion(e) {            
+            //alert("Activaste la funcion miFuncion()");
+            //if (1 > 2) {
+            if (a > 2) {
+                alert("Verdadero");
+                nombre="Argenis";
+                document.write(nombre);
+            }
+            else {
+                alert("Falso");
+                e.preventDefault();
+            }
+        }        
+    </script>
+    <input type="button" onclick="miFuncion()" value="Activar Función 1">            
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Ejempo de if anidados -->
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <script type="text/javascript">
+            idioma=prompt("Por favor escriba su idioma");
+            var a="castellano", b="ingles", c="frances", d="alemán";            
+            
+            if (idioma === a) {
+                alert("Castellano!")
+                alert("Que bueno! "+idioma);
+            }
+            else
+            {                
+                if (idioma === b) {
+                    alert("Ingles!");
+                    alert("Que bueno! "+idioma);
+                }
+                else
+                {
+                    if (idioma === c) {
+                        alert("Frances!")
+                        alert("Que bueno! "+idioma);
+                    }
+                    else
+                    {
+                        if (idioma === d){
+                            alert("Alemán")
+                            alert("Que bueno! "+idioma);
+                        }
+                        else
+                        {
+                            //error('idioma no presente');
+                            alert("idioma no presente")
+                            alert("no conozco! el "+idioma);
+                        }
+                    }
+                }
+            }
+        </script>
+    </head>    
+<body>    
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Ejempo de if y else if  -->
+<html>
+    <meta charset="utf-8"/>
+<body>
+    <script type="text/javascript">    
+        respuestaUsuario = prompt("¿Guardar los datos? s/n");
+        if (respuestaUsuario === "s") {
+            alert("Datos guardados!");
+        }        
+        else if (respuestaUsuario === "n") {
+            alert("Datos no guardados!")
+        }
+        else {
+            alert("Respuesta no valida!")
+        }
+    </script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- switch en JS -->
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+    idioma=prompt("Por favor escriba su idioma");
+
+    switch (idioma) {
+        case 'castellano' :
+            alert("1")
+            break;
+        
+        case 'ingles' :
+            alert("2")
+            break;
+        
+        case 'frances' :
+            alert("3")
+            break;
+        
+        case 'alemán' :
+            alert("4")
+            break;
+        
+        default :
+        error ('Idioma no presente');
+    } 
+</script>
+</body>
+</html>
+
+-------------------------------------
+
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+    vocal=prompt("Introduzca una letra vocal");
+    switch (vocal) {
+        case 'a' :
+            alert("Se ha escrito una a");
+            break;        
+        case 'e' :
+            alert("Se ha escrito una e");
+            break;
+        case 'i' :
+            alert("Se ha escrito una i");
+            break;
+        case 'o' :
+            alert("Se ha escrito una o");
+            break;
+        case 'u' :
+            alert("Se ha escrito una u");
+            break;              
+        default :
+        //error ('Esa no es una vocal!');
+        alert("Esa no es una vocal!");
+    } 
+</script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Definicion de un arreglo en JS -->
+<!DOCTYPE html>
+<html>
+<body>
+<script>    
+    a = new Array(1,2,3,4,5);
+    alert(a);
+    //alert(a[0]);
+    //alert(a[1]);
+    //alert(a[2]);
+    //alert(a[3]);
+    //alert(a[4]);    
+    //dias = new Array('lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes');
+    //alert(dias);
+    //alert(dias[0]);
+    //alert(dias[3]);
+</script>
+</body>
+</html>
+
+-------------------------------------
+
+<html>
+    <meta charset="utf-8"/>
+<body>
+    <script type="text/javascript">
+        a = new Array(1,2,3,'casa',"perro");
+        document.write(a,"<p />");
+        document.write(a[0],"<br />");        
+        document.write(a[1],"<br />");
+        document.write(a[2],"<br />");
+        document.write(a[3],"<br />");
+        document.write(a[4],"<br />");        
+    </script>
+</body>
+</html>
+
+-------------------------------------
+
+<!--Concatenacion de una cadena y de un arreglo -->
+<html>
+    <meta charset="utf-8"/>
+<body>
+    <script type="text/javascript">
+        var saludo = "Buenos ";
+        var hola = saludo.concat("días");
+        alert(hola);
+        //-------------
+        a = Array (1,2,3,4);
+        b = Array (3,4,5,6)
+        c = a.concat(b);
+        alert(c);
+    </script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Mostrar un saludo con la hora del sistema -->
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <script type="text/javascript">
+            function saludar(){
+                var tiempo = new Date();
+                var hora, cad="son las ";
+                with (tiempo){
+                    hora = getHours();
+                    //minuto = getMinutes();
+                    //segundo = getSeconds();
+                    cad += hora + ":" + getMinutes()+":"+getSeconds();
+                    //cad += hora + ":" + minuto + ":" + segundo;
+                }
+                if (hora < 12)
+                cad = "Buenos días, "+ cad;
+                else if (hora < 18)
+                cad = "Buenas tardes, "+ cad;
+                else
+                cad = "Buenas noches, " + cad;
+                return cad
+            }
+        </script>
+    </head>
+<body>
+    <script type="text/javascript">    
+        document.write(saludar());    
+    </script>    
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Mostrar un saludo con la fecha y hora del sistema -->
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <script type="text/javascript">
+            function saludar() {
+                var date = new Date();
+                var dd = date.getDate();
+                var mm = date.getMonth()+1;
+                var yyyy = date.getFullYear();
+                var hora, cad=" y son las ";
+                var hoy = "hoy es ";
+                with (date) {
+                    hora = getHours();
+                    minuto = getMinutes();
+                    segundo = getSeconds();            
+                    if (minuto < 10)
+                        minuto='0'+minuto
+                    cad += hora + ":" + minuto;
+                }
+                if(dd<10) {
+                    dd='0'+dd
+                }
+                if(mm<10) {
+                    mm='0'+mm
+                }
+                dates = dd+'/'+mm+'/'+yyyy;                
+                
+                if (hora < 12)
+                    cad = "Buenos días, "+ hoy + dates +cad + " am";
+                else if (hora < 18)
+                    cad = "Buenas tardes, "+ hoy + dates + cad + " pm";
+                else
+                    cad = "Buenas noches, " + hoy + dates + cad + " pm";;
+                return cad
+            }
+        </script>
+    </head>
+<body>
+    <script type="text/javascript">
+        document.write(saludar());
+    </script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Validar direccion e-mail -->
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <script type="text/javascript">
+            function checkemail(email) {
+                var ind1, ind2, ind3;
+                ind1 = email.indexOf('@');
+                ind2 = email.indexOf('.');
+                ind3 = email.lastIndexOf('@');
+                if ((ind1<=0) || (ind2<ind1) || (ind3 != ind1)) {
+                    return "Correo invalido!";
+                }                    
+                else
+                {
+                    return "Correo valido!";
+                }
+            }
+        </script>
+    </head>
+<body>
+    <script type="text/javascript">    
+        correo = "admin@admin.com";
+        document .write(correo+" "+checkemail(correo),'<br />');
+        correo= "admin.com";
+        document.write(correo+" "+checkemail(correo));
+        //correo=prompt("Por favor escriba su email");
+        //alert(correo+" "+checkemail(correo));        
+    </script>    
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Validar direccion e-mail 2 -->
+<html>
+    <meta charset="utf-8"/>
+    <script type="text/javascript">
+        function checkMail(cadena) {
+            var plant = /[^\w^@^\.^-]+/gi
+            if (plant.test(cadena)) {
+                alert(cadena + " contiene caracteres extraños.");
+            }
+            else {
+                plant =/(^\w+)(@{1})([\w\.-]+$)/i            
+                if (plant.test(cadena)) {
+                    alert(cadena + ", direccion valida!");
+                }
+                else {
+                    alert(cadena + ", no es válido!");
+                }
+            }
+        }    
+    </script>
+<body>
+    <form name="form1" method="post" action="">
+        e-mail: <input type="text" name="email">
+        <input type="button" name="Button" value="Validar" onclick="checkMail(this.form.email.value)">
+    </form>    
+</body>
+</html>
+
+
+-------------------------------------
+
+<!-- Comprobar si una cadena contiene ciertos caracteres o palabras -->
+<html>
+    <head>
+        <script>
+            function myFunction() {
+                var str = "abecedario12";                
+                var patt = /ab/g;
+                var result = patt.test(str);                
+                var patt2 = /1/g;
+                var result2 = patt2.test(str);
+                document.getElementById("site").innerHTML = result + "<br>" + result2;
+            }
+        </script>
+    </head>
+<body>
+    <button onclick="myFunction()">Probar</button>
+    <p id="site"></p>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Creacion de un modal grande -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+      <h2>Modal grande</h2>
+      <!-- Trigger the modal with a button -->
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Abrir el modal</button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg"> <!-- modal-sm para que sea pequeño -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Cabecera del Modal </h4>
+            </div>
+            <div class="modal-body">
+              <p>Contenido del modal</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Boton cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Creacion de un modal pequeño -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+      <h2>Modal pequeño</h2>
+      <!-- Trigger the modal with a button -->
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Abrir el modal</button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-sm"> <!-- modal-lg para que sea grande -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Cabecera del Modal </h4>
+            </div>
+            <div class="modal-body">
+              <p>Contenido del modal</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Boton cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Mostrar mensaje al posar el cursor sobre enlace con tooltip -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $('[data-toggle="tooltip"]').tooltip();   
+            });
+        </script>
+    </head>
+<body>
+    <div class="container">
+        <h1>Titulo 1</h1>
+        <h2>Titulo 2</h2>
+        <h3>Titulo 3</h3>
+        <a href="#" data-toggle="tooltip" title="Recuerda llenar todos los datos!">Registrarse</a>        
+    </div>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Alineacion de tooltip (top,bottom,left,right) -->
+<!-- Mostrar mensaje al posar el cursor sobre enlace con tooltip -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('[data-toggle="tooltip"]').tooltip();   
+            });
+        </script>
+    </head>
+<body>
+    <div class="container" align="center">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <!--a href="#" data-toggle="tooltip" title="Recuerda llenar todos los datos!">Registrarse</a-->
+        <button id="grafo" data-toggle="tooltip" data-placement="top" class="btn btn-success" title="Permite apreciar gráficamente cómo las cuentas de Twitter mencionan etiquetas (hashtags) y se mencionan entre sí. >Grafo de menciones">Grafo de menciones</button>
+
+        <p>.</p>
+        
+
+        <button id="grafo" data-toggle="tooltip" data-placement="bottom" class="btn btn-success" title="Permite apreciar gráficamente cómo las cuentas de Twitter mencionan etiquetas (hashtags) y se mencionan entre sí. >Grafo de menciones">Grafo de menciones</button>
+
+        <p>.</p>        
+
+        <button id="grafo" data-toggle="tooltip" data-placement="left" class="btn btn-success" title="Permite apreciar gráficamente cómo las cuentas de Twitter mencionan etiquetas (hashtags) y se mencionan entre sí. >Grafo de menciones">Grafo de menciones</button>
+
+        <p>.</p>
+
+        <button id="grafo" data-toggle="tooltip" data-placement="right" class="btn btn-success" title="Permite apreciar gráficamente cómo las cuentas de Twitter mencionan etiquetas (hashtags) y se mencionan entre sí. >Grafo de menciones">Grafo de menciones</button>
+
+    </div>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Mostrar mensaje al posar el cursor sobre enlace con tooltip de CSS -->
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        button.tooltip {outline:none; }
+        button.tooltip strong {line-height:30px;}
+        button.tooltip:hover {text-decoration:none;} 
+        button.tooltip span {
+            z-index:10;display:none; padding:14px 20px;
+            margin-top:-30px; margin-left:28px;
+            width:300px; line-height:16px;
+        }
+        button.tooltip:hover span{
+            display:inline; position:absolute; color:#111;
+            border:1px solid #DCA; background:#fffAF0;}
+        .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
+            
+        /*CSS3 extras*/
+        button.tooltip span
+        {
+            border-radius:4px;
+            box-shadow: 5px 5px 8px #CCC;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />        
+        <button class="tooltip"> Grafo de Menciones
+            <span>
+                Permite apreciar gráficamente cómo las cuentas de Twitter mencionan etiquetas (hashtags) y se mencionan entre sí.
+            </span>
+        </button>
+        <br/>
+        <button class="tooltip"> Agrupamiento por temas
+            <span>
+                Permite apreciar gráficamente los "temas" principales tratados en los textos de los tuits.
+            </span>
+        </button>
+    </center>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Popover, al dar click muestra una pestaña con una cabecera y un cuerpo -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <script>
+        $(document).ready(function(){
+            $('[data-toggle="popover"]').popover();   
+        });
+    </script>
+
+    <center>
+        <h3>Ejemplo de Popover</h3>
+        <a href="#" data-toggle="popover" title="Cabecera del Popover" data-content="contenido dentro del popover">Activar Popover</a>
+    </center>
+
+</body>
+</html>
+
+<!-- ********************************************************* -->
+<!-- Para dar posicion al Popover(top,bottom,left,right) -->
+<!--DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h3>Popover Example</h3>
+  <ul class="list-inline">
+    <li><a href="#" title="Header" data-toggle="popover" data-placement="top" data-content="Content">Top</a></li>
+    <li><a href="#" title="Header" data-toggle="popover" data-placement="bottom" data-content="Content">Bottom</a></li>
+    <li><a href="#" title="Header" data-toggle="popover" data-placement="left" data-content="Content">Left</a></li>
+    <li><a href="#" title="Header" data-toggle="popover" data-placement="right" data-content="Content">Right</a></li>
+  </ul>
+</div>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();   
+});
+</script>
+
+</body>
+</html-->
+
+<!-- ********************************************************* -->
+<!-- Para cerrar el Popover haciendo click en cualquier lugar del doc-->
+<!--DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h3>Popover Example</h3>
+    <a href="#" title="Dismissible popover" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover">Click me</a>
+</div>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();   
+});
+</script>
+
+</body>
+</html-->
+
+-------------------------------------
+
+<!-- Popover con hover -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </head>
+<body>
+    <script>
+        $(document).ready(function() {
+            $('[data-toggle="popover"]').popover();   
+        });
+    </script>
+
+    <div class="container" align="center">
+        <h3>Popover Example</h3>        
+        <a href="#" data-toggle="popover" data-trigger="hover" title="Cabecera" data-content="Cuerpo">Posa el cursor</a>
+    </div>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Mostrar mensaje al posar el cursor sobre boton -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">        
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <!--<script src="jquery-1.9.1.js" type="text/javascript"></script>-->
+        <script>
+            $(document).ready(function() {
+                $('#boton').prop('title', 'Enunciado para el boton, se muestra al posar el cursor');
+                $('#boton').click(function(e){
+                    alert("Hola!");
+                    e.preventDefault();
+                });
+            });
+        </script>
+    </head>
+<body>
+    <div align="center">        
+        <button id="boton" type="" class="btn btn-success" >PRUEBA</button>
+    </div>    
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Ejemplo de formulario y modal, curso JS example -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Curso JavaScript</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('[data-toggle="tooltip"]').tooltip();   
+    });
+  </script>
+  <style type="text/css">
+    label {
+        display:block;
+    }
+  </style>
+</head>
+<body bgcolor="red">
+    <div class="container">
+      <h2>Curso JavaScript</h2>
+      <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Registrarse</button>
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Registrarse en el curso</h4>
+            </div>
+            <div class="modal-body">
+                <form action="#" method="get">
+                    <label>Nombre: <input type="text" name="nombre" placeholder="Tu Nombre" required> <br /></label>
+                    <label>e-mail: <input type="text" name="email" placeholder="Tu email" required> <br /></label>
+                    <p></p>                    
+                    <input type="submit" data-toggle="tooltip" title="Recuerda llenar todos los campos!" value="Registrarse">
+                    <input type="reset" value="Borrar">
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Capturar y escribir los datos enviados por un formulario en JS -->
+<html>
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+    </head>
+    <script type="text/javascript">
+        function escribe() {
+            escribir = document.getElementById("caja")
+            miusuario = "<p>" + document.rellenar.usuario.value + "</p>"
+            mipass = "<p>" + document.rellenar.pass.value + "</p>"
+            micoment = "<p>" + document.rellenar.coment.value + "</p>"
+            escribir.innerHTML = miusuario + mipass + micoment
+        }
+        window.onload = function() {
+            document.rellenar.guardar.onclick = escribe
+        }
+    </script>
+<body>
+    <form name="rellenar" action="#" method="get">
+        <h2>Acceder</h2>
+        <p> USUARIO : <input name="usuario" type="text"/> </p> 
+        <p>PASSWORD: <input name="pass" type="password" /></p>
+        <p>Comentario</p>
+        <p><textarea name="coment"></textarea></p>
+        <p><input name="guardar" type="button" value="Enviar" />
+    </form>
+    <br />
+    <div id="caja">
+    </div>    
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Eventos en JS -->
+<!DOCTYPE html>
+<html>
+    <head>
+      <script type="text/javascript">
+        //EVENTOS EN javascript
+        function hacer_click() {
+            alert("Usando la funcion onclick!");
+        }
+        function hacer_hover() {
+            alert("Usando la funcion onmouseover!");
+        }
+        function salir_del_hover() {
+            alert("Usando la funcion onmouseout");
+        }
+        function cargar_pagina() {
+          alert("Ya se ha cargado el sitio web");
+        }
+        //onmouseout="salir_del_hover()" Este evento se lanza cuando pasamos el mouse(puntero) sobre un elemento del html, para especificar gatillo de este evento en un elemento del DOM debe usarse el atributo “onmouseover”. 
+
+        //onmouseover="hacer_hover()" "onmouseout" se dispara cuando el puntero sale del area de un elemento del DOM.
+
+        //onclick="hacer_click()"" Se ejecuta cuando damos click a un elemento del DOM en nuestro sitio, no necesariamente este debe ser un boton, puede ser un <div> u otro tag de html. Para incorporarlo en HTML basta con utilizar el atributo “onclick” en un elemento HTML y especificar el codigo o funcion de javascript a ejecutar.
+
+        //onload="cargar_pagina()" Este evento se ejecuta cuando el DOM, es decir todos los elementos html del sitio web han sido cargados correctamente en el cliente, se usa mucho para asegurar la ejecución de codigo cuando se es necesario que la página este completamente cargada para la ejecución correcta de nuestros programas en javascript. Lo ideal es colocarlo unicamente en el tag “<body>” de nuestros sitios web.
+      </script>
+    </head>
+<body onload="cargar_pagina()">
+  <form>
+      <input type="button" value="Hacer click" onclick="hacer_click()"/>
+
+      <input type="button" value="Posar cursor" onmouseover="hacer_hover()" />      
+
+      <input type="button" value="Posar y quitar cursor" onmouseout="salir_del_hover()" />      
+  </form>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Crear una clase y un objeto en Js -->
+<!--En Javascript las clases se crean utilizando las funciones. Es por ello que, si queremos crear una clase, lo único que tenemos que hacer es crear una función.-->
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+        <title>Objeto Persona</title>
+    </head>
+<body>
+    <h1>Objeto Persona</h1>
+    <script type="text/javascript">
+        function persona(nombre,apellido,edad) { //Usando una funcion se puede crear una clase
+            this.nombre = nombre; // Atributos de la clase persona
+            this.apellido = apellido; // Los atributos se referencian mediante this
+            this.edad = edad;
+        }
+        var p1 = new persona("Argenis","Osorio",25); //Para instanciar un objeto de una clase utilizaremos la sentencia new
+        var p2 = new persona("Maria","Perez",33);        
+        //alert(p1.nombre + "-" + p1.edad);
+        //alert(p2.nombre + "-" + p2.edad);
+        //document.write(p1.nombre + p1.apellido + p1.edad + "<br />");
+        document.write(p1.nombre + " " + p1.apellido + " " + p1.edad + "<br />"); //Escribiendo en el documento HTML
+        document.write(p2.nombre + " " + p2.apellido + " " + p2.edad + "<p />");
+        document.write("<b>Nombre: </b>" + p1.nombre + "<br />");
+        document.write("<b>Apellido: </b>" + p1.apellido  + "<br />");
+        document.write("<b>Edad: </b>" + p1.edad + "<br />");
+    </script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Creando una clase, metodo y un objeto en Js -->
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript">
+        function rectangulo(base,altura) {
+            this.base = base;
+            this.altura = altura;            
+            
+            this.calcularArea = function () { // Método creado para realizar el calculo del area
+                return this.base*this.altura;
+            };
+        }       
+
+        var r1 = new rectangulo(3,8); // Creando el objeto y pasandole parametros
+        
+        document.write(r1.calcularArea()); // Llamada del metodo de la clase
+    </script>
+</head>
+<body>s
+</body>
+</html>
+
+-------------------------------------
+
+<!--Creando una clase, una función para calcular fuera de la clase y un objeto en Js -->
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript">
+        function rectangulo(base,altura) {
+            this.base = base;
+            this.altura = altura;
+            this.calcularArea = getArea; // Asignamos a una variable (calcularArea) una funcion externa (getArea)
+        }
+        function getArea() { // Funcion para calcular el area, declarada fuera de la clase
+            return this.base*this.altura;
+        }
+        var r1 = new rectangulo(3,9); // Creando el objeto y pasandole parametros        
+        document.write(r1.calcularArea()); // Llamada del metodo de la clase
+    </script>
+</head>
+<body>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- abrir enlace en nueva ventana usando un enlace-->
+<a href="javascript:window.open('http://www.as.com/','','width=600,height=400,left=50,top=50,toolbar=yes');void 0">Nueva nueva ventana</a> <p />
+
+<!-- abrir enlace en nueva ventana usando un boton-->
+<input type="button" value="Nueva ventana" onclick="javascript:window.open('http://www.as.com/','','width=600,height=400,left=50,top=50,toolbar=yes');" /> <p /> 
+
+<p />
+<a onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" href="http://www.as.com/">Vinculo para abrir la página en otra ventana</a>
+
+

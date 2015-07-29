@@ -1,0 +1,837 @@
+<!-- Guía HTML by dM -->
+
+<!-- Comentarios en HTML -->
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Page Title</title>
+	</head>
+<body>
+	<h1>This is a Heading</h1>
+	<p>This is a paragraph.</p>
+</body>
+</html>
+
+<html>
+
+	<head> <!-- CABEZERA -->
+		<title>Titulo</title> <!-- TITULO, se verá reflejado en la barra y pestañas del navegador -->
+		<meta http-equiv="content-type" content="text/html;charset=utf-8" /> <!--Sirve entre otras cosas para poder usar los acentos en HTML-->
+		<meta charset="UTF-8" /> <!-- La que usa wikipedia -->
+	</head>
+
+<body> <!-- CUERPO, donde va el contenido de la página -->
+
+	<center><h2>Pagina Web</h2></center>
+	<p>
+	<p align="justify"> El fútbol o futbol (del inglés británico football), también conocido como fútbol asociación, balompié o soccer, es un deporte de equipo jugado entre dos conjuntos de once jugadores cada uno y cuatro árbitros que se ocupan de que las normas se cumplan correctamente. Es ampliamente considerado el deporte más popular del mundo, pues participan en él unos 270 millones de personas. <p>
+
+	<p align="justify"> El terreno de juego es rectangular de césped natural o artificial, con una portería o arco a cada lado del campo. El objetivo del juego es desplazar con cualquier parte del cuerpo que no sea los brazos o las manos, y mayoritariamente con los pies (de ahí su nombre), una pelota a través del campo para intentar introducirla dentro de la portería contraria, acción que se denomina marcar un gol. El equipo que logre más goles al cabo del partido, de una duración de 90 minutos, es el que resulta ganador del encuentro. <p>
+
+	<!-- COMENTARIOS/TEXTO  -->	
+	
+	****************VARIOS****************
+
+	<script type="text/javascript"> 
+	document.oncontextmenu = function(){return false;}
+	</script> //Desabilitar el click derecho, se pone encima del HEAD
+
+	<a href="#"><img src="1.PNG" onmouseover="this.src='2.PNG' " onmouseout="this.src='1.PNG' "/> </a> //Botón Rollover con dos imágenes
+
+	****************PÁRRAFOS****************
+
+	<P> Sirve para separar parrafos y dejar espacios en blanco
+
+	<BR> Sirve como fin de línea o como un punto y aparte	
+
+	&nbsp; &nbsp; Crear espacios en blanco entre las palabras
+
+	<PRE></PRE> Formato de texto, el texto se mostrará como se escribió en el codigo fuente
+
+	<HR></HR> Permite trazar lineas horizontales para dividir o crear secciones en la página y <hr color="red"> así como <hr size=10px>
+
+	<fieldset></fieldset> Crea un rectangulo alrrededor del texto o imagen
+
+	<legend>Titulo</legend> Asignar un enzabezado al fieldset
+
+	<CENTER></CENTER> Sirve para alinear un encabezado o un parrafo al centro de la pagina
+
+	//HTML5 elimina el uso de center y recomienda el uso de CSS para alinear los textos etc, tambien es valido usar la etiqueta DIV a la cual se le pueden dar atributos como id="nombre_identificador" y align="justify,center,left o right" para alinear.
+	
+	<div id="cuerpo" align="left"> 
+		Hola....
+	</div>
+
+	<p align="left"></p> Sirve para justificar un parrafo a LEFT, CENTER, RIGHT o JUSTIFY 
+
+	****************TIPOS DE LETRA, EFECTOS Y MÁS****************
+
+	<H1></H1> Le da tamaño al texto, varia del 1 al 6
+
+	<B></B> Estilo Negrita
+
+	<TT></TT> Teletipo
+
+	<strong></strong> Fuerte, como negrita
+
+	<I></I> Cursiva
+
+	<EM></EM> Émfasis, como cursiva
+
+	<U></U> Subrayado
+
+	<strike></strike> Texto tachado	
+
+	<S></S> Texto tachado
+	
+	<SUP></SUP> Superíndice, como elevado en matemáticas
+	
+	<SUB></SUB> Subíndice
+
+	<marquee></marquee> El texto se desplaza de derecha a izquierda repetidamente	
+
+	<font size="7px">TEXTO</font> Para asignar tamaño al texto, se denota en pixeles el tamaño
+
+	<font color="red">TEXTO</font> Para dar color al texto, red, green, orange, blue etc...
+
+	<font face="arial">TEXTO</font> Tipo de fuente del texto			
+
+	****************COLORES Y FONDO****************	
+
+	<body text="red"></body> Para dar color a todo el texto de la página
+
+	<body bgcolor="red"></body> Color a el fondo de la página
+
+	<body background="Imagen.jpg"></body> Asignar una imagen local como fondo de la página
+
+	<body link="yellow"></body> Para dar color a los enlaces
+
+	<body alink="yellow"></body> Color de enlaces ya visitados
+	
+	****************LISTAS****************	
+
+	<ol> ó <ul> Tipo de demarcacion de una lista, numerica y punto
+	<li>techo</li>
+	<li>puerta</li>
+	<li>ventana</li>
+
+	<OL type=A> De tipos A,a,I,i,1
+	/////
+
+	<ol> Los famosos más insoportables de la televisión:
+        <li>Antonio Bandelas</li>
+        <li>Catherine Zeta Jones</li>
+        <li>Robert Downey Jr.</li>
+    </ol>
+
+	****************LINKS O ENLACES****************	
+
+	<a href="LINK">Título del enlace</a> Crear un link 
+
+	<a href="DIRECCION DE PAGINA EN EL ORDENADOR LOCAL">Título</a> Enlaces  locales, páginas que están en el mismo ordenador
+
+	<img src="Imagen.jpg" width="200px" heigth="200px"></img> Agregar una imagen local a la página, debe estar en el mismo directorio de la página, se le puede asignar el tamaño, dimensiones que tendrá la imagen
+
+	<a href="link"><img src="Imagen.jpg"></a> Poner una imagen como enlace
+
+	<EMBED SRC="Multimedia.mp4" Agregar archivos multimedias a la página, videos, imagenes o archivos de audio
+	WIDTH="400" Se le puede asignar un tamaño al archivo multimedia agregado a la página
+	HEIGHT="180"
+
+	<iframe src="http://as.com" width="800" height="800" scrolling="yes" /> Permite añadir contenido HTML dentro de una página HTML. Una página dentro de otra
+
+	<A HREF="Multimedia.mp3">Texto o Imagen</A> Texto o Imagen como enlace a un archivo multimedia
+
+	<a href="libro.rar">Descargar Libro</a> Descargar archivo desde el servidor o carpeta local de la página
+
+	<!--META http-equiv="refresh" content="número_segundos;url=URL de refresco"--> Sirve para que la pagina se actualice en otra que indiquemos, se le asigna el tiempo de refresco y la URL de la página
+
+	<a name="Inicio"></a> Ancla, sirve para asignar un enlace a una seccion de la página, por ejemplo el inicio de la misma, con: <a href="#Inicio">Inicio</a> nos Dirigimos al ancla
+
+	<a href="#" title="Ejemplo de título">ENLACE</a> Sirve para ayadir un Título o pequeño texto sobre un enlace determinado, al posar el cursor sobre el enlace se observará el texto
+
+	_____________________________________________________________________________________
+
+	<body> Enlaces Locales, sirve para trasladarse a sitios determinados dentro de la misma página, por ejemplo secciones de la página.
+		
+	<h2>Enlaces Locales</h2>
+	<h3><a name="indice">Indice</a></h3>
+
+	<ul>
+		<li><a href="#uno">Seción 1</a>  
+		<li><a href="#dos">Seción 2</a>  
+		<li><a href="#tres">Seción 3</a>  
+		<li><a href="#cuatro">Seción 4</a>    
+	</ul>	
+
+	<hr>
+
+	<h3><a name="uno">Sección 1</a></h3>
+
+	
+	11111111111111111111111111 <br>	
+
+	<hr>
+
+
+	<h3><a name="dos">Sección 2</a></h3>
+
+	22222222222222222222222
+
+	<hr>
+
+
+	<h3><a name="tres">Sección 3</a></h3>
+
+	333333333333333333333333333333
+
+	<hr>
+
+
+	<h3><a name="cuatro">Sección 4</a></h3>
+
+	444444444444444444444444
+
+	</body>
+
+****************TABLAS****************	
+
+	<table border="3px" cellpadding="10px" cellspacing="10px" style="width:100%"> Creacion de una tabla
+	<caption>Tabla</caption> Título de la tabla
+	<tr><td>1</td>	<td>2</td> <td>3</td> </tr>
+	<tr><td>4</td>	<td>5</td> <td>6</td> </tr>
+	<tr><td>7</td>	<td>8</td> <td>9</td> </tr>
+	</table>
+
+	<td bgcolor="red"> Para dar color a una celda
+	cellpadding=10px Para dar distancia entre el borde de la celda y el texto que contiene
+	cellspacing="10px" Establece la anchura en px de los bordes de la celda
+
+*************Tabla con estilo****************
+	
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8">
+    </head>
+    <style>
+        table {
+            width:50%;
+            text-align: center;
+            border-color: red;
+            /*color:yellow;*/
+            /*color: white;*/            
+        }
+        div {            
+            font-size:20px;
+            color: Red;
+        }
+    </style>
+<body>
+    <center>
+        <table border="1px" cellpadding="5px" cellspacing="1px">
+            <p >
+            <caption></caption>
+            <tr>
+                <td><button id="grafo" type="" class="btn btn-success" >Grafo de menciones</button></td>
+                <td>CÓNDOR</td>
+                <td><button id="conteos" type="" class="btn btn-success" >Conteos comparativos</button></td>
+            </tr>            
+            <tr>
+                <td><button id="agrupar" type="" class="btn btn-success" >Agrupamiento por temas</button></td>
+                <td><img src="condor.png" width="100px" heigth="100px"></img></td>
+                <td><button id="conteos_simp" type="" class="btn btn-success" >Conteos simples</button></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><button id="graficos" type="" class="btn btn-success" >Comportamientos en el Tiempo</button></td>
+                <td></td>
+            </tr>            
+        </table>
+        <div>
+            hola
+        </div>
+    </center>
+</body>
+</html>
+
+**********91 etiquetas disponibles en HTML**********
+
+	a, abbr, acronym, address, applet, area, b, base, basefont, bdo, big, blockquote, body, br, button,	caption, center, cite, code, col, colgroup, dd, del, dfn, dir, div, dl, dt, em, fieldset, font, form, frame, frameset, h1, h2, h3, h4, h5, h6, head, hr, html, i, iframe, img, input, ins, isindex, kbd, label, legend, li,
+	link, map, menu, meta, noframes, noscript, object, ol, optgroup, option, p, param, pre, q, s, samp, script, select, small, span, strike, strong, style, sub, sup, table, tbody, td, textarea, tfoot, th, thead, title, tr, tt, u, ul, var
+	
+****************FORMULARIOS****************
+
+	<form action="datos.php" method="get"> Formulario de USUARIO y CONTRASEÑA también method="post"
+	Nombre: <input type="text" name="nombre" autocomplete=off><br />
+	Contraseña: <input type="password" name="contrasena"><br />
+	<input type="submit" value="Enviar">
+	<input type="reset" value="Borrar">
+	<input type=image src="guardar.png" width="25" height="15"> Imagen como boton submit
+	<a href="#"><img src="guardar.png" alt="Enviar"></a> Imagen como boton submit
+	<input type="image" name="imageField" src="guardar.png" /> Imagen como boton submit
+	</form>
+
+*****HTML agrega nuevos tipos de formularios y validacion de campos sin el uso de JavaScript*****
+
+	<div id="Formulario1">
+	    <h4>LOGIN</h4>
+	    <form action="#" method="GET"> 
+	      Nombre: <input type="text" name="nombre"><br />      
+	      Contraseña: <input type="password" name="contrasena"><br /> <p></p>          
+	      Búsqueda: <input type="search"> <br />
+	      Números: <input type="number"> <br />
+	      Rango: <input type="range"> <br />
+	      Color: <input type="color"> <br />
+	      NMobNum: <input type="tel"> <br />
+	      URL: <input type="url"> <br />
+	      E-Mail: <input type="email"> <br /> 
+	      <input type="submit" value="Enviar">
+	      <input type="reset" value="Borrar"> 
+	    </form>
+  	</div>
+  	
+  	**************
+
+  	<form action="#" method="get">
+		Nombre: <input type="text" name="nombre" placeholder="Tu Nombre" required> <br />
+		Contraseña: <input type="password" name="pass" placeholder="Tu clave" required> <br />
+		<input type="submit" value="Enviar">
+		<input type="reset" value="Borrar">
+	</form>
+
+	--------
+
+	-->Botón enviar
+	<form action="" method="get">
+        Nombre: <input type="text" name="nombre"> <br />
+        <!--input type="submit" value="Enviar"-->
+        <button>Enviar</button>
+    </form>
+
+	required // Atributo que hace que el campo sea obligatorio llenarlo
+	size="10" // Atributo que se puede añadir al input
+	maxlength="10" // Atributo del input para limitar el número de caracteres permitidos en los campos
+	autocomplete=off // Atributo para evitar recordar los datos introducidos en los campos
+	placeholder="Tu Nombre" //Texto de ejemplo dentro del campo del formulario, a manera de ejemplos
+
+	<INPUT TYPE="button" VALUE="Pulseme"> Crea un boton generico de HTML y nosotros asignamos su funcionamiento
+
+	<FORM> 
+	<TEXTAREA NAME="texto" ROWS="10" COLS="50">
+	Hola hdspm
+	</TEXTAREA>
+	</FORM>
+
+	<FORM> Cuadro de seleccion
+	Elija un color:<BR>
+	<SELECT NAME="color">
+	<OPTION>Verde
+	<OPTION>Negro
+	<OPTION>Rojo
+	<OPTION>Azul
+	</SELECT><BR>
+	<INPUT TYPE="submit" VALUE="Enviar elección">
+	</FORM>
+
+	<form action="datos.php" method="get"> Tipo Checkbox
+	¿Cuáles son sus pasatiempos favoritos?<br>
+	<input type="checkbox" name="pasa" value="tv">TV<br>
+	<input type="checkbox" name="pasa" value="libros">Libros<br>
+	<input type="checkbox" name="pasa" value="musica">Música<br>
+	<input type="checkbox" name="pasa" value="otros">Otros<br>
+	</form>
+
+	<form action="foto.php" method="post" accept="image/jpg"> Subir una imagen a la página o al servidor
+	Ingrese la foto: <input type="file" name="foto"><br />
+	<input type="submit" value="Enviar">
+	<input type="reset" value="Borrar">
+	</form>
+
+	<form action="colores.php" method="get"> Formulario tipo radio
+	Elija un color<br>
+	<input type="radio" name="col" value="red">Rojo<br>
+	<input type="radio" name="col" value="blue">Azul<br>
+	<input type="radio" name="col" value="green">Verde<br>
+	<input type="submit" value="Enviar">
+	<input type="reset" value="Borrar">
+	</form>
+
+	****************ESTILOS****************
+
+	<div style="color:red;font-size:20px">
+    	hola
+	</div>
+
+	<p style="color:green;font-size:30px">
+    	hola
+	</p>
+
+	<h1 style="color:green;font-size:10px">Título grande</h1>
+
+	<p style="font-size:15px;color:red;font-family: Verdana">Un párrafo verdaderamente espectacular</p>
+
+	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+	<html>
+		<head>
+			<title>Ejemplo de estilos con CSS</title>
+			<style>
+	  			h1 { color: red;  font-family: Arial;   font-size: large;  }
+	  			p  { color: blue; font-family: Verdana; font-size: medium; }
+			</style>
+		</head> 
+	<body>
+	  <h1>Titular de la página</h1>
+	  <p>CSS permite separar los contenidos de la página y la información sobre su aspecto. En el ejemplo anterior, dentro de la propia página HTML se crea una zona especial en la que se incluye toda la información relacionada con los estilos de la página.</p>
+	</body>
+	</html>
+
+	xxxxxxxxxxxxxxxxxxxxxxxxx
+
+	<html>
+		<head>
+		<title>Titulo</title>
+			<style>
+				div {
+					float: justify; 
+					border: ridge;
+					margin: 20px;
+				}
+			</style>
+		</head>	
+	<body> 
+		<div>
+			<P>El fútbol femenino ha tenido un crecimiento lento en el fútbol moderno, principalmente por obstáculos sociales y culturales que no permiten el ingreso pleno de la mujer al deporte.29 El primer encuentro femenino bajo las reglas del fútbol asociación del cual se tienen registros sucedió en 1892 en Glasgow, Escocia.30 A finales de 1921 el fútbol femenino fue prohibido en Inglaterra, hecho que no le permitió expandirse al resto del mundo.</P>
+		</div>	
+	</body>
+	</html>
+
+	****************HOVER****************
+
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<title>Prueba</title>		
+			<style>
+				b {
+					color:red;
+				}
+
+				b:hover {
+					color:green;
+				}
+		    </style>  
+		</head>
+	<body>
+		<b>Hola lince</b> 
+	</body>
+	</html>
+
+****************Estilo en <div> con el id y el class****************
+
+<html>
+    <head>    
+        <title>Titulo</title>
+        <meta charset="utf-8">
+        <style>
+            #a { /* Llamada de un div por su identificador*/
+                float: justify; 
+                border: ridge;
+                margin: 20px;
+            }
+            .b { /* Llamada de un div por su identificador de clase*/
+                float: justify; 
+                border: ridge;
+                margin: 20px;
+            }
+        </style>
+    </head> 
+<body> 
+    <div id="a">
+        <P>El fútbol femenino ha tenido un crecimiento lento en el fútbol moderno, principalmente por obstáculos sociales y culturales que no permiten el ingreso pleno de la mujer al deporte.29 El primer encuentro femenino bajo las reglas del fútbol asociación del cual se tienen registros sucedió en 1892 en Glasgow, Escocia.30 A finales de 1921 el fútbol femenino fue prohibido en Inglaterra, hecho que no le permitió expandirse al resto del mundo.</P>
+    </div>
+    <div class="b">
+        <P>El fútbol femenino ha tenido un crecimiento lento en el fútbol moderno, principalmente por obstáculos sociales y culturales que no permiten el ingreso pleno de la mujer al deporte.29 El primer encuentro femenino bajo las reglas del fútbol asociación del cual se tienen registros sucedió en 1892 en Glasgow, Escocia.30 A finales de 1921 el fútbol femenino fue prohibido en Inglaterra, hecho que no le permitió expandirse al resto del mundo.</P>
+    </div>
+</body>
+</html>
+
+****************Menu con estilos****************
+
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        @import url(http://fonts.googleapis.com/css?family=Carme);
+        .fit-content ul {
+            font-family: carme, sans serif;
+            width: -moz-fit-content;
+            width: -webkit-fit-content;
+            width: -ms-fit-content;
+            width: -o-fit-content;
+            width: fit-content;
+            margin: 0 auto;
+            background: DarkRed;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            list-style: none;
+            overflow: hidden;
+            padding: 10px 5px;
+            font-size: 1.2rem;
+        }
+        .fit-content ul li {
+            float: left;
+            margin: 0 5px;
+        }
+        .fit-content a {
+            background: blue;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            color: black;
+            display: block;
+            padding: 4px 10px;
+            text-decoration: none;
+            -moz-transition: background .7s;
+            -webkit-transition: background .7s;
+            -ms-transition: background .7s;
+            -o-transition: background .7s;
+            transition: background .7s;
+        }
+        .fit-content a:hover {
+            background: #EC0404;
+            outline: 0 none;
+            text-shadow: 0 1px #000; 
+        }
+    </style>
+</head>    
+<body>
+    <p></p>
+    <nav class="fit-content">
+        <ul class="fit-content">
+            <li><a href="#">Aaaaaaa</a></li>
+            <li><a href="#">Bbbbbbbb</a></li>
+            <li><a href="#">Cccccccc</a></li>
+            <li><a href="#">0123456789</a></li>
+        </ul>
+    </nav>
+</body>
+</html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Bootstrap Buttons xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<button type="button" class="btn btn-default">Default</button>
+<button type="button" class="btn btn-primary">Primary</button>
+<button type="button" class="btn btn-success">Success</button>
+<button type="button" class="btn btn-info">Info</button>
+<button type="button" class="btn btn-warning">Warning</button>
+<button type="button" class="btn btn-danger">Danger</button>
+<button type="button" class="btn btn-link">Link</button>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Bootstrap Buttons tamaños xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<button type="button" class="btn btn-primary btn-lg">Large</button>
+<button type="button" class="btn btn-primary btn-md">Medium</button>
+<button type="button" class="btn btn-primary btn-sm">Small</button>
+<button type="button" class="btn btn-primary btn-xs">XSmall</button>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Block Level Buttons xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<div class="container">
+  <h2>Block Level Buttons</h2>
+  <button type="button" class="btn btn-primary btn-block">Button 1</button>
+  <button type="button" class="btn btn-default btn-block">Button 2</button>
+
+  <h2>Large Block Level Buttons</h2>
+  <button type="button" class="btn btn-primary btn-lg btn-block">Button 1</button>
+  <button type="button" class="btn btn-default btn-lg btn-block">Button 2</button>
+
+  <h2>Small Block Level Buttons</h2>
+  <button type="button" class="btn btn-primary btn-sm btn-block">Button 1</button>
+  <button type="button" class="btn btn-default btn-sm btn-block">Button 2</button>
+</div>
+
+---------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+	  <h2>Button Styles</h2>
+	  <button type="button" class="btn btn-default">Default</button>
+	  <button type="button" class="btn btn-primary">Primary</button>
+	  <button type="button" class="btn btn-success">Success</button>
+	  <button type="button" class="btn btn-info">Info</button>
+	  <button type="button" class="btn btn-warning">Warning</button>
+	  <button type="button" class="btn btn-danger">Danger</button>
+	  <button type="button" class="btn btn-link">Link</button>      
+	</div>
+</body>
+</html>
+
+----------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+	  <h2>Button Tags</h2>
+	  <a href="#" class="btn btn-info" role="button">Link Button</a>
+	  <button type="button" class="btn btn-info">Button</button>
+	  <input type="button" class="btn btn-info" value="Input Button">
+	  <input type="submit" class="btn btn-info" value="Submit Button">
+	</div>
+</body>
+</html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+
+	<head>
+		<title>Ejemplo aprenderaprogramar.com</title>
+		<meta charset="utf-8">
+
+	<style type="text/css">label{display:block; padding:5px;}
+	</style>
+
+	<script type="text/javascript">
+		window.onload = function () {
+			document.formularioContacto.nombre.focus();
+			document.formularioContacto.addEventListener('submit', validarFormulario);
+		}	 
+
+		function validarFormulario(evObject) {
+			evObject.preventDefault();
+			var todoCorrecto = true;
+			var formulario = document.formularioContacto;
+		for (var i=0; i<formulario.length; i++) {
+		                if(formulario[i].type =='text') {
+		                               if (formulario[i].value == null || formulario[i].value.length == 0 || /^\s*$/.test(formulario[i].value)){
+		                               alert (formulario[i].name+ ' no puede estar vacío o contener sólo espacios en blanco');
+		                               todoCorrecto=false;
+		                               }
+					                }
+
+		                		}
+
+		if (todoCorrecto ==true) {formulario.submit(); }
+
+		}
+	</script>
+	</head>
+
+<body>
+
+	<form name ="formularioContacto" class="formularioTipo1" method="get" action="">
+		<p>REGISTRARSE</p>
+		<label for="nombre"><span>Nombre:</span> <input id="nombre" type="text" name="nombre" /></label>
+		<label for="apellidos"><span>Apellidos:</span> <input id="apellidos" type="text" name="apellidos" /></label>
+		<label for="email"><span>Correo electrónico:</span> <input id="email" type="text" name="email" /></label>
+		<label><input type="submit" value="Enviar"><input type="reset" value="Cancelar"></label>
+	</form>
+
+</body>
+</html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar claves con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+<!doctype html>
+<html>
+<head>
+<title></title>
+
+<script type="text/javascript">
+
+    window.addEventListener('load', inicio, false);
+
+    function inicio() {
+        document.getElementById("formulario1").addEventListener('submit', validar, false);
+    }
+
+    function validar(evt) {
+        var cla1 = document.getElementById("clave1").value;
+        var cla2 = document.getElementById("clave2").value;
+        if (cla1!=cla2) {
+            alert('Las claves ingresadas son distintas');
+            evt.preventDefault();
+        }
+        //else
+        //{
+        //    alert('Correcto');
+        //}
+    }
+
+</script>
+
+</head>
+<body>
+
+<form method="GET" action="#" id="formulario1">
+    Ingrese clave: <input type="password" id="clave1" name="clave1" size="20" required> <br>
+    Repita clave: <input type="password" id="clave2" name="clave2" size="20" required> <br>
+    <input type="submit" id="confirmar" name="confirmar" value="Confirmar">
+</form>
+
+</body>
+</html> 		 
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Formulario, campo de busqueda con estilo xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <style>
+        #caja {
+            background: none repeat scroll 0 0 #EEEEEE;
+            border: 0 none;
+            padding: 8px;
+            width: 200px;
+        }
+        #boton-buscar {
+            background: none repeat scroll 0 0 #359BED;
+            border: 0 none;
+            border-radius: 0 0 0 0;
+            color: #FFFFFF;
+            font-weight: 500;
+            padding: 8px 10px;
+        }
+        #formulario {
+            /*border: ridge;*/
+            height: 250; 
+            width: 300;
+            font-family: carme, sans serif;
+            /*color: #359BED;*/
+            color: orange;
+        }        
+    </style>
+</head>
+<body>
+    <div align="center">        
+        <!--form action="" style="display:inline;" method="get">
+            <input type="text" id="caja" name="busqueda" placeholder="Buscar..."/>
+            <input type="submit" id="boton-buscar" value="Buscar" />
+        </form-->
+        <p />
+        <div id="formulario" align="right">
+            <form id="form" action="#" method="get">
+                <b>Nombre: </b><input type="text" name="nombre" placeholder="Tu Nombre" id="caja" required> <p />
+                <b>Apellido: </b> <input type="text" name="apellido" placeholder="Tu Apellido" id="caja" required> <p />
+                <b>Cédula: </b><input type="text" name="ci" placeholder="Tu Cédula" id="caja" required> <p />
+                <b>Correo-e: </b><input type="text" name="correo-e" placeholder="Tu Correo" id="caja" required> <p />
+                <input type="submit" value="Enviar" id="boton-buscar">
+                <input type="reset" value="Borrar" id="boton-buscar">
+            </form> 
+        </div>
+    </div>    
+</body>
+</html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Formulario, Campo de busqueda con estilo 2 xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+<html>
+<head>
+    <style>
+        body {
+            background:#f8f8f8;
+        }
+        #search {
+        }
+        #search input[type="text"] {
+            background: url(search-dark.png) no-repeat 10px 6px #fcfcfc;
+            border: 1px solid #d1d1d1;
+            font: bold 12px Arial,Helvetica,Sans-serif;
+            color: #bebebe;
+            width: 150px;
+            padding: 6px 15px 6px 35px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+            text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+            -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+            -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+            -webkit-transition: all 0.7s ease 0s;
+            -moz-transition: all 0.7s ease 0s;
+            -o-transition: all 0.7s ease 0s;
+            transition: all 0.7s ease 0s;
+        }
+        #search input[type="text"]:focus {
+            width: 200px;
+        }
+    </style>
+</head>
+<body>
+    <form method="get" action="#" id="search">
+        <input name="a" type="text" size="40" placeholder="Buscar..." />
+        <button>Buscar</button>
+    </form>
+
+	<p />
+
+	<form action="#" method="get" id="search">
+        <label> Nombre: <input type="text" name="nombre"> </label> <p />
+        <label> Apellido: <input type="text" name="nombre" >  </label> <p />
+        <label> Cedula: <input type="text" name="nombre" > </label> <p />
+        <input type="submit" value="Enviar">
+        <input type="reset" value="Borrar">
+    </form>
+</body>
+</html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,394 @@
+#### Guía de comandos en Linux by dM ####
+
+Crtl + h // Mostrar archivos ocultos de un directorio de manera grafica
+
+cat /etc/issue.net  //Para saber la versión de SO que tenemos, probado en Debian.  
+
+lsb_release -a //También tenemos un comando que nos va a dar muchos más detalles 
+
+uname // Muestra información del sistema
+
+uname -a // Ver mi version de Kernel, recomendable la otra
+
+uname -mrs // Saber mi version de Kernel especifica, recomendada
+
+cat /etc/*-release // Ver info del sistema (Probado en Debian GNU/Linux 7 wheezy)
+
+who // Muestra usuarios conectados
+
+whoami // Muestra que usuario soy
+
+clear // Limpia la pantalla
+
+date // Muestra la fecha
+ 
+man // Muestra ayuda sobre el comando que pongas a continuación
+
+cal // Muestra un calendario
+
+pwd // Muestra la ruta en la que te encuentras
+
+ls // Muestra lo que hay en la carpeta en la que te encuentras
+
+ls -l // Muestra los archivos, fecha, permisos, etc
+
+ls -la // Muestra los archivos, los ocultos tambien, fecha, permisos, etc
+
+ls -1 // Muestra los archivos en forma de lista
+
+\du // Para ver la lista de carpetas y sub carpetas, los directorios que existen 
+dentro de donde se encuentre situado
+
+cd // Cambiar de directorio
+
+mkdir // Crear carpeta
+
+touch // Crear fichero
+
+nano nombre_fichero // Modificar un fichero
+
+cat nombre_fichero // Mostrar contenido de un fichero
+
+less nombre_fichero // Mostrar el contenido de un archivo, mayor movilidad que cat.
+
+########## Less ##########
+
+// less es un visualizador de archivos de texto que funciona en intérpretes de comando.
+// A diferencia de otros programas similares (como more), less permite una completa navegación
+// por el contenido del archivo, utilizando un mínino de recursos del sistema.
+
+***** Comandos basicos *****
+
+man less // Manual de less
+
+AvPag // Avanzar una página
+
+RePag // Retroceder una página
+
+space // Tecla espacio para avanzar, como page up
+
+:q // Salir
+
+:h // Ayuda
+
+:/palabra // (/) Buscamos una palabra dentro del documento
+// (n) para ir a la siguiente coincidencia.
+// (N) para ir a la coincidencia anterior
+
+:G // Ir al final del texto
+
+:g // Ir al inicio del texto
+
+:v //Incocar un editor de texto para el documento, por lo general usa vi pero puede usar nano automaticamente
+
+**********
+
+cp // Copiar un fichero o carpeta
+
+cp -r // Copiar un fichero o carpeta
+
+cp Nombre_de_archivo.txt /Carpeta/destino/a/copiar // Se debe estar situado en la carpeta del archivo a copiar
+
+cp Nombre_carpeta -r /Carpeta/destino/a/copiar // Se debe estar situado en la carpeta de la carpeta a copiar
+
+cp -r /home/usuario/carpeta1/ /home/usuario/carpeta2/ //Se pueden copiar archivos o carpetas especificando las
+rutas completas, en este caso la primera ruta es el directorio o archivo a copiar y la segunda es la ruta donde
+se va a pegar lo copiado, ambas rutas separadas por un espacio en blanco.
+
+mv // Mover un fichero o carpeta y/o cambiar su nombre
+
+mv /home/carpeta/archivo1.txt /home/carpeta2/ // Mover una carpeta o archivo especificando el directorio
+de salida y el de llegada
+
+mv archivo1.txt archivo2.txt // Renombrar un archivo o carpeta 
+
+rmdir // Borrar una carpeta
+
+rm // Borrar un fichero
+
+rm -r /directorio // Para borrar una carpeta, se le da la ruta del directorio a borrar
+
+sudo -i // Pedir contraseña root, algunas versiones basadas en Debian
+
+su // Pedir contraseña del root
+
+root@debian:/home/user# Ctrl + d //Para salir del root, tambien exit, funciona en algunas consolas como python, ruby, entre otras.
+
+Ctrl + R // En la consola, para hacer una busqueda de comandos usados baasndose en la palabra que se introduzca
+
+Shift + Page up <--> Page down // Moverse a traves de los logs de la consola, simula el scroll up/down del mouse
+
+########## Cambiar el pass del root ##########
+
+su: ****** // Acceder como root
+passwd // Nos pedira que introduzcamos la nueva contraseña y la confirmacion para cambiar la clave de root
+
+root@debian:/home/user# passwd
+Introduzca la nueva contraseña de UNIX: ****** 
+Vuelva a escribir la nueva contraseña de UNIX: ***** 
+passwd: contraseña actualizada correctamente
+root@debian:/home/user# 
+
+########## Manejo de programas y paquetes ##########
+
+sudo apt-get install Nombre_Paquete // Instalar paquetes
+
+sudo aptitude install Nombre_Paquete // Instalar paquetes, otra forma
+
+aptitude install -s Nombre_Paquete // Hace una simulacion de la instalacion, podemos ver que procesos haría la instalación
+
+sudo aptitude search Nombre_Paquete // Realizar una busqueda en los repositorios del paquete que se quiere encontrar
+
+aptitude show Nombre_Paguete // Para ver la informacion del paquete, version, estado, tamaño, conflictos, etc.
+
+aptitude remove Nombre_paquete // Elimina o Desinstala el paquete
+
+aptitude purge Nombre_Paquete //Elimina el paquete y sus archivos de configuracion
+
+----------
+
+diff /home/user/file.html /home/user/file2.html // Permite hacer una comparacion de dos archivos para apreciar sus diferencias
+se debe especificar la ruta de ambos archivos y separarlos con un espacio.
+
+########## Comprimir archivos ##########
+
+tar -cvf paquete.tar /home/user/carpeta // Le damos los parametros de compresion, asi como el nombre del paquete
+y la ruta de lo que queremos que comprima
+
+-c : indica a tar que cree un archivo.
+-v : indica a tar que muestre lo que va empaquetando.
+-f : indica a tar que el siguiente argumento es el nombre del fichero.tar.
+
+tar -cvf paquete.tar archivo.txt // Creara un paquete con el nombre que le dimos y contiene el archivo.txt 
+
+########## APACHE ##########
+
+sudo apt-get install apache2 // Instalar servidor apache, 127.0.0.1 o LocalHost es para iniciarlo
+
+/var/www/ es la carpeta de los proyectos
+
+chmod -R 777 /var/www/ // Cambiar los permisos de www puesto que solo tiene permisos root, 
+-R para que los permisos se hagan de forma recursiva
+
+sudo aptitude search php // Realizar una busqueda en los repositorios del paquete que se quiere encontrar
+
+sudo aptitude install php5 // instalar php5
+
+http://192.xxx.xx.xxx/ //La direccion ip sirve para acceder al directorio del servidor
+
+
+########## PHP ##########
+
+apt-get install php5 php5-mysql php5-gd libapache2-mod-php5
+
+// Una vez que se hayan descargado e instalado los paquetes de PHP, solo tienes que reiniciar el 
+servidor Apache para que el servicio esté disponible. Para hacerlo solo tienes que teclear los siguientes comandos:
+
+/etc/init.d/apache2 restart
+
+// Para probar que tu servicio esta trabajando puedes crear un pequeño archivo y verlo en tu navegador.
+// Para hacer esto puedes teclear los siguientes comandos:
+
+nano /var/www/testphp.php
+
+// agrega las lineas siguientes
+
+<?php
+// Muestra toda la información, por defecto INFO_ALL
+phpinfo();
+?>
+
+Para ver este archivo abre tu navegador web y teclea la IP de tu servidor seguido del archivo que acabas de crear, por ejemplo:
+
+http://127.0.0.1/testphp.php //Si aparece la pagina azul pastel de PHP se instalo correctamente
+
+########## phpMyAdmin ##########
+
+# aptitude install phpmyadmin // Instalar
+
+http://localhost/phpmyadmin // Acceder al servicio
+
+***After the installation has completed, add phpmyadmin to the apache configuration.**
+
+# sudo nano /etc/apache2/apache2.conf //Agregar en este archivo la configuracion de abajo
+
+***Add the phpmyadmin config to the file.
+
+Include /etc/phpmyadmin/apache.conf //Esta linea se agrega al final de la configuracion del apache para que reconozca el phpMyAdmin
+
+# sudo service apache2 restart // Restart apache para guardar los cambios
+
+/etc/init.d/xxx restart // xxx mysql, apache etc... restart
+
+
+########## Instalar MySQL server ##########
+
+apt-get install mysql-server
+
+root@debian:/home/cenditel# aptitude search mysql | grep mysql
+
+# mysql -p //acceder al mysql
+
+##### Comandos para hacer busquedas en los directorios y en el historial del shell #####
+
+history | grep xxx //busqueda en el historial de la consola aptitude, ls, l 
+
+grep --color=always -n "mysql" /var/www/prueba/2/datos.php // --color para colorear la palabra a buscar, 
+-n para listar la la linea del caracter buscado y al final ra ruta del archivo a buscar
+
+grep cadena_texto ./* -rIn //Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
+
+grep --color=always -n "cadena_texto" ./* -Ir //Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
+
+egrep -r "Saludo" . //Otra forma de busqueda.
+
+#history //mostrar el historial de los comandos de la consola
+
+whereis python // Para saber donde esta instalado un programa, saber el directorio
+whereis firefox
+whereis apache2
+
+su:
+find / -type f -name NombreArchivo.html // Para mostrar el directorio del archivo que se 
+//quiera buscar, se debe saber el nombre del archivo
+
+locate nombre_del_archivo // Hacer una busqueda de un archivo en los directorios, se puede especificar un nombre con su extencion
+//o solo especificar una palabra, la busqueda se hara en todos los archivos que contengan la palabra o nombre de archivo escrita.
+
+su: *****
+find / -name nombre_carpeta // (/) es para hacer la busqueda desde ahi en adelante, puede ser (/home/user)
+
+find /carpeta // Lista los archivos que componen el directorio introducido
+
+----------
+
+wget -r www.host.com //descargar el contenido de una web, los archivos del directorio
+wget -r www.programador-de-software.blogspot.com
+
+####### Comandos GIT #######
+
+// Software de control de versiones diseñado por Linus Torvalds, pensando en la eficiencia
+y la confiabilidad del mantenimiento de versiones de aplicaciones cuando éstas tienen un gran número de
+archivos de código fuente. Hay algunos proyectos de mucha relevancia que ya usan Git
+en particular, el grupo de programación del núcleo Linux.
+
+aptitude install git // fast, scalable, distributed revision control system 
+
+git // Con este comando nos listara la lista de comandos Git que podemos usar en un proyecto
+
+git init // Crear un directorio, dentro del directorio ejecutar
+para crear un nuevo repositorio de git.
+
+git status -s // Lista los archivos del proyecto y se visualiza si fueron agregados al seguimiento de Git.
+//Tambien podemos ver si un archivo fue modificado y no a sido agregado al seguimiento de Git
+
+git add * // Para agregar todos los archivos al seguimiento
+
+git status // Muestra el estado actual de la rama, como los cambios que hay sin commitear.
+
+git branch // Lista todas las ramas locales.
+
+git branch -a // Lista todas las ramas locales y remotas.
+
+A  gris.jpg // Agregado
+A  principal.html // Agregado
+AM principal2.html // Agregado y modificado, se debe agregar otra ver para aceptar los cambios
+?? principal3.html // Archivo agregado al directorio pero no agregado al seguimiento de Git
+
+git add Nombre_archivo.xxx // Agregamos el archivo al seguimiento de Git
+
+git rm --cached Nombre_archivo.xxx // Si un archivo fue modificado queda un registro de su nombre anterior en el cache
+para borrarlo se esa este comando
+
+git commit -m "Primer commit del proyecto" //Hacer un commit al proyecto, se activara la rama master
+
+git log // Podemos ver todos los commits que se han hehco a un proyecto
+
+git checkout -b Nombre_Rama // Crear una rama y cambiarse a ella.
+
+git branch -d Nombre_Rama // Borrar una rama, se debe estar en otra rama para borrarla
+
+git checkout Nombre_Rama // Cambiarse de rama
+
+git diff // Luego de hacer el commit, si algun archivo es modificado este comando mostrara los cambios hechos
+desde el ultimo commit
+
+---------
+
+//Luego de hacer el commit en la rama master y luego de haber creado la rama desarrollo y hacer el commit
+se pueden listar los commits de las ramas existentes y asi poder realizar comparacaiones entre las
+diferentes versiones del codigo. En este caso se agregaron 2 lineas al <div id="cabecera"> de una plantilla del proyecto
+//Usando los identificadores de cada commit se pueden comparar las versiones del software.
+
+$ git branch -v
+* desarrollo e6dcbf4 Modificacion de texto de la cabecera
+  master     a537ef5 Primer commit
+cenditel@debian:~/DIV$ git diff a537ef5 e6dcbf4
+diff --git a/principal.html b/principal.html
+index 554fd4f..94b3eac 100755
+--- a/principal.html
++++ b/principal.html
+@@ -14,6 +14,8 @@
+ 
+                <div id="cabecera">
+                        CabeceraXXX
++                       CabeceraXXX
++                       CabeceraXXX
+                </div>  
+ 
+                <div id="cuerpo1">
+
+git branch -v // Para ver los ultimos commits de cada rama.
+
+git branch -d Nombre_rama // Para borrar una rama, no se borra si esta situado en la rama a borrar.
+
+git clone /home/directorio/proyecto/ //Crea una copia local del repositorio se debe situar en la carpeta
+donde se quiere hacer la copia y luego se le da la ruta del proyecto a copiar 
+
+git clone https://xxx.xxx.gob.ve/xxx/xxx/xxx.git // Si esta subido en algun servidor 
+
+---Recomendado---
+
+*Cada desarrollador o equipo de desarrollo puede hacer uso de Git de la forma que le parezca
+ conveniente. Sin embargo una buena práctica es la siguiente:
+
+Se deben utilizar 4 tipos de ramas: Master, Development, Features, y Hotfix.
+
+-Master: Es la rama principal. Contiene el repositorio que se encuentra publicado
+en producción, por lo que debe estar siempre estable.
+
+-Development: Es una rama sacada de master. Es la rama de integración, todas las nuevas
+funcionalidades se deben integrar en esta rama. Luego que se realice la integración y se
+ corrijan los errores (en caso de haber alguno), es decir que la rama se encuentre estable,
+ se puede hacer un merge de development sobre la rama master.
+
+-Features: Cada nueva funcionalidad se debe realizar en una rama nueva, específica para
+esa funcionalidad. Estas se deben sacar de development. Una vez que la funcionalidad
+esté pronta, se hace un merge de la rama sobre development, donde
+se integrará con las demás funcionalidades.
+
+-Hotfix: Son bugs que surgen en producción, por lo que se deben arreglar y publicar
+de forma urgente. Es por ello, que son ramas sacadas de master. Una vez corregido
+el error, se debe hacer un merge de la rama sobre master. Al final, para que no
+quede desactualizada, se debe realizar el merge de master sobre development.
+
+########## Terminal Terminator ##########
+
+//Gran herramienta para los desarrolladores, permite abrir multiples terminales
+y poder ordenarlos, muy personalizable, entre muchas otras cosas. **RECOMENDADO**
+
+Paquete: terminator / multiple GNOME terminals in one window
+
+aptitude install terminator // Para instalarlo
+apt-get install terminator
+
+Dentro de Terminator:
+Ctrl + Shift + o // Abrir un terminal horizontal y paralelo
+Ctrl + Shift + e // Abrir un terminal vertical y paralelo
+Alt + flechas // Moverse por los terminales
+Ctrl + Shift + w // Cerrar un terminal
+Ctrl + Shift + x // Maximizar un terminal, igual para salir
+Ctrl + Shift + z // Maximizar un terminal(aumentado), igual para salir
+Ctrl + Shift + flechas // Cambiar el tamaño a voluntad de un terminal
+Ctrl + (+) // Aumentar tamaño de fuente, el (+) del Qwerty
+Ctrl + (-) // Minimizar tamaño de fuente, el (-) del Qwerty 

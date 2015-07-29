@@ -1,0 +1,79 @@
+### Guía PostgreSQL by dM ###
+
+$ aptitude install postgresql postgresql−server−dev−9.X // Instalar la version de PostgreSQL
+
+--------------------
+
+$ su
+$ su postgres // Comprobacion de la instalacion
+
+postgres$ psql
+psql (9.3.5)
+Type "help" for help.
+
+postgres=#
+
+--------------------
+
+postgres=# help
+Está usando psql, la interfaz de línea de órdenes de PostgreSQL.
+Digite:  \copyright para ver los términos de distribución
+       \h para ayuda de órdenes SQL
+       \? para ayuda de órdenes psql
+       \g o punto y coma («;») para ejecutar la consulta
+       \q para salir
+postgres=# 
+
+--------------------
+
+postgres=# \l //Ver las bases de datos creadas
+
+postgres=# \du //Para ver los roles existentes (usuarios)
+
+postgres=# CREATE USER nombre_usuario; //Crear usuario sin password, es mejor asignarle el pass
+
+postgres=# CREATE USER nombre_usuario PASSWORD 'password'; //Crear usuario y asignarle el password
+
+postgres=# ALTER USER usuario WITH PASSWORD 'nueva_password'; //Asignarle o cambiarle el password a un usuario, debe estar creado
+
+postgres=# DROP USER nombre_usuario; // Borrar un usuario
+
+postgres=# CREATE DATABASE nombre_db; // Crear una base de datos
+
+postgres=# DROP DATABASE nombre_db; // Borrar una base de datos
+
+postgres=# CREATE DATABASE nombre_BaseDatosprueba OWNER nombre_usuario; // Creando una base de datos, debe estar creado el usuario
+
+postgres=# \c name_db; //Conectarse a la base de datos creada
+
+name_db=# CREATE TABLE nombre_tabla (nombre varchar(20),edad int); //Creacion de una tabla con un campo varchar de tamaño 20 y un campo para enteros
+
+name_db=# \d // Para ver la lista de relaciones de la db, se debe estar conectado a la db, se pueden ver las tablas
+
+namedb=# \d nombre_tabla // Para ver la descripción (nombre de columnas, tipo de datos de una tabla, etc.
+
+namedb=# INSERT INTO nombre_tabla (nombre_campo, ..., nombre_campo) values (valor_campo, ..., valor_campo); //Insertar datos en la tabla
+
+namedb=# SELECT nombre_campo FROM nombre_tabla; // Hacer una consulta a los datos de un campo especifico.
+
+namedb=# SELECT * FROM nombre_tabla; // Hacer una consulta de los datos de la tabla, (*) Significa que lea todas las columnas de la tabla
+
+GRANT ALL PRIVILEGES ON DATABASE nombre_BaseDatos TO nombre_usuario; // Al crear un usuario podemos darle permisos a una base de datos existente
+
+########## Hacer un dump de una base de datos ##########
+
+pg_dump -U username -W -h host basename > basename.sql
+
+########## Importar una base de datos ##########
+
+// Se debe tener creado el usuario con la contraseña y la base de datos, luego el dum sustituira a la bd creada
+
+psql -U username -W -h localhost nombre_base < dump_base.sql
+
+// -U Se refiere al Usuario, en este caso puede ser el usuario propietario de la base de datos o el usuario postgres
+// -W Con este parámetro conseguiremos que nos solicite el password del usuario antes especificado
+// -h Con este indicamos cuál es el servidor PostgreSQL al que nos conectaremos para obtener nuestro dump, si estamos local podemos colocar localhost sino ponemos la IP del servidor PostgreSQL
+// basename Este es el ultimo parámetro realmente en esta linea de comando, por esa razon no tiene alguna letra que indique que el siguiente parámetro es el nombre de la base de datos
+// basename.sql Esta parte en realidad solo indica que la salida de nuestro comando pg_dump la guarde en un archivo basename.sql
+
+user@debian:~$ pg_dump -U autana_bd -h 127.0.0.1 comun > comun.sql
