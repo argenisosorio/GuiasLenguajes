@@ -372,6 +372,32 @@ de forma urgente. Es por ello, que son ramas sacadas de master. Una vez corregid
 el error, se debe hacer un merge de la rama sobre master. Al final, para que no
 quede desactualizada, se debe realizar el merge de master sobre development.
 
+######### Subir proyectos a GitHub ##########
+
+// Repositorio: Un repositorio, depósito o archivo es un sitio centralizado donde
+se almacena y mantiene información digital, habitualmente bases de datos o archivos informáticos.
+
+1- Crearnos una cuenta en GitHub
+2- Crear un repositorio, ese repo tendra una URL asignada, ejem: https://github.com/argenisosorio/GuiasLenguajes
+// En este caso (argenisosorio) es el nombre de usuario y (GuiasLenguajes) es el nombre del repositorio
+3- Una forma rapida de subir un proyecto de git es bajando ese repositorio creado, que sera donde subiremos nuestro proyecto
+// descargamos ese repo con:
+
+git clone https://github.com/Usuario/nombreproyecto.git // Clonamos el repositorio del proyecto
+
+cd nombreproyecto/ //Nos cambiamos a la carpeta del proyecto
+
+4- Una vez hecho es veremos una carpeta local con el nombre de nuestro repositorio de Github
+esta carpeta estará vacía porque aun no hemos puesto nada. Ahora puedes meter dentro todos los archivos
+nuestro proyecto y cuando los tengas todos dentro puedes ejecutar estos comandos:
+
+git add // Leer seccion de comandos git
+git commit -m "Comentario" // Leer seccion de comandos git
+git push origin master // Este comando es para subir el proyecto directamente al repo de nuestra cuenta en 
+github, cabe mencionar que en el directorio .git descargado, en el archivo config estará por defecto
+escrita la URL de nuestro repo lo que facilita subir los proyectos y los cambios directamente, por ello 
+el paso de la clonacion del repo
+
 ########## Terminal Terminator ##########
 
 //Gran herramienta para los desarrolladores, permite abrir multiples terminales
