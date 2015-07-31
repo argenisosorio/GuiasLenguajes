@@ -1,5 +1,9 @@
 #### Guía de comandos en Linux by dM ####
 
+********************************************
+**Probados en: Debian GNU/Linux 7 (wheezy)**
+********************************************
+
 Crtl + h // Mostrar archivos ocultos de un directorio de manera grafica
 
 cat /etc/issue.net  //Para saber la versión de SO que tenemos, probado en Debian.  
@@ -21,7 +25,7 @@ whoami // Muestra que usuario soy
 clear // Limpia la pantalla
 
 date // Muestra la fecha
- 
+
 man // Muestra ayuda sobre el comando que pongas a continuación
 
 cal // Muestra un calendario
@@ -45,13 +49,23 @@ mkdir // Crear carpeta
 
 touch // Crear fichero
 
-nano nombre_fichero // Modificar un fichero
+nano nombre_fichero // Modificar un fichero con el editor nano.
+
+man nano // Leer el manual del editor de textos nano, muy útil, práctico y fácil de usar
 
 cat nombre_fichero // Mostrar contenido de un fichero
 
 less nombre_fichero // Mostrar el contenido de un archivo, mayor movilidad que cat.
 
+Ctrl + D // En el shell, cerrar sesion, salir del root, de maquinas virtuales o de sesiones de usuarios iniciadas
+
+Ctrl + flecha derecha o izquierda // Moverse en el prompt palabra a palabra, no letra por letra.
+
+top  // Listar los procesos de ejecución del sistema (y más cosas) en tiempo real, es una de las herramientas más importantes para un administrador.
+
+##########################
 ########## Less ##########
+##########################
 
 // less es un visualizador de archivos de texto que funciona en intérpretes de comando.
 // A diferencia de otros programas similares (como more), less permite una completa navegación
@@ -118,7 +132,9 @@ Ctrl + R // En la consola, para hacer una busqueda de comandos usados baasndose 
 
 Shift + Page up <--> Page down // Moverse a traves de los logs de la consola, simula el scroll up/down del mouse
 
+##############################################
 ########## Cambiar el pass del root ##########
+##############################################
 
 su: ****** // Acceder como root
 passwd // Nos pedira que introduzcamos la nueva contraseña y la confirmacion para cambiar la clave de root
@@ -127,9 +143,11 @@ root@debian:/home/user# passwd
 Introduzca la nueva contraseña de UNIX: ****** 
 Vuelva a escribir la nueva contraseña de UNIX: ***** 
 passwd: contraseña actualizada correctamente
-root@debian:/home/user# 
+root@debian:/home/user#
 
-########## Manejo de programas y paquetes ##########
+#########################################################
+########## Instalacion de programas y paquetes ##########
+#########################################################
 
 sudo apt-get install Nombre_Paquete // Instalar paquetes
 
@@ -150,7 +168,9 @@ aptitude purge Nombre_Paquete //Elimina el paquete y sus archivos de configuraci
 diff /home/user/file.html /home/user/file2.html // Permite hacer una comparacion de dos archivos para apreciar sus diferencias
 se debe especificar la ruta de ambos archivos y separarlos con un espacio.
 
+########################################
 ########## Comprimir archivos ##########
+########################################
 
 tar -cvf paquete.tar /home/user/carpeta // Le damos los parametros de compresion, asi como el nombre del paquete
 y la ruta de lo que queremos que comprima
@@ -176,8 +196,9 @@ sudo aptitude install php5 // instalar php5
 
 http://192.xxx.xx.xxx/ //La direccion ip sirve para acceder al directorio del servidor
 
-
-########## PHP ##########
+###############################################
+########## Instalar y configurar PHP ##########
+###############################################
 
 apt-get install php5 php5-mysql php5-gd libapache2-mod-php5
 
@@ -202,9 +223,11 @@ Para ver este archivo abre tu navegador web y teclea la IP de tu servidor seguid
 
 http://127.0.0.1/testphp.php //Si aparece la pagina azul pastel de PHP se instalo correctamente
 
-########## phpMyAdmin ##########
+######################################################
+########## Instalar y configurar phpMyAdmin ##########
+######################################################
 
-# aptitude install phpmyadmin // Instalar
+aptitude install phpmyadmin // Instalar
 
 http://localhost/phpmyadmin // Acceder al servicio
 
@@ -221,7 +244,9 @@ Include /etc/phpmyadmin/apache.conf //Esta linea se agrega al final de la config
 /etc/init.d/xxx restart // xxx mysql, apache etc... restart
 
 
+###########################################
 ########## Instalar MySQL server ##########
+###########################################
 
 apt-get install mysql-server
 
@@ -229,7 +254,9 @@ root@debian:/home/cenditel# aptitude search mysql | grep mysql
 
 # mysql -p //acceder al mysql
 
+########################################################################################
 ##### Comandos para hacer busquedas en los directorios y en el historial del shell #####
+########################################################################################
 
 history | grep xxx //busqueda en el historial de la consola aptitude, ls, l 
 
@@ -265,7 +292,9 @@ find /carpeta // Lista los archivos que componen el directorio introducido
 wget -r www.host.com //descargar el contenido de una web, los archivos del directorio
 wget -r www.programador-de-software.blogspot.com
 
-####### Comandos GIT #######
+###############################
+####### Comandos de GIT #######
+###############################
 
 // Software de control de versiones diseñado por Linus Torvalds, pensando en la eficiencia
 y la confiabilidad del mantenimiento de versiones de aplicaciones cuando éstas tienen un gran número de
@@ -275,6 +304,12 @@ en particular, el grupo de programación del núcleo Linux.
 aptitude install git // fast, scalable, distributed revision control system 
 
 git // Con este comando nos listara la lista de comandos Git que podemos usar en un proyecto
+
+//Lo primero que debemos hacer despues de la instalacion es configurar nuestro Git
+
+git config --global user.name "Argenis Osorio" // Asignamos el nombre de usuario que será la firma del usuario en cada commit
+
+git config --global user.email aosorio@example.com // igualmente el correo que siempre acompañara al autor de cada commit
 
 git init // Crear un directorio, dentro del directorio ejecutar
 para crear un nuevo repositorio de git.
@@ -310,10 +345,15 @@ git checkout -b Nombre_Rama // Crear una rama y cambiarse a ella.
 
 git branch -d Nombre_Rama // Borrar una rama, se debe estar en otra rama para borrarla
 
+git branch -D Nombre_Branch // Forzar el borrado de una rama, a veces no se dejan borrar si hay cambios sin guardar.
+
 git checkout Nombre_Rama // Cambiarse de rama
 
-git diff // Luego de hacer el commit, si algun archivo es modificado este comando mostrara los cambios hechos
-desde el ultimo commit
+git branch -v // Para ver los ultimos commits de cada rama.
+
+git diff // Si se hacen cambios o se agregaron archivos al proyecto este comando nos hará mostrara una comparacion entre los
+ultimos cambios hechos el ultimo commit hecho, es recomendable revisar esos cambios antes de agregarlos al seguimiento de git
+y por supuesto antes de hacer un commit.
 
 ---------
 
@@ -340,9 +380,6 @@ index 554fd4f..94b3eac 100755
  
                 <div id="cuerpo1">
 
-git branch -v // Para ver los ultimos commits de cada rama.
-
-git branch -d Nombre_rama // Para borrar una rama, no se borra si esta situado en la rama a borrar.
 
 git clone /home/directorio/proyecto/ //Crea una copia local del repositorio se debe situar en la carpeta
 donde se quiere hacer la copia y luego se le da la ruta del proyecto a copiar 
@@ -374,7 +411,9 @@ de forma urgente. Es por ello, que son ramas sacadas de master. Una vez corregid
 el error, se debe hacer un merge de la rama sobre master. Al final, para que no
 quede desactualizada, se debe realizar el merge de master sobre development.
 
+#############################################
 ######### Subir proyectos a GitHub ##########
+#############################################
 
 // Repositorio: Un repositorio, depósito o archivo es un sitio centralizado donde
 se almacena y mantiene información digital, habitualmente bases de datos o archivos informáticos.
@@ -394,11 +433,17 @@ esta carpeta estará vacía porque aun no hemos puesto nada. Ahora puedes meter 
 nuestro proyecto y cuando los tengas todos dentro puedes ejecutar estos comandos:
 
 git add // Leer seccion de comandos git
+
 git commit -m "Comentario" // Leer seccion de comandos git
+
 git push origin master // Este comando es para subir el proyecto directamente al repo de nuestra cuenta en 
 github, cabe mencionar que en el directorio .git descargado, en el archivo config estará por defecto
 escrita la URL de nuestro repo lo que facilita subir los proyectos y los cambios directamente, por ello 
 el paso de la clonacion del repo.
+
+git push origin --delete your_branch //Eliminar una rama en tu Github o en tu repositorio remoto.
+
+git push origin :your_branch // Eliminar una rama, alternativa al anterior.
 
 // Antes de subir los cambios nos pedira el user y pass de la cuenta github para realizar la autenticacion
 cenditel@debian:~/GuiasLenguajes$ git push origin master
@@ -414,7 +459,9 @@ To https://github.com/user/proyecto.git
 
 //Listo ya deberias porder ver tu proyecto en github
 
+#########################################
 ########## Terminal Terminator ##########
+#########################################
 
 //Gran herramienta para los desarrolladores, permite abrir multiples terminales
 y poder ordenarlos, muy personalizable, entre muchas otras cosas. **RECOMENDADO**
@@ -434,3 +481,43 @@ Ctrl + Shift + z // Maximizar un terminal(aumentado), igual para salir
 Ctrl + Shift + flechas // Cambiar el tamaño a voluntad de un terminal
 Ctrl + (+) // Aumentar tamaño de fuente, el (+) del Qwerty
 Ctrl + (-) // Minimizar tamaño de fuente, el (-) del Qwerty 
+Ctrl + d // Si no hay sesion de usuario abierta, como root y otros cerrará la pestaña o ventana.
+
+-----------------
+
+################################################
+########## Ambiente virtual en Python ##########
+################################################
+
+// Cuando se desarrollando software con Python, quizas se presente el problema de tener utilizar diferentes versiones de una mismo paquete en
+diferentes proyectos, ya sea el mismo Python o diferentes versiones de un Framework como Django por ejemplo, el problema a solucionar radica
+en como poder instalar las dos o mas versiones de la misma librería con el fin de poder desarrollar varios proyectos de forma simultánea.
+
+La solución consiste en crear virtualenvs o entornos virtuales. Un entorno virtual de Python es un espacio completamente independiente
+de otros entornos virtuales y de los paquetes instalados globalmente en el sistema. Esto significa que es posible instalar la versión
+2.7 de Python en un entorno virtual y la versión 3.0 en otro diferente o de forma global sin problema alguno.
+
+El porder tener diferentes entornos donde podemos instalar diferentes versiones de paquetes nos da la oportunidad de hacer un desarrollo simultaneo
+así como poder hacer pruebas si afectar a los paquetes del sistema global.
+
+--Instalación: 
+
+$ aptitude install python−virtualenv virtualenvwrapper // Para crear un ambiente virtual instale las herramientas
+python-virtualenv y virtualenvwrapper
+
+$ mkvirtualenv nombre_ambiente_virtual //  Con su usuario (diferente a root) cree un ambiente virtual para su proyecto.
+
+$ workon nombre_ambiente_virtual // Para acceder al nombre del ambiente virtual creado
+
+ejemplo: 
+user@debian:/home$ workon proyecto // Accedemos al entorno virtual creado
+(proyecto)user@debian:/home$ // Ya estamos en el entorno virtual creado, denotado por el nombre del entorno al inicio del prompt
+
+$ deactivate nombre_ambiente_virtual // Para salir del entorno virtaul, o simplemente deactivate
+
+##############
+### Otros: ###
+##############
+
+$ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con el certificado
+digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando.
