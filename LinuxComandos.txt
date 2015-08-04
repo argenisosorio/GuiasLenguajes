@@ -18,9 +18,35 @@ uname -mrs // Saber mi version de Kernel especifica, recomendada
 
 cat /etc/*-release // Ver info del sistema (Probado en Debian GNU/Linux 7 wheezy)
 
-who // Muestra usuarios conectados
+who // Muestra usuarios conectados a nuestra máquina, tambien usado para ver las conexiones entrantes de un servidor
 
-whoami // Muestra que usuario soy
+Ejemplo:
+user tty7         2015-07-28 08:47 (:0)
+user pts/0        2015-07-30 14:03 (:0.0)
+user pts/1        2015-07-30 17:03 (:0.0)
+user pts/2        2015-07-31 14:15 (:0.0)
+user pts/3        2015-07-31 12:37 (:0.0)
+
+//En este caso son los usuarios conectados a mi máquina, eso quiere decir que tengo shells
+abiertos, por lo tanto todos son representados como usuarios, entre los diversos parametros
+se puede apreciar la fecha y la hora en que se abrio el shell, en un servidor seria
+el momento en que se conecto el usuario
+
+whoami // Muestra que usuario soy, nombre de usuario
+
+who am i // Nos dira cual usuario somos, si navegamos por los shells abiertos y ejecutamos el comando nos dira cual usuario es
+
+who -u //Ver usuarios conectados
+
+// Ejemplo:
+
+cenditel tty7         2015-07-28 08:47  antig       4257 (:0)
+cenditel pts/0        2015-07-30 14:03 03:22        8351 (:0.0)
+cenditel pts/1        2015-07-30 17:03 03:19        8351 (:0.0)
+cenditel pts/2        2015-07-31 14:15 00:08        8351 (:0.0)
+cenditel pts/3        2015-07-31 12:37 02:53        8351 (:0.0)
+
+last // listar los ultimos usuarios conectados
 
 clear // Limpia la pantalla
 
@@ -155,6 +181,8 @@ sudo aptitude install Nombre_Paquete // Instalar paquetes, otra forma
 
 aptitude install -s Nombre_Paquete // Hace una simulacion de la instalacion, podemos ver que procesos haría la instalación
 
+apt-get install -s Nombre_Paquete // Simulacion de instalacion con  apt-get install
+
 sudo aptitude search Nombre_Paquete // Realizar una busqueda en los repositorios del paquete que se quiere encontrar
 
 aptitude show Nombre_Paguete // Para ver la informacion del paquete, version, estado, tamaño, conflictos, etc.
@@ -269,7 +297,11 @@ grep --color=always -n "cadena_texto" ./* -Ir //Busca la cadena de manera recurs
 
 egrep -r "Saludo" . //Otra forma de busqueda.
 
-#history //mostrar el historial de los comandos de la consola
+history //mostrar el historial de los comandos de la consola
+
+history | grep xxx // Para buscar algun comando usado en el historial del shell, sirve con indicios de alguno usado
+
+
 
 whereis python // Para saber donde esta instalado un programa, saber el directorio
 whereis firefox
@@ -340,6 +372,10 @@ para borrarlo se esa este comando
 git commit -m "Primer commit del proyecto" //Hacer un commit al proyecto, se activara la rama master
 
 git log // Podemos ver todos los commits que se han hehco a un proyecto
+
+git commit --amend -m "comentario commit corregido" // Corregir algun error en el texto del ultimo commit
+
+git reset --hard HEAD~1 // Borrar el ultimo commit hecho.
 
 git checkout -b Nombre_Rama // Crear una rama y cambiarse a ella.
 
