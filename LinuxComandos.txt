@@ -162,6 +162,45 @@ Ctrl + R // En la consola, para hacer una busqueda de comandos usados baasndose 
 
 Shift + Page up <--> Page down // Moverse a traves de los logs de la consola, simula el scroll up/down del mouse
 
+####################################
+##### Editor de texto VI o VIM #####
+####################################
+
+// Es un editor de texto poderoso, muy usado en la comunidad de desarrolladores de Software Libre para escribir scripts, modificar ficheros
+de texto en el shell, programar etc. No posee botones y todas sus funcionalidades se usan a traves de comandos.
+Por lo general viene preinstalado en la mayoria de distribuciones, si no es así solo basta con un:
+
+apt-get install vim // con apt-get
+
+aptitude install vim // con aptitude
+
+----------------
+
+--- Modos de uso ---
+
+// Al entrar a VIM para editar un fichero por primera vez, estamos en modo de comandos, quiere decir que no podemos editar el texto
+sino que solo podremos usar comandos.
+
+vim // Abrir vim, un fichero en blanco sin nombre ni contenido
+
+i // Tecleamos i para entrar en modo de edicion, podemos insertar texto
+
+escape // Pulsamos la tecla escape para salir del modo edicion o de cualquier otro modo, y volvemos al modo comandos.
+
+:q // En modo comandos escribimos :q para salir del editor sin guardar
+
+:q! // Salir del editor sin guardar ni pedir confirmacion
+
+:w nombre_fichero.xxx //Guardamos un fichero nuevo, le asignamos el nombre y la extension si es necesario.
+
+vim nombre_archivo.xxx // Nos aparecerá una ventana en negro, donde nos aparecerá el contenido del fichero o en negro si está vacío
+// En la parte inferior, nos aparecerán los mensajes o comandos que escribamos para manejar el editor, así como la línea en la que estamos, porcentaje del fichero, etc.
+
+:wq! // Guardar y salir, esta accion aplica a un fichero ya creado, que estemos editando.
+
+:syntax on // Sirve para dar color al codigo que estemos editando, VIM reconoce la sintaxis de muchos lenguajes y
+la resalta en colores como muchos otros editores graficos como gedit, sublime, ninja, komodo, Geany.
+
 ##############################################
 ########## Cambiar el pass del root ##########
 ##############################################
@@ -565,6 +604,7 @@ user@debian:/home$ workon proyecto // Accedemos al entorno virtual creado
 (proyecto)user@debian:/home$ // Ya estamos en el entorno virtual creado, denotado por el nombre del entorno al inicio del prompt
 
 $ deactivate nombre_ambiente_virtual // Para salir del entorno virtaul, o simplemente deactivate
+
 
 ##############
 ### Otros: ###
