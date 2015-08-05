@@ -89,6 +89,10 @@ Ctrl + flecha derecha o izquierda // Moverse en el prompt palabra a palabra, no 
 
 top  // Listar los procesos de ejecución del sistema (y más cosas) en tiempo real, es una de las herramientas más importantes para un administrador.
 
+// Cada proceso tiene un identificador (PID), entonces podemos matar ese proceso con:
+
+kill -9 xxxx // Matar un proceso donde xxxx es el identificador del proceso.
+
 ##########################
 ########## Less ##########
 ##########################
@@ -387,6 +391,14 @@ git checkout Nombre_Rama // Cambiarse de rama
 
 git branch -v // Para ver los ultimos commits de cada rama.
 
+git checkout XXXXXX123456 // Este comando sirve para moverse entre los commits, cada commit genera una
+etiqueta hash, un identificador muy largo alfanumerico, estas etiquetas identifican una version del proyecto
+lo que permite restaurar el proyecto a estados anteriores donde XXXXXX123456 representa la etiqueta del commit al que queremos ir.
+
+//Una vez movidos a ese commit especifico del historial se puede crear una nueva rama desde ese punto, si hacemos git log nos mostrara
+los commits que habian hasta ese momento y el ultimo es en el que nos encontramos, si queremos volver a tener los commits anteriores 
+solo hacemos git checkout a la rama en que estabamos antes o a alguna rama especifica.
+
 git diff // Si se hacen cambios o se agregaron archivos al proyecto este comando nos hará mostrara una comparacion entre los
 ultimos cambios hechos el ultimo commit hecho, es recomendable revisar esos cambios antes de agregarlos al seguimiento de git
 y por supuesto antes de hacer un commit.
@@ -494,6 +506,9 @@ To https://github.com/user/proyecto.git
    af47064..228246e  master -> master
 
 //Listo ya deberias porder ver tu proyecto en github
+
+git push origin +master // Para borrar o deshacer un commit en github, se debe primero borrar el commit 
+de manera local, luego volvemos a subir el proyecto con este comando para que quede como estaba.
 
 #########################################
 ########## Terminal Terminator ##########
