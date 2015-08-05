@@ -196,7 +196,27 @@ escape // Pulsamos la tecla escape para salir del modo edicion o de cualquier ot
 vim nombre_archivo.xxx // Nos aparecerá una ventana en negro, donde nos aparecerá el contenido del fichero o en negro si está vacío
 // En la parte inferior, nos aparecerán los mensajes o comandos que escribamos para manejar el editor, así como la línea en la que estamos, porcentaje del fichero, etc.
 
+:w // Guardar un documento
+
 :wq! // Guardar y salir, esta accion aplica a un fichero ya creado, que estemos editando.
+
+:u // Deshacer el ultimo cambio
+
+Ctrl + R // Rehacer el ultimo cambio
+
+:dd // Eliminar una linea, en tal caso la corta y esta lista para pegarse
+
+:p // Pegar una linea cortada
+
+guu // Convertir la linea actual en minusculas
+
+gUU // Convertir la linea actual en mayusculas
+
+:G // Ir al final del documento
+
+:/palabra // Para hacer una busqueda de una palabra dentro del archivo
+n // Para ir a la siguiente coincidencia.
+N // Para ir a la coincidencia anterior
 
 :syntax on // Sirve para dar color al codigo que estemos editando, VIM reconoce la sintaxis de muchos lenguajes y
 la resalta en colores como muchos otros editores graficos como gedit, sublime, ninja, komodo, Geany.
