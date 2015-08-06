@@ -1,0 +1,33 @@
+#### Guía haml by dM ####
+
+Haml es un lenguaje de marcado ligero que se usa para describir el XHTML de un documento
+web sin emplear el código embebido tradicional.
+Haml funciona como reemplazo de sistemas de plantillas de páginas embebidas como PHP, RHTML
+y ASP. Sin embargo, Haml elimina la necesidad de escribir XHTML explícito dentro de la plantilla
+por ser en sí una descripción de XHTML.
+
+La implementación oficial de Haml está hecha para el lenguaje de programación Ruby con extensiones para
+Ruby on Rails y Merb, no obstante la implementación de Ruby también funciona de manera independiente.
+
+El equivalente de Haml para CSS es Sass.
+
+-----------------------
+
+Ejemplos de haml y html:
+
+haml:
+%html
+  %body
+      %h1 My First Heading
+
+html:
+<html>
+    <body>
+        <h1>My First Heading</h1>
+    </body>
+</html>
+
+Como podemos observar el haml emplea el caracter (%) para englobar las etiquetas html convencionales
+ademas de usar la indentacion del codigo para referenciar el final de un bloque, es decir, no usa
+etiquetas de cierre sino se basa en la indentacion para ese aspecto.
+

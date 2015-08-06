@@ -40,11 +40,15 @@ who -u //Ver usuarios conectados
 
 // Ejemplo:
 
-cenditel tty7         2015-07-28 08:47  antig       4257 (:0)
-cenditel pts/0        2015-07-30 14:03 03:22        8351 (:0.0)
-cenditel pts/1        2015-07-30 17:03 03:19        8351 (:0.0)
-cenditel pts/2        2015-07-31 14:15 00:08        8351 (:0.0)
-cenditel pts/3        2015-07-31 12:37 02:53        8351 (:0.0)
+user tty7         2015-07-28 08:47  antig       4257 (:0)
+user pts/0        2015-07-30 14:03 03:22        8351 (:0.0)
+user pts/1        2015-07-30 17:03 03:19        8351 (:0.0)
+user pts/2        2015-07-31 14:15 00:08        8351 (:0.0)
+user pts/3        2015-07-31 12:37 02:53        8351 (:192.168.0.240)
+
+//Aqui observamos que hay una conexion externa a traves de ssh a nuestro servidor proveniente de la maquina
+(192.168.0.240) demarcada por el id process 8351 la cual podemos cancelar, es decir refusar esa conexion con
+kill -9 8351
 
 last // listar los ultimos usuarios conectados
 
@@ -93,6 +97,16 @@ top  // Listar los procesos de ejecución del sistema (y más cosas) en tiempo r
 
 kill -9 xxxx // Matar un proceso donde xxxx es el identificador del proceso.
 
+ps // Muestra los procesos actuales del sistema y acepta varios parametros como:
+
+ps -e // Visualiza información sobre "todos" los procesos del sistema.
+
+ps -l // Muestra algunos detalles de los procesos del sistema
+
+ps l //  Muestra mas detalles de los procesos del sistema.
+
+poweroff // Apagar la maquina, se debe ser root para ejecutarlo.
+
 ##########################
 ########## Less ##########
 ##########################
@@ -139,10 +153,13 @@ cp -r /home/usuario/carpeta1/ /home/usuario/carpeta2/ //Se pueden copiar archivo
 rutas completas, en este caso la primera ruta es el directorio o archivo a copiar y la segunda es la ruta donde
 se va a pegar lo copiado, ambas rutas separadas por un espacio en blanco.
 
+cp -r carpeta/ carpeta2/ // Ambas carpetas estan en el mismo directorio donde estamos situados, por lo tanto
+no hay que especificar las rutas completas de las carpetas involucradas.
+
 mv // Mover un fichero o carpeta y/o cambiar su nombre
 
 mv /home/carpeta/archivo1.txt /home/carpeta2/ // Mover una carpeta o archivo especificando el directorio
-de salida y el de llegada
+de salida y el de llegada, si estan en el mismo directorio no hace falta poner las rutas completas.
 
 mv archivo1.txt archivo2.txt // Renombrar un archivo o carpeta 
 
@@ -263,14 +280,19 @@ se debe especificar la ruta de ambos archivos y separarlos con un espacio.
 ########## Comprimir archivos ##########
 ########################################
 
-tar -cvf paquete.tar /home/user/carpeta // Le damos los parametros de compresion, asi como el nombre del paquete
-y la ruta de lo que queremos que comprima
+tar -cvf paquete.tar carpeta/ // Le damos los parametros de compresion, asi como el nombre del paquete
+y la carpeta que vamos a comprimir
 
--c : indica a tar que cree un archivo.
+-c : indica a tar que cree un archivo
+-x : extraer un archivo
+-t : listar los contenidos de un archivo
 -v : indica a tar que muestre lo que va empaquetando.
--f : indica a tar que el siguiente argumento es el nombre del fichero.tar.
+-f : indica a tar que el siguiente argumento es el nombre del fichero.tar
+-z : comprimir a la vez que se empaqueta
 
 tar -cvf paquete.tar archivo.txt // Creara un paquete con el nombre que le dimos y contiene el archivo.txt 
+
+tar -xvf paquete.tar // Descomprimir un paquete 
 
 ########## APACHE ##########
 
@@ -341,7 +363,7 @@ Include /etc/phpmyadmin/apache.conf //Esta linea se agrega al final de la config
 
 apt-get install mysql-server
 
-root@debian:/home/cenditel# aptitude search mysql | grep mysql
+root@debian:/home/user# aptitude search mysql | grep mysql
 
 # mysql -p //acceder al mysql
 
@@ -358,13 +380,19 @@ grep cadena_texto ./* -rIn //Busca la cadena de manera recursiva en la carpeta e
 
 grep --color=always -n "cadena_texto" ./* -Ir //Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
 
+grep --color -n "cadena_texto" -Ir // No hace falta poner =always
+
 egrep -r "Saludo" . //Otra forma de busqueda.
 
 history //mostrar el historial de los comandos de la consola
 
 history | grep xxx // Para buscar algun comando usado en el historial del shell, sirve con indicios de alguno usado
 
+| grep xxx // filtra la busqueda con el parametro que le demos ejemplo:
 
+aptitude search python | grep 2.7 // Busca las versiones de python que coincidan con el patron 2.7
+
+ps -e | grep ruby // Busca en los procesos del sistema las coincidencias con ruby
 
 whereis python // Para saber donde esta instalado un programa, saber el directorio
 whereis firefox
@@ -472,7 +500,7 @@ diferentes versiones del codigo. En este caso se agregaron 2 lineas al <div id="
 $ git branch -v
 * desarrollo e6dcbf4 Modificacion de texto de la cabecera
   master     a537ef5 Primer commit
-cenditel@debian:~/DIV$ git diff a537ef5 e6dcbf4
+user@debian:~/DIV$ git diff a537ef5 e6dcbf4
 diff --git a/principal.html b/principal.html
 index 554fd4f..94b3eac 100755
 --- a/principal.html
@@ -553,7 +581,7 @@ git push origin --delete your_branch //Eliminar una rama en tu Github o en tu re
 git push origin :your_branch // Eliminar una rama, alternativa al anterior.
 
 // Antes de subir los cambios nos pedira el user y pass de la cuenta github para realizar la autenticacion
-cenditel@debian:~/GuiasLenguajes$ git push origin master
+user@debian:~/GuiasLenguajes$ git push origin master
 Username for 'https://github.com': user
 Password for 'https://user@github.com': *****
 Counting objects: 14, done.
@@ -624,6 +652,25 @@ user@debian:/home$ workon proyecto // Accedemos al entorno virtual creado
 (proyecto)user@debian:/home$ // Ya estamos en el entorno virtual creado, denotado por el nombre del entorno al inicio del prompt
 
 $ deactivate nombre_ambiente_virtual // Para salir del entorno virtaul, o simplemente deactivate
+
+#############################################
+########## Conexion remota con SSH ##########
+#############################################
+
+SSH (Secure SHell) es el nombre de un protocolo y del programa que lo implementa, y sirve para acceder
+a máquinas remotas a través de una red. Permite manejar por completo la computadora mediante un intérprete
+de comandos, y también puede redirigir el tráfico de X para poder ejecutar programas gráficos si tenemos ejecutando un Servidor X (en sistemas Unix y Windows).
+
+Además de la conexión a otros dispositivos, SSH nos permite copiar datos de forma segura
+(tanto archivos sueltos como simular sesiones FTP cifradas), gestionar claves RSA para no escribir
+claves al conectar a los dispositivos y pasar los datos de cualquier otra aplicación por un canal seguro tunelizado mediante SSH.
+
+ssh Nombre_usuario@IP_servidor o nombre_servidor
+
+ssh user@192.168.0.240 // Asi se accede a un ordenador o servidor remoto, debemos poner el usuario que debe estar creado asi como la ip
+del server, nos pedira la clave de session, una vez adentro tenemos acceso a los archivos y podemos pedir el root para tener acceso total.
+ssh es muy usado por administradores de redes y de sistemas para acceder a las maquinas que arrojan los servidores y hacer cambios asi 
+como monitorear los proyectos que esten ejecutando, especialmente en maquinas virtuales si varios proyectos corren en un mismo servidor.
 
 
 ##############
