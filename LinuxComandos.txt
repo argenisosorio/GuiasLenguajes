@@ -217,13 +217,15 @@ vim nombre_archivo.xxx // Nos aparecerá una ventana en negro, donde nos aparece
 
 :wq! // Guardar y salir, esta accion aplica a un fichero ya creado, que estemos editando.
 
-:u // Deshacer el ultimo cambio
+u // Deshacer el ultimo cambio
 
 Ctrl + R // Rehacer el ultimo cambio
 
-:dd // Eliminar una linea, en tal caso la corta y esta lista para pegarse
+yy // Copiar la linea
 
-:p // Pegar una linea cortada
+dd // Eliminar una linea, en tal caso la corta y esta lista para pegarse
+
+p // Pegar una linea cortada
 
 guu // Convertir la linea actual en minusculas
 
@@ -678,4 +680,6 @@ como monitorear los proyectos que esten ejecutando, especialmente en maquinas vi
 ##############
 
 $ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con el certificado
-digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando.
+digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando
+
+~ // Para sacarlo usar AvPag en la consola 
