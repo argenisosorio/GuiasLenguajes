@@ -4,9 +4,9 @@
 **Probados en: Debian GNU/Linux 7 (wheezy)**
 ********************************************
 
-Crtl + h // Mostrar archivos ocultos de un directorio de manera grafica
+Crtl + h // Mostrar archivos ocultos de un directorio, en el entorno grafico
 
-cat /etc/issue.net  //Para saber la versión de SO que tenemos, probado en Debian.  
+cat /etc/issue.net  //Para saber la versión de SO que tenemos.  
 
 lsb_release -a //También tenemos un comando que nos va a dar muchos más detalles 
 
@@ -77,6 +77,14 @@ cd // Cambiar de directorio
 
 mkdir // Crear carpeta
 
+&& // El operador '&&' sirver para continuar con la ejecucion de comadnos en el shell, ejemplo:
+
+$ mkdir carpetaFFF && cd carpetaFFF // Creamos una carpetaFFF y luego entramos en la carpeta creada
+,&& nos permite poner varias instrucciones en una sola linea del shell, otro ejemplo:
+
+$ mkdir carpetaZZZ && cd carpetaZZZ && touch archivo.txt // Creamos una carpeta, entramos en ella y creamos un archivo
+en ese directorio en una sola instruccion.
+
 touch // Crear fichero
 
 nano nombre_fichero // Modificar un fichero con el editor nano.
@@ -90,6 +98,8 @@ less nombre_fichero // Mostrar el contenido de un archivo, mayor movilidad que c
 Ctrl + D // En el shell, cerrar sesion, salir del root, de maquinas virtuales o de sesiones de usuarios iniciadas
 
 Ctrl + flecha derecha o izquierda // Moverse en el prompt palabra a palabra, no letra por letra.
+
+Ctrl + w // Borrar la palabra que esta antes del cursor en el shell
 
 top  // Listar los procesos de ejecución del sistema (y más cosas) en tiempo real, es una de las herramientas más importantes para un administrador.
 

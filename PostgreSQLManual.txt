@@ -1,21 +1,25 @@
 ### Guía PostgreSQL by dM ###
 
-$ aptitude install postgresql postgresql−server−dev−9.X // Instalar la version de PostgreSQL
+#######################
+##### Instalacion #####
+#######################
+
+$ aptitude update // Actualizar los repositorios
+$ aptitude search postgresql // Buscar la version actual en los repositotios
+$ aptitude install postgresql postgresql−server // Instalar la version de PostgreSQL
 
 --------------------
 
-$ su
-$ su postgres // Comprobacion de la instalacion
+$ su // hacerse root
+$ su postgres // Acerce root de postgres
+$ psql // Entrar a posgresql
 
-postgres$ psql
-psql (9.3.5)
+psql (9.x.x) // Al ver esto postgresql fue instalado correctamente
 Type "help" for help.
 
-postgres=#
+postgres=# // Linea de comandos de postgresql
 
---------------------
-
-postgres=# help
+postgres=# help // Ayuda de postgresql
 Está usando psql, la interfaz de línea de órdenes de PostgreSQL.
 Digite:  \copyright para ver los términos de distribución
        \h para ayuda de órdenes SQL
@@ -26,25 +30,25 @@ postgres=#
 
 --------------------
 
-postgres=# \l //Ver las bases de datos creadas
+# \du //Para ver los roles existentes (usuarios)
 
-postgres=# \du //Para ver los roles existentes (usuarios)
+# \l //Ver las bases de datos creadas
 
-postgres=# CREATE USER nombre_usuario; //Crear usuario sin password, es mejor asignarle el pass
+# CREATE USER nombre_usuario; //Crear usuario sin password, es mejor asignarle el pass
 
-postgres=# CREATE USER nombre_usuario PASSWORD 'password'; //Crear usuario y asignarle el password
+# CREATE USER nombre_usuario PASSWORD 'password'; //Crear usuario y asignarle el password
 
-postgres=# ALTER USER usuario WITH PASSWORD 'nueva_password'; //Asignarle o cambiarle el password a un usuario, debe estar creado
+# ALTER USER usuario WITH PASSWORD 'nueva_password'; //Asignarle o cambiarle el password a un usuario, debe estar creado
 
-postgres=# DROP USER nombre_usuario; // Borrar un usuario
+# DROP USER nombre_usuario; // Borrar un usuario
 
-postgres=# CREATE DATABASE nombre_db; // Crear una base de datos
+# CREATE DATABASE nombre_db; // Crear una base de datos
 
-postgres=# DROP DATABASE nombre_db; // Borrar una base de datos
+# DROP DATABASE nombre_db; // Borrar una base de datos
 
-postgres=# CREATE DATABASE nombre_BaseDatosprueba OWNER nombre_usuario; // Creando una base de datos, debe estar creado el usuario
+# CREATE DATABASE nombre_BaseDatosprueba OWNER nombre_usuario; // Creando una base de datos, debe estar creado el usuario
 
-postgres=# \c name_db; //Conectarse a la base de datos creada
+# \c name_db; //Conectarse a la base de datos creada
 
 name_db=# CREATE TABLE nombre_tabla (nombre varchar(20),edad int); //Creacion de una tabla con un campo varchar de tamaño 20 y un campo para enteros
 
@@ -54,17 +58,41 @@ namedb=# \d nombre_tabla // Para ver la descripción (nombre de columnas, tipo d
 
 namedb=# INSERT INTO nombre_tabla (nombre_campo, ..., nombre_campo) values (valor_campo, ..., valor_campo); //Insertar datos en la tabla
 
+Ejemplo:
+namedb=# INSERT INTO usuario (nombre, nacionalidad, cedula) values ('vladimirov','V',12345678); //Insertar datos en la una tabla, las cadenas
+se expresan entre ('')
+
 namedb=# SELECT nombre_campo FROM nombre_tabla; // Hacer una consulta a los datos de un campo especifico.
 
 namedb=# SELECT * FROM nombre_tabla; // Hacer una consulta de los datos de la tabla, (*) Significa que lea todas las columnas de la tabla
 
 GRANT ALL PRIVILEGES ON DATABASE nombre_BaseDatos TO nombre_usuario; // Al crear un usuario podemos darle permisos a una base de datos existente
 
+nombredb=# DELETE FROM nombre_tabla; // Eliminar los registros de una tabla 
+
+nombredb=# DELETE FROM tabla WHERE nombre_campo='xxx'; // Eliminar los registros de un campo especifico
+Ejemplo:
+
+nombredb=# DELETE FROM usuario WHERE nombre='vladimirov'; // En este ejemplo eliminaremos los registros de una tabla usuarios
+pero solo de los campos cuyo nombre sea igual a (vladimirov), por ello se usa la clausula WHER.
+
+nombredb=# TRUNCATE TABLE nombre_table; // Vaciar los registros de una tabla, (elimina todos los registros de la tabla)
+y vuelve a crear la tabla con la misma estructura.
+
+// La diferencia con "delete" es la velocidad, es más rápido "truncate table" que "delete" (se nota cuando la cantidad
+de registros es muy grande) ya que éste borra los registros uno a uno.
+
+nombredb=# DROP TABLE nombre_tabla // elimina una tabla asi como sus registros. 
+
+########################################################
 ########## Hacer un dump de una base de datos ##########
+########################################################
 
 pg_dump -U username -W -h host basename > basename.sql
 
+################################################
 ########## Importar una base de datos ##########
+################################################
 
 // Se debe tener creado el usuario con la contraseña y la base de datos, luego el dum sustituira a la bd creada
 
@@ -77,3 +105,4 @@ psql -U username -W -h localhost nombre_base < dump_base.sql
 // basename.sql Esta parte en realidad solo indica que la salida de nuestro comando pg_dump la guarde en un archivo basename.sql
 
 user@debian:~$ pg_dump -U autana_bd -h 127.0.0.1 comun > comun.sql
+
