@@ -60,7 +60,9 @@ namedb=# INSERT INTO nombre_tabla (nombre_campo, ..., nombre_campo) values (valo
 
 Ejemplo:
 namedb=# INSERT INTO usuario (nombre, nacionalidad, cedula) values ('vladimirov','V',12345678); //Insertar datos en la una tabla, las cadenas
-se expresan entre ('')
+se expresan entre ('').
+
+namedb=# INSERT INTO usuarios VALUES ('mariana','V',12345678); // Insertar datos, no se pueden dejar campos vacios.
 
 namedb=# SELECT nombre_campo FROM nombre_tabla; // Hacer una consulta a los datos de un campo especifico.
 
@@ -70,11 +72,10 @@ GRANT ALL PRIVILEGES ON DATABASE nombre_BaseDatos TO nombre_usuario; // Al crear
 
 nombredb=# DELETE FROM nombre_tabla; // Eliminar los registros de una tabla 
 
-nombredb=# DELETE FROM tabla WHERE nombre_campo='xxx'; // Eliminar los registros de un campo especifico
+nombredb=# DELETE FROM nombre_tabla WHERE nombre_campo='xxx'; // Eliminar los registros de un campo especifico
 Ejemplo:
-
 nombredb=# DELETE FROM usuario WHERE nombre='vladimirov'; // En este ejemplo eliminaremos los registros de una tabla usuarios
-pero solo de los campos cuyo nombre sea igual a (vladimirov), por ello se usa la clausula WHER.
+pero solo de los campos cuyo nombre sea igual a (vladimirov), por ello se usa la clausula WHERE.
 
 nombredb=# TRUNCATE TABLE nombre_table; // Vaciar los registros de una tabla, (elimina todos los registros de la tabla)
 y vuelve a crear la tabla con la misma estructura.
@@ -82,7 +83,51 @@ y vuelve a crear la tabla con la misma estructura.
 // La diferencia con "delete" es la velocidad, es más rápido "truncate table" que "delete" (se nota cuando la cantidad
 de registros es muy grande) ya que éste borra los registros uno a uno.
 
-nombredb=# DROP TABLE nombre_tabla // elimina una tabla asi como sus registros. 
+nombredb=# DROP TABLE nombre_tabla // elimina una tabla asi como sus registros.
+
+nombredb=# ALTER TABLE nombre_tabla ADD nombre_campo tipo_campo; //Agregar un nuevo campo a una tabla.
+Ejemplo:
+prueba=# ALTER TABLE usuarios ADD cedula int; //En la base de datos prueba, agregamos a la tabla usuarios un nuevo campo
+cedula de tipo entero.
+
+nombredb=# ALTER TABLE nombre_tabla RENAME nombre_campo TO nuevo_nombre_campo; //Cambiar o renombrar el nombre de un campo creado.
+
+nombredb=# ALTER TABLE nombre_tabla DROP COLUMN nombre_columna; // Para eliminar un campo o una columna de una tabla.
+
+nombredb=# ALTER TABLE nombre_tabla ALTER COLUMN nombre_campo TYPE tipo_campo; // Modificar el tipo de dato de una columna.
+
+nombredb=# UPDATE nombre_tabla SET nombre_campo='xxx' WHERE nombre_campo='xxxx'; // Modificar el registro de un campo
+Ejemplo:
+Prueba=# UPDATE usuarios SET nombre='Vitaly' WHERE cedula='12345678'; // En la base de datos prueba, vamos a actualizar un registro
+de la tabla usuarios que corresponde a la columna o campo nombre, el registro que se modificara sera el que corresponda con el parametro 
+pasado con WHERE, sera el parametro de busqueda en la columna, pero puede ser el id por ejemplo.
+
+***** Creando columna de autoincremento *****
+
+Para crear una columna de autoincremento, ideal para la columna (id) se usa el tipo de dato (serial)
+
+Ejemplo:
+nombredb=# CREATE TABLE usuarios (id serial, nombre varchar(20)); //Creamos una tabla usuarios con dos campos,
+id que sera (serial) y otro campo nombre de tamaño 20, el campo serial toma el valor por defecto de (1) al momento de
+comenzar a introducir registros en los campos. 
+
+Ejemplo:
+prueba=# INSERT INTO usuarios (nombre) VALUES ('Kristina');
+prueba=# INSERT INTO usuarios (nombre) VALUES ('Khalifa');
+// Introducimos los registros 'Kristina' y 'Khalifa' en la columna nombre, como vemos
+no hace falta introducir el valor de la columna (id) puesto que lo toma automaticamente autoincrementando en
+relacion al anterior registro. Si observamos la tabla se vería asi:
+
+prueba=# SELECT * FROM usuarios;
+ id | nombre     
+ ----+-------+
+1 | Kristina |
+2 | Khalifa  |
+(2 filas)
+
+-------
+
+nombredb=# CREATE TABLE nombre_tabla (id serial primary key, nombre_campo varchar(20)); //Creando un campo id tipo clave primaria.
 
 ########################################################
 ########## Hacer un dump de una base de datos ##########
@@ -105,4 +150,18 @@ psql -U username -W -h localhost nombre_base < dump_base.sql
 // basename.sql Esta parte en realidad solo indica que la salida de nuestro comando pg_dump la guarde en un archivo basename.sql
 
 user@debian:~$ pg_dump -U autana_bd -h 127.0.0.1 comun > comun.sql
+
+######################
+##### phppgadmin #####
+######################
+
+PhpPgAdmin es una aplicación web, escrita en PHP, para administrar bases de datos PostgreSQL.
+Es una aplicación web que provee una interfaz grafica a los usuarios para crear bases de datos, tablas, alterarlas y consultar
+sus datos usando el lenguaje estándar SQL. phpPgAdmin estuvo basado en phpMyAdmin, pero hoy día ya no comparte código con él; incluso
+provee las mismas funcionalidades y más a los usuarios del servidor de base de datos PostgreSQL.
+
+Instalacion:
+$ aptitude install phppgadmin
+
+http://localhost/phppgadmin/ // Interfaz grafica en el navegador web
 
