@@ -427,9 +427,9 @@ find /carpeta // Lista los archivos que componen el directorio introducido
 wget -r www.host.com //descargar el contenido de una web, los archivos del directorio
 wget -r www.programador-de-software.blogspot.com
 
-###############################
-####### Comandos de GIT #######
-###############################
+######################################################
+####### GIT - Software de Control de Versiones #######
+######################################################
 
 // Software de control de versiones diseñado por Linus Torvalds, pensando en la eficiencia
 y la confiabilidad del mantenimiento de versiones de aplicaciones cuando éstas tienen un gran número de
@@ -439,6 +439,8 @@ en particular, el grupo de programación del núcleo Linux.
 aptitude install git // fast, scalable, distributed revision control system 
 
 git // Con este comando nos listara la lista de comandos Git que podemos usar en un proyecto
+
+git --version // Para saber que version tenemos instalada.
 
 //Lo primero que debemos hacer despues de la instalacion es configurar nuestro Git
 
@@ -683,6 +685,51 @@ ssh user@192.168.0.240 // Asi se accede a un ordenador o servidor remoto, debemo
 del server, nos pedira la clave de session, una vez adentro tenemos acceso a los archivos y podemos pedir el root para tener acceso total.
 ssh es muy usado por administradores de redes y de sistemas para acceder a las maquinas que arrojan los servidores y hacer cambios asi 
 como monitorear los proyectos que esten ejecutando, especialmente en maquinas virtuales si varios proyectos corren en un mismo servidor.
+
+###############################################
+########## Programación Shell-Script ##########
+###############################################
+
+Bash (y otros shells) permiten programar scripts
+--Bash (Bourne again shell) es un programa informático cuya función consiste en interpretar órdenes.
+Está basado en la shell de Unix.
+
+Script o programa shell: Fichero de texto conteniendo comandos externos e internos
+que se ejecutan línea por línea, el programa puede contener, además de comandos
+variables, constructores lógicos (if...then, AND, OR, etc.) y lazos (while, for, etc.)
+funciones comentarios
+
+-- Ejecución de un script --
+
+Los scripts deben empezar por el simbolo #! seguido del programa a usar para interpretar el script:
+
+#!/bin/bash // Script de bash
+#!/bin/sh // Script de shell
+#!/usr/bin/perl // Script de perl
+
+
+----------------------------
+
+#!/bin/bash
+#Ejemplo de programa en bash
+VAL=10
+VAL2=20
+echo $VAL
+echo $VAL2
+
+----------------------------
+
+sh prueba.sh // Ejecutar un programa bash
+
+
+
+
+
+
+
+
+
+ 
 
 
 ##############
