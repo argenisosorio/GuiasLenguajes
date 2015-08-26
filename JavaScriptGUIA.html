@@ -1226,11 +1226,180 @@ $(document).ready(function(){
 
 -------------------------------------
 
-<!-- -->
+<!--Rotador de texto, texto cambiante -->
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8" />
+    </head>
+    <script type="text/javascript">
+        var indice = 0;
+        frases = new Array();
+        frases[0] = "'Tenemos que ser creativos continuamente, creativos; hay que buscar la teoría, no hay revolución sin teoría revolucionaria; no lo olvidemos' Hugo Chávez."
+
+        frases[1] = "'Amor con amor se paga, y yo no tengo más nada que darles que amor, entrega, trabajo; mi vida entera se las regalo' Hugo Chávez."
+
+        frases[2] = "'Todo revolucionario debe ser un profundo autocrítico' Hugo Chávez."
+
+        indice = Math.random()*(frases.length);
+        indice = Math.floor(indice);
+
+        function rotar() {
+            if (indice == frases.length) {indice = 0;}
+                document.getElementById("rotando").innerHTML = frases[indice];
+                indice++;
+                setTimeout("rotar();",8000);
+        }
+    </script>
+<body>    
+    <div id="rotando" style="height:120px;margin:0px auto;font-weight:bold;color:red;">
+    </div>
+    <script type="text/javascript">rotar();</script>
+</body>
+</html>
 
 -------------------------------------
 
-<!-- -->
+<!--Rotador de texto, texto cambiante 2 -->
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8" />
+    </head>
+
+    <style type="text/css">
+        #frases {
+            color: red;
+        }
+        .gallerycontroller {
+            /*width: 250px*/
+        }
+
+        .gallerycontent {
+            /*width: 250px;
+            height: 200px;*/
+            /*border: 1px solid black;*/
+            /*background-color: #DFDFFF;*/
+            /*padding: 3px;*/
+            /*display: block;*/
+        }
+    </style>
+    <script type="text/javascript">
+        /***********************************************
+        * Advanced Gallery script- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+        * Please keep this notice intact
+        * Visit http://www.dynamicdrive.com/ for full source code
+        ***********************************************/
+
+        var tickspeed=8000 //ticker speed in miliseconds (2000=2 seconds)
+        var displaymode="auto" //displaymode ("auto" or "manual"). No need to modify as form at the bottom will control it, unless you wish to remove form.
+
+        if (document.getElementById){
+        document.write('<style type="text/css">\n')
+        document.write('.gallerycontent{display:none;}\n')
+        document.write('</style>\n')
+        }
+
+        var selectedDiv=0
+        var totalDivs=0
+
+        function getElementbyClass(classname){
+        partscollect=new Array()
+        var inc=0
+        var alltags=document.all? document.all.tags("DIV") : document.getElementsByTagName("*")
+        for (i=0; i<alltags.length; i++){
+        if (alltags[i].className==classname)
+        partscollect[inc++]=alltags[i]
+        }
+        }
+
+        function contractall(){
+        var inc=0
+        while (partscollect[inc]){
+        partscollect[inc].style.display="none"
+        inc++
+        }
+        }
+
+        function expandone(){
+        var selectedDivObj=partscollect[selectedDiv]
+        contractall()
+        selectedDivObj.style.display="block"
+        if (document.gallerycontrol)
+        temp.options[selectedDiv].selected=true
+        selectedDiv=(selectedDiv<totalDivs-1)? selectedDiv+1 : 0
+        if (displaymode=="auto")
+        autocontrolvar=setTimeout("expandone()",tickspeed)
+        }
+
+        function populatemenu(){
+        temp=document.gallerycontrol.menu
+        for (m=temp.options.length-1;m>0;m--)
+        temp.options[m]=null
+        for (i=0;i<totalDivs;i++){
+        var thesubject=partscollect[i].getAttribute("subject")
+        thesubject=(thesubject=="" || thesubject==null)? "HTML Content "+(i+1) : thesubject
+        temp.options[i]=new Option(thesubject,"")
+        }
+        temp.options[0].selected=true
+        }
+
+        function manualcontrol(menuobj){
+        if (displaymode=="manual"){
+        selectedDiv=menuobj
+        expandone()
+        }
+        }
+
+        function preparemode(themode){
+        displaymode=themode
+        if (typeof autocontrolvar!="undefined")
+        clearTimeout(autocontrolvar)
+        if (themode=="auto"){
+        document.gallerycontrol.menu.disabled=true
+        autocontrolvar=setTimeout("expandone()",tickspeed)
+        }
+        else
+        document.gallerycontrol.menu.disabled=false
+        }
+
+
+        function startgallery(){
+        if (document.getElementById("controldiv")) //if it exists
+        document.getElementById("controldiv").style.display="block"
+        getElementbyClass("gallerycontent")
+        totalDivs=partscollect.length
+        if (document.gallerycontrol){
+        populatemenu()
+        if (document.gallerycontrol.mode){
+        for (i=0; i<document.gallerycontrol.mode.length; i++){
+        if (document.gallerycontrol.mode[i].checked)
+        displaymode=document.gallerycontrol.mode[i].value
+        }
+        }
+        }
+        if (displaymode=="auto" && document.gallerycontrol)
+        document.gallerycontrol.menu.disabled=true
+        expandone()
+        }
+
+        if (window.addEventListener)
+        window.addEventListener("load", startgallery, false)
+        else if (window.attachEvent)
+        window.attachEvent("onload", startgallery)
+        else if (document.getElementById)
+        window.onload=startgallery
+    </script>
+<body>    
+    <div id="frases" class="gallerycontent">
+        "Tenemos que ser creativos continuamente, creativos; hay que buscar la teoría, no hay revolución sin teoría revolucionaria; no lo olvidemos" Hugo Chávez.
+    </div>
+
+    <div id="frases" class="gallerycontent">
+        "Amor con amor se paga, y yo no tengo más nada que darles que amor, entrega, trabajo; mi vida entera se las regalo" Hugo Chávez.
+    </div>
+</body>
+</html>
 
 -------------------------------------
 

@@ -117,6 +117,31 @@ ps l //  Muestra mas detalles de los procesos del sistema.
 
 poweroff // Apagar la maquina, se debe ser root para ejecutarlo.
 
+file xxx // donde xxx es el nombre de un fichero, nos dira el tipo de fichero que es.
+    Ejemplo: file index.html
+    index.html: HTML document, UTF-8 Unicode text
+
+file * // Nos dira el tipo de archivo de todos los ficheros del directorio
+
+diff /home/user/file.html /home/user/file2.html // Permite hacer una comparacion de dos archivos para apreciar sus diferencias
+se debe especificar la ruta de ambos archivos y separarlos con un espacio, si estan en el mismo directorio no hace
+falta especificar las rutas completas.
+
+df // Muestra el espacio disponible del disco y demas dispositivos asi como el espacio usado
+
+free // Muestra el estado de la memoria RAM, total, usado, disponible, cached, buffers 
+
+vmstat // Muestra el estado de la memoria virtual
+
+pstree // Muestra los procesos del sistema en forma de arbol
+
+du // Muestra una lista de los directorios y el espacio que ocupan en el disco
+
+du * // Muestra todos directorios y ficheros y el espacio que ocupan en el disco
+
+ping xxx // Donde xxx es el nombre de un host al cual enviaremos paquetes y comprobaremos si hay una conexion con ese host, util para saber si estamos conectados a internet por ejemplo:
+    ping http://www.google.com.ve // Si hay conexion a internet enviara paquetes que seran recibidos, de lo contrario dara un error.
+
 ##########################
 ########## Less ##########
 ##########################
@@ -147,7 +172,7 @@ space // Tecla espacio para avanzar, como page up
 
 :g // Ir al inicio del texto
 
-:v //Incocar un editor de texto para el documento, por lo general usa vi pero puede usar nano automaticamente
+:v //Invocar un editor de texto para el documento, por lo general usa vi pero puede usar nano automaticamente
 
 **********
 
@@ -241,11 +266,15 @@ guu // Convertir la linea actual en minusculas
 
 gUU // Convertir la linea actual en mayusculas
 
-:G // Ir al final del documento
+g // Ir al principio del archivo
+
+G // Ir al final del documento
 
 :/palabra // Para hacer una busqueda de una palabra dentro del archivo
 n // Para ir a la siguiente coincidencia.
 N // Para ir a la coincidencia anterior
+
+:123 // Ir a la linea (x) donde 123 es el número de linea a la cual queremos ir.
 
 :syntax on // Sirve para dar color al codigo que estemos editando, VIM reconoce la sintaxis de muchos lenguajes y
 la resalta en colores como muchos otros editores graficos como gedit, sublime, ninja, komodo, Geany.
@@ -282,11 +311,6 @@ aptitude show Nombre_Paguete // Para ver la informacion del paquete, version, es
 aptitude remove Nombre_paquete // Elimina o Desinstala el paquete
 
 aptitude purge Nombre_Paquete //Elimina el paquete y sus archivos de configuracion
-
-----------
-
-diff /home/user/file.html /home/user/file2.html // Permite hacer una comparacion de dos archivos para apreciar sus diferencias
-se debe especificar la ruta de ambos archivos y separarlos con un espacio.
 
 ########################################
 ########## Comprimir archivos ##########
@@ -686,6 +710,10 @@ del server, nos pedira la clave de session, una vez adentro tenemos acceso a los
 ssh es muy usado por administradores de redes y de sistemas para acceder a las maquinas que arrojan los servidores y hacer cambios asi 
 como monitorear los proyectos que esten ejecutando, especialmente en maquinas virtuales si varios proyectos corren en un mismo servidor.
 
+echo "mensaje" > /dev/pts/2 // Enviar mensaje a traves del shell, se debe especificar 
+el usuario, se puede hacer localmente para probar, enviando mensajes entre dos shells
+abiertos. con (who) veremos la identificacion de cada shell.
+
 ###############################################
 ########## Programación Shell-Script ##########
 ###############################################
@@ -739,4 +767,17 @@ sh prueba.sh // Ejecutar un programa bash
 $ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con el certificado
 digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando
 
-~ // Para sacarlo usar AvPag en la consola 
+~ // Para sacarlo usar AvPag en la consola
+
+####################################################
+##### Saber la version instalada de un paquete #####
+####################################################
+
+xxx --version // Saber la version de algun paquete que tengamos instalado.
+
+Ejemplo:
+    bash --version
+    gcc --version
+    python --version
+    ruby --version
+
