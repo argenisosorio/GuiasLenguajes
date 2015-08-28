@@ -142,6 +142,8 @@ du * // Muestra todos directorios y ficheros y el espacio que ocupan en el disco
 ping xxx // Donde xxx es el nombre de un host al cual enviaremos paquetes y comprobaremos si hay una conexion con ese host, util para saber si estamos conectados a internet por ejemplo:
     ping http://www.google.com.ve // Si hay conexion a internet enviara paquetes que seran recibidos, de lo contrario dara un error.
 
+glxgears // Siendo root, Ver si hay aceleracion grafica en la maquina, muestra unos engranajes rodando, si es así está correcta la instalacion del video.
+
 ##########################
 ########## Less ##########
 ##########################
@@ -278,6 +280,9 @@ N // Para ir a la coincidencia anterior
 
 :syntax on // Sirve para dar color al codigo que estemos editando, VIM reconoce la sintaxis de muchos lenguajes y
 la resalta en colores como muchos otros editores graficos como gedit, sublime, ninja, komodo, Geany.
+
+En /etc/vim en el fichero vimrc descomentamos la linea 
+"syntax on // Quitamos las (") para que quede activado directamente la coloracion de codigos
 
 ##############################################
 ########## Cambiar el pass del root ##########
