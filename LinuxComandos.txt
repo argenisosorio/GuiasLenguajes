@@ -117,6 +117,8 @@ ps l //  Muestra mas detalles de los procesos del sistema.
 
 poweroff // Apagar la maquina, se debe ser root para ejecutarlo.
 
+reboot // Reiniciar la maquina.
+
 file xxx // donde xxx es el nombre de un fichero, nos dira el tipo de fichero que es.
     Ejemplo: file index.html
     index.html: HTML document, UTF-8 Unicode text
@@ -142,7 +144,7 @@ du * // Muestra todos directorios y ficheros y el espacio que ocupan en el disco
 ping xxx // Donde xxx es el nombre de un host al cual enviaremos paquetes y comprobaremos si hay una conexion con ese host, util para saber si estamos conectados a internet por ejemplo:
     ping http://www.google.com.ve // Si hay conexion a internet enviara paquetes que seran recibidos, de lo contrario dara un error.
 
-glxgears // Siendo root, Ver si hay aceleracion grafica en la maquina, muestra unos engranajes rodando, si es así está correcta la instalacion del video.
+glxgears // Siendo root, Ver si hay aceleracion grafica en la maquina, muestra unos engranajes de colores rodando, si es así, está correcta la instalacion del video.
 
 ##########################
 ########## Less ##########
@@ -754,16 +756,23 @@ echo $VAL2
 
 sh prueba.sh // Ejecutar un programa bash
 
+#################
+##### RSYNC #####
+#################
 
+Es una aplicación que ofrece transmisión eficiente de datos, que opera también con datos comprimidos y cifrados.
+Mediante una técnica de delta encoding, permite sincronizar archivos y directorios entre dos máquinas de una red
+o entre dos ubicaciones en una misma máquina, minimizando el volumen de datos transferidos.
+Muy recomendable para hacer respaldos en discos externos.
 
+aptitude install rsync // Instalarlo desde los repositorios de debian
 
+Parametros: -P para mostrar el progreso de la copia y -r cuando se van a copiar directorios
 
+rsync -P ficehero /directorio/carpeta2 // Para copiar ficheros, archivos, etc. 
 
-
-
-
- 
-
+rsync -P -r /directorio/carpeta1 /directorio/carpeta2 // -r para copiar directorios
+se ponen las dos rutas: origen y destino separados por un espacio.
 
 ##############
 ### Otros: ###
