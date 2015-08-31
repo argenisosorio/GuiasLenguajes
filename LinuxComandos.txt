@@ -1,8 +1,8 @@
 #### Guía de comandos en Linux by dM ####
 
-********************************************
-**Probados en: Debian GNU/Linux 7 (wheezy)**
-********************************************
+################################################
+### Probados en: Debian GNU/Linux 7 (wheezy) ###
+################################################
 
 Crtl + h // Mostrar archivos ocultos de un directorio, en el entorno grafico
 
@@ -683,7 +683,7 @@ de otros entornos virtuales y de los paquetes instalados globalmente en el siste
 El porder tener diferentes entornos donde podemos instalar diferentes versiones de paquetes nos da la oportunidad de hacer un desarrollo simultaneo
 así como poder hacer pruebas si afectar a los paquetes del sistema global.
 
---Instalación: 
+--- Instalación: ---
 
 $ aptitude install python−virtualenv virtualenvwrapper // Para crear un ambiente virtual instale las herramientas
 python-virtualenv y virtualenvwrapper
@@ -697,6 +697,10 @@ user@debian:/home$ workon proyecto // Accedemos al entorno virtual creado
 (proyecto)user@debian:/home$ // Ya estamos en el entorno virtual creado, denotado por el nombre del entorno al inicio del prompt
 
 $ deactivate nombre_ambiente_virtual // Para salir del entorno virtaul, o simplemente deactivate
+
+$ lsvirtualenv // Para listar los entornos virtuales creados o disponibles.
+
+$ rmvirtualenv nombre_virtualenv // Remover o borrar un entorno virtual.
 
 #############################################
 ########## Conexion remota con SSH ##########
@@ -773,6 +777,27 @@ rsync -P ficehero /directorio/carpeta2 // Para copiar ficheros, archivos, etc.
 
 rsync -P -r /directorio/carpeta1 /directorio/carpeta2 // -r para copiar directorios
 se ponen las dos rutas: origen y destino separados por un espacio.
+
+##################################
+##### Crer alias de comandos #####
+##################################
+
+Un alias es una palabra o frase que se asignara para 
+remplazar un comando, por lo generalmente se usa para
+remplazar comandos muy largos y dificiles de recordar
+por lo que es una gran ventaja la creacion de alias.
+
+Un alias Se pueden crear temporalmente, directamente en la consola
+y durara hasta que cerremos ese shell, tambien asignar permanentemente
+escribiendolo en el archivo .bashrc que esta en el /home 
+
+$ alias nombre_alias='comando'
+
+Ejemplo:
+$ alias sa='aptitude search apache | grep rt4' // (sa) ahora es el alias de 
+ese comando de busqueda en los repositorios de un paquete especifico.
+
+$ unalias nombre_alias // Para eliminar el alias creado temporalmente
 
 ##############
 ### Otros: ###

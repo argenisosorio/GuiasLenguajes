@@ -141,15 +141,31 @@ pg_dump -U username -W -h host basename > basename.sql
 
 // Se debe tener creado el usuario con la contraseña y la base de datos, luego el dum sustituira a la bd creada
 
+psql -h localhost -U nombre_usuario -d nombre_bd -f /ruta/al/archivo.sql
+
+Parametros:
+-h : Es la ip en donde esta el servidor de la base de datos, si esta trabajando localmente entonces es localhost o 127.0.0.1
+-U : Nombre de usuario propietario de la base de datos.
+-d : Nombre de la base de datos.
+-f : Ruta del archivo sql, si esta en el directorio no hay que poner la ruta
+
+Ejemplo:
+psql -h 127.0.0.1 -U usuario_cliente -d banco_db -f banco_db.sql
+
+----- Otra forma -----
+
+// Se debe tener creado el usuario con la contraseña y la base de datos, luego el dum sustituira a la bd creada
+
 psql -U username -W -h localhost nombre_base < dump_base.sql
 
-// -U Se refiere al Usuario, en este caso puede ser el usuario propietario de la base de datos o el usuario postgres
-// -W Con este parámetro conseguiremos que nos solicite el password del usuario antes especificado
-// -h Con este indicamos cuál es el servidor PostgreSQL al que nos conectaremos para obtener nuestro dump, si estamos local podemos colocar localhost sino ponemos la IP del servidor PostgreSQL
-// basename Este es el ultimo parámetro realmente en esta linea de comando, por esa razon no tiene alguna letra que indique que el siguiente parámetro es el nombre de la base de datos
-// basename.sql Esta parte en realidad solo indica que la salida de nuestro comando pg_dump la guarde en un archivo basename.sql
+-U Se refiere al Usuario, en este caso puede ser el usuario propietario de la base de datos o el usuario postgres
+-W Con este parámetro conseguiremos que nos solicite el password del usuario antes especificado
+-h Con este indicamos cuál es el servidor PostgreSQL al que nos conectaremos para obtener nuestro dump, si estamos local podemos colocar localhost sino ponemos la IP del servidor PostgreSQL
+basename Este es el ultimo parámetro realmente en esta linea de comando, por esa razon no tiene alguna letra que indique que el siguiente parámetro es el nombre de la base de datos
+basename.sql Esta parte en realidad solo indica que la salida de nuestro comando pg_dump la guarde en un archivo basename.sql
 
-user@debian:~$ pg_dump -U autana_bd -h 127.0.0.1 comun > comun.sql
+Ejemplo:
+user@debian:~$ pg_dump -U usuario -h 127.0.0.1 nombre_database > nombre_database.sql
 
 ######################
 ##### phppgadmin #####
