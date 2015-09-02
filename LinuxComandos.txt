@@ -319,6 +319,19 @@ aptitude remove Nombre_paquete // Elimina o Desinstala el paquete
 
 aptitude purge Nombre_Paquete //Elimina el paquete y sus archivos de configuracion
 
+####################################################
+##### Saber la version instalada de un paquete #####
+####################################################
+
+xxx --version // Saber la version de algun paquete que tengamos instalado.
+
+Ejemplo:
+    bash --version
+    gcc --version
+    python --version
+    ruby --version
+
+
 ########################################
 ########## Comprimir archivos ##########
 ########################################
@@ -799,6 +812,26 @@ ese comando de busqueda en los repositorios de un paquete especifico.
 
 $ unalias nombre_alias // Para eliminar el alias creado temporalmente
 
+########################################################
+### Saber la direccion ip de una pagina o un sevidor ###
+########################################################
+
+user@debian:~$ nslookup google.com // Saber la de google por ejemplo
+Non-authoritative answer:
+Name:   google.com
+Address: 216.58.192.110 // Direccion ip de google
+
+--- Otra forma ---
+
+$ ping google.com // Haciendo ping al una pagina 
+PING google.com (216.58.192.110) 56(84) bytes of data.
+64 bytes from mia07s35-in-f14.1e100.net (216.58.192.110): icmp_req=1 ttl=49 time=69.6 ms // Ip de google
+64 bytes from mia07s35-in-f14.1e100.net (216.58.192.110): icmp_req=2 ttl=49 time=70.4 ms
+
+--- google.com ping statistics ---
+3 packets transmitted, 2 received, 33% packet loss, time 2001ms
+rtt min/avg/max/mdev = 69.645665/70.00475/470.48645/0.010 ms
+
 ##############
 ### Otros: ###
 ##############
@@ -807,16 +840,4 @@ $ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con e
 digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando
 
 ~ // Para sacarlo usar AvPag en la consola
-
-####################################################
-##### Saber la version instalada de un paquete #####
-####################################################
-
-xxx --version // Saber la version de algun paquete que tengamos instalado.
-
-Ejemplo:
-    bash --version
-    gcc --version
-    python --version
-    ruby --version
 
