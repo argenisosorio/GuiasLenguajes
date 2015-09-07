@@ -70,6 +70,10 @@ ls -la // Muestra los archivos, los ocultos tambien, fecha, permisos, etc
 
 ls -1 // Muestra los archivos en forma de lista
 
+ls *.xxx // Listar todos los ficheros de un directorio que tengan las extension .xxx, donde xxx puede ser: txt, html, php, css, etc.
+
+ls -R // Listar los directorios y subdirectorios asi como ficehros de un directorio.
+
 \du // Para ver la lista de carpetas y sub carpetas, los directorios que existen 
 dentro de donde se encuentre situado
 
@@ -146,6 +150,15 @@ ping xxx // Donde xxx es el nombre de un host al cual enviaremos paquetes y comp
 
 glxgears // Siendo root, Ver si hay aceleracion grafica en la maquina, muestra unos engranajes de colores rodando, si es así, está correcta la instalacion del video.
 
+adduser nombre_de_usuario // Como root, Agregar un usuario nuevo al sistema, una nueva sesion, nos pedira agregar el 
+nombre de usuario y asignarle contraseña, la clave de root es la misma para todas las sesiones.
+
+su nombre_de_usuario // Conectarse como otro usuario creado
+
+userdel -r nombre_usuario // Como root, eliminar el usuario creado
+
+deluser --remove-home nombre_usuario // Otra forma de eliminar un usuario creado
+
 ##########################
 ########## Less ##########
 ##########################
@@ -207,6 +220,11 @@ rmdir // Borrar una carpeta
 rm // Borrar un fichero
 
 rm -r /directorio // Para borrar una carpeta, se le da la ruta del directorio a borrar
+
+rm * // Borrar todos el contenido de una carpeta, se debe estar dentro del directorio
+
+rm -r * // Borrar todo el contenido de una carpeta, incluyendo las carpetas de ese directorio
+se debe estar dentro del directorio
 
 sudo -i // Pedir contraseña root, algunas versiones basadas en Debian
 
@@ -427,7 +445,11 @@ root@debian:/home/user# aptitude search mysql | grep mysql
 ##### Comandos para hacer busquedas en los directorios y en el historial del shell #####
 ########################################################################################
 
-history | grep xxx //busqueda en el historial de la consola aptitude, ls, l 
+history // Mostrar el historial de los comandos de la consola
+
+history | grep xxx // Busqueda especifica de una comando usado, ejemplo: aptitude, alias, grep etc.
+
+.bash_history // En los archivos ocultos del home, en este fichero se almacena el historial de los comandos usados
 
 grep --color=always -n "mysql" /var/www/prueba/2/datos.php // --color para colorear la palabra a buscar, 
 -n para listar la la linea del caracter buscado y al final ra ruta del archivo a buscar
@@ -439,10 +461,6 @@ grep --color=always -n "cadena_texto" ./* -Ir //Busca la cadena de manera recurs
 grep --color -n "cadena_texto" -Ir // No hace falta poner =always
 
 egrep -r "Saludo" . //Otra forma de busqueda.
-
-history //mostrar el historial de los comandos de la consola
-
-history | grep xxx // Para buscar algun comando usado en el historial del shell, sirve con indicios de alguno usado
 
 | grep xxx // filtra la busqueda con el parametro que le demos ejemplo:
 
