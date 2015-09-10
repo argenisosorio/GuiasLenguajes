@@ -902,6 +902,97 @@ Ejemplo:
 <!--span style="color:#CB0630"></span>
 <span style="color:#5376FF"></span-->
 
+----- Ejemplo practico -----
+
+<html>
+    <head>
+        <title>Estilo para codigo basico</title>
+        <meta charset="UTF-8" />
+    </head>
+
+	<style>
+	    #code {
+	    	background-color: #141830;
+	        width:50%;
+	        color: white;
+	        border-radius: 15px;
+	        border: ridge 1px;	        
+	    }	    
+	</style>
+<body>
+Ejemplo:
+<div id="code">
+	<pre>	
+	<span style="color:aqua">var</span> formData <span style="color:red">= new</span> FormData();
+		formData.append("<span style="color:Khaki">upload</span>", <span style="color:red">$</span>(<span style="color:Khaki">"#file-sign"</span>)[<span style="color:DarkViolet">0</span>].files[<span style="color:DarkViolet">0</span>]);
+		<span style="color:red">$</span>.ajax({
+		         url: <span style="color:Khaki">"https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/firmados"</span>,
+		         type: <span style="color:Khaki">"post"</span>,
+		         dataType: <span style="color:Khaki">"json"</span>,
+		         data: formData,
+		         cache: <span style="color:DarkViolet">false</span>,
+		         contentType: <span style="color:DarkViolet">false</span>,
+		         processData: <span style="color:DarkViolet">false</span>,
+		         headers: {<span style="color:Khaki">"Authorization"</span>:<span style="color:Khaki">"Basic YWRtaW46YWRtaW4="</span>},
+		         <span style="color:Lime">success</span>: <span style="color:aqua">function</span>(<span style="color:orange">response</span>) {
+		                <span style="color:aqua">var</span> json <span style="color:red">=</span> JSON.stringify(response);
+		                <span style="color:aqua">alert</span>(json);
+		         },
+		         <span style="color:Lime">error</span>: <span style="color:aqua">function</span>(<span style="color:orange">response</span>){
+		                <span style="color:aqua">alert</span>(<span style="color:Khaki">"error: "</span> <span style="color:red">+</span> response.<span style="color:aqua">error</span>.<span style="color:aqua">toString</span>());
+		         }
+		});		
+	</pre>
+</div>
+</body>
+</html>
+<!--span style="color:Lime"></span-->
+
+----- Ejemplo practico con numeracion de lineas -----
+<html>
+    <head>
+        <title>Estilo para codigo basico</title>
+        <meta charset="UTF-8" />
+    </head>
+
+	<style>
+	    #code {
+	    	background-color: #141830;
+	        width:50%;
+	        color: white;
+	        border-radius: 15px;
+	        border: ridge 1px;	        
+	    }	    
+	</style>
+<body>
+Ejemplo:
+<div id="code">	
+<pre>
+<span style="color:gray"> 1</span>	<span style="color:aqua">var</span> formData <span style="color:red">= new</span> FormData();
+<span style="color:gray"> 2</span>		formData.append("<span style="color:Khaki">upload</span>", <span style="color:red">$</span>(<span style="color:Khaki">"#file-sign"</span>)[<span style="color:DarkViolet">0</span>].files[<span style="color:DarkViolet">0</span>]);
+<span style="color:gray"> 3</span>		<span style="color:red">$</span>.ajax({
+<span style="color:gray"> 4</span>		         url: <span style="color:Khaki">"https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/firmados"</span>,
+<span style="color:gray"> 5</span>		         type: <span style="color:Khaki">"post"</span>,
+<span style="color:gray"> 6</span>		         dataType: <span style="color:Khaki">"json"</span>,
+<span style="color:gray"> 7</span>		         data: formData,
+<span style="color:gray"> 8</span>		         cache: <span style="color:DarkViolet">false</span>,
+<span style="color:gray"> 9</span>		         contentType: <span style="color:DarkViolet">false</span>,
+<span style="color:gray"> 10</span>		         processData: <span style="color:DarkViolet">false</span>,
+<span style="color:gray"> 11</span>		         headers: {<span style="color:Khaki">"Authorization"</span>:<span style="color:Khaki">"Basic YWRtaW46YWRtaW4="</span>},
+<span style="color:gray"> 12</span>		         <span style="color:Lime">success</span>: <span style="color:aqua">function</span>(<span style="color:orange">response</span>) {
+<span style="color:gray"> 13</span>		                <span style="color:aqua">var</span> json <span style="color:red">=</span> JSON.stringify(response);
+<span style="color:gray"> 14</span>		                <span style="color:aqua">alert</span>(json);
+<span style="color:gray"> 15</span>		         },
+<span style="color:gray"> 16</span>		         <span style="color:Lime">error</span>: <span style="color:aqua">function</span>(<span style="color:orange">response</span>){
+<span style="color:gray"> 17</span>		                <span style="color:aqua">alert</span>(<span style="color:Khaki">"error: "</span> <span style="color:red">+</span> response.<span style="color:aqua">error</span>.<span style="color:aqua">toString</span>());
+<span style="color:gray"> 18</span>		         }
+<span style="color:gray"> 19</span>		});		
+</pre>
+</div>
+</body>
+</html>
+<span style="color:gray"></span>
+
 xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
