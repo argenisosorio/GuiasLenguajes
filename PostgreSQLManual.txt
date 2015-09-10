@@ -30,6 +30,7 @@ postgres=#
 
 --------------------
 
+
 # \du //Para ver los roles existentes (usuarios)
 
 # \l //Ver las bases de datos creadas
@@ -48,7 +49,9 @@ postgres=#
 
 # CREATE DATABASE nombre_BaseDatosprueba OWNER nombre_usuario; // Creando una base de datos, debe estar creado el usuario
 
-# \c name_db; //Conectarse a la base de datos creada
+# \c name_db; // Conectarse a la base de datos creada
+
+# \c postgres; // Conectarse de nuevo a la db postgres con el usuario postgres 
 
 name_db=# CREATE TABLE nombre_tabla (nombre varchar(20),edad int); //Creacion de una tabla con un campo varchar de tamaño 20 y un campo para enteros
 

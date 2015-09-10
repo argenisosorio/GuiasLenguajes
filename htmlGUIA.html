@@ -207,6 +207,10 @@
 	<td bgcolor="red"> Para dar color a una celda
 	cellpadding=10px Para dar distancia entre el borde de la celda y el texto que contiene
 	cellspacing="10px" Establece la anchura en px de los bordes de la celda
+	style="width:100%" Ancho de la tabla
+	style="text-align:center" Centrar elementos(texto) de las celdas
+	style="width:100%;text-align:center" Dos atributos en el estilo separados por ;
+	
 
 *************Tabla con estilo****************
 	
@@ -842,6 +846,64 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Formulario, Campo de busqueda con estilo 2 xxxxxxxxxx
 </body>
 </html>
 
+xxxxxxxxxxxxxxxxxxxxxxxxxx Estilo para div, mostrar codigos como ejemplo xxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxx y uso de estilo en <span></span> xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+<html>
+    <head>
+        <title>Estilo para codigo basico</title>
+        <meta charset="UTF-8" />
+    </head>
+
+	<style>
+	    #code {
+	    	background-color: #2B3047;
+	        width:50%;
+	        color: white;
+	        border-radius: 15px;
+	        border: ridge 1px;	  
+	    }	    
+	</style>
+<body>
+
+<h2>Archivos</h2>
+<h3>Archivos - Carga un archivo y verifica</h3>
+Carga un archivo a través de un formulario y retorna un json con la información de la firma.
+<br />
+<br />
+<a href="https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/firmados">https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/firmados</a>
+<p />
+Ejemplo:
+<div id="code">
+	<pre>
+	<span style="color:#5376FF">var</span> formData <span style="color:#CB0630">= new</span> FormData();
+	formData.append("upload", $("#file-sign")[0].files[0]);            
+	$.ajax({
+	         url: "https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/firmados",
+	         type: "post",
+	         dataType: "json",
+	         data: formData,
+	         cache: false,
+	         contentType: false,
+	         processData: false,
+	         headers: {"Authorization":"Basic YWRtaW46YWRtaW4="},
+	         <span style="color:#CB0630">success:</span> <span style="color:#5376FF">function</span>(response) {
+	                <span style="color:#5376FF">var</span> json = JSON.stringify(response);
+	                <span style="color:#5376FF">alert</span>(json);
+	         },
+	         <span style="color:#CB0630">error:</span> <span style="color:#5376FF">function</span>(response){
+	                <span style="color:#5376FF">alert</span>("error: " + response.error.toString());
+	         }
+	});
+	</pre>
+</div>
+</body>
+</html>
+<!--span style="color:#CB0630"></span>
+<span style="color:#5376FF"></span-->
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

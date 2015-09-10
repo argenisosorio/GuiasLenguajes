@@ -56,7 +56,7 @@ clear // Limpia la pantalla
 
 date // Muestra la fecha
 
-man // Muestra ayuda sobre el comando que pongas a continuación
+man nombre_comando  // Muestra el manual de una comando donde como: ls, grep, aptitude etc...
 
 cal // Muestra un calendario
 
@@ -99,6 +99,8 @@ cat nombre_fichero // Mostrar contenido de un fichero
 
 less nombre_fichero // Mostrar el contenido de un archivo, mayor movilidad que cat.
 
+stat nombre_fichero // Muestra el estado de un fichero.
+
 Ctrl + D // En el shell, cerrar sesion, salir del root, de maquinas virtuales o de sesiones de usuarios iniciadas
 
 Ctrl + flecha derecha o izquierda // Moverse en el prompt palabra a palabra, no letra por letra.
@@ -107,7 +109,7 @@ Ctrl + w // Borrar la palabra que esta antes del cursor en el shell
 
 top  // Listar los procesos de ejecución del sistema (y más cosas) en tiempo real, es una de las herramientas más importantes para un administrador.
 
-// Cada proceso tiene un identificador (PID), entonces podemos matar ese proceso con:
+// Cada proceso tiene un identificador (PID) proccess ID, entonces podemos matar ese proceso con:
 
 kill -9 xxxx // Matar un proceso donde xxxx es el identificador del proceso.
 
@@ -197,16 +199,20 @@ cp // Copiar un fichero o carpeta
 
 cp -r // Copiar un fichero o carpeta
 
-cp Nombre_de_archivo.txt /Carpeta/destino/a/copiar // Se debe estar situado en la carpeta del archivo a copiar
+cp Nombre_de_archivo.txt /Carpeta/destino/a/copiar // Copiar un fichero en un directorio
+se debe estar situado en la carpeta del archivo a copiar
 
-cp Nombre_carpeta -r /Carpeta/destino/a/copiar // Se debe estar situado en la carpeta de la carpeta a copiar
+cp Nombre_carpeta -r /Carpeta/destino/a/copiar // Copiar un directorio en otro, 
+se debe estar situado en la carpeta de la carpeta a copiar
 
 cp -r /home/usuario/carpeta1/ /home/usuario/carpeta2/ //Se pueden copiar archivos o carpetas especificando las
 rutas completas, en este caso la primera ruta es el directorio o archivo a copiar y la segunda es la ruta donde
 se va a pegar lo copiado, ambas rutas separadas por un espacio en blanco.
 
 cp -r carpeta/ carpeta2/ // Ambas carpetas estan en el mismo directorio donde estamos situados, por lo tanto
-no hay que especificar las rutas completas de las carpetas involucradas.
+no hay que especificar las rutas completas de las carpetas involucradas
+
+cp nombre_fichero.xxx nombre_fichero2.xxx // Hacer una copia de un fichero y cambiarle el nombre.
 
 mv // Mover un fichero o carpeta y/o cambiar su nombre
 
@@ -217,7 +223,9 @@ mv archivo1.txt archivo2.txt // Renombrar un archivo o carpeta
 
 rmdir // Borrar una carpeta
 
-rm // Borrar un fichero
+rm nombre_fichero // Borrar un fichero
+
+rm fichero1 fichero2 fichero3 // Borrar varios ficheros
 
 rm -r /directorio // Para borrar una carpeta, se le da la ruta del directorio a borrar
 
@@ -447,6 +455,8 @@ root@debian:/home/user# aptitude search mysql | grep mysql
 
 history // Mostrar el historial de los comandos de la consola
 
+fc -l // Mostrar los ultimos comandos usados por el usuario
+
 history | grep xxx // Busqueda especifica de una comando usado, ejemplo: aptitude, alias, grep etc.
 
 .bash_history // En los archivos ocultos del home, en este fichero se almacena el historial de los comandos usados
@@ -483,6 +493,10 @@ su: *****
 find / -name nombre_carpeta // (/) es para hacer la busqueda desde ahi en adelante, puede ser (/home/user)
 
 find /carpeta // Lista los archivos que componen el directorio introducido
+
+type nombre_comando // Busca la ruta donde se encuentra el comando, ejemplo: aptitude, python, etc.
+
+which nombre_programa // Buscar la ruta de un programa
 
 ----------
 
