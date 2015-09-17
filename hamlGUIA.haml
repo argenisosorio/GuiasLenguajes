@@ -27,7 +27,32 @@ html:
     </body>
 </html>
 
+Ejemplos de declaracionde div id y div class
+
+#content
+ .title   
+
+--- may be compiled to: ---
+
+<div id='content'>
+  <div class='title'>
+  </div>
+</div>
+
 Como podemos observar el haml emplea el caracter (%) para englobar las etiquetas html convencionales
 ademas de usar la indentacion del codigo para referenciar el final de un bloque, es decir, no usa
 etiquetas de cierre sino se basa en la indentacion para ese aspecto.
+Los div class se expresan con .xxx y los div id con #...
 
+Comentarios:
+
+%peanutbutterjelly
+  / This is the peanutbutterjelly element
+  I like sandwiches!
+
+is compiled to:
+
+<peanutbutterjelly>
+  <!-- This is the peanutbutterjelly element -->
+  I like sandwiches!
+</peanutbutterjelly>

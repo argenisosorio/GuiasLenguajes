@@ -41,21 +41,21 @@
 
 	****************PÁRRAFOS****************
 
-	<P> Sirve para separar parrafos y dejar espacios en blanco
+	<p> Sirve para separar parrafos y dejar espacios en blanco
 
-	<BR> Sirve como fin de línea o como un punto y aparte	
+	<br> Sirve como fin de línea o como un punto y aparte	
 
 	&nbsp; &nbsp; Crear espacios en blanco entre las palabras
 
-	<PRE></PRE> Formato de texto, el texto se mostrará como se escribió en el codigo fuente
+	<pre></pre> Formato de texto, el texto se mostrará como se escribió en el codigo fuente
 
-	<HR></HR> Permite trazar lineas horizontales para dividir o crear secciones en la página y <hr color="red"> así como <hr size=10px>
+	<hr></hr> Permite trazar lineas horizontales para dividir o crear secciones en la página y <hr color="red"> así como <hr size=10px>
 
 	<fieldset></fieldset> Crea un rectangulo alrrededor del texto o imagen
 
 	<legend>Titulo</legend> Asignar un enzabezado al fieldset
 
-	<CENTER></CENTER> Sirve para alinear un encabezado o un parrafo al centro de la pagina
+	<center></center> Sirve para alinear un encabezado o un parrafo al centro de la pagina
 
 	//HTML5 elimina el uso de center y recomienda el uso de CSS para alinear los textos etc, tambien es valido usar la etiqueta DIV a la cual se le pueden dar atributos como id="nombre_identificador" y align="justify,center,left o right" para alinear.
 	
@@ -67,27 +67,27 @@
 
 	****************TIPOS DE LETRA, EFECTOS Y MÁS****************
 
-	<H1></H1> Le da tamaño al texto, varia del 1 al 6
+	<h1></h1> Le da tamaño al texto, varia del 1 al 6
 
-	<B></B> Estilo Negrita
+	<b></b> Estilo Negrita
 
-	<TT></TT> Teletipo
+	<tt></tt> Teletipo
 
 	<strong></strong> Fuerte, como negrita
 
-	<I></I> Cursiva
+	<i></i> Cursiva
 
-	<EM></EM> Émfasis, como cursiva
+	<em></em> Émfasis, como cursiva
 
-	<U></U> Subrayado
+	<u></u> Subrayado
 
 	<strike></strike> Texto tachado	
 
-	<S></S> Texto tachado
+	<s></s> Texto tachado
 	
-	<SUP></SUP> Superíndice, como elevado en matemáticas
+	<sup></sup> Superíndice, como elevado en matemáticas
 	
-	<SUB></SUB> Subíndice
+	<sub></sub> Subíndice
 
 	<marquee></marquee> El texto se desplaza de derecha a izquierda repetidamente	
 
@@ -993,27 +993,53 @@ Ejemplo:
 </html>
 <span style="color:gray"></span>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxx Uso de !important en CSS xxxxxxxxxxxxxxxxxxxxxxxxxxx
+<!-- El atributo !important señala que si hay dos propiedas con diferentes valores,
+aquella propiedad que tenga este atributo sera la que sea usada -->
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-
+<html>
+    <head>
+    <title>Titulo</title>
+    <meta charset="UTF-8">
+      <style>
+        div {
+          float: justify; 
+          border: ridge;
+          margin: 20px;
+          color: red; /* Letra roja */
+        }
+        div {          
+          color: blue !important; /* Letra azul */
+        }
+      </style>
+    </head> 
+  <body> 
+    <div>
+      <p>El fútbol femenino ha tenido un crecimiento lento en el fútbol moderno, principalmente por obstáculos sociales y culturales que no permiten el ingreso pleno de la mujer al deporte.29 El primer encuentro femenino bajo las reglas del fútbol asociación del cual se tienen registros sucedió en 1892 en Glasgow, Escocia.30 A finales de 1921 el fútbol femenino fue prohibido en Inglaterra, hecho que no le permitió expandirse al resto del mundo.</p>
+    </div>  
+  </body>
+  </html>
 </body>
-
 </html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
 
 

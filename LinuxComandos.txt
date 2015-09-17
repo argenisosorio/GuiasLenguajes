@@ -8,11 +8,23 @@ Crtl + h // Mostrar archivos ocultos de un directorio, en el entorno grafico
 
 cat /etc/issue.net  //Para saber la versión de SO que tenemos.  
 
+!! // Repetir el ultimo comando ejecutado
+
+comando && comando && comando... // Ejecucion multiple de comandos
+
+Ctrl + u // Cortar el contenido de la linea de comandos desde la posicion del cursor hasta el principio
+
+Ctrl + k // Cortar el contenido de la linea de comandos desde la posicion del cursor hasta el final
+
+Ctrl + t // Intercambiar de posicion las letras que estan a cada lado del cursor
+
+Alt + d // Borrar palabra
+
 lsb_release -a //También tenemos un comando que nos va a dar muchos más detalles 
 
 uname // Muestra información del sistema
 
-uname -a // Ver mi version de Kernel, recomendable la otra
+uname -a // Version de Kernel
 
 uname -mrs // Saber mi version de Kernel especifica, recomendada
 
@@ -146,6 +158,10 @@ vmstat // Muestra el estado de la memoria virtual
 
 pstree // Muestra los procesos del sistema en forma de arbol
 
+gnome-screenshot // Captura de pantalla del escritorio
+
+pdfimages fichero.pdf nombre_imagene // Extrae las imagenes de un .pdf
+
 du // Muestra una lista de los directorios y el espacio que ocupan en el disco
 
 du * // Muestra todos directorios y ficheros y el espacio que ocupan en el disco
@@ -217,6 +233,8 @@ no hay que especificar las rutas completas de las carpetas involucradas
 
 cp nombre_fichero.xxx nombre_fichero2.xxx // Hacer una copia de un fichero y cambiarle el nombre.
 
+cp -r carpeta1 carpeta2 // Hacer una copia de un directorio y cambiarle el nombre.
+
 mv // Mover un fichero o carpeta y/o cambiar su nombre
 
 mv /home/carpeta/archivo1.txt /home/carpeta2/ // Mover una carpeta o archivo especificando el directorio
@@ -285,6 +303,8 @@ vim nombre_archivo.xxx // Nos aparecerá una ventana en negro, donde nos aparece
 
 :wq! // Guardar y salir, esta accion aplica a un fichero ya creado, que estemos editando.
 
+:f // Para saber el nombre y extensión del fichero abierto.
+
 u // Deshacer el ultimo cambio
 
 Ctrl + R // Rehacer el ultimo cambio
@@ -350,6 +370,10 @@ aptitude remove Nombre_paquete // Elimina o Desinstala el paquete
 
 aptitude purge Nombre_Paquete //Elimina el paquete y sus archivos de configuracion
 
+aptitude download nombre_paquete // Descargar el paquete en el directorio
+
+aptitude reinstall nombre_paquete // Reinstalar un paquete
+
 ####################################################
 ##### Saber la version instalada de un paquete #####
 ####################################################
@@ -379,7 +403,10 @@ y la carpeta que vamos a comprimir
 
 tar -cvf paquete.tar archivo.txt // Creara un paquete con el nombre que le dimos y contiene el archivo.txt 
 
-tar -xvf paquete.tar // Descomprimir un paquete 
+tar -xvf paquete.tar // Descomprimir un paquete
+
+--- Descomprimir archivo .tar.bz2 ---
+tar -xjvf example.tar.bz2
 
 ########## APACHE ##########
 
@@ -775,6 +802,27 @@ echo "mensaje" > /dev/pts/2 // Enviar mensaje a traves del shell, se debe especi
 el usuario, se puede hacer localmente para probar, enviando mensajes entre dos shells
 abiertos. con (who) veremos la identificacion de cada shell.
 
+
+--- COPIAR ARCHIVOS DE LOCAL A SERVIDOR ---
+Si queremos subir el archivo archivo.txt de nuestro ordenador a la carpeta /home/usuario del servidor, hacemos lo siguiente:
+
+$ scp archivo.txt usuario@dominio.com:/home/usuario // Se especifica el archivo a copia, luego el servidor y luego el directorio 
+en el servidor donde copiaremos el archivo
+
+--- COPIAR ARCHIVOS DE SERVIDOR A LOCAL ---
+Si queremos copiar el fichero archivo.txt del servidor a nuestro ordenador en la carpeta Documentos, hacemos lo siguiente:
+
+$ scp usuario@dominio.com:/home/usuario/archivo.txt /home/usuario/Documentos // Especificamos el servidor, luego la ruta y el archivo a copiar y luego el directorio local donde sera copiado el archivo.
+
+--- COPIAR ARCHIVOS DE SERVIDOR A SERVIDOR ---
+
+$ scp usuario1@dominio1.com:/home/usuario1/archivo.txt usuario2@dominio2.com:/home/usuario2/
+
+--- COPIAR UN DIRECTORIO COMPLETO ---
+Para copiar un directorio completo de mi ordenador al servidor, por ejemplo /home/mario/carpeta a /home/usuario, añadimos un -r en el comando:
+
+$ scp -r /home/mario/carpeta usuario@dominio.com:/home/usuario
+
 ###############################################
 ########## Programación Shell-Script ##########
 ###############################################
@@ -877,4 +925,10 @@ $ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con e
 digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando
 
 ~ // Para sacarlo usar AvPag en la consola
+
+aptitude search build-essential // Este paquete es esencial para crear y manejar paquetes debian, 
+por consiguiente para la creación, compilacion e instalación de programas en debian, ubuntu etc.
+Tambien se instala cuando se va a desarrollar con c y c++ puesto que la instalacion incluye
+los compiladores y las librerias necesarias para comenzar a trabajar en estos lenguajes.
+
 
