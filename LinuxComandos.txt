@@ -387,9 +387,12 @@ Ejemplo:
     ruby --version
 
 
-########################################
-########## Comprimir archivos ##########
-########################################
+#####################################################
+########## Comprimir/Descomprimir archivos ##########
+#####################################################
+
+paquete.tar
+paquete.tar.gz
 
 tar -cvf paquete.tar carpeta/ // Le damos los parametros de compresion, asi como el nombre del paquete
 y la carpeta que vamos a comprimir
@@ -407,6 +410,34 @@ tar -xvf paquete.tar // Descomprimir un paquete
 
 --- Descomprimir archivo .tar.bz2 ---
 tar -xjvf example.tar.bz2
+
+--- Descomprimir archivo.rar ---
+//Necesitamos instalar unrar
+aptitude search unrar
+
+Si no lo encuentra debemos bajar el source de http://www.unrarlib.org/
+Nos bajara unrarsrc-3.7.8.tar.gz // Descomprimimos, nos dejara la carpeta (unrar)
+luego: 
+$ cd unrar
+$ make -f makefile.unix
+$ install -v -m755 unrar /usr/bin // Como root
+
+// Ya deberíamos poder descomprimir .rar
+
+Uso: unrar [OPTION...] ARCHIVE [FILE...] [DESTINATION]
+-x, --extract              Extract files from archive (default)
+-t, --list                 List files in archive
+-f, --force                Overwrite files when extracting
+    --extract-newer        Only extract newer files from the archive
+    --extract-no-paths     Don't create directories while extracting
+-p, --password             Decrypt archive using a password
+-?, --help                 Give this help list
+    --usage                Give a short usage message
+-V, --version              Print program version
+
+ejemplo:
+$ unrar x archivo.rar // Para descomprimir un fichero .rar
+$ unrar x archivo.rar /home/user/carpeta // Para descomprimir un fichero .rar dando la ruta
 
 ########## APACHE ##########
 
