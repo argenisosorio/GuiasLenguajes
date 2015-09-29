@@ -213,22 +213,19 @@ config/routes.rb #Es el archivo de enrutamiento de la aplicacion, le dice a rail
 get 'welcome/index' #Que esta asociado al controlador (welcome) de la accion (index)
 #lo cual indica que en 127.0.0.1:3000/welcome/index se encuentra la vista del controlador que creamos
 
+#Por defecto rails carga como pagina inicial la "Welcome aboard..." en el 127.0.0.1:3000
+#Para que rails carge por defecto nuestra vista modificada vamos al fichero
+config/routes.rb #y descomentamos la linea del
+root 'welcome#index' # Ahora rails cargará nuestra vista por defecto
 
+#Supongamos que hemos credo dos controladores con sus respectivas vistas, cuyas
+#rutas de ven reflejadas en el config/router.rb.
+get 'welcome/index'
+    y
+get 'welcome2/index2'
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#Si queremos que la vista principal sea ahora welcome2/index2 en vez de la primera entonces:
+#en config/routes:
+root 'welcomei2#index2' # Ahora rails cargará nuestra vista 2 por defecto
 
 

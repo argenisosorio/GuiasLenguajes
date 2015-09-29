@@ -448,7 +448,9 @@ ejemplo:
 $ unrar x archivo.rar // Para descomprimir un fichero .rar
 $ unrar x archivo.rar /home/user/carpeta // Para descomprimir un fichero .rar dando la ruta
 
-########## APACHE ##########
+#####################################
+########## Instalar APACHE ##########
+#####################################
 
 sudo apt-get install apache2 // Instalar servidor apache, 127.0.0.1 o LocalHost es para iniciarlo
 
@@ -819,6 +821,50 @@ $ lsvirtualenv // Para listar los entornos virtuales creados o disponibles.
 
 $ rmvirtualenv nombre_virtualenv // Remover o borrar un entorno virtual.
 
+// Los entornos virtuales se crean en el directorio /home/user/.virtualenvs
+
+########################
+##### Paquetes PIP #####
+########################
+
+// Para desarrollar software con rapidez y calidad, es imprescindible utilizar paquetes externos que ayuden
+con parte de la funcionalidad que se desea implementar. En el ambiente Python esto no es la excepción.
+
+// Para solventar ésta necesidad, la comunidad Python ha puesto convenientemente a disposición de los desarrolladores
+un repositorio de paquetes de fácil acceso llamado PyPi. Solo es necesario ejecutar un comando en la terminal
+para poder instalar el paquete Python que necesitemos. Incluso es posible instalar paquetes que no se encuentren
+en el mencionado repositorio.
+
+// Para descargar paquetes del repositorio PyPi se pueden utilizar varias herramientas, pero en este caso se
+va a usar pip. Es necesario instalar esta herramienta en el sistema en caso de no estar disponible, antes
+de poder instalar un paquete Python.
+
+// El comando pip equivale al apt-get de Debian pero para paquetes Python.
+
+$ aptitude install python−pip python−dev python-setuptools // Instalamos PIP y otros necesarios
+
+// Una vez instalado ya podremos instalar paquetes de Python a traves de pip ejemplo:
+
+$ pip install django // Nos instalara la ultima version de Django disponible en los paquetes pi
+
+// Tambien es posible crear ficheros que contengan rutinas para automatizar la instalacion
+de varios paquetes ejemplo:
+
+Creamos un requirements.txt y dentro escribimos como ejemplo:
+django==1.5.12
+pillow==2.4.0
+Geraldo==0.4.17
+
+// Luego podemos ejecutar un pip install sobre el fichero e instalará lo que contenga:
+
+pip install −r requirements.txt
+
+// Dentro de los .virtualenvs, dentro de nuestro entorno virtual en
+lib/python2.7/site-packages podemos ver que se instalaron los paquetes de requirements.txt
+de no ser así hay que revisar el fichero o el nombre de los paquetes a instalar, etc.
+
+$ pip search nombre_paquete // Buscar un paquete.
+
 #############################################
 ########## Conexion remota con SSH ##########
 #############################################
@@ -957,6 +1003,35 @@ PING google.com (216.58.192.110) 56(84) bytes of data.
 3 packets transmitted, 2 received, 33% packet loss, time 2001ms
 rtt min/avg/max/mdev = 69.645665/70.00475/470.48645/0.010 ms
 
+########################################
+##### Compilar e instalar paquetes #####
+########################################
+
+$ aptitude search build-essential // Este paquete es esencial para crear y manejar paquetes debian,
+por consiguiente para la creación, compilacion e instalación de programas en debian, ubuntu etc.
+Tambien se instala cuando se va a desarrollar con c y c++ puesto que la instalacion incluye
+los compiladores y las librerias necesarias para comenzar a trabajar en estos lenguajes.
+
+Descargámos el código fuente del programa que queremos compilar e instalar.
+Normalmente lo encontraremos en un archivo comprimido, con extensión tar.bz2. 
+Así que tendrás que descomprimirlo escribiendo en la consola:
+
+$ tar xvzf paquete.tar.gz (o ver sección de Comprimir/Descomprimir archivos arriba)
+
+//Ahora vamos al directorio donde hemos extraído el contenido del paquete:
+$ cd path_del_paquete
+
+// Confguramos el modo de compilación con:
+./configure
+
+Luego escribimos:
+make
+
+Y finalmente, instalamos con:
+make install
+
+// Si no hay errores ya deberíamos poder usar el programa instalado.
+
 ##############
 ### Otros: ###
 ##############
@@ -965,10 +1040,4 @@ $ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con e
 digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando
 
 ~ // Para sacarlo usar AvPag en la consola
-
-aptitude search build-essential // Este paquete es esencial para crear y manejar paquetes debian, 
-por consiguiente para la creación, compilacion e instalación de programas en debian, ubuntu etc.
-Tambien se instala cuando se va a desarrollar con c y c++ puesto que la instalacion incluye
-los compiladores y las librerias necesarias para comenzar a trabajar en estos lenguajes.
-
 
