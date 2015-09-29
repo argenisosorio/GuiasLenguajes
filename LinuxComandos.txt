@@ -33,6 +33,8 @@ cat /etc/*-release // Ver info del sistema (Probado en Debian GNU/Linux 7 wheezy
 ifconfig // Siendo root, permite desplegar numerosos parámetros de las interfaces de red residentes  en el núcleo,
 como la dirección IP (dinámica o estática), o la máscara de red entre otros.
 
+user@debian:/media$ umount nombre_device // Desmontar un dispositivo, pendrive, disco externo etc.
+
 who // Muestra usuarios conectados a nuestra máquina, tambien usado para ver las conexiones entrantes de un servidor
 
 Ejemplo:
@@ -93,6 +95,10 @@ ls -R // Listar los directorios y subdirectorios asi como ficehros de un directo
 dentro de donde se encuentre situado
 
 cd // Cambiar de directorio
+
+cd .. // retroceder un directorio
+
+cd ../../ // Retroceder dos directorios (../) representa un directorio
 
 mkdir // Crear carpeta
 
@@ -170,6 +176,9 @@ ping xxx // Donde xxx es el nombre de un host al cual enviaremos paquetes y comp
     ping http://www.google.com.ve // Si hay conexion a internet enviara paquetes que seran recibidos, de lo contrario dara un error.
 
 glxgears // Siendo root, Ver si hay aceleracion grafica en la maquina, muestra unos engranajes de colores rodando, si es así, está correcta la instalacion del video.
+
+xrandr // Detectar las resoluciones de pantalla disponibles del sistema así como los hz correspondientes, la que
+tenga (*) es la que está siendo usada.
 
 adduser nombre_de_usuario // Como root, Agregar un usuario nuevo al sistema, una nueva sesion, nos pedira agregar el 
 nombre de usuario y asignarle contraseña, la clave de root es la misma para todas las sesiones.
@@ -908,7 +917,7 @@ rsync -P -r /directorio/carpeta1 /directorio/carpeta2 // -r para copiar director
 se ponen las dos rutas: origen y destino separados por un espacio.
 
 ##################################
-##### Crer alias de comandos #####
+##### Crear alias de comandos #####
 ##################################
 
 Un alias es una palabra o frase que se asignara para 

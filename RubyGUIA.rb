@@ -1,5 +1,15 @@
 #### Guía Ruby by dM ####
 
+# Comentarios de línea en Ruby
+
+=begin
+   Comentarios de multiple linea 
+   en lengua de programacion
+   Ruby
+=end
+
+#------------------------------
+
 #Instalación en Debian:
  aptitude install ruby 
 

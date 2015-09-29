@@ -872,6 +872,269 @@ console.log(miPais.substring(0,3)); //Usá console.log para mostrar las tres pri
 
 -------------------------------------
 
+<!-- Otros tooltip´s de CSS avanzado -->
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+<style type="text/css">  
+  html {
+    box-sizing: border-box;
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: inherit;
+  }
+
+  body {
+    margin: 64px auto;
+    text-align: center;
+    font-size: 100%;
+    max-width: 640px;
+    width: 94%;
+  }
+
+  a:hover {
+    text-decoration: none;
+  }
+
+  header,
+  .demo,
+  .demo p {
+    margin: 4em 0;
+    text-align: center;
+  }
+
+  /**
+   * Tooltip Styles
+   */
+
+  /* Base styles for the element that has a tooltip */
+  [data-tooltip],
+  .tooltip {
+    position: relative;
+    cursor: pointer;
+  }
+
+  /* Base styles for the entire tooltip */
+  [data-tooltip]:before,
+  [data-tooltip]:after,
+  .tooltip:before,
+  .tooltip:after {
+    position: absolute;
+    visibility: hidden;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+    opacity: 0;
+    -webkit-transition: 
+        opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out,
+          -webkit-transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+      -moz-transition:    
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out,
+          -moz-transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+      transition:         
+          opacity 0.2s ease-in-out,
+          visibility 0.2s ease-in-out,
+          transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
+    -webkit-transform: translate3d(0, 0, 0);
+    -moz-transform:    translate3d(0, 0, 0);
+    transform:         translate3d(0, 0, 0);
+    pointer-events: none;
+  }
+
+  /* Show the entire tooltip on hover and focus */
+  [data-tooltip]:hover:before,
+  [data-tooltip]:hover:after,
+  [data-tooltip]:focus:before,
+  [data-tooltip]:focus:after,
+  .tooltip:hover:before,
+  .tooltip:hover:after,
+  .tooltip:focus:before,
+  .tooltip:focus:after {
+    visibility: visible;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+    opacity: 1;
+  }
+
+  /* Base styles for the tooltip's directional arrow */
+  .tooltip:before,
+  [data-tooltip]:before {
+    z-index: 1001;
+    border: 6px solid transparent;
+    background: transparent;
+    content: "";
+  }
+
+  /* Base styles for the tooltip's content area */
+  .tooltip:after,
+  [data-tooltip]:after {
+    z-index: 1000;
+    padding: 8px;
+    width: 160px;
+    background-color: #000;
+    background-color: hsla(0, 0%, 20%, 0.9);
+    color: #fff;
+    content: attr(data-tooltip);
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+  /* Directions */
+
+  /* Top (default) */
+  [data-tooltip]:before,
+  [data-tooltip]:after,
+  .tooltip:before,
+  .tooltip:after,
+  .tooltip-top:before,
+  .tooltip-top:after {
+    bottom: 100%;
+    left: 50%;
+  }
+
+  [data-tooltip]:before,
+  .tooltip:before,
+  .tooltip-top:before {
+    margin-left: -6px;
+    margin-bottom: -12px;
+    border-top-color: #000;
+    border-top-color: hsla(0, 0%, 20%, 0.9);
+  }
+
+  /* Horizontally align top/bottom tooltips */
+  [data-tooltip]:after,
+  .tooltip:after,
+  .tooltip-top:after {
+    margin-left: -80px;
+  }
+
+  [data-tooltip]:hover:before,
+  [data-tooltip]:hover:after,
+  [data-tooltip]:focus:before,
+  [data-tooltip]:focus:after,
+  .tooltip:hover:before,
+  .tooltip:hover:after,
+  .tooltip:focus:before,
+  .tooltip:focus:after,
+  .tooltip-top:hover:before,
+  .tooltip-top:hover:after,
+  .tooltip-top:focus:before,
+  .tooltip-top:focus:after {
+    -webkit-transform: translateY(-12px);
+    -moz-transform:    translateY(-12px);
+    transform:         translateY(-12px); 
+  }
+
+  /* Left */
+  .tooltip-left:before,
+  .tooltip-left:after {
+    right: 100%;
+    bottom: 50%;
+    left: auto;
+  }
+
+  .tooltip-left:before {
+    margin-left: 0;
+    margin-right: -12px;
+    margin-bottom: 0;
+    border-top-color: transparent;
+    border-left-color: #000;
+    border-left-color: hsla(0, 0%, 20%, 0.9);
+  }
+
+  .tooltip-left:hover:before,
+  .tooltip-left:hover:after,
+  .tooltip-left:focus:before,
+  .tooltip-left:focus:after {
+    -webkit-transform: translateX(-12px);
+    -moz-transform:    translateX(-12px);
+    transform:         translateX(-12px); 
+  }
+
+  /* Bottom */
+  .tooltip-bottom:before,
+  .tooltip-bottom:after {
+    top: 100%;
+    bottom: auto;
+    left: 50%;
+  }
+
+  .tooltip-bottom:before {
+    margin-top: -12px;
+    margin-bottom: 0;
+    border-top-color: transparent;
+    border-bottom-color: #000;
+    border-bottom-color: hsla(0, 0%, 20%, 0.9);
+  }
+
+  .tooltip-bottom:hover:before,
+  .tooltip-bottom:hover:after,
+  .tooltip-bottom:focus:before,
+  .tooltip-bottom:focus:after {
+    -webkit-transform: translateY(12px);
+    -moz-transform:    translateY(12px);
+    transform:         translateY(12px); 
+  }
+
+  /* Right */
+  .tooltip-right:before,
+  .tooltip-right:after {
+    bottom: 50%;
+    left: 100%;
+  }
+
+  .tooltip-right:before {
+    margin-bottom: 0;
+    margin-left: -12px;
+    border-top-color: transparent;
+    border-right-color: #000;
+    border-right-color: hsla(0, 0%, 20%, 0.9);
+  }
+
+  .tooltip-right:hover:before,
+  .tooltip-right:hover:after,
+  .tooltip-right:focus:before,
+  .tooltip-right:focus:after {
+    -webkit-transform: translateX(12px);
+    -moz-transform:    translateX(12px);
+    transform:         translateX(12px); 
+  }
+
+  /* Move directional arrows down a bit for left/right tooltips */
+  .tooltip-left:before,
+  .tooltip-right:before {
+    top: 3px;
+  }
+
+  /* Vertically center tooltip content for left/right tooltips */
+  .tooltip-left:after,
+  .tooltip-right:after {
+    margin-left: 0;
+    margin-bottom: -16px;
+  }    
+</style>
+</head>
+<body>
+    <center>      
+      
+        <p>Data attribute only <a href="#" data-tooltip="I’m the tooltip text">Tooltip</a></p>
+        <p><code>.toolbar</code> <a href="#" class="tooltip" data-tooltip="I’m the tooltip text.">Tooltip</a></p>
+        <p><code>.toolbar-top</code> <a href="#" class="tooltip-top" data-tooltip="I’m the tooltip text.">Tooltip</a></p>
+        <p><code>.toolbar-right</code> <a href="#" class="tooltip-right" data-tooltip="I’m the tooltip text.">Tooltip</a></p>
+        <p><code>.toolbar-bottom</code> <a href="#" class="tooltip-bottom" data-tooltip="I’m the tooltip text.">Tooltip</a><p>
+        <p><a href="#" class="tooltip-left" data-tooltip="I’m the tooltip text.">Tooltip</a> <code>.toolbar-left</code></p>
+      
+    </center>
+</body>
+</html>
+
+-------------------------------------
+
 <!-- Popover, al dar click muestra una pestaña con una cabecera y un cuerpo -->
 <!DOCTYPE html>
 <html lang="en">
@@ -1400,6 +1663,106 @@ $(document).ready(function(){
     </div>
 </body>
 </html>
+
+-------------------------------------
+
+<!-- Agregar estilos CSS a elementos HTML con JS -->
+<html>
+<head>    
+    <title>Page Title</title>
+    <meta charset="UTF-8">
+    <script>
+        function x() {
+            document.getElementById("p2").style.color = "blue";
+            document.getElementById("p2").style.fontFamily = "Arial";
+            document.getElementById("p2").style.fontSize = "larger";
+            //alert("sssssssss");
+        }
+    </script>    
+    
+</head>
+
+<body>    
+    <p id="p1">Hello World!</p>
+    <p id="p2">Hello World!</p>
+    <br />
+    <input type="button" onclick="x()" value="Activar Función">
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Estilos CSS con JS inscristados en elementos HTML -->
+<html>
+<head>    
+    <title>Page Title</title>
+    <meta charset="UTF-8">    
+    <style type="text/css">
+    div {
+        border: ridge 1px;
+    }
+    </style>
+</head>
+<body>
+    <a href="javascript:void(document.body.style.fontSize='20px')">Aumenta el tamaño de la fuente de toda la página</a> <br />
+    <a href="javascript:void(document.body.style.fontSize='16px')">Tamaño normal</a> <br />
+    <a href="javascript:void(document.body.style.backgroundColor='yellow')">Cambia el color del fondo</a> <br />
+    <a href="javascript:void(document.body.style.backgroundColor='#CDCDCD')">Color normal</a> <br />
+    <div id="ejemplo">
+        <a href="javascript:void(document.getElementById('ejemplo').style.fontSize='20px')">Aumenta el tamaño de la fuente solo de esta sección</a> <br />
+        <a href="javascript:void(document.getElementById('ejemplo').style.fontSize='16px')">Tamaño normal</a> <br />
+        <a href="javascript:void(document.getElementById('ejemplo').style.backgroundColor='yellow')">Cambia el color del fondo de esta sección</a> <br />
+        <a href="javascript:void(document.getElementById('ejemplo').style.backgroundColor='white')">Color normal</a> <br />    
+    </div>
+</body>
+</html>
+
+
+-------------------------------------
+
+<!-- Agregadndo estilos CSS con funciones JS en elementos HTML -->
+<html>
+<head>
+    <meta charset="utf-8">
+    <style type="text/css">
+     label {
+        color: maroon;
+        display:block;
+        padding:5px;
+    }
+    </style>
+    <script type="text/javascript">
+        function cambiarAspecto(elemento) {
+            var elementosObtenidos = document.getElementsByTagName(elemento);
+            elementosObtenidos[0].style.backgroundColor = '#FF6633';
+            elementosObtenidos[1].style.backgroundColor = '#FF9933';
+            elementosObtenidos[2].style.backgroundColor = '#FFCC33';
+        }
+    </script>
+</head>
+<body>
+<div style="width:450px;">
+    <form name ="formularioContacto" class="formularioTipo1" method="get" action="accion.html" onclick="cambiarAspecto('label')">
+        <p>Si quieres contactar con nosotros envíanos este formulario relleno:</p>
+        <label for="nombre"><span>Nombre:</span> <input id="nombre" type="text" name="nombre" /></label>
+        <label for="apellidos"><span>Apellidos:</span> <input id="apellidos" type="text" name="apellidos" /></label>
+        <label for="email"><span>Correo electrónico:</span> <input id="email" type="text" name="email" /></label>
+        <label>
+            <input type="submit" value="Enviar">
+            <input type="reset" value="Cancelar">
+        </label>
+    </form>
+</div>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
 
 -------------------------------------
 
