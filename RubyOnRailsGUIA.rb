@@ -1,5 +1,11 @@
 ### Guía Ruby on Rails by dM ####
 
+################################################
+### Probados en: Debian GNU/Linux 7 (wheezy) ###
+### ruby 2.2.1p85 ##############################
+### Rails 4.2.4 ################################
+################################################
+
 --- Ruby on Rails ---
 #Es un framework de aplicaciones web de código abierto escrito en Ruby, siguiendo el paradigma de la arquitectura
 #Modelo Vista Controlador (MVC). Trata de combinar la simplicidad con la posibilidad de desarrollar aplicaciones
@@ -79,9 +85,11 @@ $ sqlite3 --version
 $ gem install rails
 
 #-Comprobar la correcta instalacion de Rails
-$ rails --version
+$ rails --version 
+	ó
+$ rails -v
 
-#-Instalar bundle, recorrerá todas las dependencias de gemas de la aplicación y las instalarái.
+#-Instalar bundle, recorrerá todas las dependencias de gemas de la aplicación y las instalará.
 #Deberíamos hacerlo cada vez que creemos una nueva aplicación para asegurarnos de que tenemos las gemas
 #correctas instaladas, y también deberíamos hacerlo cada vez que desplegamos una aplicación para que se
 #instalen las gemas correctas en el servidor.
@@ -143,6 +151,12 @@ vendor/ #Lugar para código de terceros. En una típica aplicación Rails, ésta
 
 -------------------
 
+#Ejemplos prácticos:
+
+$ rails new universidad # Creamos la aplicacion de prueba
+
+$ cd universidad # Entramos en el directorio creado
+
 #Crear una tabla Empleados con algunos campos
 $ rails g scaffold empleado Nombre:string direccion:string telefono:string fechadeEntrada:date 
 
@@ -163,7 +177,9 @@ localhost:333/Empleados
 	ó
 localhost:333/Alumnos
 
-@@@ Creando una aplicacion de prueba @@@
+--- Otro ejemplo--- 
+
+#Creando una aplicacion de prueba
 
 $ rails new blog
 
@@ -228,4 +244,78 @@ get 'welcome2/index2'
 #en config/routes:
 root 'welcomei2#index2' # Ahora rails cargará nuestra vista 2 por defecto
 
+--- Creando aplicacion blog (controladores, vistas y rutas a mano)  ---
 
+$ rails new blog #Creamos nuestra aplicacion
+
+$ cd blog # Entramos en el directorio de la aplicacion
+
+$ rails server # Iniciamos el servidor de pruebas
+
+$ bin/rails g controller articulos #Creamos el controlador (articulos)
+#nos generara un nuevo controlador en el fichero:
+  blog/app/controllers/articulos_controller.rb
+#así como como un directorio para guardar las vistas de nuestra aplicacion
+#blog en:
+  blog/app/views/articulos
+
+#Si abrimos el
+  blog/app/controllers/articulos_controller.rb
+#veremos que el controlador de nuestra aplicacion blog esta vacío:
+
+class ArticulosController < ApplicationController
+end
+
+#Un controlador es una clase que hereda de (ApplicationController) dentro
+#de la clase Articulos es donde definiremos los metodos de nuestra aplicación
+
+#Definimos un nuevo metodo en:
+  blog/app/controllers/articulos_controller.rb
+#El fichero nos quedaría así:
+
+class ArticulosController < ApplicationController
+  def nuevo
+  end
+end
+
+#Sabemos que los controladores van asociados a una vista que mostrará
+#el contenido que queremos, por ellos debemos crear esa vista,
+#vamos a:
+  blog/app/views/articulos
+#Creamos un nuevo fichero:
+  nuevo.html.erb
+#La extensión de este nombre de archivo es muy importante: la primera extensión define el formato
+#de la plantilla, y la segunda extensión el manejador de plantilla que se usará.
+#Y pondremos un texto de ejemplo:
+
+<div algin="center">
+  <h1>Nuevo artículo</h1>
+</div>
+
+#Guardamos, ahora esta sera la vista que se mostrara cuando hagamos uso del controlador creado
+
+#Solo resta agregar la ruta de nuestro controlador y nuestra vista en:
+  blog/config/routes.rb
+
+#Abrimos el routes.rb y agregamos en la segunda linea la ruta de nuestro
+#controlador, nos quedaría así:
+
+Rails.application.routes.draw do
+  get 'articulos/nuevo'
+  # The priority is based upon order of creation: first created -> highest priority.
+  # See how all your routes lay out with "rake routes"....... etc...
+
+#Como vemos, le hemos dicho que a rails que esa será la ruta que ejecutará un controlador
+#llamado (articulo) cuya vista es (nuevo) por lo que si visitamos:
+
+  127.0.0.1:3000/articulos/nuevo #Deberíamos visualizar la plantilla que creamos
+
+#Por defecto rails carga el index 'Welcome aboard...' en el 127.0.0.1:3000, si queremos
+#que nuestra vista creada se cargue predeterminadamente buscamos en:
+   blog/config/routes.rb 
+#la linea root que esta comentada: # root 'welcome#index'
+#la descomentamos y le damos la nueva ruta que va a nuestra vista para que se cargue por defecto:
+
+  root 'articulos/nuevoi'
+
+#Guardamos y si vamos al localhost:3000 deberíamos ver nuestra vista cargada por defecto.
