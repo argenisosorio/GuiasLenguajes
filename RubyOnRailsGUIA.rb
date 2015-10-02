@@ -290,6 +290,36 @@ Son las <%= @time %>
 #En Ruby se definen las variables de una clase con @ al comienzo del nombre.
 #lo que nos permite hacer llamados de variables y funciones en la vista
 
+### Declarando variables en el controlador e imprimiendolas en la vista ### 
+
+#Basándonos en el ejemplo de mostrar el saludo y la hora, ahora declararemos unas variables
+#y le daremos valores para imprimirlas en la vista, ejemplo:
+
+    prueba/app/controller/saludo_controller.rb
+
+#Nos quedará así:
+class SaludoController < ApplicationController
+  def index
+    #t = Time.now
+    #@time = t.strftime('%H:%m:%S')
+    @nombre = "Maria"
+    @apellido = "Sharapova" 
+    @cedula = 12345678
+    @email = "mariasha@fisk.com"
+  end
+end
+
+    prueba/app/views/saludo/index.html.erb
+
+#Nos queda así:
+<h1>Hola, Rails!</h1>
+<b>Nombre:</b> <%= @nombre %> <br />
+<b>Apellido:</b> <%= @apellido%> <br />
+<b>Cedula:</b> <%= @cedula %> <br />
+<b>Email:</b> <%= @email %>
+
+#Guardamos y ya podremos ver las variables impresas en la vista
+
 --- Creando aplicacion blog (controladores, vistas y rutas a mano)  ---
 
 $ rails new blog #Creamos nuestra aplicacion
