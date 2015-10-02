@@ -2,63 +2,108 @@
 
 **********TEORIA**********
 
--Framework de desarrollo web de codigo abierto escrito en Python
-(todo lo que se haga dentro de Django sera en Python)
+#-Framework de desarrollo web de codigo abierto escrito en Python
+#(todo lo que se haga dentro de Django sera en Python)
 
--Permite construir aplicaciones web mas rapido y con menos codigo.
+#-Permite construir aplicaciones web mas rapido y con menos codigo.
 
--El un proyecto en Django se divide en varias partes llamadas aplicaciones, el conjunto
-esas aplicaciones genera un proyecto general en Django.
+#-El un proyecto en Django se divide en varias partes llamadas aplicaciones, el conjunto
+#esas aplicaciones genera un proyecto general en Django.
 
--Django se basa en la reutilizacion de el codigo que ya hemos hecho,
-en tratar de no repetir y volver a escribir ese codigo. No duplcaremos
-el codigo.
+#-Django se basa en la reutilizacion de el codigo que ya hemos hecho,
+#en tratar de no repetir y volver a escribir ese codigo. No duplcaremos
+#el codigo.
 
--Cuenta con su propia ORM (Object relational maping)  
-Quiere decir que nuestra base de datos relacional que ya conocemos
-la va a transformar a una base de datos orientada a objetos
-Las tablas que soliamos tener vamos a verlas en formas de clases
-y las consultas en SQL seran a nivel de Python.
+#-Cuenta con su propia ORM (Object relational maping)  
+#Quiere decir que nuestra base de datos relacional que ya conocemos
+#la va a transformar a una base de datos orientada a objetos
+#Las tablas que soliamos tener vamos a verlas en formas de clases
+#y las consultas en SQL seran a nivel de Python.
 
--Django trae su propio administrador por defecto:
-Podemos gestionar todos los datos de nuestro proyecto
-con el administrador.
+#-Django trae su propio administrador por defecto:
+#Podemos gestionar todos los datos de nuestro proyecto
+#con el administrador.
 
 **********PATRON DE DESARROLLO MVT**********
 
-***Modelo-vista-controlador:
--Modelo: Se encarga de manipular toda la informacion
-de nuestro proyecto que este en nuestras bases de datos.
-Vista: Es la que decide como es que vamos a mostrar toda
-esta informacion almacenada.
--Controlador: Es el que se encarga de hacer
-la comunicacion entre el modelo y las vista
+#***Modelo-vista-controlador:
+#-Modelo: Se encarga de manipular toda la informacion
+#de nuestro proyecto que este en nuestras bases de datos.
+#Vista: Es la que decide como es que vamos a mostrar toda
+#esta informacion almacenada.
+#-Controlador: Es el que se encarga de hacer
+#la comunicacion entre el modelo y las vista
 
-***Modelo-vista-template:
-(Ahora Django hara el papel de el controlador, que se encargaba
-de la comunicacion de los modelos y las vistas)
--Modelo: Se encarga de manipular toda la informacion
-de nuestro proyecto que este en nuestras bases de datos.
--Vista: Es la que se encarga de decir que informacion vamos
-a mostrar y en que template.
--Template: Es el que se encarga de coger toda la informacion, organizarla
-y ver como se va a mostrar.
+#***Modelo-vista-template:
+#(Ahora Django hara el papel de el controlador, que se encargaba
+#de la comunicacion de los modelos y las vistas)
+#-Modelo: Se encarga de manipular toda la informacion
+#de nuestro proyecto que este en nuestras bases de datos.
+#-Vista: Es la que se encarga de decir que informacion vamos
+#a mostrar y en que template.
+#-Template: Es el que se encarga de coger toda la informacion, organizarla
+#y ver como se va a mostrar.
 
 **********Instalar Django*********
 
--Django está escrito completamente en Python
-por lo que el primer paso en la instalación de Django 
-es el asegurarse de que Python esta instalado.
+#-Django está escrito completamente en Python
+#por lo que el primer paso en la instalación de Django 
+#es el asegurarse de que Python esta instalado.
 
--Bajar Django de: http://www.python.org/download/
-Ejemplo: Django-1.5.12.tar.gz
+#-Bajar Django de: http://www.python.org/download/
+#Ejemplo: Django-1.5.12.tar.gz
 
--Descomprimir el archivo: Nos dejara una carpeta
-Ejemplo: Django-1.5.12
+#-Descomprimir el archivo: Nos dejara una carpeta
+#Ejemplo: Django-1.5.12
 
--Dentro de (Django-1.5.12) esta el archivo setup.py
+#-Dentro de (Django-1.5.12) esta el archivo setup.py
 
--Ejecutar: sudo python setup.py install #Estando en el directorio del archivo
+#-Ejecutar: sudo python setup.py install #Estando en el directorio del archivo
+
+#Tambien podemos realizar la instalación desde PIP que es un repositorio
+#de paquetes python facil de manejar
+
+########################
+##### Paquetes PIP #####
+########################
+
+Para desarrollar software con rapidez y calidad, es imprescindible utilizar paquetes externos que ayuden
+con parte de la funcionalidad que se desea implementar. En el ambiente Python esto no es la excepción.
+
+// Para solventar ésta necesidad, la comunidad Python ha puesto convenientemente a disposición de los desarrolladores
+un repositorio de paquetes de fácil acceso llamado PyPi. Solo es necesario ejecutar un comando en la terminal
+para poder instalar el paquete Python que necesitemos. Incluso es posible instalar paquetes que no se encuentren
+en el mencionado repositorio.
+
+// Para descargar paquetes del repositorio PyPi se pueden utilizar varias herramientas, pero en este caso se
+va a usar pip. Es necesario instalar esta herramienta en el sistema en caso de no estar disponible, antes
+de poder instalar un paquete Python.
+
+// El comando pip equivale al apt-get de Debian pero para paquetes Python.
+
+$ aptitude install python−pip python−dev python-setuptools // Instalamos PIP y otros necesarios
+
+// Una vez instalado ya podremos instalar paquetes de Python a traves de pip ejemplo:
+
+$ pip install django // Nos instalara la ultima version de Django disponible en los paquetes pi
+
+// Tambien es posible crear ficheros que contengan rutinas para automatizar la instalacion
+de varios paquetes ejemplo:
+
+Creamos un requirements.txt y dentro escribimos como ejemplo:
+django==1.5.12
+pillow==2.4.0
+Geraldo==0.4.17
+
+// Luego podemos ejecutar un pip install sobre el fichero e instalará lo que contenga:
+
+pip install −r requirements.txt
+
+// Dentro de los .virtualenvs, dentro de nuestro entorno virtual en
+lib/python2.7/site-packages podemos ver que se instalaron los paquetes de requirements.txt
+de no ser así hay que revisar el fichero o el nombre de los paquetes a instalar, etc.
+
+$ pip search nombre_paquete // Buscar un paquete.
 
 **********VERIFICACION DE INSTALACION**********
 
@@ -72,7 +117,6 @@ Ejemplo: Django-1.5.12
 >>> print(django.get_version()) #Nos mostrar la version de Django Instalada
 1.5.12
 
-
 **********Compatibilidad / Base de Datos**********
 
 Django es compatible con cuatro motores de base de datos:
@@ -82,7 +126,7 @@ Django es compatible con cuatro motores de base de datos:
 -MySQL (http://www.mysql.com/) #Django requiere MySQL 4.0 o superior
 -Oracle (http://www.oracle.com/)
 
-**********PROYECTO**********
+**********CREANDO UN PROYECTO**********
 
 -Un proyecto es una colección de ajustes de una instancia de Django
 incluyendo la configuración de la base de datos, las opciones
@@ -90,7 +134,8 @@ específicas de Django, y la configuración de la aplicación.
 
 -Para crear un proyecto hay que abrir unaconsola
 situarse donde se quiere crear el proyecto y Ejecutar:
-django-admin.py startproject NombreDelProyecto #Se creará un directorio NombreDelProyecto 
+
+$ django-admin.py startproject NombreDelProyecto #Se creará un directorio NombreDelProyecto 
 
 -El comando startproject crea un directorio (NombreDelProyecto)
 que contiene cuatro archivos:
@@ -154,7 +199,6 @@ python manage.py runserver 8080 #Arranca el servido en el puerto 8080
 
 python manage.py runserver 0.0.0.0:8000 #Cambiando la direccion IP
 
-
 **********Configuración de la base de datos**********
 
 En settings.py se pueden configurar los privilegios, nombre, etc a la base de datos. 
@@ -213,8 +257,6 @@ Un modelo de Django es una descripción de los datos en la base de datos, esta e
 
 - views.py: En este archivo es donde pondremos todas las funciones que necesitemos
 ejecutar en nuestro proyecto
-
-'''
 
 --- Las variables las llamo en mi template así: {{ variable }}
 
@@ -357,22 +399,29 @@ Ejemplo:
 
 <img src="{{STATIC_URL}}css/Img/gris.JPG"></img> Agregando una imagen local 
 
+
+#Estructura de un proyecto
 *proyecto
-	*db.db
-	*manage.py
-	*proyecto
-		-settings.py
-		-urls
-	*aplicacion
-		-admin.py
-		-models.py
-		-views.py
-		-static
-			-css
-				-estilo.css
-			-imagenes
-			-js
-		-templates
-			-index.html
-			-index2.html
+    -db.db
+    -manage.py
+    *proyecto
+        -settings.py
+	-__init__.py
+	-urls.py
+	-wsgi.py
+    *aplicacion
+        -admin.py
+	-models.py
+	-views.py
+	*static
+	    *css
+	        -estilo.css
+	    *imagenes
+	        -a.jpg
+		-b.png
+	    *js
+	        -jquery.js
+	*templates
+	    -index.html
+	    -index2.html
 			

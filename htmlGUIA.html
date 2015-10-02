@@ -197,23 +197,64 @@
 
 ****************TABLAS****************	
 
-	<table border="3px" cellpadding="10px" cellspacing="10px" style="width:100%"> Creacion de una tabla
-	<caption>Tabla</caption> Título de la tabla
-	<tr><td>1</td>	<td>2</td> <td>3</td> </tr>
-	<tr><td>4</td>	<td>5</td> <td>6</td> </tr>
-	<tr><td>7</td>	<td>8</td> <td>9</td> </tr>
-	</table>
+<table border="3px" cellpadding="10px" cellspacing="10px" style="width:100%"> Creacion de una tabla
+<caption>Tabla</caption> Título de la tabla
+<tr><td>1</td>	<td>2</td> <td>3</td> </tr>
+<tr><td>4</td>	<td>5</td> <td>6</td> </tr>
+<tr><td>7</td>	<td>8</td> <td>9</td> </tr>
+</table>
 
-	<td bgcolor="red"> Para dar color a una celda
-	cellpadding=10px Para dar distancia entre el borde de la celda y el texto que contiene
-	cellspacing="10px" Establece la anchura en px de los bordes de la celda
-	style="width:100%" Ancho de la tabla
-	style="text-align:center" Centrar elementos(texto) de las celdas
-	style="width:100%;text-align:center" Dos atributos en el estilo separados por ;
-	
+<td bgcolor="red"> Para dar color a una celda
+cellpadding=10px Para dar distancia entre el borde de la celda y el texto que contiene
+cellspacing="10px" Establece la anchura en px de los bordes de la celda
+style="width:100%" Ancho de la tabla
+style="text-align:center" Centrar elementos(texto) de las celdas
+style="width:100%;text-align:center" Dos atributos en el estilo separados por ;
 
-*************Tabla con estilo****************
-	
+xxxxxxxxxxxxxxxx Tablas con cabecera, cuerpo y pies xxxxxxxxxxxxxxxx
+<!-- El orden de uso de thead tbody y tfoot no altera el resultado
+siempre los mostrara en orden en la vista -->
+<html>
+<head>
+  <style>
+    thead {color:green;}
+    tbody {color:blue;}
+    tfoot {color:red;}
+    table, th, td {
+        border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+<table>
+  <thead>
+    <tr>
+      <th>Mes</th>
+      <th>Pagos</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td>Suma</td>
+      <td>180</td>
+    </tr>
+  </tfoot>
+  <tbody>
+    <tr>
+      <td>Enero</td>
+      <td>100</td>
+    </tr>
+    <tr>
+      <td>Febrero</td>
+      <td>80</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>
+
+xxxxxxxxxxxxxxxx Tabla con estilo xxxxxxxxxxxxxxxx
+
 <html>
     <head>
         <title></title>
@@ -262,157 +303,204 @@
 
 **********91 etiquetas disponibles en HTML**********
 
-	a, abbr, acronym, address, applet, area, b, base, basefont, bdo, big, blockquote, body, br, button,	caption, center, cite, code, col, colgroup, dd, del, dfn, dir, div, dl, dt, em, fieldset, font, form, frame, frameset, h1, h2, h3, h4, h5, h6, head, hr, html, i, iframe, img, input, ins, isindex, kbd, label, legend, li,
-	link, map, menu, meta, noframes, noscript, object, ol, optgroup, option, p, param, pre, q, s, samp, script, select, small, span, strike, strong, style, sub, sup, table, tbody, td, textarea, tfoot, th, thead, title, tr, tt, u, ul, var
+a, abbr, acronym, address, applet, area, b, base, basefont, bdo, big, blockquote, body, br, button,	caption, center, cite, code, col, colgroup, dd, del, dfn, dir, div, dl, dt, em, fieldset, font, form, frame, frameset, h1, h2, h3, h4, h5, h6, head, hr, html, i, iframe, img, input, ins, isindex, kbd, label, legend, li,
+link, map, menu, meta, noframes, noscript, object, ol, optgroup, option, p, param, pre, q, s, samp, script, select, small, span, strike, strong, style, sub, sup, table, tbody, td, textarea, tfoot, th, thead, title, tr, tt, u, ul, var
 	
 ****************FORMULARIOS****************
 
-	<form action="datos.php" method="get"> Formulario de USUARIO y CONTRASEÑA también method="post"
-	Nombre: <input type="text" name="nombre" autocomplete=off><br />
-	Contraseña: <input type="password" name="contrasena"><br />
-	<input type="submit" value="Enviar">
-	<input type="reset" value="Borrar">
-	<input type=image src="guardar.png" width="25" height="15"> Imagen como boton submit
-	<a href="#"><img src="guardar.png" alt="Enviar"></a> Imagen como boton submit
-	<input type="image" name="imageField" src="guardar.png" /> Imagen como boton submit
-	</form>
+<form action="datos.php" method="get"> Formulario de USUARIO y CONTRASEÑA también method="post"
+Nombre: <input type="text" name="nombre" autocomplete=off><br />
+Contraseña: <input type="password" name="contrasena"><br />
+<input type="submit" value="Enviar">
+<input type="reset" value="Borrar">
+<input type=image src="guardar.png" width="25" height="15"> Imagen como boton submit
+<a href="#"><img src="guardar.png" alt="Enviar"></a> Imagen como boton submit
+<input type="image" name="imageField" src="guardar.png" /> Imagen como boton submit
+</form>
 
 *****HTML agrega nuevos tipos de formularios y validacion de campos sin el uso de JavaScript*****
 
-	<div id="Formulario1">
-	    <h4>LOGIN</h4>
-	    <form action="#" method="GET"> 
-	      Nombre: <input type="text" name="nombre"><br />      
-	      Contraseña: <input type="password" name="contrasena"><br /> <p></p>          
-	      Búsqueda: <input type="search"> <br />
-	      Números: <input type="number"> <br />
-	      Rango: <input type="range"> <br />
-	      Color: <input type="color"> <br />
-	      NMobNum: <input type="tel"> <br />
-	      URL: <input type="url"> <br />
-	      E-Mail: <input type="email"> <br /> 
-	      <input type="submit" value="Enviar">
-	      <input type="reset" value="Borrar"> 
-	    </form>
-  	</div>
-  	
-  	**************
-
-  	<form action="#" method="get">
-		Nombre: <input type="text" name="nombre" placeholder="Tu Nombre" required> <br />
-		Nombre: <input type="text" name="nombre" placeholder="Tu Nombre" disabled="disabled" required> <br />
-		Contraseña: <input type="password" name="pass" placeholder="Tu clave" required> <br />
+<div id="Formulario1">
+	<h4>LOGIN</h4>
+	<form action="#" method="GET"> 
+		Nombre: <input type="text" name="nombre"><br />      
+		Contraseña: <input type="password" name="contrasena"><br /> <p></p>          
+		Búsqueda: <input type="search"> <br />
+		Números: <input type="number"> <br />
+		Rango: <input type="range"> <br />
+		Color: <input type="color"> <br />
+		NMobNum: <input type="tel"> <br />
+		URL: <input type="url"> <br />
+		E-Mail: <input type="email"> <br /> 
 		<input type="submit" value="Enviar">
-		<input type="reset" value="Borrar">
+		<input type="reset" value="Borrar"> 
 	</form>
+</div>
 
+	
+	**************
 
-	--------
-
-	-->Botón enviar
-	<form action="" method="get">
-        Nombre: <input type="text" name="nombre"> <br />
-        <!--input type="submit" value="Enviar"-->
-        <button>Enviar</button>
-    </form>
-
-	required // Atributo que hace que el campo sea obligatorio llenarlo
-	size="10" // Atributo que se puede añadir al input
-	maxlength="10" // Atributo del input para limitar el número de caracteres permitidos en los campos
-	autocomplete=off // Atributo para evitar recordar los datos introducidos en los campos
-	placeholder="Tu Nombre" //Texto de ejemplo dentro del campo del formulario, a manera de ejemplos
-
-	<INPUT TYPE="button" VALUE="Pulseme"> Crea un boton generico de HTML y nosotros asignamos su funcionamiento
-
-	<FORM> 
-	<TEXTAREA NAME="texto" ROWS="10" COLS="50">
-	Hola hdspm
-	</TEXTAREA>
-	</FORM>
-
-	<FORM> Cuadro de seleccion
-	Elija un color:<BR>
-	<SELECT NAME="color">
-	<OPTION>Verde
-	<OPTION>Negro
-	<OPTION>Rojo
-	<OPTION>Azul
-	</SELECT><BR>
-	<INPUT TYPE="submit" VALUE="Enviar elección">
-	</FORM>
-
-	<form action="datos.php" method="get"> Tipo Checkbox
-	¿Cuáles son sus pasatiempos favoritos?<br>
-	<input type="checkbox" name="pasa" value="tv">TV<br>
-	<input type="checkbox" name="pasa" value="libros">Libros<br>
-	<input type="checkbox" name="pasa" value="musica">Música<br>
-	<input type="checkbox" name="pasa" value="otros">Otros<br>
-	</form>
-
-	<form action="foto.php" method="post" accept="image/jpg"> Subir una imagen a la página o al servidor
-	Ingrese la foto: <input type="file" name="foto"><br />
+	<form action="#" method="get">
+	Nombre: <input type="text" name="nombre" placeholder="Tu Nombre" required> <br />
+	Nombre: <input type="text" name="nombre" placeholder="Tu Nombre" disabled="disabled" required> <br />
+	Contraseña: <input type="password" name="pass" placeholder="Tu clave" required> <br />
 	<input type="submit" value="Enviar">
 	<input type="reset" value="Borrar">
-	</form>
+</form>
 
-	<form action="colores.php" method="get"> Formulario tipo radio
-	Elija un color<br>
-	<input type="radio" name="col" value="red">Rojo<br>
-	<input type="radio" name="col" value="blue">Azul<br>
-	<input type="radio" name="col" value="green">Verde<br>
-	<input type="submit" value="Enviar">
-	<input type="reset" value="Borrar">
-	</form>
 
-	****************ESTILOS****************
+--------
 
-	<div style="color:red;font-size:20px">
-    	hola
-	</div>
+-->Botón enviar
+<form action="" method="get">
+    Nombre: <input type="text" name="nombre"> <br />
+    <!--input type="submit" value="Enviar"-->
+    <button>Enviar</button>
+</form>
 
-	<p style="color:green;font-size:30px">
-    	hola
-	</p>
+required // Atributo que hace que el campo sea obligatorio llenarlo
+size="10" // Atributo que se puede añadir al input
+maxlength="10" // Atributo del input para limitar el número de caracteres permitidos en los campos
+autocomplete=off // Atributo para evitar recordar los datos introducidos en los campos
+placeholder="Tu Nombre" //Texto de ejemplo dentro del campo del formulario, a manera de ejemplos
 
-	<h1 style="color:green;font-size:10px">Título grande</h1>
+<INPUT TYPE="button" VALUE="Pulseme"> Crea un boton generico de HTML y nosotros asignamos su funcionamiento
 
-	<p style="font-size:15px;color:red;font-family: Verdana">Un párrafo verdaderamente espectacular</p>
+<FORM> 
+<TEXTAREA NAME="texto" ROWS="10" COLS="50">
+Hola hdspm
+</TEXTAREA>
+</FORM>
 
-	XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+<FORM> Cuadro de seleccion
+Elija un color:<BR>
+<SELECT NAME="color">
+<OPTION>Verde
+<OPTION>Negro
+<OPTION>Rojo
+<OPTION>Azul
+</SELECT><BR>
+<INPUT TYPE="submit" VALUE="Enviar elección">
+</FORM>
 
-	<html>
-		<head>
-			<title>Ejemplo de estilos con CSS</title>
-			<style>
-	  			h1 { color: red;  font-family: Arial;   font-size: large;  }
-	  			p  { color: blue; font-family: Verdana; font-size: medium; }
-			</style>
-		</head> 
-	<body>
-	  <h1>Titular de la página</h1>
-	  <p>CSS permite separar los contenidos de la página y la información sobre su aspecto. En el ejemplo anterior, dentro de la propia página HTML se crea una zona especial en la que se incluye toda la información relacionada con los estilos de la página.</p>
-	</body>
-	</html>
+<form action="datos.php" method="get"> Tipo Checkbox
+¿Cuáles son sus pasatiempos favoritos?<br>
+<input type="checkbox" name="pasa" value="tv">TV<br>
+<input type="checkbox" name="pasa" value="libros">Libros<br>
+<input type="checkbox" name="pasa" value="musica">Música<br>
+<input type="checkbox" name="pasa" value="otros">Otros<br>
+</form>
 
-	xxxxxxxxxxxxxxxxxxxxxxxxx
+<form action="foto.php" method="post" accept="image/jpg"> Subir una imagen a la página o al servidor
+Ingrese la foto: <input type="file" name="foto"><br />
+<input type="submit" value="Enviar">
+<input type="reset" value="Borrar">
+</form>
 
-	<html>
-		<head>
-		<title>Titulo</title>
-			<style>
-				div {
-					float: justify; 
-					border: ridge;
-					margin: 20px;
-				}
-			</style>
-		</head>	
-	<body> 
-		<div>
-			<P>El fútbol femenino ha tenido un crecimiento lento en el fútbol moderno, principalmente por obstáculos sociales y culturales que no permiten el ingreso pleno de la mujer al deporte.29 El primer encuentro femenino bajo las reglas del fútbol asociación del cual se tienen registros sucedió en 1892 en Glasgow, Escocia.30 A finales de 1921 el fútbol femenino fue prohibido en Inglaterra, hecho que no le permitió expandirse al resto del mundo.</P>
-		</div>	
-	</body>
-	</html>
+<form action="colores.php" method="get"> Formulario tipo radio
+Elija un color<br>
+<input type="radio" name="col" value="red">Rojo<br>
+<input type="radio" name="col" value="blue">Azul<br>
+<input type="radio" name="col" value="green">Verde<br>
+<input type="submit" value="Enviar">
+<input type="reset" value="Borrar">
+</form>
+
+****************ESTILOS****************
+
+<div style="color:red;font-size:20px">
+	hola
+</div>
+
+<p style="color:green;font-size:30px">
+	hola
+</p>
+
+<h1 style="color:green;font-size:10px">Título grande</h1>
+
+<p style="font-size:15px;color:red;font-family: Verdana">Un párrafo verdaderamente espectacular</p>
+
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+<html>
+	<head>
+		<title>Ejemplo de estilos con CSS</title>
+		<style>
+  			h1 { color: red;  font-family: Arial;   font-size: large;  }
+  			p  { color: blue; font-family: Verdana; font-size: medium; }
+		</style>
+	</head> 
+<body>
+  <h1>Titular de la página</h1>
+  <p>CSS permite separar los contenidos de la página y la información sobre su aspecto. En el ejemplo anterior, dentro de la propia página HTML se crea una zona especial en la que se incluye toda la información relacionada con los estilos de la página.</p>
+</body>
+</html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxx
+
+<html>
+	<head>
+	<title>Titulo</title>
+		<style>
+			div {
+				float: justify; 
+				border: ridge;
+				margin: 20px;
+			}
+		</style>
+	</head>	
+<body> 
+	<div>
+		<P>El fútbol femenino ha tenido un crecimiento lento en el fútbol moderno, principalmente por obstáculos sociales y culturales que no permiten el ingreso pleno de la mujer al deporte.29 El primer encuentro femenino bajo las reglas del fútbol asociación del cual se tienen registros sucedió en 1892 en Glasgow, Escocia.30 A finales de 1921 el fútbol femenino fue prohibido en Inglaterra, hecho que no le permitió expandirse al resto del mundo.</P>
+	</div>	
+</body>
+</html>
+
+xxxxxxxxxx LLamado de id y class en CSS xxxxxxxxxx
+
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8" />
+</head>
+<style>
+  div {
+    border: ridge;
+    width: 300px;
+  }
+  div#a {        
+    color: yellow;
+  }
+  div#b {
+    color: blue;    
+  }
+  div#c {
+    color: red;
+  }
+  div.d {
+    color: green;
+  }
+</style>
+<body>
+<center>
+  <div id="a">
+    11111
+  </div>
+  <br />
+  <div id="b">
+    22222
+  </div>
+  <br />
+  <div id="c">
+    33333
+  </div>
+  <br />
+  <div class="d">
+    44444
+  </div>
+</center>
+</body>
+</html>
 
 	****************HOVER****************
 
@@ -845,6 +933,31 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Formulario, Campo de busqueda con estilo 2 xxxxxxxxxx
         <input type="submit" value="Enviar">
         <input type="reset" value="Borrar">
     </form>
+</body>
+</html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Etiqueta span xxxxxxxxxxxxxxxxxxxxxxxxxxx
+<!--La etiqueta <span> permite agrupar varios elementos en línea seguidos dentro de un
+mismo bloque (por ejemplo, varias palabras seguidas en un párrafo),
+para después darles formato con la hoja de estilo, tambien podemos declarar
+clases para identificar etiquetas y luego llamarlas en los estilos-->
+<html>
+<head>
+  <meta charset="utf-8">  
+  <style>
+    span.fecha { 
+      font-style: oblique; 
+      text-decoration: underline; 
+    }
+    span.resaltar { 
+      color: red; 
+    }
+  </style>  
+</head>
+<body>
+<p>El <span class="resaltar">primer servidor web de la historia</span> 
+se instaló en el CERN en <span class="fecha">diciembre de 1990</span> (<a
+href="https://en.wikipedia.org/wiki/Image:First_Web_Server.jpg">foto</a>)</p>
 </body>
 </html>
 

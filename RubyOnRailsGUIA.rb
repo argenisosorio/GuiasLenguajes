@@ -114,7 +114,6 @@ $ rails new prueba #Se genera una nueva carpeta dentro del directorio, esa carpe
 #Al crear la aplicacion se generaran los directorios y subdirectorios de la misma:
 
 app/ #Contiene los controllers, models, views, helpers, mailers y assets para tu aplicación.
-#Te centrarás en esta carpeta por el resto de esta guía.
 
 config/ #Configura las reglas de ejecución de la aplicación, rutas, base de datos y más.
 
@@ -172,10 +171,14 @@ $ rails s
 $ rails server #Se visita la direccion 127.0.0.1/3000 para comprobar que el servidor esta corriendo
 #Ctrl + C para  detener el servidor
 
+#Por defecto rails lanza su servidor en el puerto 3000 del localhost pero podemos iniciarlo en otro puerto dandole el parametro -p ejemplo:
+
+$ rails server -P 8080 #Si visitamos 127.0.0.1:8080 comprobaremos el cambio de puerto
+
 #Listo. Ahora se ingresa a la siguiente dirección en el navegador para utilizar la aplicación desarrollada:
-localhost:333/Empleados
+localhost:3000/Empleados
 	ó
-localhost:333/Alumnos
+localhost:3000/Alumnos
 
 --- Otro ejemplo--- 
 
@@ -319,3 +322,6 @@ Rails.application.routes.draw do
   root 'articulos/nuevoi'
 
 #Guardamos y si vamos al localhost:3000 deberíamos ver nuestra vista cargada por defecto.
+
+$ bin/rake routes #En la carpeta del proyecto, podremos ver las rutas establecidas para los controladores
+#y vistas de nuestra aplicación 

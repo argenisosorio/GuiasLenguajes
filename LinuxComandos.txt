@@ -33,6 +33,8 @@ cat /etc/*-release // Ver info del sistema (Probado en Debian GNU/Linux 7 wheezy
 ifconfig // Siendo root, permite desplegar numerosos parámetros de las interfaces de red residentes  en el núcleo,
 como la dirección IP (dinámica o estática), o la máscara de red entre otros.
 
+nmap -sT -O localhost // Ver que puertos estan escuchando 
+
 user@debian:/media$ umount nombre_device // Desmontar un dispositivo, pendrive, disco externo etc.
 
 who // Muestra usuarios conectados a nuestra máquina, tambien usado para ver las conexiones entrantes de un servidor
@@ -120,7 +122,9 @@ cat nombre_fichero // Mostrar contenido de un fichero
 
 less nombre_fichero // Mostrar el contenido de un archivo, mayor movilidad que cat.
 
-stat nombre_fichero // Muestra el estado de un fichero.
+stat nombre_fichero // Muestra el estado e información de un fichero
+
+stat nombre_carpeta // Muestra información de un directorio
 
 Ctrl + D // En el shell, cerrar sesion, salir del root, de maquinas virtuales o de sesiones de usuarios iniciadas
 
@@ -452,18 +456,25 @@ $ unrar x archivo.rar /home/user/carpeta // Para descomprimir un fichero .rar da
 ########## Instalar APACHE ##########
 #####################################
 
-sudo apt-get install apache2 // Instalar servidor apache, 127.0.0.1 o LocalHost es para iniciarlo
+$ sudo apt-get install apache2 // Instalar servidor apache, 127.0.0.1 o LocalHost es para iniciarlo
 
-/var/www/ es la carpeta de los proyectos
+/var/www/ // Es la carpeta de donde podemos guardar nuestros proyectos, ficheros etc 
+puesto que es la carpeta por defecto de Apache para ese fin.
 
-chmod -R 777 /var/www/ // Cambiar los permisos de www puesto que solo tiene permisos root, 
--R para que los permisos se hagan de forma recursiva
+$ chmod -R 777 /var/www/ // Cambiar los permisos de /var/www puesto que solo tiene permisos root, 
+-R para que los permisos se hagan de forma recursiva, esto se hace porque al pegar ficheros
+o carpetas estas no tiene los permisos de lectura/escritura necesarios.
 
-sudo aptitude search php // Realizar una busqueda en los repositorios del paquete que se quiere encontrar
-
-sudo aptitude install php5 // instalar php5
+sudo aptitude search php // Realizar una búsqueda en los repositorios del paquete que se quiere encontrar
 
 http://192.xxx.xx.xxx/ //La direccion ip sirve para acceder al directorio del servidor
+
+127.0.0.1:80 // Apache cuando está en ejecucion siempre está escuchando por el puerto 80
+por lo que si visitamos 127.0.0.1:80 accederemos al servicio
+
+Sus archivos e configuracion están en etc/apache2
+
+$ sudo service apache2 restart // Restart apache para guardar los cambios
 
 ###############################################
 ########## Instalar y configurar PHP ##########
@@ -507,8 +518,6 @@ http://localhost/phpmyadmin // Acceder al servicio
 ***Add the phpmyadmin config to the file.
 
 Include /etc/phpmyadmin/apache.conf //Esta linea se agrega al final de la configuracion del apache para que reconozca el phpMyAdmin
-
-# sudo service apache2 restart // Restart apache para guardar los cambios
 
 /etc/init.d/xxx restart // xxx mysql, apache etc... restart
 
@@ -982,6 +991,19 @@ $ alias sa='aptitude search apache | grep rt4' // (sa) ahora es el alias de
 ese comando de busqueda en los repositorios de un paquete especifico.
 
 $ unalias nombre_alias // Para eliminar el alias creado temporalmente
+
+// Para que se haga efectivo algun cambio en .bashrc es necesario reiniciar
+pero hay otra forma de actualizar el fichero sin reiniciar, entonces:
+
+$ source .bashrc // Bastara para que se apliquen los cambios hechos
+
+// Mensaje de bienvenida al usuario
+
+Pegamos esto al final del .bashrc, reiniciamos el fichero
+y ahora cada vez que iniciemos un shell nos saludará.
+
+## Mensaje al iniciar
+echo "Hola Usuario"
 
 ########################################################
 ### Saber la direccion ip de una pagina o un sevidor ###
