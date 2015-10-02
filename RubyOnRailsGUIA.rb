@@ -182,11 +182,11 @@ localhost:3000/Alumnos
 
 --- Otro ejemplo--- 
 
-#Creando una aplicacion de prueba
+#Creando una aplicacion de (prueba) saludar y dar la hora
 
-$ rails new blog
+$ rails new prueba
 
-$ cd blog
+$ cd prueba
 
 $ rails server
 
@@ -194,8 +194,8 @@ $ rails server
 #La página "Welcome Aboard" es la primera prueba para una nueva aplicación Rails.
 #Ésta asegura que tienes el software configurado correctamente para servir una página.
 
-#Hola Mundo
-#Para conseguir que Rails diga "Hola", necesitas crear como mínimo un controlador y una vista.
+#Hola Rails
+#Para conseguir que Rails diga "Hola Rails", necesitas crear como mínimo un controlador y una vista.
 #El propósito de un controlador es recibir las peticiones (requests) de la aplicación. El enrutamiento
 #(routing) decide qué controlador recibe qué petición.
 
@@ -212,40 +212,83 @@ $ rails server
 #Para crear un nuevo controlador, necesitas ejecutar el generador de controladores y
 #decirle que quieres un controlador llamado por ejemplo welcome con una acción llamada index.
 
-$ rails generate controller welcome index #Rails creará una serie de archivos y añadirá una ruta por ti.
+$ rails generate controller saludo index #Rails creará una serie de archivos y añadirá una ruta por ti.
+#Se creará la ruta (http://localhost:3000/saludo/index) la primera parte indica la direccion base de 
+#la aplicación, la segunda el controlador(welcome) y la tercera la accion a ejecutar(index)
 
 #Los archivos más importantes de éstos son el controlador, que se encuentra en:
-app/controllers/welcome_controller.rb
+app/controllers/saludo_controller.rb
 
 #y la vista, que se encuentra en:
 app/views/welcome/index.html.erb.
 
-#Abre el archivo app/views/welcome/index.html.erb en tu editor de texto y edítalo
+#Abre el archivo app/views/saludo/index.html.erb en tu editor de texto y edítalo
 #para que contenga sólo está línea de código:
-<h1>Hello, Rails!</h1>
+<h1>Hola, Rails!</h1>
 
-#Si visitamos 127.0.0.1:3000/welcome/index veremos la vista rails ha creado y nosotros hemos modificado
+#Si visitamos:
+127.0.0.1:3000/saludo/index #Veremos la vista que rails ha creado y nosotros hemos modificado
 
 config/routes.rb #Es el archivo de enrutamiento de la aplicacion, le dice a rails como 
 #conectar peticiones entrantes a controladores y acciones
 #Encontraremos un:
-get 'welcome/index' #Que esta asociado al controlador (welcome) de la accion (index)
-#lo cual indica que en 127.0.0.1:3000/welcome/index se encuentra la vista del controlador que creamos
+get 'saludo/index' #Que esta asociado al controlador (saludo) de la accion (index)
+#lo cual indica que en 127.0.0.1:3000/saludo/index se encuentra la vista del controlador que creamos
 
 #Por defecto rails carga como pagina inicial la "Welcome aboard..." en el 127.0.0.1:3000
 #Para que rails carge por defecto nuestra vista modificada vamos al fichero
-config/routes.rb #y descomentamos la linea del
-root 'welcome#index' # Ahora rails cargará nuestra vista por defecto
+config/routes.rb #y descomentamos la linea:
+
+root 'welcome#index'
+
+#la modificamos a:
+
+root 'saludo#index' # Ahora rails cargará nuestra vista por defecto
 
 #Supongamos que hemos credo dos controladores con sus respectivas vistas, cuyas
 #rutas de ven reflejadas en el config/router.rb.
-get 'welcome/index'
+get 'saludo/index'
     y
-get 'welcome2/index2'
+get 'saludo2/index2'
 
 #Si queremos que la vista principal sea ahora welcome2/index2 en vez de la primera entonces:
 #en config/routes:
 root 'welcomei2#index2' # Ahora rails cargará nuestra vista 2 por defecto
+
+#Habiendo creado nuestro controlador y nuestra vista y haberlas probado
+#vamos a mostrar la hora del sistema ademas del saludo.
+
+#Para añadir contenido dinámico a una vista se incrusta código Ruby, algo así como la
+#incrustacion de PHP en plantillas HTML. La incrustacion se hace en las vistas .html.erb
+#ya que Rails lee interpreta esos ficheros usando el sistema ERb (de Embbeded Ruby).
+
+#El contenido HTML es pasado al navegador directamente pero el contenido
+#encerrado entre <%= %> es intrepetado y ejecutado como código Ruby.
+
+#Editamos el controlado:
+    prueba/app/controller/saludo_controller.rb
+
+#Nos quedará así:
+
+class SaludoController < ApplicationController
+  def index
+    t = Time.now
+    @time = t.strftime('%H:%m:%S')
+  end
+end
+
+#Guardamos, y ahora editaremos la vista para que muestre la hora que queremos:
+    prueba/app/views/saludo/index.html.erb
+
+#Nos queda así:
+
+<h1>Hola, Rails!</h1>
+Son las <%= @time %>
+
+#Guardamos, si visitamos al url que hayamos asignado veremos el saludo y la hora.
+
+#En Ruby se definen las variables de una clase con @ al comienzo del nombre.
+#lo que nos permite hacer llamados de variables y funciones en la vista
 
 --- Creando aplicacion blog (controladores, vistas y rutas a mano)  ---
 
@@ -319,7 +362,7 @@ Rails.application.routes.draw do
 #la linea root que esta comentada: # root 'welcome#index'
 #la descomentamos y le damos la nueva ruta que va a nuestra vista para que se cargue por defecto:
 
-  root 'articulos/nuevoi'
+  root 'articulos/nuevo'
 
 #Guardamos y si vamos al localhost:3000 deberíamos ver nuestra vista cargada por defecto.
 
