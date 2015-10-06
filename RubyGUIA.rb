@@ -1,14 +1,11 @@
 #### Guía Ruby by dM ####
 
-# Comentarios de línea en Ruby
-
-=begin
-   Comentarios de multiple linea 
-   en lengua de programacion
-   Ruby
-=end
-
-#------------------------------
+#Características:
+#-Casi todo es un objeto
+#-Son innecesarias las declaraciones de variables
+#-Las variables no tienen tipo
+#-La sintaxis es simple y consistente
+#-La gestión de memoria se realiza automáticamente
 
 #Instalación en Debian:
  aptitude install ruby 
@@ -46,6 +43,7 @@ ruby ejemplo.rb #Se debe estar en el directorio del archivo o en su defecto
 =end
 
 **********VARIABLES**********
+#En ruby las variables no tienen tipos
 
 #Se pueden declarar variables sin especificar el tipo de dato que va a almacenar, similar a Python
 
@@ -55,7 +53,9 @@ mi_booleano = true
 
 mi_booleano = false
 
-mi_string = "Ruby"
+mi_string = "Ruby" 
+#En ruby, las cadenas son objetos pertenecientes a la clase String
+#¡no confundir con pertenecientes al tipo String!
 
 **********Operaciones básicas**********
 
@@ -143,16 +143,39 @@ else
   puts "¡Elegiste cero!"
 end
 
+********** Funciones **********
+#Una funcion de suma
+#-Como vimos anteriormente, en ruby las variables no tienen tipos
+#-Esto implica que al pasar variables a funciones, estas no necesitan tipo
+#-Implica, además, que ruby tan solo se limita a ejecutar el método
+#llamado para un objeto, da igual cual sea éste mientras tenga ese método
+
+def
+  suma (a, b)
+    a + b
+end
+puts suma(3, 3)
+puts suma("hola", "mundo")
+
+--- Otro Ejemplo ---
+
+def
+  fun1()
+    puts ("cadena 1")
+end
+def
+  fun2()
+    puts ("cadena 2")
+end
+fun1
+fun2
+#print fun1
+#print fun2
 
 
+**********Usando métodos**********
+**********Usando métodos**********
+**********Usando métodos**********
+**********Usando métodos**********
+**********Usando métodos**********
 
-
-
-*****************************
-*****************************
-*****************************
-*****************************
-*****************************
-*****************************
-*****************************
-*****************************

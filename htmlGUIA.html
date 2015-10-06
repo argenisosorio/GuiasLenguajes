@@ -1077,7 +1077,7 @@ Ejemplo:
 	        color: white;
 	        border-radius: 15px;
 	        border: ridge 1px;	        
-	    }	    
+	    }
 	</style>
 <body>
 Ejemplo:
@@ -1161,19 +1161,105 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Estilo en boton html xxxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
+xxxxxxxxxxxxxxxxxxxxxxxxxx Alineacion en linea de bloques adaptables xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8" />
+    </head>
+    <style>
+      #contenedor .bloque{
+        display: inline-block;  /* Es esencial para que se muestren los bloques en línea */
+        height:300px;
+        width: 300px;
+        border:1px solid #333;
+        background: #999;
+        margin:5px;
+      }      
+    </style>
+<body>
+  <div id="contenedor">
+  <div class="bloque">[Texto/Imágenes]</div>
+  <div class="bloque">[Texto/Imágenes]</div>
+  <div class="bloque">[Texto/Imágenes]</div>
+  <div class="bloque">[Texto/Imágenes]</div>
+  <div class="bloque">[Texto/Imágenes]</div>
+</div>
+</body>
+</html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Diseño adaptable en cascada xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8" />
+    </head>
+    <style>
+      @media all and (max-width: 600px){
+        div{
+          display: block !important;  /* Cuando el ancho sea inferior a 600px el elemento será un bloque */
+          width: 100% !important;
+          max-width: 100% !important;
+          margin: auto !important;
+          position: static !important;
+          float: none !important;
+        }
+      }
+      .superior{
+        background: #F99;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 30px;
+      }
+      .cuerpo{  /* Este es el delimitador para que la página no sea excesivamente grande */
+        max-width: 1000px;
+        margin:auto;
+      }
+      .cabecera{
+        background: #9F9;
+        margin-top: 30px;
+        height: 200px;
+      }
+      .agenda{
+        background: #99F;
+        float: left;  /* flotamos el elemento a la izquierda */
+        width: 35%;
+        height: 600px;
+      }
+      .contenido{
+        background: #AAA;
+        width: 65%;
+        margin-left: 35%;
+        height: 900px;
+      }
+    </style>
+<body>
+  <div class="superior">[Menú]</div>
+  <div class="cuerpo">
+    <div class="cabecera">[Cabecera]</div>
+    <div class="agenda">[Agenda]</div>
+    <div class="contenido">[Contenido]</div>
+  </div>
+</body>
+</html>
+
 xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

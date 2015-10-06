@@ -98,6 +98,11 @@ $ bundle install
 #-Despues de instalar las gemas basicas necesarias para un proyecto, se pueden visualizar con:
 $ bundle show
 
+#DB: Si creamos un proyecto, rails esta configurado para usar por defecto una db de Sqlite3 y 
+#crear las tablas y campos en ella cuando se haga un rake, si cambiamos a otra base de datos
+#en la conf de la aplicacion, será necesario hacer de nuevo un rake db:migrate para que vuelva
+#a crear la estructura en la nueva db
+
 --- Comandos básicos de Ruby on rails ---
 
 #Si quieres empezar un proyecto y ya tienes instalado RoR puedes comenzar con lo siguiente:
@@ -120,6 +125,7 @@ config/ #Configura las reglas de ejecución de la aplicación, rutas, base de da
 config.ru #Configuración Rack para servidores basados en Rack usados para iniciar la aplicación.
 
 db/ #Contiene el esquema actual de tu base de datos, así como las migraciones de la base de datos.
+#en el caso de Sqlite3, almacena el fichero de la db creada luego de la migrate.
 
 doc/ #Documentación detallada de tu aplicación.
 
@@ -308,6 +314,8 @@ class SaludoController < ApplicationController
     @email = "mariasha@fisk.com"
   end
 end
+#Las variables que comiencen con (@) que son variables de instancia
+#automáticamente estián disponibles para las vista.
 
     prueba/app/views/saludo/index.html.erb
 
@@ -398,3 +406,22 @@ Rails.application.routes.draw do
 
 $ bin/rake routes #En la carpeta del proyecto, podremos ver las rutas establecidas para los controladores
 #y vistas de nuestra aplicación 
+
+--- Creando aplicacion para hacer publicaciones (autor, titulo y contenido)  ---
+
+$ rails new publicaciones
+
+$ cd publicaciones
+
+$ rails server
+
+$ rails generate scaffold Post autor:string titulo:string contenido:text 
+# Se generaron los controladores y vistas que contienen los formularios
+#con los campos establecidos
+
+$ rake db:migrate #Se crearon las tablas correspondientes en la 
+#base de datos de desarrollo Sqlite3
+
+#http://127.0.0.1:3000/posts
+#Podemos visualizar la lista de publicaciones asi como enlaces a las operaciones
+#CRUD que se crearon

@@ -1,4 +1,4 @@
-// Guía C y C++ by dM
+// ### Guía C y C++ by dM ###
 
 // Comentarios de Linea
 
@@ -218,17 +218,15 @@ return 0;
 #include<iostream>
 using namespace std;
 
-void funcion1()
-    {
+void funcion1() {
     cout<<"Cadena de texto"<<endl; 
     }
 
-void funcion2()
-    {
+void funcion2() {
     cout<<5000<<endl; 
     }
 
-int main (){          
+int main () {
     funcion1();
     funcion2();
     return 0;
@@ -330,6 +328,12 @@ int main()
 }
 
 --------------------
+
+/*El (::) es llamado el operador de resolución de ámbito. Esencialmente le dice al compilador que pedir_edad y
+mostrar_edad pertenecen a la clase Persona. Dicho de otra forma, :: declara que esas funcionen se encuentra en el
+ámbito de la clase Persona. Varias clases diferentes pueden usar los mismos nombres de función. El compilador
+sabe cuál función pertenece a cuál clase y esto es posible por el operador de resolución de ámbito y el nombre
+de la clase.*/
 
 #include <iostream>
 using namespace std;
