@@ -1758,19 +1758,197 @@ $(document).ready(function(){
 
 -------------------------------------
 
-<!-- -->
+<!-- Alerta, con boton aceptar y cancelar -->
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <script language="Javascript"> 
+      function confirmar(){ 
+      confirmar=confirm("¿Enviar datos?"); 
+      if (confirmar) 
+      // si pulsamos en aceptar
+      alert('Has dicho que si');
+      else 
+      // si pulsamos en cancelar
+      alert('Has dicho que no'); 
+      }
+    </script>    
+</head>
+<body>  
+  <form action="#" method="get">
+  Nombre: <input type="text" name="nombre"> <br />
+  Cédula: <input type="text" name="cedula"> <br />
+  <input type="submit" value="Enviar" onclick="confirmar()">
+  <input type="reset" value="Borrar">
+</form>
+</body>
+</html>
 
 -------------------------------------
 
-<!-- -->
+<!-- Confirmación de envío de formulario con alert, boton aceptar, cancelar -->
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8">
+<script language="JavaScript">
+function pregunta(){
+    if (confirm('¿Estas seguro de enviar este formulario?')){
+      document.formulario.submit()
+    }
+    else {
+      alert("!Datos no enviados¡");
+    }
+}
+</script>
+</head>
+<body>
+<form action="#" name=formulario method="get" >
+  Nombre: <input type="text" name="nombre"> <br />
+  Cédula: <input type="text" name="cedula"> <br />
+  <input type="button" value="Enviar" onclick="pregunta()">
+  <input type="reset" value="Borrar">
+</form>
+</body>
+</html>
 
 -------------------------------------
 
-<!-- -->
+<!-- Uso de Pestañas para contenidos con JS y CSS-->
+<html>
+<head>  
+  <title>tab_javascript</title>
+  <script type="text/javascript">
+    function tab(tab_id) {//funcion tab que recibe el parametro del id
+      var tab_contenido = document.getElementsByTagName("div");//definimos el elemento que sera devuelto
+        for(var x=0; x<tab_contenido.length; x++) {//almacenamos los elementos divs
+          name = tab_contenido[x].getAttribute("name");//recibimos el nombre de la clase
+          if (name == 'tab_contenido') {//comparamos el valor del nombre
+            if (tab_contenido[x].id == tab_id) {//comparamos el numero de contenido
+            tab_contenido[x].style.display = 'block';//mostramos el contenido correspondiente
+          }
+          else {
+            tab_contenido[x].style.display = 'none';//ocultamos los otros contenidos.
+          }
+        }
+      }
+    }
+  </script>
+  <style>      
+    /*----clase pra las pestañas---*/
+    #tab {
+      text-transform: uppercase;
+      padding:5px;
+      text-decoration:none;
+      color:#ccc;
+      font: 14px/100% Arial, Helvetica, sans-serif;
+       background: #4162a8;
+       border: 1px solid #19253f;
+      -webkit-border-top-left-radius: 10px;
+      -webkit-border-top-right-radius: 10px;
+      -moz-border-radius-topleft: 10px;
+      -moz-border-radius-topright: 10px;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    /*----clase para las pestañas activadas----*/
+    #tab:active {
+      /*color:#000;*/    
+      background:#ccc;
+    }
+    /*----clase para el contenido------*/
+    .tab_contenido {
+      text-align:left;
+      padding: 8px;
+      display:none;
+      width:550px;
+      height: 250px;
+      color:#000;
+      background:#ccc;    
+      border: ridge 1px;
+    }
+  </style>
+</head>
+<body>
+  <!--pestañas de la tab-->
+  <a id="tab" href="javascript:tab('tab_contenido1');" >Contenido 1</a>
+  <a id="tab" href="javascript:tab('tab_contenido2');" >Contenido 2</a>
+  <a id="tab" href="javascript:tab('tab_contenido3');" >Contenido 3</a>
+
+  <!--contenidos de la tab-->
+  <div name="tab_contenido" id="tab_contenido1" class="tab_contenido"style="display: block;">
+    Contenido1 Contenido1 Contenido1 Contenido1<br />
+    Contenido1 Contenido1 Contenido1 Contenido1<br />
+  </div>
+    
+  <div name="tab_contenido" id="tab_contenido2" class="tab_contenido">
+    Contenido2 Contenido2 Contenido2 Contenido2<br />
+    Contenido2 Contenido2 Contenido2 Contenido2<br />
+  </div>
+
+  <div name="tab_contenido" id="tab_contenido3" class="tab_contenido">
+    Contenido3 Contenido3 Contenido3 Contenido3<br />
+    Contenido3 Contenido3 Contenido3 Contenido3<br />
+  </div>
+</body>
+</html>
 
 -------------------------------------
 
-<!-- -->
+<!-- Comprobar que las contraseñas/passwords sean iguales -->
+<html>
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <script>
+  function comprobarClave() {
+    clave1 = document.f1.clave1.value
+    clave2 = document.f1.clave2.value
+    if (clave1 == clave2)
+       alert("Las dos claves son iguales")
+    else
+       alert("Las dos claves son distintas")
+  }
+  </script>
+</head>
+<body>  
+  <form action="#" method="get" name="f1">
+    Contraseña: <input type="password" name="clave1" size="20"> <br />
+    Repite contraseña: <input type="password" name="clave2" size="20"> <br />
+  <input type="button" value="Enviar" onClick="comprobarClave()">
+  </form>
+</body>
+</html>
+
+--- Forma completa con submit ---
+
+<html>
+<head>
+  <title></title>
+  <meta charset="UTF-8">
+  <script>
+  function comprobarClave() {
+    clave1 = document.formulario.clave1.value
+    clave2 = document.formulario.clave2.value
+    if (clave1 == clave2)
+       //alert("Las dos claves son iguales")
+       document.formulario.submit()
+    else
+       alert("Las contraseñas deben ser idénticas ")
+  }
+  </script>
+</head>
+<body>  
+  <form action="#" method="get" name="formulario">
+    Nombre: <input type="text" name="nombre"> <br />
+    Cédula: <input type="text" name="cedula"> <br />
+    Contraseña: <input type="password" name="clave1" size="20"> <br />
+    Repite contraseña: <input type="password" name="clave2" size="20"> <br />
+  <input type="button" value="Enviar" onClick="comprobarClave()">
+  </form>
+</body>
+</html>
 
 -------------------------------------
 

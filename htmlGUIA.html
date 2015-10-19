@@ -338,9 +338,9 @@ Contraseña: <input type="password" name="contrasena"><br />
 </div>
 
 	
-	**************
+**************
 
-	<form action="#" method="get">
+<form action="#" method="get">
 	Nombre: <input type="text" name="nombre" placeholder="Tu Nombre" required> <br />
 	Nombre: <input type="text" name="nombre" placeholder="Tu Nombre" disabled="disabled" required> <br />
 	Contraseña: <input type="password" name="pass" placeholder="Tu clave" required> <br />
@@ -549,6 +549,49 @@ xxxxxxxxxx LLamado de id y class en CSS xxxxxxxxxx
     <div class="b">
         <P>El fútbol femenino ha tenido un crecimiento lento en el fútbol moderno, principalmente por obstáculos sociales y culturales que no permiten el ingreso pleno de la mujer al deporte.29 El primer encuentro femenino bajo las reglas del fútbol asociación del cual se tienen registros sucedió en 1892 en Glasgow, Escocia.30 A finales de 1921 el fútbol femenino fue prohibido en Inglaterra, hecho que no le permitió expandirse al resto del mundo.</P>
     </div>
+</body>
+</html>
+
+--- En el mismo div ---
+
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8" />
+    </head>
+    <style>
+    #a {
+      border: ridge 1px;
+      width: 500px; 
+      height: 200px;
+    } 
+    .b {
+      background-color: gray;
+    }     
+    </style>
+<body>
+  <div id="a" class="b">xxxxxxxxxxxx</div>  
+</body>
+</html>
+
+--- Llamado de id y class en linea css ---
+
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8" />
+    </head>
+    <style>
+    #a.b {
+      border: ridge 1px;
+      border-radius: 10px;
+      width: 500px; 
+      height: 200px;
+      background-color: red;
+    }     
+    </style>
+<body>
+  <div id="a" class="b">xxxxxxxxxxxx</div>  
 </body>
 </html>
 

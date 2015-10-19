@@ -179,6 +179,12 @@ $ rails server #Se visita la direccion 127.0.0.1/3000 para comprobar que el serv
 
 #Por defecto rails lanza su servidor en el puerto 3000 del localhost pero podemos iniciarlo en otro puerto dandole el parametro -p ejemplo:
 
+#Usos del server: server [options]
+-p, --port=port  --- Runs Rails on the specified port.
+                     Default: 3000
+-b, --binding=ip --- Binds Rails to the specified ip.
+                     Default: 0.0.0.0
+
 $ rails server -P 8080 #Si visitamos 127.0.0.1:8080 comprobaremos el cambio de puerto
 
 #Listo. Ahora se ingresa a la siguiente dirección en el navegador para utilizar la aplicación desarrollada:
@@ -414,6 +420,9 @@ $ rails new publicaciones
 $ cd publicaciones
 
 $ rails server
+
+$ rails generate controller welcome index #Generamos el controlador y las vista 
+#de nuestra pagina principal
 
 $ rails generate scaffold Post autor:string titulo:string contenido:text 
 # Se generaron los controladores y vistas que contienen los formularios
