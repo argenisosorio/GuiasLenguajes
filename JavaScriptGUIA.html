@@ -1,5 +1,24 @@
 <!-- Guía JavaScript by dM -->
 
+La sintaxis de JavaScript es muy similar a la de otros lenguajes de programación como Java y C.
+Las normas básicas que definen la sintaxis de JavaScript son las siguientes:
+
+-No se tienen en cuenta los espacios en blanco y las nuevas líneas: como sucede con XHTML, el intérprete de JavaScript
+ignora cualquier espacio en blanco sobrante, por lo que el código se puede ordenar de forma adecuada para entenderlo mejor
+(tabulando las líneas, añadiendo espacios, creando nuevas líneas, etc.)
+
+-Se distinguen las mayúsculas y minúsculas: al igual que sucede con la sintaxis de las etiquetas y elementos XHTML.
+Sin embargo, si en una página XHTML se utilizan indistintamente mayúsculas y minúsculas, la página se visualiza
+correctamente, siendo el único problema la no validación de la página. En cambio, si en JavaScript se
+intercambian mayúsculas y minúsculas el script no funciona.
+
+-No se define el tipo de las variables: al crear una variable, no es necesario indicar el tipo de dato que almacenará.
+De esta forma, una misma variable puede almacenar diferentes tipos de datos durante la ejecución del script.
+
+-No es necesario terminar cada sentencia con el carácter de punto y coma (;): en la mayoría de lenguajes de
+programación, es obligatorio terminar cada sentencia con el carácter ;. Aunque JavaScript no obliga a hacerlo, es
+conveniente seguir la tradición de terminar cada sentencia con el carácter del punto y coma (;).
+
 <script type="text/javascript">
 
 -------------------------------------
@@ -1692,7 +1711,7 @@ $(document).ready(function(){
 
 -------------------------------------
 
-<!-- Estilos CSS con JS inscristados en elementos HTML -->
+<!-- Estilos CSS con JS inscrustados en elementos HTML -->
 <html>
 <head>    
     <title>Page Title</title>
@@ -1952,6 +1971,89 @@ function pregunta(){
 
 -------------------------------------
 
+<!-- Cargar en modal una pagina web o html externa, con boton cerrar -->
+<!-- Crear el archivo x.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Example of Bootstrap 3 Modals with Remote URL</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="bs-example">
+    <!-- Button HTML (to Trigger Modal) -->
+    <a href="y.html" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#myModal">Launch Demo Modal</a>
+    
+    <!-- Modal HTML -->
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">             
+                <!-- Content will be loaded here from "remote.php" file -->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<!-- Crear el archivo y.html-->
+<div align="center">
+  <span style="text-align:right">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>  
+  </span>
+  XXXXXXXXXXXXXXXX <br />
+  XXXXXXXXXXXXXXXX <br />
+  XXXXXXXXXXXXXXXX <br />
+  XXXXXXXXXXXXXXXX <br />
+  XXXXXXXXXXXXXXXX <br />
+  <span style="text-align:right">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Boton cerrar</button>
+  </span>
+</div>
+
+-------------------------------------
+<!-- -->
+
+-------------------------------------
+<!-- -->
+
+-------------------------------------
+<!-- -->
+
+-------------------------------------
+<!-- -->
+
+-------------------------------------
+<!-- -->
+
+-------------------------------------
+<!-- -->
+
+-------------------------------------
+<!-- -->
+
+-------------------------------------
+<!-- -->
+
+-------------------------------------
+<!-- -->
+
+-------------------------------------
+<!-- -->
+
+-------------------------------------
+<!-- -->
+
+-------------------------------------
+<!-- -->
+
+-------------------------------------
+<!-- -->
+
+-------------------------------------
 <!-- -->
 
 -------------------------------------

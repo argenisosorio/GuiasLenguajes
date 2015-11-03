@@ -2,11 +2,26 @@
 
 <!-- Comentarios en HTML -->
 
+<html>
+    <head>
+        <title>Page Title</title>
+        <meta charset="UTF-8" />
+    </head>    
+<body>
+    <p>XXXXXXXXXXXXXXXX</p>
+</body>
+</html>
+
+---------------
+
 <!DOCTYPE html>
 <html>
 	<head>
 		<title>Page Title</title>
 	</head>
+    <link rel="stylesheet" href="estilo.css" type="text/css"/> <!--Llamada de un fichero de estilos-->
+    <script src="jquery-1.9.1.js" type="text/javascript"></script> <!--Llamada de un fichero js-->
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> <!--Llamada de un fichero js de un servidor externo-->
 <body>
 	<h1>This is a Heading</h1>
 	<p>This is a paragraph.</p>
@@ -298,6 +313,147 @@ xxxxxxxxxxxxxxxx Tabla con estilo xxxxxxxxxxxxxxxx
             hola
         </div>
     </center>
+</body>
+</html>
+
+xxxxxxxxxxxxxxxx Tabla con estilo e identificador xxxxxxxxxxxxxxxx
+
+<html>
+    <head>
+        <title></title>
+        <meta charset="UTF-8" />
+    </head>
+    <style>
+        table#X {
+            width:50%;
+            text-align: center;
+            color: red;
+            border-color: red;
+        }
+        table#Y {
+            width:50%;
+            text-align: center;
+            color: blue;
+            border-color: blue;
+        }
+    </style>
+<body>
+    <center>
+        tabla 1 <br />
+        <table id="X" border="1px" cellpadding="0px" cellspacing="0px">
+            <tr><td>1</td>  <td>2</td> <td>3</td> </tr>
+            <tr><td>4</td>  <td>5</td> <td>6</td> </tr>
+            <tr><td>7</td>  <td>8</td> <td>9</td> </tr>
+        </table>
+        <p></p>
+        tabla 2 <br />
+        <table id="Y" border="1px" cellpadding="0px" cellspacing="0px">
+            <tr><td>1</td>  <td>2</td> <td>3</td> </tr>
+            <tr><td>4</td>  <td>5</td> <td>6</td> </tr>
+            <tr><td>7</td>  <td>8</td> <td>9</td> </tr>
+        </table>
+    </center>
+</body>
+</html>
+
+xxxxxxxxxxxxxxxx Tabla con estilo e identificador en th, td xxxxxxxxxxxxxxxx
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+<style>
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: left;
+}
+
+table#t01 {
+    /*width:50%;*/
+}
+
+table#t01 tr:nth-child(even) {
+    /*background-color: #eee;*/
+    background-color: LightCyan;
+}
+table#t01 tr:nth-child(odd) {
+/*   background-color:#fff;*/
+   background-color: green;
+}
+table#t01 th    {
+    background-color: DodgerBlue;
+    color: white;
+}
+</style>
+</head>
+<body>
+<table>
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>      
+    <th>Points</th>
+  </tr>
+  <tr>
+    <td>Jill</td>
+    <td>Smith</td>      
+    <td>50</td>
+  </tr>  
+</table>
+<br>
+<table id="t01" border="1px" cellpadding="1px" cellspacing="0px" style="text-align:center;margin-left:10px">
+    <tr>
+        <th><b>ID</b></th>
+        <th><b>Usuario</b></th>
+        <th><b>Nombre</b></th>
+        <th><b>Apellido</b></th>
+        <th><b>Correo electrónico</b></th>
+        <th><b>Creado</b></th>
+        <th><b>Último acceso</b></th>
+        <th><b>Admin</b></th>
+        <th><b>Activo</b></th>
+        <th><b>Grupo</b></th>        
+    </tr>
+    <tr>
+        <td>XXXX</td>
+        <td>XXXX</td>
+        <td>XXXX</td>
+        <td>XXXX</td>
+        <td>XXXX</td>                  
+        <td>XXXX</td>
+        <td>XXXX</td>        
+        <td>Sí</td>
+        <td>No</td>        
+        <td>Grupo </td>
+    </tr>
+    <tr>
+        <td>XXXX</td>
+        <td>XXXX</td>
+        <td>XXXX</td>
+        <td>XXXX</td>
+        <td>XXXX</td>                  
+        <td>XXXX</td>
+        <td>XXXX</td>        
+        <td>Sí</td>
+        <td>No</td>        
+        <td>Grupo </td>
+    </tr>
+    <tr>
+        <td>XXXX</td>
+        <td>XXXX</td>
+        <td>XXXX</td>
+        <td>XXXX</td>
+        <td>XXXX</td>                  
+        <td>XXXX</td>
+        <td>XXXX</td>        
+        <td>Sí</td>
+        <td>No</td>        
+        <td>Grupo </td>
+    </tr>
+</table>
 </body>
 </html>
 
@@ -1290,9 +1446,143 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Diseño adaptable en cascada xxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxx Campo de busqueda - buscar/search con estilo xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+<html>
+<head>
+<style>
+#search input[type="text"] {
+    background: url(search-white.png) no-repeat 10px 6px #fcfcfc;/*Agregar imagen de lupa por ejemplo*/    
+    border: 1px solid #d1d1d1;
+    font: bold 12px Arial,Helvetica,Sans-serif;
+    /*color: #bebebe;*/
+    color: #000000;
+    width: 150px;
+    padding: 6px 15px 6px 35px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 5px;
+    text-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset;
+    -webkit-transition: all 0.7s ease 0s;
+    -moz-transition: all 0.7s ease 0s;
+    -o-transition: all 0.7s ease 0s;
+    transition: all 0.7s ease 0s;
+    /*border: ridge 1px;*/
+    }
+#search input[type="text"]:focus {
+    width: 200px;
+    }
+</style>
+</head>
+<body>
+<form method="get" action="/search" id="search">
+  <input name="q" type="text" size="40" placeholder="Buscar..." />
+</form>
+</body>
+</html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Ejemplo de fichero .css xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+body, html {
+    margin:0;
+    padding:0;
+    background:url("./Img/gris2.jpg");
+}
+#cabecera{
+    background:url("./Img/head.png") 100%;
+    width:100%;
+    height: 400px;
+    margin: 0px 0px 2px 0px;
+    border-radius:3px;    
+}
+#RedesSociales{
+    background:url("./Img/transparenciaa.PNG") 100%;
+    position:fixed;
+    width:55px;
+    height:216px;
+    margin:140px auto;  
+    border-radius:3px;  
+}
+#form{
+    /*width:520px;
+    height:35px;        
+     border:ridge 1px;  */
+    /*margin: 10px 10px 10px 10px;*/
+}
+#menu{  
+    background:url("./Img/negro.jpg") 100%; 
+    width:100%;
+    height: 34px;
+    margin: 0px 0px 0px 0px;    
+    border-radius:3px;  
+}
+#menu2{ 
+    background:url("./Img/negro.jpg") 100%; 
+    width:100%;
+    height: 64px;
+    margin: 0px 0px 0px 0px;
+    position:fixed;
+}
+#completo{
+    background:url("./Img/blancoo.jpg") 100%;
+    width:1000px;
+    height: 1080px;
+    margin: 0 auto;
+    border-radius:3px;
+}
+#cuerpo1{
+    background:url("./Img/negro.jpg") 100%;
+    width: 99%;
+    height: 350px;
+    margin: 3px 3px 3px 3px;
+    overflow : auto;
+    float: left;
+    border-radius:3px;
+    
+}
+#cuerpo2{
+    background:url("./Img/negro.jpg") 100%;
+    width: 99%;
+    height: 350px;
+    margin: 3px 3px 3px 3px;
+    overflow : auto;
+    float: left;
+    border-radius:3px;
+}
+#cuerpo3{
+    background:url("./Img/negro.jpg") 100%;
+    width: 99%;
+    height: 350px;
+    margin: 3px 3px 3px 3px;
+    overflow : auto;
+    float: left;
+    border-radius:3px;
+}
+#contenido{
+    background:url("./Img/blanco.jpg") 100%;
+    width: 31%;
+    height: 328px;
+    overflow : auto;
+    margin: 10px 10px 10px 10px;
+    float: left;
+    border-radius:3px;    
+}
+#pie{   
+    background:url("./Img/negro.jpg") 100%; 
+    width:100%;
+    height: 30px;
+    margin: 5px 0px 0px 0px;    
+    border-radius:3px;
+    /*float: left;*/
+    /* bottom: 0;
+    position:fixed; */
+}
+#textos{    
+    margin: 20px 20px 20px 20px;    
+}
 
 xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
