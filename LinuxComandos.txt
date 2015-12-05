@@ -193,6 +193,9 @@ userdel -r nombre_usuario // Como root, eliminar el usuario creado
 
 deluser --remove-home nombre_usuario // Otra forma de eliminar un usuario creado
 
+rename 's/\.txt/\.xls/' *.txt  //Cambiar extension a todos los ficheros de un directorio
+//En el ejemplo vamos a sustituir los .txt por .xls y le decimos que se lo haga a todos los .txt
+
 ##########################
 ########## Less ##########
 ##########################
@@ -644,6 +647,8 @@ git log // Podemos ver todos los commits que se han hehco a un proyecto
 
 git commit --amend -m "comentario commit corregido" // Corregir algun error en el texto del ultimo commit
 
+git commit --amend // Correguir un error en el commit, abrira un editor de texto
+
 git reset --hard HEAD~1 // Borrar el ultimo commit hecho.
 
 git checkout -b Nombre_Rama // Crear una rama y cambiarse a ella.
@@ -818,10 +823,10 @@ así como poder hacer pruebas si afectar a los paquetes del sistema global.
 
 --- Instalación: ---
 
-$ aptitude install python−virtualenv virtualenvwrapper // Para crear un ambiente virtual instale las herramientas
+$ aptitude install python-virtualenv virtualenvwrapper // Para crear un ambiente virtual instale las herramientas
 python-virtualenv y virtualenvwrapper
 
-$ mkvirtualenv nombre_ambiente_virtual //  Con su usuario (diferente a root) cree un ambiente virtual para su proyecto.
+$ mkvirtualenv nombre_ambiente_virtual //  Con un usuario (diferente a root) cree un ambiente virtual para su proyecto.
 
 $ workon nombre_ambiente_virtual // Para acceder al nombre del ambiente virtual creado
 

@@ -2015,13 +2015,71 @@ function pregunta(){
 </div>
 
 -------------------------------------
-<!-- -->
+
+<!-- Uso de  (dialog)
+Es una ventana de diálogo , cuenta con una barra de título y área de contenido, se puede mover,
+cambiar de tamaño y se cierra con el icono de 'x' por defecto.-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>jQuery UI Dialog - Default functionality</title>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css" />
+  <script>
+  $(function() {
+    $( "#dialog" ).dialog();
+  });
+  </script>
+</head>
+<body>
+<div id="dialog" title="Basic dialog">
+  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>
+</body>
+</html>
 
 -------------------------------------
-<!-- -->
+<!-- Copiar texto de una caja de texto a otra -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <script type="text/javascript">
+        function copiar() {
+            document.getElementById("text2").value=document.getElementById("text1").value;
+        }
+    </script>
+</head>
+<body>
+    <input type="text" name="text1" id="text1" onkeyup="copiar()">
+    <input type="text" name="text2" id="text2">
+</body>
+</html>
 
 -------------------------------------
-<!-- -->
+<!-- Descargar en un .txt el contenido de un area de texto -->
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <script type="text/javascript">         
+            window.onload = function() {
+            var txt = document.getElementById('txt');
+            txt.value = window.onload + '';
+                document.getElementById('link').onclick = function(code) {
+                    this.href = 'data:text/plain;charset=utf-8,'
+                    + encodeURIComponent(txt.value);
+                };
+            };          
+        </script>       
+    </head>
+<body>      
+    <textarea id="txt"></textarea>
+    <br />
+    <a href="#" id="link" download="contenido.txt">Descargar el contenido del textarea</a>  
+</body>
+</html>
 
 -------------------------------------
 <!-- -->

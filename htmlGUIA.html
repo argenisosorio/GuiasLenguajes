@@ -1584,9 +1584,92 @@ body, html {
     margin: 20px 20px 20px 20px;    
 }
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxx Pagina para crear tutoriales xxxxxxxxxxxxxxxxxxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxx de instalacion con estilos xxxxxxxxxxxxxxxxxxxxxxxxxxx
+<html>
+    <head>
+        <title>Estilo para codigo basico</title>
+        <meta charset="UTF-8" />
+    </head>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+  <style>
+    body {
+      background-color: #FFFFFF;
+    }
+    #cuerpo {
+      width: 90%;
+      /*border: ridge 1px;*/
+      background-color: #FFFFFF;      
+      margin-top: 5px;
+      padding: 10px;
+      float: left;
+      text-align: justify;
+    }
+
+    #code {
+      background-color: black;
+      width: 90%;      
+      color: lime;
+      /*border: ridge 1px;*/
+      border-color: black;      
+      margin-top: 5px;
+      float: left;
+      padding: 10px;
+      border-radius: 5px;
+    }    
+  </style>
+<body>  
+  <div id="cuerpo">
+    ########## Ambiente virtual en Python ##########
+  </div>
+  <div id="cuerpo">
+    Cuando se desarrollando software con Python, quizas se presente el problema de tener utilizar diferentes versiones de una mismo paquete en
+    diferentes proyectos, ya sea el mismo Python o diferentes versiones de un Framework como Django por ejemplo, el problema a solucionar radica
+    en como poder instalar las dos o mas versiones de la misma librería con el fin de poder desarrollar varios proyectos de forma simultánea.
+
+    La solución consiste en crear virtualenvs o entornos virtuales. Un entorno virtual de Python es un espacio completamente independiente
+    de otros entornos virtuales y de los paquetes instalados globalmente en el sistema. Esto significa que es posible instalar la versión
+    2.7 de Python en un entorno virtual y la versión 3.0 en otro diferente o de forma global sin problema alguno.
+
+    El porder tener diferentes entornos donde podemos instalar diferentes versiones de paquetes nos da la oportunidad de hacer un desarrollo simultaneo
+    así como poder hacer pruebas si afectar a los paquetes del sistema global.
+  </div>
+  <div id="cuerpo">
+    --- Instalación: ---
+  </div>
+  <div id="cuerpo">
+    Para crear un ambiente virtual instale las herramientas python-virtualenv y virtualenvwrapper
+  </div>
+  <div id="code">
+    $ aptitude install python-virtualenv virtualenvwrapper
+  </div>
+  <div id="cuerpo">
+    Con un usuario (diferente a root) cree un ambiente virtual para su proyecto.
+  </div>
+  <div id="code">
+    $ mkvirtualenv nombre_ambiente_virtual
+  </div>  
+</body>
+</html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Hover con imagenes xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+<html>
+    <head>
+        <title>Estilo para codigo basico</title>
+        <meta charset="UTF-8" />
+    </head>
+    <style type="text/css">
+    img {      
+    }
+    img:hover {
+      border: ridge 1px;
+    }
+    </style>
+<body>  
+    <img src="1.png" onmouseover="this.src='2.png' " onmouseout="this.src='1.png' "/>
+</body>
+</html>
 
 xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
