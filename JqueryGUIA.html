@@ -108,7 +108,75 @@
 
 -------------------------------------
 
-<!-- -->
+<!-- Validación con jQuery.validate, mensaje de alerta junto al campo -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Validación con jQuery.validate</title>
+  <script src="js/jquery-1.9.1.js" type="text/javascript"></script>
+  <script src="js/jquery.validate.js" type="text/javascript"></script>
+  <script>
+  $(document).ready(function () {
+    $("#form1").validate();
+    
+    $("#txtNombre").rules("add", {
+        required: true,
+        messages: {
+            required: "<span>El campo nombre es obligatorio</span>"
+        }
+    });
+
+    $("#txtPwd").rules("add", {
+        required: true,
+        minlength: 6,
+        messages: {
+            required: "<span>El password no puede ser nulo.</span>",
+            minlength: $.validator.format("<span>El largo mínimo permitido es {0} caracteres.</span>")
+        }
+    });
+
+    $("#txtEdad").rules("add", {
+        required: true,
+        min: 18,
+        messages: {
+            required: "<span>Debe entrar una edad.</span>",
+            min: $.validator.format("<span>La edad mínima debe ser {0} años.</span>"),
+            max: $.validator.format("<span>La edad máxima debe ser {0} años.</span>")
+        }
+    });
+
+    $("#txtEmail").rules("add", {
+        email: true,
+        messages: {
+            email:"<span>Debe ingresar un email válido o dejarlo en blanco</span>"
+        }
+    });
+
+    $('#btn').click(function () {
+        $("#form1").valid();
+        $("#form1").submit();
+    });
+  });
+  </script>
+  <style>
+    span {
+      color: red;
+      padding-left: 5px;
+      display:inline;
+    }
+  </style>
+</head>
+<body>
+  <form id="form1" action="#">
+    Nombre: <input name="txtNombre" type="text" id="txtNombre" /> <br />
+    Password: <input type="password" name="txtPwd" id="txtPwd" /> <br />
+    Edad: <input name="txtEdad" type="number" id="txtEdad" min="18" max="60"/> <br />
+    Email: <input name="txtEmail" id="txtEmail" type="email" /> <br />    
+    <input id="btn" type="button" value="Enviar"/>
+  </form>
+</body>
+</html>
 
 -------------------------------------
 

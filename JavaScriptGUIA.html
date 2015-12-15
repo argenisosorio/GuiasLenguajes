@@ -2082,16 +2082,115 @@ cambiar de tamaño y se cierra con el icono de 'x' por defecto.-->
 </html>
 
 -------------------------------------
-<!-- -->
+<!-- Confirmación, validar envío de formulario en js-->
+<!-- alerta sobre el envio del formulario-->
+<html>
+<head>
+    <title>Confirmación de envío de formulario</title>
+    <meta charset="UTF-8">
+    <script language="JavaScript">
+        function pregunta() {
+            if (confirm('¿Estas seguro de enviar este formulario?')){
+               document.tuformulario.submit()
+            }
+        }
+    </script>
+</head>
+<body>
+    <form name=tuformulario method="get" action="">
+        <label for="nombre">Nombre:<input id="nombre" type="text" name="nombre" /></label> <br />
+        <label for="apellidos">Apellidos:<input id="apellidos" type="text" name="apellidos" /></label> <br />
+        <input type=button onclick="pregunta()" value="Enviar">
+    </form>
+</body>
+</html>
 
 -------------------------------------
-<!-- -->
+<!-- Confirmación, validación de que los datos del formulario fueron enviados -->
+<!-- mediante una alerta -->
+<html>
+<head>
+    <title>Confirmación de datos enviados</title>
+    <meta charset="UTF-8">
+    <script language="JavaScript">
+        function return_validacion() {
+            alert("Acceso concedido");
+        }
+    </script>
+</head>
+<body>
+    <!--form action="#" method="get"-->
+    <form action="" method="" id="" name="" onsubmit="return_validacion()">
+        Usuario: <input type="text" name="user" > <br />
+        Contraseña: <input type="password" name="contrasena"> <br />
+        <input type="submit" value="Enviar">
+        <input type="reset" value="Borrar">
+    </form>
+</body>
+</html>
 
 -------------------------------------
-<!-- -->
+<!-- Validar que los campos no estén vacios, form-->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Ejemplo aprenderaprogramar.com</title>
+        <meta charset="utf-8" />
+        <style type="text/css">
+            
+        </style>
+        <script type="text/javascript">
+          function formulario(f) {
+            if (f.user.value == '') {
+              alert ('El Usuario es obligatorio');
+              f.nombre.focus(); return false;
+            }
+            
+            if (f.pass.value == '') {
+              alert ('El Password es obligatorio');
+              f.email.focus(); return false; } return true;
+            }
+        </script>
+    </head>
+<body>
+    <form method="get" action="" onsubmit="return formulario(this)">
+        Usuario: <input type="text" name="user"> <br />  
+        Contraseña: <input type="password" name="pass"> <br />
+        <label><input type="submit" value="Enviar"><input type="reset" value="Cancelar"></label>
+    </form>
+</body>
+</html>
 
 -------------------------------------
-<!-- -->
+<!-- Validar que los campos no estén vacios, si estan vacios -->
+<!-- no envia los datos -->
+<html>
+<head>
+    <title>Confirmación de envío de formulario</title>
+    <meta charset="utf-8" />
+    <script language="JavaScript">
+      function validar() {
+        if (document.formulario.username.value == '') {
+          alert("El campo Usuario es obligatorio");
+        }
+        if (document.formulario.password.value == '') {
+          alert("El campo Contraseña es obligatorio");
+        }        
+        else {
+          alert("Datos enviados");
+          document.formulario.submit()
+        }
+      }
+    </script>
+</head>
+<body>
+  <form name="formulario" action="#">
+    Usuario: <input type="text" name="username"> <br />
+    Contraseña: <input type="password" name="password"> <br />
+    <input type="button" onclick="validar()" value="Enviar">
+  </form>
+</body>
+</html>
 
 -------------------------------------
 <!-- -->

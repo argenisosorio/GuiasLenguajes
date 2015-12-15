@@ -489,7 +489,7 @@ Contraseña: <input type="password" name="contrasena"><br />
 		URL: <input type="url"> <br />
 		E-Mail: <input type="email"> <br /> 
 		<input type="submit" value="Enviar">
-		<input type="reset" value="Borrar"> 
+		<input type="reset" value="Borrar">
 	</form>
 </div>
 
@@ -940,53 +940,47 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Block Level Buttons xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
+    <head>
+        <title>Ejemplo aprenderaprogramar.com</title>
+        <meta charset="utf-8" />
+        <style type="text/css">
+            label {
+                display:block;
+                padding:5px;
+            }
+        </style>
+        <script type="text/javascript">
+            window.onload = function () {
+                document.formularioContacto.nombre.focus();
+                document.formularioContacto.addEventListener('submit', validarFormulario);
+            }    
 
-	<head>
-		<title>Ejemplo aprenderaprogramar.com</title>
-		<meta charset="utf-8" />
-
-	<style type="text/css">label{display:block; padding:5px;}
-	</style>
-
-	<script type="text/javascript">
-		window.onload = function () {
-			document.formularioContacto.nombre.focus();
-			document.formularioContacto.addEventListener('submit', validarFormulario);
-		}	 
-
-		function validarFormulario(evObject) {
-			evObject.preventDefault();
-			var todoCorrecto = true;
-			var formulario = document.formularioContacto;
-		for (var i=0; i<formulario.length; i++) {
-		                if(formulario[i].type =='text') {
-		                               if (formulario[i].value == null || formulario[i].value.length == 0 || /^\s*$/.test(formulario[i].value)){
-		                               alert (formulario[i].name+ ' no puede estar vacío o contener sólo espacios en blanco');
-		                               todoCorrecto=false;
-		                               }
-					                }
-
-		                		}
-
-		if (todoCorrecto ==true) {formulario.submit(); }
-
-		}
-	</script>
-	</head>
-
+            function validarFormulario(evObject) {
+                evObject.preventDefault();
+                var todoCorrecto = true;
+                var formulario = document.formularioContacto;
+            for (var i=0; i<formulario.length; i++) {
+                            if(formulario[i].type =='text') {
+                                           if (formulario[i].value == null || formulario[i].value.length == 0 || /^\s*$/.test(formulario[i].value)){
+                                           alert (formulario[i].name+ ' no puede estar vacío o contener sólo espacios en blanco');
+                                           todoCorrecto=false;
+                                           }
+                                        }
+                                    }
+            if (todoCorrecto ==true) {formulario.submit(); }
+            }
+        </script>
+    </head>
 <body>
-
-	<form name ="formularioContacto" class="formularioTipo1" method="get" action="">
-		<p>REGISTRARSE</p>
-		<label for="nombre"><span>Nombre:</span> <input id="nombre" type="text" name="nombre" /></label>
-		<label for="apellidos"><span>Apellidos:</span> <input id="apellidos" type="text" name="apellidos" /></label>
-		<label for="email"><span>Correo electrónico:</span> <input id="email" type="text" name="email" /></label>
-		<label><input type="submit" value="Enviar"><input type="reset" value="Cancelar"></label>
-	</form>
-
+    <form name ="formularioContacto" class="formularioTipo1" method="get" action="">
+        <p>REGISTRARSE</p>
+        <label for="nombre"><span>Nombre:</span> <input id="nombre" type="text" name="nombre" /></label>
+        <label for="apellidos"><span>Apellidos:</span> <input id="apellidos" type="text" name="apellidos" /></label>
+        <label for="email"><span>Correo electrónico:</span> <input id="email" type="text" name="email" /></label>
+        <label><input type="submit" value="Enviar"><input type="reset" value="Cancelar"></label>
+    </form>
 </body>
 </html>
 
@@ -1346,7 +1340,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Estilo en boton html xxxxxxxxxxxxxxxxxxxxxxxxxxx
 <body>
   <style type="text/css">
     #boton {
-      font-size:15px;      
+      font-size:15px;
       font-weight:bold;
       color:black;
       background:gray;
@@ -1670,6 +1664,78 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Hover con imagenes xxxxxxxxxxxxxxxxxxxxxxxxxxx
     <img src="1.png" onmouseover="this.src='2.png' " onmouseout="this.src='1.png' "/>
 </body>
 </html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validacion de campos con html5 xxxxxxxxxxxxxxxxxxxxxxxxxxx
+<html>
+<head>
+    <title>Validacion de campos con html5</title>
+    <meta charset="UTF-8">  
+</head>
+<body>
+    <form>
+        <Nombre: <input name="txtNombre" type="text" id="txtNombre" required oninvalid="setCustomValidity('El campo nombre es obligatorio')" oninput="setCustomValidity('')"/> <br />       
+        Password: <input type="password" name="txtPwd" id="txtPwd" required pattern=".{6,}" oninvalid="setCustomValidity('El password es obligatorio y debe tener como mínimo 6 caracteres')" oninput="setCustomValidity('')" /> <br />
+        Edad: <input name="txtEdad" type="number" id="txtEdad" min="18" max="60" oninvalid="etCustomValidity('La edad debe ser entre 18 y 60 años.')" oninput="setCustomValidity('')" /> <br /-->
+        Email: <input name="txtEmail" id="txtEmail" type="email" oninvalid="setCustomValidity('Debe ingresar un email válido')" oninput="setCustomValidity('')" /> <br />
+        <input type="submit" value="Enviar"  id="btnSubmit" name="btnSubmit"/>
+    </form>
+</body>
+</html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Mensaje de alerta con css xxxxxxxxxxxxxxxxxxxxxxxxxxx
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>xxxxxx</title>
+  <style type="text/css">
+    @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
+     
+    .isa_info, .isa_success, .isa_warning, .isa_error {
+    margin: 10px 0px;
+    padding:12px;
+    }
+    .isa_info {
+        color: #00529B;
+        background-color: #BDE5F8;
+    }
+    .isa_success {
+        color: #4F8A10;
+        background-color: #DFF2BF;
+    }
+    .isa_warning {
+        color: #9F6000;
+        background-color: #FEEFB3;
+    }
+    .isa_error {
+        color: #D8000C;
+        background-color: #FFBABA;
+    }
+    .isa_info i, .isa_success i, .isa_warning i, .isa_error i {
+        margin:10px 22px;
+        font-size:2em;
+        vertical-align:middle;
+    }
+  </style> 
+</head>
+<body>
+  <div class="isa_info">Replace this text with your own text.</div>
+   
+  <div class="isa_success">Replace this text with your own text.</div>
+   
+  <div class="isa_warning">Replace this text with your own text.</div>
+   
+  <div class="isa_error">Replace this text with your own text.</div>
+</body>
+</html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
