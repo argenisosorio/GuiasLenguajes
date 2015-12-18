@@ -270,8 +270,7 @@ console.log(miPais.substring(0,3)); //Usá console.log para mostrar las tres pri
                 alert("Falso");
             }
         </script>
-    </head>
-    
+    </head>   
 <body>    
 </body>
 </html>
@@ -2193,16 +2192,196 @@ cambiar de tamaño y se cierra con el icono de 'x' por defecto.-->
 </html>
 
 -------------------------------------
-<!-- -->
+
+<!-- Validar claves con javascript -->
+<!doctype html>
+<html>
+<head>
+<title></title>
+
+<script type="text/javascript">
+
+    window.addEventListener('load', inicio, false);
+
+    function inicio() {
+        document.getElementById("formulario1").addEventListener('submit', validar, false);
+    }
+
+    function validar(evt) {
+        var cla1 = document.getElementById("clave1").value;
+        var cla2 = document.getElementById("clave2").value;
+        if (cla1!=cla2) {
+            alert('Las claves ingresadas son distintas');
+            evt.preventDefault();
+        }
+        //else
+        //{
+        //    alert('Correcto');
+        //}
+    }
+
+</script>
+
+</head>
+<body>
+
+<form method="GET" action="#" id="formulario1">
+    Ingrese clave: <input type="password" id="clave1" name="clave1" size="20" required> <br>
+    Repita clave: <input type="password" id="clave2" name="clave2" size="20" required> <br>
+    <input type="submit" id="confirmar" name="confirmar" value="Confirmar">
+</form>
+
+</body>
+</html>          
 
 -------------------------------------
-<!-- -->
+<!-- Validar campos con javascript -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+    <head>
+        <title>Ejemplo aprenderaprogramar.com</title>
+        <meta charset="utf-8" />
+        <style type="text/css">
+            label {
+                display:block;
+                padding:5px;
+            }
+        </style>
+        <script type="text/javascript">
+            window.onload = function () {
+                document.formularioContacto.nombre.focus();
+                document.formularioContacto.addEventListener('submit', validarFormulario);
+            }    
+
+            function validarFormulario(evObject) {
+                evObject.preventDefault();
+                var todoCorrecto = true;
+                var formulario = document.formularioContacto;
+            for (var i=0; i<formulario.length; i++) {
+                            if(formulario[i].type =='text') {
+                                           if (formulario[i].value == null || formulario[i].value.length == 0 || /^\s*$/.test(formulario[i].value)){
+                                           alert (formulario[i].name+ ' no puede estar vacío o contener sólo espacios en blanco');
+                                           todoCorrecto=false;
+                                           }
+                                        }
+                                    }
+            if (todoCorrecto ==true) {formulario.submit(); }
+            }
+        </script>
+    </head>
+<body>
+    <form name ="formularioContacto" class="formularioTipo1" method="get" action="">
+        <p>REGISTRARSE</p>
+        <label for="nombre"><span>Nombre:</span> <input id="nombre" type="text" name="nombre" /></label>
+        <label for="apellidos"><span>Apellidos:</span> <input id="apellidos" type="text" name="apellidos" /></label>
+        <label for="email"><span>Correo electrónico:</span> <input id="email" type="text" name="email" /></label>
+        <label><input type="submit" value="Enviar"><input type="reset" value="Cancelar"></label>
+    </form>
+</body>
+</html>
 
 -------------------------------------
-<!-- -->
+<!-- Validar campos vacios de formulario, mostrar texto de alerta con estilo
+junto a la caja de texto -->
+<html>
+<head>
+    <title>Confirmación de envío de formulario</title>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      span.mensaje_error_color {
+        color: red;
+      }      
+    </style>
+    <script language="JavaScript">
+      function validar() {
+        if (document.formulario.username.value == '') {
+          //alert("El campo Usuario es obligatorio");
+          document.getElementById("mensaje_error").innerHTML = "El Usuario es obligatorio";
+        }
+        if (document.formulario.password.value == '') {
+          //alert("El campo Usuario es obligatorio");
+          document.getElementById("mensaje_error2").innerHTML = "La Contraseña es obligatoria";
+        }
+        else {
+          //alert("Datos enviados");
+          document.formulario.submit()
+        }
+      }
+    </script>
+</script>
+</head>
+<body>
+  <form name="formulario" action="#">
+    *Usuario: <input type="text" name="username">
+    <span id="mensaje_error" class="mensaje_error_color"></span> <br />
+    *Contraseña: <input type="password" name="password">
+    <span id="mensaje_error2" class="mensaje_error_color"></span> <br />    
+    <input type="button" onclick="validar()" value="Enviar">
+  </form>
+</body>
+</html>
 
 -------------------------------------
-<!-- -->
+<!-- Validar el envio de datos del formulario segun la condición, este es el caso de que el campo
+no este vacío -->
+<html>
+<head>
+    <title>Confirmación de envío de formulario</title>
+    <meta charset="utf-8" />      
+    <script type="text/javascript">
+      function enviar(){
+        var formulario = document.getElementById("formulario");
+        var dato = formulario[0];       
+        if (dato.value != ""){
+          alert("Se envió");
+          formulario.submit();
+          return true;
+        }
+        else {
+          alert("No se envió");
+          return false;
+        }
+      }
+    </script>
+</head>
+<body>
+  <form id="formulario" action="#" onsubmit="return enviar();">  
+    Usuario: <input type="text" name="username"> <p />    
+    <button>Enviar</button>
+  </form>
+</body>
+</html>
+
+-----
+
+<!-- Ejemplo original, solo envía si la cadena a enviar coincide con la condición -->
+<html>
+<head>
+    <title>Confirmación de envío de formulario</title>
+    <meta charset="utf-8" />
+    <script type="text/javascript">
+      function enviar(){
+        var formulario = document.getElementById("formulario"); 
+        var dato = formulario[0];
+       
+        if (dato.value=="enviar"){
+          alert("Enviando el formulario");
+          formulario.submit();
+          return true;
+        } else {
+          alert("No se envía el formulario");
+          return false;
+        }
+      }
+    </script>
+</head>
+<body>
+  <form id="formulario" action="#" onsubmit="return enviar();">
+    *Usuario: <input type="text" name="username"> <p />    
+    <button>Enviar</button>
+  </form>
+</body>
+</html>
 
 -------------------------------------
 <!-- -->
@@ -2223,5 +2402,3 @@ cambiar de tamaño y se cierra con el icono de 'x' por defecto.-->
 
 <p />
 <a onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" href="http://www.as.com/">Vinculo para abrir la página en otra ventana</a>
-
-

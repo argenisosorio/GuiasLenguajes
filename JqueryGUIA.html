@@ -2,14 +2,14 @@
 
 -------------------------------------
 
-<!-- Hola Mundo en Jquery -->
+<!-- Hola Mundo en Jquery
+imprimir en el documento -->
 <html>
     <head>
         <title>jQuery Hello World</title>
         <script src="jquery-1.9.1.js" type="text/javascript"></script>
         <meta charset="UTF-8">
-    </head> 
-<body> 
+    </head>
     <script type="text/javascript"> 
         $(document).ready(function() {
             $("#texto").html("Hola mundo con JQuery"); //Este texto se escribira en el documento en donde esta la etiqueta con el id especificado
@@ -21,16 +21,61 @@
             $("p").html("Esto es un párrafo"); // El texto se escribirá en todas las etiquetas (<p>)
         });
     </script>
- 
-<b>Hola mundo con HTML</b>
- 
+<body>     
 <div id="texto"> <!-- Etiqueta con identificador donde se escribira el texto--> 
 </div>
-
 <p></p> <!-- Aqui se imprime otro texto enviado en el script -->
+</body>
+</html>
 
-<p />
+-------------------------------------
 
+<!-- Hola Mundo con alerta js -->
+<html>
+    <head>
+        <title>jQuery Hello World</title>
+        <script src="jquery-1.9.1.js" type="text/javascript"></script>
+        <meta charset="UTF-8">
+    </head>
+    <script type="text/javascript"> 
+        $(document).ready(function() {
+            alert("Hola mundo");
+        });
+    </script>    
+<body>
+  xxxxxxxxxx
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Activar funcion, funcion con Jquery activada desde un enlace o un botón
+el (id) define que funcion usará -->
+<html>
+    <head>    
+      <title>Prueba</title> 
+      <meta charset="UTF-8">        
+      <script src="jquery-1.9.1.js" type="text/javascript"></script>
+      <script>
+            $(document).ready(function() {
+                $("#h").click(function(){
+                    alert("Escribirá en el html un Hola Mundo ");
+                    $("p").html("Hola Mundo");                    
+                });
+                $('#btn').click(function () {
+                    alert("Activó la función");
+                });
+            });
+        </script>
+    </head>
+<body>
+    <div id="h">
+        <a href="#">Función Hola Mundo</a>
+    </div>
+    <br />
+    <button id="btn">Botón</button>
+    <br />
+    <p></p>
 </body>
 </html>
 
@@ -50,20 +95,11 @@
                 });
             });
         </script>
-
-        <script>
-            /*$(document).ready(function() {
-                $("p").html("Hola Mundo");
-            });*/
-        </script>
     </head>
 <body>
     <div id="h">
         <a href="#">Activar alerta</a>
-    </div>
-
-    <!--<p>Párrafo</p>-->
-    
+    </div>    
 </body>
 </html>
 

@@ -522,7 +522,7 @@ placeholder="Tu Nombre" //Texto de ejemplo dentro del campo del formulario, a ma
 
 <INPUT TYPE="button" VALUE="Pulseme"> Crea un boton generico de HTML y nosotros asignamos su funcionamiento
 
-<FORM> 
+<FORM>
 <TEXTAREA NAME="texto" ROWS="10" COLS="50">
 Hola hdspm
 </TEXTAREA>
@@ -937,94 +937,6 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Block Level Buttons xxxxxxxxxxxxxxxxxxxxxxxxxxx
 	</div>
 </body>
 </html>
-
-xxxxxxxxxxxxxxxxxxxxxxxxxx Validar campos con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-    <head>
-        <title>Ejemplo aprenderaprogramar.com</title>
-        <meta charset="utf-8" />
-        <style type="text/css">
-            label {
-                display:block;
-                padding:5px;
-            }
-        </style>
-        <script type="text/javascript">
-            window.onload = function () {
-                document.formularioContacto.nombre.focus();
-                document.formularioContacto.addEventListener('submit', validarFormulario);
-            }    
-
-            function validarFormulario(evObject) {
-                evObject.preventDefault();
-                var todoCorrecto = true;
-                var formulario = document.formularioContacto;
-            for (var i=0; i<formulario.length; i++) {
-                            if(formulario[i].type =='text') {
-                                           if (formulario[i].value == null || formulario[i].value.length == 0 || /^\s*$/.test(formulario[i].value)){
-                                           alert (formulario[i].name+ ' no puede estar vacío o contener sólo espacios en blanco');
-                                           todoCorrecto=false;
-                                           }
-                                        }
-                                    }
-            if (todoCorrecto ==true) {formulario.submit(); }
-            }
-        </script>
-    </head>
-<body>
-    <form name ="formularioContacto" class="formularioTipo1" method="get" action="">
-        <p>REGISTRARSE</p>
-        <label for="nombre"><span>Nombre:</span> <input id="nombre" type="text" name="nombre" /></label>
-        <label for="apellidos"><span>Apellidos:</span> <input id="apellidos" type="text" name="apellidos" /></label>
-        <label for="email"><span>Correo electrónico:</span> <input id="email" type="text" name="email" /></label>
-        <label><input type="submit" value="Enviar"><input type="reset" value="Cancelar"></label>
-    </form>
-</body>
-</html>
-
-xxxxxxxxxxxxxxxxxxxxxxxxxx Validar claves con javascript xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-<!doctype html>
-<html>
-<head>
-<title></title>
-
-<script type="text/javascript">
-
-    window.addEventListener('load', inicio, false);
-
-    function inicio() {
-        document.getElementById("formulario1").addEventListener('submit', validar, false);
-    }
-
-    function validar(evt) {
-        var cla1 = document.getElementById("clave1").value;
-        var cla2 = document.getElementById("clave2").value;
-        if (cla1!=cla2) {
-            alert('Las claves ingresadas son distintas');
-            evt.preventDefault();
-        }
-        //else
-        //{
-        //    alert('Correcto');
-        //}
-    }
-
-</script>
-
-</head>
-<body>
-
-<form method="GET" action="#" id="formulario1">
-    Ingrese clave: <input type="password" id="clave1" name="clave1" size="20" required> <br>
-    Repita clave: <input type="password" id="clave2" name="clave2" size="20" required> <br>
-    <input type="submit" id="confirmar" name="confirmar" value="Confirmar">
-</form>
-
-</body>
-</html> 		 
 
 xxxxxxxxxxxxxxxxxxxxxxxxxx Formulario, campo de busqueda con estilo xxxxxxxxxxxxxxxxxxxxxxxxxxx
 

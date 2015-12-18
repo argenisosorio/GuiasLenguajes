@@ -737,31 +737,27 @@ quede desactualizada, se debe realizar el merge de master sobre development.
 se almacena y mantiene información digital, habitualmente bases de datos o archivos informáticos.
 
 1- Crearnos una cuenta en GitHub
-2- Crear un repositorio, ese repo tendra una URL asignada, ejem: https://github.com/argenisosorio/GuiasLenguajes
-// En este caso (argenisosorio) es el nombre de usuario y (GuiasLenguajes) es el nombre del repositorio
-3- Una forma rapida de subir un proyecto de git es bajando ese repositorio creado, que sera donde subiremos nuestro proyecto
-// descargamos ese repo con:
+2- Crear un repositorio, ese repo tendra una URL asignada, ejem: https://github.com/name_user/name_repo
+3- Una forma rapida de subir un proyecto de git es bajando ese repositorio creado, clonandolo en nuestro directorio,
+al clonarlo ya viene configurado con los ficehros de git lo que nos permitira hacer push directamente sin hacer mayores
+configuraciones
 
-git clone https://github.com/Usuario/nombreproyecto.git // Clonamos el repositorio del proyecto
+git clone https://github.com/name_user/name_repo.git // Clonamos el repositorio del proyecto
 
-cd nombreproyecto/ //Nos cambiamos a la carpeta del proyecto
+cd name_repo/ //Nos cambiamos a la carpeta del proyecto
 
 4- Una vez hecho es veremos una carpeta local con el nombre de nuestro repositorio de Github
 esta carpeta estará vacía porque aun no hemos puesto nada. Ahora puedes meter dentro todos los archivos
 nuestro proyecto y cuando los tengas todos dentro puedes ejecutar estos comandos:
 
-git add // Leer seccion de comandos git
+git add . // Para agregar todos los archivos nuevos
 
-git commit -m "Comentario" // Leer seccion de comandos git
+git commit -m "Comentario" // Hacemos el primer commit del proyecto, ejemplo: "Primer commit" o "Caga inicial"
 
 git push origin master // Este comando es para subir el proyecto directamente al repo de nuestra cuenta en 
 github, cabe mencionar que en el directorio .git descargado, en el archivo config estará por defecto
 escrita la URL de nuestro repo lo que facilita subir los proyectos y los cambios directamente, por ello 
 el paso de la clonacion del repo.
-
-git push origin --delete your_branch //Eliminar una rama en tu Github o en tu repositorio remoto.
-
-git push origin :your_branch // Eliminar una rama, alternativa al anterior.
 
 // Antes de subir los cambios nos pedira el user y pass de la cuenta github para realizar la autenticacion
 user@debian:~/GuiasLenguajes$ git push origin master
@@ -776,6 +772,10 @@ To https://github.com/user/proyecto.git
    af47064..228246e  master -> master
 
 //Listo ya deberias porder ver tu proyecto en github
+
+git push origin --delete your_branch //Eliminar una rama en tu Github o en tu repositorio remoto.
+
+git push origin :your_branch // Eliminar una rama, alternativa al anterior.
 
 git push origin +master // Para borrar o deshacer un commit en github, se debe primero borrar el commit 
 de manera local, luego volvemos a subir el proyecto con este comando para que quede como estaba.
