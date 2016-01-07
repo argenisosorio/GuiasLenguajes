@@ -1,5 +1,46 @@
 <!-- Guía Jquery by dM -->
 
+--- ¿Qué es JQuery? ---
+
+jQuery es una biblioteca de JavaScript, permite simplificar la manera de interactuar
+con los documentos HTML, manipular el árbol DOM, manejar eventos, desarrollar
+animaciones y agregar interacción con la técnica AJAX a páginas web.
+
+Cada sentencia en JQuery contiene un "selector", para seleccionar uno o más elementos HTML
+del documento.
+
+-Ejemplo:
+$(selector).acccion();
+
+La función $() hace una petición al documento HTML para encontrar el elemento
+especificado por el selector, después regresa un objeto JQuery que es una
+colección de todos esos objetos que buscó.
+
+En este punto el evento "document ready" es disparado en el navegador para dar
+señal de que el documento esta listo para ser manipulado por JQuery.
+
+El documento puede ser reconocido especificando el documento como tal
+y mandando llamar la función ready(), es decir, que cuando el documento
+este listo entonces se disparen los eventos.
+
+Es buena practica especificar una función JavaScript anónima junto con los paréntesis
+de la función ready(), ejemplo:
+
+<script>
+    $(document).ready(function(){
+        alert("¡Hola esto es una alerta!");
+    });
+</script>
+
+-------------------------------------
+
+*Dato: Los Jquery descargados como: jquery-1.9.1.js representan una librería que 
+se puede manipular para hacer modificaciones, el codigo viene indentado para ser mas 
+legible, a diferencia de las librerías con la extensión .min.js como: jquery-1.9.1.min.js
+que es una versión de la librería donde el codigo viene comprmido, sin indentación lo que 
+hace el fichero mas liviano al momento de descargarse, util cuando se hace el llamado a
+la librería desde un servidor externo.
+
 -------------------------------------
 
 <!-- Hola Mundo en Jquery
