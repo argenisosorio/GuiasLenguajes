@@ -2,35 +2,81 @@
 
 --- ¿Qué es JQuery? ---
 
-jQuery es una biblioteca de JavaScript, permite simplificar la manera de interactuar
-con los documentos HTML, manipular el árbol DOM, manejar eventos, desarrollar
-animaciones y agregar interacción con la técnica AJAX a páginas web.
+jQuery es una biblioteca de JavaScript, permite simplificar la
+manera de interactuar con los documentos HTML, manipular el
+árbol DOM, manejar eventos, desarrollar animaciones y agregar
+interacción con la técnica AJAX a páginas web.
 
-Cada sentencia en JQuery contiene un "selector", para seleccionar uno o más elementos HTML
-del documento.
+Cada sentencia en JQuery contiene un "selector", para seleccionar
+uno o más elementos HTML del documento.
 
 -Ejemplo:
 $(selector).acccion();
 
-La función $() hace una petición al documento HTML para encontrar el elemento
-especificado por el selector, después regresa un objeto JQuery que es una
-colección de todos esos objetos que buscó.
+-Ejemplo:
+$(elemento).metodoAEjecutar();
 
-En este punto el evento "document ready" es disparado en el navegador para dar
-señal de que el documento esta listo para ser manipulado por JQuery.
+La función $() hace una petición al documento HTML para encontrar
+el elemento especificado por el selector, después regresa un objeto
+JQuery que es una colección de todos esos objetos que buscó.
+
+En este punto el evento "document ready" es disparado en el
+navegador para dar señal de que el documento esta listo para
+ser manipulado por JQuery.
 
 El documento puede ser reconocido especificando el documento como tal
 y mandando llamar la función ready(), es decir, que cuando el documento
 este listo entonces se disparen los eventos.
 
-Es buena practica especificar una función JavaScript anónima junto con los paréntesis
-de la función ready(), ejemplo:
+Es buena practica especificar una función JavaScript anónima junto con
+los paréntesis de la función ready(), ejemplo:
 
 <script>
     $(document).ready(function(){
         alert("¡Hola esto es una alerta!");
     });
 </script>
+
+En el caso de los eventos, ejemplo:
+
+<script>
+    $(elemento).click(function(){
+       //Código a ejecutar.
+    });
+</script>
+
+----------------
+
+Existe algo llamado selectores, los selectores nos permiten
+levantar una etiqueta por su nombre, id e incluso por su class.
+Para levantar un elemento por su id. Primero que nada cuando
+usamos como en el ejemplo anterior:
+
+<script>
+    $(document).ready(function(){
+       //Código a ejecutar cuando se carga la página 
+    });
+</script>
+
+Lo que estamos haciendo es levantar un objeto document que es el
+padre de todos los elementos de html, ya sean h1, p, ul, div, span, etc.
+Lo que estamos diciendo con el evento ready() es que cuando toda la
+página esté lista, cuando todas las etiquetas se hayan cargado,
+ejecute el código que tiene dentro de la función.
+
+En el caso de que queramos levantar un elemento por su id deberíamos
+usar el caracter # seguido por el nombre del id de la siguiente forma:
+
+<script>
+    $("#id_del_elemento")
+</script>
+
+
+
+
+
+
+
 
 -------------------------------------
 
@@ -89,7 +135,62 @@ imprimir en el documento -->
 </html>
 
 -------------------------------------
+<!-- Funciones -->
+<html>
+    <head>    
+      <title>Prueba</title> 
+      <meta charset="UTF-8">        
+      <script src="jquery-1.9.1.js" type="text/javascript"></script>
+      <script>
+            $(document).ready(function() {
+              $("#boton1").click(function() {
+                  //alert("¡Alerta 1 Activada!");
+                  $("#x").html("Alerta 1 activada");
+              });
+              $("#boton2").click(function() {
+                  //alert("¡Alerta 2 Activada!");
+                  $("#x").html("Alerta 2 activada");
+              });
+            });
+        </script>
+    </head>
+<body>
+  <button id="boton1">Activar 1</button> <p />
+  <button id="boton2">Activar 2</button>
+  <div id="x"></div>
+</body>
+</html>
 
+-------------------------------------
+<!-- Mas ejemplos de funciones simples -->
+<html>
+ <head>
+    <meta charset="UTF-8">
+    <script src="jquery-1.9.1.js" type="text/javascript"></script>
+    <script type="text/javascript">
+       $(document).ready(function(){
+          $("#perro").click(function() {
+            $("#caja").html("Usted escogió un Perro");
+          });
+          $("#gato").click(function() {
+            $("#caja").html("Usted escogió un Gato");
+          });
+          $("#conejo").click(function() {
+            $("#caja").html("Usted escogió un Conejo");
+          });
+       });
+      </script>
+  </head>
+<body>
+  Por favor escoja un animal <p />
+  <button id="perro">Perro</button>
+  <button id="gato">Gato</button>
+  <button id="conejo">Conejo</button>
+  <p id="caja"> ... </p>  
+</body>
+</html>
+
+-------------------------------------
 <!-- Activar funcion, funcion con Jquery activada desde un enlace o un botón
 el (id) define que funcion usará -->
 <html>
@@ -101,7 +202,7 @@ el (id) define que funcion usará -->
             $(document).ready(function() {
                 $("#h").click(function(){
                     alert("Escribirá en el html un Hola Mundo ");
-                    $("p").html("Hola Mundo");                    
+                    $("p").html("Hola Mundo");
                 });
                 $('#btn').click(function () {
                     alert("Activó la función");
@@ -141,6 +242,177 @@ el (id) define que funcion usará -->
     <div id="h">
         <a href="#">Activar alerta</a>
     </div>    
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Formulario y función con Jquery -->
+<html>
+ <head>
+   <title>prueba</title>
+   <script src="jquery-1.9.1.js" type="text/javascript"></script>
+   <script type="text/javascript"> 
+      $(document).ready(function(){ 
+         $("#boton").click(function(){
+            var nombre = $("#nombre").val();
+            $("#saludo").html('Hola ' + nombre);
+         }); 
+      }); 
+   </script>
+ </head>
+ <body>
+    <form action="javascript:void(0);">
+       <input type="text" id="nombre" />
+       <input type="button" id="boton" value="Enviar" />
+       <div id="saludo"></div>
+    </form>
+ </body>
+</html>
+
+-------------------------------------
+
+<!-- Copiar párrafo de un elemento a otro -->
+<html>
+ <head>
+    <title>prueba</title>
+    <script src="jquery-1.9.1.js" type="text/javascript"></script>
+    <script type="text/javascript"> 
+       $(document).ready(function(){ 
+          $("#copiar").click(function(){
+             var parrafo = $("#parrafo1").html();
+             $("#parrafo2").html(parrafo);
+          });
+       }); 
+    </script>
+ </head>
+ <body>
+    <p id="parrafo1"> XXXXXXXXXX </p>
+    <a id="copiar" href="#"> Copiar </a>
+    <p id="parrafo2"> ... </p>
+ </body>
+</html>
+
+-------------------------------------
+
+<!-- Copiar cadena de un elemento a otro -->
+<html>
+ <head>
+    <script src="jquery-1.9.1.js" type="text/javascript"></script>
+    <script type="text/javascript"> 
+       $(document).ready(function(){
+          $("#valor_1").keyup(function(){
+             var valor = $(this).val();
+             $("#valor_2").val(valor);
+          });
+       }); 
+    </script>
+ </head>
+ <body>
+    <form action="javascript:void(0);">
+       Escribir algo
+       <input type="text" id="valor_1" />
+       <br />
+       <textarea id="valor_2" cols="40" rows="10"></textarea>
+    </form>
+ </body>
+</html>
+
+-------------------------------------
+
+<!-- Cambiar una cadena por otra -->
+<html>
+ <head>
+    <script src="jquery-1.9.1.js" type="text/javascript"></script>
+    <script type="text/javascript">
+       $(document).ready(function(){
+          $("#cambiar").click(function() {
+            variable = "YYYYYYY";
+            $("#parrafo").html(variable);
+          });
+       });
+      </script>
+ </head>
+ <body>    
+    <a id="cambiar" href="#">
+      <button>cambiar</button>
+    </a>    
+    <p id="parrafo"> XXXXXXX </p>
+ </body>
+</html>
+
+-------------------------------------
+
+<!-- Método hover en Jquery -->
+<html>
+  <head>
+  <script src="jquery-1.9.1.js" type="text/javascript"></script>
+  <script type="text/javascript"> 
+    $(document).ready(function() {
+      var texto = $("#caja").html();
+        $("#caja").hover(
+        function() {
+          $(this).html('XXXXX');//Mouse arriba del elemento          
+        },
+        function() {
+          $(this).html(texto);//Mouse fuera del elemento
+        }
+      );
+    }); 
+ </script>
+ <style type="text/css">
+   #caja {
+     background-color: #ccc;
+     width: 100px;
+     height: 100px;
+     padding: 10px;
+   }
+ </style>
+  </head>
+<body>
+  <div id="caja">
+    Posicione el mouse arriba
+  </div>
+</body>
+</html>
+
+-------------------------------------
+
+<!--Syntaxis del método .attr
+
+Return the value of an attribute:
+$(selector).attr(attribute)
+
+Set the attribute and value:
+$(selector).attr(attribute,value)
+
+Set attribute and value using a function:
+$(selector).attr(attribute,function(index,currentvalue))
+
+Set multiple attributes and values:
+$(selector).attr({attribute:value, attribute:value,...})
+-->
+
+<!-- Cambiar los atributos de una imagen con el metodo .attr -->
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-1.9.1.js" type="text/javascript"></script>
+<script>
+  $(document).ready(function(){
+    $("#aumentar").click(function(){
+      $("img").attr("width", "200");
+    });
+    $("#normal").click(function(){
+      $("img").attr("width", "100");
+    });
+  });
+</script>
+</head>
+<body>
+<img src="firefox-icon.png" width="100"> <br />
+<button id="aumentar">Aumentar</button>
+<button id="normal">Normal</button>
 </body>
 </html>
 
@@ -257,7 +529,61 @@ el (id) define que funcion usará -->
 
 -------------------------------------
 
-<!-- -->
+<!-- Uso de  (dialog)
+Es una ventana de diálogo , cuenta con una barra de título y área de contenido, se puede mover,
+cambiar de tamaño y se cierra con el icono de 'x' por defecto.-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>jQuery UI Dialog - Default functionality</title>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css" />
+  <script>
+  $(function() {
+    $( "#dialog" ).dialog();
+  });
+  </script>
+</head>
+<body>
+<div id="dialog" title="Basic dialog">
+  <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Activar (dialog) con boton-->
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>jQuery UI Dialog - Dialogo modal</title>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+  <script>
+    $(function () {
+      $("#dialog").dialog({
+        autoOpen: false,
+        modal: true
+    });
+    $("#abrir").button().click(function () {
+        $("#dialog").dialog("open");
+      });
+    });
+  </script>
+</head>
+<body>
+  Diálogo:
+  <div id="dialog" title="Dialogo básico">
+    XXXXXXXXXXX
+  </div>
+  <button id="abrir">Abrir diálogo</button>
+</body>
+</html>
 
 -------------------------------------
 
