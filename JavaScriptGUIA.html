@@ -2136,24 +2136,38 @@ function pregunta(){
 </html>
 
 -------------------------------------
-<!-- Validar que los campos no estén vacios, si estan vacios -->
-<!-- no envia los datos -->
+
+<!-- Validar que los campos no estén vacios, si estan vacios
+no envia los datos Es comun que al validar un string se
+escriba if(campo == "") alert("Error");
+Si el campo contiene " " entonces la validacion no funciona
+-->
 <html>
 <head>
     <title>Confirmación de envío de formulario</title>
     <meta charset="utf-8" />
     <script language="JavaScript">
       function validar() {
-        if (document.formulario.username.value == '') {
-          alert("El campo Usuario es obligatorio");
+        if (document.formulario.username.value == '' && document.formulario.password.value == '') {
+          alert("Campos obligatorios");
         }
-        if (document.formulario.password.value == '') {
-          alert("El campo Contraseña es obligatorio");
-        }        
+        
         else {
+          if (document.formulario.username.value == '') {
+            alert("El campo Usuario es obligatorio");
+          }
+          else {
+            alert("Datos enviados");
+            document.formulario.submit()
+          }
+        }
+        /*if (document.formulario.password.value == '') {
+          alert("El campo Contraseña es obligatorio");
+        }*/
+        /*else {
           alert("Datos enviados");
           document.formulario.submit()
-        }
+        }*/
       }
     </script>
 </head>
@@ -2297,6 +2311,7 @@ junto a la caja de texto -->
 </html>
 
 -------------------------------------
+
 <!-- Validar el envio de datos del formulario segun la condición, este es el caso de que el campo
 no este vacío -->
 <html>
