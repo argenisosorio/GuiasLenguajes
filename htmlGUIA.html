@@ -2,13 +2,22 @@
 
 <!-- Comentarios en HTML -->
 
+<!DOCTYPE html>
 <html>
     <head>
         <title>Page Title</title>
         <meta charset="UTF-8" />
     </head>    
 <body>
-    <p>XXXXXXXXXXXXXXXX</p>
+    <div id="header">
+    Cabecera
+    </div>
+    <div id="cuerpo">
+    Cuerpo
+    </div>
+    <div id="footer">
+    footer
+    </div>
 </body>
 </html>
 
@@ -163,7 +172,7 @@
 
 	<a href="DIRECCION DE PAGINA EN EL ORDENADOR LOCAL">Título</a> Enlaces  locales, páginas que están en el mismo ordenador
 
-	<img src="Imagen.jpg" width="200px" heigth="200px"></img> Agregar una imagen local a la página, debe estar en el mismo directorio de la página, se le puede asignar el tamaño, dimensiones que tendrá la imagen
+	<img src="Imagen.jpg" width="200px" height="200px"></img> Agregar una imagen local a la página, debe estar en el mismo directorio de la página, se le puede asignar el tamaño, dimensiones que tendrá la imagen
 
 	<a href="link"><img src="Imagen.jpg"></a> Poner una imagen como enlace
 
@@ -688,7 +697,7 @@ xxxxxxxxxx LLamado de id y class en CSS xxxxxxxxxx
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Prueba</title>		
+		<title>Prueba</title>
 		<style>
 			b {
 				color:red;
@@ -701,6 +710,46 @@ xxxxxxxxxx LLamado de id y class en CSS xxxxxxxxxx
 	</head>
 <body>
 	<b>Hola lince</b> 
+</body>
+</html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Hover con imagenes xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+<html>
+    <head>
+        <title>Estilo para codigo basico</title>
+        <meta charset="UTF-8" />
+    </head>
+    <style type="text/css">
+    img {      
+    }
+    img:hover {
+      border: ridge 1px;
+    }
+    </style>
+<body>  
+    <img src="1.png" onmouseover="this.src='2.png' " onmouseout="this.src='1.png' "/>
+</body>
+</html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Hover con imagenes con id xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+<html>
+    <head>
+        <title>XXXXXX</title>
+        <meta charset="UTF-8" />
+    </head>
+    <style type="text/css">
+    img {      
+    }
+    img#firefox:hover {
+      border:ridge 1px;
+    }
+    </style>
+<body>  
+    <img id="firefox" src="firefox-icon.png" width="200px"></img>
+    <p />
+    <img src="firefox-icon.png" width="200px"></img>
 </body>
 </html>
 
@@ -1583,25 +1632,6 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx de instalacion con estilos xxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Hover con imagenes xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-<html>
-    <head>
-        <title>Estilo para codigo basico</title>
-        <meta charset="UTF-8" />
-    </head>
-    <style type="text/css">
-    img {      
-    }
-    img:hover {
-      border: ridge 1px;
-    }
-    </style>
-<body>  
-    <img src="1.png" onmouseover="this.src='2.png' " onmouseout="this.src='1.png' "/>
-</body>
-</html>
-
 xxxxxxxxxxxxxxxxxxxxxxxxxx Validacion de campos con html5 xxxxxxxxxxxxxxxxxxxxxxxxxxx
 <html>
 <head>
@@ -1666,6 +1696,16 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Mensaje de alerta con css xxxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
+xxxxxxxxxx Sueltos de css xxxxxxxxxx
+
+Sombra lateral
+box-shadow: 10px 10px 5px #888888;
+
+Sombra uniforme
+-webkit-box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.75);
+-moz-box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.75);
+box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.75);
+
 xxxxxxxxxx Colores web xxxxxxxxxx
 
 Nombre   Código hex
@@ -1687,9 +1727,239 @@ Purple   #800080
 Lime     #00FF00
 Green    #008000
 
-xxxxxxxxxx XXXXXX xxxxxxxxxx
+xxxxxxxxxx Plantilla con cuerpos y estilos definidos xxxxxxxxxx
 
-xxxxxxxxxx XXXXXX xxxxxxxxxx
+<!--html>
+    <head>
+        <title>zxx</title>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    </head>
+<body>
+    <div id="completo">
+        <div id="cabecera">
+            Cabecera
+        </div>
+        <div id="menu">
+            Menu
+        </div>
+        <div id="cuerpo">
+            Cuerpo
+        </div>              
+        <div id="footer">
+            Footer
+        </div>      
+    </div>  
+</body>
+</html>
+
+<style type="text/css">
+body, html {
+    /*margin:0;
+    padding:0;
+    background:url("./Img/gris2.jpg");*/
+    /*background-color: #808080;*/
+    background-color: #5B0101;
+    /*background:url("../imagenes/follaje.jpg") 100%;*/
+}
+
+#completo {
+    height: 610px;
+    width:1000px;
+    background-color: #D4DECE;
+    float: left;
+    margin: auto;
+    top: 15;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    border-radius: 5px;
+    /*border:ridge 1px;
+    border-color: red;*/
+    /*### Sombra ###*/
+    -webkit-box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.75);
+    -moz-box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.75);
+    box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.75);
+}
+
+#cabecera {
+    /*background:url("../imagenes/banner_cabecera.jpg") 100%;*/
+    background-color: #F2F2F2;
+    height: 150px;
+    width:98%;
+    border-radius: 5px;
+    border:ridge 1px;
+    border-color: #808080;
+    float: left;
+    margin: 10 0 0 0;    
+    margin-left: 10px;
+    -webkit-box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.15);
+    -moz-box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.15);
+    box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.15);
+}
+
+#menu {
+    /*background:url("../imagenes/chavez_bannerr.jpg") 100%;*/
+    /*background-color: #F78181;*/
+    background-color: #F2F2F2;
+    height: 50px;
+    width:98%;
+    float: left;
+    margin: 10 0 0 0;
+    margin-left: 10px;    
+    border-radius: 5px;
+    border:ridge 1px;
+    border-color: #808080;
+    -webkit-box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.15);
+    -moz-box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.15);
+    box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.15);
+}
+
+#cuerpo {
+    background-color: #F2F2F2;
+    height: 300px;
+    width:98%;    
+    float: left;    
+    /*margin-bottom: 5px;*/
+    margin: 10 0 0 10;    
+    overflow: auto;
+    border-radius: 5px;
+    border:ridge 1px;
+    border-color: #808080;
+    /*margin-left: 10px;*/
+    -webkit-box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.15);
+    -moz-box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.15);
+    box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.15);
+}
+
+#footer {
+    /*background:url("../imagenes/chavez_footerr.jpg") 100%;*/
+    background-color: #F78181;
+    /*background-color: #F2F2F2;*/
+    width:98%;
+    height: 50px;
+    float: left;
+    border:ridge 1px;
+    margin: 10 0 0 5;    
+    border-radius: 5px;
+    border:ridge 1px;
+    border-color: #808080;
+    margin-left: 10px;
+}
+</style-->
+
+xxxxxxxxxx Ejemplo de sitio responsivo xxxxxxxxxx
+
+<!--!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+* {
+    box-sizing: border-box;
+}
+.row:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+[class*="col-"] {
+    float: left;
+    padding: 15px;
+}
+html {
+    font-family: "Lucida Sans", sans-serif;
+}
+.header {
+    background-color: #9933cc;
+    color: #ffffff;
+    padding: 15px;
+}
+.menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.menu li {
+    padding: 8px;
+    margin-bottom: 7px;
+    background-color :#33b5e5;
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.menu li:hover {
+    background-color: #0099cc;
+}
+.aside {
+    background-color: #33b5e5;
+    padding: 15px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.footer {
+    background-color: #0099cc;
+    color: #ffffff;
+    text-align: center;
+    font-size: 12px;
+    padding: 15px;
+}
+/* For desktop: */
+.col-1 {width: 8.33%;}
+.col-2 {width: 16.66%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    [class*="col-"] {
+        width: 100%;
+    }
+}
+</style>
+</head>
+<body>
+<div class="header">
+    <h1>Cabecera</h1>
+</div>
+<div class="row">
+    <div class="col-3 menu">
+        <ul>
+            <li>ffff</li>
+            <li>gggg</li>
+            <li>yyyy</li>
+            <li>aaaa</li>
+        </ul>
+    </div>
+    <div class="col-6">
+        <h1>Cuerpo</h1>
+        <p>XXXXXXXXXXXXXXXX</p>
+    </div>
+    <div class="col-3 right">
+        <div class="aside">
+            <h2>What?</h2>
+            <p>Chania is a city on the island of Crete.</p>
+            <h2>Where?</h2>
+            <p>Crete is a Greek island in the Mediterranean Sea.</p>
+            <h2>How?</h2>
+            <p>You can reach Chania airport from all over Europe.</p>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <p>Footer</p>
+</div>
+</body>
+</html-->
 
 xxxxxxxxxx XXXXXX xxxxxxxxxx
 

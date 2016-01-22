@@ -150,7 +150,7 @@ script/ #Contiene el script de Rails que inicia tu aplicación y contiene otros 
 
 test/ #Pruebas unitarias, fixtures y otras pruebas.
 
-tmp/ #rchivos temporales (como archivos de caché, PID y archivos de sesiones).
+tmp/ #archivos temporales (como archivos de caché, PID y archivos de sesiones).
 
 vendor/ #Lugar para código de terceros. En una típica aplicación Rails, ésta incluye librerías y plugins.
 
