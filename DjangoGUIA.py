@@ -399,29 +399,30 @@ Ejemplo:
 
 <img src="{{STATIC_URL}}css/Img/gris.JPG"></img> Agregando una imagen local 
 
+#Estructura de un proyecto, algunos directorios
+#debemos crearlos nosotros por ejemplo: templates, static, admin.py
 
-#Estructura de un proyecto
-*proyecto
-    -db.db
+**proyecto
     -manage.py
+    -database.db
     *proyecto
-        -settings.py
-	-__init__.py
-	-urls.py
-	-wsgi.py
-    *aplicacion
+    	-settings.py
+		-urls.py
+		-wsgi.py
+    **aplicacion
         -admin.py
-	-models.py
-	-views.py
-	*static
-	    *css
-	        -estilo.css
-	    *imagenes
-	        -a.jpg
-		-b.png
-	    *js
-	        -jquery.js
-	*templates
-	    -index.html
-	    -index2.html
-			
+        -tests.py
+		-models.py
+		-views.py
+		**static
+		    **css
+		        -estilo.css
+		    **imagenes
+		        -a.jpg
+				-b.png
+		    **js
+		        -jquery.js
+		**templates
+			-base.html
+		    -index.html
+		    -index2.html

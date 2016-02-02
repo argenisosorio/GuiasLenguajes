@@ -82,6 +82,486 @@ console.log(miPais.length); //Usá console.log para mostrar el largo de la varia
 console.log(miPais.substring(0,3)); //Usá console.log para mostrar las tres primeras letras de miPais
 
 -------------------------------------
+
+##### Sintaxis básica #####
+
+
+Declaración simple de variable:
+
+var foo = 'Hola Mundo';
+
+Los espacios en blanco no tienen valor fuera de las comillas:
+
+var foo =         'hello world';
+
+Los paréntesis indican prioridad:
+
+2 * 3 + 5;    // es igual a 11; la multiplicación ocurre primero
+2 * (3 + 5);  // es igual a 16; por lo paréntesis, la suma ocurre primero
+
+La tabulación mejora la lectura del código, pero no posee ningún significado especial:
+
+var foo = function() {
+    console.log('hello');
+};
+
+-------------------------------------
+
+Operadores básicos
+
+Los operadores básicos permiten manipular valores.
+
+Concatenación
+
+var foo = 'hello';
+var bar = 'world';
+console.log(foo + ' ' + bar); // la consola de depuración muestra 'hello world'
+
+Multiplicación y división
+
+2 * 3; 2 / 3;
+
+Incrementación y decrementación
+
+var i = 1;
+var j = ++i;  // incrementación previa:  j es igual a 2; i es igual a 2
+var k = i++;  // incrementación posterior: k es igual a 2; i es igual a 3
+
+Operaciones con números y cadenas de caracteres
+
+En JavaScript, las operaciones con números y cadenas de caracteres (en inglés strings) pueden ocasionar resultados no esperados.
+
+Suma vs. concatenación
+
+var foo = 1;
+var bar = '2';
+console.log(foo + bar);  // error: La consola de depuración muestra 12
+
+Forzar a una cadena de caracteres actuar como un número
+
+var foo = 1;
+var bar = '2';
+// el constructor 'Number' obliga a la cadena comportarse como un número
+console.log(foo + Number(bar));  // la consola de depuración muestra 3
+
+El constructor Number, cuando es llamado como una función (como se muestra en el ejemplo) obliga a su argumento a comportarse como un número. También es posible utilizar el operador de suma unaria, entregando el mismo resultado:
+
+Forzar a una cadena de caracteres actuar como un número (utilizando el operador de suma unaria)
+
+console.log(foo + +bar);
+
+2.3.3. Operadores lógicos
+
+Los operadores lógicos permiten evaluar una serie de operandos utilizando operaciones AND y OR.
+
+Operadores lógicos AND y OR
+
+var foo = 1;
+var bar = 0;
+var baz = 2;
+ 
+foo || bar;  // devuelve 1, el cual es verdadero (true)
+bar || foo;  // devuelve 1, el cual es verdadero (true)
+ 
+foo && bar;  // devuelve 0, el cual es falso (false)
+foo && baz;  // devuelve 2, el cual es verdadero (true)
+baz && foo;  // devuelve 1, el cual es verdadero (true)
+
+El operador || (OR lógico) devuelve el valor del primer operando, si éste es verdadero; caso contrario devuelve el segundo operando. Si ambos operandos son falsos devuelve falso (false). El operador && (AND lógico) devuelve el valor del primer operando si éste es falso; caso contrario devuelve el segundo operando. Cuando ambos valores son verdaderos devuelve verdadero (true), sino devuelve falso.
+
+Puede consultar la sección "Elementos Verdaderos y Falsos" para más detalles sobre que valores se evalúan como true y cuales se evalúan como false.
+
+Nota
+Puede que a veces note que algunos desarrolladores utilizan esta lógica en flujos de control en lugar de utilizar la declaración if. Por ejemplo:
+
+// realizar algo con foo si foo es verdadero
+foo && doSomething(foo);
+ 
+// establecer bar igual a baz si baz es verdadero;
+// caso contrario, establecer a bar igual al
+// valor de createBar()
+var bar = baz || createBar();
+
+Este estilo de declaración es muy elegante y conciso; pero puede ser difícil para leer (sobretodo para principiantes). Por eso se explícita, para reconocerlo cuando este leyendo código. Sin embargo su utilización no es recomendable a menos que esté cómodo con el concepto y su comportamiento.
+
+2.3.4. Operadores de comparación
+
+Los operadores de comparación permiten comprobar si determinados valores son equivalentes o idénticos.
+
+Operadores de Comparación
+
+var foo = 1;
+var bar = 0;
+var baz = '1';
+var bim = 2;
+ 
+foo == bar; // devuelve falso (false)
+foo != bar; // devuelve verdadero (true)
+foo == baz; // devuelve verdadero (true); tenga cuidado
+ 
+foo === baz; // devuelve falso (false)
+foo !== baz; // devuelve verdadero (true)
+foo === parseInt(baz); // devuelve verdadero (true)
+ 
+foo > bim;   // devuelve falso (false)
+bim > baz;   // devuelve verdadero (true)
+foo <= baz;  // devuelve verdadero (true)
+
+Código condicional
+
+A veces se desea ejecutar un bloque de código bajo ciertas condiciones. Las estructuras de control de flujo — a través de la utilización de las declaraciones if y else permiten hacerlo.
+
+Control del flujo
+
+var foo = true;
+var bar = false;
+if (bar) {
+    // este código nunca se ejecutará
+    console.log('hello!');
+}
+if (bar) {
+    // este código no se ejecutará
+} else {
+    if (foo) {
+        // este código se ejecutará
+    } else {
+        // este código se ejecutará si foo y bar son falsos (false)
+    }
+}
+
+Elementos verdaderos y falsos
+
+Para controlar el flujo adecuadamente, es importante entender qué tipos de valores son "verdaderos" y cuales "falsos". A veces, algunos valores pueden parecer una cosa pero al final terminan siendo otra.
+
+Valores que devuelven verdadero (true)
+
+'0';          // una cadena de texto cuyo valor sea 0
+'any string'; // cualquier cadena
+[];           // un array vacío
+{};           // un objeto vacío
+1;            // cualquier número distinto a cero
+
+Valores que devuelven falso (false)
+
+0;
+'';        // una cadena vacía
+NaN;       // la variable JavaScript "not-a-number" (No es un número)
+null;      // un valor nulo
+undefined; // tenga cuidado -- indefinido (undefined) puede ser redefinido
+
+Variables condicionales utilizando el operador ternario
+
+A veces se desea establecer el valor de una variable dependiendo de cierta condición. Para hacerlo se puede utilizar una declaración if/else, sin embargo en muchos casos es más conveniente utilizar el operador ternario. [Definición: El operador ternario evalúa una condición; si la condición es verdadera, devuelve cierto valor, caso contrario devuelve un valor diferente.]
+
+El operador ternario
+
+// establecer a foo igual a 1 si bar es verdadero;
+// caso contrario, establecer a foo igual a 0
+var foo = bar ? 1 : 0;
+
+El operador ternario puede ser utilizado sin devolver un valor a la variable, sin embargo este uso generalmente es desaprobado.
+
+Declaración switch
+
+En lugar de utilizar una serie de declaraciones if/else/else if/else, a veces puede ser útil la utilización de la declaración switch. [Definición: La declaración Switch evalúa el valor de una variable o expresión, y ejecuta diferentes bloques de código dependiendo de ese valor.]
+
+Una declaración switch
+
+switch (foo) {
+    case 'bar':
+        alert('el valor es bar');
+    break;
+    case 'baz':
+        alert('el valor es baz');
+    break;
+    default:
+        alert('de forma predeterminada se ejecutará este código');
+    break;
+}
+
+Las declaraciones switch son poco utilizadas en JavaScript, debido a que el mismo comportamiento es posible obtenerlo creando un objeto, el cual posee más potencial ya que es posible reutilizarlo, usarlo para realizar pruebas, etc. Por ejemplo:
+
+var stuffToDo = {
+    'bar' : function() {
+        alert('el valor es bar');
+    },
+ 
+    'baz' : function() {
+        alert('el valor es baz');
+    },
+ 
+    'default' : function() {
+        alert('de forma predeterminada se ejecutará este código');
+    }
+};
+ 
+if (stuffToDo[foo]) {
+    stuffToDo[foo]();
+} else {
+    stuffToDo['default']();
+}
+
+Bucles
+
+Los bucles (en inglés loops) permiten ejecutar un bloque de código un determinado número de veces.
+
+Bucles
+
+// muestra en la consola 'intento 0', 'intento 1', ..., 'intento 4'
+for (var i=0; i<5; i++) {
+    console.log('intento ' + i);
+}
+
+Note que en el ejemplo se utiliza la palabra var antes de la variable i, esto hace que dicha variable quede dentro del "alcance" (en inglés *scope) del bucle. Más adelante en este capítulo se examinará en profundidad el concepto de alcance.*
+
+Bucles utilizando for
+
+Un bucle utilizando for se compone de cuatro estados y posee la siguiente estructura:
+
+for ([expresiónInicial]; [condición]; [incrementoDeLaExpresión])
+    [cuerpo]
+
+El estado expresiónInicial es ejecutado una sola vez, antes que el bucle comience. Éste otorga la oportunidad de preparar o declarar variables.
+
+El estado condición es ejecutado antes de cada repetición, y retorna un valor que decide si el bucle debe continuar ejecutándose o no. Si el estado condicional evalúa un valor falso el bucle se detiene.
+
+El estado incrementoDeLaExpresión es ejecutado al final de cada repetición y otorga la oportunidad de cambiar el estado de importantes variables. Por lo general, este estado implica la incrementación o decrementación de un contador.
+
+El cuerpo es el código a ejecutar en cada repetición del bucle.
+
+Un típico bucle utilizando for
+
+for (var i = 0, limit = 100; i < limit; i++) {
+    // Este bloque de código será ejecutado 100 veces
+    console.log('Currently at ' + i);
+    // Nota: el último registro que se mostrará
+    // en la consola será "Actualmente en 99"
+}
+
+Bucles utilizando while
+
+Un bucle utilizando while es similar a una declaración condicional if, excepto que el cuerpo va a continuar ejecutándose hasta que la condición a evaluar sea falsa.
+
+while ([condición]) [cuerpo]
+
+Un típico bucle utilizando while
+
+var i = 0;
+while (i < 100) {
+    // Este bloque de código se ejecutará 100 veces
+    console.log('Actualmente en ' + i);
+    i++; // incrementa la variable i
+}
+
+Puede notar que en el ejemplo se incrementa el contador dentro del cuerpo del bucle, pero también es posible combinar la condición y la incrementación, como se muestra a continuación:
+
+Bucle utilizando while con la combinación de la condición y la incrementación
+
+var i = -1;
+while (++i < 100) {
+    // Este bloque de código se ejecutará 100 veces
+    console.log('Actualmente en ' + i);
+}
+
+Se comienza en -1 y luego se utiliza la incrementación previa (++i).
+
+Bucles utilizando do-while
+
+Este bucle es exactamente igual que el bucle utilizando while excepto que el cuerpo es ejecutado al menos una vez antes que la condición sea evaluada.
+
+do [cuerpo] while ([condición])
+
+Un bucle utilizando do-while
+
+do {
+    // Incluso cuando la condición sea falsa
+    // el cuerpo del bucle se ejecutará al menos una vez.
+    alert('Hello');
+} while (false);
+
+Este tipo de bucles son bastantes atípicos ya que en pocas ocasiones de necesita un bucle que se ejecute al menos una vez. De cualquier forma debe estar al tanto de ellos.
+
+break y continue
+
+Usualmente, el fin de la ejecución de un bucle resultará cuando la condición no siga evaluando un valor verdadero, sin embargo también es posible parar un bucle utilizando la declaración break dentro del cuerpo.
+
+Detener un bucle con break
+
+for (var i = 0; i < 10; i++) {
+    if (something) {
+        break;
+    }
+}
+
+También puede suceder que quiera continuar con el bucle sin tener que ejecutar más sentencias del cuerpo del mismo bucle. Esto puede realizarse utilizando la declaración continue.
+
+Saltar a la siguiente iteración de un bucle
+
+for (var i = 0; i < 10; i++) {
+    if (something) {
+        continue;
+    }
+ 
+    // La siguiente declaración será ejecutada
+    // si la condición 'something' no se cumple
+    console.log('Hello');
+}
+
+Arrays
+
+Los arrays (en inglés arrays) son listas de valores con índice-cero (en inglés zero-index), es decir, que el primer elemento del array está en el índice 0. éstos son una forma práctica de almacenar un conjunto de datos relacionados (como cadenas de caracteres), aunque en realidad, un array puede incluir múltiples tipos de datos, incluso otros arrays.
+
+Un array simple
+
+var myArray = [ 'hello', 'world' ];
+
+Acceder a los ítems del array a través de su índice
+
+var myArray = [ 'hello', 'world', 'foo', 'bar' ];
+console.log(myArray[3]);   // muestra en la consola 'bar'
+
+Obtener la cantidad de ítems del array
+
+var myArray = [ 'hello', 'world' ];
+console.log(myArray.length);   // muestra en la consola 2
+
+Cambiar el valor de un ítem de un array
+
+var myArray = [ 'hello', 'world' ];
+myArray[1] = 'changed';
+
+Como se muestra en el ejemplo Cambiar el valor de un ítem de un array es posible cambiar el valor de un ítem de un array, sin embargo, por lo general, no es aconsejable.
+
+Añadir elementos a un array
+
+var myArray = [ 'hello', 'world' ];
+myArray.push('new');
+
+Trabajar con arrays
+
+var myArray = [ 'h', 'e', 'l', 'l', 'o' ];
+var myString = myArray.join('');   // 'hello'
+var mySplit = myString.split('');  // [ 'h', 'e', 'l', 'l', 'o' ]
+
+Objetos
+
+Los objetos son elementos que pueden contener cero o más conjuntos de pares de nombres claves y valores asociados a dicho objeto. Los nombres claves pueden ser cualquier palabra o número válido. El valor puede ser cualquier tipo de valor: un número, una cadena, un array, una función, incluso otro objeto.
+
+[Definición: Cuando uno de los valores de un objeto es una función, ésta es nombrada como un método del objeto.] De lo contrario, se los llama propiedades.
+
+Curiosamente, en JavaScript, casi todo es un objeto — arrays, funciones, números, incluso cadenas — y todos poseen propiedades y métodos.
+
+Creación de un "objeto literal"
+
+var myObject = {
+    sayHello : function() {
+        console.log('hello');
+    },
+    myName : 'Rebecca'
+};
+ 
+// se llama al método sayHello, el cual muestra en la consola 'hello'
+myObject.sayHello();
+ 
+// se llama a la propiedad myName, la cual muestra en la consola 'Rebecca'
+console.log(myObject.myName);
+
+Nota:
+
+Notar que cuando se crean objetos literales, el nombre de la propiedad puede ser cualquier identificador JavaScript, una cadena de caracteres (encerrada entre comillas) o un número:
+
+var myObject = {
+    validIdentifier: 123,
+    'some string': 456,
+    99999: 789
+};
+Funciones
+
+Las funciones contienen bloques de código que se ejecutaran repetidamente. A las mismas se le pueden pasar argumentos, y opcionalmente la función puede devolver un valor.
+
+Las funciones pueden ser creadas de varias formas:
+
+Declaración de una función
+
+function foo() { /* hacer algo */ }
+
+Declaración de una función nombrada
+
+var foo = function() { /* hacer algo */ }
+
+Es preferible el método de función nombrada debido a algunas profundas razones técnicas. Igualmente, es probable encontrar a los dos métodos cuando se revise código JavaScript.
+
+Utilización de funciones
+
+Una función simple
+
+var greet = function(person, greeting) {
+    var text = greeting + ', ' + person;
+    console.log(text);
+};
+ 
+greet('Rebecca', 'Hello');  // muestra en la consola 'Hello, Rebecca'
+
+Una función que devuelve un valor
+
+var greet = function(person, greeting) {
+    var text = greeting + ', ' + person;
+    return text;
+};
+ 
+console.log(greet('Rebecca','hello'));
+
+Una función que devuelve otra función
+
+// la función devuelve 'Hello, Rebecca',
+// la cual se muestra en la consola
+var greet = function(person, greeting) {
+    var text = greeting + ', ' + person;
+    return function() { console.log(text); };
+};
+ 
+var greeting = greet('Rebecca', 'Hello');
+greeting();  // se muestra en la consola 'Hello, Rebecca'
+
+Funciones anónimas autoejecutables
+
+Un patrón común en JavaScript son las funciones anónimas autoejecutables. Este patrón consiste en crear una expresión de función e inmediatamente ejecutarla. El mismo es muy útil para casos en que no se desea intervenir espacios de nombres globales, debido a que ninguna variable declarada dentro de la función es visible desde afuera.
+
+Función anónima autoejecutable
+
+(function(){
+    var foo = 'Hello world';
+})();
+console.log(foo);   // indefinido (undefined)
+
+Funciones como argumentos
+
+En JavaScript, las funciones son ciudadanos de primera clase — pueden ser asignadas a variables o pasadas a otras funciones como argumentos. En jQuery, pasar funciones como argumentos es una práctica muy común.
+
+Pasar una función anónima como un argumento
+
+var myFn = function(fn) {
+    var result = fn();
+    console.log(result);
+};
+ 
+myFn(function() { return 'hello world'; }); // muestra en la consola 'hello world'
+
+Pasar una función nombrada como un argumento
+
+var myFn = function(fn) {
+    var result = fn();
+    console.log(result);
+};
+ 
+var myOtherFn = function() {
+    return 'hello world';
+};
+ 
+myFn(myOtherFn);   // muestra en la consola 'hello world'
+
+
+
 </script>
 
 -------------------------------------
@@ -2374,7 +2854,43 @@ no este vacío -->
 </html>
 
 -------------------------------------
-<!-- -->
+
+<!-- Crear elementos de formulario html dinámicamente con javascript -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>clone demo</title>
+  <script src="jquery-1.9.1.js" type="text/javascript"></script>
+  <!--script src="https://code.jquery.com/jquery-1.10.2.js"></script-->
+    <script type="text/javascript">
+        var contador = 1;
+        var limite = 3;
+        var cont_name = 1;
+        function addInput(divName){
+            if (contador == limite)  {
+                alert("Exedíste el límite de adición (" + contador + ") campos");
+            }
+            else {
+                var newdiv = document.createElement('div');
+                newdiv.innerHTML = "Nombre: "/* + (contador + 1) */+ "<input type='text' name='nombre"+cont_name+"'>";
+                document.getElementById(divName).appendChild(newdiv);
+                contador++;
+                cont_name++;
+            }
+        }
+    </script>
+</head>
+<body>
+<form method="get">
+    <div id="campo_dinamico">
+        Nombre: <input type="text" name="nombre">
+    </div>
+    <br />
+    <input type="button" value="Agregar campo" onClick="addInput('campo_dinamico');">
+</form>
+</body>
+</html>
 
 -------------------------------------
 <!-- -->
