@@ -1243,595 +1243,6 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 
 -------------------------------------
 
-<!-- Mostrar mensaje al posar el cursor sobre enlace con tooltip -->
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Bootstrap Example</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
-        <script>
-            $(document).ready(function() {
-                $('[data-toggle="tooltip"]').tooltip();   
-            });
-        </script>
-    </head>
-<body>
-    <div class="container">
-        <h1>Titulo 1</h1>
-        <h2>Titulo 2</h2>
-        <h3>Titulo 3</h3>
-        <a href="#" data-toggle="tooltip" title="Recuerda llenar todos los datos!">Registrarse</a>        
-    </div>
-</body>
-</html>
-
--------------------------------------
-
-<!-- Alineacion de tooltip (top,bottom,left,right) -->
-<!-- Mostrar mensaje al posar el cursor sobre enlace con tooltip -->
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Bootstrap Example</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $('[data-toggle="tooltip"]').tooltip();   
-            });
-        </script>
-    </head>
-<body>
-    <div class="container" align="center">
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <!--a href="#" data-toggle="tooltip" title="Recuerda llenar todos los datos!">Registrarse</a-->
-        <button id="grafo" data-toggle="tooltip" data-placement="top" class="btn btn-success" title="Permite apreciar gráficamente cómo las cuentas de Twitter mencionan etiquetas (hashtags) y se mencionan entre sí. >Grafo de menciones">Grafo de menciones</button>
-
-        <p>.</p>
-        
-
-        <button id="grafo" data-toggle="tooltip" data-placement="bottom" class="btn btn-success" title="Permite apreciar gráficamente cómo las cuentas de Twitter mencionan etiquetas (hashtags) y se mencionan entre sí. >Grafo de menciones">Grafo de menciones</button>
-
-        <p>.</p>        
-
-        <button id="grafo" data-toggle="tooltip" data-placement="left" class="btn btn-success" title="Permite apreciar gráficamente cómo las cuentas de Twitter mencionan etiquetas (hashtags) y se mencionan entre sí. >Grafo de menciones">Grafo de menciones</button>
-
-        <p>.</p>
-
-        <button id="grafo" data-toggle="tooltip" data-placement="right" class="btn btn-success" title="Permite apreciar gráficamente cómo las cuentas de Twitter mencionan etiquetas (hashtags) y se mencionan entre sí. >Grafo de menciones">Grafo de menciones</button>
-
-    </div>
-</body>
-</html>
-
--------------------------------------
-
-<!-- Mostrar mensaje al posar el cursor sobre enlace con tooltip de CSS -->
-<html>
-<head>
-    <title></title>
-    <meta charset="UTF-8">
-    <style type="text/css">
-        button.tooltip {outline:none; }
-        button.tooltip strong {line-height:30px;}
-        button.tooltip:hover {text-decoration:none;} 
-        button.tooltip span {
-            z-index:10;display:none; padding:14px 20px;
-            margin-top:-30px; margin-left:28px;
-            width:300px; line-height:16px;
-        }
-        button.tooltip:hover span{
-            display:inline; position:absolute; color:#111;
-            border:1px solid #DCA; background:#fffAF0;}
-        .callout {z-index:20;position:absolute;top:30px;border:0;left:-12px;}
-            
-        /*CSS3 extras*/
-        button.tooltip span
-        {
-            border-radius:4px;
-            box-shadow: 5px 5px 8px #CCC;
-        }
-    </style>
-</head>
-<body>
-    <center>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />        
-        <button class="tooltip"> Grafo de Menciones
-            <span>
-                Permite apreciar gráficamente cómo las cuentas de Twitter mencionan etiquetas (hashtags) y se mencionan entre sí.
-            </span>
-        </button>
-        <br/>
-        <button class="tooltip"> Agrupamiento por temas
-            <span>
-                Permite apreciar gráficamente los "temas" principales tratados en los textos de los tuits.
-            </span>
-        </button>
-    </center>
-</body>
-</html>
-
--------------------------------------
-
-<!-- Otros tooltip´s de CSS avanzado -->
-<html>
-<head>
-    <title></title>
-    <meta charset="UTF-8">
-<style type="text/css">  
-  html {
-    box-sizing: border-box;
-  }
-
-  *,
-  *:before,
-  *:after {
-    box-sizing: inherit;
-  }
-
-  body {
-    margin: 64px auto;
-    text-align: center;
-    font-size: 100%;
-    max-width: 640px;
-    width: 94%;
-  }
-
-  a:hover {
-    text-decoration: none;
-  }
-
-  header,
-  .demo,
-  .demo p {
-    margin: 4em 0;
-    text-align: center;
-  }
-
-  /**
-   * Tooltip Styles
-   */
-
-  /* Base styles for the element that has a tooltip */
-  [data-tooltip],
-  .tooltip {
-    position: relative;
-    cursor: pointer;
-  }
-
-  /* Base styles for the entire tooltip */
-  [data-tooltip]:before,
-  [data-tooltip]:after,
-  .tooltip:before,
-  .tooltip:after {
-    position: absolute;
-    visibility: hidden;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
-    opacity: 0;
-    -webkit-transition: 
-        opacity 0.2s ease-in-out,
-          visibility 0.2s ease-in-out,
-          -webkit-transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
-      -moz-transition:    
-          opacity 0.2s ease-in-out,
-          visibility 0.2s ease-in-out,
-          -moz-transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
-      transition:         
-          opacity 0.2s ease-in-out,
-          visibility 0.2s ease-in-out,
-          transform 0.2s cubic-bezier(0.71, 1.7, 0.77, 1.24);
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform:    translate3d(0, 0, 0);
-    transform:         translate3d(0, 0, 0);
-    pointer-events: none;
-  }
-
-  /* Show the entire tooltip on hover and focus */
-  [data-tooltip]:hover:before,
-  [data-tooltip]:hover:after,
-  [data-tooltip]:focus:before,
-  [data-tooltip]:focus:after,
-  .tooltip:hover:before,
-  .tooltip:hover:after,
-  .tooltip:focus:before,
-  .tooltip:focus:after {
-    visibility: visible;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
-    filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-    opacity: 1;
-  }
-
-  /* Base styles for the tooltip's directional arrow */
-  .tooltip:before,
-  [data-tooltip]:before {
-    z-index: 1001;
-    border: 6px solid transparent;
-    background: transparent;
-    content: "";
-  }
-
-  /* Base styles for the tooltip's content area */
-  .tooltip:after,
-  [data-tooltip]:after {
-    z-index: 1000;
-    padding: 8px;
-    width: 160px;
-    background-color: #000;
-    background-color: hsla(0, 0%, 20%, 0.9);
-    color: #fff;
-    content: attr(data-tooltip);
-    font-size: 14px;
-    line-height: 1.2;
-  }
-
-  /* Directions */
-
-  /* Top (default) */
-  [data-tooltip]:before,
-  [data-tooltip]:after,
-  .tooltip:before,
-  .tooltip:after,
-  .tooltip-top:before,
-  .tooltip-top:after {
-    bottom: 100%;
-    left: 50%;
-  }
-
-  [data-tooltip]:before,
-  .tooltip:before,
-  .tooltip-top:before {
-    margin-left: -6px;
-    margin-bottom: -12px;
-    border-top-color: #000;
-    border-top-color: hsla(0, 0%, 20%, 0.9);
-  }
-
-  /* Horizontally align top/bottom tooltips */
-  [data-tooltip]:after,
-  .tooltip:after,
-  .tooltip-top:after {
-    margin-left: -80px;
-  }
-
-  [data-tooltip]:hover:before,
-  [data-tooltip]:hover:after,
-  [data-tooltip]:focus:before,
-  [data-tooltip]:focus:after,
-  .tooltip:hover:before,
-  .tooltip:hover:after,
-  .tooltip:focus:before,
-  .tooltip:focus:after,
-  .tooltip-top:hover:before,
-  .tooltip-top:hover:after,
-  .tooltip-top:focus:before,
-  .tooltip-top:focus:after {
-    -webkit-transform: translateY(-12px);
-    -moz-transform:    translateY(-12px);
-    transform:         translateY(-12px); 
-  }
-
-  /* Left */
-  .tooltip-left:before,
-  .tooltip-left:after {
-    right: 100%;
-    bottom: 50%;
-    left: auto;
-  }
-
-  .tooltip-left:before {
-    margin-left: 0;
-    margin-right: -12px;
-    margin-bottom: 0;
-    border-top-color: transparent;
-    border-left-color: #000;
-    border-left-color: hsla(0, 0%, 20%, 0.9);
-  }
-
-  .tooltip-left:hover:before,
-  .tooltip-left:hover:after,
-  .tooltip-left:focus:before,
-  .tooltip-left:focus:after {
-    -webkit-transform: translateX(-12px);
-    -moz-transform:    translateX(-12px);
-    transform:         translateX(-12px); 
-  }
-
-  /* Bottom */
-  .tooltip-bottom:before,
-  .tooltip-bottom:after {
-    top: 100%;
-    bottom: auto;
-    left: 50%;
-  }
-
-  .tooltip-bottom:before {
-    margin-top: -12px;
-    margin-bottom: 0;
-    border-top-color: transparent;
-    border-bottom-color: #000;
-    border-bottom-color: hsla(0, 0%, 20%, 0.9);
-  }
-
-  .tooltip-bottom:hover:before,
-  .tooltip-bottom:hover:after,
-  .tooltip-bottom:focus:before,
-  .tooltip-bottom:focus:after {
-    -webkit-transform: translateY(12px);
-    -moz-transform:    translateY(12px);
-    transform:         translateY(12px); 
-  }
-
-  /* Right */
-  .tooltip-right:before,
-  .tooltip-right:after {
-    bottom: 50%;
-    left: 100%;
-  }
-
-  .tooltip-right:before {
-    margin-bottom: 0;
-    margin-left: -12px;
-    border-top-color: transparent;
-    border-right-color: #000;
-    border-right-color: hsla(0, 0%, 20%, 0.9);
-  }
-
-  .tooltip-right:hover:before,
-  .tooltip-right:hover:after,
-  .tooltip-right:focus:before,
-  .tooltip-right:focus:after {
-    -webkit-transform: translateX(12px);
-    -moz-transform:    translateX(12px);
-    transform:         translateX(12px); 
-  }
-
-  /* Move directional arrows down a bit for left/right tooltips */
-  .tooltip-left:before,
-  .tooltip-right:before {
-    top: 3px;
-  }
-
-  /* Vertically center tooltip content for left/right tooltips */
-  .tooltip-left:after,
-  .tooltip-right:after {
-    margin-left: 0;
-    margin-bottom: -16px;
-  }    
-</style>
-</head>
-<body>
-    <center>      
-      
-        <p>Data attribute only <a href="#" data-tooltip="I’m the tooltip text">Tooltip</a></p>
-        <p><code>.toolbar</code> <a href="#" class="tooltip" data-tooltip="I’m the tooltip text.">Tooltip</a></p>
-        <p><code>.toolbar-top</code> <a href="#" class="tooltip-top" data-tooltip="I’m the tooltip text.">Tooltip</a></p>
-        <p><code>.toolbar-right</code> <a href="#" class="tooltip-right" data-tooltip="I’m the tooltip text.">Tooltip</a></p>
-        <p><code>.toolbar-bottom</code> <a href="#" class="tooltip-bottom" data-tooltip="I’m the tooltip text.">Tooltip</a><p>
-        <p><a href="#" class="tooltip-left" data-tooltip="I’m the tooltip text.">Tooltip</a> <code>.toolbar-left</code></p>
-      
-    </center>
-</body>
-</html>
-
--------------------------------------
-
-<!-- Popover, al dar click muestra una pestaña con una cabecera y un cuerpo -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <script>
-        $(document).ready(function(){
-            $('[data-toggle="popover"]').popover();   
-        });
-    </script>
-
-    <center>
-        <h3>Ejemplo de Popover</h3>
-        <a href="#" data-toggle="popover" title="Cabecera del Popover" data-content="contenido dentro del popover">Activar Popover</a>
-    </center>
-
-</body>
-</html>
-
-<!-- ********************************************************* -->
-<!-- Para dar posicion al Popover(top,bottom,left,right) -->
-<!--DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-</head>
-<body>
-
-<div class="container">
-  <h3>Popover Example</h3>
-  <ul class="list-inline">
-    <li><a href="#" title="Header" data-toggle="popover" data-placement="top" data-content="Content">Top</a></li>
-    <li><a href="#" title="Header" data-toggle="popover" data-placement="bottom" data-content="Content">Bottom</a></li>
-    <li><a href="#" title="Header" data-toggle="popover" data-placement="left" data-content="Content">Left</a></li>
-    <li><a href="#" title="Header" data-toggle="popover" data-placement="right" data-content="Content">Right</a></li>
-  </ul>
-</div>
-
-<script>
-$(document).ready(function(){
-    $('[data-toggle="popover"]').popover();   
-});
-</script>
-
-</body>
-</html-->
-
-<!-- ********************************************************* -->
-<!-- Para cerrar el Popover haciendo click en cualquier lugar del doc-->
-<!--DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-</head>
-<body>
-
-<div class="container">
-  <h3>Popover Example</h3>
-    <a href="#" title="Dismissible popover" data-toggle="popover" data-trigger="focus" data-content="Click anywhere in the document to close this popover">Click me</a>
-</div>
-
-<script>
-$(document).ready(function(){
-    $('[data-toggle="popover"]').popover();   
-});
-</script>
-
-</body>
-</html-->
-
--------------------------------------
-
-<!-- Popover con hover -->
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Bootstrap Example</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    </head>
-<body>
-    <script>
-        $(document).ready(function() {
-            $('[data-toggle="popover"]').popover();   
-        });
-    </script>
-
-    <div class="container" align="center">
-        <h3>Popover Example</h3>        
-        <a href="#" data-toggle="popover" data-trigger="hover" title="Cabecera" data-content="Cuerpo">Posa el cursor</a>
-    </div>
-</body>
-</html>
-
--------------------------------------
-
-<!-- Mostrar mensaje al posar el cursor sobre boton -->
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Bootstrap Example</title>
-        <meta charset="utf-8">        
-        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <!--<script src="jquery-1.9.1.js" type="text/javascript"></script>-->
-        <script>
-            $(document).ready(function() {
-                $('#boton').prop('title', 'Enunciado para el boton, se muestra al posar el cursor');
-                $('#boton').click(function(e){
-                    alert("Hola!");
-                    e.preventDefault();
-                });
-            });
-        </script>
-    </head>
-<body>
-    <div align="center">        
-        <button id="boton" type="" class="btn btn-success" >PRUEBA</button>
-    </div>    
-</body>
-</html>
-
--------------------------------------
-
-<!-- Ejemplo de formulario y modal, curso JS example -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Curso JavaScript</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('[data-toggle="tooltip"]').tooltip();   
-    });
-  </script>
-  <style type="text/css">
-    label {
-        display:block;
-    }
-  </style>
-</head>
-<body bgcolor="red">
-    <div class="container">
-      <h2>Curso JavaScript</h2>
-      <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Registrarse</button>
-      <!-- Modal -->
-      <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog modal-sm">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Registrarse en el curso</h4>
-            </div>
-            <div class="modal-body">
-                <form action="#" method="get">
-                    <label>Nombre: <input type="text" name="nombre" placeholder="Tu Nombre" required> <br /></label>
-                    <label>e-mail: <input type="text" name="email" placeholder="Tu email" required> <br /></label>
-                    <p></p>                    
-                    <input type="submit" data-toggle="tooltip" title="Recuerda llenar todos los campos!" value="Registrarse">
-                    <input type="reset" value="Borrar">
-                </form>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Salir</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-</body>
-</html>
-
--------------------------------------
-
 <!-- Capturar y escribir los datos enviados por un formulario en JS -->
 <html>
     <head>
@@ -2893,12 +2304,6 @@ no este vacío -->
 </html>
 
 -------------------------------------
-<!-- -->
-
--------------------------------------
-<!-- -->
-
--------------------------------------
 
 <!-- abrir enlace en nueva ventana usando un enlace-->
 <a href="javascript:window.open('http://www.as.com/','','width=600,height=400,left=50,top=50,toolbar=yes');void 0">Nueva nueva ventana</a> <p />
@@ -2908,3 +2313,68 @@ no este vacío -->
 
 <p />
 <a onclick="window.open(this.href); return false;" onkeypress="window.open(this.href); return false;" href="http://www.as.com/">Vinculo para abrir la página en otra ventana</a>
+
+-------------------------------------
+
+JSON es una notación de objetos basada en JavaScript, utiliza una sintaxis que nos permite crear objetos de manera rapida y simple, estos objetos pueden ser utilizados de la manera que queramos y la notación se utiliza muy comúnmente para crear servicios REST, objetos, e incluso fue adoptada por algunas bases de datos como lo es MongoDB. A continuación el siguiente video tutorial demuestra una introducción. Codigo ejemplo puedes encontrarlo posteriormente.
+Sintaxis de JSON
+
+Para escribir JSON debemos tener en cuenta lo siguiente:
+La creación de los objetos JSON implica escribir datos, para ello:
+
+    Losdatos estan separados por comas.
+    los datos se escriban en pares, siendo primero el nombre o atributo del mismo y luego el valor del dato.
+    Los objetos JSON estan rodeados por llaves “{}”
+    Llaves cuadradas [] guardan arreglos, incluyendo otros objetos JSON
+
+Ejemplo de un objeto JSON que guarda un usuario y password:
+
+var objetoJSON = {"usuario":"user","password":"123456"};
+
+<!-- Escribiendo en el DOM los datos de un JSON -->
+<!DOCTYPE html>
+<html>
+<body>
+<h3>JSON Object Creation in JavaScript</h3>
+<p id="caja"></p>
+<script type="text/javascript">
+  var json = '{ "nombre":"Pedro Camejo", "pais":"Venezuela", "telefono":"12345678" }';
+  var obj = JSON.parse(json);
+  document.getElementById("caja").innerHTML =
+  obj.nombre + "<br>" +
+  obj.pais + "<br>" +
+  obj.telefono;
+</script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+
+
+
+
