@@ -1,7 +1,7 @@
 #Guías y Códigos de...
 
-```- C``
-`- C++
+```- C```
+- C++
 - HTML
 - HAML
 - PHP
