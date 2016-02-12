@@ -45,7 +45,6 @@ El bloque $(document).ready()
 </script>
 
 
-
 Es buena practica especificar una función JavaScript anónima junto con
 los paréntesis de la función ready(), ejemplo:
 
@@ -2024,19 +2023,17 @@ fast – Rápido
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script>
+      $(document).ready(function(){
+          $('[data-toggle="popover"]').popover();
+      });
+    </script>
 </head>
 <body>
-    <script>
-        $(document).ready(function(){
-            $('[data-toggle="popover"]').popover();   
-        });
-    </script>
-
-    <center>
-        <h3>Ejemplo de Popover</h3>
-        <a href="#" data-toggle="popover" title="Cabecera del Popover" data-content="contenido dentro del popover">Activar Popover</a>
-    </center>
-
+    <div align="center">
+      <h3>Ejemplo de Popover</h3>
+      <a href="#" data-toggle="popover" title="Cabecera del Popover" data-content="contenido dentro del popover">Activar Popover</a>
+    </div>
 </body>
 </html>
 
@@ -2117,7 +2114,7 @@ $(document).ready(function(){
 <body>
     <script>
         $(document).ready(function() {
-            $('[data-toggle="popover"]').popover();   
+            $('[data-toggle="popover"]').popover();
         });
     </script>
 
@@ -2151,7 +2148,9 @@ $(document).ready(function(){
         </script>
     </head>
 <body>
-    <div align="center">        
+    <div align="center">
+        <br />
+        <br />
         <button id="boton" type="" class="btn btn-success" >PRUEBA</button>
     </div>    
 </body>
@@ -2242,6 +2241,8 @@ $(document).ready(function(){
   });
 </script>
 
+-------------------------------------
+
 <!-- Escribiendo en el DOM los datos de un JSON 2 -->
 <!DOCTYPE  html>
 <html>
@@ -2274,6 +2275,168 @@ $(document).ready(function(){
     });
   });
 </script>
+
+-------------------------------------
+
+<!--El método .empty() elimina todos los nodos secundarios y el contenido de los elementos seleccionados.
+Nota: Este método no elimina el elemento en sí, o sus atributos.-->
+<!DOCTYPE html>
+<html>
+<head>
+<!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script-->
+<script src="jquery-1.9.1.js" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+        $("div").empty();
+    });
+});
+</script>
+</head>
+<body>
+<div style="height:100px;background-color:yellow">
+  This is some text
+  <p>This is a paragraph inside the div.</p>
+</div>
+<p>This is a paragraph outside the div.</p>
+<button>Remove content of the div element</button>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Agregar campos de formulario al DOM usando un select form -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <script>
+          var counterText = 0;
+          var counterRadioButton = 0;
+          var counterCheckBox = 0;
+          var counterTextArea = 0;
+          function addAllInputs(divName, inputType){
+               var newdiv = document.createElement('div');
+               switch(inputType) {
+              case 'text':
+                         newdiv.innerHTML = "Entry " + (counterText + 1) + " <br><input type='text' name='myInputs[]'>";
+                   counterText++;
+                     break;
+                    case 'radio': 
+                         newdiv.innerHTML = "Entry " + (counterRadioButton + 1) + " <br><input type='radio' name='myRadioButtons[]'>";
+                   counterRadioButton++;
+                   break; 
+                    case 'checkbox':
+                         newdiv.innerHTML = "Entry " + (counterCheckBox + 1) + " <br><input type='checkbox' name='myCheckBoxes[]'>";
+                         counterCheckBox++;
+                   break;     
+                    case 'textarea':
+                         newdiv.innerHTML = "Entry " + (counterTextArea + 1) + " <br><textarea name='myTextAreas[]'>type here...</textarea>";
+                   counterTextArea++;
+                   break;       
+                    }
+               document.getElementById(divName).appendChild(newdiv);
+          }
+        </script>
+    </head>
+<body>
+<form name="myForm" method="POST">
+  <div id="dynamicInputs">
+  </div>
+  <p />
+  <select name='inputSelect'>
+    <option value ="text">text field</option>
+    <option value ="radio">radio button</option>
+    <option value ="checkbox">checkbox</option>
+    <option value ="textarea">textarea</option>
+  </select>
+  <br />
+  <input type="button" value="Add selected input" onClick="addAllInputs('dynamicInputs', document.myForm.inputSelect.value);"><br />
+</form>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Agregar campos de formulario al DOM usando un select form -->
+<!-- Agregados otros campos para agregar -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>XXX</title>
+        <meta charset="utf-8">
+        <script>
+          var EnunciadoText = 0;
+          var counterText = 0;
+          var counterTextArea_corto = 0;
+          var counterTextArea_larga = 0;
+          var counterVerdadero_Falso = 0;
+          function addAllInputs(divName, inputType) {
+            var newdiv = document.createElement('div');
+            switch(inputType) {
+              case 'enunciado':
+                newdiv.innerHTML = "Enunciado, pregunta o título " + "(" + (EnunciadoText + 1) + ")" + "<br /><input type='text' name='myInputs_enunciado' ><p />";
+                EnunciadoText++;
+              break;
+              case 'text':
+                newdiv.innerHTML = "Texto Corto " + "(" + (counterText + 1) + ")" + "<br /><input type='text' name='myInputs' ><p />";
+                counterText++;
+              break;
+              case 'textarea_corta':
+                newdiv.innerHTML = "Area de Texto Corto " + "(" + (counterTextArea_corto + 1) + ")" + "<br /><textarea name='myTextAreas_corto' rows='5' cols='50' ></textarea><p />";
+                counterTextArea_corto++;
+              break;
+              case 'textarea_larga':
+                newdiv.innerHTML = "Area de Texto Largo " + "(" + (counterTextArea_larga + 1) + ")" + "<br /><textarea name='myTextAreas_larga' rows='10' cols='60' ></textarea><p />";
+                counterTextArea_larga++;
+              break;
+              case 'verdadero_falso':
+                newdiv.innerHTML = "Verdadero o Falso " + "(" + (counterVerdadero_Falso + 1) + ")" + "<br />Pregunta: <input type='text' name='myInputs_pregunta_vof'><select name='select_form[]'><option>---<option>Sí<option>No</select><p />";
+                counterVerdadero_Falso++;
+              break;
+            }
+            document.getElementById(divName).appendChild(newdiv);
+          }
+        </script>
+    </head>
+<body>
+<h3>Agregar campos </h3>
+<form name="myForm" method="GET">
+  <div id="dynamicInputs">
+  </div>
+  <p />
+  <hr>
+  <select name='inputSelect'>
+    <option value ="enunciado">Enunciado, pregunta o título</option>
+    <option value ="text">Campo de Texto</option>
+    <option value ="textarea_corta">Area de Texto</option>
+    <option value ="textarea_larga">Area de Largo</option>
+    <option value ="verdadero_falso">Verdadero o Falso</option>
+  </select>
+  <br />
+  <br />
+  <input type="button" value="Agregar" onClick="addAllInputs('dynamicInputs', document.myForm.inputSelect.value);">
+  <input type="submit" value="Enviar">
+</form>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
 
 -------------------------------------
 
