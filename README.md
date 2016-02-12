@@ -1,6 +1,6 @@
 #Guías y Códigos de...
 
-```- C```
+- C
 - C++
 - HTML
 - HAML
