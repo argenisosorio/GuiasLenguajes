@@ -638,6 +638,12 @@ AM principal2.html // Agregado y modificado, se debe agregar otra ver para acept
 
 git add Nombre_archivo.xxx // Agregamos el archivo al seguimiento de Git
 
+git rm Nombre_ficehro // Borrar un fichero de manera segura, puesto que lo borra del directorio y del seguimiento de git, es un error
+común borrar los archivos directamente y estos siguen estando en el seguimiento de git por lo que se lia bastantes veces
+al subir los cambios, recomendable borrarlos desde git.
+
+git rm -f Nombre_ficehro // para forzar el borrado.
+
 git rm --cached Nombre_archivo.xxx // Si un archivo fue modificado queda un registro de su nombre anterior en el cache
 para borrarlo se esa este comando
 
