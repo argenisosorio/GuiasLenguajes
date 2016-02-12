@@ -1,7 +1,7 @@
 #Guías y Códigos de...
 
-- C
-- C++
+```- C``
+`- C++
 - HTML
 - HAML
 - PHP
@@ -15,4 +15,3 @@
 - MySQL
 - PostgreSQL
 - Comandos de Linux y muchos más para practicar y aprender.
-
