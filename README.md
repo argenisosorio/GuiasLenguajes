@@ -14,4 +14,5 @@
 - Angular
 - MySQL
 - PostgreSQL
+- SCSS
 - Comandos de Linux y muchos más para practicar y aprender.
