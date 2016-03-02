@@ -224,4 +224,3 @@ fun2
 **********Usando métodos**********
 **********Usando métodos**********
 **********Usando métodos**********
-

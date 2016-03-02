@@ -78,7 +78,9 @@ True
 
 '''
 
-**********OPERADORES LÓGICOS**********
+##############################
+##### OPERADORES LÓGICOS #####
+##############################
 
 '''Expresión --- Significado
 
@@ -109,7 +111,9 @@ True
 False
 '''
 
-**********OPERCIONES MATEMÁTICAS**********
+##################################
+##### OPERCIONES MATEMÁTICAS #####
+##################################
 
 #Python permite utilizar las operaciones  +  -  *  /  (división entera) y ** (potenciación)
 
@@ -168,7 +172,9 @@ print 7 / 2
 #MODULO
 print 7%3
 
-**********VARIABLES**********
+######################
+##### VARIABLES ######
+######################
 
 a = 2 #Declaramos (a) y le asignamos un valor (INT) entero
 
@@ -179,7 +185,9 @@ a = "casa" ##Declaramos (a) y le asignamos una cadena de caracteres
 print a #Imprime el valor de (a)
 a #Imprime el valor de (a) directamente, si esta cargada 
 
-**********print**********
+#################
+##### print #####
+#################
 
 #Imprimer por pantalla el contenido entre las comillas simples o dobles: ('') o ("")
 
@@ -219,8 +227,9 @@ Linea 2
 Linea 3
 Linea 4
 
-
-**********FUNCIÓN**********
+###################
+##### FUNCIÓN #####
+###################
 
 def funcion(): #Declaramos el nombre de la Función
 	print "Esto es una funcion" #Contenido de la Función
@@ -228,7 +237,9 @@ def funcion(): #Declaramos el nombre de la Función
 
 funcion() #Invocación de la Función
 
-**********FUNCIÓN con parámetros**********
+##################################
+##### FUNCIÓN con parámetros #####
+##################################
 
 #---Función con un parámetro:
 def funcion(alguien): #Podemos pasar un parametro a la función
@@ -306,7 +317,9 @@ def funcion ():
 	print horas, "horas " "son", segundos, "Segundos"
 funcion()
 
-**********CONCATENACIÓN**********
+#########################
+##### CONCATENACIÓN #####
+#########################
 
 print "Un divertido "+"programa "+"de "+ "radio"
 Un divertido programa de radio
@@ -331,7 +344,9 @@ def prueba():
 	print "El nombre completo es",nom+ape,"!" #Imprime: El nombre completo es ArgenisOsorio !
 prueba()
 
-**********FOR**********
+###############
+##### FOR #####
+###############
 
 def prueba(): 
 	n1 = 0	
@@ -347,7 +362,9 @@ def prueba():
 		print x #Imprimirá los los números 1, 3, 9 y 27
 prueba()
 
-**********IF**********
+##############
+##### IF #####
+##############
 
 #Introducir la nota, el programa calcula si APROBO o SUSPENDIO XD
 nota = input ("Escriba la nota: ")
@@ -363,7 +380,9 @@ if nota > 10:
 if nota == 20:
 	print "*****NO INVENTE! que usted nunca ha sacado 20*****"
 
-**********IF ELSE**********
+###################
+##### IF ELSE #####
+###################
 
 usuario = raw_input ("USUARIO: ")
 if usuario == "canaima":
@@ -386,7 +405,9 @@ if x > 0:
 if not (x > 0):
 	print "Numero no positivo"
 
-**********ELIF**********
+################
+##### ELIF #####
+################
 
 x = input("Ingrese un numero: ")
 if x > 0:
@@ -407,7 +428,9 @@ for j in range(0,i):
 	else:
 		print "Numero negativo"
 
-**********WHILE**********
+#################
+##### WHILE #####
+#################
 
 numero = input("Escriba un numero negativo: ")
 while numero > 0:
@@ -451,51 +474,54 @@ while True:
         else:
 		print "Numero negativo"
 
-**********LISTAS**********		
+##################
+##### LISTAS #####
+##################
 
-#lista = [2,"tres",True,["uno",10]] #Cada elemento de la lista contiene un indice, desde el 0,1,2...
+lista = [2,"tres",True,["uno",10]] #Cada elemento de la lista contiene un indice, desde el 0,1,2...
 
-#print lista
-
-#********************
-
-#acceder = lista [0]
-#acceder = lista [1]
-#acceder = lista [2] Accede al elemento en la posicion 2 de mi lista
-
-#print acceder
+print lista
 
 #********************
 
-#acceder = lista [3][0] accedo al tercer elemento y dentro del tercero accedo al elemento 0 de la sublista
+acceder = lista [0]
+acceder = lista [1]
+acceder = lista [2] Accede al elemento en la posicion 2 de mi lista
 
-#print acceder
-
-#********************
-
-#lista [1] = 4 cambiar el valor del elemento en la posicion 1 por un entero
-#lista [1] = "casa" cambiar el valor del elemento en la posicion 1 por una cadena
-
-#print lista
+print acceder
 
 #********************
 
-#lista = ["casa","carro","perro","gato","ventana","puerta"] Nueva lista
+acceder = lista [3][0] accedo al tercer elemento y dentro del tercero accedo al elemento 0 de la sublista
 
-#lista2 = lista[0:3] Imprmir elementos desde la lista desde el 0 hasta la posicion 3
-
-#print lista2
+print acceder
 
 #********************
 
-#lista = ["casa","carro","perro","gato","ventana","puerta"] 
+lista [1] = 4 cambiar el valor del elemento en la posicion 1 por un entero
+lista [1] = "casa" cambiar el valor del elemento en la posicion 1 por una cadena
 
-#lista[0:1] = 5,6 Sustituir valores en las posiciones
+print lista
 
-#print lista
+#********************
 
+lista = ["casa","carro","perro","gato","ventana","puerta"] Nueva lista
 
-**********VARIABLE GLOBAL**********	
+lista2 = lista[0:3] Imprmir elementos desde la lista desde el 0 hasta la posicion 3
+
+print lista2
+
+#********************
+
+lista = ["casa","carro","perro","gato","ventana","puerta"] 
+
+lista[0:1] = 5,6 Sustituir valores en las posiciones
+
+print lista
+
+###########################
+##### VARIABLE GLOBAL #####
+###########################
 
 a = 5
 

@@ -6,9 +6,9 @@
 
 $ aptitude update // Actualizar los repositorios
 $ aptitude search postgresql // Buscar la version actual en los repositotios
-$ aptitude install postgresql postgresql−server // Instalar la version de PostgreSQL
+$ aptitude install postgresql postgresql-server // Instalar la version de PostgreSQL
 
-sudo service postgresql restart // Reiniciar el serviciode PostgreSQL, para aplicar cambios etc.
+$ sudo service postgresql restart // Reiniciar el servicio de PostgreSQL, para aplicar cambios etc.
 
 --------------------
 
@@ -27,11 +27,14 @@ Digite:  \copyright para ver los términos de distribución
        \h para ayuda de órdenes SQL
        \? para ayuda de órdenes psql
        \g o punto y coma («;») para ejecutar la consulta
-       \q para salir
+       \q para salir       
 postgres=# 
 
 --------------------
 
+# \q //Salir de la consola de Postgres
+
+# \quit //Salir de la consola de Postgres
 
 # \du // Para ver los roles existentes (usuarios)
 
@@ -175,6 +178,14 @@ basename.sql Esta parte en realidad solo indica que la salida de nuestro comando
 
 Ejemplo:
 user@debian:~$ pg_dump -U usuario -h 127.0.0.1 nombre_database > nombre_database.sql
+
+#########################
+##### Configuración #####
+#########################
+
+Los archivos de configuracion estan en: 
+
+--> /etc/postgresql/9.1/main
 
 ######################
 ##### phppgadmin #####

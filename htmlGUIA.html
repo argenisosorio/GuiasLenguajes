@@ -515,8 +515,8 @@ Contraseña: <input type="password" name="contrasena"><br />
 **************
 
 <form action="#" method="get">
-	Nombre: <input type="text" name="nombre" placeholder="Tu Nombre" required> <br />
-	Nombre: <input type="text" name="nombre" placeholder="Tu Nombre" disabled="disabled" required> <br />
+	Usuario: <input type="text" name="user" placeholder="Tu Usuario" required> <br />
+	Usuario: <input type="text" name="user" placeholder="Tu Usuario" disabled="disabled" required> <br />
 	Contraseña: <input type="password" name="pass" placeholder="Tu clave" required> <br />
 	<input type="submit" value="Enviar">
 	<input type="reset" value="Borrar">
@@ -525,7 +525,7 @@ Contraseña: <input type="password" name="contrasena"><br />
 -------- Limpio --------
 
 <form action="#" method="get">
-    Nombre: <input type="text" name="nombre"> <br />
+    Usuario: <input type="text" name="user"> <br />
     Contraseña: <input type="password" name="pass"> <br />
     <input type="submit" value="Enviar">
     <input type="reset" value="Borrar">
@@ -555,13 +555,13 @@ Hola hdspm
 </form>
 
 <form> Cuadro de seleccion
-Elija un color:<BR>
+Elija un color:<br>
 <select name="color">
 <option>Verde
 <option>Negro
 <option>Rojo
 <option>Azul
-</select><BR>
+</select><br />
 <input type="submit" value="Enviar elección">
 </form>
 
@@ -580,12 +580,12 @@ Ingrese la foto: <input type="file" name="foto"><br />
 </form>
 
 <form action="colores.php" method="get"> formulario tipo radio
-Elija un color<br>
-<input type="radio" name="col" value="red">Rojo<br>
-<input type="radio" name="col" value="blue">Azul<br>
-<input type="radio" name="col" value="green">Verde<br>
-<input type="submit" value="Enviar">
-<input type="reset" value="Borrar">
+    Elija un color<br>
+    <input type="radio" name="col" value="red">Rojo<br>
+    <input type="radio" name="col" value="blue">Azul<br>
+    <input type="radio" name="col" value="green">Verde<br>
+    <input type="submit" value="Enviar">
+    <input type="reset" value="Borrar">
 </form>
 
 ****************ESTILOS****************
@@ -1772,9 +1772,11 @@ DarkRed     #8B0000
 Pink        #FFC0CB
 Aqua / Cyan #00FFFF
 Blue        #0000FF
+Light Blue  #A9E2F3
 DarkBlue    #00008B
 Purple      #800080
 Lime        #00FF00
+Light Green #01DF3A
 Green       #008000
 
 xxxxxxxxxx Plantilla con cuerpos y estilos definidos xxxxxxxxxx
@@ -2087,18 +2089,71 @@ xxxxxxxxxx centrando a <div id="completo"> xxxxxxxxxx
 </body>
 </html>
 
-------------------------------
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-xxxxxxxxxx XXXXXX xxxxxxxxxx
+<!-- Trabajando con display block, inline, inlineblock -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Display valores</title>
+    <link rel="stylesheet" type="text/css" href="css/displayvalores.css">
+  </head>
+  <body>
+    <p class="block">Soy un elemento con comportamiento de bloque</p>
+    <p class="block">Soy un elemento con comportamiento de bloque</p>
+ 
+    <p class="inline">Soy un elemento con comportamiento en linea</p>
+    <p class="inline">Soy un elemento con comportamiento en linea</p>
+ 
+    <p class="inlineblock">Soy un elemento con comportamiento en bloque de linea</p>
+    <p class="inlineblock">Soy un elemento con comportamiento en bloque de linea</p>
+  </body>
+</html>
 
-xxxxxxxxxx XXXXXX xxxxxxxxxx
+<style type="text/css">
+.block { /*Si acepta width y height*/
+  display: block;
+  padding: 10px;
+  background: blue;
+  color: white;
+}
+ 
+ 
+.inline { /* No acepta width ni height */
+  display: inline;
+  padding: 10px;
+  margin-left: 50px;
+  background: pink;
+}
+ 
+.inlineblock { /*Permite width, height, tener elementos vecinos, margin y padding */
+  display: inline-block;
+  width: 160px;
+  margin: 15px;
+  padding: 15px;
+  background: red;
+  color: white;
+}
+</style>
 
-xxxxxxxxxx XXXXXX xxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-xxxxxxxxxx XXXXXX xxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-xxxxxxxxxx XXXXXX xxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-xxxxxxxxxx XXXXXX xxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-xxxxxxxxxx XXXXXX xxxxxxxxxx
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

@@ -1544,7 +1544,7 @@ fast – Rápido
       $("#add").click(function () {
         $("#contenido").append( "<h2>Cabecera</h2>" );
       });
-    });    
+    });
   </script>
   <style type="text/css">
   #contenido {
@@ -1587,6 +1587,44 @@ fast – Rápido
     <button id="clonar">Clonar</button>
 </body>
 </html>
+
+-------------------------------------
+
+<!-- Agregar/Eliminar elementos del DOM -->
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-1.9.1.js" type="text/javascript"></script>
+</head>
+<body>
+  <button id="add">Agregar</button>
+  <button id="remove">Borrar</button>
+  <br />
+  <br />
+  <div id="contenido">
+    <h1>XXXXX</h1>
+  </div>
+</body>
+</html>
+<script>
+  $("document").ready(function(){    
+    $("#add").click(function () {
+      a = "<h1>XXXXX</h1>"
+      $("#contenido").append(a);
+    });
+    $("#remove").click(function(){
+      $("#contenido").empty();
+    });
+});
+</script>
+<style type="text/css">
+#contenido {
+  height: 300px;
+  width: 300px;
+  border: solid 1px #000000;
+  overflow: auto;
+}
+</style>
 
 -------------------------------------
 
@@ -1693,6 +1731,43 @@ fast – Rápido
         <button id="grafo" data-toggle="tooltip" data-placement="right" class="btn btn-success" title="Permite apreciar gráficamente cómo las cuentas de Twitter mencionan etiquetas (hashtags) y se mencionan entre sí. >Grafo de menciones">Grafo de menciones</button>
 
     </div>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Mostrar mensaje (tooltip) al posar el cursor sobre campos de un formulario -->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+    </head>
+<body>
+  <br />
+  <br />
+  <br />
+  <div align="center">
+    <form action="#" method="get">
+      Usuario: <input type="text" name="nombre" data-toggle="tooltip" data-placement="right" title="Escribe tu nombre de Usuario">
+      <br />
+      <br />
+      Contraseña: <input type="password" name="pass" data-toggle="tooltip" data-placement="right" title="Escribe tu contraseña">
+      <br />
+      <br />
+      <input type="submit" value="Enviar">
+      <input type="reset" value="Borrar">
+    </form>
+  </div>
 </body>
 </html>
 
@@ -2424,7 +2499,39 @@ $(document).ready(function(){
 
 -------------------------------------
 
-<!-- -->
+<!--Mostrar hora del sistema con una funcion -->
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <script src="jquery-1.9.1.js" type="text/javascript"></script>
+    </head>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#hora_actual_inicio").click(function() {
+          var tiempo = new Date();
+          var hora;
+          with (tiempo){
+            hora = getHours();
+            minuto = getMinutes();
+            //segundo = getSeconds();
+            if (minuto < 10) {
+              minuto="0"+ minuto
+            }
+            cad = hora + ":" + minuto;
+            //cad = hora + ":" + minuto + ":" + segundo;
+          }
+          $("#fijar_hora_inicio").html(cad);
+        });
+      });
+    </script>
+<body>
+    <div align="center">
+      <b>Hora de inicio:</b>
+      <div id="fijar_hora_inicio"></div>      
+      <button id="hora_actual_inicio">Hora actual</button>
+    </div>
+</body>
+</html>
 
 -------------------------------------
 

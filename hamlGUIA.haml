@@ -1,5 +1,5 @@
 /#### Guía haml by dM ####
-<!--
+
 Haml es un lenguaje de marcado ligero que se usa para describir el XHTML de un documento
 web sin emplear el código embebido tradicional.
 Haml funciona como reemplazo de sistemas de plantillas de páginas embebidas como PHP, RHTML
@@ -12,7 +12,6 @@ Ruby on Rails y Merb, no obstante la implementación de Ruby también funciona d
 El equivalente de Haml para CSS es Sass.
 
 En los ejemplos tambien hay codigo de plantillas .erb nativo de Ruby On Rails
--->
 
 /------------------------
 
@@ -42,19 +41,17 @@ example.html
   </div>
 </div>
 
-<!--
 Como podemos observar el haml emplea el caracter (%) para englobar las etiquetas html convencionales
 ademas de usar la indentacion del codigo para referenciar el final de un bloque, es decir, no usa
 etiquetas de cierre sino se basa en la indentacion para ese aspecto.
 Los div class se expresan con .xxx y los div id con #...
--->
 
 /Ejemplos:
 example.erb:
-<section class=”container”>
+<section class="container">
   <h1><%= post.title %></h1>
   <h2><%= post.subtitle %></h2>
-  <div class=”content”>
+  <div class="content">
     <%= post.content %>
   </div>
 </section>

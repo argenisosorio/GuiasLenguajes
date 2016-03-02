@@ -112,7 +112,7 @@ $ mkdir carpetaFFF && cd carpetaFFF // Creamos una carpetaFFF y luego entramos e
 $ mkdir carpetaZZZ && cd carpetaZZZ && touch archivo.txt // Creamos una carpeta, entramos en ella y creamos un archivo
 en ese directorio en una sola instruccion.
 
-touch // Crear fichero
+touch Nombre_Fichero // Crear fichero
 
 nano nombre_fichero // Modificar un fichero con el editor nano.
 
@@ -271,13 +271,16 @@ rm * // Borrar todos el contenido de una carpeta, se debe estar dentro del direc
 rm -r * // Borrar todo el contenido de una carpeta, incluyendo las carpetas de ese directorio
 se debe estar dentro del directorio
 
+sudo rm -rf /xxx/xxxx // rm: Comando "remove", eliminar. -rf: r de "recursivo" donde se borra todo y f de "force";
+nunca solicita confirmación. /xxx/xxx indica la ruta de los ficehros o carpetas a borrar.
+
 sudo -i // Pedir contraseña root, algunas versiones basadas en Debian
 
 su // Pedir contraseña del root
 
 root@debian:/home/user# Ctrl + d //Para salir del root, tambien exit, funciona en algunas consolas como python, ruby, entre otras.
 
-Ctrl + R // En la consola, para hacer una busqueda de comandos usados baasndose en la palabra que se introduzca
+Ctrl + r // En la consola, para hacer una busqueda de comandos usados baasndose en la palabra que se introduzca
 
 Shift + Page up <--> Page down // Moverse a traves de los logs de la consola, simula el scroll up/down del mouse
 
@@ -577,7 +580,7 @@ su:
 find / -type f -name NombreArchivo.html // Para mostrar el directorio del archivo que se 
 //quiera buscar, se debe saber el nombre del archivo
 
-locate nombre_del_archivo // Hacer una busqueda de un archivo en los directorios, se puede especificar un nombre con su extencion
+locate nombre_del_archivo // Hacer una busqueda de un archivo en los directorios, se puede especificar un nombre con su extensión
 //o solo especificar una palabra, la busqueda se hara en todos los archivos que contengan la palabra o nombre de archivo escrita.
 
 su: *****
@@ -745,8 +748,8 @@ se almacena y mantiene información digital, habitualmente bases de datos o arch
 1- Crearnos una cuenta en GitHub
 2- Crear un repositorio, ese repo tendra una URL asignada, ejem: https://github.com/name_user/name_repo
 3- Una forma rapida de subir un proyecto de git es bajando ese repositorio creado, clonandolo en nuestro directorio,
-al clonarlo ya viene configurado con los ficehros de git lo que nos permitira hacer push directamente sin hacer mayores
-configuraciones
+al clonarlo ya viene configurado con los ficheros de git lo que nos permitira hacer push directamente sin hacer mayores
+configuraciones.
 
 git clone https://github.com/name_user/name_repo.git // Clonamos el repositorio del proyecto
 
@@ -882,7 +885,7 @@ Geraldo==0.4.17
 
 // Luego podemos ejecutar un pip install sobre el fichero e instalará lo que contenga:
 
-pip install −r requirements.txt
+pip install -r requirements.txt
 
 // Dentro de los .virtualenvs, dentro de nuestro entorno virtual en
 lib/python2.7/site-packages podemos ver que se instalaron los paquetes de requirements.txt
@@ -934,9 +937,9 @@ Para copiar un directorio completo de mi ordenador al servidor, por ejemplo /hom
 
 $ scp -r /home/mario/carpeta usuario@dominio.com:/home/usuario
 
-###############################################
-########## Programación Shell-Script ##########
-###############################################
+######################################################
+########## Programación Shell-Script (bash) ##########
+######################################################
 
 Bash (y otros shells) permiten programar scripts
 --Bash (Bourne again shell) es un programa informático cuya función consiste en interpretar órdenes.
@@ -955,11 +958,10 @@ Los scripts deben empezar por el simbolo #! seguido del programa a usar para int
 #!/bin/sh // Script de shell
 #!/usr/bin/perl // Script de perl
 
-
 ----------------------------
 
+#Ejemplo de programa en bash para imprimir valores de variables
 #!/bin/bash
-#Ejemplo de programa en bash
 VAL=10
 VAL2=20
 echo $VAL
@@ -967,7 +969,15 @@ echo $VAL2
 
 ----------------------------
 
-sh prueba.sh // Ejecutar un programa bash
+Guardamos el script, ejemplo: prueba.sh, no es necesario ponerle
+la extensión ya que la cabecera del script especifíca que programa
+lo interpretará
+
+Ejecución:
+
+sh prueba.sh // Ejecutar un programa con bash.
+
+sh prueba // Ejecutar un programa con bash, script guardado sin extension.
 
 #################
 ##### RSYNC #####
@@ -1078,7 +1088,47 @@ Es un editor de diagramas, grafos, gráficas, etc. Ofrece soporte para diagramas
 estáticas en UML (diagramas de clases), diagramas de  Entidad-Relación, diagramas de redes y mucho más.
 Los diagramas se pueden exportar a postscript y a otros formatos.
 
-aptitude show dia
+$ aptitude install dia
+
+################
+##### Meld #####
+################
+
+Es una herramienta gráfica para hacer archivos diff y fusionarlos.
+Permite al usuario ver los cambios entre, y fusionar, dos archivos, dos directorios, o dos archivos con un ancestro común.
+
+$ aptitude install meld
+
+########################################
+##### Cambiar permisos de usuarios #####
+########################################
+
+Al ver los permisos de los ficehros o directorios nos encontramos con varios parametros:
+
+En la primera columna se pueden ver una serie de letras y guiones (-rwxr-x---)
+estas letras nos dicen quien en el sistema, y que clases de permisos tiene el fichero o carpeta.
+
+Estas letras están agrupadas en tres grupos con tres posiciones cada uno
+más una primera posición que nos dice de que clase de archivo se trata
+(los mas normales (d) directorios, o (-) archivos de datos).
+
+El primer grupo de tres (rwx en nuestro caso) nos dice que clase de permisos tiene el dueño del fichero (u)(user/owner)
+El segundo grupo de tres (r-x en nuestro caso) nos dice que clase de permisos tiene el grupo del fichero (g)(group).
+Y el último grupo de tres (--- en nuestro caso) nos dice que clase de permisos tienen todos los demás usuarios del sistema sobre este
+fichero (o)(others).
+
+r :significa permiso para leer 
+w :significa permiso para escribir  
+x :significa permiso para ejecutar  
+
+Los permisos se pueden especificar de diferentes maneras, una serie de ejemplos, es lo mejor para comprenderlo:
+
+chmod ugo+rwx test (da permisos rwx a todos, user,group,others)
+chmod ugo-x test (quita permiso x (ejecucion) a todos, user,group,others) 
+chmod o-rwx test (quita permisos rwx a others) 
+chmod u=rwx,g=rx test (da permisos rwx a user, rx a group y ninguno a others)
+
+chmod -R u=rwxr,g=xr,o=x /dir/dir2/dir3 // Ejemplo de como otorgar permisos a un directorio específico.
 
 ##############
 ### Otros: ###
@@ -1088,4 +1138,3 @@ $ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con e
 digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando
 
 ~ // Para sacarlo usar AvPag en la consola
-

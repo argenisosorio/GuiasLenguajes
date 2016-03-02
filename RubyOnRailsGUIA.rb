@@ -120,6 +120,8 @@ $ rails new prueba #Se genera una nueva carpeta dentro del directorio, esa carpe
 
 app/ #Contiene los controllers, models, views, helpers, mailers y assets para tu aplicación.
 
+app/assets #Aquí guardaremos las imagenes, javascripts y las hojas de estilo.
+
 config/ #Configura las reglas de ejecución de la aplicación, rutas, base de datos y más.
 
 config.ru #Configuración Rack para servidores basados en Rack usados para iniciar la aplicación.
@@ -222,11 +224,11 @@ $ rails server
 #que se procesa automáticamente para cada petición servida por Rails.
 
 #Para crear un nuevo controlador, necesitas ejecutar el generador de controladores y
-#decirle que quieres un controlador llamado por ejemplo welcome con una acción llamada index.
+#decirle que quieres un controlador llamado por ejemplo saludo con una acción llamada index.
 
 $ rails generate controller saludo index #Rails creará una serie de archivos y añadirá una ruta por ti.
 #Se creará la ruta (http://localhost:3000/saludo/index) la primera parte indica la direccion base de 
-#la aplicación, la segunda el controlador(welcome) y la tercera la accion a ejecutar(index)
+#la aplicación, la segunda el controlador(saludo) y la tercera la accion a ejecutar(index)
 
 #Los archivos más importantes de éstos son el controlador, que se encuentra en:
 app/controllers/saludo_controller.rb
