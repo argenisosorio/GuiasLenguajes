@@ -1,0 +1,54 @@
+/ ##### Ejemplos: #####
+
+example.erb:
+<section class="container">
+  <h1><%= post.title %></h1>
+  <h2><%= post.subtitle %></h2>
+  <div class="content">
+    <%= post.content %>
+  </div>
+</section>
+
+example.haml:
+%section.container
+  %h1= post.title
+  %h2= post.subtitle
+  .content
+    = post.content
+
+/-----------------
+
+example.erb:
+<strong><%= item.title %></strong>
+
+example.haml:
+%strong= item.title
+
+/-----------------
+
+example.html
+<strong class="code" id="message">Hello, World!</strong>
+
+example.haml
+%strong{:class => "code", :id => "message"} Hello, World!
+
+/----------------
+
+example.erb
+<div id='content'>
+  <div class='left column'>
+    <h2>Welcome to our site!</h2>
+    <p><%= print_information %></p>
+  </div>
+  <div class="right column">
+    <%= render :partial => "sidebar" %>
+  </div>
+</div>
+
+example.haml
+#content
+  .left.column
+    %h2 Welcome to our site!
+    %p= print_information
+  .right.column
+    = render :partial => "sidebar"

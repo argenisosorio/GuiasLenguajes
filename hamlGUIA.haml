@@ -13,102 +13,65 @@ El equivalente de Haml para CSS es Sass.
 
 En los ejemplos tambien hay codigo de plantillas .erb nativo de Ruby On Rails
 
-/------------------------
+/ Comentarios de línea
 
-/Ejemplos de haml y html:
+/ ##### Ejemplos de haml y html: #####
 
 haml:
+
 %html
   %body
       %h1 My First Heading
 
 html:
+
 <html>
     <body>
         <h1>My First Heading</h1>
     </body>
 </html>
 
-/Ejemplos de declaracionde div id y div class
+/ ##### Ejemplos de declaracionde div id y div class #####
 
-example.haml
+haml:
+
 #content
- .title   
+ .title
+  Título
 
-example.html
+html:
+
 <div id='content'>
   <div class='title'>
+    Título
   </div>
 </div>
 
-Como podemos observar el haml emplea el caracter (%) para englobar las etiquetas html convencionales
-ademas de usar la indentacion del codigo para referenciar el final de un bloque, es decir, no usa
-etiquetas de cierre sino se basa en la indentacion para ese aspecto.
-Los div class se expresan con .xxx y los div id con #...
+/ -------------------
 
-/Ejemplos:
-example.erb:
-<section class="container">
-  <h1><%= post.title %></h1>
-  <h2><%= post.subtitle %></h2>
-  <div class="content">
-    <%= post.content %>
-  </div>
-</section>
+Como podemos observar el haml emplea el caracter (%) para englobar las
+etiquetas html convencionales ademas de usar la indentación del código
+para referenciar el final de un bloque, es decir, no usa etiquetas de
+cierre sino se basa en la indentacion para ese aspecto.
 
-example.haml:
-%section.container
-  %h1= post.title
-  %h2= post.subtitle
-  .content
-    = post.content
+Los div class se expresan con .xxx y los div id con #
 
-/-----------------
+/ -------------------
+/ -------------------
+/ -------------------
+/ -------------------
+/ -------------------
+/ -------------------
+/ -------------------
+/ -------------------
+/ -------------------
+/ -------------------
+/ -------------------
+/ -------------------
+/ -------------------
+/ -------------------
+/ -------------------
+/ -------------------
+/ -------------------
+/ -------------------
 
-example.erb:
-<strong><%= item.title %></strong>
-
-example.haml:
-%strong= item.title
-
-/-----------------
-
-example.html
-<strong class="code" id="message">Hello, World!</strong>
-
-example.haml
-%strong{:class => "code", :id => "message"} Hello, World!
-
-/----------------
-
-example.erb
-<div id='content'>
-  <div class='left column'>
-    <h2>Welcome to our site!</h2>
-    <p><%= print_information %></p>
-  </div>
-  <div class="right column">
-    <%= render :partial => "sidebar" %>
-  </div>
-</div>
-
-example.haml
-#content
-  .left.column
-    %h2 Welcome to our site!
-    %p= print_information
-  .right.column
-    = render :partial => "sidebar"
-
-/----------------
-
-/Comentarios:
-
-/ Comentarios de línea
-
-<!--
-Comentarios de
-múltiple linea
--->
-
--# Otra forma de comentario de línea

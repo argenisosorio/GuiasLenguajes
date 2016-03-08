@@ -601,76 +601,78 @@ wget -r www.programador-de-software.blogspot.com
 ####### GIT - Software de Control de Versiones #######
 ######################################################
 
-// Software de control de versiones diseñado por Linus Torvalds, pensando en la eficiencia
+Software de control de versiones diseñado por Linus Torvalds, pensando en la eficiencia
 y la confiabilidad del mantenimiento de versiones de aplicaciones cuando éstas tienen un gran número de
 archivos de código fuente. Hay algunos proyectos de mucha relevancia que ya usan Git
 en particular, el grupo de programación del núcleo Linux.
 
-aptitude install git // fast, scalable, distributed revision control system 
+$ aptitude install git // fast, scalable, distributed revision control system 
 
-git // Con este comando nos listara la lista de comandos Git que podemos usar en un proyecto
+$ git // Con este comando nos listara la lista de comandos Git que podemos usar en un proyecto
 
-git --version // Para saber que version tenemos instalada.
+$ git --version // Para saber que versión tenemos instalada.
 
 //Lo primero que debemos hacer despues de la instalacion es configurar nuestro Git
 
-git config --global user.name "Argenis Osorio" // Asignamos el nombre de usuario que será la firma del usuario en cada commit
+$ git config --global user.name "Argenis Osorio" // Asignamos el nombre de usuario que será la firma del usuario en cada commit
 
-git config --global user.email aosorio@example.com // igualmente el correo que siempre acompañara al autor de cada commit
+$ git config --global user.email aosorio@example.com // igualmente el correo que siempre acompañara al autor de cada commit
 
-git init // Crear un directorio, dentro del directorio ejecutar
+$ git init // Crear un directorio, dentro del directorio ejecutar
 para crear un nuevo repositorio de git.
 
-git status -s // Lista los archivos del proyecto y se visualiza si fueron agregados al seguimiento de Git.
-//Tambien podemos ver si un archivo fue modificado y no a sido agregado al seguimiento de Git
+$ git status -s // Lista los archivos del proyecto y se visualiza si fueron agregados al seguimiento de Git.
+//Tambien podemos ver si un archivo fue modificado y no a sido agregado al seguimiento de Git.
 
-git add * // Para agregar todos los archivos al seguimiento
+$ git add * // Agregar todos los archivos al seguimiento de Git.
 
-git status // Muestra el estado actual de la rama, como los cambios que hay sin commitear.
+$ git status // Muestra el estado actual de la rama, como los cambios que hay sin commitear.
 
-git status -s // Muestra el estado de los archivos del proyecto, si estan sin agregar o fueron modificados
+$ git status -s // Muestra el estado de los archivos del proyecto, si estan sin agregar o fueron modificados.
 
-git branch // Lista todas las ramas locales.
+$ git commit -m "Primer commit del proyecto" //Hacer un commit al proyecto, se activara la rama master por defecto.
 
-git branch -a // Lista todas las ramas locales y remotas.
+$ git log // Podemos ver todos los commits que se han hehco a un proyecto, fecha, autor, etc...
 
+$ git branch // Lista todas las ramas locales.
+
+$ git branch -a // Lista todas las ramas locales y remotas.
+
+
+// Ejemplo de archivos agregados al seguimiento de git:
 A  gris.jpg // Agregado
 A  principal.html // Agregado
 AM principal2.html // Agregado y modificado, se debe agregar otra ver para aceptar los cambios
 ?? principal3.html // Archivo agregado al directorio pero no agregado al seguimiento de Git
 
-git add Nombre_archivo.xxx // Agregamos el archivo al seguimiento de Git
+$ git add Nombre_archivo.xxx // Agregar un fichero específico al seguimiento de Git
 
-git rm Nombre_ficehro // Borrar un fichero de manera segura, puesto que lo borra del directorio y del seguimiento de git, es un error
+$ git rm Nombre_fichero.xxx // Borrar un fichero de manera segura, puesto que lo borra del directorio y del seguimiento de git, es un error
 común borrar los archivos directamente y estos siguen estando en el seguimiento de git por lo que se lia bastantes veces
 al subir los cambios, recomendable borrarlos desde git.
 
-git rm -f Nombre_ficehro // para forzar el borrado.
+$ git rm -f Nombre_fichero.xxx // Forzar el borrado del fichero.
 
-git rm --cached Nombre_archivo.xxx // Si un archivo fue modificado queda un registro de su nombre anterior en el cache
+$ git rm --cached Nombre_archivo.xxx // Si un archivo fue modificado queda un registro de su nombre anterior en el cache
 para borrarlo se esa este comando
 
-git commit -m "Primer commit del proyecto" //Hacer un commit al proyecto, se activara la rama master
+$ git commit --amend -m "comentario commit corregido" // Corregir algun error en el texto del último commit
 
-git log // Podemos ver todos los commits que se han hehco a un proyecto
+$ git commit --amend // Corregir un error en el commit, abrira un editor de texto
 
-git commit --amend -m "comentario commit corregido" // Corregir algun error en el texto del ultimo commit
+$ git reset --hard HEAD~1 // Borrar el ultimo commit hecho.
 
-git commit --amend // Correguir un error en el commit, abrira un editor de texto
+$ git checkout -b Nombre_Rama // Crear una rama y cambiarse a ella.
 
-git reset --hard HEAD~1 // Borrar el ultimo commit hecho.
+$ git branch -d Nombre_Rama // Borrar una rama, se debe estar en otra rama para borrarla
 
-git checkout -b Nombre_Rama // Crear una rama y cambiarse a ella.
+$ git branch -D Nombre_Branch // Forzar el borrado de una rama, a veces no se dejan borrar si hay cambios sin guardar.
 
-git branch -d Nombre_Rama // Borrar una rama, se debe estar en otra rama para borrarla
+$ git checkout Nombre_Rama // Cambiarse de rama
 
-git branch -D Nombre_Branch // Forzar el borrado de una rama, a veces no se dejan borrar si hay cambios sin guardar.
+$ git branch -v // Para ver los ultimos commits de cada rama.
 
-git checkout Nombre_Rama // Cambiarse de rama
-
-git branch -v // Para ver los ultimos commits de cada rama.
-
-git checkout XXXXXX123456 // Este comando sirve para moverse entre los commits, cada commit genera una
+$ git checkout XXXXXX123456 // Este comando sirve para moverse entre los commits, cada commit genera una
 etiqueta hash, un identificador muy largo alfanumerico, estas etiquetas identifican una version del proyecto
 lo que permite restaurar el proyecto a estados anteriores donde XXXXXX123456 representa la etiqueta del commit al que queremos ir.
 
@@ -678,7 +680,7 @@ lo que permite restaurar el proyecto a estados anteriores donde XXXXXX123456 rep
 los commits que habian hasta ese momento y el ultimo es en el que nos encontramos, si queremos volver a tener los commits anteriores 
 solo hacemos git checkout a la rama en que estabamos antes o a alguna rama especifica.
 
-git diff // Si se hacen cambios o se agregaron archivos al proyecto este comando nos hará mostrara una comparacion entre los
+$ git diff // Si se hacen cambios o se agregaron archivos al proyecto este comando nos hará mostrara una comparacion entre los
 ultimos cambios hechos el ultimo commit hecho, es recomendable revisar esos cambios antes de agregarlos al seguimiento de git
 y por supuesto antes de hacer un commit.
 
@@ -708,7 +710,7 @@ index 554fd4f..94b3eac 100755
                 <div id="cuerpo1">
 
 
-git clone /home/directorio/proyecto/ //Crea una copia local del repositorio se debe situar en la carpeta
+$ git clone /home/directorio/proyecto/proyecto //Crea una copia local del repositorio se debe situar en la carpeta
 donde se quiere hacer la copia y luego se le da la ruta del proyecto a copiar 
 
 git clone https://xxx.xxx.gob.ve/xxx/xxx/xxx.git // Si esta subido en algun servidor 
@@ -746,32 +748,36 @@ quede desactualizada, se debe realizar el merge de master sobre development.
 se almacena y mantiene información digital, habitualmente bases de datos o archivos informáticos.
 
 1- Crearnos una cuenta en GitHub
-2- Crear un repositorio, ese repo tendra una URL asignada, ejem: https://github.com/name_user/name_repo
-3- Una forma rapida de subir un proyecto de git es bajando ese repositorio creado, clonandolo en nuestro directorio,
-al clonarlo ya viene configurado con los ficheros de git lo que nos permitira hacer push directamente sin hacer mayores
-configuraciones.
 
-git clone https://github.com/name_user/name_repo.git // Clonamos el repositorio del proyecto
+2- Crear un repositorio, desde la intefáz gráfica de github nos pedirá el nombre para el repositorio
+ese repo tendra una URL asignada, ejem: https://github.com/name_user/name_repo
 
-cd name_repo/ //Nos cambiamos a la carpeta del proyecto
+3- La forma mas rápida de subir un proyecto al repositorio creado es bajando ese repositorio creado, clonandolo en nuestro directorio,
+al clonarlo ya viene configurado con los ficheros de git lo que nos permitira hacer push directamente sin hacer mayores esfuerzos.
 
-4- Una vez hecho es veremos una carpeta local con el nombre de nuestro repositorio de Github
-esta carpeta estará vacía porque aun no hemos puesto nada. Ahora puedes meter dentro todos los archivos
-nuestro proyecto y cuando los tengas todos dentro puedes ejecutar estos comandos:
+$ git clone https://github.com/name_user/name_repo.git // Clonamos el repositorio del proyecto, se guardará en nuestro directorio
 
-git add . // Para agregar todos los archivos nuevos
+$ cd name_repo/ //Nos cambiamos a la carpeta del proyecto, 
 
-git commit -m "Comentario" // Hacemos el primer commit del proyecto, ejemplo: "Primer commit" o "Caga inicial"
+4- Una vez hecho es veremos una carpeta local con el nombre de nuestro repositorio de GitHub
+esta carpeta estará vacía, dentro de la carpeta irá el proyecto que queremos subir. Ahora metemos dentro de la carpeta
+todos los directorios y ficehros de nuestro proyecto.
 
-git push origin master // Este comando es para subir el proyecto directamente al repo de nuestra cuenta en 
-github, cabe mencionar que en el directorio .git descargado, en el archivo config estará por defecto
-escrita la URL de nuestro repo lo que facilita subir los proyectos y los cambios directamente, por ello 
+$ git add . // Para agregar todos los archivos que pegamos al seguimiento de git.
+
+$ git commit -m "Comentario" // Hacemos el primer commit del proyecto, ejemplo: "Primer commit" o "Caga inicial del proyecto"
+
+$ git push origin master // Este comando es para subir el proyecto directamente a la rama master de nuestro repo.
+
+// Cabe mencionar que en el directorio .git descargado, en el archivo config estará por defecto
+escrita la URL de nuestro repo, lo que facilita subir los proyectos y los cambios directamente, por ello 
 el paso de la clonacion del repo.
 
-// Antes de subir los cambios nos pedira el user y pass de la cuenta github para realizar la autenticacion
-user@debian:~/GuiasLenguajes$ git push origin master
+// Antes de subir los cambios nos pedira el user y pass de la cuenta github para realizar la autenticación
+
+user@debian:~/MiProyecto$ git push origin master
 Username for 'https://github.com': user
-Password for 'https://user@github.com': *****
+Password for 'https://user@github.com': ************
 Counting objects: 14, done.
 Delta compression using up to 4 threads.
 Compressing objects: 100% (13/13), done.
@@ -780,13 +786,13 @@ Total 13 (delta 0), reused 0 (delta 0)
 To https://github.com/user/proyecto.git
    af47064..228246e  master -> master
 
-//Listo ya deberias porder ver tu proyecto en github
+// Listo ya deberias porder ver tu proyecto en github
 
-git push origin --delete your_branch //Eliminar una rama en tu Github o en tu repositorio remoto.
+$ git push origin --delete your_branch // Eliminar una rama en tu GitHub o en tu repositorio remoto.
 
-git push origin :your_branch // Eliminar una rama, alternativa al anterior.
+$ git push origin :your_branch // Eliminar una rama, alternativa al anterior.
 
-git push origin +master // Para borrar o deshacer un commit en github, se debe primero borrar el commit 
+$ git push origin +master // Para borrar o deshacer un commit en github, se debe primero borrar el commit 
 de manera local, luego volvemos a subir el proyecto con este comando para que quede como estaba.
 
 #########################################

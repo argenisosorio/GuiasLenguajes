@@ -33,6 +33,16 @@ $ irb # Interactive Ruby Shell
 
 Ctrl + D # Salir de la Consola
 
+**********Comentarios en ruby********* 
+
+# Comentario de una línea
+
+=begin
+  Comentario
+  de varias
+  lineas
+=end
+
 **********Imprimir por pantalla**********
 
 puts "¿Por qué estas aqui?" #Agrega una linea en blanco al final, como un fin de línea.
@@ -76,16 +86,6 @@ puts "Hola Ruby 2"
 
 ruby ejemplo.rb #Se debe estar en el directorio del archivo o en su defecto
 #le pasamos la ruta del archivo--> ruby /home/user/ejemplo.rb
-
-**********Comentarios en ruby********* 
-
-# Comentario de una línea
-
-=begin
-	Comentario
-  de varias
-  lineas
-=end
 
 **********VARIABLES**********
 
