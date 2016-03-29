@@ -122,6 +122,10 @@ app/ #Contiene los controllers, models, views, helpers, mailers y assets para tu
 
 app/assets #Aquí guardaremos las imagenes, javascripts y las hojas de estilo.
 
+  images - javascripts - stylesheets
+
+# Por cada controlador creado también se nos crearan subdirectorios de cada controlador en nuestros assets.
+
 config/ #Configura las reglas de ejecución de la aplicación, rutas, base de datos y más.
 
 config.ru #Configuración Rack para servidores basados en Rack usados para iniciar la aplicación.
@@ -292,7 +296,7 @@ class SaludoController < ApplicationController
 end
 
 #Guardamos, y ahora editaremos la vista para que muestre la hora que queremos:
-    prueba/app/views/saludo/index.html.erb
+  prueba/app/views/saludo/index.html.erb
 
 #Nos queda así:
 
@@ -436,3 +440,7 @@ $ rake db:migrate #Se crearon las tablas correspondientes en la
 #http://127.0.0.1:3000/posts
 #Podemos visualizar la lista de publicaciones asi como enlaces a las operaciones
 #CRUD que se crearon
+
+# ----- Varios -----
+
+<%= link_to "proyecto", proyecto_path%> //Enlace al path de otro controlador

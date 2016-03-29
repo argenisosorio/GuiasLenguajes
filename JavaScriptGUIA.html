@@ -2343,7 +2343,68 @@ var objetoJSON = {"usuario":"user","password":"123456"};
 
 -------------------------------------
 
-<!-- -->
+<!-- Contar el número de caractéres escritos en un area de texto -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ssss</title>
+</head>
+<body>
+  <form action="#" method="post">  
+    <b>Texto:</b>
+    <textarea cols="40" rows="5" name="texto" onKeyDown="cuenta()" onKeyUp="cuenta()"></textarea>
+    <p />
+    <b>Caracteres:</b>
+    <input type="text" name="caracteres" size="4">
+  </form>
+</body>
+<script>
+  function cuenta(){
+    document.forms[0].caracteres.value=document.forms[0].texto.value.length
+  }
+</script> 
+</html>
+
+-------------------------------------
+
+<!-- Limitar el número de caractéres escritos en un area de texto -->
+<html>
+<head>
+  <title>Ssssssss</title>
+<script>
+  contenido_textarea = ""
+  num_caracteres_permitidos = 10
+  function valida_longitud() {
+    num_caracteres = document.forms[0].texto.value.length    
+    if (num_caracteres <= num_caracteres_permitidos) {
+      contenido_textarea = document.forms[0].texto.value  
+    }
+    else {
+      document.forms[0].texto.value = contenido_textarea
+    }    
+    if (num_caracteres >= num_caracteres_permitidos) {
+      document.forms[0].caracteres.style.color="#ff0000";
+    }
+    else {
+      document.forms[0].caracteres.style.color="#000000";
+    }    
+    cuenta()
+  }
+  function cuenta(){
+    document.forms[0].caracteres.value=document.forms[0].texto.value.length
+  }
+</script>
+</head>
+<body>
+<form action="#" method="post">
+<b>Texto:</b>
+<textarea cols="40" rows="5" name="texto" onKeyDown="valida_longitud()" onKeyUp="valida_longitud()"></textarea>
+<br />
+<b>Caracteres:</b>
+<input type="text" name="caracteres" size="4">
+</form>
+</body>
+</html>
 
 -------------------------------------
 
@@ -2366,6 +2427,22 @@ var objetoJSON = {"usuario":"user","password":"123456"};
 <!-- -->
 
 -------------------------------------
+
+
+<!-- -->
+
+-------------------------------------
+
+
+<!-- -->
+
+-------------------------------------
+
+
+<!-- -->
+
+-------------------------------------
+
 
 
 

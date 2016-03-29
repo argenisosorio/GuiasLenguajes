@@ -118,7 +118,7 @@ usar el caracter # seguido por el nombre del id de la siguiente forma:
 <head>  
   <title>Prueba Selectores</title>
   <meta charset="UTF-8">
-  <script src="jquery-1.9.1.js" type="text/javascript"></script><html>
+  <script src="jquery-1.9.1.js" type="text/javascript"></script>
   <script type="text/javascript">
   $(document).ready(function() {
     $('p').click(function() {
@@ -517,7 +517,7 @@ el (id) define que funcion usará -->
 
 -------------------------------------
 
-<!-- Copiar cadena de un elemento a otro -->
+<!-- Copiar cadena de un elemento a otro con keyup function -->
 <html>
  <head>
     <script src="jquery-1.9.1.js" type="text/javascript"></script>
@@ -538,6 +538,59 @@ el (id) define que funcion usará -->
        <textarea id="valor_2" cols="40" rows="10"></textarea>
     </form>
  </body>
+</html>
+
+-------------------------------------
+
+<!-- keyup function, escribir en un campo y replicar los datos en un párrafo -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>val demo</title>  
+  <!--script src="https://code.jquery.com/jquery-1.10.2.js"></script-->
+  <script src="jquery-1.9.1.js" type="text/javascript"></script>
+</head>
+<body>
+<input type="text" value="algun texto">
+<p></p> 
+<script>
+$( "input" ).keyup(function() {
+    var value = $( this ).val();
+    $( "p" ).text( value );
+  })
+  .keyup();
+</script>
+<style>
+  p {
+    color: blue;
+    margin: 8px;
+  }
+</style>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Contar el número de pulsaciones de teclas en un campo <input> keypress -->
+<!DOCTYPE html>
+<html>
+<head>
+<!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script-->
+<script src="jquery-1.9.1.js" type="text/javascript"></script>
+<script>
+  i = 0;
+  $(document).ready(function(){
+      $("input").keypress(function(){
+          $("span").text(i += 1);
+      });
+  });
+</script>
+</head>
+<body>
+Nombre: <input type="text">
+<p>Keypresses: <span>0</span></p>
+</body>
 </html>
 
 -------------------------------------

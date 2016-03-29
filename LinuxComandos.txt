@@ -373,25 +373,31 @@ root@debian:/home/user#
 ########## Instalacion de programas y paquetes ##########
 #########################################################
 
-sudo apt-get install Nombre_Paquete // Instalar paquetes
+$ man aptitude // Ver el manual de aptitude.
 
-sudo aptitude install Nombre_Paquete // Instalar paquetes, otra forma
+$ man apt-get
 
-aptitude install -s Nombre_Paquete // Hace una simulacion de la instalacion, podemos ver que procesos haría la instalación
+$ sudo apt-get install Nombre_Paquete // Instalar paquetes
 
-apt-get install -s Nombre_Paquete // Simulacion de instalacion con  apt-get install
+$ sudo aptitude install Nombre_Paquete // Instalar paquetes, otra forma
 
-sudo aptitude search Nombre_Paquete // Realizar una busqueda en los repositorios del paquete que se quiere encontrar
+$ aptitude install -s Nombre_Paquete // Hace una simulacion de la instalacion, podemos ver que procesos haría la instalación
 
-aptitude show Nombre_Paguete // Para ver la informacion del paquete, version, estado, tamaño, conflictos, etc.
+$ apt-get install -s Nombre_Paquete // Simulacion de instalacion con  apt-get install
 
-aptitude remove Nombre_paquete // Elimina o Desinstala el paquete
+$ apt-get source Nombre_paquete // Descargar las fuentes del paquete, para compilar e instalar. 
 
-aptitude purge Nombre_Paquete //Elimina el paquete y sus archivos de configuracion
+$ sudo aptitude search Nombre_Paquete // Realizar una busqueda en los repositorios del paquete que se quiere encontrar
 
-aptitude download nombre_paquete // Descargar el paquete en el directorio
+$ aptitude show Nombre_Paguete // Para ver la informacion del paquete, version, estado, tamaño, conflictos, etc.
 
-aptitude reinstall nombre_paquete // Reinstalar un paquete
+$ aptitude remove Nombre_paquete // Elimina o Desinstala el paquete
+
+$ aptitude purge Nombre_Paquete //Elimina el paquete y sus archivos de configuracion
+
+$ aptitude download nombre_paquete // Descarga el fichero .deb del paquete dado al directorio actual.
+
+$ aptitude reinstall nombre_paquete // Reinstalar un paquete
 
 ####################################################
 ##### Saber la version instalada de un paquete #####
@@ -621,14 +627,12 @@ $ git config --global user.email aosorio@example.com // igualmente el correo que
 $ git init // Crear un directorio, dentro del directorio ejecutar
 para crear un nuevo repositorio de git.
 
+$ git status // Muestra el estado actual de la rama, como los cambios que hay sin commitear.
+
 $ git status -s // Lista los archivos del proyecto y se visualiza si fueron agregados al seguimiento de Git.
 //Tambien podemos ver si un archivo fue modificado y no a sido agregado al seguimiento de Git.
 
 $ git add * // Agregar todos los archivos al seguimiento de Git.
-
-$ git status // Muestra el estado actual de la rama, como los cambios que hay sin commitear.
-
-$ git status -s // Muestra el estado de los archivos del proyecto, si estan sin agregar o fueron modificados.
 
 $ git commit -m "Primer commit del proyecto" //Hacer un commit al proyecto, se activara la rama master por defecto.
 
@@ -636,8 +640,7 @@ $ git log // Podemos ver todos los commits que se han hehco a un proyecto, fecha
 
 $ git branch // Lista todas las ramas locales.
 
-$ git branch -a // Lista todas las ramas locales y remotas.
-
+$ git branch -a // Lista todas las ramas locales y remotas
 
 // Ejemplo de archivos agregados al seguimiento de git:
 A  gris.jpg // Agregado

@@ -1,4 +1,6 @@
-/ ##### Ejemplos: #####
+<!-- Guía html.erb by dM  -->
+
+<!-- ##### Ejemplos: ##### -->
 
 example.erb:
 <section class="container">
@@ -16,7 +18,7 @@ example.haml:
   .content
     = post.content
 
-/-----------------
+<!-- ############### -->
 
 example.erb:
 <strong><%= item.title %></strong>
@@ -24,7 +26,7 @@ example.erb:
 example.haml:
 %strong= item.title
 
-/-----------------
+<!-- ############### -->
 
 example.html
 <strong class="code" id="message">Hello, World!</strong>
@@ -32,7 +34,7 @@ example.html
 example.haml
 %strong{:class => "code", :id => "message"} Hello, World!
 
-/----------------
+<!-- ############### -->
 
 example.erb
 <div id='content'>
@@ -52,3 +54,7 @@ example.haml
     %p= print_information
   .right.column
     = render :partial => "sidebar"
+
+<!-- ##### Otros ##### -->
+
+<%= link_to "proyecto", proyecto_path%> // Enlace al path de otro controlador

@@ -366,6 +366,14 @@ prueba()
 ##### IF #####
 ##############
 
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# La primera es la cabecera del archivo, indica al compilador o
+#editor que se trata de un fichero python
+
+# La segunda da codificación UTF-8 al programa  
+
 #Introducir la nota, el programa calcula si APROBO o SUSPENDIO XD
 nota = input ("Escriba la nota: ")
 
