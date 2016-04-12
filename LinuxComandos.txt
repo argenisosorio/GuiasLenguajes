@@ -683,6 +683,8 @@ lo que permite restaurar el proyecto a estados anteriores donde XXXXXX123456 rep
 los commits que habian hasta ese momento y el ultimo es en el que nos encontramos, si queremos volver a tener los commits anteriores 
 solo hacemos git checkout a la rama en que estabamos antes o a alguna rama especifica.
 
+$ git checkout -f master // Para forzar volver a la rama master por ejemplo, a veces no nos deja porque no commitemos algunos cambios, como logs, etc.
+
 $ git diff // Si se hacen cambios o se agregaron archivos al proyecto este comando nos hará mostrara una comparacion entre los
 ultimos cambios hechos el ultimo commit hecho, es recomendable revisar esos cambios antes de agregarlos al seguimiento de git
 y por supuesto antes de hacer un commit.
@@ -1180,3 +1182,4 @@ $ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con e
 digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando
 
 ~ // Para sacarlo usar AvPag en la consola
+rails g migration AddPollTextAreaToPoll poll:belongs_to

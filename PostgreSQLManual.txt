@@ -78,6 +78,8 @@ namedb=# INSERT INTO usuarios VALUES ('mariana','V',12345678); // Insertar datos
 
 namedb=# SELECT nombre_campo FROM nombre_tabla; // Hacer una consulta a los datos de un campo especifico.
 
+namedb=# SELECT nombre_campo,nombre_campo2 FROM nombre_tabla; // Hacer una consulta a los datos de varios campos especificos, separados por ",".
+
 namedb=# SELECT * FROM nombre_tabla; // Hacer una consulta de los datos de la tabla, (*) Significa que lea todas las columnas de la tabla
 
 GRANT ALL PRIVILEGES ON DATABASE nombre_BaseDatos TO nombre_usuario; // Al crear un usuario podemos darle permisos a una base de datos existente
@@ -105,6 +107,8 @@ cedula de tipo entero.
 nombredb=# ALTER TABLE nombre_tabla RENAME nombre_campo TO nuevo_nombre_campo; //Cambiar o renombrar el nombre de un campo creado.
 
 nombredb=# ALTER TABLE nombre_tabla DROP COLUMN nombre_columna; // Para eliminar un campo o una columna de una tabla.
+
+nombredb=# ALTER TABLE nombre_tabla DROP COLUMN nombre_columna CASCADE; // Para eliminar un campo o una columna de una tabla en cascada.
 
 nombredb=# ALTER TABLE nombre_tabla ALTER COLUMN nombre_campo TYPE tipo_campo; // Modificar el tipo de dato de una columna.
 

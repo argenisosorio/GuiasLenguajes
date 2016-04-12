@@ -6,96 +6,103 @@
 ### Rails 4.2.4 ################################
 ################################################
 
---- Ruby on Rails ---
-#Es un framework de aplicaciones web de código abierto escrito en Ruby, siguiendo el paradigma de la arquitectura
-#Modelo Vista Controlador (MVC). Trata de combinar la simplicidad con la posibilidad de desarrollar aplicaciones
-#del mundo real escribiendo menos código que con otros frameworks y con un mínimo de configuración.
-#El lenguaje de programación Ruby permite la metaprogramación, de la cual Rails hace uso, lo que resulta en una
-#sintaxis que muchos de sus usuarios encuentran muy legible. Rails se distribuye a través de RubyGems, que es
-#el formato oficial de paquete y canal de distribución de bibliotecas y aplicaciones Ruby.
+#########################
+##### Ruby on Rails #####
+#########################
 
+Es un framework de aplicaciones web de código abierto escrito en Ruby, siguiendo el paradigma
+de la arquitectura Modelo Vista Controlador (MVC). Trata de combinar la simplicidad con la
+posibilidad de desarrollar aplicaciones del mundo real escribiendo menos código que con
+otros frameworks y con un mínimo de configuración. El lenguaje de programación Ruby permite
+la metaprogramación, de la cual Rails hace uso, lo que resulta en una sintaxis que muchos
+de sus usuarios encuentran muy legible. Rails se distribuye a través de RubyGems, que es
+el formato oficial de paquete y canal de distribución de bibliotecas y aplicaciones Ruby.
 
---- Arquitectura MVC de Rails ---
+#####################################
+##### Arquitectura MVC de Rails #####
+#####################################
 
---- Modelo ---
-#En las aplicaciones web orientadas a objetos sobre bases de datos, el Modelo consiste en las clases que
-#representan a las tablas de la base de datos.
+##### Modelo #####
+En las aplicaciones web orientadas a objetos sobre bases de datos, el Modelo consiste en las clases que
+representan a las tablas de la base de datos.
 
-#En Ruby on Rails, las clases del Modelo son gestionadas por ActiveRecord. Por lo general, lo único que
-#tiene que hacer el programador es heredar una de las clases ActiveRecord::Base, y el programa averiguará
-#automáticamente qué tabla usar y qué columnas tiene.
+En Ruby on Rails, las clases del Modelo son gestionadas por ActiveRecord. Por lo general, lo único que
+tiene que hacer el programador es heredar una de las clases ActiveRecord::Base, y el programa averiguará
+automáticamente qué tabla usar y qué columnas tiene.
 
-#Las definiciones de las clases también detallan las relaciones entre clases con sentencias de mapeo objeto
+Las definiciones de las clases también detallan las relaciones entre clases con sentencias de mapeo objeto
 
-#El modelo representa:
-#-Las Tablas de la Base de Datos.
-#-Migraciones (Expresan Cambios en las BD)
-#-Observadores
-#-Emmigraciones
+El modelo representa:
+-Las Tablas de la Base de Datos.
+-Migraciones (Expresan Cambios en las BD)
+-Observadores
+-Emmigraciones
 
---- Vista ---
-#Es la lógica de visualización, o cómo se muestran los datos de las clases del Controlador.
-#Con frecuencia en las aplicaciones web la vista consiste en una cantidad mínima de código incluido en HTML.
+##### Vista #####
+Es la lógica de visualización, o cómo se muestran los datos de las clases del Controlador.
+Con frecuencia en las aplicaciones web la vista consiste en una cantidad mínima de código incluido en HTML.
 
-#Existen maneras de gestionar las vistas. El método que se emplea en Rails por defecto
-#es usar Ruby Empotrado (archivos.rhtml, desde la versión 2.x en adelante de RoR archivos.html.erb)
-#que son básicamente fragmentos de código HTML con algo de código en Ruby.
+Existen maneras de gestionar las vistas. El método que se emplea en Rails por defecto
+es usar Ruby Empotrado (archivos.rhtml, desde la versión 2.x en adelante de RoR archivos.html.erb)
+que son básicamente fragmentos de código HTML con algo de código en Ruby.
 
-#Es necesario escribir un pequeño fragmento de código en HTML para cada método del controlador
-#que necesita mostrar información al usuario. El "maquetado" o distribución de los
-#elementos de la página se describe separadamente de la acción del controlador y
-#los fragmentos pueden invocarse unos a otros.
+Es necesario escribir un pequeño fragmento de código en HTML para cada método del controlador
+que necesita mostrar información al usuario. El "maquetado" o distribución de los
+elementos de la página se describe separadamente de la acción del controlador y
+los fragmentos pueden invocarse unos a otros.
 
---- Controlador ---
-#Las clases del Controlador responden a la interacción del usuario e invocan a la lógica
-#de la aplicación, que a su vez manipula los datos de las clases del Modelo y muestra los
-#resultados usando las Vistas. En las aplicaciones web basadas en MVC, los métodos del
-#controlador son invocados por el usuario usando el navegador web.
+##### Controlador #####
+Las clases del Controlador responden a la interacción del usuario e invocan a la lógica
+de la aplicación, que a su vez manipula los datos de las clases del Modelo y muestra los
+resultados usando las Vistas. En las aplicaciones web basadas en MVC, los métodos del
+controlador son invocados por el usuario usando el navegador web.
 
---- Gemas ---
-#Las gemas son plugins, paquetes y/o códigos añadidos a nuestros proyectos, que nos permiten
-#nuevas funcionalidades, nuevas funciones predefinidas (como login de usuarios) o nuevas
-#herramientas para el desarrollo como puedan ser Haml y SASS (la primera es una nueva
-#forma de template basada en html pero más sencilla y potente, y la segunda es igual pero
-#para el caso de las CSS). Para encontrar el listado de gemas disponibles puedes ir a RubyForge.
+##### Gemas #####
+Las gemas son plugins, paquetes y/o códigos añadidos a nuestros proyectos, que nos permiten
+nuevas funcionalidades, nuevas funciones predefinidas (como login de usuarios) o nuevas
+herramientas para el desarrollo como puedan ser Haml y SASS (la primera es una nueva
+forma de template basada en html pero más sencilla y potente, y la segunda es igual pero
+para el caso de las CSS). Para encontrar el listado de gemas disponibles puedes ir a RubyForge.
 
---- Soporte de Bases de Datos ---
-#Dada que la arquitectura Rails favorece el uso de bases de datos se recomienda usar un
-#SGBDR para almacenamiento de datos. Rails soporta la biblioteca SQLite por defecto.
-#El acceso a la base de datos es totalmente abstracto desde el punto de vista del programador,
-#es decir que es agnóstico a la base de datos, y Rails gestiona los accesos a la base de datos
-#automáticamente (aunque, si se necesita, se pueden hacer consultas directas en SQL) Rails
-#intenta mantener la neutralidad con respecto a la base de datos, la portatibilidad de la
-#aplicación a diferentes sistemas de base de datos y la reutilización de bases de datos
-#preexistentes. Sin embargo, debido a la diferente naturaleza y prestaciones de los SGBDRs
-#el framework no puede garantizar la compatibilidad completa. Se soportan diferentes SGBDRs
-#incluyendo MySQL, PostgreSQL, SQLite, IBM DB2 y Oracle.
+##### Soporte de Bases de Datos #####
+Dada que la arquitectura Rails favorece el uso de bases de datos se recomienda usar un
+SGBDR para almacenamiento de datos. Rails soporta la biblioteca SQLite por defecto.
+El acceso a la base de datos es totalmente abstracto desde el punto de vista del programador,
+es decir que es agnóstico a la base de datos, y Rails gestiona los accesos a la base de datos
+automáticamente (aunque, si se necesita, se pueden hacer consultas directas en SQL) Rails
+intenta mantener la neutralidad con respecto a la base de datos, la portatibilidad de la
+aplicación a diferentes sistemas de base de datos y la reutilización de bases de datos
+preexistentes. Sin embargo, debido a la diferente naturaleza y prestaciones de los SGBDRs
+el framework no puede garantizar la compatibilidad completa. Se soportan diferentes SGBDRs
+incluyendo MySQL, PostgreSQL, SQLite, IBM DB2 y Oracle.
 
---- PRUEBAS ---
-
+##### PRUEBAS #####
 #-Lo primero es comprobar que tienes instalada alguna versión reciente de Ruby:
 $ ruby -v
 ruby 2.2.1p85
 
-#-Se debe contar con SQLite 3 instalado correctamente, comprobar.
+#Se debe contar con SQLite 3 instalado correctamente, comprobar.
 $ sqlite3 --version
 3.7.13
 
-#-Instalar Rails con el comando de RubyGems: gem install.
+#Instalar Rails con el comando de RubyGems: gem install.
 $ gem install rails
 
-#-Comprobar la correcta instalacion de Rails
+#Comprobar la correcta instalacion de Rails
 $ rails --version 
 	ó
 $ rails -v
 
-#-Instalar bundle, recorrerá todas las dependencias de gemas de la aplicación y las instalará.
+#Comando para ver los parametro disponibles de rails
+$ rails
+
+#Instalar bundle, recorrerá todas las dependencias de gemas de la aplicación y las instalará.
 #Deberíamos hacerlo cada vez que creemos una nueva aplicación para asegurarnos de que tenemos las gemas
 #correctas instaladas, y también deberíamos hacerlo cada vez que desplegamos una aplicación para que se
 #instalen las gemas correctas en el servidor.
 $ bundle install
 
-#-Despues de instalar las gemas basicas necesarias para un proyecto, se pueden visualizar con:
+#Despues de instalar las gemas basicas necesarias para un proyecto, se pueden visualizar con:
 $ bundle show
 
 #DB: Si creamos un proyecto, rails esta configurado para usar por defecto una db de Sqlite3 y 
@@ -103,12 +110,13 @@ $ bundle show
 #en la conf de la aplicacion, será necesario hacer de nuevo un rake db:migrate para que vuelva
 #a crear la estructura en la nueva db
 
---- Comandos básicos de Ruby on rails ---
+##### Comandos básicos de Ruby on rails #####
 
 #Si quieres empezar un proyecto y ya tienes instalado RoR puedes comenzar con lo siguiente:
 #Abre tu terminal, ve a la carpeta en donde meterás tus archivos y escribe los siguientes comandos:
 
-$ rails new prueba #Se genera una nueva carpeta dentro del directorio, esa carpeta sera la aplicacion
+$ rails new prueba
+#Se genera una nueva carpeta dentro del directorio, esa carpeta sera la aplicacion
 #rails creada, ademas de que ejecutara bundle install automaticamente para instalar las dependencias(gemas)
 #necesarias para el proyecto, a veces es necesario volver a instalar bundle para verificar si
 #se instalaron todas las gemas, verificar errores etc. Las gemas que se instalan son las mencionadas
@@ -162,7 +170,7 @@ vendor/ #Lugar para código de terceros. En una típica aplicación Rails, ésta
 
 -------------------
 
-#Ejemplos prácticos:
+##### Ejemplos prácticos #####
 
 $ rails new universidad # Creamos la aplicacion de prueba
 
@@ -340,7 +348,7 @@ end
 
 #Guardamos y ya podremos ver las variables impresas en la vista
 
---- Creando aplicacion blog (controladores, vistas y rutas a mano)  ---
+#####  Creando aplicacion blog (controladores, vistas y rutas a mano) #####
 
 $ rails new blog #Creamos nuestra aplicacion
 
@@ -419,7 +427,7 @@ Rails.application.routes.draw do
 $ bin/rake routes #En la carpeta del proyecto, podremos ver las rutas establecidas para los controladores
 #y vistas de nuestra aplicación 
 
---- Creando aplicacion para hacer publicaciones (autor, titulo y contenido)  ---
+##### Creando aplicacion para hacer publicaciones (autor, titulo y contenido) #####
 
 $ rails new publicaciones
 
@@ -444,3 +452,26 @@ $ rake db:migrate #Se crearon las tablas correspondientes en la
 # ----- Varios -----
 
 <%= link_to "proyecto", proyecto_path%> //Enlace al path de otro controlador
+
+##################
+##### Bundle #####
+##################
+
+# Detectar las gemas que están desactualizadas, bundle revisará cuáles de nuestras
+# gemas tienen nuevas versiones y nos las listará
+$ bundle outdated 
+
+# Si queremos actualizarlas todas podemos ejecutar
+$ bundle update
+
+# Si solo queremos actualizar una gema en particular.
+$ bundle update <nombre_de_la_gema>
+
+###########################
+##### Comandos varios #####
+###########################
+
+$ DB=postgres bin/rake db:migrate:status // Chequear las migraciones realizadas, cuales se levantaron y cuales estan pendientes o fallaron
+
+$ bin/rails db:rollback STEP=X // Para moverse entre los estados de las migraciones donde X es el numero a retroceder
+
