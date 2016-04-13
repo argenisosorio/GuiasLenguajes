@@ -110,7 +110,9 @@ $ bundle show
 #en la conf de la aplicacion, será necesario hacer de nuevo un rake db:migrate para que vuelva
 #a crear la estructura en la nueva db
 
+#############################################
 ##### Comandos básicos de Ruby on rails #####
+#############################################
 
 #Si quieres empezar un proyecto y ya tienes instalado RoR puedes comenzar con lo siguiente:
 #Abre tu terminal, ve a la carpeta en donde meterás tus archivos y escribe los siguientes comandos:
@@ -122,8 +124,6 @@ $ rails new prueba
 #se instalaron todas las gemas, verificar errores etc. Las gemas que se instalan son las mencionadas
 #en el gemfile que esta en el directorio de la aplicacion creada.
 
--------------------
-
 #Al crear la aplicacion se generaran los directorios y subdirectorios de la misma:
 
 app/ #Contiene los controllers, models, views, helpers, mailers y assets para tu aplicación.
@@ -131,8 +131,6 @@ app/ #Contiene los controllers, models, views, helpers, mailers y assets para tu
 app/assets #Aquí guardaremos las imagenes, javascripts y las hojas de estilo.
 
   images - javascripts - stylesheets
-
-# Por cada controlador creado también se nos crearan subdirectorios de cada controlador en nuestros assets.
 
 config/ #Configura las reglas de ejecución de la aplicación, rutas, base de datos y más.
 
@@ -168,9 +166,74 @@ tmp/ #archivos temporales (como archivos de caché, PID y archivos de sesiones).
 
 vendor/ #Lugar para código de terceros. En una típica aplicación Rails, ésta incluye librerías y plugins.
 
--------------------
+##################
+##### Bundle #####
+##################
 
+# Bundler proporciona un entorno consistente para proyectos de Ruby
+# mediante el seguimiento y la instalación de las versiones
+# y las gemas exactas que se necesitan.
+
+# Bundler es una salida del infierno de las dependencias, y asegura que las gemas
+# que necesita están presentes en el desarrollo, la puesta en escena, y la producción.
+# De empezar a trabajar en un proyecto es tan simple como paquete de instalación.
+
+# Documentacio en --> http://bundler.io/
+
+# En el Gemfile se especifican las dependencias de las gemas que usara nuestro proyecto, ejemplo:
+source 'https://rubygems.org'
+gem 'nokogiri'
+gem 'rack', '~>1.1'
+gem 'rspec', :require => 'spec' 
+
+# Visualizar las gemas instaladas en un proyecto
+$ bundle show
+
+# Detectar las gemas que están desactualizadas, bundle revisará cuáles de nuestras
+# gemas tienen nuevas versiones y nos las listará
+$ bundle outdated 
+
+# Si queremos actualizarlas todas podemos ejecutar
+$ bundle update
+
+# Si solo queremos actualizar una gema en particular.
+$ bundle update <nombre_de_la_gema>
+
+# Desinstalar una gema específica, a veces hay conflictos entre versiones de gemas a usar en el proyecto y las gemas instaladas.
+$ gem uninstall <gem-name>
+
+# Instalar una gema específica, usar el parametro "--version" acortado con "-v"
+$ gem install rails -v 0.14.1
+
+###########################
+##### Comandos varios #####
+###########################
+
+# Ver las rutas para todas las acciones estándar de las aplicaciones, direcciones REST
+$ rake routes
+
+# Especificando la DB si hay exepciones sobre ello
+$ DB=postgres rake routes
+
+# Saltandose erroes para ejecutar el comando
+$ DB=postgres bundle exec rake routes
+
+#Chequear las migraciones realizadas, cuales se levantaron y cuales estan pendientes o fallaron
+$ DB=postgres bin/rake db:migrate:status
+
+#Para moverse entre los estados de las migraciones donde X es el numero a retroceder
+$ bin/rails db:rollback STEP=X 
+
+#################
+##### NOTAS #####
+#################
+
+# Enlace al path de otro controlador
+<%= link_to "proyecto", proyecto_path%>
+
+##############################
 ##### Ejemplos prácticos #####
+##############################
 
 $ rails new universidad # Creamos la aplicacion de prueba
 
@@ -203,7 +266,7 @@ $ rails server -P 8080 #Si visitamos 127.0.0.1:8080 comprobaremos el cambio de p
 
 #Listo. Ahora se ingresa a la siguiente dirección en el navegador para utilizar la aplicación desarrollada:
 localhost:3000/Empleados
-	ó
+  ó
 localhost:3000/Alumnos
 
 --- Otro ejemplo--- 
@@ -448,30 +511,3 @@ $ rake db:migrate #Se crearon las tablas correspondientes en la
 #http://127.0.0.1:3000/posts
 #Podemos visualizar la lista de publicaciones asi como enlaces a las operaciones
 #CRUD que se crearon
-
-# ----- Varios -----
-
-<%= link_to "proyecto", proyecto_path%> //Enlace al path de otro controlador
-
-##################
-##### Bundle #####
-##################
-
-# Detectar las gemas que están desactualizadas, bundle revisará cuáles de nuestras
-# gemas tienen nuevas versiones y nos las listará
-$ bundle outdated 
-
-# Si queremos actualizarlas todas podemos ejecutar
-$ bundle update
-
-# Si solo queremos actualizar una gema en particular.
-$ bundle update <nombre_de_la_gema>
-
-###########################
-##### Comandos varios #####
-###########################
-
-$ DB=postgres bin/rake db:migrate:status // Chequear las migraciones realizadas, cuales se levantaron y cuales estan pendientes o fallaron
-
-$ bin/rails db:rollback STEP=X // Para moverse entre los estados de las migraciones donde X es el numero a retroceder
-
