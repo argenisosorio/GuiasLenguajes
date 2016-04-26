@@ -1201,6 +1201,50 @@ $ cclive -F https://www.youtube.com/watch?v=Lfj667lLLnE // Comprobar los formato
 
 $ cclive -f fmt22_720p https://www.youtube.com/watch?v=LtzFg4JiL5E // Se elige el formato y se pasa en el comando.
 
+###############################
+##### Cifrado de ficheros #####
+###############################
+
+El cifrado simétrico y asimétrico.
+
+-En el cifrado simétrico, ciframos el archivo con una clave X
+Para descifrarlo y obtener el archivo original, utilizamos la misma clave X.
+
+-El cifrado asimétrico es más complicado. Aquí no tenemos una sola clave común. En su lugar
+cada persona tiene dos claves, una pública y una privada. Para enviarle un archivo a un amigo
+lo cifras con su clave pública. De esta forma, sólo lo puede descifrar él con su clave privada.
+Es más seguro que el cifrado simétrico, ya que la clave de descifrado (la privada) nunca se
+comparte, siempre la tiene el receptor.
+
+Ejemplo: Sabiendo lo anterior, si queremos que tres compañeros de trabajo nos manden un archivo
+cifrado debemos de mandarle nuestra clave pública (que está vinculada a la privada) y nos
+podrán mandar de forma confidencial ese archivo que solo nosotros podremos
+descifrar con la clave privada.
+
+--- ¿Qué es GnuPG? (GNU Privacy Guard) ---
+
+Es un derivado libre de PGP y su utilidad es la de cifrar y firmar digitalmente, siendo además
+multiplataforma (podéis descargarlo desde la página oficial) aunque viene incorporado en algunos
+sistemas Linux, como en Ubuntu o Debian.
+
+##### Cifrado simétrico #####
+
+El cifrado simétrico es el tipo de cifrado más sencillo que hay, es más rápido de procesar y por desgracia
+menos seguro que el cifrado asimétrico.
+
+Crear un fichero cualquiera de ejemplo
+
+$ touch prueba.txt
+
+Dentro del fichero copiaremos algun texto de prueba para comprobar luego con el descifrado.
+
+Luego en el shell escribimos el comando gpg con el parámetro -c para cifrar y -d para descifrar.
+
+$ gpg -c prueba.txt // El comando gpg -c nombre_fichero nos aparecerá un cuadro que nos pide la contraseña
+luego una confirmacion de la misma, luego  generará un archivo .gpg
+Para descifrarlo usamos el comando gpg -d nombre_fichero e introduciendo la clave anterior para poder decifrarlo.
+
+$ gpg -d prueba.txt.gpg // Pare descifrar el fichero, nos permitira mirar el contenido.
 
 ##############
 ### Otros: ###
