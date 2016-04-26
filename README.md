@@ -11,7 +11,6 @@
 - Django
 - JavaScript
 - Jquery
-- Angular
 - MySQL
 - PostgreSQL
 - SCSS
