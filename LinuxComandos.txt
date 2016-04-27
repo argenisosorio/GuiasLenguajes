@@ -438,9 +438,13 @@ tar -xvf paquete.tar // Descomprimir un paquete
 --- Descomprimir archivo .tar.bz2 ---
 tar -xjvf example.tar.bz2
 
---- Descomprimir archivo.rar ---
-//Necesitamos instalar unrar
-aptitude search unrar
+################################
+##### Descomprimir con RAR #####
+################################
+
+// Necesitamos instalar unrar
+
+$ aptitude search unrar
 
 Si no lo encuentra debemos bajar el source de http://www.unrarlib.org/
 Nos bajara unrarsrc-3.7.8.tar.gz // Descomprimimos, nos dejara la carpeta (unrar)
@@ -466,10 +470,17 @@ ejemplo:
 $ unrar x archivo.rar // Para descomprimir un fichero .rar
 $ unrar x archivo.rar /home/user/carpeta // Para descomprimir un fichero .rar dando la ruta
 
+###########################################
+##### Comprimir/ Descomprimir con ZIP #####
+###########################################
 
---- Descomprimir archivo.zip ---
+$ sudo aptitude install zip // Instalar el paquete de zip
 
-unzip archivo.zip // Descomprimir el fichero
+$ zip archivo.zip nombre_fichero.xxx
+
+$ unzip archivo.zip // Descomprimir el fichero
+
+$ zip -r carpeta.zip nombre_carpeta // Comprimir directorios y su contenido
 
 #####################################
 ########## Instalar APACHE ##########
