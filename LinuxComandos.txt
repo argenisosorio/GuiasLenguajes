@@ -416,8 +416,10 @@ Ejemplo:
 ########## Comprimir/Descomprimir archivos ##########
 #####################################################
 
-paquete.tar
-paquete.tar.gz
+paquete.tar y paquete.tar.gz  // tar se refiere a un formato de archivos ampliamente usado en
+entornos UNIX identificados por el sufijo de archivo .tar.. Además hace referencia al programa
+para la manipulación de archivos que es estándar en estos entornos, pero no incluye la
+compresión de los mismos.
 
 tar -cvf paquete.tar carpeta/ // Le damos los parametros de compresion, asi como el nombre del paquete
 y la carpeta que vamos a comprimir
@@ -1240,11 +1242,78 @@ Dentro del fichero copiaremos algun texto de prueba para comprobar luego con el 
 
 Luego en el shell escribimos el comando gpg con el parámetro -c para cifrar y -d para descifrar.
 
+--- Parámetros básicos de gpg ---
+
+-c // Encrypt with a symmetric cipher using a passphrase. The default symmetric cipher used is CAST5,
+
+-d // Decrypt the file given on the command line
+
 $ gpg -c prueba.txt // El comando gpg -c nombre_fichero nos aparecerá un cuadro que nos pide la contraseña
 luego una confirmacion de la misma, luego  generará un archivo .gpg
-Para descifrarlo usamos el comando gpg -d nombre_fichero e introduciendo la clave anterior para poder decifrarlo.
 
-$ gpg -d prueba.txt.gpg // Pare descifrar el fichero, nos permitira mirar el contenido.
+Para descifrarlo usamos el comando gpg -d notas.txt.gpg introduciendo la contraseña correcta para poder decifrarlo.
+
+$ gpg -d prueba.txt.gpg // Descifrar el fichero, nos permitira mirar el contenido.
+
+$ man gpg // Ver el Manual de gpg
+
+##### Cifrado asimétrico #####
+
+--- Generar las claves---
+
+Para poder cifrar asimétricamente primero tenemos que crear la pareja de claves
+(pública y privada) con el comando gpg --gen-key
+
+$ gpg --gen-key
+gpg (GnuPG) 1.4.12; Copyright (C) 2012 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Por favor seleccione tipo de clave deseado:
+   (1) RSA and RSA (default)
+   (2) DSA and Elgamal
+   (3) DSA (sólo firmar)
+   (4) RSA (sólo firmar)
+Su elección:
+
+// GPG nos permite elegir el tipo de clave que queremos usar, hay opciones que solo permiten firmar
+y otras que permiten firmar y cifrar, en este caso usaremos DSA y Elgamal.
+
+las claves DSA pueden tener entre 1024 y 3072 bits de longitud.
+¿De qué tamaño quiere la clave? (2048)
+
+Nos pedirá el tamaño de la clave que puede variar entre 1024 bits y 3072, esto es de libre elección,
+tomarémos el que propone por defecto (2048).
+
+Nos pide la fecha en la que expirará la clave, la información del emisor de la clave
+(nombre, mail y algunos datos extra que queramos dar) y por último nos pedirá la
+contraseña que salvaguarda la clave privada.
+
+Tras generar las claves podemos verlas con el comando gpg -k que nos muestra nuestro
+anillo de claves, lo importante de este paso es que veremos la identificación de cada una
+que es necesaria para poderlas exportar y enviar.
+
+$ gpg -k // Visualizar anillo de claves
+/home/user/.gnupg/pubring.gpg
+--------------------------------
+
+pub   1559C/88651986 2017-01-01
+uid                  username_lastname (Enunciado de la clave) <username@email.com>
+sub   2048g/55GD33FG 2017-01-01
+
+--- Exportar y enviar la clave pública ---
+
+El objetivo de esta pareja de claves es que cualquiera nos pueda mandar un archivo cifrado
+que solo veremos nosotros y esto se hace difundiendo la clave pública que acabamos de crear
+(la pública, nunca la privada), para exportarla en un archivo usaremos el comando:
+
+$ gpg -output [archivo destino] --export [ID de a clave pública] (la clave pública generada antes tiene la ID 88651986).
+
+$ gpg --output ClavePublica_username.gpg --export 88651986
+$ ls
+ClavePublica_username.gpg // Fichero generado que contiene la clave pública
+
+Este archivo ahora se puede difundir por el medio que queramos.
 
 ##############
 ### Otros: ###
