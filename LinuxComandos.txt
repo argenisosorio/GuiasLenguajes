@@ -6,7 +6,7 @@
 
 Crtl + h // Mostrar archivos ocultos de un directorio, en el entorno grafico
 
-cat /etc/issue.net  //Para saber la versión de SO que tenemos.  
+$ cat /etc/issue.net  //Para saber la versión de SO que tenemos.
 
 !! // Repetir el ultimo comando ejecutado en consola
 
@@ -20,24 +20,24 @@ Ctrl + t // Intercambiar de posicion las letras que estan a cada lado del cursor
 
 Alt + d // Borrar palabra
 
-lsb_release -a //También tenemos un comando que nos va a dar muchos más detalles 
+$ lsb_release -a //También tenemos un comando que nos va a dar muchos más detalles 
 
-uname // Muestra información del sistema
+$ uname // Muestra información del sistema
 
-uname -a // Version de Kernel
+$ uname -a // Version de Kernel
 
-uname -mrs // Saber mi version de Kernel especifica, recomendada
+$ uname -mrs // Saber mi version de Kernel especifica, recomendada
 
-cat /etc/*-release // Ver info del sistema (Probado en Debian GNU/Linux 7 wheezy)
+$ cat /etc/*-release // Ver info del sistema (Probado en Debian GNU/Linux 7 wheezy)
 
-ifconfig // Siendo root, permite desplegar numerosos parámetros de las interfaces de red residentes  en el núcleo,
+$ ifconfig // Siendo root, permite desplegar numerosos parámetros de las interfaces de red residentes  en el núcleo,
 como la dirección IP (dinámica o estática), o la máscara de red entre otros.
 
-nmap -sT -O localhost // Ver que puertos estan escuchando 
+$ nmap -sT -O localhost // Ver que puertos estan escuchando 
 
-user@debian:/media$ umount nombre_device // Desmontar un dispositivo, pendrive, disco externo etc.
+$ user@debian:/media$ umount nombre_device // Desmontar un dispositivo, pendrive, disco externo etc.
 
-who // Muestra usuarios conectados a nuestra máquina, tambien usado para ver las conexiones entrantes de un servidor
+$ who // Muestra usuarios conectados a nuestra máquina, tambien usado para ver las conexiones entrantes de un servidor
 
 Ejemplo:
 user tty7         2015-07-28 08:47 (:0)
@@ -51,11 +51,11 @@ abiertos, por lo tanto todos son representados como usuarios, entre los diversos
 se puede apreciar la fecha y la hora en que se abrio el shell, en un servidor seria
 el momento en que se conecto el usuario
 
-whoami // Muestra que usuario soy, nombre de usuario
+$ whoami // Muestra que usuario soy, nombre de usuario
 
-who am i // Nos dira cual usuario somos, si navegamos por los shells abiertos y ejecutamos el comando nos dira cual usuario es
+$ who am i // Nos dira cual usuario somos, si navegamos por los shells abiertos y ejecutamos el comando nos dira cual usuario es
 
-who -u //Ver usuarios conectados
+$ who -u //Ver usuarios conectados
 
 // Ejemplo:
 
@@ -69,40 +69,43 @@ user pts/3        2015-07-31 12:37 02:53        8351 (:192.168.0.240)
 (192.168.0.240) demarcada por el id process 8351 la cual podemos cancelar, es decir refusar esa conexion con
 kill -9 8351
 
-last // listar los ultimos usuarios conectados
+$ last // listar los ultimos usuarios conectados
 
-clear // Limpia la pantalla
+$ clear // Limpia la pantalla
 
-date // Muestra la fecha
+$ date // Muestra la fecha
 
-man nombre_comando  // Muestra el manual de una comando donde como: ls, grep, aptitude etc...
+$ man nombre_comando  // Muestra el manual de una comando donde como: ls, grep, aptitude etc...
 
-cal // Muestra un calendario
+// Dentro de los manuales podemos presionar "h" para ver las opciones tenemos del manual, ejemplo "/delete"
+para hacer una busqueda de la cadena "delete" dentro del manual.
 
-pwd // Muestra la ruta en la que te encuentras
+$ cal // Muestra un calendario
 
-ls // Muestra lo que hay en la carpeta en la que te encuentras
+$ pwd // Muestra la ruta en la que te encuentras
 
-ls -l // Muestra los archivos, fecha, permisos, etc
+$ ls // Muestra lo que hay en la carpeta en la que te encuentras
 
-ls -la // Muestra los archivos, los ocultos tambien, fecha, permisos, etc
+$ ls -l // Muestra los archivos, fecha, permisos, etc
 
-ls -1 // Muestra los archivos en forma de lista
+$ ls -la // Muestra los archivos, los ocultos tambien, fecha, permisos, etc
 
-ls *.xxx // Listar todos los ficheros de un directorio que tengan las extension .xxx, donde xxx puede ser: txt, html, php, css, etc.
+$ ls -1 // Muestra los archivos en forma de lista
 
-ls -R // Listar los directorios y subdirectorios asi como ficehros de un directorio.
+$ ls *.xxx // Listar todos los ficheros de un directorio que tengan las extension .xxx, donde xxx puede ser: txt, html, php, css, etc.
 
-\du // Para ver la lista de carpetas y sub carpetas, los directorios que existen 
+$ ls -R // Listar los directorios y subdirectorios asi como ficehros de un directorio.
+
+$ \du // Para ver la lista de carpetas y sub carpetas, los directorios que existen 
 dentro de donde se encuentre situado
 
-cd // Cambiar de directorio
+$ cd // Cambiar de directorio, nos lleva al home del usuario.
 
-cd .. // retroceder un directorio
+$ cd .. // retroceder un directorio
 
-cd ../../ // Retroceder dos directorios (../) representa un directorio
+$ cd ../../ // Retroceder dos directorios (../) representa un directorio
 
-mkdir // Crear carpeta
+$ mkdir // Crear carpeta
 
 && // El operador '&&' sirver para continuar con la ejecucion de comadnos en el shell, ejemplo:
 
@@ -112,19 +115,19 @@ $ mkdir carpetaFFF && cd carpetaFFF // Creamos una carpetaFFF y luego entramos e
 $ mkdir carpetaZZZ && cd carpetaZZZ && touch archivo.txt // Creamos una carpeta, entramos en ella y creamos un archivo
 en ese directorio en una sola instruccion.
 
-touch Nombre_Fichero // Crear fichero
+$ touch Nombre_Fichero // Crear fichero
 
-nano nombre_fichero // Modificar un fichero con el editor nano.
+$ nano nombre_fichero // Modificar un fichero con el editor nano.
 
-man nano // Leer el manual del editor de textos nano, muy útil, práctico y fácil de usar
+$ man nano // Leer el manual del editor de textos nano, muy útil, práctico y fácil de usar
 
-cat nombre_fichero // Mostrar contenido de un fichero
+$ cat nombre_fichero // Mostrar contenido de un fichero
 
-less nombre_fichero // Mostrar el contenido de un archivo, mayor movilidad que cat.
+$ less nombre_fichero // Mostrar el contenido de un archivo, mayor movilidad que cat.
 
-stat nombre_fichero // Muestra el estado e información de un fichero
+$ stat nombre_fichero // Muestra el estado e información de un fichero
 
-stat nombre_carpeta // Muestra información de un directorio
+$ stat nombre_carpeta // Muestra información de un directorio
 
 Ctrl + D // En el shell, cerrar sesion, salir del root, de maquinas virtuales o de sesiones de usuarios iniciadas
 
@@ -132,68 +135,68 @@ Ctrl + flecha derecha o izquierda // Moverse en el prompt palabra a palabra, no 
 
 Ctrl + w // Borrar la palabra que esta antes del cursor en el shell
 
-top  // Listar los procesos de ejecución del sistema (y más cosas) en tiempo real, es una de las herramientas más importantes para un administrador.
+$ top  // Listar los procesos de ejecución del sistema (y más cosas) en tiempo real, es una de las herramientas más importantes para un administrador.
 
 // Cada proceso tiene un identificador (PID) proccess ID, entonces podemos matar ese proceso con:
 
-kill -9 xxxx // Matar un proceso donde xxxx es el identificador del proceso.
+$ kill -9 xxxx // Matar un proceso donde xxxx es el identificador del proceso.
 
-ps // Muestra los procesos actuales del sistema y acepta varios parametros como:
+$ ps // Muestra los procesos actuales del sistema y acepta varios parametros como:
 
-ps -e // Visualiza información sobre "todos" los procesos del sistema.
+$ ps -e // Visualiza información sobre "todos" los procesos del sistema.
 
-ps -l // Muestra algunos detalles de los procesos del sistema
+$ ps -l // Muestra algunos detalles de los procesos del sistema
 
-ps l //  Muestra mas detalles de los procesos del sistema.
+$ ps l //  Muestra mas detalles de los procesos del sistema.
 
-poweroff // Apagar la maquina, se debe ser root para ejecutarlo.
+$ poweroff // Apagar la maquina, se debe ser root para ejecutarlo.
 
-reboot // Reiniciar la maquina.
+$ reboot // Reiniciar la maquina.
 
-file xxx // donde xxx es el nombre de un fichero, nos dira el tipo de fichero que es.
+$ file xxx // donde xxx es el nombre de un fichero, nos dira el tipo de fichero que es.
     Ejemplo: file index.html
     index.html: HTML document, UTF-8 Unicode text
 
-file * // Nos dira el tipo de archivo de todos los ficheros del directorio
+$ file * // Nos dira el tipo de archivo de todos los ficheros del directorio
 
-diff /home/user/file.html /home/user/file2.html // Permite hacer una comparacion de dos archivos para apreciar sus diferencias
+$ diff /home/user/file.html /home/user/file2.html // Permite hacer una comparacion de dos archivos para apreciar sus diferencias
 se debe especificar la ruta de ambos archivos y separarlos con un espacio, si estan en el mismo directorio no hace
 falta especificar las rutas completas.
 
-df // Muestra el espacio disponible del disco y demas dispositivos asi como el espacio usado
+$ df // Muestra el espacio disponible del disco y demas dispositivos asi como el espacio usado
 
-free // Muestra el estado de la memoria RAM, total, usado, disponible, cached, buffers 
+$ free // Muestra el estado de la memoria RAM, total, usado, disponible, cached, buffers 
 
-vmstat // Muestra el estado de la memoria virtual
+$ vmstat // Muestra el estado de la memoria virtual
 
-pstree // Muestra los procesos del sistema en forma de arbol
+$ pstree // Muestra los procesos del sistema en forma de arbol
 
-gnome-screenshot // Captura de pantalla del escritorio
+$ gnome-screenshot // Captura de pantalla del escritorio
 
-pdfimages fichero.pdf nombre_imagene // Extrae las imagenes de un .pdf
+$ pdfimages fichero.pdf nombre_imagene // Extrae las imagenes de un .pdf
 
-du // Muestra una lista de los directorios y el espacio que ocupan en el disco
+$ du // Muestra una lista de los directorios y el espacio que ocupan en el disco
 
-du * // Muestra todos directorios y ficheros y el espacio que ocupan en el disco
+$ du * // Muestra todos directorios y ficheros y el espacio que ocupan en el disco
 
-ping xxx // Donde xxx es el nombre de un host al cual enviaremos paquetes y comprobaremos si hay una conexion con ese host, util para saber si estamos conectados a internet por ejemplo:
+$ ping xxx // Donde xxx es el nombre de un host al cual enviaremos paquetes y comprobaremos si hay una conexion con ese host, util para saber si estamos conectados a internet por ejemplo:
     ping http://www.google.com.ve // Si hay conexion a internet enviara paquetes que seran recibidos, de lo contrario dara un error.
 
-glxgears // Siendo root, Ver si hay aceleracion grafica en la maquina, muestra unos engranajes de colores rodando, si es así, está correcta la instalacion del video.
+$ glxgears // Siendo root, Ver si hay aceleracion grafica en la maquina, muestra unos engranajes de colores rodando, si es así, está correcta la instalacion del video.
 
-xrandr // Detectar las resoluciones de pantalla disponibles del sistema así como los hz correspondientes, la que
+$ xrandr // Detectar las resoluciones de pantalla disponibles del sistema así como los hz correspondientes, la que
 tenga (*) es la que está siendo usada.
 
-adduser nombre_de_usuario // Como root, Agregar un usuario nuevo al sistema, una nueva sesion, nos pedira agregar el 
+$ adduser nombre_de_usuario // Como root, Agregar un usuario nuevo al sistema, una nueva sesion, nos pedira agregar el 
 nombre de usuario y asignarle contraseña, la clave de root es la misma para todas las sesiones.
 
-su nombre_de_usuario // Conectarse como otro usuario creado
+$ su nombre_de_usuario // Conectarse como otro usuario creado
 
-userdel -r nombre_usuario // Como root, eliminar el usuario creado
+$ userdel -r nombre_usuario // Como root, eliminar el usuario creado
 
-deluser --remove-home nombre_usuario // Otra forma de eliminar un usuario creado
+$ deluser --remove-home nombre_usuario // Otra forma de eliminar un usuario creado
 
-rename 's/\.txt/\.xls/' *.txt  //Cambiar extension a todos los ficheros de un directorio
+$ rename 's/\.txt/\.xls/' *.txt  //Cambiar extension a todos los ficheros de un directorio
 //En el ejemplo vamos a sustituir los .txt por .xls y le decimos que se lo haga a todos los .txt
 
 ##########################
@@ -929,7 +932,7 @@ Además de la conexión a otros dispositivos, SSH nos permite copiar datos de fo
 (tanto archivos sueltos como simular sesiones FTP cifradas), gestionar claves RSA para no escribir
 claves al conectar a los dispositivos y pasar los datos de cualquier otra aplicación por un canal seguro tunelizado mediante SSH.
 
-ssh Nombre_usuario@IP_servidor o nombre_servidor
+$ ssh Nombre_usuario@IP_servidor o nombre_servidor
 
 ssh user@192.168.0.240 // Asi se accede a un ordenador o servidor remoto, debemos poner el usuario que debe estar creado asi como la ip
 del server, nos pedira la clave de session, una vez adentro tenemos acceso a los archivos y podemos pedir el root para tener acceso total.
@@ -944,8 +947,8 @@ abiertos. con (who) veremos la identificacion de cada shell.
 --- COPIAR ARCHIVOS DE LOCAL A SERVIDOR ---
 Si queremos subir el archivo archivo.txt de nuestro ordenador a la carpeta /home/usuario del servidor, hacemos lo siguiente:
 
-$ scp archivo.txt usuario@dominio.com:/home/usuario // Se especifica el archivo a copia, luego el servidor y luego el directorio 
-en el servidor donde copiaremos el archivo
+$ scp archivo.txt usuario@dominio.com:/home/usuario // Se especifica el archivo a copiar, luego el servidor y luego el directorio 
+en el servidor donde copiaremos el archivo.
 
 --- COPIAR ARCHIVOS DE SERVIDOR A LOCAL ---
 Si queremos copiar el fichero archivo.txt del servidor a nuestro ordenador en la carpeta Documentos, hacemos lo siguiente:
