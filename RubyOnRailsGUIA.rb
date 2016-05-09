@@ -209,7 +209,8 @@ $ gem install rails -v 0.14.1
 ##### Comandos varios #####
 ###########################
 
-# Ver las rutas para todas las acciones estándar de las aplicaciones, direcciones REST
+# Ver las rutas para todas las acciones estándar de las aplicaciones, direcciones REST, se
+#especifican cuales peticiones van por GET, POST, etc.
 $ rake routes
 
 # Especificando la DB si hay exepciones sobre ello

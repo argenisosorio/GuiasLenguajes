@@ -82,9 +82,12 @@ namedb=# SELECT nombre_campo,nombre_campo2 FROM nombre_tabla; // Hacer una consu
 
 namedb=# SELECT * FROM nombre_tabla; // Hacer una consulta de los datos de la tabla, (*) Significa que lea todas las columnas de la tabla
 
-GRANT ALL PRIVILEGES ON DATABASE nombre_BaseDatos TO nombre_usuario; // Al crear un usuario podemos darle permisos a una base de datos existente
+GRANT ALL PRIVILEGES ON DATABASE nombre_BaseDatos TO nombre_usuario; // Al crear un usuario podemos darle permisos a una base de datos existente.
 
 nombredb=# DELETE FROM nombre_tabla; // Eliminar los registros de una tabla 
+
+namedb=# DELETE FROM table_name WHERE condition; // Borrar los datos de la columna de una tabla cuando se cumpla
+una condicion.
 
 nombredb=# DELETE FROM nombre_tabla WHERE nombre_campo='xxx'; // Eliminar los registros de un campo especifico
 Ejemplo:
@@ -149,7 +152,9 @@ nombredb=# CREATE TABLE nombre_tabla (id serial primary key, nombre_campo varcha
 ########## Hacer un dump de una base de datos ##########
 ########################################################
 
-pg_dump -U username -W -h host basename > basename.sql
+$ pg_dump -U username -W -h host basename > basename.sql
+
+$ pg_dump -U username -W -h 127.0.0.1 basename > basename.sql
 
 ##########################################################
 ########## Restaurar/Importar una base de datos ##########
@@ -181,7 +186,7 @@ basename Este es el ultimo parámetro realmente en esta linea de comando, por es
 basename.sql Esta parte en realidad solo indica que la salida de nuestro comando pg_dump la guarde en un archivo basename.sql
 
 Ejemplo:
-user@debian:~$ pg_dump -U usuario -h 127.0.0.1 nombre_database > nombre_database.sql
+$ pg_dump -U usuario -h 127.0.0.1 nombre_database > nombre_database.sql
 
 #########################
 ##### Configuración #####

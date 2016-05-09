@@ -569,34 +569,34 @@ root@debian:/home/user# aptitude search mysql | grep mysql
 ##### Comandos para hacer busquedas en los directorios y en el historial del shell #####
 ########################################################################################
 
-history // Mostrar el historial de los comandos de la consola
+$ history // Mostrar el historial de los comandos de la consola
 
-fc -l // Mostrar los ultimos comandos usados por el usuario
+$ fc -l // Mostrar los ultimos comandos usados por el usuario
 
-history | grep xxx // Busqueda especifica de una comando usado, ejemplo: aptitude, alias, grep etc.
+$ history | grep xxx // Busqueda especifica de una comando usado, ejemplo: aptitude, alias, grep etc.
 
 .bash_history // En los archivos ocultos del home, en este fichero se almacena el historial de los comandos usados
 
-grep --color=always -n "mysql" /var/www/prueba/2/datos.php // --color para colorear la palabra a buscar, 
+$ grep --color=always -n "mysql" /var/www/prueba/2/datos.php // --color para colorear la palabra a buscar, 
 -n para listar la la linea del caracter buscado y al final ra ruta del archivo a buscar
 
-grep cadena_texto ./* -rIn //Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
+$ grep cadena_texto ./* -rIn //Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
 
-grep --color=always -n "cadena_texto" ./* -Ir //Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
+$ grep --color=always -n "cadena_texto" ./* -Ir //Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
 
-grep --color -n "cadena_texto" -Ir // No hace falta poner =always
+$ grep --color -n "cadena_texto" -Ir // No hace falta poner =always
 
-egrep -r "Saludo" . //Otra forma de busqueda.
+$ egrep -r "Saludo" . //Otra forma de busqueda.
 
 | grep xxx // filtra la busqueda con el parametro que le demos ejemplo:
 
-aptitude search python | grep 2.7 // Busca las versiones de python que coincidan con el patron 2.7
+$ aptitude search python | grep 2.7 // Busca las versiones de python que coincidan con el patron 2.7
 
-ps -e | grep ruby // Busca en los procesos del sistema las coincidencias con ruby
+$ ps -e | grep ruby // Busca en los procesos del sistema las coincidencias con ruby
 
-whereis python // Para saber donde esta instalado un programa, saber el directorio
-whereis firefox
-whereis apache2
+$ whereis python // Para saber donde esta instalado un programa, saber el directorio
+$ whereis firefox
+$ whereis apache2
 
 su:
 find / -type f -name NombreArchivo.html // Para mostrar el directorio del archivo que se 
@@ -605,14 +605,15 @@ find / -type f -name NombreArchivo.html // Para mostrar el directorio del archiv
 locate nombre_del_archivo // Hacer una busqueda de un archivo en los directorios, se puede especificar un nombre con su extensión
 //o solo especificar una palabra, la busqueda se hara en todos los archivos que contengan la palabra o nombre de archivo escrita.
 
-su: *****
-find / -name nombre_carpeta // (/) es para hacer la busqueda desde ahi en adelante, puede ser (/home/user)
+$ sudo find / -name nombre_carpeta // (/) es para hacer la busqueda desde ahi en adelante, puede ser (/home/user)
 
-find /carpeta // Lista los archivos que componen el directorio introducido
+$ find /carpeta // Lista los archivos que componen el directorio introducido
 
-type nombre_comando // Busca la ruta donde se encuentra el comando, ejemplo: aptitude, python, etc.
+$ type nombre_comando // Busca la ruta donde se encuentra el comando, ejemplo: aptitude, python, etc.
 
-which nombre_programa // Buscar la ruta de un programa
+$ which nombre_programa // Buscar la ruta de un programa
+
+sudo find / -name "*nombre_fichero*" // Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion escrita.
 
 ----------
 
