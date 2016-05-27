@@ -424,8 +424,8 @@ entornos UNIX identificados por el sufijo de archivo .tar.. Además hace referen
 para la manipulación de archivos que es estándar en estos entornos, pero no incluye la
 compresión de los mismos.
 
-tar -cvf paquete.tar carpeta/ // Le damos los parametros de compresion, asi como el nombre del paquete
-y la carpeta que vamos a comprimir
+tar -cvf paquete.tar directorio // Comprimir un directorio, le damos los parametros de compresion, asi como el nombre del paquete
+y el directorio que vamos a comprimir.
 
 -c : indica a tar que cree un archivo
 -x : extraer un archivo
@@ -438,8 +438,17 @@ tar -cvf paquete.tar archivo.txt // Creara un paquete con el nombre que le dimos
 
 tar -xvf paquete.tar // Descomprimir un paquete
 
---- Descomprimir archivo .tar.bz2 ---
+Descomprimir paquetes.tar.bz2
 tar -xjvf example.tar.bz2
+
+Ficheros o Directorios con .tar.gz:
+Comprimir: tar -czvf paquete.tar.gz nombre_directorio
+Comprimir: tar -czvf paquete.tar.gz nombre_fichero.xxx
+Descomprimir: tar -xzvf paquete.tar.gz
+
+Archivos .gz:
+Comprimir: gzip -9 index.php
+Descomprimir: gzip -d index.php.gz
 
 ################################
 ##### Descomprimir con RAR #####
@@ -614,6 +623,8 @@ $ type nombre_comando // Busca la ruta donde se encuentra el comando, ejemplo: a
 $ which nombre_programa // Buscar la ruta de un programa
 
 sudo find / -name "*nombre_fichero*" // Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion escrita.
+
+sudo find / -name "*.xxx*" // Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion escrita, en este caso, una extensión de fichero
 
 ----------
 

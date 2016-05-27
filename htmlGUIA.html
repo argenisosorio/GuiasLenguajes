@@ -56,177 +56,215 @@
 
 <body> <!-- CUERPO, donde va el contenido de la página -->
 
-	<center><h2>Pagina Web</h2></center>
-	<p>
-	<p align="justify"> El fútbol o futbol (del inglés británico football), también conocido como fútbol asociación, balompié o soccer, es un deporte de equipo jugado entre dos conjuntos de once jugadores cada uno y cuatro árbitros que se ocupan de que las normas se cumplan correctamente. Es ampliamente considerado el deporte más popular del mundo, pues participan en él unos 270 millones de personas. <p>
+<center><h2>Pagina Web</h2></center>
+<p>
+<p align="justify"> El fútbol o futbol (del inglés británico football), también conocido como fútbol asociación, balompié o soccer, es un deporte de equipo jugado entre dos conjuntos de once jugadores cada uno y cuatro árbitros que se ocupan de que las normas se cumplan correctamente. Es ampliamente considerado el deporte más popular del mundo, pues participan en él unos 270 millones de personas. <p>
 
-	<p align="justify"> El terreno de juego es rectangular de césped natural o artificial, con una portería o arco a cada lado del campo. El objetivo del juego es desplazar con cualquier parte del cuerpo que no sea los brazos o las manos, y mayoritariamente con los pies (de ahí su nombre), una pelota a través del campo para intentar introducirla dentro de la portería contraria, acción que se denomina marcar un gol. El equipo que logre más goles al cabo del partido, de una duración de 90 minutos, es el que resulta ganador del encuentro. <p>
+<p align="justify"> El terreno de juego es rectangular de césped natural o artificial, con una portería o arco a cada lado del campo. El objetivo del juego es desplazar con cualquier parte del cuerpo que no sea los brazos o las manos, y mayoritariamente con los pies (de ahí su nombre), una pelota a través del campo para intentar introducirla dentro de la portería contraria, acción que se denomina marcar un gol. El equipo que logre más goles al cabo del partido, de una duración de 90 minutos, es el que resulta ganador del encuentro. <p>
 
-	<!-- COMENTARIOS/TEXTO  -->	
+<!-- COMENTARIOS/TEXTO  -->	
+
+****************VARIOS****************
+
+<script type="text/javascript"> 
+document.oncontextmenu = function(){return false;}
+</script> //Desabilitar el click derecho, se pone encima del HEAD
+
+<a href="#"><img src="1.PNG" onmouseover="this.src='2.PNG' " onmouseout="this.src='1.PNG' "/> </a> //Botón Rollover con dos imágenes
+
+****************PÁRRAFOS****************
+
+<p> Sirve para separar parrafos y dejar espacios en blanco
+
+<br> Sirve como fin de línea o como un punto y aparte	
+
+&nbsp; &nbsp; Crear espacios en blanco entre las palabras
+
+<pre></pre> formato de texto, el texto se mostrará como se escribió en el codigo fuente
+
+<hr></hr> Permite trazar lineas horizontales para dividir o crear secciones en la página y <hr color="red"> así como <hr size=10px>
+
+<fieldset></fieldset> Crea un rectangulo alrrededor del texto o imagen
+
+<legend>Titulo</legend> Asignar un enzabezado al fieldset
+
+<center></center> Sirve para alinear un encabezado o un parrafo al centro de la pagina
+
+//HTML5 elimina el uso de center y recomienda el uso de CSS para alinear los textos etc, tambien es valido usar la etiqueta DIV a la cual se le pueden dar atributos como id="nombre_identificador" y align="justify,center,left o right" para alinear.
+
+<div id="cuerpo" align="left"> 
+	Hola....
+</div>
+
+<p align="left"></p> Sirve para justificar un parrafo a LEFT, CENTER, RIGHT o JUSTIFY 
+
+****************TIPOS DE LETRA, EFECTOS Y MÁS****************
+
+<h1></h1> Le da tamaño al texto, varia del 1 al 6
+
+<b></b> Estilo Negrita
+
+<tt></tt> Teletipo
+
+<strong></strong> Fuerte, como negrita
+
+<i></i> Cursiva
+
+<em></em> Émfasis, como cursiva
+
+<u></u> Subrayado
+
+<strike></strike> Texto tachado	
+
+<s></s> Texto tachado
+
+<sup></sup> Superíndice, como elevado en matemáticas
+
+<sub></sub> Subíndice
+
+<marquee></marquee> El texto se desplaza de derecha a izquierda repetidamente	
+
+<font size="7px">TEXTO</font> Para asignar tamaño al texto, se denota en pixeles el tamaño
+
+<font color="red">TEXTO</font> Para dar color al texto, red, green, orange, blue etc...
+
+<font face="arial">TEXTO</font> Tipo de fuente del texto			
+
+****************COLORES Y FONDO****************	
+
+<body text="red"></body> Para dar color a todo el texto de la página
+
+<body bgcolor="red"></body> Color a el fondo de la página
+
+<body background="Imagen.jpg"></body> Asignar una imagen local como fondo de la página
+
+<body link="yellow"></body> Para dar color a los enlaces
+
+<body alink="yellow"></body> Color de enlaces ya visitados
+
+****************LISTAS****************	
+
+<ol> ó <ul> Tipo de demarcacion de una lista, numerica y punto
+<li>techo</li>
+<li>puerta</li>
+<li>ventana</li>
+
+<OL type=A> De tipos A,a,I,i,1
+/////
+
+<ol> Los famosos más insoportables de la televisión:
+    <li>Antonio Bandelas</li>
+    <li>Catherine Zeta Jones</li>
+    <li>Robert Downey Jr.</li>
+</ol>
+
+xxxxxxxxxx listas con estilos xxxxxxxxxx
+
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+    li {
+      /*list-style: none;*/
+      color: red;
+    }
+    #a {
+      color:blue;
+    }
+    #b {
+      color:yellow;
+    }
+    #c {
+      color:green;
+    }
+    </style>
+</head>
+<body>
+  <ul>
+      <li id="a">aaaaaaa</li>
+      <li id="b">bbbbbbb</li>
+      <li id="c">ccccccc</li>
+      <li>ddddddd</li>
+  </ul>
+  <p />
+  <ol>
+      <li id="a">aaaaaaa</li>
+      <li id="b">bbbbbbb</li>
+      <li id="c">ccccccc</li>
+      <li>ddddddd</li>
+  </ol>
+</body>
+</html>
+
+****************LINKS O ENLACES****************	
+
+<a href="LINK">Título del enlace</a> Crear un link 
+
+<a href="DIRECCION DE PAGINA EN EL ORDENADOR LOCAL">Título</a> Enlaces  locales, páginas que están en el mismo ordenador
+
+<img src="Imagen.jpg" width="200px" height="200px"></img> Agregar una imagen local a la página, debe estar en el mismo directorio de la página, se le puede asignar el tamaño, dimensiones que tendrá la imagen
+
+<a href="link"><img src="Imagen.jpg"></a> Poner una imagen como enlace
+
+<embeed SRC="Multimedia.mp4"> Agregar archivos multimedias a la página, videos, imagenes o archivos de audio
+width="400" Se le puede asignar un tamaño al archivo multimedia agregado a la página
+height="180"
+
+<iframe src="http://as.com" width="800" height="800" scrolling="yes" /> Permite añadir contenido HTML dentro de una página HTML. Una página dentro de otra
+
+<A HREF="Multimedia.mp3">Texto o Imagen</A> Texto o Imagen como enlace a un archivo multimedia
+
+<a href="libro.rar">Descargar Libro</a> Descargar archivo desde el servidor o carpeta local de la página
+
+<!--META http-equiv="refresh" content="número_segundos;url=URL de refresco"--> Sirve para que la pagina se actualice en otra que indiquemos, se le asigna el tiempo de refresco y la URL de la página
+
+<a name="Inicio"></a> Ancla, sirve para asignar un enlace a una seccion de la página, por ejemplo el inicio de la misma, con: <a href="#Inicio">Inicio</a> nos Dirigimos al ancla
+
+<a href="#" title="Ejemplo de título">ENLACE</a> Sirve para ayadir un Título o pequeño texto sobre un enlace determinado, al posar el cursor sobre el enlace se observará el texto
+
+_____________________________________________________________________________________
+
+<body> Enlaces Locales, sirve para trasladarse a sitios determinados dentro de la misma página, por ejemplo secciones de la página.
 	
-	****************VARIOS****************
+<h2>Enlaces Locales</h2>
+<h3><a name="indice">Indice</a></h3>
 
-	<script type="text/javascript"> 
-	document.oncontextmenu = function(){return false;}
-	</script> //Desabilitar el click derecho, se pone encima del HEAD
+<ul>
+	<li><a href="#uno">Seción 1</a>  
+	<li><a href="#dos">Seción 2</a>  
+	<li><a href="#tres">Seción 3</a>  
+	<li><a href="#cuatro">Seción 4</a>    
+</ul>	
 
-	<a href="#"><img src="1.PNG" onmouseover="this.src='2.PNG' " onmouseout="this.src='1.PNG' "/> </a> //Botón Rollover con dos imágenes
+<hr>
 
-	****************PÁRRAFOS****************
+<h3><a name="uno">Sección 1</a></h3>
 
-	<p> Sirve para separar parrafos y dejar espacios en blanco
 
-	<br> Sirve como fin de línea o como un punto y aparte	
+11111111111111111111111111 <br>	
 
-	&nbsp; &nbsp; Crear espacios en blanco entre las palabras
+<hr>
 
-	<pre></pre> formato de texto, el texto se mostrará como se escribió en el codigo fuente
 
-	<hr></hr> Permite trazar lineas horizontales para dividir o crear secciones en la página y <hr color="red"> así como <hr size=10px>
+<h3><a name="dos">Sección 2</a></h3>
 
-	<fieldset></fieldset> Crea un rectangulo alrrededor del texto o imagen
+22222222222222222222222
 
-	<legend>Titulo</legend> Asignar un enzabezado al fieldset
+<hr>
 
-	<center></center> Sirve para alinear un encabezado o un parrafo al centro de la pagina
 
-	//HTML5 elimina el uso de center y recomienda el uso de CSS para alinear los textos etc, tambien es valido usar la etiqueta DIV a la cual se le pueden dar atributos como id="nombre_identificador" y align="justify,center,left o right" para alinear.
-	
-	<div id="cuerpo" align="left"> 
-		Hola....
-	</div>
+<h3><a name="tres">Sección 3</a></h3>
 
-	<p align="left"></p> Sirve para justificar un parrafo a LEFT, CENTER, RIGHT o JUSTIFY 
+333333333333333333333333333333
 
-	****************TIPOS DE LETRA, EFECTOS Y MÁS****************
+<hr>
 
-	<h1></h1> Le da tamaño al texto, varia del 1 al 6
 
-	<b></b> Estilo Negrita
+<h3><a name="cuatro">Sección 4</a></h3>
 
-	<tt></tt> Teletipo
+444444444444444444444444
 
-	<strong></strong> Fuerte, como negrita
-
-	<i></i> Cursiva
-
-	<em></em> Émfasis, como cursiva
-
-	<u></u> Subrayado
-
-	<strike></strike> Texto tachado	
-
-	<s></s> Texto tachado
-	
-	<sup></sup> Superíndice, como elevado en matemáticas
-	
-	<sub></sub> Subíndice
-
-	<marquee></marquee> El texto se desplaza de derecha a izquierda repetidamente	
-
-	<font size="7px">TEXTO</font> Para asignar tamaño al texto, se denota en pixeles el tamaño
-
-	<font color="red">TEXTO</font> Para dar color al texto, red, green, orange, blue etc...
-
-	<font face="arial">TEXTO</font> Tipo de fuente del texto			
-
-	****************COLORES Y FONDO****************	
-
-	<body text="red"></body> Para dar color a todo el texto de la página
-
-	<body bgcolor="red"></body> Color a el fondo de la página
-
-	<body background="Imagen.jpg"></body> Asignar una imagen local como fondo de la página
-
-	<body link="yellow"></body> Para dar color a los enlaces
-
-	<body alink="yellow"></body> Color de enlaces ya visitados
-	
-	****************LISTAS****************	
-
-	<ol> ó <ul> Tipo de demarcacion de una lista, numerica y punto
-	<li>techo</li>
-	<li>puerta</li>
-	<li>ventana</li>
-
-	<OL type=A> De tipos A,a,I,i,1
-	/////
-
-	<ol> Los famosos más insoportables de la televisión:
-        <li>Antonio Bandelas</li>
-        <li>Catherine Zeta Jones</li>
-        <li>Robert Downey Jr.</li>
-    </ol>
-
-	****************LINKS O ENLACES****************	
-
-	<a href="LINK">Título del enlace</a> Crear un link 
-
-	<a href="DIRECCION DE PAGINA EN EL ORDENADOR LOCAL">Título</a> Enlaces  locales, páginas que están en el mismo ordenador
-
-	<img src="Imagen.jpg" width="200px" height="200px"></img> Agregar una imagen local a la página, debe estar en el mismo directorio de la página, se le puede asignar el tamaño, dimensiones que tendrá la imagen
-
-	<a href="link"><img src="Imagen.jpg"></a> Poner una imagen como enlace
-
-	<embeed SRC="Multimedia.mp4"> Agregar archivos multimedias a la página, videos, imagenes o archivos de audio
-	width="400" Se le puede asignar un tamaño al archivo multimedia agregado a la página
-	height="180"
-
-	<iframe src="http://as.com" width="800" height="800" scrolling="yes" /> Permite añadir contenido HTML dentro de una página HTML. Una página dentro de otra
-
-	<A HREF="Multimedia.mp3">Texto o Imagen</A> Texto o Imagen como enlace a un archivo multimedia
-
-	<a href="libro.rar">Descargar Libro</a> Descargar archivo desde el servidor o carpeta local de la página
-
-	<!--META http-equiv="refresh" content="número_segundos;url=URL de refresco"--> Sirve para que la pagina se actualice en otra que indiquemos, se le asigna el tiempo de refresco y la URL de la página
-
-	<a name="Inicio"></a> Ancla, sirve para asignar un enlace a una seccion de la página, por ejemplo el inicio de la misma, con: <a href="#Inicio">Inicio</a> nos Dirigimos al ancla
-
-	<a href="#" title="Ejemplo de título">ENLACE</a> Sirve para ayadir un Título o pequeño texto sobre un enlace determinado, al posar el cursor sobre el enlace se observará el texto
-
-	_____________________________________________________________________________________
-
-	<body> Enlaces Locales, sirve para trasladarse a sitios determinados dentro de la misma página, por ejemplo secciones de la página.
-		
-	<h2>Enlaces Locales</h2>
-	<h3><a name="indice">Indice</a></h3>
-
-	<ul>
-		<li><a href="#uno">Seción 1</a>  
-		<li><a href="#dos">Seción 2</a>  
-		<li><a href="#tres">Seción 3</a>  
-		<li><a href="#cuatro">Seción 4</a>    
-	</ul>	
-
-	<hr>
-
-	<h3><a name="uno">Sección 1</a></h3>
-
-	
-	11111111111111111111111111 <br>	
-
-	<hr>
-
-
-	<h3><a name="dos">Sección 2</a></h3>
-
-	22222222222222222222222
-
-	<hr>
-
-
-	<h3><a name="tres">Sección 3</a></h3>
-
-	333333333333333333333333333333
-
-	<hr>
-
-
-	<h3><a name="cuatro">Sección 4</a></h3>
-
-	444444444444444444444444
-
-	</body>
+</body>
 
 ****************TABLAS****************	
 
@@ -549,28 +587,25 @@ placeholder="Tu Nombre" //Texto de ejemplo dentro del campo del formulario, a ma
 <input type="button" value="Pulseme"> Crea un boton generico de HTML y nosotros asignamos su funcionamiento
 
 <form>
-<textarea name="texto" rows="10" cols="50">
-Hola hdspm
-</textarea>
+    <textarea name="texto" rows="10" cols="50">
+        Hola hdspm
+    </textarea>
 </form>
 
-<form> Cuadro de seleccion
-Elija un color:<br>
-<select name="color">
-<option>Verde
-<option>Negro
-<option>Rojo
-<option>Azul
-</select><br />
-<input type="submit" value="Enviar elección">
-</form>
+Formulario de Selección
+<select name="carlist" form="carform">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="opel">Opel</option>
+  <option value="audi">Audi</option>
+</select>
 
 <form action="datos.php" method="get"> Tipo Checkbox
-¿Cuáles son sus pasatiempos favoritos?<br>
-<input type="checkbox" name="pasa" value="tv">TV<br>
-<input type="checkbox" name="pasa" value="libros">Libros<br>
-<input type="checkbox" name="pasa" value="musica">Música<br>
-<input type="checkbox" name="pasa" value="otros">Otros<br>
+    ¿Cuáles son sus pasatiempos favoritos?<br>
+    <input type="checkbox" name="pasa" value="tv">TV<br>
+    <input type="checkbox" name="pasa" value="libros">Libros<br>
+    <input type="checkbox" name="pasa" value="musica">Música<br>
+    <input type="checkbox" name="pasa" value="otros">Otros<br>
 </form>
 
 <form action="foto.php" method="post" accept="image/jpg"> Subir una imagen a la página o al servidor
@@ -904,6 +939,49 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Hover con imagenes con id xxxxxxxxxxxxxxxxxxxxxxxxxxx
             <li><a href="#">0123456789</a></li>
         </ul>
     </nav>
+</body>
+</html>
+
+xxxxxxxxxxxxxxxxxxxxxxxxxx Menu horizontal, listas con estilos xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+</style>
+</head>
+<body>
+
+<ul>
+  <li><a class="active" href="#home">Home</a></li>
+  <li><a href="#news">News</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li><a href="#about">About</a></li>
+</ul>
+
 </body>
 </html>
 
@@ -1753,6 +1831,11 @@ Sombra uniforme
 -webkit-box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.75);
 -moz-box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.75);
 box-shadow: -1px 0px 9px 5px rgba(0,0,0,0.75);
+
+Sombra interior leve
+-webkit-box-shadow: inset 0px 1px 28px -9px rgba(0,0,0,1);
+-moz-box-shadow: inset 0px 1px 28px -9px rgba(0,0,0,1);
+box-shadow: inset 0px 1px 28px -9px rgba(0,0,0,1);
 
 xxxxxxxxxx Colores web xxxxxxxxxx
 

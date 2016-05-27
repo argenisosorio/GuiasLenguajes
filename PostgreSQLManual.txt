@@ -44,7 +44,9 @@ postgres=#
 
 Ctrl + l // Limpiar la consola de postgres
 
-# CREATE USER nombre_usuario; //Crear usuario sin password, es mejor asignarle el pass
+# SELECT CURRENT_DATE; // Muestra la fecha del sistema, para ver el formato de fecha de postgres.
+
+# CREATE USER nombre_usuario; // Crear usuario sin password, es mejor asignarle el pass
 
 # CREATE USER nombre_usuario PASSWORD 'password'; //Crear usuario y asignarle el password
 
@@ -80,7 +82,11 @@ namedb=# SELECT nombre_campo FROM nombre_tabla; // Hacer una consulta a los dato
 
 namedb=# SELECT nombre_campo,nombre_campo2 FROM nombre_tabla; // Hacer una consulta a los datos de varios campos especificos, separados por ",".
 
-namedb=# SELECT * FROM nombre_tabla; // Hacer una consulta de los datos de la tabla, (*) Significa que lea todas las columnas de la tabla
+namedb=# SELECT * FROM nombre_tabla; // Hacer una consulta de los datos de la tabla, (*) Significa que lea todas las columnas de la tabla.
+
+namedb=# SELECT * FROM nombre_tabla WHERE nombre_campo='valor'; // Hacer una consulta de los datos de una tabla cuando coincida con el parametro establecido, cadena
+
+namedb=# SELECT * FROM nombre_tabla WHERE nombre_campo=3; // Hacer una consulta de los datos de una tabla cuando coincida con el parametro establecido, entero
 
 GRANT ALL PRIVILEGES ON DATABASE nombre_BaseDatos TO nombre_usuario; // Al crear un usuario podemos darle permisos a una base de datos existente.
 
