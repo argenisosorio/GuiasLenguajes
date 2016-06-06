@@ -125,6 +125,14 @@ $ cat nombre_fichero // Mostrar contenido de un fichero
 
 $ less nombre_fichero // Mostrar el contenido de un archivo, mayor movilidad que cat.
 
+$ tail nombre_fichero.xxx // El comando tail sirve para mostrar en pantalla las últimas líneas de un archivo.
+
+$ tail -n X nombre_fichero.xxx // -n donde X es el número de lineas que queremos ver del fichero.
+
+$ tail -c X nombre_fichero.xxx // -n donde X es el número caracteres desde el final, que queremos ver del fichero.
+
+$ tail fichero_1.xxx fichero_2.xxx // Se pueden especificar 1 o más ficheros a la vez, los mostrara en el orden declarado.
+
 $ stat nombre_fichero // Muestra el estado e información de un fichero
 
 $ stat nombre_carpeta // Muestra información de un directorio
@@ -977,7 +985,7 @@ Para copiar un directorio completo de mi ordenador al servidor, por ejemplo /hom
 $ scp -r /home/mario/carpeta usuario@dominio.com:/home/usuario
 
 ######################################################
-########## Programación Shell-Script (bash) ##########
+########## Programación shell-script (bash) ##########
 ######################################################
 
 Bash (y otros shells) permiten programar scripts
@@ -1015,6 +1023,8 @@ lo interpretará
 Ejecución:
 
 sh prueba.sh // Ejecutar un programa con bash.
+
+./script.sh // Otra manera de ejecutar el script.
 
 sh prueba // Ejecutar un programa con bash, script guardado sin extension.
 
@@ -1349,4 +1359,3 @@ $ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con e
 digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando
 
 ~ // Para sacarlo usar AvPag en la consola
-rails g migration AddPollTextAreaToPoll poll:belongs_to
