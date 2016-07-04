@@ -12,6 +12,8 @@ $ cat /etc/issue  //Para saber la versión de SO que tenemos.
 
 !! // Repetir el ultimo comando ejecutado en consola
 
+~ // Para sacarlo usar AvPag en la consola
+
 comando && comando && comando... // Ejecucion multiple de comandos
 
 Ctrl + u // Cortar el contenido de la linea de comandos desde la posicion del cursor hasta el principio
@@ -1364,11 +1366,64 @@ ClavePublica_username.gpg // Fichero generado que contiene la clave pública
 
 Este archivo ahora se puede difundir por el medio que queramos.
 
+###################################################################
+##### Lista de fuentes de los paquetes de debian sources.list #####
+###################################################################
+
+----- Apt -----
+
+Apt (Advanced Package Tool) es un set de herramientas del núcleo de Debian. Apt hace posible:
+instalar, eliminar, mantener sus aplicaciones al día y mucho más... 
+
+Apt, que basicamente resuelve problemas de dependencias y busca los paquetes solicitados, trabaja con dpkg, otra herramienta
+que maneja la instalación y eliminación de paquetes (aplicaciones). Apt es muy poderoso, y se usa frecuentemente desde la línea
+de comandos o consola/terminal. Sin embargo, hay muchas herramientas GUI/Gráficas para ayudarle a usar Apt sin tener
+que tocar la línea de comando.
+
+Al presente, aptitude es la herramienta recomendada para interactuar con la suite APT. Las herramientas APT deben ser usadas
+especificamente para manejar acciones que no puedan ser manejadas por aptitude, o dónde se necesite mayor control de las dependencias. 
+
+/etc/apt/sources.list // APT utiliza un archivo que enlista las "fuentes" en donde se encuentran los paquetes. Este archivo es: /etc/apt/sources.list
+
+El contenido de este archivo, normalmente sigue este formato:
+    deb http://host/debian distribución sección1 sección2 sección3
+    deb-src http://host/debian distribución sección1 sección2 sección3
+
+Los renglones arriba mencionados son ficticios y no deberán ser usados. La primera palabra en cada línea, deb o deb-src, indican
+el tipo del archivo: ya sea que contenga paquetes binarios (deb), esto es, los paquetes pre-compilados que normalmente se usan
+o los paquetes fuente (deb-src), que son los códigos originales, más el archivo de control de Debian (.dsc) y el diff.gz que
+contienen los cambios necesarios para "debianizar" el programa.
+
+Generalmente se encuentra lo siguiente por defecto en el archivo sources.list:
+
+     # See sources.list(5) for more information, especialy
+     # Remember that you can only use http, ftp or file URIs
+     # CDROMs are managed through the apt-cdrom tool.
+     deb http://http.us.debian.org/debian stable main contrib non-free
+     deb http://non-us.debian.org/debian-non-US stable/non-US main contrib non-free
+     deb http://security.debian.org stable/updates main contrib non-free
+     
+     # Uncomment if you want the apt-get source function to work
+     #deb-src http://http.us.debian.org/debian stable main contrib non-free
+     #deb-src http://non-us.debian.org/debian-non-US stable/non-US main contrib non-free
+
+Éstas son las líneas necesarias para una instalación básica de Debian. La primer línea deb apunta al archivo en el servidor oficial
+la segunda línea apunta hacia el archivo del servidor non-US y la tercera línea apunta hacia el archivo del servidor de
+actualizaciones de seguridad.
+
+Las dos últimas líneas están deshabilitadas (con un "#" al inicio), así que apt-get las ignora. Éstas son las líneas de deb-src
+esto es, apuntan hacia los paquetes fuente de Debian. Si frecuentemente descarga paquetes fuente para probar o recompilar
+habilítelas (borrando el "#" al inicio de la línea).
+
+El archivo /etc/apt/sources.list puede contener varios tipos de líneas. APT sabe como interpretar líneas del tipo http,
+ftp, file (archivos locales, p.e., un directorio que contiene un CD-ROM) y ssh, según mis conocimientos.
+
+No olvide ejecutar el comando apt-get update después de modificar el archivo /etc/apt/sources.list. Debe hacer
+esto para permitir a APT obtener la lista de paquetes de las fuentes que especificó.
+
 ##############
 ### Otros: ###
 ##############
 
 $ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con el certificado
 digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando
-
-~ // Para sacarlo usar AvPag en la consola
