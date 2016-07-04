@@ -8,6 +8,8 @@ Crtl + h // Mostrar archivos ocultos de un directorio, en el entorno grafico
 
 $ cat /etc/issue.net  //Para saber la versión de SO que tenemos.
 
+$ cat /etc/issue  //Para saber la versión de SO que tenemos.
+
 !! // Repetir el ultimo comando ejecutado en consola
 
 comando && comando && comando... // Ejecucion multiple de comandos
@@ -711,8 +713,19 @@ $ git checkout Nombre_Rama // Cambiarse de rama
 
 $ git branch -v // Para ver los ultimos commits de cada rama.
 
+----- Mezclando Ramas -----
+
+Para fusionar dos ramas, en este caso una rama de desarrollo con la rama master se hace un git merge, para realizar la mezcla vamos
+a situarnos en la rama master escribimos el comando donde especificamos que rama queremos mezclar con master.
+
+$ git checkout master // Cambiarsa a la rama master
+
+$ git merge desarrollo // Mezclar la rama desarrollo con master
+
+---------------------------
+
 $ git checkout XXXXXX123456 // Este comando sirve para moverse entre los commits, cada commit genera una
-etiqueta hash, un identificador muy largo alfanumerico, estas etiquetas identifican una version del proyecto
+etiqueta, un identificador muy largo alfanumerico, estas etiquetas identifican una version del proyecto
 lo que permite restaurar el proyecto a estados anteriores donde XXXXXX123456 representa la etiqueta del commit al que queremos ir.
 
 //Una vez movidos a ese commit especifico del historial se puede crear una nueva rama desde ese punto, si hacemos git log nos mostrara
