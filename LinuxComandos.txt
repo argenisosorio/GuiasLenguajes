@@ -97,6 +97,7 @@ $ ls -la // Muestra los archivos, los ocultos tambien, fecha, permisos, etc
 $ ls -1 // Muestra los archivos en forma de lista
 
 $ ls *.xxx // Listar todos los ficheros de un directorio que tengan las extension .xxx, donde xxx puede ser: txt, html, php, css, etc.
+ejemplo: ls *.txt
 
 $ ls -R // Listar los directorios y subdirectorios asi como ficehros de un directorio.
 
@@ -956,7 +957,7 @@ de no ser así hay que revisar el fichero o el nombre de los paquetes a instalar
 $ pip search nombre_paquete // Buscar un paquete.
 
 #############################################
-########## Conexion remota con SSH ##########
+########## Conexion remota con ssh ##########
 #############################################
 
 SSH (Secure SHell) es el nombre de un protocolo y del programa que lo implementa, y sirve para acceder
@@ -994,14 +995,40 @@ $ scp usuario@dominio.com:/home/usuario/archivo.txt /home/usuario/Documentos // 
 
 $ scp usuario1@dominio1.com:/home/usuario1/archivo.txt usuario2@dominio2.com:/home/usuario2/
 
---- COPIAR UN DIRECTORIO COMPLETO ---
+--- COPIAR UN DIRECTORIO COMPLETO DE LOCAL A SERVIDOR ---
 Para copiar un directorio completo de mi ordenador al servidor, por ejemplo /home/mario/carpeta a /home/usuario, añadimos un -r en el comando:
 
 $ scp -r /home/mario/carpeta usuario@dominio.com:/home/usuario
 
+--- COPIAR UN DIRECTORIO COMPLETO DE SERVIDOR A LOCAL---
+Para copiar un directorio completo del servidor al local, por ejemplo /home/usuario/carpeta a /home/user/docs, añadimos un -r en el comando:
+
+$ scp -r usuario@dominio.com:/home/usuario/carpeta /home/user/docs
+
 ######################################################
 ########## Programación shell-script (bash) ##########
 ######################################################
+
+----- ¿Qué es un "Script"? -----
+
+Es un archivo que contiene código escrito en determinado lenguaje de programación que el sistema usa para determinada tarea.
+No es necesario que tenga una entrada externa ni interfaz gráfica, pero sí que provoque una salida de datos procesados
+(por más de que el usuario no los vea).
+
+El lenguaje usado por Bash está definido por su propio intérprete y combina la sintaxis de otros Shells, como el Korn Shell (ksh) o el C Shell (csh).
+Muchos de los comandos que usualmente se usan en la consola también pueden usarse en los scripts, salvo aquellos que pertenecen estrictamente a una
+distribución en particular.
+
+----- Estructura de un Script -----
+
+Para empezar debemos contar con un editor de texto, los archivos que guardamos con extensión .sh podrán ser ejecutados (o interpretados) por la consola
+siempre y cuando la primera línea sea la siguiente:
+
+#!/bin/bash
+
+Esto le dice al sistema que deberá usar la consola para ejecutar el archivo. Además, el carácter # permite escribir comentarios.
+
+echo // muestra un mensaje en pantalla, en este caso el típico "Hola Mundo". Si lo guardamos y ejecutamos con la consola veremos el resultado.
 
 Bash (y otros shells) permiten programar scripts
 --Bash (Bourne again shell) es un programa informático cuya función consiste en interpretar órdenes.
@@ -1039,9 +1066,51 @@ Ejecución:
 
 sh prueba.sh // Ejecutar un programa con bash.
 
+bash prueba.sh // Ejecutar un programa con bash.
+
 ./script.sh // Otra manera de ejecutar el script.
 
 sh prueba // Ejecutar un programa con bash, script guardado sin extension.
+
+------------------------
+
+#Ejemplo de programa en bash para ejecutar aplicaciones instaladas en el SO.
+#!/bin/bash
+#val=10
+val1='#########################\n'
+val2='##### Abriendo Meld #####\n'
+val3='#########################\n'
+#echo $val1
+#echo $val2
+#echo $val3
+echo $val1 $val2 $val3
+/usr/bin/meld
+
+------------------------
+
+#Usando una funcion, y viendo el funcionamiento de variables locales y globales.
+#!/bin/bash
+HOLA=Hola_global
+function hola {
+    local HOLA=Mundo_local
+    echo $HOLA
+}
+echo $HOLA
+hola
+echo $HOLA
+
+-----------------------
+
+#Llamado de una Funcion
+#!/bin/bash
+a='Estaba la pájara pinta'
+function Imprimir {
+    local a='sentada en un verde limón.'
+    echo $a
+}
+echo $a
+Imprimir
+#echo $a
 
 #################
 ##### RSYNC #####
@@ -1420,6 +1489,156 @@ ftp, file (archivos locales, p.e., un directorio que contiene un CD-ROM) y ssh, 
 
 No olvide ejecutar el comando apt-get update después de modificar el archivo /etc/apt/sources.list. Debe hacer
 esto para permitir a APT obtener la lista de paquetes de las fuentes que especificó.
+
+####################################################
+##### Visión General del Árbol de Directorios  #####
+####################################################
+
+El árbol de directorios completo está pensado para poder ser dividido en partes más pequeñas, que pueden estar en su propio disco
+o partición y acomodarse así a los límites del tamaño del disco, así como para facilitar la realización de copias de seguridad y
+otras tareas de la administración de sistemas. Las partes principales son los sistemas de archivos raíz (/) , /usr, /var , y /home.
+Cada parte tiene un propósito diferente. El árbol de directorios se ha diseñado para funcionar bien en una red de máquinas GNU/Linux
+las cuales pueden compartir algunas partes del sistema de archivos sobre un dispositivo de solo-lectura (CD-ROM por ejemplo) o sobre
+la red a través de NFS.
+
+Los roles de las diferentes secciones del árbol de directorios son:
+
+- El sistema de archivos raíz es específico para cada máquina (generalmente se encuentra almacenado en el disco local, aunque puede estar
+también en un disco RAM o en una unidad de red) y contiene los archivos que son necesarios para arrancar el sistema y dejarlo en un estado
+en el que se puedan montar los demás sistemas de archivos. El contenido del sistema de archivos raíz es por lo tanto suficiente para el nivel
+de ejecución de usuario individual. También contiene herramientas para reparar un sistema dañado y para recuperar archivos perdidos desde
+las copias de seguridad.
+
+- El sistema de archivos /usr contiene todos los comandos, librerías, páginas de manual, y otros archivos que no serán modificados durante el
+funcionamiento normal del sistema. No deben existir archivos bajo /usr que sean específicos para una máquina en particular, ni que deban ser
+modificados durante la utilización normal del sistema. Esto permite que los archivos sean compartidos a través de la red, lo cual puede ser
+efectivo en cuanto a costes, puesto que se obtiene un ahorro de espacio en disco (/usr puede ocupar fácilmente miles de megabytes) y puede
+facilitar la administración, ya que sólo el /usr maestro necesita ser modificado cuando actualizamos una aplicación, y no en cada máquina por
+separado. Aún cuando el sistema de archivos resida en el disco local, este puede ser montado en modo solo lectura, para eliminar el riesgo
+de que se corrompa durante un fallo.
+
+- El sistema de archivos /var contiene archivos que sí cambian durante el funcionamiento normal del sistema, tales como directorios spool
+( para correo, noticias (news), impresoras, etc), archivos de log, páginas de manual formateadas y archivos temporales. Tradicionalmente
+todo en /var es algo que debería estar en /usr, pero que haría imposible montar dicho sistema de archivos como solo lectura.
+
+- El sistema de archivos /home contiene los directorios específicos de los usuarios, P.Ej., todos los datos reales del sistema. Separar los
+directorios home a su propio árbol de directorios o sistema de archivos hace más fácil la tarea de realizar copias de seguridad; los demás
+sistemas de archivos no necesitan que se les haga copias de seguridad, o al menos no tan frecuentemente, puesto que rara vez cambian.
+Un gran directorio /home puede ser dividido en varios sistemas de archivos, lo cual requiere agregar niveles de nombres extra, como por ejemplo
+/home/estudiantes y /home/staff.
+
+- Si bien las diferentes partes del árbol de directorios se han llamado hasta ahora sistemas de archivos, no se requiere necesariamente que se
+encuentren en particiones separadas. Se pueden mantener fácilmente en una única partición si se trata de un sistema pequeño de un solo usuario
+y este sólo desea mantener las cosas de manera simple. El árbol de directorios puede también ser dividido en diferentes particiones dependiendo
+del tamaño de los discos, y de como el espacio se destine a los distintos propósitos. Lo importante, no obstante, es que todos los nombres estándar
+funcionen; Aún cuando, digamos,/var y /usr se encuentren de hecho en la misma partición, los nombres /usr/lib/libc.a y /var/log/messages deben funcionar.
+Incluso si, por ejemplo, moviéramos los archivos que se encuentren en /var dentro de /usr/var, y hagamos a /var un enlace simbólico a /usr/var.
+
+La estructura del sistema de archivos en UNIX agrupa a los archivos de acuerdo a su propósito. Por lo tanto, todos los comandos están en un mismo lugar
+todos los archivos de datos en otro, la documentación en un tercer lugar, etc. Otra alternativa podría ser la de agrupar los archivos de acuerdo al programa
+al que pertenezcan, P.Ej., todos los archivos de Emacs podrían colocarse en un mismo directorio, todos los de Tex en otro, etc. El problema con esta última
+aproximación es que dificulta compartir archivos (el directorio del programa frecuentemente contiene archivos no cambiantes y compartibles, y cambiantes y no
+compartibles), y algunas veces incluso encontrar archivos (por ejemplo, las páginas de manual se encuentran ubicadas en una gran cantidad de lugares
+y hacer que los programas que leen tales páginas de manual las encuentren sería una pesadilla de mantenimiento).
+
+#######################################
+##### El sistema de archivos /usr #####
+#######################################
+
+El sistema de archivos /usr es con frecuencia grande, debido a que todos los programas están instalados allí. Normalmente, todos los archivos en /usr provienen
+de la distribución Linux que hayamos instalado; los programas instalados localmente y algunas otras cosas se encuentran bajo /usr/local. De esta manera es posible
+actualizar el sistema desde una nueva versión de la distribución, o incluso desde una distribución completamente nueva, sin tener que instalar todos los programas
+nuevamente. Algunos de los directorios de /usr están explicados aquí debajo (algunos de los menos importantes se han omitido, se puede encontrar información
+adicional en el Estándar del Sistema de Ficheros).
+
+/usr/X11R6
+    Se encuentran aquí todos los archivos del Sistema X-Windows. Para simplificar el desarrollo y la instalación de X, sus archivos no fueron integrados
+dentro del resto del sistema. Existe un árbol de directorios bajo /usr/X11R6 similar al que está bajo /usr.
+
+/usr/bin
+    En este directorio se encuentran la gran mayoría de los comandos para los usuarios. Algunos otros comandos pueden encontrarse
+en /bin o en /usr/local/bin. 
+
+/usr/sbin
+    Comandos para la administración del sistema que no son necesarios en el sistema de archivos raíz, como por ejemplo la mayoría de los
+programas que proveen servicios.
+
+/usr/share/man, /usr/share/info, /usr/share/doc
+    Páginas de manual, documentos de información GNU, y archivos de documentación de los programas instalados. 
+
+/usr/include
+    Archivos cabecera para el lenguaje de programación C. Estos deberían estar de hecho debajo de /usr/lib por coherencia, pero tradicionalmente
+se ha apoyado de forma mayoritaria esta ubicación.
+
+/usr/lib
+    Archivos de datos de programas y subsistemas que no sufren cambios, incluyendo algunos archivos de configuración globales. El nombre lib viene
+de librería; originariamente las librerías de las subrutinas de programación se almacenaban en /usr/lib.
+
+/usr/local
+    Es la ubicación para el software instalado localmente y para algunos otros archivos. Las distribuciones no deben colocar archivos bajo este
+directorio. Se reserva para ser utilizado únicamente por el administrador local del sistema. De esta manera, aquel se asegura totalmente de que
+ninguna actualización de su distribución sobreescribirá el software que él mismo haya instalado localmente.
+
+##############################
+##### El directorio /etc #####
+##############################
+
+El directorio /etc contiene gran cantidad de archivos. Muchos archivos de configuración de red se encuentran también en /etc.
+
+/etc/rc o /etc/rc.d o /etc/rc?.d
+	Scripts o directorios de scripts que se ejecutan durante el arranque del sistema o al cambiar el nivel de ejecución. Se puede encontrar
+información adicional en el capítulo dedicado a Init.
+
+/etc/passwd
+    La base de datos de los usuarios, que incluye campos como el nombre de usuario, nombre real, directorio home, password encriptada y otra información
+acerca de cada usuario. El formato de este archivo se encuentra documentado en la página de manual del comando passwd. Sin embargo, hoy día es muy común
+encontrar las contraseñas encriptadas en /etc/shadow. Esto significa que en tal caso, los datos de los usuarios excepto la password encriptada se
+encontrarían almacenados en passwd.
+
+/etc/fdprm
+    Tabla de parámetros para los discos flexibles. Describe cómo son los diferentes formatos de estos discos. Este archivo es utilizado por el programa setfdprm. Se puede encontrar información adicional en la página de manual de setfdprm. 
+
+/etc/fstab
+    Lista los sistemas de archivos montados automáticamente en el arranque del sistema por el comando mount -a (en /etc/rc o archivo de inicio equivalente). En Linux, este archivo también contiene información acerca de áreas de swap utilizadas automáticamente por swapon -a. Se puede encontrar información adicional en “Montar y desmontar”, la página de manual del comando mount. 
+
+/etc/group
+    Este archivo es similar a /etc/passwd , pero describe grupos en vez de usuarios. Se puede encontrar información adicional en la página de manual del comando group. 
+
+/etc/inittab
+    Archivo de configuración para init. 
+
+/etc/issue
+    Archivos que utiliza getty como salida antes de que el sistema pida el nombre de usuario. Usualmente contiene una descripción corta o mensaje de bienvenida al sistema. El contenido es establecido por el administrador del sistema. 
+
+/etc/magic
+    El archivo de configuración para el programa file. Contiene las descripciones de varios formatos de archivos que utiliza file para determinar el tipo de archivo. Se puede encontrar información adicional en las páginas de manual para magic y file. 
+
+/etc/motd
+    Contiene el mensaje del día, que se emite automáticamente tras iniciar una sesión con éxito. El contenido es definido por el administrador del sistema. Con frecuencia se utiliza para dar información a todos los usuarios, como por ejemplo, mensajes de advertencias acerca de la hora en que está planeada una parada técnica del servidor. 
+
+/etc/mtab
+    Contiene un listado de los sistemas de archivos actualmente montados. Se establece Inicialmente por los scripts del arranque del sistema, y se actualiza automáticamente por el comando mount. Se utiliza cuando se necesita un listado de los sistemas de archivos que estén actualmente montados (por ejemplo por el comando df). 
+
+/etc/shadow
+    Archivo de contraseñas ocultas en sistemas donde se encuentre instalado el software de contraseñas ocultas. Al utilizar contraseñas ocultas la password encriptada de cada usuario es eliminada de /etc/passwd y colocada en el archivo /etc/shadow; este último no puede ser leído por nadie a excepción del usuario root. De esta manera se dificulta el proceso de descifrado de las contraseñas de los usuarios. Si la distribución GNU/Linux que estemos utilizando nos permite elegir utilizar o no contraseñas ocultas (muchas lo hacen), está altamente recomendado hacerlo. 
+
+/etc/login.defs
+    Archivo de configuración para el comando login. El archivo login.defs se describe en el capítulo 5. 
+
+/etc/printcap
+    Similar a /etc/termcap, con la excepción de que está destinado a la configuración de colas de impresión. La sintaxis también es diferente. printcap se describe en el capitulo 5. 
+
+/etc/profile, /etc/csh.login, /etc/csh.cshrc
+    Archivos que se ejecutan en el momento de iniciar los intérpretes de comandos C o Bourne. Permite al administrador del sistema establecer parámetros globales por defecto para todos los usuarios. Se puede encontrar información adicional en las páginas de manual para los respectivos intérpretes de comandos. 
+
+/etc/securetty
+    Identifica las terminales seguras, esto es, las terminales por las cuales el usuario root tiene permitido iniciar una sesión. Típicamente sólo las consolas virtuales se encuentran listadas en este archivo, con lo que se hace imposible (o al menos mas difícil) obtener privilegios de superusuario accediendo a través de un módem o la red. No se debe permitir iniciar una sesión como usuario root desde la red. Es preferible iniciar una sesión con un usuario sin privilegios y utilizar después su o sudo para obtener privilegios de superusuario. 
+
+/etc/shells
+    Listado de intérpretes de comandos admitidos. El comando chsh permite a los usuarios cambiar su intérprete de comandos por defecto a otro que se encuentre listado en este archivo. Ftpd, el proceso servidor que proporciona servicios FTP en una máquina, comprueba que los intérpretes de comandos de los usuarios estén listados en /etc/shells y no permite que nadie inicie una sesión si el intérprete de comandos no se encuentra en dicho listado. 
+
+/etc/termcap
+    La base de datos de capacidades del terminal. Describe las “secuencias de escape” por medio de las cuales se pueden controlar diversos tipos de terminales. Los programas se escriben para que, en lugar de generar directamente una secuencia de escape que solo funcione en un tipo de terminal, busquen la secuencia correcta para hacer lo que necesiten en /etc/termcap. Como resultado, la mayoría de los programas trabajan con la mayoría de los tipos de terminales existentes. Se puede encontrar información adicional en las páginas de manual de termcap, curs_termcap, y de terminfo. 
 
 ##############
 ### Otros: ###
