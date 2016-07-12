@@ -415,6 +415,8 @@ $ aptitude download nombre_paquete // Descarga el fichero .deb del paquete dado 
 
 $ aptitude reinstall nombre_paquete // Reinstalar un paquete
 
+$ aptitude update // Actualizar la lista de paquetes disponibles.
+
 ####################################################
 ##### Saber la version instalada de un paquete #####
 ####################################################
@@ -972,13 +974,21 @@ $ ssh Nombre_usuario@IP_servidor o nombre_servidor
 
 ssh user@192.168.0.240 // Asi se accede a un ordenador o servidor remoto, debemos poner el usuario que debe estar creado asi como la ip
 del server, nos pedira la clave de session, una vez adentro tenemos acceso a los archivos y podemos pedir el root para tener acceso total.
-ssh es muy usado por administradores de redes y de sistemas para acceder a las maquinas que arrojan los servidores y hacer cambios asi 
-como monitorear los proyectos que esten ejecutando, especialmente en maquinas virtuales si varios proyectos corren en un mismo servidor.
+ssh es muy usado por administradores de redes y de sistemas para acceder a las maquinas y los servidores y hacer cambios asi 
+como monitorear los procesos que esten ejecutando, especialmente en maquinas virtuales si varios proyectos corren en un mismo servidor.
+
+Conectado al servidor, podemos enviar mensajes o abrir programas remotamente, ejemplo:
 
 echo "mensaje" > /dev/pts/2 // Enviar mensaje a traves del shell, se debe especificar 
 el usuario, se puede hacer localmente para probar, enviando mensajes entre dos shells
 abiertos. con (who) veremos la identificacion de cada shell.
 
+$ export DISPLAY=:0.0 // Creamos la ventana virtual donde se abrira la aplicacion que ejecutemos, luego
+$totem o $nautilus // Deberia abrir el programa en el servidor, ya esportada la ventana podemos:
+
+DISPLAY=:0.0 totem // Abrir el reproductor totem en el servidor
+
+DISPLAY=:0.0 nautilus // Abrir el explorador de archivos en el servidor
 
 --- COPIAR ARCHIVOS DE LOCAL A SERVIDOR ---
 Si queremos subir el archivo archivo.txt de nuestro ordenador a la carpeta /home/usuario del servidor, hacemos lo siguiente:
@@ -1000,7 +1010,7 @@ Para copiar un directorio completo de mi ordenador al servidor, por ejemplo /hom
 
 $ scp -r /home/mario/carpeta usuario@dominio.com:/home/usuario
 
---- COPIAR UN DIRECTORIO COMPLETO DE SERVIDOR A LOCAL---
+--- COPIAR UN DIRECTORIO COMPLETO DE SERVIDOR A LOCAL ---
 Para copiar un directorio completo del servidor al local, por ejemplo /home/usuario/carpeta a /home/user/docs, añadimos un -r en el comando:
 
 $ scp -r usuario@dominio.com:/home/usuario/carpeta /home/user/docs
@@ -1009,7 +1019,7 @@ $ scp -r usuario@dominio.com:/home/usuario/carpeta /home/user/docs
 ########## Programación shell-script (bash) ##########
 ######################################################
 
------ ¿Qué es un "Script"? -----
+--- ¿Qué es un "Script"? ---
 
 Es un archivo que contiene código escrito en determinado lenguaje de programación que el sistema usa para determinada tarea.
 No es necesario que tenga una entrada externa ni interfaz gráfica, pero sí que provoque una salida de datos procesados
@@ -1019,7 +1029,7 @@ El lenguaje usado por Bash está definido por su propio intérprete y combina la
 Muchos de los comandos que usualmente se usan en la consola también pueden usarse en los scripts, salvo aquellos que pertenecen estrictamente a una
 distribución en particular.
 
------ Estructura de un Script -----
+--- Estructura de un Script ---
 
 Para empezar debemos contar con un editor de texto, los archivos que guardamos con extensión .sh podrán ser ejecutados (o interpretados) por la consola
 siempre y cuando la primera línea sea la siguiente:
@@ -1039,7 +1049,7 @@ que se ejecutan línea por línea, el programa puede contener, además de comand
 variables, constructores lógicos (if...then, AND, OR, etc.) y lazos (while, for, etc.)
 funciones comentarios
 
--- Ejecución de un script --
+--- Ejecución de un script ---
 
 Los scripts deben empezar por el simbolo #! seguido del programa a usar para interpretar el script:
 
@@ -1435,6 +1445,23 @@ ClavePublica_username.gpg // Fichero generado que contiene la clave pública
 
 Este archivo ahora se puede difundir por el medio que queramos.
 
+#####################################
+##### Configurar sudo en Debian #####
+#####################################
+
+En Debian no viene instalado y configurado por defecto.
+
+$ aptitude install sudo
+
+Una vez con el sudo instalado deberemos agregar nuestro usuario en la sección "User privilege specification"
+en el archivo /etc/sudoers, de tal forma que la sección quede así:
+
+User privilege specification
+root ALL=(ALL) ALL
+tu_usuario ALL=(ALL) ALL
+
+Una vez configurado esto, ya podremos ejecutar acciones de administrador desde una terminal común, anteponiendo el sudo a la acción a realizar.
+
 ###################################################################
 ##### Lista de fuentes de los paquetes de debian sources.list #####
 ###################################################################
@@ -1639,6 +1666,66 @@ encontrarían almacenados en passwd.
 
 /etc/termcap
     La base de datos de capacidades del terminal. Describe las “secuencias de escape” por medio de las cuales se pueden controlar diversos tipos de terminales. Los programas se escriben para que, en lugar de generar directamente una secuencia de escape que solo funcione en un tipo de terminal, busquen la secuencia correcta para hacer lo que necesiten en /etc/termcap. Como resultado, la mayoría de los programas trabajan con la mayoría de los tipos de terminales existentes. Se puede encontrar información adicional en las páginas de manual de termcap, curs_termcap, y de terminfo. 
+
+################
+##### dpkg #####
+################
+
+El programa dpkg es la base del sistema de gestión de paquetes de Debian GNU/Linux. Fue creado por Ian Jackson en 1993. Se utiliza para instalar
+quitar, y proporcionar información sobre los paquetes .deb.
+
+dpkg es en sí misma una herramienta de bajo nivel; se necesita un frontal de alto nivel para traer los paquetes desde lugares remotos o resolver
+conflictos complejos en las dependencias de paquetes. Debian cuenta con apt para esta tarea.
+
+Herramientas Dpkg, Debian posee una serie de herramientas que es necesario llamar para construir un paquete:
+
+-dpkg-source Empaqueta y desempaqueta los archivos fuentes de un paquete Debian.
+-dpkg-gencontrol Lee la información de un árbol fuente Debian desempaquetado y genera un paquete binario de control, generando una
+entrada para éste en el fichero debian/files.
+-dpkg-shlibdeps Calcula las dependencias de ejecutables respecto a bibliotecas.
+-dpkg-genchanges Lee la información de un árbol fuente Debian desempaquetado y ya construido, generando un fichero de control de los últimos cambios (un.changes).
+-dpkg-buildpackage Es un script de control que se puede utilizar para automatizar la construcción del paquete.
+-dpkg-distaddfile Añade una entrada de un fichero a debian/files.
+-dpkg-parsechangelog Lee el fichero de cambios changelog) de un árbol fuente Debian desempaquetado y genera una salida con la información
+de estos cambios, convenientemente preparada.
+
+###############
+##### deb #####
+###############
+
+-Extensión de archivo: .deb
+-Tipo de formato: Sistema de gestión de paquetes
+
+.deb es la extensión del formato de paquetes de software de la distribución de Linux, Debian GNU/Linux y derivadas (e.j.Ubuntu), y
+el nombre más usado para dichos paquetes. Como Debian, su nombre proviene de Deborah Murdock, ex-esposa del fundador de la distribución Ian Murdock.
+
+El programa predeterminado para manejar estos paquetes es dpkg, generalmente usando apt/aptitude aunque también hay interfaces gráficas como Synaptic
+PackageKit, Gdebi o en Ubuntu Software Center (este último solo para Ubuntu), desde la versión 3.0. Es posible convertir un paquete deb a otros
+formatos de paquete (como RPM), y viceversa, usando la aplicación alien.
+
+--- Estructura interna ---
+
+Los paquetes deb son archivos ar estándar de Unix que incluyen dos archivos tar en formato gzip, bzip2 o lzma: uno de los cuales alberga
+la información de control y el otro los datos.
+
+Estos paquetes contienen tres archivos:
+-debian-binary - número de versión del formato deb. Este es "2.0" para las versiones actuales de Debian.
+-control.tar.gz - toda la meta-información del paquete.
+-data.tar, data.tar.gz, data.tar.bz2 o data.tar.lzma: - los archivos a instalar.
+
+#########################################
+##### Trabajando con paquetes Debian #####
+##########################################
+
+./configure
+
+dpkg-source
+
+dpkg-source -x evince_3.14.1-2+deb8u1.dsc
+
+cd evince-3.14.1/
+
+dpkg-buildpackage -rfakeroot
 
 ##############
 ### Otros: ###
