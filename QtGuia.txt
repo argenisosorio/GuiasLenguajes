@@ -1,0 +1,67 @@
+##### Guía de Qt by dM #####
+
+##############
+##### Qt #####
+##############
+
+
+Información general
+
+Modelo de desarrollo: Software libre y de código abierto
+Última versión estable: 5.6
+Género: Biblioteca de desarrollo
+Programado en: C++
+Sistema operativo: Multiplataforma
+Licencia: GNU LGPL 2.1, GNU GPL 2 y 3
+Estado actual: Activo
+
+Es una biblioteca multiplataforma ampliamente usada para desarrollar aplicaciones con interfaz gráfica de usuario, así como también para el
+desarrollo de programas sin interfaz gráfica, como herramientas para la línea de comandos y consolas para servidores.
+
+Qt es desarrollada como un software libre y de código abierto a través de Qt Project, donde participa tanto la comunidad, como desarrolladores
+de Nokia, Digia y otras empresas.3 Anteriormente, era desarrollado por la división de software de Qt de Nokia, que entró en vigor después de la
+adquisición por parte de Nokia de la empresa noruega Trolltech, el productor original de Qt, el 17 de junio de 2008.4 Qt es distribuida bajo los
+términos de GNU Lesser General Public License (y otras). Por otro lado, Digia está a cargo de las licencias comerciales de Qt desde marzo de 2011.
+
+Qt es utilizada en KDE, entorno de escritorio para sistemas como GNU/Linux o FreeBSD, entre otros.
+
+--- Propósitos y características ---
+
+Qt utiliza el lenguaje de programación C++ de forma nativa, adicionalmente puede ser utilizado en varios otros lenguajes de programación a
+través de bindings.
+
+Funciona en todas las principales plataformas, y tiene un amplio apoyo. El API de la biblioteca cuenta con métodos para acceder a bases de
+datos mediante SQL, así como uso de XML, gestión de hilos, soporte de red, una API multiplataforma unificada para la manipulación de archivos
+y una multitud de otros para el manejo de ficheros, además de estructuras de datos tradicionales.
+
+--- Ejemplo de programación --- Desde Windows
+
+Usando Qt del conocido programa ¡Hola Mundo!, donde se crea una ventana con una etiqueta (QLabel) mostrando el texto ¡Hola Mundo!.
+
+/******** Hola.cpp **********/
+/* Nos Mostrará una ventana con el saludo */
+#include <QtGui/QApplication>
+#include <QtGui/QLabel>
+
+int main(int argc, char *argv[])
+{
+    QApplication app(argc, argv);
+    QLabel label( QString::fromUtf8("¡Hola Mundo!") );
+    label.show();
+    return app.exec();
+}
+
+--- Compilación y ejecución ---
+
+1. Se crea la carpeta Hola
+2. Se crea el archivo Hola.cpp en la carpeta Hola
+3. En un emulador de terminal descender a la carpeta Hola y ejecutar:
+
+    a) qmake -project
+    b) qmake
+    c) make/gmake/nmake - según el sistema operativo o de compilación
+
+4. Para ejecutar el programa:
+
+    d) ./release/Hola (en Windows: release\Hola.exe) 
+

@@ -1,8 +1,8 @@
-#### Guía de comandos en Linux by dM ####
+##### Guía de comandos en Linux by dM #####
 
-################################################
-### Probados en: Debian GNU/Linux 7 (wheezy) ###
-################################################
+####################################################
+##### Probados en: Debian GNU/Linux 7 (wheezy) #####
+####################################################
 
 Crtl + h // Mostrar archivos ocultos de un directorio, en el entorno grafico
 
@@ -212,9 +212,9 @@ $ deluser --remove-home nombre_usuario // Otra forma de eliminar un usuario crea
 $ rename 's/\.txt/\.xls/' *.txt  //Cambiar extension a todos los ficheros de un directorio
 //En el ejemplo vamos a sustituir los .txt por .xls y le decimos que se lo haga a todos los .txt
 
-##########################
-########## Less ##########
-##########################
+################
+##### Less #####
+################
 
 // less es un visualizador de archivos de texto que funciona en intérpretes de comando.
 // A diferencia de otros programas similares (como more), less permite una completa navegación
@@ -244,7 +244,9 @@ space // Tecla espacio para avanzar, como page up
 
 :v //Invocar un editor de texto para el documento, por lo general usa vi pero puede usar nano automaticamente
 
-**********
+########################################################
+##### Comandos para copiar, mover, eliminar, otros #####
+########################################################
 
 cp // Copiar un fichero o carpeta
 
@@ -921,7 +923,7 @@ $ rmvirtualenv nombre_virtualenv // Remover o borrar un entorno virtual.
 // Los entornos virtuales se crean en el directorio /home/user/.virtualenvs
 
 ########################
-##### Paquetes PIP #####
+##### Paquetes pip #####
 ########################
 
 // Para desarrollar software con rapidez y calidad, es imprescindible utilizar paquetes externos que ayuden
@@ -938,11 +940,13 @@ de poder instalar un paquete Python.
 
 // El comando pip equivale al apt-get de Debian pero para paquetes Python.
 
-$ aptitude install python−pip python−dev python-setuptools // Instalamos PIP y otros necesarios
+$ aptitude install python-pip python-dev python-setuptools // Instalamos PIP y otros necesarios
 
 // Una vez instalado ya podremos instalar paquetes de Python a traves de pip ejemplo:
 
 $ pip install django // Nos instalara la ultima version de Django disponible en los paquetes pi
+
+$ pip install django==1.7 // Instalar una versión específica de algun paquete.
 
 // Tambien es posible crear ficheros que contengan rutinas para automatizar la instalacion
 de varios paquetes ejemplo:
@@ -983,9 +987,10 @@ como monitorear los procesos que esten ejecutando, especialmente en maquinas vir
 
 Conectado al servidor, podemos enviar mensajes o abrir programas remotamente, ejemplo:
 
-echo "mensaje" > /dev/pts/2 // Enviar mensaje a traves del shell, se debe especificar 
-el usuario, se puede hacer localmente para probar, enviando mensajes entre dos shells
-abiertos. con (who) veremos la identificacion de cada shell.
+echo "mensaje" > /dev/pts/2 // Enviar mensaje a traves del shell a otro usuario, en el servidor o local, debe haber un shell abierto que sea receptor
+Se puede hacer localmente para probar, con (who) veremos la identificacion de cada shell, si estamos conectados remotamente, comprobaremos si hay shells
+abiertos en el local y el servidor, se identifican con los pts/0, pts/1, etc, y sabremos por la ip si son shells locales o del server  el mensaje sale en
+el shell escogido.
 
 $ export DISPLAY=:0.0 // Creamos la ventana virtual donde se abrira la aplicacion que ejecutemos, luego
 $totem o $nautilus // Deberia abrir el programa en el servidor, ya esportada la ventana podemos:
@@ -1682,7 +1687,10 @@ del sistema; de esta forma, puede repararse el sistema sin afectar o borrar los 
 
 /boot/ Archivos cargadores de arranque (por ejemplo, los núcleos, el initrd). A menudo en una partición o disco aparte.
 
-/dev/ Contiene los portales a Dispositivos esenciales (por ejemplo, /dev/null), incluso a los que no se les ha asignado (montado) un directorio. Contiene incluso los portales a dispositivos que son virtuales y también a los que no proporcionan almacenamiento (p.e. micrófonos, impresoras, etc). Se trata de la parte más cruda o de más bajo nivel del sistema operativo hacia el hardware, aunque es extremadamente útil para tener un acceso directo a los dispositivos.
+/dev/ Contiene los portales a Dispositivos esenciales (por ejemplo, /dev/null), incluso a los que no se les ha asignado (montado) un directorio.
+Contiene incluso los portales a dispositivos que son virtuales y también a los que no proporcionan almacenamiento (p.e. micrófonos, impresoras, etc).
+Se trata de la parte más cruda o de más bajo nivel del sistema operativo hacia el hardware, aunque es extremadamente útil para tener un acceso
+directo a los dispositivos.
 
 /etc/ Contiene archivos de configuración del sistema específicos del Host de todo el sistema. Ha habido controversia sobre el significado del nombre, en las primeras versiones del Documento de Implementación de UNIX de los laboratorios Bell, /etc se conoce como el directorio /etcetra, todo lo que históricamente este directorio consideró que no pertenecía en otra parte (sin embargo, restringe la ESF / etc a los archivos de configuración estáticos y no puede contener archivos binarios). Desde la publicación de la documentación temprana, el nombre de la guía ha sido re-designados de varias maneras. Interpretaciones más recientes incluyen Backronyms como "Configuración de texto editable".
 
