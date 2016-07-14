@@ -1,0 +1,604 @@
+Alojado en --> https://debian-handbook.info/browse/es-ES/stable/index.html
+
+#################################################
+##### El manual del Administrador de Debian #####
+#################################################
+
+Debian 8
+
+El manual del Administrador de Debian
+
+Debian Jessie desde el descubrimiento a la maestría
+
+--- Edición 1 ---
+
+-Raphäel Hertzog
+hertzog@debian.org
+
+-Roland Mas
+lolando@debian.org
+
+--- Resumen ---
+Un libro de referencia que presenta la distribución Debian, desde la instalación incial hasta la configuración de servicios.
+
+Prólogo
+
+Prefacio
+
+    1. ¿Por qué este libro?
+    2. ¿Para quién es este libro?
+    3. Enfoque general
+    4. Estructura del libro
+    5. Reconocimientos
+
+        5.1. Un poco de historia
+        5.2. Nacimiento del libro en inglés
+        5.3. Liberación del libro en francés
+        5.4. Agradecimientos especiales para colaboradores
+        5.5. Gracias a los traductores
+        5.6. Reconocimientos personales de Raphaël
+        5.7. Agradecimientos personales de Roland
+
+1. El proyecto Debian
+
+    1.1. ¿Qué es Debian?
+
+        1.1.1. Un sistema operativo multiplataforma
+        1.1.2. La calidad del software libre
+        1.1.3. El marco legal: una organización sin ánimo de lucro
+
+    1.2. Los documentos de fundación
+
+        1.2.1. El compromiso hacia los Usuarios
+        1.2.2. Las directrices de software libre de Debian
+
+    1.3. El funcionamiento interno del proyecto Debian
+
+        1.3.1. Los desarrolladores Debian
+        1.3.2. El papel activo de los usuarios
+        1.3.3. Equipos y subproyectos
+
+    1.4. Seguir las noticias de Debian
+    1.5. El papel de las distribuciones
+
+        1.5.1. El instalador: debian-installer
+        1.5.2. La biblioteca del software
+
+    1.6. Ciclo de vida de una versión
+
+        1.6.1. El estado experimental: «Experimental»
+        1.6.2. El estado inestable: «Unstable»
+        1.6.3. Migración a Testing
+        1.6.4. La promoción desde «Testing» a «Stable»
+        1.6.5. El estado de Oldstable y Oldoldstable
+
+2. Presentación del caso de estudio
+
+    2.1. Necesidades de TI de rápido crecimiento
+    2.2. Plan maestro
+    2.3. ¿Por qué una distribución GNU/Linux?
+    2.4. ¿Por qué la distribución Debian?
+
+        2.4.1. Distribuciones comerciales y guiadas por la comunidad
+
+    2.5. ¿Por qué Debian Jessie?
+
+3. Análisis de la instalación existente y migración
+
+    3.1. Coexistencia en entornos heterogéneos
+
+        3.1.1. Integración con equipos Windows
+        3.1.2. Integración con equipos OS X
+        3.1.3. Integración con otros equipos Linux/Unix
+
+    3.2. Cómo migrar
+
+        3.2.1. Reconocimiento e identificación de servicios
+        3.2.2. Respaldos de la configuración
+        3.2.3. Adopción de un servidor Debian existente
+        3.2.4. Instalación de Debian
+        3.2.5. Instalación y configuración de los servicios seleccionados
+
+4. Instalación
+
+    4.1. Métodos de instalación
+
+        4.1.1. Instalación desde CD-ROM/DVD-ROM
+        4.1.2. Arranque desde una llave USB
+        4.1.3. Instalación a través de arranque por red
+        4.1.4. Otros métodos de instalación
+
+    4.2. Instalación, paso a paso
+
+        4.2.1. Arranque e inicio del instalador
+        4.2.2. Selección del idioma
+        4.2.3. Selección del país
+        4.2.4. Selección de la distribución de teclado
+        4.2.5. Detección de hardware
+        4.2.6. Carga de componentes
+        4.2.7. Detección de hardware de red
+        4.2.8. Configuración de red
+        4.2.9. Contraseña del administrador
+        4.2.10. Creación del primer usuario
+        4.2.11. Configuración del reloj
+        4.2.12. Detección de discos y otros dispositivos
+        4.2.13. Inicio de la herramienta de particionado
+        4.2.14. Instalación del sistema base
+        4.2.15. Configuración del gestor de paquetes (apt)
+        4.2.16. Concurso de popularidad de paquetes Debian
+        4.2.17. Selección de paquetes para instalación
+        4.2.18. Instalación del gestor de arranque GRUB
+        4.2.19. Finalización de la instalación y reiniciado
+
+    4.3. Luego del primer arranque
+
+        4.3.1. Instalación de software adicional
+        4.3.2. Actualización del sistema
+
+5. Sistema de paquetes: herramientas y principios fundamentales
+
+    5.1. Estructura de un paquete binario
+    5.2. Metainformación de un paquete
+
+        5.2.1. Descripción: el archivo control
+        5.2.2. Scripts de configuración
+        5.2.3. Sumas de verificación («checksum»), lista de archivos de configuración
+
+    5.3. Estructura de un paquete fuente
+
+        5.3.1. Formato
+        5.3.2. Utilización dentro de Debian
+
+    5.4. Manipulación de paquetes con dpkg
+
+        5.4.1. Instalación de paquetes
+        5.4.2. Eliminación de un paquete
+        5.4.3. Consulta de la base de datos de dpkg e inspección de archivos .deb
+        5.4.4. Archivo de registro de dpkg
+        5.4.5. Compatibilidad multiarquitectura
+
+    5.5. Coexistencia con otros sistemas paquetes
+
+6. Mantenimiento y actualizaciones: las herramientas APT
+
+    6.1. Contenido del archivo sources.list
+
+        6.1.1. Sintaxis
+        6.1.2. Repositorios para usuarios de Stable
+        6.1.3. Repositorios para usuarios de Testing/Unstable
+        6.1.4. Recursos no oficiales: mentors.debian.net
+        6.1.5. Proxy caché para paquetes Debian
+
+    6.2. Los programas aptitude, apt-get y apt
+
+        6.2.1. Inicialización
+        6.2.2. Instalación y eliminación
+        6.2.3. Actualización del sistema
+        6.2.4. Opciones de configuración
+        6.2.5. Gestión de prioridades de los paquetes
+        6.2.6. Trabajo con varias distribuciones
+        6.2.7. Seguimiento de paquetes instalados automáticamente
+
+    6.3. La orden apt-cache
+    6.4. Interfaces: aptitude, synaptic
+
+        6.4.1. aptitude
+        6.4.2. synaptic
+
+    6.5. Comprobación de la autenticidad de un paquete
+    6.6. Actualización de una distribución estable a la siguiente
+
+        6.6.1. Procedimiento recomendado
+        6.6.2. Manejo de problemas tras una actualización
+
+    6.7. Manutención de un sistema actualizado
+    6.8. Actualizaciones automáticas
+
+        6.8.1. Configuración de dpkg
+        6.8.2. Configuración de APT
+        6.8.3. Configuración de debconf
+        6.8.4. Manejo de interacciones de línea de órdenes
+        6.8.5. La combinación milagrosa
+
+    6.9. Búsqueda de paquetes
+
+7. Resolución de problemas y búsqueda de información relevante
+
+    7.1. Fuentes de documentación
+
+        7.1.1. Páginas de manual
+        7.1.2. Documentos info
+        7.1.3. Documentación específica
+        7.1.4. Sitios web
+        7.1.5. Tutoriales (HOWTO)
+
+    7.2. Procedimientos comunes
+
+        7.2.1. Configuración de un programa
+        7.2.2. Monitorización de lo que hacen los demonios
+        7.2.3. Pedido de ayuda en una lista de correo
+        7.2.4. Reporte de un error cuando un problema es demasiado difícil
+
+8. Configuración básica: red, cuentas, impresión...
+
+    8.1. Configuración del sistema en otro idioma
+
+        8.1.1. Configuración del idioma predeterminado
+        8.1.2. Configuración del teclado
+        8.1.3. Migración a UTF-8
+
+    8.2. Configuración de red
+
+        8.2.1. Interfaz Ethernet
+        8.2.2. Conexión con PPP a través de un módem PSTN
+        8.2.3. Conexión a través de un módem ADSL
+        8.2.4. Configuración de red automática para usuarios itinerantes
+
+    8.3. Definición del nombre de equipo y configuración del servicio de nombres
+
+        8.3.1. Resolución de nombres
+
+    8.4. Bases de datos de usuarios y grupos
+
+        8.4.1. Lista de usuarios: /etc/passwd
+        8.4.2. El archivo de contraseñas ocultas y cifradas: /etc/shadow
+        8.4.3. Modificación de una cuenta o contraseña existente
+        8.4.4. Desactivación de una cuenta
+        8.4.5. Lista de grupos: /etc/group
+
+    8.5. Creación de cuentas
+    8.6. Entorno de consola
+    8.7. Configuración de impresoras
+    8.8. Configuración del gestor de arranque
+
+        8.8.1. Identificación de discos
+        8.8.2. Configuración de LILO
+        8.8.3. Configuración de GRUB 2
+        8.8.4. Para equipos Macintosh (PowerPC): configuración de Yaboot
+
+    8.9. Otras configuraciones: sincronización de tiempo, registros, acceso compartido…
+
+        8.9.1. Zona horaria
+        8.9.2. Sincronización de tiempo
+        8.9.3. Rotación de archivos de registro
+        8.9.4. Compartición de permisos de administración
+        8.9.5. Lista de puntos de montaje
+        8.9.6. locate y updatedb
+
+    8.10. Compilación de un núcleo
+
+        8.10.1. Introducción y prerequisitos
+        8.10.2. Obtención de las fuentes
+        8.10.3. Configuración del núcleo
+        8.10.4. Compilación y creación del paquete
+        8.10.5. Compilación de módulos externos
+        8.10.6. Aplicación de un parche al núcleo
+
+    8.11. Instalación de un núcleo
+
+        8.11.1. Características de un paquete Debian del núcleo
+        8.11.2. Instalación con dpkg
+
+9. Servicios Unix
+
+    9.1. Arranque del sistema
+
+        9.1.1. El sistema de inicio systemd
+        9.1.2. El sistema de inicio System V
+
+    9.2. Inicio de sesión remoto
+
+        9.2.1. Inicio seguro de sesión remota: SSH
+        9.2.2. Utilización de escritorios gráficos remotos
+
+    9.3. Administración de permisos
+    9.4. Interfaces de administración
+
+        9.4.1. Administración en una interfaz web: webmin
+        9.4.2. Configuración de paquetes: debconf
+
+    9.5. syslog Eventos de sistema
+
+        9.5.1. Principio y mecanismo
+        9.5.2. El archivo de configuración
+
+    9.6. El superservidor inetd
+    9.7. Programación de tareas con cron y atd
+
+        9.7.1. Formato de un archivo crontab
+        9.7.2. Utilización del programa at
+
+    9.8. Programación de tareas asincrónicas: anacron
+    9.9. Cuotas
+    9.10. Respaldo
+
+        9.10.1. Respaldos con rsync
+        9.10.2. Restauración de equipos sin repaldos
+
+    9.11. Conexión en caliente: hotplug
+
+        9.11.1. Introducción
+        9.11.2. El problema de nombres
+        9.11.3. Cómo funciona udev
+        9.11.4. Un ejemplo concreto
+
+    9.12. Gestión de energía: interfaz avanzada de configuración y energía (ACPI: «Advanced Configuration and Power Interface)
+
+10. Infraestructura de red
+
+    10.1. Puerta de enlace
+    10.2. Red virtual privada
+
+        10.2.1. OpenVPN
+        10.2.2. Red privada virtual con SSH
+        10.2.3. IPsec
+        10.2.4. PPTP
+
+    10.3. Calidad del servicio
+
+        10.3.1. Principio y mecanismo
+        10.3.2. Configuración e implementación
+
+    10.4. Enrutamiento dinámico
+    10.5. IPv6
+
+        10.5.1. Túneles
+
+    10.6. Servidores de nombres de dominio (DNS)
+
+        10.6.1. Principio y mecanismo
+        10.6.2. Configuración
+
+    10.7. DHCP
+
+        10.7.1. Configuración
+        10.7.2. DHCP y DNS
+
+    10.8. Herramientas de diagnóstico de red
+
+        10.8.1. Diagnóstico local: netstat
+        10.8.2. Diagnóstico remoto: nmap
+        10.8.3. «Sniffers»: tcpdump y wireshark
+
+11. Servicios de red: Postfix, Apache, NFS, Samba, Squid, LDAP, SIP, XMPP, TURN
+
+    11.1. Servidor de correo
+
+        11.1.1. Instalación de Postfix
+        11.1.2. Configuración de dominios virtuales
+        11.1.3. Restricciones para recibir y enviar
+        11.1.4. Configuración de «listas grises» (greylisting)
+        11.1.5. Personalización de filtros basados en el receptor
+        11.1.6. Integración con un antivirus
+        11.1.7. SMTP autenticado
+
+    11.2. Servidor web (HTTP)
+
+        11.2.1. Instalación de Apache
+        11.2.2. Configuración de servidores virtuales («virtual hosts»)
+        11.2.3. Directivas comunes
+        11.2.4. Analizadores de registros
+
+    11.3. Servidor de archivos FTP
+    11.4. Servidor de archivos NFS
+
+        11.4.1. Protección de NFS
+        11.4.2. Servidor NFS
+        11.4.3. Cliente NFS
+
+    11.5. Configuración de espacios compartidos Windows con Samba
+
+        11.5.1. Servidor Samba
+        11.5.2. Cliente Samba
+
+    11.6. Proxy HTTP/FTP
+
+        11.6.1. Instalación
+        11.6.2. Configuración de un caché
+        11.6.3. Configuración de un filtro
+
+    11.7. Directorio LDAP
+
+        11.7.1. Instalación
+        11.7.2. Relleno del directorio
+        11.7.3. Administración de cuentas con LDAP
+
+    11.8. Servicios de comunicación en tiempo real
+
+        11.8.1. Parámetros DNS para los servicios RTC
+        11.8.2. Servidor TURN
+        11.8.3. Servidor Proxy SIP
+        11.8.4. Servidor XMPP
+        11.8.5. Servicios corriendo en el puerto 443
+        11.8.6. Agregando WebRTC
+
+12. Administración avanzada
+
+    12.1. RAID y LVM
+
+        12.1.1. RAID por software
+        12.1.2. LVM
+        12.1.3. ¿RAID o LVM?
+
+    12.2. Virtualización
+
+        12.2.1. Xen
+        12.2.2. LXC
+        12.2.3. Virtualización con KVM
+
+    12.3. Instalación automatizada
+
+        12.3.1. Instalador completamente automático (FAI: «Fully Automatic Installer»)
+        12.3.2. Presembrado de Debian-Installer
+        12.3.3. Simple-CDD: la solución todo-en-uno
+
+    12.4. Monitorización
+
+        12.4.1. Configuración de Munin
+        12.4.2. Configuración de Nagios
+
+13. Estación de trabajo
+
+    13.1. Configuración del servidor X11
+    13.2. Personalización de la interfaz gráfica
+
+        13.2.1. Elección de un gestor de pantalla
+        13.2.2. Elección de un gestor de ventanas
+        13.2.3. Gestión del menú
+
+    13.3. Escritorios gráficos
+
+        13.3.1. GNOME
+        13.3.2. KDE
+        13.3.3. Xfce y otros
+
+    13.4. Correo
+
+        13.4.1. Evolution
+        13.4.2. KMail
+        13.4.3. Thunderbird y Icedove
+
+    13.5. Navegadores web
+    13.6. Desarrollo
+
+        13.6.1. Herramientas para GTK+ en GNOME
+        13.6.2. Herramientas para Qt en KDE
+
+    13.7. Trabajo colaborativo
+
+        13.7.1. Trabajo en grupo: groupware
+        13.7.2. Trabajo colaborativo con FusionForge
+
+    13.8. Suites de oficina
+    13.9. Emulación de Windows: Wine
+    13.10. Software de comunicaciones en tiempo real
+
+14. Seguridad
+
+    14.1. Definición de una política de seguridad
+    14.2. Firewall o el filtrado de paquetes
+
+        14.2.1. Comportamiento de netfilter
+        14.2.2. Sintaxis de iptables e ip6tables
+        14.2.3. Creación de reglas
+        14.2.4. Instalación de las reglas en cada arranque
+
+    14.3. Supervisión: prevención, detección, disuasión
+
+        14.3.1. Monitorización de los registros con logcheck
+        14.3.2. Monitorización de actividad
+        14.3.3. Detección de cambios
+        14.3.4. Detección de intrusiones (IDS/NIDS)
+
+    14.4. Introducción a AppArmor
+
+        14.4.1. Principios
+        14.4.2. Activar AppArmour y gestionar los perfiles
+        14.4.3. Creación de un nuevo perfil
+
+    14.5. Introducción a SELinux
+
+        14.5.1. Principios
+        14.5.2. Configuración de SELinux
+        14.5.3. Gestión de un sistema SELinux
+        14.5.4. Adaptación de las reglas
+
+    14.6. Otras consideraciones relacionadas con la seguridad
+
+        14.6.1. Riesgos inherentes de las aplicaciones web
+        14.6.2. Saber qué esperar
+        14.6.3. Selección prudente de software
+        14.6.4. Gestión de una máquina como un todo
+        14.6.5. Los usuarios también son parte
+        14.6.6. Seguridad física
+        14.6.7. Responsabilidad legal
+
+    14.7. Tratamiento de una máquina comprometida
+
+        14.7.1. Detección y visualización de la intrusión
+        14.7.2. Desconexión del servidor
+        14.7.3. Preservación de todo lo que pueda utilizar como evidencia
+        14.7.4. Reinstalación
+        14.7.5. Análisis forense
+        14.7.6. Reconstrucción del escenario de ataque
+
+15. Creación de un paquete Debian
+
+    15.1. Recompilación de un paquete desde sus fuentes
+
+        15.1.1. Obtención de las fuentes
+        15.1.2. Realización de cambios
+        15.1.3. Inicio de la recompilación
+
+    15.2. Creación de su primer paquete
+
+        15.2.1. Metapaquetes o paquetes falsos
+        15.2.2. Simple compendio de archivos
+
+    15.3. Creación de un repositorio de paquetes para APT
+    15.4. Cómo convertirse en un encargado de paquetes
+
+        15.4.1. Aprendizaje de creación de paquetes
+        15.4.2. Proceso de aceptación
+
+16. Conclusión: el futuro de Debian
+
+    16.1. Los próximos desarrollos
+    16.2. El futuro de Debian
+    16.3. El futuro de este libro
+
+A. Distribuciones derivadas
+
+    A.1. Censo y cooperación
+    A.2. Ubuntu
+    A.3. Linux Mint
+    A.4. Knoppix
+    A.5. Aptosid y Siduction
+    A.6. Grml
+    A.7. Tails
+    A.8. Kali Linux
+    A.9. Devuan
+    A.10. Tanglu
+    A.11. DoudouLinux
+    A.12. Raspbian
+    A.13. Y muchas más
+
+B. Curso breve de emergencia
+
+    B.1. Consola y órdenes básicas
+
+        B.1.1. Navegación del árbol de directorios y gestión de archivos
+        B.1.2. Visualización y modificación de archivos de texto
+        B.1.3. Búsqueda de y en archivos
+        B.1.4. Gestión de proceso
+        B.1.5. Información de sistema: memoria, espacio en disco, identidad
+
+    B.2. Organización de la jerarquía del sistema de archivos
+
+        B.2.1. El directorio raíz
+        B.2.2. El directorio personal de los usuarios
+
+    B.3. Funcionamiento interno de un equipo: las diferentes capas involucradas
+
+        B.3.1. La capa más profunda: el hardware
+        B.3.2. El iniciador: el BIOS o UEFI
+        B.3.3. El núcleo
+        B.3.4. El espacio de usuario
+
+    B.4. Algunas tareas administradas por el núcleo
+
+        B.4.1. Administración del hardware
+        B.4.2. Sistemas de archivos
+        B.4.3. Funciones compartidas
+        B.4.4. Gestión de proceso
+        B.4.5. Gestión de permisos
+
+    B.5. El espacio de usuario
+
+        B.5.1. Proceso
+        B.5.2. Demonios
+        B.5.3. Comunicación entre procesos
+        B.5.4. Bibliotecas
+
+
+
