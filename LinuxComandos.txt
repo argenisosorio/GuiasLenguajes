@@ -106,6 +106,12 @@ dentro de donde se encuentre situado
 
 $ cd // Cambiar de directorio, nos lleva al home del usuario.
 
+$ cd 'nombre carpeta' // Acceder a un directorio que tiene espacios en el nombre.
+
+-- Si una carpeta se llama (a b c d e), para aceder a ella usamos:
+
+$ cd a\ b\ c\ d\ e/ // Al final siempre lleva el / normal, los otros usan el invertido.
+
 $ cd .. // retroceder un directorio
 
 $ cd ../../ // Retroceder dos directorios (../) representa un directorio
@@ -409,7 +415,9 @@ $ sudo aptitude search Nombre_Paquete // Realizar una busqueda en los repositori
 
 $ aptitude show Nombre_Paguete // Para ver la informacion del paquete, version, estado, tamaño, conflictos, dependencias, etc.
 
-$ apt-cache show nombre_paquete // Ver informacion del paquete, version, dependencias, descripcion, tamaño, entre otros. 
+$ apt-cache show nombre_paquete // Ver informacion del paquete, version, dependencias, descripcion, tamaño, entre otros.
+
+$ apt-cache search nombre_paquete // Buscar un paquete en los repositorios.
 
 # aptitude remove Nombre_paquete // Elimina o Desinstala el paquete.
 
@@ -595,9 +603,9 @@ root@debian:/home/user# aptitude search mysql | grep mysql
 
 # mysql -p //acceder al mysql
 
-########################################################################################
-##### Comandos para hacer busquedas en los directorios y en el historial del shell #####
-########################################################################################
+#############################################################################
+##### Comandos para buscar ficheros, directorios, paquetes, historiales #####
+#############################################################################
 
 $ history // Mostrar el historial de los comandos de la consola
 

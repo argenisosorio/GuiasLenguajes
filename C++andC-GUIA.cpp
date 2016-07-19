@@ -287,6 +287,26 @@ return 0;
 
 --------------------
 
+//Funcion para sumar dos numeros, todo dentro de la función
+#include<iostream>
+using namespace std;
+int suma;
+int a,b;
+int funcionSuma(){
+    cout<<"Introduzca un numero A: ";
+    cin>>a;
+    cout<<"Introduzca un numero B: ";
+    cin>>b;
+    suma=a+b;
+    cout<<"La suma es: "<<suma<<endl;
+}
+int main() {
+    funcionSuma();
+return 0;
+}
+
+--------------------
+
 #include<iostream>
 using namespace std;
 int edades[3]; 
@@ -386,3 +406,44 @@ int main() {
    cout<<"El promedio de notas es: "<<promedio<<endl;      
 return 0;
 }
+
+############################
+##### Uso de Librerias #####
+############################
+
+Las librerías nos permite el uso de funciones en un programa sin la necesidad de escribir su código en nuestro programa
+únicamente llamando a la biblioteca donde está contenida. Existen bibliotecas estándares en C que ya vienen incluida en la
+mayoría de los compiladores, como son stdio.h, math.h, time.h... 
+Para utilizar nuestra biblioteca, únicamente basta con situar en la cabecera del programa el nombre de la biblioteca para
+poder utilizar todas las funciones contenidas en la misma.
+
+1- Generar las funciones que necesitemos y escribelas todas juntas (codigo y cabeceras) en un mismo fichero:
+
+int suma;
+int funcionSuma(int a, int b){
+    suma=a+b;
+}
+
+2- El fichero creado anteriormente, guardalo con extension .h, por ejemplo libreria.h (importante no ejecutarlo para que no le pueda cambiar sola la extensión).
+Se deberá guardar en el mismo directorio de nuestro programa principal el .cpp
+
+3- Llamar a la biblioteca en el programa. Deberemos colocar en la cabecera del programa, junto a los llamamiento de otras bibliotecas:
+
+#include <libreria.h> // Cuando el fichero libreria.h se encuentre en la carpeta include de nuestro compilador.
+#include "libreria.h" // Cuando el fichero libreria.h esté en el mismo directorio que el archivo que queremos compilar.
+
+4- Uso de las funciones de la biblioteca: Finalmente ya podemos usar las funciones de libreria.h sin necesidad de copiar el codigo,
+tal y como ilustra el programa siguiente, lo guardamos como .cpp, compilamos y ejecutamos y listo, debería realizar las operaciones
+declaradas sin problemas.
+
+#include<iostream>
+#include <stdio.h>
+#include "libreria.h"
+using namespace std;
+int main() {
+    funcionSuma(15,20);
+    cout<<suma<<endl;
+    return 0;
+}
+
+

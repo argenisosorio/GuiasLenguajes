@@ -4,8 +4,7 @@
 ##### Qt #####
 ##############
 
-
-Información general
+--- Información general ---
 
 Modelo de desarrollo: Software libre y de código abierto
 Última versión estable: 5.6
@@ -65,3 +64,35 @@ int main(int argc, char *argv[])
 
     d) ./release/Hola (en Windows: release\Hola.exe) 
 
+###############################################
+##### Instalación de QT5 en Debian jessie #####
+###############################################
+
+QT4 viene por defecto en debian 8, pero somos libres de usar QT5 también. Para hacer eso simplemente seguimos las instrucciones siguientes:
+
+- 1. Actualiza tu fichero sources.list si acabas de instalar Debian, para que las actualizaciones de paquetes provengan de los servidores oficiales de Debian.
+Añadir:
+
+deb http://security.debian.org/ jessie/updates main
+deb-src http://security.debian.org/ jessie/updates main
+deb http://http.debian.net/debian/ jessie main
+
+- 2. Actualizamos
+
+$ apt-get update
+
+- 3. Instalamos el paquete qt5-default:
+
+# apt-get install qt5-default
+
+Se instalaran todas las dependencias también.
+
+4. Instalamos qtcreator, Qt Creator es un IDE creado por Trolltech para el desarrollo de aplicaciones con las bibliotecas Qt, requiriendo su versión 4.x.
+Los sistemas operativos que soporta en forma oficial son:
+- GNU/Linux 2.6.x, para versiones de 32 y 64 bits con Qt 4.x instalado. Además hay una versión para Linux con gcc 3.3.
+- Mac OS X 10.4 o superior, requiriendo Qt 4.x
+-  Windows XP y superiores, requiriendo el compilador MinGW y Qt 4.4.3 para MinGW.
+
+# apt-get install qtcreator
+
+Esto instalará automáticamente otras dependencias y el IDE gráfico!
