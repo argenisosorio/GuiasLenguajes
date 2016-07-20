@@ -1,8 +1,8 @@
 ##### Guía de comandos en Linux by dM #####
 
-####################################################
-##### Probados en: Debian GNU/Linux 7 (wheezy) #####
-####################################################
+###################################################################################
+##### Probados en: Debian GNU/Linux 7 (wheezy) y algunos en Debian 8 (Jessie) #####
+###################################################################################
 
 Crtl + h // Mostrar archivos ocultos de un directorio, en el entorno grafico
 
@@ -35,7 +35,17 @@ $ uname -mrs // Saber mi version de Kernel especifica, recomendada
 $ cat /etc/*-release // Ver info del sistema (Probado en Debian GNU/Linux 7 wheezy)
 
 $ ifconfig // Siendo root, permite desplegar numerosos parámetros de las interfaces de red residentes  en el núcleo,
-como la dirección IP (dinámica o estática), o la máscara de red entre otros.
+como la dirección ip (dinámica o estática), o la máscara de red entre otros.
+
+$ apt-get moo // Huevo de pascua, muestra una vaca.
+
+--- ip publica ---
+
+Una forma de averigar esa IP pública es haciendo uso del comando curl. Si no tenéis instalado el paquete habrá que instalarlo,
+
+$ sudo apt-get install curl
+
+$ curl ifconfig.me // Nos mostrará nuestra ip pública.
 
 $ nmap -sT -O localhost // Ver que puertos estan escuchando 
 
@@ -478,6 +488,33 @@ Descomprimir: tar -xzvf paquete.tar.gz
 Archivos .gz:
 Comprimir: gzip -9 index.php
 Descomprimir: gzip -d index.php.gz
+
+-------------
+
+Cuando nos iniciamos en Linux y buscamos un programa lo normal es que encontremos un .deb o .rpm y en muchos casos nos encontramos programas con
+la extensión .tar.gz y .tar.bz2, estos archivos están comprimidos y por lo general contienen aparte del programa unas instrucciones para instalarlo.
+
+La instalación para estos dos tipos de paquetes es exactamente igual, primero entramos a la carpeta donde tengamos el archivo.
+
+$ cd directorio
+
+$ tar -zxvf nombredelarchivo.tar.gz
+
+$ tar -jxvf nombredelarchivo.tar.bz2
+
+-Configuramos, con esta accion se configurara el paquete
+para la posterior compilacion, si hacen falta paquetes "dependencias" para la compilacion
+por lo general mostrara que paquetes faltan y fallará la configuracion.
+
+$ ./configure
+
+-Hacemos make (compilamos)
+
+$ make
+
+-Ahora make install
+
+$ make install
 
 ################################
 ##### Descomprimir con RAR #####
@@ -1032,9 +1069,63 @@ Para copiar un directorio completo del servidor al local, por ejemplo /home/usua
 
 $ scp -r usuario@dominio.com:/home/usuario/carpeta /home/user/docs
 
-######################################################
-########## Programación shell-script (bash) ##########
-######################################################
+####################################################################
+##### Conexion por nautilus explorador de archivos/directorios #####
+####################################################################
+
+Usando el navegador de archivos de Debian, Ubuntu, etc, podemos acceder a ordenador remoto "servidor" para ver graficamente 
+los directorios, es decir, desde nuestro navegador de archivos, navegaremos en los directorios del servidor, para acceder vamos a:
+
+$ nautilus
+
+Archivo > Conectar con el servidor // Nos saldrá una ventana para llenar con:
+
+Servidor: 192.168.12.400 // Aqui va la ip del servidor
+Puerto: 22 // El puerto que tiene habilitado el ssh_config
+Tipo: SSH
+Carpeta: /home // Carpeta que abrira al entrar en conexion
+Nombre de usuario: // Nombre de usuario, de sesion de ese servidor
+Contraseña: // Contraseña de la sesion de usuario del servidor
+
+Si todo esta bien deberia entrar a explorar los directorios del servidor.
+
+###########################################
+##### X11 forwarding a través de ssh  #####
+###########################################
+
+X11, como supongo la mayoría de Uds. sabrá, es el servidor gráfico que usan casi todas las distribuciones Linux. Este servidor permite, entre otras cosas,
+forwarding a través de SSH. Esto significa que es posible ejecutar apliaciones gráficas de una máquina remota exportando el display a nuestro escritorio.
+Es decir, la aplicación se ejecuta en el servidor remoto, pero la interfaz gráfica la visualizamos en nuestro escritorio local.
+
+Ejemplo:
+1- En el servidor, editar el archivo /etc/ssh/ssh_config y modificar la opción X11Forwarding o ForwardX11 para que quede así:
+
+X11Forwarding yes
+
+ó
+
+ForwardX11 yes
+
+Luego de este cambio, posiblemente sea necesario reiniciar el demonio ssh. La forma de hacer esto varía de acuerdo a cada distribución Linux.
+Lo más sencillo es reiniciar la máquina.
+
+2- En el escritorio local, loguearse al servidor a través de ssh utilizando el parámetro -X:
+
+$ ssh -X user@hostname
+
+Donde user es el nombre de usuario utilizado para loguearse en el servidor y hostname es el ip o el alias del servidor.
+
+3- Para ejecutar una aplicación, simplemente hay que hacerlo desde el terminal. Por ejemplo:
+
+$ firefox
+
+$ nautilus
+
+$ evince
+
+#############################################
+##### Programación shell-script (bash) ######
+#############################################
 
 --- ¿Qué es un "Script"? ---
 
@@ -2006,9 +2097,85 @@ que están ausentes en su sistema. Por eso, siempre es recomendable investigar c
 que se tiene suficiente espacio para la instalación. No todas las dependencias son absolutamente necesarias, algunas sólo dan soporte adicional para ciertas
 funciones o efectos visuales que extienden las características del programa en sí mismo.
 
+########################
+##### Metapaquetes #####
+########################
+
+Un metapaquete es un como un paquete que enlaza varios paquetes, es decir, es un paquete que contiene referencias a
+varios paquetes pero no realiza ninguna funcionalidad.
+
+Los metapaquetes sirven para poder instalar fácilmente varios paquetes con una sola orden. Estos paquetes guardan entre
+sí una cierta coherencia.
+
+El funcionamiento de un metapaquete es el siguiente:
+
+Imaginemos que tenemos el metapaquete A, que contiene a B, C , D y E. Cuando instalamos el metapaquete A, lo que en realidad estamos instalando
+son los paquetes B, C, D y E.
+
+--- Estructura de un metapaquete ---
+
+Tal como los paquetes comunes, los metapaquetes deben ser generados a partir de un código fuente basado en las políticas de Debian.
+
+metapaquete
+    |-- AUTHORS                (opcional)
+    |-- COPYING                (opcional)
+    |-- debian
+    |    |-- changelog
+    |    |-- compat
+    |    |-- control
+    |    |-- copyright
+    |    |-- postinst
+    |    |-- postrm
+    |    |-- preinst
+    |    |-- prerm
+    |    |-- rules
+    |    `-- source
+    |        `-- format
+    |-- LICENSE                (opcional)
+    |-- Makefile               (opcional)
+    |-- README                 (opcional)
+    |-- THANKS                 (opcional)
+    `-- TODO                   (opcional)
+
+La carpeta debian contiene los siguientes archivos:
+
+-changelog: Lista cronológica de versiones del metapaquete, que además contiene una descripción significativa de los cambios hechos en cada una de ellas.
+-compat: versión de debhelper utilizada.
+-control: El archivo más importante en un metapaquete. Especifica las dependencias, el nombre del paquete, el responsable (mantenedor),
+descripción, entre otros campos.
+-copyright: Declaración de derechos de autor (si los hubiere) y licencia de distribución del paquete.
+-postinst, postrm, preinst, prerm: Los scripts del mantenedor permiten configurar o modificar partes del sistema en diferentes momentos de la instalación del paquete.
+-rules: El archivo rules especifica las reglas para el empaquetado de la aplicación.
+-source/format: Especifica el formato del código fuente, el más recomendado es 3.0 (quilt).
+
+Los siguientes son archivos opcionales que pueden o no ser incluidos a gusto del desarrollador. Normalmente se incluyen, pero en el caso de los
+metapaquetes no hay código que compilar, ni copiar dentro del paquete (que es para lo que sirve el Makefile), ni tampoco hay
+código que documentar o describir.
+
+-AUTHORS: Contiene el o los autores del código fuente.
+-COPYING: Declaración de derechos de autor (si los hubiere) y licencia de distribución del código fuente.
+-LICENSE: Una copia exacta de la licencia con que se distribuye el código fuente.
+-Makefile: Son el conjunto de instrucciones necesarias para que el código fuente se organice, (compile si es necesario) e instale en
+el sistema. También contiene instrucciones para limpiar y desinstalar.
+-README: Descripción detallada del software. Se responden preguntas como: ¿Para que sirve? ¿Cómo se instala? ¿Cómo se desinstala? ¿Donde consigo ayuda?
+-THANKS: Agradecimientos a las personas que contribuyeron contigo.
+-TODO: Cosas que quisieras hacer en el futuro con tu software.
+
 ##############
 ### Otros: ###
 ##############
+
+################################################
+##### Quemar una imagen iso en un pendrive #####
+################################################
+
+$ dd if=[imagen] of=[dispositivo]
+
+En donde imagen es la ruta completa a la imagen ISO que deseas grabar y dispositivo la ruta completa hacia el pendrive, por ejemplo:
+
+dd if=/home/user/Descargas/debian-testing-i386-businesscard.iso of=/dev/media/sdb
+
+-----
 
 $ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con el certificado
 digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando
