@@ -677,8 +677,16 @@ su:
 find / -type f -name NombreArchivo.html // Para mostrar el directorio del archivo que se 
 //quiera buscar, se debe saber el nombre del archivo
 
-locate nombre_del_archivo // Hacer una busqueda de un archivo en los directorios, se puede especificar un nombre con su extensión
+$ locate nombre_del_archivo // Hacer una busqueda de un archivo en los directorios, se puede especificar un nombre con su extensión
 //o solo especificar una palabra, la busqueda se hara en todos los archivos que contengan la palabra o nombre de archivo escrita.
+
+$ locate "*.jpg" // Buscar todos los ficheros con la extension especificada
+
+$ sudo locate -c hola // Muestra cuantos archivos contienen la palabra "hola" en el nombre.
+
+$ sudo locate -i hola // Busca todos los archivos que contienen la palabra "hola" en el nombre tanto en mayúsculas como en minúsculas.
+
+$ sudo locate nombre_archivo > /home/usuario/lista.txt // Para guardar el resultado de la búsqueda en un archivo de texto.
 
 $ sudo find / -name nombre_carpeta // (/) es para hacer la busqueda desde ahi en adelante, puede ser (/home/user)
 
@@ -688,9 +696,17 @@ $ type nombre_comando // Busca la ruta donde se encuentra el comando, ejemplo: a
 
 $ which nombre_programa // Buscar la ruta de un programa
 
-sudo find / -name "*nombre_fichero*" // Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion escrita.
+$ sudo find / -name "*nombre_fichero*" // Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion escrita.
 
-sudo find / -name "*.xxx*" // Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion escrita, en este caso, una extensión de fichero
+$ sudo find / -name "*.xxx*" // Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion escrita, en este caso,
+una extensión de fichero, donde / puede ser /home/user etc y .xxx la extension: .jpg, .png, .txt, .py, etc.
+
+$ sudo find /home/user ! -name "*xxx*" // Busca todos los archivos que NO contienen la palabra "xxx" en el nombre, se especifíca el directorio en el cual buscar.
+
+$ sudo find /home/user -iname "*xxx*" // Busca todos los archivos que contienen la palabra "xxx" en el nombre tanto en mayúsculas como en minúsculas.
+
+$ sudo find /home/user/ -iname "*xxx*" > /home/user/lista.txt // Si el resultado de la búsqueda anterior te ha proporcionado una gran cantidad de información, resulta
+más cómodo almacenar el resultado de la búsqueda en un fichero de texto para revisarlo posteriormente.
 
 ----------
 
@@ -2160,10 +2176,6 @@ el sistema. También contiene instrucciones para limpiar y desinstalar.
 -README: Descripción detallada del software. Se responden preguntas como: ¿Para que sirve? ¿Cómo se instala? ¿Cómo se desinstala? ¿Donde consigo ayuda?
 -THANKS: Agradecimientos a las personas que contribuyeron contigo.
 -TODO: Cosas que quisieras hacer en el futuro con tu software.
-
-##############
-### Otros: ###
-##############
 
 ################################################
 ##### Quemar una imagen iso en un pendrive #####
