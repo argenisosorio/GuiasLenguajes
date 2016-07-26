@@ -33,37 +33,6 @@ Funciona en todas las principales plataformas, y tiene un amplio apoyo. El API d
 datos mediante SQL, así como uso de XML, gestión de hilos, soporte de red, una API multiplataforma unificada para la manipulación de archivos
 y una multitud de otros para el manejo de ficheros, además de estructuras de datos tradicionales.
 
---- Ejemplo de programación --- Desde Windows
-
-Usando Qt del conocido programa ¡Hola Mundo!, donde se crea una ventana con una etiqueta (QLabel) mostrando el texto ¡Hola Mundo!.
-
-/******** Hola.cpp **********/
-/* Nos Mostrará una ventana con el saludo */
-#include <QtGui/QApplication>
-#include <QtGui/QLabel>
-
-int main(int argc, char *argv[])
-{
-    QApplication app(argc, argv);
-    QLabel label( QString::fromUtf8("¡Hola Mundo!") );
-    label.show();
-    return app.exec();
-}
-
---- Compilación y ejecución ---
-
-1. Se crea la carpeta Hola
-2. Se crea el archivo Hola.cpp en la carpeta Hola
-3. En un emulador de terminal descender a la carpeta Hola y ejecutar:
-
-    a) qmake -project
-    b) qmake
-    c) make/gmake/nmake - según el sistema operativo o de compilación
-
-4. Para ejecutar el programa:
-
-    d) ./release/Hola (en Windows: release\Hola.exe) 
-
 ###############################################
 ##### Instalación de QT5 en Debian jessie #####
 ###############################################

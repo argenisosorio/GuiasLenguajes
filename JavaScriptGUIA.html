@@ -2408,11 +2408,68 @@ var objetoJSON = {"usuario":"user","password":"123456"};
 
 -------------------------------------
 
-<!-- -->
+<!-- Contador de visitas, cuenta las veces que se accede al doc a través del navegador
+LocalStorage: Guarda información que permanecerá almacenada por tiempo indefinido; sin importar que el navegador se cierre. -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Contador de Visitas</title>
+</head>
+<body>
+<div id="VisitCount"></div>
+<script>
+    x=function(id){
+        return document.getElementById(id);
+    }
+    if(localStorage){
+        if(localStorage['visitas']==undefined){
+            localStorage['visitas']=0;
+        }
+        var n=parseInt(localStorage['visitas']);localStorage['visitas']=1+n;
+        var num=localStorage['visitas'];
+        var mensaje="Hasta ahora has visitado mi pagina " + num + " Veces !";
+        x('VisitCount').innerHTML=mensaje;
+    }
+</script>
+</body>
+</html>
 
 -------------------------------------
 
-<!-- -->
+<!-- Probando con LocalStorage, guardando valores en variables -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Contador de Visitas</title>
+</head>
+<style type="text/css">
+    #session {
+        color: green;
+    }
+</style>
+<body>
+<div id="session"></div>
+<script>
+    x=function(id){
+        return document.getElementById(id);
+    }
+    if(localStorage){
+        if(localStorage['nombre']=="") {
+            var nombre=prompt("Nombre de Usuario:");
+            localStorage['nombre']=nombre;
+            var mensaje="Bienvenido " + nombre;
+            x('session').innerHTML=mensaje;
+        } else {
+            localStorage['nombre']=nombre;
+            var mensaje="Bienvenido " + nombre;
+            x('session').innerHTML=mensaje;
+        }
+    }
+</script>
+</body>
+</html>
 
 -------------------------------------
 

@@ -197,6 +197,12 @@ falta especificar las rutas completas.
 
 $ df // Muestra el espacio disponible del disco y demas dispositivos asi como el espacio usado
 
+$ df -h // Muestra el espacio disponible del disco y demas dispositivos asi como el espacio usado, pero en mg o gb según sea el caso.
+
+# fdisk -l // Ver informacion de los discos duros, particiones y dispositivos montados en el sistema.
+
+$ lsusb // Este comando muestra todos los puertos USB y los detalles acerca de los dispositivos conectados a ellos.
+
 $ free // Muestra el estado de la memoria RAM, total, usado, disponible, cached, buffers 
 
 $ vmstat // Muestra el estado de la memoria virtual
@@ -414,9 +420,13 @@ $ man aptitude // Ver el manual de aptitude.
 
 $ man apt-get
 
-$ sudo apt-get install Nombre_Paquete // Instalar paquetes
+# apt-get install Nombre_Paquete // Instalar paquetes
 
-$ sudo aptitude install Nombre_Paquete // Instalar paquetes, otra forma
+# aptitude install Nombre_Paquete // Instalar paquetes, otra forma
+
+# apt-get build-dep Nombre_Paquete // Intentará satisfacer las dependencias de compilación de un paquete fuente, el comando build-dep
+busca en los repositorios locales en el sistema e instala las dependencias de construcción para el paquete. Si el paquete no existe en
+el repositorio local se devolverá un código de error.
 
 $ aptitude install -s Nombre_Paquete // Hace una simulacion de la instalacion, podemos ver que procesos haría la instalación
 
@@ -713,8 +723,11 @@ más cómodo almacenar el resultado de la búsqueda en un fichero de texto para 
 
 ----------
 
-wget -r www.host.com //descargar el contenido de una web, los archivos del directorio
-wget -r www.programador-de-software.blogspot.com
+$ wget -r www.host.com // Descargar el contenido de una web, los archivos del directorio
+
+$ wget -r www.programador-de-software.blogspot.com
+
+$ wget -c ftp://sunsite.doc.ic.ac.uk/ls-lR.Z // -c ó --continue, reanudar una descarga de wget si se detuvo por caída de red, cancelación de proceso, etc.
 
 ######################################################
 ####### GIT - Software de Control de Versiones #######
@@ -2178,13 +2191,13 @@ el sistema. También contiene instrucciones para limpiar y desinstalar.
 -THANKS: Agradecimientos a las personas que contribuyeron contigo.
 -TODO: Cosas que quisieras hacer en el futuro con tu software.
 
-################################################
-##### Quemar una imagen iso en un pendrive #####
-################################################
+#########################################################
+##### Quemar o grabar una imagen iso en un pendrive #####
+#########################################################
 
-$ dd if=[imagen] of=[dispositivo]
+# dd if=[imagen] of=[dispositivo]
 
-En donde imagen es la ruta completa a la imagen ISO que deseas grabar y dispositivo la ruta completa hacia el pendrive, por ejemplo:
+En donde imagen es la ruta completa a la imagen ISO que deseas grabar y dispositivo la ruta completa hacia el pendrive, no la ruta con el nombre del pendrive, por ejemplo:
 
 dd if=/home/user/Descargas/debian-testing-i386-businesscard.iso of=/dev/media/sdb
 
