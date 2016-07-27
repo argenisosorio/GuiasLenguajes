@@ -105,6 +105,8 @@ $ ls // Muestra lo que hay en la carpeta en la que te encuentras
 
 $ ls -l // Muestra los archivos, fecha, permisos, etc
 
+$ ls -lh // Muestra los archivos, fecha, permisos, y el peso pero en kb,mg o gb según sea el caso.
+
 $ ls -la // Muestra los archivos, los ocultos tambien, fecha, permisos, etc
 
 $ ls -1 // Muestra los archivos en forma de lista
@@ -145,9 +147,12 @@ $ nano nombre_fichero // Modificar un fichero con el editor nano.
 
 $ man nano // Leer el manual del editor de textos nano, muy útil, práctico y fácil de usar
 
-$ cat nombre_fichero // Mostrar contenido de un fichero
+$ cat nombre_fichero.xxx // Mostrar contenido de un fichero, concatenate files and print on the standard output.
 
-$ less nombre_fichero // Mostrar el contenido de un archivo, mayor movilidad que cat.
+$ cat -b nombre_fichero.xxx // Mostrar contenido de un fichero y numerar las líneas.
+
+$ less nombre_fichero.xxx // Mostrar el contenido de un archivo, lector de ficheros, mayor movilidad que cat, con / permite buscar dentro
+del fichero, como vim, q para salir.
 
 $ tail nombre_fichero.xxx // El comando tail sirve para mostrar en pantalla las últimas líneas de un archivo.
 
@@ -721,13 +726,46 @@ $ sudo find /home/user -iname "*xxx*" // Busca todos los archivos que contienen 
 $ sudo find /home/user/ -iname "*xxx*" > /home/user/lista.txt // Si el resultado de la búsqueda anterior te ha proporcionado una gran cantidad de información, resulta
 más cómodo almacenar el resultado de la búsqueda en un fichero de texto para revisarlo posteriormente.
 
-----------
+########################################
+##### wget para descargar ficheros #####
+########################################
 
-$ wget -r www.host.com // Descargar el contenido de una web, los archivos del directorio
+$ wget www.ejemplo_web.com // Descargar toda una página completa, wget no está limitado a solo descargas de archivos. Sitios completos pueden descargarse también.
 
-$ wget -r www.programador-de-software.blogspot.com
+$ wget -p www.ejemplo_web.com  // Lo mismo que lo anterior pero con esta opción -p descarga además todos los elementos extras necesarios de la página
+como hojas de estilos, imágenes en línea, etc.
 
 $ wget -c ftp://sunsite.doc.ic.ac.uk/ls-lR.Z // -c ó --continue, reanudar una descarga de wget si se detuvo por caída de red, cancelación de proceso, etc.
+
+$ wget http://ejemplo.com/programa.tar.gz  ftp://otrositio.com/descargas/video.mpg // Indicar más de una descarga a la vez, incluso con distintos protocolos o extensiones
+
+$ wget http://ejemplo.com/*.pdf // Descargar varios archivos, con extensión similar.
+
+$ wget -i archivos.txt // Descargar varios archivos a traves de una lista.
+
+Creamos una lista en archivos.txt que serán descargados:
+http://ejemplo.com/programa.tar.gz
+http://ejemplo.com/rpm/paquete.rpm
+ftp://otrositio.com/descargas/distro.iso
+
+$ wget -t 50 http://ejemplo.com/pelicula.mpg // Por defecto, wget realiza 20 intentos de establecer la conexión e iniciar la descarga, en sitios muy
+saturados es posible que ni con 20 intentos se logré, con la opción -t (tries) aumenta a más intentos.
+
+$ wget -r www.ejemplo.com // Con la opción -r se descarga recursivamente hasta 5 niveles del sitio.
+
+$ wget --convert-links -r http://www.sitio.com/
+
+ó
+
+$ wget -k -r http://www.sitio.com/ // Por defecto, los enlaces dentro del sitio apuntan a la dirección del dominio completo. Si deseas descargar el sitio
+recursivamente y después estudiarlo fuera de línea (off line) usa la opción convert-links que los convertirá en enlaces locales, apuntando a las páginas
+dentro del sitio descargado.
+
+$ wget --mirror http://ejemplo_web.com/    
+
+ó
+
+$ wget -m http://ejemplo_web.com/ // De este modo obtienes una copia (un espejo) completa del sitio.
 
 ######################################################
 ####### GIT - Software de Control de Versiones #######
