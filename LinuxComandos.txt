@@ -1085,6 +1085,12 @@ $ pip search nombre_paquete // Buscar un paquete.
 ########## Conexion remota con ssh ##########
 #############################################
 
+# aptitude install ssh
+
+--> configurarlo
+
+# aptitude install openssh-server
+
 SSH (Secure SHell) es el nombre de un protocolo y del programa que lo implementa, y sirve para acceder
 a máquinas remotas a través de una red. Permite manejar por completo la computadora mediante un intérprete
 de comandos, y también puede redirigir el tráfico de X para poder ejecutar programas gráficos si tenemos ejecutando un Servidor X (en sistemas Unix y Windows).
@@ -2244,11 +2250,34 @@ dd if=/home/user/Descargas/debian-testing-i386-businesscard.iso of=/dev/media/sd
 $ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con el certificado
 digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando.
 
+###########################################
+##### Formatear pendrives desde linux #####
+###########################################
+
+# aptitude install dosfstools
+
+Luego de instalar el paquede, montamos el pendrive, escribimos:
+
+$ df -h
+
+Visualizamos la ruta de nuestro usb, ejemplo /dev/sdc1 que es el puerto donde está montado, luego desmontamos el pendrive.
+
+$ umount /media/nombre_usb
+
+Luego, estando desmontado la unidad usb, pero conectado al puerto
+
+# mkfs.vfat -F 32 -n Nombre_usb /dev/sdc1
+
+Esperamos y listo. Con la opción -F 32 le decimos que será formateada como Fat32, y con la opción -n le ponemos una etiqueta o nombre al dispositivo y
+al final ponemos la ruta hasta nuestro dispositivo, la que vimos con df -h
+
 ########################################################
 ##### Recommended installation packages for Debian #####
 ########################################################
-apache
+Actualizar el source.list
 terminator
+aptitude
+apache
 postgresql
 ssh
 Sudo
