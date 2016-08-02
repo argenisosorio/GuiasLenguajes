@@ -848,6 +848,8 @@ $ git checkout master // Cambiarsa a la rama master
 
 $ git merge desarrollo // Mezclar la rama desarrollo con master
 
+git pull origin master // Recuperar y unir automáticamente la rama remota con tu rama actual, traerse los cambios del repo al repo local.
+
 ---------------------------
 
 $ git checkout XXXXXX123456 // Este comando sirve para moverse entre los commits, cada commit genera una
@@ -920,6 +922,40 @@ de forma urgente. Es por ello, que son ramas sacadas de master. Una vez corregid
 el error, se debe hacer un merge de la rama sobre master. Al final, para que no
 quede desactualizada, se debe realizar el merge de master sobre development.
 
+Algo de teoría...
+
+¿Qué es un fork?
+
+La palabra fork se traduce al castellano, dentro del contexto que nos ocupa, como bifurcación. Cuando hacemos un fork de un repositorio, se hace una copia exacta en crudo (en inglés “bare”) del repositorio original que podemos utilizar como un repositorio git cualquiera. Después de hacer fork tendremos dos repositorios git idénticos pero con distinta URL. Justo después de hacer el fork, estos dos repositorios tienen exactamente la misma historia, son una copia idéntica. Finalizado el proceso, tendremos dos repositorios independientes que pueden cada uno evolucionar de forma totalmente autónoma. De hecho, los cambios que se hacen el repositorio original NO se transmiten automáticamente a la copia (fork). Esto tampoco ocurre a la inversa: las modificaciones que se hagan en la copia (fork) NO se transmiten automáticamente al repositorio original.
+¿Y en qué se diferencia un fork de un clon?
+
+Cuando hacemos un clon de un repositorio, te bajas una copia del mismo a tu máquina. Empiezas a trabajar, haces modificaciones y haces un push. Cuando haces el push estás modificando el repositorio que has clonado.
+
+Cuando haces un fork de un repositorio, se crea un nuevo repositorio en tu cuenta de Github o Bitbucket, con una URL diferente (fork). Acto seguido tienes que hacer un clon de esa copia sobre la que empiezas a trabajar de forma que cuando haces push, estás modificando TU COPIA (fork). El repositorio original sigue intacto. Lo vamos a ver en breve con un ejemplo.
+¿Para qué sirve?
+
+Tiene varios usos. El más común es el de permitir a los desarrolladores contribuir a un proyecto de forma segura.
+
+¿Porqué decimos de forma segura? Imaginaos un super proyecto como puede ser el código fuente de Apache. ¿Cómo se trabajaba antes de existir git? con Subversion o CVS existía un servidor centralizado que tenía dos tipos de usuarios: lo que podían “escribir” en el repositorio (subir cambios al código fuente) y los que sólo podían “leer” el repositorio. Estos últimos sólo podían bajarse el código a su máquina y podían modificarlo sólo en su copia local. No podían subir ninguna modificación al servidor central.
+
+¿Qué tenías que hacer para contribuir? Tenías que solicitar permiso de escritura y que alguien te lo diese. Una vez te lo concedían, ya podías subir tus modificaciones y, por supuesto, liarla si no sabías lo que estabas haciendo. Otra opción era enviar parches, trabajar con ramas… había varias formas pero todas bastante engorrosas.
+
+Además, este procedimiento de dar acceso de escritura a un repositorio centralizado es un poco arriesgado. Siguiendo con el ejemplo que he puesto de Apache ¿cómo sé yo, responsable del repositorio, que esta persona que está a 10000Km de mí en la otra punta del planeta sabe lo que está haciendo? ¿puedo confiar en él?. Al final, contribuir a un proyecto se convertía en una tarea tediosa tanto para el que pretendía contribuir como para el que lo tenía que gestionar. Y no hablemos de lo divertido que era hacer un merge…
+
+Git, al tratarse de un sistema distribuido, resuelve este tipo de problemas de una forma muy elegante a través de los forks. Digamos que Pepito es una persona quiere contribuir al proyecto. Ha encontrado un bug y sabe cómo corregirlo. Como propietario del repositorio me interesa que Pepito pueda enviarme el parche de forma rápida, que no pierda mucho tiempo. Si es así ¡Pepito estará encantado de colaborar con nosotros! ;-). Además, necesito que el proceso sea ágil, no quiero tener que invertir 5 horas de mi tiempo cada vez que tenga que hacer un merge del trabajo que Pepito me envíe. ¿Cómo resuelve git el problema?
+
+-Pepito hace un fork de mi repositorio, para lo que sólo necesito darle permiso de lectura.
+-Pepito trabaja en SU COPIA (fork) del repositorio. Como es suya, puede hacer lo que quiera, la puede borrar, corromper, dinamitar, reescribir la historia del proyecto… nos da lo mismo, es SU COPIA (fork).
+-Cuando Pepito termina de programar y testear el parche, me avisa de que ya lo tiene y me dice “En la rama parche_de_pepito de MI COPIA (fork), tienes el parche que corrige el Bug XXXX”.
+-Yo voy a su repositorio, miro lo que ha hecho y si está bien lo incorporo (merge) a mi repositorio, que es el original.
+
+Las ventajas de este proceso son las siguientes:
+
+-Pepito trabaja con SU COPIA. En ningún momento le tengo que dar acceso al repositorio central.
+-El proceso de incorporación de los cambios de Pepito es muy sencillo. Si no hay conflictos en los ficheros puede que sea tan simple como ejecutar un par de comandos git.
+-Pepito tiene muy fácil contribuir, no le cuesta esfuerzo.
+-Yo puedo gestionar muy fácilmente las contribuciones de muchas personas ¡me cuesta muy poco trabajo!
+
 #############################################
 ######### Subir proyectos a GitHub ##########
 #############################################
@@ -975,6 +1011,22 @@ $ git push origin :your_branch // Eliminar una rama, alternativa al anterior.
 $ git push origin +master // Para borrar o deshacer un commit en github, se debe primero borrar el commit 
 de manera local, luego volvemos a subir el proyecto con este comando para que quede como estaba.
 
+----- Inviting collaborators to a personal repository -----
+
+You can invite users to become collaborators on your personal repository.
+Tip: You can grant read/write access to collaborators on a personal repository.
+Repositories owned by an organization can grant more granular access. For more information, see "What are the different access permissions?"
+
+Ask for the username of the person you're inviting as a collaborator. If they don't have a username yet, they can sign up for GitHub.
+On GitHub, navigate to the main page of the repository.
+Repository settings buttonUnder your repository name, click Settings.
+Repository settings sidebar with Collaborators highlightedIn the left sidebar, click Collaborators.
+Under "Collaborators", start typing the collaborator's username.
+Select the collaborator's username from the drop-down menu.
+Click Add collaborator.
+The user will receive an email inviting them to the repository.
+Once they accept your invitation, they will have collaborator access to your repository.
+
 #########################################
 ########## Terminal Terminator ##########
 #########################################
@@ -1018,8 +1070,11 @@ así como poder hacer pruebas si afectar a los paquetes del sistema global.
 
 --- Instalación: ---
 
-$ aptitude install python-virtualenv virtualenvwrapper // Para crear un ambiente virtual instale las herramientas
-python-virtualenv y virtualenvwrapper
+Para crear un ambiente virtual instale las herramientas python-setuptools, python-dev, python-virtualenv, virtualenvwrapper
+
+# aptitude install python-setuptools python-dev
+
+# aptitude install python-virtualenv virtualenvwrapper
 
 $ mkvirtualenv nombre_ambiente_virtual //  Con un usuario (diferente a root) cree un ambiente virtual para su proyecto.
 
@@ -1036,6 +1091,32 @@ $ lsvirtualenv // Para listar los entornos virtuales creados o disponibles.
 $ rmvirtualenv nombre_virtualenv // Remover o borrar un entorno virtual.
 
 // Los entornos virtuales se crean en el directorio /home/user/.virtualenvs
+
+##### Usando virtualenv #####
+
+Installation: Instala python-virtualenv.
+
+-Crear un virtualenv:
+
+$ virtualenv mi_env
+
+-Activar el virtualenv:
+
+$ source mi_env/bin/activate
+
+-Instalar un paquete (p.ej. Django) en el virtualenv:
+
+(mi_env)$ pip install django
+
+-Trabajar en el proyecto.
+
+-Salir del virtualenv:
+
+(mi_env)$ deactivate
+
+--- Using Python 3 in virtualenv ---
+
+$ virtualenv -p python3 my_env
 
 ########################
 ##### Paquetes pip #####
@@ -2288,7 +2369,8 @@ meld
 git
 vim
 Virtual Box
-sublime
+Sublime
+    -Instalar el .deb de la página o buscar en los repos, > a v2.
 python-pip
 virtualenv
 virtualenvwrapper
