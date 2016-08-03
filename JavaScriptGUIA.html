@@ -2315,7 +2315,7 @@ Sintaxis de JSON
 Para escribir JSON debemos tener en cuenta lo siguiente:
 La creación de los objetos JSON implica escribir datos, para ello:
 
-    Losdatos estan separados por comas.
+    Los datos estan separados por comas.
     los datos se escriban en pares, siendo primero el nombre o atributo del mismo y luego el valor del dato.
     Los objetos JSON estan rodeados por llaves “{}”
     Llaves cuadradas [] guardan arreglos, incluyendo otros objetos JSON
@@ -2323,6 +2323,63 @@ La creación de los objetos JSON implica escribir datos, para ello:
 Ejemplo de un objeto JSON que guarda un usuario y password:
 
 var objetoJSON = {"usuario":"user","password":"123456"};
+
+--- Ejemplos:
+ 
+<!-- Ejemplo de XML -->
+<Clientes>
+  <Cliente ID="283">
+    <Nombre>Juan Carlos Crespin</Nombre>
+    <Direccion verificada="si">
+            <Calle>Avda Perú</Calle>
+            <Numero>235</Numero>
+        <Ciudad>Bahía Blanca</Ciudad>
+        <Provincia>Buenos Aires</Provincia>
+        <CodigoPostal>8000</CodigoPostal>
+            <Pais>Argentina</Pais>
+         </Direccion>
+  </Cliente>
+</Clientes>
+
+<!-- Equivalente en JSON -->
+{
+  "Clientes": {
+    "Cliente": {
+      "-ID": "283",
+      "Nombre": "Juan Carlos Crespin",
+      "Direccion": {
+        "-verificada": "si",
+        "Calle": "Avda Perú",
+        "Numero": "235",
+        "Ciudad": "Bahía Blanca",
+        "Provincia": "Buenos Aires",
+        "CodigoPostal": "8000",
+        "Pais": "Argentina"
+      }
+    }
+  }
+}
+
+<!-- Otro Ejemplo de XML-->
+<persona>
+    <nombre>juan</nombre>
+    <edad>22</edad>
+    <estudios>
+        <estudio>primario</estudio>
+        <estudio>secundario</estudio>
+    </estudios>
+</persona>
+
+<!-- Equivalente en JSON -->
+{
+    "persona":{
+       "nombre":"juan",
+       "edad":22,
+       "estudios":["primario","secundario"]
+    }
+}
+
+-------------------------------------
 
 <!-- Escribiendo en el DOM los datos de un JSON -->
 <!DOCTYPE html>

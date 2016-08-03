@@ -2612,15 +2612,153 @@ $( "button" ).click(function() {
 
 -------------------------------------
 
-<!-- -->
+<!-- Utilización de un parser JSON en jQuery
+Evaluar una variable que contiene notación JSON.
+-->
+<!DOCTYPE html>
+<html> 
+  <head> 
+     <title>Evaluar una variable que contiene notación JSON</title> 
+     <meta http-equiv="Content-Type" 
+              content="text/html; charset=UTF-8">
+     <script src="jquery-1.10.2.js" type="text/javascript"></script>
+ </head> 
+ <body> 
+   <h1>Evaluar una variable que contiene notación JSON.</h1> 
+   <input type="button" id="boton1"
+             value="Recuperar datos del JSON" /> <br/>
+   <span id="texto"></span>
+   <script type="text/javascript">
+       $(document).ready(function () {
+           $("#boton1").click(function () {
+               var cad = "Los libros en el archivo JSON son:<br />";
+               var cadena = $.getJSON("mi.json", function (data) {
+                   for (l in data.libros.lib) {
+                       cad += ("<br />" + data.libros.lib[l].libro + " de " +
+                           data.libros.lib[l].autores[0] + ", " +
+                           data.libros.lib[l].autores[1] + " y " +
+                           data.libros.lib[l].autores[2] + "<br />Editorial: " +
+                           data.libros.lib[l].editorial +
+                           "<br />").replace("y undefined", "").replace(", undefined", "");
+                    }
+                   $("#texto").html(cad);
+               })     
+           })
+       });
+  </script>                
+    </body> 
+</html>
+
+El JSON = mi.json
+
+{
+  "libros": {
+      "lib": [
+          {
+              "libro": "Beginning XML, Cuarta Edición",
+              "año": "2007",
+              "autores": [
+                  "David Hunter",
+                  "Jeff Rafter",
+                  "Andrew Watt"
+              ],
+              "editorial": "Wrox"
+          },
+          {
+              "libro": "Code First",
+              "año": "2012",
+              "autores": [
+                  "Julia Lerman"
+              ],
+              "editorial": "O'Reilly"
+          },
+    {
+              "libro": " .NET: Architecting Applications for the Enterprise",
+              "año": "2009",
+              "autores": [
+                  "Dino Espósito",
+            "Andrea Saltarello"
+              ],
+              "editorial": "Microsoft Press"
+          },
+    {
+              "libro": "Professional ASP.NET MVC 4",
+              "año": "2012",
+              "autores": [
+                  "Jon Galloway",
+        "Phil Haack",
+        "Brad Wilson"
+              ],
+              "editorial": "Wrox (P2P)"
+          }
+      ]
+  }
+}
 
 -------------------------------------
 
-<!-- -->
+<!-- Crea un arreglo de nodos del DOM usando una cadena de y la inserta dentro de un div -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.parseHTML demo</title>
+  <script src="jquery-1.10.2.js"></script>
+</head>
+<body>
+<div id="log">
+  <h3>Content:</h3>
+</div>
+<script>
+var $log = $( "#log" ),
+  str = "hello, <b>my name is</b> jQuery.",
+  html = $.parseHTML( str ),
+  nodeNames = [];
+ 
+// Append the parsed HTML
+$log.append( html );
+ 
+// Gather the parsed HTML's node names
+$.each( html, function( i, el ) {
+  nodeNames[ i ] = "<li>" + el.nodeName + "</li>";
+});
+ 
+// Insert the node names
+$log.append( "<h3>Node Names:</h3>" );
+$( "<ol></ol>" )
+  .append( nodeNames.join( "" ) )
+  .appendTo( $log );
+</script>
+</body>
+</html>
 
 -------------------------------------
 
-<!-- -->
+<!-- Toma una cadena JSON bien formada y devuelve el valor resultante JavaScript, si esta masl declarado o no consigue el dato devolvera false -->
+<!--Passing in a malformed JSON string results in a JavaScript exception being thrown. For example, the following are all invalid JSON strings:
+"{test: 1}" (test does not have double quotes around it).
+"{'test': 1}" ('test' is using single quotes instead of double quotes).
+"'test'" ('test' is using single quotes instead of double quotes).
+".1" (a number must start with a digit; "0.1" would be valid).
+"undefined" (undefined cannot be represented in a JSON string; null, however, can be).
+"NaN" (NaN cannot be represented in a JSON string; direct representation of Infinity is also not permitted).
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.parseHTML demo</title>
+  <script src="jquery-1.10.2.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+  $(document).ready(function(){
+    var obj = jQuery.parseJSON( '{ "name": "John" }' );
+    alert( obj.name === "Johnn" );
+  });
+</script>
+</body>
+</html>
 
 -------------------------------------
 
