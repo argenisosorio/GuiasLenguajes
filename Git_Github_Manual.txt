@@ -1,0 +1,267 @@
+######################################################
+####### GIT - Software de Control de Versiones #######
+######################################################
+
+Software de control de versiones diseñado por Linus Torvalds, pensando en la eficiencia
+y la confiabilidad del mantenimiento de versiones de aplicaciones cuando éstas tienen un gran número de
+archivos de código fuente. Hay algunos proyectos de mucha relevancia que ya usan Git
+en particular, el grupo de programación del núcleo Linux.
+
+$ aptitude install git // fast, scalable, distributed revision control system 
+
+$ git // Con este comando nos listara la lista de comandos Git que podemos usar en un proyecto
+
+$ git --version // Para saber que versión tenemos instalada.
+
+//Lo primero que debemos hacer despues de la instalacion es configurar nuestro Git
+
+$ git config --global user.name "Argenis Osorio" // Asignamos el nombre de usuario que será la firma del usuario en cada commit
+
+$ git config --global user.email aosorio@example.com // igualmente el correo que siempre acompañara al autor de cada commit
+
+$ git init // Crear un directorio, dentro del directorio ejecutar
+para crear un nuevo repositorio de git.
+
+$ git status // Muestra el estado actual de la rama, como los cambios que hay sin commitear.
+
+$ git status -s // Lista los archivos del proyecto y se visualiza si fueron agregados al seguimiento de Git.
+//Tambien podemos ver si un archivo fue modificado y no a sido agregado al seguimiento de Git.
+
+$ git add * // Agregar todos los archivos al seguimiento de Git.
+
+$ git commit -m "Primer commit del proyecto" //Hacer un commit al proyecto, se activara la rama master por defecto.
+
+$ git log // Podemos ver todos los commits que se han hehco a un proyecto, fecha, autor, etc...
+
+$ git branch // Lista todas las ramas locales.
+
+$ git branch -a // Lista todas las ramas locales y remotas
+
+// Ejemplo de archivos agregados al seguimiento de git:
+A  gris.jpg // Agregado
+A  principal.html // Agregado
+AM principal2.html // Agregado y modificado, se debe agregar otra ver para aceptar los cambios
+?? principal3.html // Archivo agregado al directorio pero no agregado al seguimiento de Git
+
+$ git add Nombre_archivo.xxx // Agregar un fichero específico al seguimiento de Git
+
+$ git rm Nombre_fichero.xxx // Borrar un fichero de manera segura, puesto que lo borra del directorio y del seguimiento de git, es un error
+común borrar los archivos directamente y estos siguen estando en el seguimiento de git por lo que se lia bastantes veces
+al subir los cambios, recomendable borrarlos desde git.
+
+$ git rm -f Nombre_fichero.xxx // Forzar el borrado del fichero.
+
+$ git rm --cached Nombre_archivo.xxx // Si un archivo fue modificado queda un registro de su nombre anterior en el cache
+para borrarlo se esa este comando
+
+$ git commit --amend -m "comentario commit corregido" // Corregir algun error en el texto del último commit
+
+$ git commit --amend // Corregir un error en el commit, abrira un editor de texto
+
+$ git reset --hard HEAD~1 // Borrar el ultimo commit hecho.
+
+$ git checkout -b Nombre_Rama // Crear una rama y cambiarse a ella.
+
+$ git branch -d Nombre_Rama // Borrar una rama, se debe estar en otra rama para borrarla
+
+$ git branch -D Nombre_Branch // Forzar el borrado de una rama, a veces no se dejan borrar si hay cambios sin guardar.
+
+$ git checkout Nombre_Rama // Cambiarse de rama
+
+$ git branch -v // Para ver los ultimos commits de cada rama.
+
+----- Mezclando Ramas -----
+
+Para fusionar dos ramas, en este caso una rama de desarrollo con la rama master se hace un git merge, para realizar la mezcla vamos
+a situarnos en la rama master escribimos el comando donde especificamos que rama queremos mezclar con master.
+
+$ git checkout master // Cambiarsa a la rama master
+
+$ git merge desarrollo // Mezclar la rama desarrollo con master
+
+$ git pull origin master // Recuperar y unir automáticamente la rama remota con tu rama actual, traerse los cambios del repo al repo local.
+
+$ git status origin master // Comparar la rama local con la rama del repositorio, nos dirá si estamos atrás o delante del repo, y por cuantos commits.
+Si estamos detrás, con un pull nos traeremos los cambios del repo, si estamos delante, se hará un merge o una mezcla del repo local y el remoto y así tendra todos los cambios listos, luego en el status del repo local, pedirá hacer un push para estabilizar todos los cambios en el repo remoto.
+
+---------------------------
+
+$ git checkout XXXXXX123456 // Este comando sirve para moverse entre los commits, cada commit genera una
+etiqueta, un identificador muy largo alfanumerico, estas etiquetas identifican una version del proyecto
+lo que permite restaurar el proyecto a estados anteriores donde XXXXXX123456 representa la etiqueta del commit al que queremos ir.
+
+//Una vez movidos a ese commit especifico del historial se puede crear una nueva rama desde ese punto, si hacemos git log nos mostrara
+los commits que habian hasta ese momento y el ultimo es en el que nos encontramos, si queremos volver a tener los commits anteriores 
+solo hacemos git checkout a la rama en que estabamos antes o a alguna rama especifica.
+
+$ git checkout -f master // Para forzar volver a la rama master por ejemplo, a veces no nos deja porque no commitemos algunos cambios, como logs, etc.
+
+$ git diff // Si se hacen cambios o se agregaron archivos al proyecto este comando nos hará mostrara una comparacion entre los
+ultimos cambios hechos el ultimo commit hecho, es recomendable revisar esos cambios antes de agregarlos al seguimiento de git
+y por supuesto antes de hacer un commit.
+
+---------
+
+//Luego de hacer el commit en la rama master y luego de haber creado la rama desarrollo y hacer el commit
+se pueden listar los commits de las ramas existentes y asi poder realizar comparacaiones entre las
+diferentes versiones del codigo. En este caso se agregaron 2 lineas al <div id="cabecera"> de una plantilla del proyecto
+//Usando los identificadores de cada commit se pueden comparar las versiones del software.
+
+$ git branch -v
+* desarrollo e6dcbf4 Modificacion de texto de la cabecera
+  master     a537ef5 Primer commit
+user@debian:~/DIV$ git diff a537ef5 e6dcbf4
+diff --git a/principal.html b/principal.html
+index 554fd4f..94b3eac 100755
+--- a/principal.html
++++ b/principal.html
+@@ -14,6 +14,8 @@
+ 
+                <div id="cabecera">
+                        CabeceraXXX
++                       CabeceraXXX
++                       CabeceraXXX
+                </div>  
+ 
+                <div id="cuerpo1">
+
+
+$ git clone /home/directorio/proyecto/proyecto //Crea una copia local del repositorio se debe situar en la carpeta
+donde se quiere hacer la copia y luego se le da la ruta del proyecto a copiar 
+
+git clone https://xxx.xxx.gob.ve/xxx/xxx/xxx.git // Si esta subido en algun servidor 
+
+---Recomendado---
+
+*Cada desarrollador o equipo de desarrollo puede hacer uso de Git de la forma que le parezca
+ conveniente. Sin embargo una buena práctica es la siguiente:
+
+Se deben utilizar 4 tipos de ramas: Master, Development, Features, y Hotfix.
+
+-Master: Es la rama principal. Contiene el repositorio que se encuentra publicado
+en producción, por lo que debe estar siempre estable.
+
+-Development: Es una rama sacada de master. Es la rama de integración, todas las nuevas
+funcionalidades se deben integrar en esta rama. Luego que se realice la integración y se
+ corrijan los errores (en caso de haber alguno), es decir que la rama se encuentre estable,
+ se puede hacer un merge de development sobre la rama master.
+
+-Features: Cada nueva funcionalidad se debe realizar en una rama nueva, específica para
+esa funcionalidad. Estas se deben sacar de development. Una vez que la funcionalidad
+esté pronta, se hace un merge de la rama sobre development, donde
+se integrará con las demás funcionalidades.
+
+-Hotfix: Son bugs que surgen en producción, por lo que se deben arreglar y publicar
+de forma urgente. Es por ello, que son ramas sacadas de master. Una vez corregido
+el error, se debe hacer un merge de la rama sobre master. Al final, para que no
+quede desactualizada, se debe realizar el merge de master sobre development.
+
+Algo de teoría...
+
+¿Qué es un fork?
+
+La palabra fork se traduce al castellano, dentro del contexto que nos ocupa, como bifurcación. Cuando hacemos un fork de un repositorio, se hace una copia exacta en crudo (en inglés “bare”) del repositorio original que podemos utilizar como un repositorio git cualquiera. Después de hacer fork tendremos dos repositorios git idénticos pero con distinta URL. Justo después de hacer el fork, estos dos repositorios tienen exactamente la misma historia, son una copia idéntica. Finalizado el proceso, tendremos dos repositorios independientes que pueden cada uno evolucionar de forma totalmente autónoma. De hecho, los cambios que se hacen el repositorio original NO se transmiten automáticamente a la copia (fork). Esto tampoco ocurre a la inversa: las modificaciones que se hagan en la copia (fork) NO se transmiten automáticamente al repositorio original.
+¿Y en qué se diferencia un fork de un clon?
+
+Cuando hacemos un clon de un repositorio, te bajas una copia del mismo a tu máquina. Empiezas a trabajar, haces modificaciones y haces un push. Cuando haces el push estás modificando el repositorio que has clonado.
+
+Cuando haces un fork de un repositorio, se crea un nuevo repositorio en tu cuenta de Github o Bitbucket, con una URL diferente (fork). Acto seguido tienes que hacer un clon de esa copia sobre la que empiezas a trabajar de forma que cuando haces push, estás modificando TU COPIA (fork). El repositorio original sigue intacto. Lo vamos a ver en breve con un ejemplo.
+¿Para qué sirve?
+
+Tiene varios usos. El más común es el de permitir a los desarrolladores contribuir a un proyecto de forma segura.
+
+¿Porqué decimos de forma segura? Imaginaos un super proyecto como puede ser el código fuente de Apache. ¿Cómo se trabajaba antes de existir git? con Subversion o CVS existía un servidor centralizado que tenía dos tipos de usuarios: lo que podían “escribir” en el repositorio (subir cambios al código fuente) y los que sólo podían “leer” el repositorio. Estos últimos sólo podían bajarse el código a su máquina y podían modificarlo sólo en su copia local. No podían subir ninguna modificación al servidor central.
+
+¿Qué tenías que hacer para contribuir? Tenías que solicitar permiso de escritura y que alguien te lo diese. Una vez te lo concedían, ya podías subir tus modificaciones y, por supuesto, liarla si no sabías lo que estabas haciendo. Otra opción era enviar parches, trabajar con ramas… había varias formas pero todas bastante engorrosas.
+
+Además, este procedimiento de dar acceso de escritura a un repositorio centralizado es un poco arriesgado. Siguiendo con el ejemplo que he puesto de Apache ¿cómo sé yo, responsable del repositorio, que esta persona que está a 10000Km de mí en la otra punta del planeta sabe lo que está haciendo? ¿puedo confiar en él?. Al final, contribuir a un proyecto se convertía en una tarea tediosa tanto para el que pretendía contribuir como para el que lo tenía que gestionar. Y no hablemos de lo divertido que era hacer un merge…
+
+Git, al tratarse de un sistema distribuido, resuelve este tipo de problemas de una forma muy elegante a través de los forks. Digamos que Pepito es una persona quiere contribuir al proyecto. Ha encontrado un bug y sabe cómo corregirlo. Como propietario del repositorio me interesa que Pepito pueda enviarme el parche de forma rápida, que no pierda mucho tiempo. Si es así ¡Pepito estará encantado de colaborar con nosotros! ;-). Además, necesito que el proceso sea ágil, no quiero tener que invertir 5 horas de mi tiempo cada vez que tenga que hacer un merge del trabajo que Pepito me envíe. ¿Cómo resuelve git el problema?
+
+-Pepito hace un fork de mi repositorio, para lo que sólo necesito darle permiso de lectura.
+-Pepito trabaja en SU COPIA (fork) del repositorio. Como es suya, puede hacer lo que quiera, la puede borrar, corromper, dinamitar, reescribir la historia del proyecto… nos da lo mismo, es SU COPIA (fork).
+-Cuando Pepito termina de programar y testear el parche, me avisa de que ya lo tiene y me dice “En la rama parche_de_pepito de MI COPIA (fork), tienes el parche que corrige el Bug XXXX”.
+-Yo voy a su repositorio, miro lo que ha hecho y si está bien lo incorporo (merge) a mi repositorio, que es el original.
+
+Las ventajas de este proceso son las siguientes:
+
+-Pepito trabaja con SU COPIA. En ningún momento le tengo que dar acceso al repositorio central.
+-El proceso de incorporación de los cambios de Pepito es muy sencillo. Si no hay conflictos en los ficheros puede que sea tan simple como ejecutar un par de comandos git.
+-Pepito tiene muy fácil contribuir, no le cuesta esfuerzo.
+-Yo puedo gestionar muy fácilmente las contribuciones de muchas personas ¡me cuesta muy poco trabajo!
+
+#############################################
+######### Subir proyectos a GitHub ##########
+#############################################
+
+// Repositorio: Un repositorio, depósito o archivo es un sitio centralizado donde
+se almacena y mantiene información digital, habitualmente bases de datos o archivos informáticos.
+
+1- Crearnos una cuenta en GitHub
+
+2- Crear un repositorio, desde la intefáz gráfica de github nos pedirá el nombre para el repositorio
+ese repo tendra una URL asignada, ejem: https://github.com/name_user/name_repo
+
+3- La forma mas rápida de subir un proyecto al repositorio creado es bajando ese repositorio creado, clonandolo en nuestro directorio,
+al clonarlo ya viene configurado con los ficheros de git lo que nos permitira hacer push directamente sin hacer mayores esfuerzos.
+
+$ git clone https://github.com/name_user/name_repo.git // Clonamos el repositorio del proyecto, se guardará en nuestro directorio
+
+$ cd name_repo/ //Nos cambiamos a la carpeta del proyecto, 
+
+4- Una vez hecho es veremos una carpeta local con el nombre de nuestro repositorio de GitHub
+esta carpeta estará vacía, dentro de la carpeta irá el proyecto que queremos subir. Ahora metemos dentro de la carpeta
+todos los directorios y ficehros de nuestro proyecto.
+
+$ git add . // Para agregar todos los archivos que pegamos al seguimiento de git.
+
+$ git commit -m "Comentario" // Hacemos el primer commit del proyecto, ejemplo: "Primer commit" o "Caga inicial del proyecto"
+
+$ git push origin master // Este comando es para subir el proyecto directamente a la rama master de nuestro repo.
+
+// Cabe mencionar que en el directorio .git descargado, en el archivo config estará por defecto
+escrita la URL de nuestro repo, lo que facilita subir los proyectos y los cambios directamente, por ello 
+el paso de la clonacion del repo.
+
+// Antes de subir los cambios nos pedira el user y pass de la cuenta github para realizar la autenticación
+
+user@debian:~/MiProyecto$ git push origin master
+Username for 'https://github.com': user
+Password for 'https://user@github.com': ************
+Counting objects: 14, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (13/13), done.
+Writing objects: 100% (13/13), 45.99 KiB, done.
+Total 13 (delta 0), reused 0 (delta 0)
+To https://github.com/user/proyecto.git
+   af47064..228246e  master -> master
+
+// Listo ya deberias porder ver tu proyecto en github
+
+$ git push origin --delete your_branch // Eliminar una rama en tu GitHub o en tu repositorio remoto.
+
+$ git push origin :your_branch // Eliminar una rama, alternativa al anterior.
+
+$ git push origin +master // Para borrar o deshacer un commit en github, se debe primero borrar el commit 
+de manera local, luego volvemos a subir el proyecto con este comando para que quede como estaba.
+
+----- Inviting collaborators to a personal repository -----
+
+You can invite users to become collaborators on your personal repository.
+Tip: You can grant read/write access to collaborators on a personal repository.
+Repositories owned by an organization can grant more granular access. For more information, see "What are the different access permissions?"
+
+Ask for the username of the person you're inviting as a collaborator. If they don't have a username yet, they can sign up for GitHub.
+On GitHub, navigate to the main page of the repository.
+Repository settings buttonUnder your repository name, click Settings.
+Repository settings sidebar with Collaborators highlightedIn the left sidebar, click Collaborators.
+Under "Collaborators", start typing the collaborator's username.
+Select the collaborator's username from the drop-down menu.
+Click Add collaborator.
+The user will receive an email inviting them to the repository.
+Once they accept your invitation, they will have collaborator access to your repository.
+
+##### Otros #####
+
+$ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con el certificado
+digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando.
