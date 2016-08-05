@@ -80,11 +80,12 @@ user pts/2        2015-07-31 14:15 00:08        8351 (:0.0)
 user pts/3        2015-07-31 12:37 02:53        8351 (:192.168.0.240)
 
 //Aqui observamos que hay una conexion externa a traves de ssh a nuestro servidor proveniente de la maquina
-(192.168.0.240) demarcada por el id process 8351 la cual podemos cancelar, es decir refusar esa conexion con
+(192.168.0.240) demarcada por el id process 8351 la cual podemos cancelar, pero no refusar esa conexion, el usuario seguirá conectado por ssh.
 $ kill -9 8351
 
 # pkill -9 -t pts/3 // Acabar con una conexión externa, se envió la señal -9 que indica matar (KILL) el proceso, la opción -t indica que se basará
-en un atributo de nombre de terminal y se indica después el nombre de la terminal en si pts/3.
+en un atributo de nombre de terminal y se indica después el nombre de la terminal en si pts/3. Este es el comando que sí funciona para 
+refusar conexiones externas.
 
 $ last // listar los ultimos usuarios conectados
 
@@ -207,6 +208,8 @@ $ df -h // Muestra el espacio disponible del disco y demas dispositivos asi como
 # fdisk -l // Ver informacion de los discos duros, particiones y dispositivos montados en el sistema.
 
 $ lsusb // Este comando muestra todos los puertos USB y los detalles acerca de los dispositivos conectados a ellos.
+
+$ lspci // Lista todos los componentes tipo pci (Peripheral Component Interconnec) como las tarjetas de red, de sonido o de televisión.
 
 $ free // Muestra el estado de la memoria RAM, total, usado, disponible, cached, buffers 
 
@@ -2091,6 +2094,45 @@ Luego, estando desmontado la unidad usb, pero conectado al puerto
 
 Esperamos y listo. Con la opción -F 32 le decimos que será formateada como Fat32, y con la opción -n le ponemos una etiqueta o nombre al dispositivo y
 al final ponemos la ruta hasta nuestro dispositivo, la que vimos con df -h
+
+################################
+##### source.list example  #####
+################################
+
+#Debian GNU/Linux 8 (Jessie) Estable
+
+#Repositorio Oficial
+deb http://http.us.debian.org/debian/ jessie main contrib non-free
+deb-src http://http.us.debian.org/debian/ jessie main contrib non-free
+
+#Repositorio de Seguridad
+deb http://security.debian.org/ jessie/updates main contrib non-free
+deb-src http://security.debian.org/ jessie/updates main contrib non-free
+
+#Repositorio Multimedia
+#aptitude install deb-multimedia-keyring
+#deb http://www.deb-multimedia.org testing main non-free
+#deb http://www.deb-multimedia.org jessie main non-free
+#deb-src http://www.deb-multimedia.org jessie main non-free
+
+#----------------------------------
+
+#Debian GNU/Linux 7 (Wheezy) Estable
+
+#Repositorio Oficial
+deb http://ftp.us.debian.org/debian/ wheezy main contrib
+deb-src http://ftp.us.debian.org/debian/ wheezy main contrib
+
+#Actualizaciones de Seguridad
+deb http://security.debian.org/ wheezy/updates main contrib
+deb-src http://security.debian.org/ wheezy/updates main contrib
+
+#Actualizaciones de Wheezy
+deb http://ftp.debian.org/debian wheezy-updates main contrib non-free
+deb-src http://ftp.debian.org/debian wheezy-updates main contrib non-free
+
+#Backports
+deb http://ftp.debian.org/debian/ wheezy-backports main
 
 ########################################################
 ##### Recommended installation packages for Debian #####
