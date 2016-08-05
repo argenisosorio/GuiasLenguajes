@@ -1863,9 +1863,9 @@ encontrarían almacenados en passwd.
 /etc/termcap
     La base de datos de capacidades del terminal. Describe las “secuencias de escape” por medio de las cuales se pueden controlar diversos tipos de terminales. Los programas se escriben para que, en lugar de generar directamente una secuencia de escape que solo funcione en un tipo de terminal, busquen la secuencia correcta para hacer lo que necesiten en /etc/termcap. Como resultado, la mayoría de los programas trabajan con la mayoría de los tipos de terminales existentes. Se puede encontrar información adicional en las páginas de manual de termcap, curs_termcap, y de terminfo. 
 
-################
-##### dpkg #####
-################
+#########################
+##### dpkg - debian #####
+#########################
 
 El programa dpkg es la base del sistema de gestión de paquetes de Debian GNU/Linux. Fue creado por Ian Jackson en 1993. Se utiliza para instalar
 quitar, y proporcionar información sobre los paquetes .deb.
@@ -1885,7 +1885,7 @@ entrada para éste en el fichero debian/files.
 -dpkg-parsechangelog Lee el fichero de cambios changelog) de un árbol fuente Debian desempaquetado y genera una salida con la información
 de estos cambios, convenientemente preparada.
 
---- Instalación de paquetes ---
+##### Instalación de paquetes .deb #####
 
 Documentacion oficial de debian --> https://debian-handbook.info/browse/es-ES/stable/sect.manipulating-packages-with-dpkg.html
 
@@ -1904,6 +1904,17 @@ significaría que el programa ha sido correctamente instalado.
 caso que hubieras realizado cambios en ellos y quieras una copia para usos posteriores. Pero si deseas quitar todo rastro del paquete debes usar purge.
 
 # dpkg -P nombre-del-paquete // Ahora no quedará rastro del paquete antes instalado.
+
+$ dpkg --get-selections // Para listar el total de paquetes instalados.
+
+# dpkg --get-selections > mis_paquetes // Gracias a este herramienta también es posible exportar la lista de paquetes instalados
+
+#dpkg --set-selections < mis_paquetes // Luego podemos instalarlos en otra máquina pasandole la lista, obtención de la lista precedente.
+
+# apt-get dselect-upgrade // Instalación de la lista
+
+El comando dpkg -l da la lista de paquetes instalados pero con mayor información. Sin embargo, no es posible utilizarlo
+para instalar una lista de paquetes. 
 
 --- Descargando los paquetes fuente ---
 
@@ -2080,7 +2091,7 @@ digital del servidor a veces se debe saltar chequeo de la firma para bajar las f
 
 # aptitude install dosfstools
 
-Luego de instalar el paquede, montamos el pendrive, escribimos:
+Luego de instalar el paquede, montamos el pendrive, solo esta montado si aparece el nombre de la unidad en /media, luego escribimos:
 
 $ df -h
 
