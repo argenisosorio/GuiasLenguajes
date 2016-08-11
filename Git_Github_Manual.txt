@@ -79,7 +79,12 @@ $ git checkout master // Cambiarsa a la rama master
 
 $ git merge desarrollo // Mezclar la rama desarrollo con master
 
-$ git pull origin master // Recuperar y unir automáticamente la rama remota con tu rama actual, traerse los cambios del repo al repo local.
+$ git pull origin master // Recuperar y unir automáticamente la rama remota con tu rama actual, traerse los cambios del repo al repo local. A veces puede haber 
+conflictos con ficheros locales y no deja hacer el pull, por lo que es necesario descartar esos ficheros.
+
+$ git checkout // Descartar cambios, probar el pull de nuevo
+
+$ git checkout fichero.xxx // Si no deja hacer el pull, descartar cambios en ese fichero/s para poder hacer el pull.
 
 $ git status origin master // Comparar la rama local con la rama del repositorio, nos dirá si estamos atrás o delante del repo, y por cuantos commits.
 Si estamos detrás, con un pull nos traeremos los cambios del repo, si estamos delante, se hará un merge o una mezcla del repo local y el remoto y así tendra todos los cambios listos, luego en el status del repo local, pedirá hacer un push para estabilizar todos los cambios en el repo remoto.

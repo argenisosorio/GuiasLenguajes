@@ -770,6 +770,20 @@ $ wget --mirror http://ejemplo_web.com/
 
 $ wget -m http://ejemplo_web.com/ // De este modo obtienes una copia (un espejo) completa del sitio.
 
+#################
+##### jigdo #####
+#################
+
+Jigsaw Download, o abreviadamente jigdo , se propone como la forma principal de distribuir imágenes de CD de Debian en el futuro. Actualmente, el sistema funciona, pero no es aún muy cómodo de usar porque la aplicación gestora de descargas no está terminada.
+
+Página del paquete -> https://www.debian.org/CD/jigdo-cd/
+
+# aptitude install jigdo-file
+
+Aquí, por ejemplo, podemos buscar los .jigdo --> http://cdimage.debian.org/debian-cd/8.5.0/amd64/ en jigdo-dvd/
+
+$ jigdo-lite http://cdimage.debian.org/debian-cd/8.5.0/amd64/jigdo-dvd/debian-8.5.0-amd64-DVD-1.jigdo
+
 #########################################
 ########## Terminal Terminator ##########
 #########################################
@@ -879,7 +893,7 @@ de poder instalar un paquete Python.
 
 // El comando pip equivale al apt-get de Debian pero para paquetes Python.
 
-$ aptitude install python-pip python-dev python-setuptools // Instalamos PIP y otros necesarios
+$ aptitude install python-pip python-dev python-setuptools python3-pip // Instalamos pip y otros necesarios, com python3 para pip, necesario en algunos proyectos.
 
 // Una vez instalado ya podremos instalar paquetes de Python a traves de pip ejemplo:
 
@@ -1022,6 +1036,16 @@ $ firefox
 $ nautilus
 
 $ evince
+
+Cuando ejecutamos una aplicación gráficamente la consola se bloqueara con el proceso en ejecución, por lo que podemos usar &
+para que se ejecute el proceso, construya el entorno grafico del programa y luego dezplace el proceso para poder seguir usando la
+consola, ejemplo:
+
+$ firefox
+
+ó
+
+$ firefox & nautilus &
 
 #############################################
 ##### Programación shell-script (bash) ######
@@ -1907,9 +1931,9 @@ caso que hubieras realizado cambios en ellos y quieras una copia para usos poste
 
 $ dpkg --get-selections // Para listar el total de paquetes instalados.
 
-# dpkg --get-selections > mis_paquetes // Gracias a este herramienta también es posible exportar la lista de paquetes instalados
+# dpkg --get-selections > /home/dir/mis_paquetes.txt // Gracias a este herramienta también es posible exportar la lista de paquetes instalados, crear el fichero
 
-#dpkg --set-selections < mis_paquetes // Luego podemos instalarlos en otra máquina pasandole la lista, obtención de la lista precedente.
+#dpkg --set-selections < /home/dir/mis_paquetes.txt // Luego podemos instalarlos en otra máquina pasandole la lista, obtención de la lista precedente.
 
 # apt-get dselect-upgrade // Instalación de la lista
 
@@ -2116,9 +2140,18 @@ al final ponemos la ruta hasta nuestro dispositivo, la que vimos con df -h
 deb http://http.us.debian.org/debian/ jessie main contrib non-free
 deb-src http://http.us.debian.org/debian/ jessie main contrib non-free
 
+deb http://httpredir.debian.org/debian/ jessie main
+deb-src http://httpredir.debian.org/debian/ jessie main
+
+# jessie-updates, previously known as 'volatile'
+deb http://httpredir.debian.org/debian/ jessie-updates main
+deb-src http://httpredir.debian.org/debian/ jessie-updates main
+
 #Repositorio de Seguridad
 deb http://security.debian.org/ jessie/updates main contrib non-free
 deb-src http://security.debian.org/ jessie/updates main contrib non-free
+deb http://security.debian.org/ jessie/updates main
+deb-src http://security.debian.org/ jessie/updates main
 
 #Repositorio Multimedia
 #aptitude install deb-multimedia-keyring
@@ -2148,7 +2181,16 @@ deb http://ftp.debian.org/debian/ wheezy-backports main
 ########################################################
 ##### Recommended installation packages for Debian #####
 ########################################################
-Actualizar el source.list
+Actualizar el source.list 
+
+# apt-get update
+
+Si da problemas con el fichero dir/dir/lock por ejemplo, lo borramos
+
+# rm -f dir/dir/lock
+
+luego seguimos con...
+
 terminator
 aptitude
 apache
@@ -2173,3 +2215,4 @@ python
 django
 ruby
 ruby on rails
+Paquete para dar formatos a unidades usb
