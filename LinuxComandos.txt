@@ -501,14 +501,17 @@ tar -xvf paquete.tar // Descomprimir un paquete
 Descomprimir paquetes.tar.bz2
 tar -xjvf example.tar.bz2
 
-Ficheros o Directorios con .tar.gz:
-Comprimir: tar -czvf paquete.tar.gz nombre_directorio
-Comprimir: tar -czvf paquete.tar.gz nombre_fichero.xxx
-Descomprimir: tar -xzvf paquete.tar.gz
+Ficheros: .tar.gz:
+Comprimir: $ tar -czvf paquete.tar.gz nombre_directorio
+Comprimir: $ tar -czvf paquete.tar.gz nombre_fichero.xxx
+Descomprimir: $ tar -xzvf paquete.tar.gz
 
-Archivos .gz:
-Comprimir: gzip -9 index.php
-Descomprimir: gzip -d index.php.gz
+Ficheros: .gz:
+Comprimir: $ gzip -9 index.php
+Descomprimir: $ gzip -d index.php.gz
+
+Ficheros: .tar.xz
+$ tar Jxvf fichero.tar.xz
 
 -------------
 
@@ -728,6 +731,9 @@ $ sudo find /home/user -iname "*xxx*" // Busca todos los archivos que contienen 
 
 $ sudo find /home/user/ -iname "*xxx*" > /home/user/lista.txt // Si el resultado de la búsqueda anterior te ha proporcionado una gran cantidad de información, resulta
 más cómodo almacenar el resultado de la búsqueda en un fichero de texto para revisarlo posteriormente.
+
+# sudo find / -type f -name /home/user/fichero.c>>/home/user/x.txt // Crear un fichero (x.txt) que guardará la salida de la consola, en este caso
+es una búsqueda, buscamos el fichero.c en el directorio user y guardaremos la salida del shell en el fichero x.txt que se creará.
 
 ########################################
 ##### wget para descargar ficheros #####
