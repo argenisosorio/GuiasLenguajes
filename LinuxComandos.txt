@@ -1261,82 +1261,6 @@ make install
 
 // Si no hay errores ya deberíamos poder usar el programa instalado.
 
-###########################################
-##### Estructura de un paquete fuente #####
-###########################################
-
-Un paquete fuente generalmente consiste de tres archivos: uno .dsc, uno .orig.tar.gz y uno .debian.tar.gz (o .diff.gz). Ellos permiten la creación
-de paquetes binarios (.deb) a partir de los archivos de código fuente del programa, escritos en un lenguaje de programación.
-El archivo .dsc («Debian Source Control»: control de fuente Debian) es un archivo de texto corto que contiene una cabecera RFC 2822 que describe el paquete
-fuente e indica qué otros archivos forman parte del mismo. Está firmado por su encargado, lo que garantiza su autenticidad.
-
-# Ejemplo 5.1. Un archivo .dsc
-
------BEGIN PGP SIGNED MESSAGE-----
-Hash: SHA256
-
-Format: 3.0 (quilt)
-Source: zim
-Binary: zim
-Architecture: all
-Version: 0.62-3
-Maintainer: Emfox Zhou <emfox@debian.org>
-Uploaders: Raphaël Hertzog <hertzog@debian.org>
-Homepage: http://zim-wiki.org
-Standards-Version: 3.9.6
-Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/zim.git
-Vcs-Git: git://anonscm.debian.org/collab-maint/zim.git
-Build-Depends: debhelper (>= 9), xdg-utils, python (>= 2.6.6-3~), libgtk2.0-0 (>= 2.6), python-gtk2, python-xdg
-Package-List:
- zim deb x11 optional arch=all
-Checksums-Sha1:
- ad8de170826682323c10195b65b9f1243fd75637 1772246 zim_0.62.orig.tar.gz
- a4f70d6f7fb404022c9cc4870a4e62ea3ca08388 14768 zim_0.62-3.debian.tar.xz
-Checksums-Sha256:
- 19d62aebd2c1a92d84d80720c6c1dcdb779c39a2120468fed01b7f252511bdc2 1772246 zim_0.62.orig.tar.gz
- fc2e827e83897d5e33f152f124802c46c3c01c5158b75a8275a27833f1f6f1de 14768 zim_0.62-3.debian.tar.xz
-Files:
- 43419efba07f7086168442e3d698287a 1772246 zim_0.62.orig.tar.gz
- 725a69663a6c2961f07673ae541298e4 14768 zim_0.62-3.debian.tar.xz
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2
-Comment: Signed by Raphael Hertzog
-
-iQEcBAEBCAAGBQJUR2jqAAoJEAOIHavrwpq5WFcH/RsdzCHc1oXXxHitU23hEqMj
-T6ok29M1UFDJDowMXW75jQ1nT4WPUtvEGygkCHeoO/PvjEvB0sjU8GQlX+N9ddSB
-aHfqfAYmVhADNGxrXQT5inZXUa8qGeeq2Sqf6YcWtsnuD56lDbvxkyf/XYopoIEl
-oltfl05z/AI+vYsW482YrCz0fxNAKAvkyuPhDebYI8jnKWeAANoqmKpsNc/HYyvT
-+ZiA5o57OiGdOKT6XGy3/FiF3dkHiRY8lXW7xdr1BbIgulwl9UmiUNwuxwOYbQO7
-edtjiTJqOaFUA0x1zB/XGv5tHr1MjP8naT+kfVoVHTOox51CDbeu5D3DZY4imcY=
-=Wtoa
------END PGP SIGNATURE-----
-
-Note que el paquete fuente también tiene dependencias (Build-Depends) completamente distintas de aquellas del paquete binario ya que
-indican las herramientas necesarias para compilar el software en cuestión y construir su paquete binario. 
-
-PRECAUCIÓN Espacios de nombres distintos
-
-Es importante saber que no hay una correspondencia necesaria entre el nombre de un paquete fuente y el de el o los paquetes binarios que genera. Es suficientemente fácil de entender si sabe que cada paquete fuente puede generar varios paquetes binarios. Es por esto que el archivo .dsc tiene los campos Source y Binary para nombrar explícitamente el paquete fuente y almacenar la lista de paquetes binarios que genera, respectivamente.
-
-CULTURA Porqué dividir en varios paquetes
-Frecuentemente un paquete fuente (para un programa dado) puede generar varios paquetes binarios. La división es justificada por la posibilidad de utilizar (partes de) el mismo en varios contextos. Si consideramos una biblioteca compartida, ésta puede ser instalada para hacer funcionar una aplicación (por ejemplo, libc6) o para desarrollar un nuevo programa (libc6-dev sería el paquete correcto). Encontramos la misma lógica para servicios cliente/servidor donde deseamos instalar el servidor en una máquina y la parte cliente en otras (este es el caso, por ejemplo, de openssh-server y openssh-client).
-Tan frecuentemente también se provee la documentación en un paquete dedicado: el usuario puede instalarla independientemente del software y puede elegir eliminarla en cualquier momento para ahorrar espacio en disco. Adicionalmente, esto también ahorra espacio en disco en las réplicas Debian ya que todas las arquitecturas comparten los paquetes de documentación (en lugar de tener la documentación duplicada en los paquetes para cada arquitectura).
-
-PERSPECTIVA Diferentes formatos de paquetes fuente
-Originalmente sólo existía un formato de paquete fuente. Este es el formato 1.0 que asocia un compendio .orig.tar.gz con un parche de «debianización» .diff.gz (también hay una variante que consiste de un simple compendio .tar.gz, utilizada automáticamente si hay disponible un archivo .orig.tar.gz).
-Desde Debian Squeeze, los desarrolladores Debian tienen la opción de utilizar nuevos formatos que corrigen varios problemas del formato histórico. El formato 3.0 (quilt) puede combinar varios compendios de origen en el mismo paquete fuente: puede incluir compendios .orig-componente.tar.gz además del .orig.tar.gz usual. Esto es útil con el software distribuido desde origen en varios componentes pero para el que se desea sólo un paquete fuente. Estos compendios también puede comprimirse con bzip2 o xz en lugar de gzip, lo que ahorra espacio en disco y recursos de red. Finalmente, se reemplaza el parche monolítico .diff.gz por un compendio .debian.tar.gz que contiene las instrucciones de compilación y un conjunto de parches al origen contribuidos por el desarrollador del paquete. Estos últimos son registrados en un formato compatible con quilt — una herramienta que facilita la gestión de una serie de parches. 
-
-HERRAMIENTA Descomprimiendo un paquete fuente
-Si tiene un paquete fuente, puede utilizar dpkg-source (del paquete role="pkg") para descomprimirlo:
-
-$ dpkg-source -x package_0.7-1.dsc
-
-También puede utilizar apt-get para descargar un paquete fuente y descomprimirlo inmediatamente. Necesita, sin embargo, que las líneas deb-src apropiadas estén presentes
-en el archivo /etc/apt/sources.list. Éstas son utilizadas para listar los orígenes de los paquetes fuente (los servidores en los que se encuentran un grupo de paquetes fuente).
-
-$ apt-get source package
-
 #################################
 ### DIA - Editor de diagramas ###
 #################################
@@ -1891,7 +1815,7 @@ encontrarían almacenados en passwd.
     Listado de intérpretes de comandos admitidos. El comando chsh permite a los usuarios cambiar su intérprete de comandos por defecto a otro que se encuentre listado en este archivo. Ftpd, el proceso servidor que proporciona servicios FTP en una máquina, comprueba que los intérpretes de comandos de los usuarios estén listados en /etc/shells y no permite que nadie inicie una sesión si el intérprete de comandos no se encuentra en dicho listado. 
 
 /etc/termcap
-    La base de datos de capacidades del terminal. Describe las “secuencias de escape” por medio de las cuales se pueden controlar diversos tipos de terminales. Los programas se escriben para que, en lugar de generar directamente una secuencia de escape que solo funcione en un tipo de terminal, busquen la secuencia correcta para hacer lo que necesiten en /etc/termcap. Como resultado, la mayoría de los programas trabajan con la mayoría de los tipos de terminales existentes. Se puede encontrar información adicional en las páginas de manual de termcap, curs_termcap, y de terminfo. 
+    La base de datos de capacidades del terminal. Describe las “secuencias de escape” por medio de las cuales se pueden controlar diversos tipos de terminales. Los programas se escriben para que, en lugar de generar directamente una secuencia de escape que solo funcione en un tipo de terminal, busquen la secuencia correcta para hacer lo que necesiten en /etc/termcap. Como resultado, la mayoría de los programas trabajan con la mayoría de los tipos de terminales existentes. Se puede encontrar información adicional en las páginas de manual de termcap, curs_termcap, y de terminfo.
 
 #########################
 ##### dpkg - debian #####
@@ -1915,23 +1839,42 @@ entrada para éste en el fichero debian/files.
 -dpkg-parsechangelog Lee el fichero de cambios changelog) de un árbol fuente Debian desempaquetado y genera una salida con la información
 de estos cambios, convenientemente preparada.
 
+###############
+##### deb #####
+###############
+
+-Extensión de archivo: .deb
+-Tipo de formato: Sistema de gestión de paquetes
+
+.deb es la extensión del formato de paquetes de software de la distribución de Linux, Debian GNU/Linux y derivadas (e.j.Ubuntu), y
+el nombre más usado para dichos paquetes. Como Debian, su nombre proviene de Deborah Murdock, ex-esposa del fundador de la distribución Ian Murdock.
+
+El programa predeterminado para manejar estos paquetes es dpkg, generalmente usando apt/aptitude aunque también hay interfaces gráficas como Synaptic PackageKit, Gdebi o en Ubuntu Software Center (este último solo para Ubuntu), desde la versión 3.0. Es posible convertir un paquete deb a otros formatos de paquete (como RPM), y viceversa, usando la aplicación alien.
+
+--- Estructura interna ---
+
+Los paquetes deb son archivos ar estándar de Unix que incluyen dos archivos tar en formato gzip, bzip2 o lzma: uno de los cuales alberga la información de control y el otro los datos.
+
+Estos paquetes contienen tres archivos:
+-debian-binary - número de versión del formato deb. Este es "2.0" para las versiones actuales de Debian.
+-control.tar.gz - toda la meta-información del paquete.
+-data.tar, data.tar.gz, data.tar.bz2 o data.tar.lzma: - los archivos a instalar.
+
+########################################
 ##### Instalación de paquetes .deb #####
+########################################
 
 Documentacion oficial de debian --> https://debian-handbook.info/browse/es-ES/stable/sect.manipulating-packages-with-dpkg.html
 
 dpkg es la herramienta para instalar un paquete Debian, para hacer esto utilizamos su opción -i o --install.
 
-Ejemplo de instalación de un paquete con dpkg
+--- Ejemplo de instalación de un paquete con dpkg ---
 
-# dpkg -i man-db_2.7.0.2-5_amd64.deb // El comando desempaquetara, configurara y comprobará las dependencias del paquete, si hay paquetes sin instalar,
-lo notificara, una vez instalados los paquetes necesarios, el paquete pendiente por configurar lo hará automaticamente, completando así la instalacion,
-se podrá comprobar con un aptitude show nombre_paquete.
+# dpkg -i man-db_2.7.0.2-5_amd64.deb // El comando desempaquetara, configurara y comprobará las dependencias del paquete, si hay paquetes sin instalar, lo notificara, una vez instalados los paquetes necesarios, el paquete pendiente por configurar lo hará automaticamente, completando así la instalacion, se podrá comprobar con un aptitude show nombre_paquete.
 
-# dpkg -l | grep nombre-del-paquete // Comprobar la instalación, Deberías ver ii delante del nombre del paquete en la salida en pantalla, ello
-significaría que el programa ha sido correctamente instalado.
+# dpkg -l | grep nombre-del-paquete // Comprobar la instalación, Deberías ver ii delante del nombre del paquete en la salida en pantalla, ello significaría que el programa ha sido correctamente instalado.
 
-# dpkg -r nombre-del-paquete // Desinstalar paquete con dpkg, Este comando removerá el paquete, pero dejara los archivos de configuracion intactos, esto es util en
-caso que hubieras realizado cambios en ellos y quieras una copia para usos posteriores. Pero si deseas quitar todo rastro del paquete debes usar purge.
+# dpkg -r nombre-del-paquete // Desinstalar paquete con dpkg, Este comando removerá el paquete, pero dejara los archivos de configuracion intactos, esto es util en caso que hubieras realizado cambios en ellos y quieras una copia para usos posteriores. Pero si deseas quitar todo rastro del paquete debes usar purge.
 
 # dpkg -P nombre-del-paquete // Ahora no quedará rastro del paquete antes instalado.
 
@@ -1946,7 +1889,9 @@ $ dpkg --get-selections // Para listar el total de paquetes instalados.
 El comando dpkg -l da la lista de paquetes instalados pero con mayor información. Sin embargo, no es posible utilizarlo
 para instalar una lista de paquetes. 
 
---- Descargando los paquetes fuente ---
+###########################################
+##### Descargando los paquetes fuente #####
+###########################################
 
 Es muy común en el mundo del software libre estudiar el código fuente o corregir código erróneo. Para lograr esto, necesita descargar el código fuente del programa.
 El sistema APT provee de una manera fácil de obtener código fuente de muchos programas contenidos en la distribución, incluyendo todos los archivos necesarios
@@ -1955,56 +1900,94 @@ para crear un .deb para el programa.
 Otro uso común de las fuentes de Debian es el de adaptar la versión más reciente de un programa, de la versión inestable. Compilar un programa en la versión estable
 generará .debs con las dependencias ajustadas para acoplarse a los paquetes en la distribución.
 
-Para lograr esto una entrada deb-src en el archivo /etc/apt/sources.list debe apuntar hacia "unstable". Esta línea debe estar habilitada (sin comentar). Vea a la sección El archivo /etc/apt/sources.list, Sección 2.1.
+Para lograr esto una entrada deb-src en el archivo /etc/apt/sources.list debe apuntar hacia "unstable". Esta línea debe estar habilitada (sin comentar).
 
 Para descargar un paquete fuente, haga lo siguiente:
 
 $ apt-get source packagename
 
-Esto descargará tres archivos: un .orig.tar.gz, un .dsc y un .diff.gz. En el caso de paquetes especiales para Debian, el último de estos archivos no es descargado y el primero
-generalmente no tendrá el "orig" en el nombre.
+Esto descargará tres archivos: un .orig.tar.gz, un .dsc y un .diff.gz. En el caso de paquetes especiales para Debian, el último de estos archivos no es descargado y el primero generalmente no tendrá el "orig" en el nombre.
 
-El archivo .dsc es utilizado por dbpkg-source para descomprimir el paquete en el directorio packagename-version. Con cada paquete descargado existe un directorio debian/
-que contiene los archivos necesarios para crear un paquete .deb.
+El archivo .dsc es utilizado por dbpkg-source para descomprimir el paquete en el directorio packagename-version. Con cada paquete descargado existe un directorio debian/ que contiene los archivos necesarios para crear un paquete .deb.
 
 Para automáticamente compilar el paquete cuando está siendo descargado, sólo agrega -b a la línea de comando así.
 
 $ apt-get -b source packagename
 
-Si decide no crear el archivo .deb mientras descarga el paquete, puede crearlo después ejecutando:
-
-$ dpkg-buildpackage -rfakeroot -uc -b
-
-en el directorio que se ha creado después de descargar el paquete. Para instalar el paquete que ha sido creado por los comandos anteriores, hay que usar el sistema de
-administración de paquetes directamente como aquí:
-
-     # dpkg -i archivo.deb
-
 Hay una diferencia entre el apt-get source y las otras opciones. La opción source puede ser utilizada por usuarios normales, sin necesitar de poderes especiales de root. Los archivos son descargados a un directorio desde el cual el comando apt-get source package es ejecutado.
 
-###############
-##### deb #####
-###############
+###########################################
+##### Estructura de un paquete fuente #####
+###########################################
 
--Extensión de archivo: .deb
--Tipo de formato: Sistema de gestión de paquetes
+Un paquete fuente generalmente consiste de tres archivos: uno .dsc, uno .orig.tar.gz y uno .debian.tar.gz (o .diff.gz). Ellos permiten la creación de paquetes binarios (.deb) a partir de los archivos de código fuente del programa, escritos en un lenguaje de programación.
 
-.deb es la extensión del formato de paquetes de software de la distribución de Linux, Debian GNU/Linux y derivadas (e.j.Ubuntu), y
-el nombre más usado para dichos paquetes. Como Debian, su nombre proviene de Deborah Murdock, ex-esposa del fundador de la distribución Ian Murdock.
+El archivo .dsc («Debian Source Control»: control de fuente Debian) es un archivo de texto corto que contiene una cabecera RFC 2822 que describe el paquete fuente e indica qué otros archivos forman parte del mismo. Está firmado por su encargado, lo que garantiza su autenticidad.
 
-El programa predeterminado para manejar estos paquetes es dpkg, generalmente usando apt/aptitude aunque también hay interfaces gráficas como Synaptic
-PackageKit, Gdebi o en Ubuntu Software Center (este último solo para Ubuntu), desde la versión 3.0. Es posible convertir un paquete deb a otros
-formatos de paquete (como RPM), y viceversa, usando la aplicación alien.
+# Ejemplo 5.1. Un archivo .dsc
 
---- Estructura interna ---
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA256
 
-Los paquetes deb son archivos ar estándar de Unix que incluyen dos archivos tar en formato gzip, bzip2 o lzma: uno de los cuales alberga
-la información de control y el otro los datos.
+Format: 3.0 (quilt)
+Source: zim
+Binary: zim
+Architecture: all
+Version: 0.62-3
+Maintainer: Emfox Zhou <emfox@debian.org>
+Uploaders: Raphaël Hertzog <hertzog@debian.org>
+Homepage: http://zim-wiki.org
+Standards-Version: 3.9.6
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/zim.git
+Vcs-Git: git://anonscm.debian.org/collab-maint/zim.git
+Build-Depends: debhelper (>= 9), xdg-utils, python (>= 2.6.6-3~), libgtk2.0-0 (>= 2.6), python-gtk2, python-xdg
+Package-List:
+ zim deb x11 optional arch=all
+Checksums-Sha1:
+ ad8de170826682323c10195b65b9f1243fd75637 1772246 zim_0.62.orig.tar.gz
+ a4f70d6f7fb404022c9cc4870a4e62ea3ca08388 14768 zim_0.62-3.debian.tar.xz
+Checksums-Sha256:
+ 19d62aebd2c1a92d84d80720c6c1dcdb779c39a2120468fed01b7f252511bdc2 1772246 zim_0.62.orig.tar.gz
+ fc2e827e83897d5e33f152f124802c46c3c01c5158b75a8275a27833f1f6f1de 14768 zim_0.62-3.debian.tar.xz
+Files:
+ 43419efba07f7086168442e3d698287a 1772246 zim_0.62.orig.tar.gz
+ 725a69663a6c2961f07673ae541298e4 14768 zim_0.62-3.debian.tar.xz
 
-Estos paquetes contienen tres archivos:
--debian-binary - número de versión del formato deb. Este es "2.0" para las versiones actuales de Debian.
--control.tar.gz - toda la meta-información del paquete.
--data.tar, data.tar.gz, data.tar.bz2 o data.tar.lzma: - los archivos a instalar.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2
+Comment: Signed by Raphael Hertzog
+
+iQEcBAEBCAAGBQJUR2jqAAoJEAOIHavrwpq5WFcH/RsdzCHc1oXXxHitU23hEqMj
+T6ok29M1UFDJDowMXW75jQ1nT4WPUtvEGygkCHeoO/PvjEvB0sjU8GQlX+N9ddSB
+aHfqfAYmVhADNGxrXQT5inZXUa8qGeeq2Sqf6YcWtsnuD56lDbvxkyf/XYopoIEl
+oltfl05z/AI+vYsW482YrCz0fxNAKAvkyuPhDebYI8jnKWeAANoqmKpsNc/HYyvT
++ZiA5o57OiGdOKT6XGy3/FiF3dkHiRY8lXW7xdr1BbIgulwl9UmiUNwuxwOYbQO7
+edtjiTJqOaFUA0x1zB/XGv5tHr1MjP8naT+kfVoVHTOox51CDbeu5D3DZY4imcY=
+=Wtoa
+-----END PGP SIGNATURE-----
+
+Note que el paquete fuente también tiene dependencias (Build-Depends) completamente distintas de aquellas del paquete binario ya que
+indican las herramientas necesarias para compilar el software en cuestión y construir su paquete binario. 
+
+--- PRECAUCIÓN Espacios de nombres distintos ---
+
+Es importante saber que no hay una correspondencia necesaria entre el nombre de un paquete fuente y el de el o los paquetes binarios que genera. Es suficientemente fácil de entender si sabe que cada paquete fuente puede generar varios paquetes binarios. Es por esto que el archivo .dsc tiene los campos Source y Binary para nombrar explícitamente el paquete fuente y almacenar la lista de paquetes binarios que genera, respectivamente.
+
+--- CULTURA Porqué dividir en varios paquetes ---
+
+Frecuentemente un paquete fuente (para un programa dado) puede generar varios paquetes binarios. La división es justificada por la posibilidad de utilizar (partes de) el mismo en varios contextos. Si consideramos una biblioteca compartida, ésta puede ser instalada para hacer funcionar una aplicación (por ejemplo, libc6) o para desarrollar un nuevo programa (libc6-dev sería el paquete correcto). Encontramos la misma lógica para servicios cliente/servidor donde deseamos instalar el servidor en una máquina y la parte cliente en otras (este es el caso, por ejemplo, de openssh-server y openssh-client).
+Tan frecuentemente también se provee la documentación en un paquete dedicado: el usuario puede instalarla independientemente del software y puede elegir eliminarla en cualquier momento para ahorrar espacio en disco. Adicionalmente, esto también ahorra espacio en disco en las réplicas Debian ya que todas las arquitecturas comparten los paquetes de documentación (en lugar de tener la documentación duplicada en los paquetes para cada arquitectura).
+
+--- PERSPECTIVA Diferentes formatos de paquetes fuente ---
+
+Originalmente sólo existía un formato de paquete fuente. Este es el formato 1.0 que asocia un compendio .orig.tar.gz con un parche de «debianización» .diff.gz (también hay una variante que consiste de un simple compendio .tar.gz, utilizada automáticamente si hay disponible un archivo .orig.tar.gz).
+Desde Debian Squeeze, los desarrolladores Debian tienen la opción de utilizar nuevos formatos que corrigen varios problemas del formato histórico. El formato 3.0 (quilt) puede combinar varios compendios de origen en el mismo paquete fuente: puede incluir compendios .orig-componente.tar.gz además del .orig.tar.gz usual. Esto es útil con el software distribuido desde origen en varios componentes pero para el que se desea sólo un paquete fuente. Estos compendios también puede comprimirse con bzip2 o xz en lugar de gzip, lo que ahorra espacio en disco y recursos de red. Finalmente, se reemplaza el parche monolítico .diff.gz por un compendio .debian.tar.gz que contiene las instrucciones de compilación y un conjunto de parches al origen contribuidos por el desarrollador del paquete. Estos últimos son registrados en un formato compatible con quilt — una herramienta que facilita la gestión de una serie de parches. 
+
+--- HERRAMIENTA Descomprimiendo un paquete fuente ---
+
+Si tiene un paquete fuente, puede utilizar dpkg-source (del paquete role="pkg") para descomprimirlo:
+
+$ dpkg-source -x package_0.7-1.dsc
 
 ##########################################
 ##### Trabajando con paquetes Debian #####

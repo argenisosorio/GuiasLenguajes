@@ -2515,6 +2515,44 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+<!-- Fijar un elemento abajo, al final de un div -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>XXXXXx</title>
+</head>
+<style type="text/css">
+#completo {
+  width: 900px;
+  height: 600px;
+  border: ridge red;
+  position: relative;
+}
+#cabecera {
+  border: ridge green;
+}
+#footer {
+  border: ridge blue;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+}
+</style>
+<body>
+  <div id="completo">
+    <div id="cabecera">
+      <h1>Cabecera</h1>
+    </div>
+    <div id="cabecera">
+      <h1>Cabecera2</h1>
+    </div>
+    <div id="footer">
+      <h2>Footer</h2>
+    </div>
+  </div>
+</body>
+</html>
+
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

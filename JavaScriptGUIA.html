@@ -722,6 +722,23 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 
 -------------------------------------
 
+<!-- Declaración de variable, asignación  de valor, la escribimos en el DOM y activamos una función con ella-->
+<html>
+    <meta charset="utf-8"/>
+<body>
+    <script type="text/javascript">
+        var alerta;
+        alerta="<span onclick='miFuncion()'>Alerta</span>";
+        document.write(alerta);
+        function miFuncion() {
+            alert("Alertaaaaaaa");
+        }
+    </script>
+</body>
+</html>
+
+-------------------------------------
+
 <!-- ciclo while con js -->
 <html>
 <meta charset="utf-8">
@@ -2154,6 +2171,7 @@ Si el campo contiene " " entonces la validacion no funciona
 </html>
 
 -------------------------------------
+
 <!-- Validar campos vacios de formulario, mostrar texto de alerta con estilo
 junto a la caja de texto -->
 <html>
@@ -2189,6 +2207,41 @@ junto a la caja de texto -->
     <span id="mensaje_error" class="mensaje_error_color"></span> <br />
     *Contraseña: <input type="password" name="password">
     <span id="mensaje_error2" class="mensaje_error_color"></span> <br />    
+    <input type="button" onclick="validar()" value="Enviar">
+  </form>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Validar campos select si o no en formulario, cargar texarea nueva -->
+<html>
+<head>
+    <title>Confirmación de envío de formulario</title>
+    <meta charset="utf-8" />
+    <script language="JavaScript">
+      function validar() {
+        if (document.formulario.seleccion.value == 'n') {
+          document.getElementById("texarea").innerHTML = '¿Explique por que no?<br /><textarea name="texto" rows="10" cols="50"></textarea>';
+        }
+        else {
+          //alert("Incorrecto");
+        }
+      }
+    </script>
+</script>
+</head>
+<body>
+  <form name="formulario" action="#">
+    ¿Está de acuerdo?
+    <select name="seleccion">
+      <option value="">Seleccione</option>
+      <option value="s">Sí</option>
+      <option value="n">No</option>
+    </select>
+    <div id="texarea">
+    </div>
+    <br />
     <input type="button" onclick="validar()" value="Enviar">
   </form>
 </body>
