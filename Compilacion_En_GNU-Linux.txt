@@ -1,0 +1,221 @@
+Fundamentos de la compilacion de programas en GNU - Linux
+
+¿Qué es "compilar"?
+
+Compilar es transformar el código fuente (código escrito en un determinado lenguaje de programación, por ejemplo C, C++, etc) en un programa ejecutable para su funcionamiento mediante el uso del procesador para la conversión del lenguaje usado para generar el código a el binario y ensamblador. También se le suele llamar empaquetamiento.
+
+make y makefiles
+
+Make es una herramienta de gestión de dependencias, típicamente, las que existen entre los archivos que componen el código fuente de un programa, para dirigir su recompilación o "generación" automáticamente. Su función básica consiste en determinar automáticamente qué partes de un programa requieren ser recompiladas y ejecutar los comandos necesarios para hacerlo, también lo es que Make puede usarse en cualquier escenario en el que se requiera, de alguna forma, actualizar automáticamente un conjunto de archivos a partir de otro, cada vez que éste cambie.
+
+Por defecto lee las instrucciones para generar el programa u otra acción del fichero makefile. Las instrucciones escritas en este fichero se llaman dependencias.
+
+La herramienta make se usa para las labores de creación de fichero ejecutable o programa, para su instalación, la limpieza de los archivos temporales en la creación del fichero, todo ello especificando unos parámetros iniciales (que deben estar en el makefile) al ejecutarlo.
+
+Además de ser éste su objetivo principal, es utilizado para automatización de otras tareas como la creación de documentos del formato docbook, mantenimiento del sistema, simplemente usando o creando makefiles que hagan estas tareas.
+
+Estructura de un makefile
+
+Los makefiles son los ficheros de texto que utiliza make para llevar la gestión de la compilación de programas. Se podrían entender como los guiones de la película que quiere hacer make, o la base de datos que informa sobre las dependencias entre las diferentes partes de un proyecto. Todos los Makefiles están ordenados en forma de reglas, especificando qué es lo que hay que hacer para obtener un módulo en concreto. El formato de cada una de esas reglas es el siguiente:
+
+objetivo: dependencias
+    comandos
+
+En "objetivo" definimos el módulo o programa que queremos crear, un ejecutble o un archivo objeto, después de los dos puntos y en la misma línea podemos definir qué otros módulos o programas son necesarios para conseguir el "objetivo", esas son las dependencias. Por último, en la línea siguiente y sucesivas indicamos los comandos necesarios para llevar esto a cabo. Es muy importante que los comandos estén separados por un tabulador del comienzo de línea.
+
+juego : ventana.o motor.o bd.o
+    gcc –O2 –c juego.c –o juego.o
+    gcc –O2 juego.o ventana.o motor.o bd.o –o juego
+
+Para crear "juego" es necesario que se hayan creado "ventana.o", "motor.o" y "bd.o" (típicamente habrá una regla para cada uno de esos ficheros objeto en ese mismo Makefile).
+
+Comentarios en makefiles
+
+Todo lo que esté escrito desde el carácter "#" hasta el final de la línea será ignorado por make. Las líneas que comiencen por el carácter "#" serán tomadas como líneas en blanco. Es bastante recomendable hacer uso de comentarios para dotar de mayor claridad a los Makefiles. Podemos añadir una cabecera con la fecha, autor y número de versión del fichero, para llevar un control de versiones más eficiente.
+
+Variables
+
+La forma de definir una variable es indicar el nombre de la variable (típicamente en mayúsculas) y su valor:
+
+CC = gcc –O2
+
+Comandos de mantenimiento
+
+Es habitual que los ficheros makefile puedan contener otros comandos de mantenimiento, que no generen un fichero en concreto, sino que sirvan para realizar una determinada acción dentro de nuestro proyecto. Normalmente estos comandos suelen tener un objetivo, pero ninguna dependencia. El ejemplo más típico de este tipo de comando es "clean" que incluyen casi la totalidad de makefiles, utilizada para "limpiar" de ficheros ejecutables y ficheros objeto los directorios que haga falta, con el propósito de rehacer todo la próxima vez que se llame a "make":
+
+clean:
+    rm –f juego *.o
+
+Reglas implícitas
+
+No todos los objetivos de un makefile tienen por qué tener una lista de comandos asociados para poder realizarse. En ocasiones se definen reglas que sólo indican las dependencias necesarias, y es el propio make quien decide cómo se lograrán cada uno de los objetivos, ejemplo:
+
+juego : juego.o
+juego.o : juego.c
+
+Con un Makefile como este, make verá que para generar "juego" es preciso generar previamente "juego.o" y para generar "juego.o" no existen comandos que lo puedan realizar, por lo tanto, make presupone que para generar un fichero objeto basta con compilar su fuente, y para generar el ejecutable final, basta con enlazar el fichero objeto. Así pues, implícitamente ejecuta las siguientes reglas:
+
+cc –c juego.c –o juego.o
+cc juego.o –o juego
+
+Generando el ejecutable, mediante llamadas al compilador estándar.
+
+Invocando al comando make
+
+Cuando invocamos al comando make desde la línea de comandos, lo primero que se busca es un fichero que se llama "GNUmakefile", si no se encuentra se busca un fichero llamado makefile y si por último no se encontrase, se buscaría el fichero Makefile. Si no se encuentra en el directorio actual ninguno de esos tres ficheros, se producirá un error y make no continuará:
+
+$ make
+make: *** No se especificó ningún objetivo y no se encontró ningún makefile. Alto.
+
+CMake
+
+Es una herramienta multiplataforma de generación o automatización de código. Se utiliza para ahorrar tiempo y esfuerzo en la compilación de nuestras fuentes.
+
+Instalación:
+
+$ sudo apt-get install cmake
+
+Para comprobar que funciona crearemos un directorio llamado compilacion y entramos en el directorio.
+
+debian@debian:~$ mkdir compilacion && cd compilacion
+
+Dentro creamos un fichero .cpp con el siguiente contenido:
+
+#include <iostream>
+
+using namespace std;
+
+int main () {
+    cout << "Hola Mundo!";
+    return 0;
+}
+
+Lo guardamos como source.cpp
+
+CMake necesita como entrada un fichero llamado CMakeLists.txt Este fichero contiene un programa que describe qué dependencias deben cumplirse (como un ./configure convencional) y cómo se construye el proyecto (una especie de Makefile de alto nivel).
+
+El lenguaje que se utiliza para crear este programa es propio de CMake, se ejecuta de forma secuencial y su sintaxis es bastante regular y simple.
+
+En el mismo directorio compilacion creamos un fichero CMakeLists.txt con el siguiente contenido:
+
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+PROJECT(application)
+ADD_EXECUTABLE(executable source.cpp)
+
+Todo el fichero CMakeLists.txt está constituido por comandos que describen tanto las dependencias como la forma de construir el proyecto. También existen estructuras de control (if) y bucles (foreach, while). Gracias a estas estructuras, construir un programa que describa los pormenores de la construcción de un proyecto.
+
+Ahora creamos dentro del directorio, la carpeta build con el siguientes comandos:
+
+$ mkdir build
+
+Nuestro directorio /compilacion de momento tendría los ficheros y carpetas:
+
+debian@debian:~/compilacion$ ls
+
+build  CMakeLists.txt  source.cpp
+
+Ejecutamos el comando:
+
+$ cmake .
+
+Que nos mostrara la siguiente salida:
+
+-- The C compiler identification is GNU 4.9.2
+-- The CXX compiler identification is GNU 4.9.2
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/debian/compilacion
+
+Luego del comando anterior, nuestro directorio /compilacion ahora guarda los ficheros y carpetas:
+
+debian@debian:~/compilacion$ ls
+
+build  CMakeCache.txt  CMakeFiles  cmake_install.cmake  CMakeLists.txt  Makefile  source.cpp
+
+Ejecutamos un:
+
+$ make
+
+Que nos mostrara la siguietne salida:
+
+Scanning dependencies of target executable
+[100%] Building CXX object CMakeFiles/executable.dir/source.cpp.o
+Linking CXX executable executable
+[100%] Built target executable
+
+Si todo esta bien, nos creara un programa ejecutable a partir de source.cpp, entonces, nuestro directorio /compilacion guarda los ficheros y carpetas:
+
+debian@debian:~/compilacion$ ls
+
+build  CMakeCache.txt  CMakeFiles  cmake_install.cmake  CMakeLists.txt  executable  Makefile  source.cpp
+
+El fichero ejecutable que se creo es executable
+
+Para comprobar que funciona correctamente, escribimos:
+
+debian@debian:~/compilacion$ ./executable
+
+Y nos mostraria el contenido de source.cpp compilado, en este caso, un simple Hola Mundo!
+
+Con cada proyecto descargado que use Cmake tiene un fichero CMakeLists.txt en el que describimos el proyecto utilizando un lenguaje con su propia sintaxis. Con él declaramos dónde están los directorios de inclusión, los ficheros fuente, las librerías de las que depende, los productos que generamos (ejecutables o librerías), etc. Partiendo de esta declaración de proyecto, el script es procesado por CMake y genera los ficheros de compilación.
+
+Otro ejemplo
+
+Dentro de un directorio x creamos el CMakeLists.txt con el siguiente contenido:
+
+SET(saludo "Hola Mundo")
+MESSAGE(${saludo})
+
+En este ejemplo creamos una variable utilizando SET y accedemos a su contenido con ${variable}.
+
+Luego ejecutamos:
+
+$ cmake .
+
+Y obtendrás la siguiente salida:
+
+user@debian:/x$ cmake .
+-- The C compiler identification is GNU
+-- The CXX compiler identification is GNU
+-- Check for working C compiler: /usr/bin/gcc
+-- Check for working C compiler: /usr/bin/gcc -- works
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++
+-- Check for working CXX compiler: /usr/bin/c++ -- works
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+Hola Mundo
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /x
+
+Las comprobaciones que CMake hace antes del mensaje "Hola Mundo" son las correspondientes para un proyecto programado en C/C++. Por defecto, si no se especifica otro lenguaje, se harán estas comprobaciones.
+
+Pruebamos de nuevo el comando anterior:
+
+user@debian:/x$ cmake .
+Hola Mundo
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /x
+
+Makefile generado
+
+Por defecto, en sistema UNIX como GNU/Linux, CMake genera un Makefile con diferentes objetivos. Si ejecutamos make para el ejemplo del "Hola Mundo" no pasará nada ya que hasta el momento no se ha creado un programa para compilar proyectos.
+
+./configure
+
+Es un script en bash con una funcion especial y que existe en el directorio con las fuentes del programa que estemos intentando instalar. Es el encargado de configurar y crear un fichero Makefile que sera utilizado por make para compilar/instalar el programa que estemos instalando.
+
+configure se ejecuta con $ ./configure porque al ser un script en el directorio fuente del programa a instalar, se debe llamar desde este directorio con ./ delante para definir que nos referimos al configure del directorio donde nos encontramos y para que sistema lo pueda encontrar.
+
+El ejecutar configure + make + make install es el método mas común de instalación de un programa cuando lo compilamos nosotros mismos, pero no es el único y algunos programas tienen sus propios métodos de configuracion/compilacion/instalacion.

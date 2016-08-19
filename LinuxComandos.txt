@@ -474,7 +474,6 @@ Ejemplo:
     python --version
     ruby --version
 
-
 #####################################################
 ########## Comprimir/Descomprimir archivos ##########
 #####################################################
@@ -1869,6 +1868,10 @@ Documentacion oficial de debian --> https://debian-handbook.info/browse/es-ES/st
 dpkg es la herramienta para instalar un paquete Debian, para hacer esto utilizamos su opción -i o --install.
 
 --- Ejemplo de instalación de un paquete con dpkg ---
+
+$ dpkg -c dsc-nombre-paquete-xxx_i386.deb // Listar contenido del paquete.
+
+$ dpkg -x dsc-nombre-paquete-xxx_i386.deb /home/dir/ // Desempaquetamos el contenido del paquete en una ruta, necesario es crear la ruta antes.
 
 # dpkg -i man-db_2.7.0.2-5_amd64.deb // El comando desempaquetara, configurara y comprobará las dependencias del paquete, si hay paquetes sin instalar, lo notificara, una vez instalados los paquetes necesarios, el paquete pendiente por configurar lo hará automaticamente, completando así la instalacion, se podrá comprobar con un aptitude show nombre_paquete.
 

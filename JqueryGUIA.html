@@ -2802,7 +2802,58 @@ $( "<ol></ol>" )
 
 -------------------------------------
 
-<!-- -->
+<!-- Validar campos select, si o no, en formulario, cargar texarea nueva -->
+<html>
+ <head>
+   <title>prueba</title>
+   <meta charset="UTF-8">
+   <script src="jquery-1.9.1.js" type="text/javascript"></script>
+   <style type="text/css">
+   #texarea {
+    display: none;
+   }
+   </style>
+    <script type="text/javascript">
+    $(document).ready(function(){
+      $("#seleccion").change(function() {
+        var valores = $(this).val();
+        if (valores == 's') {
+          //alert("Sí!");
+          $( "#texarea" ).hide();
+        }
+        if (valores == 'n') {
+          //alert("No!");
+          $( "#texarea" ).show();
+        }
+        else {
+          //alert("Seleccione una opción!");
+        }
+      });
+    });
+    </script>
+ </head>
+ <body>
+    <form name="formulario" action="#">
+      ¿Está de acuerdo con el informe?
+      <br />
+      <br />
+      <select name="seleccion" id="seleccion">
+        <option value="">Seleccione</option>
+        <option value="s">Sí</option>
+        <option value="n">No</option>
+      </select>
+      <br />
+      <br />
+      <div id="texarea">
+        ¿Explique por que no está de acuerdo?<br />
+        <textarea></textarea>
+      </div>
+      <br />
+      <br />
+      <input type="submit" value="Enviar">
+    </form>
+ </body>
+</html>
 
 -------------------------------------
 
