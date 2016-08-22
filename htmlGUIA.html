@@ -614,6 +614,25 @@ table#t01 tr:nth-child(odd):hover {
 a, abbr, acronym, address, applet, area, b, base, basefont, bdo, big, blockquote, body, br, button,	caption, center, cite, code, col, colgroup, dd, del, dfn, dir, div, dl, dt, em, fieldset, font, form, frame, frameset, h1, h2, h3, h4, h5, h6, head, hr, html, i, iframe, img, input, ins, isindex, kbd, label, legend, li,
 link, map, menu, meta, noframes, noscript, object, ol, optgroup, option, p, param, pre, q, s, samp, script, select, small, span, strike, strong, style, sub, sup, table, tbody, td, textarea, tfoot, th, thead, title, tr, tt, u, ul, var
 	
+
+######################
+##### GET y POST #####
+######################
+
+Se suele prestar a confusión ya que tanto GET como POST son métodos del protocolo HTTP el cual esta compuesto por un envío al servidor conocido como petición (request) y una respuesta a dicha solicitud (response).
+
+Tanto GET como POST, justamente por ser métodos ambos de HTTP, ejecutan un request y response, y a mi criterio esto suele ser parte de la confusión sobre los objetivos reales de ambos métodos.
+
+El concepto GET es obtener información del servidor. Traer datos que están en el servidor, ya sea en un archivo o base de datos, al cliente. Independientemente de que para eso tengamos que enviar (request) algún dato que será procesado para luego devolver la respuesta (response) que esperamos, como por ejemplo un identificador para obtener una noticia de la base de datos.
+
+POST sin embargo es enviar información desde el cliente para que sea procesada y actualice o agregue información en el servidor, como sería la carga o actualización en sí de una noticia. Cuando enviamos (request) datos a través de un formulario, estos son procesados y luego a través de una redirección por ejemplo devolvemos (response) alguna página con información.
+
+Ambos métodos solicitan una respuesta del servidor y ahí es donde parecen que los conceptos son iguales ya que con ambos se podría lograr los mismos objetivos. Yo podría, aunque estaría mal, enviar por GET ciertos datos en la URL y “actualizar o insertar” información en mi base de datos, pero eso le correspondería al método POST. De la misma manera podría solicitar una página diferente por medio de POST y simplemente mostrarla como respuesta aunque eso debería ser a través de una llamada GET.
+
+Las llamadas GET pueden ser cacheadas (historial del navegador), indexadas por buscadores, agregar los enlaces a nuestros favoritos o hasta pasar una url completa a otra persona para que directamente ingrese a esa página. Con el método POST sin embargo no se puede hacer esto.
+
+Generalmente usamos links para ejecutar llamadas GET ya que la idea del link es simplemente “solicitar” una información (página) al servidor y que sea devuelta como una respuesta. Mientras usamos formularios para actualizar datos de productos, clientes, noticias, etc, también teniendo en cuenta que por el método POST también se puede enviar mucha más cantidad de datos que por GET.
+
 ****************formULARIOS****************
 
 <form action="datos.php" method="get"> formulario de USUARIO y CONTRASEÑA también method="post"

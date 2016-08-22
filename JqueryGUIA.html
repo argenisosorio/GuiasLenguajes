@@ -2339,6 +2339,19 @@ $(document).ready(function(){
 
 -------------------------------------
 
+JSON es una notación de objetos basada en JavaScript, utiliza una sintaxis que nos permite crear objetos de manera rapida y simple, estos objetos pueden ser utilizados de la manera que queramos y la notación se utiliza muy comúnmente para crear servicios REST, objetos, e incluso fue adoptada por algunas bases de datos como lo es MongoDB. A continuación el siguiente video tutorial demuestra una introducción. Codigo ejemplo puedes encontrarlo posteriormente.
+Sintaxis de JSON
+
+Para escribir JSON debemos tener en cuenta lo siguiente:
+La creación de los objetos JSON implica escribir datos, para ello:
+
+    Los datos estan separados por comas.
+    los datos se escriban en pares, siendo primero el nombre o atributo del mismo y luego el valor del dato.
+    Los objetos JSON estan rodeados por llaves “{}”
+    Llaves cuadradas [] guardan arreglos, incluyendo otros objetos JSON
+
+// Comentario dentro del json
+
 <!-- Escribiendo en el DOM los datos de un JSON -->
 <!DOCTYPE  html>
 <html>
@@ -2808,14 +2821,15 @@ El JSON = mi.json
   <head> 
      <title>Evaluar una variable que contiene notación JSON</title>
      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-     <script src="jquery-min1.12.4.js" type="text/javascript"></script>
+     <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
  </head> 
  <body> 
   <h3>Evaluar una variable que contiene notación JSON.</h3>
   <input type="button" id="boton1" value="Recuperar datos del JSON" /><br /><br />
   <span id="texto"></span>
-  <script type="text/javascript">
+   <script type="text/javascript">
     $(document).ready(function () {
+      /*$("#boton1").click(function () {*/
       window.onload = function () {
         var cad = "Los elementos en el archivo JSON son:<br /><br />";
         var cadena = $.getJSON("mi.json", function (data) {
@@ -2829,8 +2843,9 @@ El JSON = mi.json
           $("#texto").html(cad);
         })
       }
+      /*});*/
     });
-  </script>
+   </script>
   </body>
 </html>
 

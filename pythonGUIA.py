@@ -865,3 +865,55 @@ lista = [1,2,3]
 print lista
 lista.reverse()
 print lista
+
+########################################################
+##### Usando APIs con el Modulo Requests de Python #####
+########################################################
+
+#Requests es una librería para HTTP
+
+'''
+Para este ejemplo aclaremos:
+
+Github y Stackoverflow proporcionan su API para extraer diversos tipos de datos.
+
+La documentación de la API de Github y StackOverflow se puede encontrar aquí.
+Github: https://developer.github.com/v3/
+StackOverflow: http://api.stackexchange.com/docs 
+
+Pero ¿qué es lo que usamos para comunicarse con estas API?
+Trabajar con HTTP es una tarea dolorosa. Python incluye un módulo llamado urllib2 pero trabajar con él puede llegar a ser engorroso.
+'''
+
+### Solicitudes HTTP ###
+
+Instalamos el paquete python-requests para hacer solicitudes HTTP
+
+# apt-get install python-requests
+
+Creamos y guardamos el fichero postrequest.py con el siguiente contenido:
+
+#----- begin
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import requests
+r = requests.get('https://api.github.com', auth=('username', '123456'))
+print r.status_code
+print r.headers['content-type']
+#----- end
+
+Contiene la llamada a la librería instalada "import requests", creamos una variable "r"
+y le asignames una solicitud GET a la api de logeo de github, donde le pasaremos el nombre de usuario y la contraseña, al ejecutarlo
+no data una respuesta gracias a los print que declaramos, hora de probarlo:
+
+$ python postrequest.py
+
+#Si el usuario o la contraseña no coinciden, o no consigue nungun recurso buscado, acceso, etc, nos dará el siguiente error:
+
+401
+application/json; charset=utf-8
+
+#De lo contrario si el usuario y la contraseña coinciden, si encontro el recurso o acceso, nos mostrara un OK:
+
+200
+application/json; charset=utf-8
