@@ -2370,8 +2370,40 @@ $(document).ready(function(){
 
 -------------------------------------
 
-<!-- Escribiendo en el DOM los datos de un JSON 2 -->
+<!-- Escribiendo en el DOM los datos de un JSON, por posiciones -->
 <!DOCTYPE  html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <script src="jquery-1.9.1.js" type="text/javascript"></script>
+</head>
+<body>  
+  <p>JSON example Jquery</p>
+  <div id="elemento1">
+  </div>
+  <div id="elemento2">
+  </div>
+  <br />
+  <button>Activar</button>
+</body>
+</html>
+<script type="text/javascript">
+  var json_datos = {"usuarios":[
+    {"nombre":"María","cedula":"12345678"},
+    {"nombre":"Carlos","cedula":"87654321"},
+  ]};
+  $(document).ready(function() {
+    $("button").click(function() {
+      $("#elemento1").html(json_datos.usuarios[0].nombre+json_datos.usuarios[0].cedula);
+      $("#elemento2").html(json_datos.usuarios[1].nombre+json_datos.usuarios[1].cedula);
+    });
+  });
+</script>
+
+-------------------------------------
+
+<!-- Escribiendo en el DOM los datos de un JSON, por posiciones 2-->
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -2617,7 +2649,7 @@ Evaluar una variable que contiene notación JSON.
 <!DOCTYPE html>
 <html> 
   <head> 
-     <title>Evaluar una variable que contiene notación JSON</title> 
+     <title>Evaluar una variable que contiene notación JSON</title>
      <meta http-equiv="Content-Type" 
               content="text/html; charset=UTF-8">
      <script src="jquery-1.10.2.js" type="text/javascript"></script>
@@ -2641,11 +2673,11 @@ Evaluar una variable que contiene notación JSON.
                            "<br />").replace("y undefined", "").replace(", undefined", "");
                     }
                    $("#texto").html(cad);
-               })     
+               })
            })
        });
-  </script>                
-    </body> 
+  </script>
+    </body>
 </html>
 
 El JSON = mi.json
@@ -2696,6 +2728,187 @@ El JSON = mi.json
 
 -------------------------------------
 
+<!-- Utilización de un for para recorrer un json y mostrar los datos -->
+<!DOCTYPE html>
+<html> 
+  <head> 
+     <title>Evaluar una variable que contiene notación JSON</title>
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+     <script src="jquery-min1.12.4.js" type="text/javascript"></script>
+ </head> 
+ <body> 
+  <h3>Evaluar una variable que contiene notación JSON.</h3>
+  <input type="button" id="boton1" value="Recuperar datos del JSON" /><br /><br />
+  <span id="texto"></span>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $("#boton1").click(function () {
+        var cad = "Los elementos en el archivo JSON son:<br /><br />";
+        var cadena = $.getJSON("mi.json", function (data) {
+          for (x in data.america.venezuela) {
+            cad += ("Estado: " + data.america.venezuela[x].estado + "<br />");
+            cad += ("Habitantes: " + data.america.venezuela[x].habitantes + "<br />");
+            cad += ("Gobernador: " + data.america.venezuela[x].gobernador[0] + "<br />");
+            cad += ("Consejal: " + data.america.venezuela[x].gobernador[1] + "<br /><br />");
+          }
+          $("#texto").html(cad);
+        })
+      })
+    });
+  </script>
+  </body>
+</html>
+
+El JSON = mi.json
+
+{
+  "america": {
+    "venezuela": [
+      {
+        "estado": "Mérida",
+        "habitantes": "2313123",
+        "gobernador": [
+          "Alexis Ramírez",
+          "Cj. Pedro Pérez"
+        ]
+      },
+      {
+        "estado": "Barinas",
+        "habitantes": "232012",
+        "gobernador": [
+          "Anibal Chávez",
+          "Cj.Carmen Yolanda"
+        ]
+      },
+      {
+        "estado": "Apure",
+        "habitantes": "212309",
+        "gobernador": [
+          "Manuel Carreño",
+          "Cj.José Albarran"
+        ]
+      },
+      {
+        "estado": "Táchira",
+        "habitantes": "234012",
+        "gobernador": [
+          "Vielma Mora",
+          "Cj.Francisco Beltrán"
+        ]
+      }
+    ]
+  }
+}
+
+-------------------------------------
+
+<!-- Utilización de un for para recorrer un json y mostrar los datos, añadiendo link en el json -->
+<!DOCTYPE html>
+<html> 
+  <head> 
+     <title>Evaluar una variable que contiene notación JSON</title>
+     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+     <script src="jquery-min1.12.4.js" type="text/javascript"></script>
+ </head> 
+ <body> 
+  <h3>Evaluar una variable que contiene notación JSON.</h3>
+  <input type="button" id="boton1" value="Recuperar datos del JSON" /><br /><br />
+  <span id="texto"></span>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      window.onload = function () {
+        var cad = "Los elementos en el archivo JSON son:<br /><br />";
+        var cadena = $.getJSON("mi.json", function (data) {
+          for (x in data.INCES.Proyectos) {
+            cad += ("Nombre del Proyecto: " + data.INCES.Proyectos[x].nombre + "<br />");
+            cad += ("Solicitud: " + data.INCES.Proyectos[x].solicitud + "<br />");
+            cad += ("Responsable 1: " + data.INCES.Proyectos[x].responsables[0] + "<br />");
+            cad += ("Responsable 2: " + data.INCES.Proyectos[x].responsables[1] + "<br />");
+            cad += ("Detalles: " + data.INCES.Proyectos[x].detalles + "<br /><br />");
+          }
+          $("#texto").html(cad);
+        })
+      }
+    });
+  </script>
+  </body>
+</html>
+
+El JSON = mi.json
+
+{
+  "INCES": {
+    "Proyectos": [
+      {
+        "nombre": "Proyecto 1",
+        "solicitud": "2313123",
+        "responsables": [
+          "Alexis Parra",
+          "Pedro Pérez"
+        ],
+        "detalles": "<a href='#'>Ver</a>"
+      },
+      {
+        "nombre": "Proyecto 2",
+        "solicitud": "232012",
+        "responsables": [
+          "Marcos Chávez",
+          "Carmen Yolanda"
+        ],
+        "detalles": "<a href='#'>Ver</a>"
+      },
+      {
+        "nombre": "Proyecto 3",
+        "solicitud": "212309",
+        "responsables": [
+          "Manuel Carreño",
+          "José Albarran"
+        ],
+        "detalles": "<a href='#'>Ver</a>"
+      },
+      {
+        "nombre": "Proyecto 4",
+        "solicitud": "234012",
+        "responsables": [
+          "Karla Mora",
+          "Francisco Beltrán"
+        ],
+        "detalles": "<a href='#'>Ver</a>"
+      }
+    ]
+  }
+}
+
+-------------------------------------
+
+<!-- Toma una cadena JSON bien formada y devuelve el valor resultante JavaScript, si esta mal declarado o no consigue el dato devolvera false -->
+<!--Passing in a malformed JSON string results in a JavaScript exception being thrown. For example, the following are all invalid JSON strings:
+"{test: 1}" (test does not have double quotes around it).
+"{'test': 1}" ('test' is using single quotes instead of double quotes).
+"'test'" ('test' is using single quotes instead of double quotes).
+".1" (a number must start with a digit; "0.1" would be valid).
+"undefined" (undefined cannot be represented in a JSON string; null, however, can be).
+"NaN" (NaN cannot be represented in a JSON string; direct representation of Infinity is also not permitted).
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery.parseHTML demo</title>
+  <script src="jquery-1.10.2.js"></script>
+</head>
+<body>
+<script type="text/javascript">
+  $(document).ready(function(){
+    var obj = jQuery.parseJSON( '{ "name": "John" }' );
+    alert( obj.name === "Johnn" );
+  });
+</script>
+</body>
+</html>
+
+-------------------------------------
+
 <!-- Crea un arreglo de nodos del DOM usando una cadena de y la inserta dentro de un div -->
 <!doctype html>
 <html lang="en">
@@ -2733,127 +2946,132 @@ $( "<ol></ol>" )
 
 -------------------------------------
 
-<!-- Toma una cadena JSON bien formada y devuelve el valor resultante JavaScript, si esta masl declarado o no consigue el dato devolvera false -->
-<!--Passing in a malformed JSON string results in a JavaScript exception being thrown. For example, the following are all invalid JSON strings:
-"{test: 1}" (test does not have double quotes around it).
-"{'test': 1}" ('test' is using single quotes instead of double quotes).
-"'test'" ('test' is using single quotes instead of double quotes).
-".1" (a number must start with a digit; "0.1" would be valid).
-"undefined" (undefined cannot be represented in a JSON string; null, however, can be).
-"NaN" (NaN cannot be represented in a JSON string; direct representation of Infinity is also not permitted).
--->
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>jQuery.parseHTML demo</title>
-  <script src="jquery-1.10.2.js"></script>
-</head>
-<body>
-<script type="text/javascript">
-  $(document).ready(function(){
-    var obj = jQuery.parseJSON( '{ "name": "John" }' );
-    alert( obj.name === "Johnn" );
-  });
-</script>
-</body>
-</html>
-
--------------------------------------
-
-<!-- Basic Navbar barra Example -->
+<!-- Creacion de un modal grande -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Case</title>
+  <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
 <body>
-<style type="text/css">
-.navbar-default {
-  border: ridge 1px red !important;
-  position: fixed;
-  max-width: 100%;
-}
-</style>
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">WebSiteName</a>
+    <div class="container">
+      <h2>Modal grande</h2>
+      <!-- Trigger the modal with a button -->
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Abrir el modal</button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg"> <!-- modal-sm para que sea pequeño -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Cabecera del Modal </h4>
+            </div>
+            <div class="modal-body">
+              <p>Contenido del modal</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Boton cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">Page 1</a></li>
-      <li><a href="#">Page 2</a></li>
-      <li><a href="#">Page 3</a></li>
-    </ul>
-  </div>
-</nav>
-  
-<div class="container">
-  <h3>Basic Navbar Example</h3>
-  <p>A navigation bar is a navigation header that is placed at the top of the page.</p>
 </body>
 </html>
 
 -------------------------------------
 
-<!-- Validar campos select, si o no, en formulario, cargar texarea nueva -->
-<html>
- <head>
-   <title>prueba</title>
-   <meta charset="UTF-8">
-   <script src="jquery-1.9.1.js" type="text/javascript"></script>
-   <style type="text/css">
-   #texarea {
-    display: none;
-   }
-   </style>
-    <script type="text/javascript">
-    $(document).ready(function(){
-      $("#seleccion").change(function() {
-        var valores = $(this).val();
-        if (valores == 's') {
-          //alert("Sí!");
-          $( "#texarea" ).hide();
-        }
-        if (valores == 'n') {
-          //alert("No!");
-          $( "#texarea" ).show();
-        }
-        else {
-          //alert("Seleccione una opción!");
-        }
-      });
-    });
-    </script>
- </head>
- <body>
-    <form name="formulario" action="#">
-      ¿Está de acuerdo con el informe?
-      <br />
-      <br />
-      <select name="seleccion" id="seleccion">
-        <option value="">Seleccione</option>
-        <option value="s">Sí</option>
-        <option value="n">No</option>
-      </select>
-      <br />
-      <br />
-      <div id="texarea">
-        ¿Explique por que no está de acuerdo?<br />
-        <textarea></textarea>
+<!-- Creacion de un modal pequeño -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+      <h2>Modal pequeño</h2>
+      <!-- Trigger the modal with a button -->
+      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Abrir el modal</button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-sm"> <!-- modal-lg para que sea grande -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Cabecera del Modal </h4>
+            </div>
+            <div class="modal-body">
+              <p>Contenido del modal</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Boton cerrar</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <br />
-      <br />
-      <input type="submit" value="Enviar">
-    </form>
- </body>
+    </div>
+</body>
 </html>
+
+-------------------------------------
+
+<!-- Cargar en modal una pagina web o html externa, con boton cerrar -->
+<!-- Crear el archivo x.html-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Example of Bootstrap 3 Modals with Remote URL</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="bs-example">
+    <!-- Button HTML (to Trigger Modal) -->
+    <a href="y.html" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#myModal">Launch Demo Modal</a>
+    
+    <!-- Modal HTML -->
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">             
+                <!-- Content will be loaded here from "remote.php" file -->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+
+<!-- Crear el archivo y.html-->
+<div align="center">
+  <span style="text-align:right">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>  
+  </span>
+  XXXXXXXXXXXXXXXX <br />
+  XXXXXXXXXXXXXXXX <br />
+  XXXXXXXXXXXXXXXX <br />
+  XXXXXXXXXXXXXXXX <br />
+  XXXXXXXXXXXXXXXX <br />
+  <span style="text-align:right">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Boton cerrar</button>
+  </span>
+</div>
+
+-------------------------------------
+
+<!-- -->
 
 -------------------------------------
 

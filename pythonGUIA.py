@@ -1,5 +1,10 @@
 ### Guía Python by dM ###
 
+#Cabecera para los scripts de Python, indica al compilador o editor que se trata de un fichero python
+#La segunda linea da codificación UTF-8 al programa
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 #Comentarios de línea en Python
 
 """ Comentarios de 
@@ -259,7 +264,7 @@ def prueba():
 	print"La suma es",suma
 prueba()
 
-#---tro Ejemplo:
+#---otro Ejemplo:
 def prueba(): 
 	num = 10
 	print num * 3 #El resultado es 30
@@ -269,6 +274,13 @@ prueba()
 def prueba(): 
 	x = [1, 2, 3, 4]
 	print x #Imprime: [1, 2, 3, 4]
+prueba()
+
+# Imprimiento un elemento de la lista
+def prueba(): 
+	x = [1, 2, 3, 4]
+	#print x #Imprime: [1, 2, 3, 4]
+	print x[2]
 prueba()
     
 #---Ejemplo de Función Matemática:
@@ -282,7 +294,17 @@ def cuadrado2(): #Creamos una nueva función
 	n = input("Ingrese un número: ") #Pedira al usuario que introduzca un número
 	cuadrado(n) #Pasara el valor introducido a la funcion matematica declarada anteriormente (Cuadrado de un número)
 
-cuadrado2() #Ejecutara la función, nos pedira un numero, realizara los calculos y mostrara el resultado 
+cuadrado2() #Ejecutara la función, nos pedira un numero, realizara los calculos y mostrara el resultado
+
+#Usando las dos funciones
+def cuadrado(num): #Calcula el cuadrado de un número dado
+	print num*num
+
+def cuadrado2(): #Creamos una nueva función
+	n = input("Ingrese un número: ") #Pedira al usuario que introduzca un número
+	cuadrado(n) #Pasara el valor introducido a la funcion matematica declarada anteriormente (Cuadrado de un número)
+
+cuadrado2()
 
 #---EJEMPLO de Función y Cálculo
 
@@ -365,14 +387,6 @@ prueba()
 ##############
 ##### IF #####
 ##############
-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-# La primera es la cabecera del archivo, indica al compilador o
-#editor que se trata de un fichero python
-
-# La segunda da codificación UTF-8 al programa  
 
 #Introducir la nota, el programa calcula si APROBO o SUSPENDIO XD
 nota = input ("Escriba la nota: ")
@@ -483,49 +497,54 @@ while True:
 		print "Numero negativo"
 
 ##################
-##### LISTAS #####
+##### Listas #####
 ##################
 
+#TEORIA PENDIENTE
+
 lista = [2,"tres",True,["uno",10]] #Cada elemento de la lista contiene un indice, desde el 0,1,2...
-
 print lista
 
 #********************
 
-acceder = lista [0]
-acceder = lista [1]
-acceder = lista [2] Accede al elemento en la posicion 2 de mi lista
-
-print acceder
-
-#********************
-
-acceder = lista [3][0] accedo al tercer elemento y dentro del tercero accedo al elemento 0 de la sublista
-
-print acceder
+#Imprimiendo los elementos de la lista
+lista = ["Proyecto1","Proyecto2","Proyecto3",["David","Usain"]]
+print lista[0]
+print lista[1]
+print lista[2]
+print lista[3][0]#Accedemos al elemento de la posición tres e imprimimos el subelemento de la posicion 0
+print lista[3][1]#Accedemos al elemento de la posición tres e imprimimos el subelemento de la posicion 1
 
 #********************
 
-lista [1] = 4 cambiar el valor del elemento en la posicion 1 por un entero
-lista [1] = "casa" cambiar el valor del elemento en la posicion 1 por una cadena
-
+lista = ["Proyecto1","Proyecto2","Proyecto3",["David","Usain"]]
+lista [1] = 4 #cambiar el valor del elemento en la posicion 1 por un entero
+lista [1] = "casa" #cambiar el valor del elemento en la posicion 1 por una cadena
 print lista
 
 #********************
 
-lista = ["casa","carro","perro","gato","ventana","puerta"] Nueva lista
-
-lista2 = lista[0:3] Imprmir elementos desde la lista desde el 0 hasta la posicion 3
-
+lista = ["casa","carro","perro","gato","ventana","puerta"] #Nueva lista
+lista2 = lista[0:3] #Imprmir elementos desde la lista desde el 0 hasta la posicion 3
 print lista2
 
 #********************
 
-lista = ["casa","carro","perro","gato","ventana","puerta"] 
-
-lista[0:1] = 5,6 Sustituir valores en las posiciones
-
+lista = ["casa","carro","perro","gato","ventana","puerta"]
+lista[0:1] = 5,6 #Sustituir valores en las posiciones
 print lista
+
+###########################
+##### Listas, métodos #####
+###########################
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+lista = [1,"Dos",3]
+buscar = 1
+print buscar in lista #Se traduciría como: ¿Buscar esta en la lista?
+#Nos devolvería un True porque si está ese valor en la lista
+
 
 ###########################
 ##### VARIABLE GLOBAL #####
@@ -546,4 +565,303 @@ print a
 function()
 #function2()
 
+##################
+##### Tuplas #####
+##################
 
+#TEORIA PENDIENTE
+
+# Imprimiendo el contenido de una tupla
+tupla = (1,True,"hola")
+print tupla
+
+# Imprimiendo el contenido de una tupla, posición a posición.
+tupla = (1,True,"hola")
+print tupla[0]
+print tupla[1]
+print tupla[2]
+
+
+########################
+##### Diccionarios #####
+########################
+
+#TEORIA PENDIENTE
+
+#Imprimiendo el contenido del diccionario
+diccionario = {'Clave1':[1,2,3],
+               'Clave2':True
+}
+print diccionario
+
+#Imprimiendo el contenido del diccionario, accedemos a los valores a través de la clave
+diccionario = {'Clave1':[1,2,3],
+               'Clave2':True
+}
+print diccionario['Clave1']
+print diccionario['Clave2']
+
+#Imprimiendo el contenido del diccionario, accedemos a los valores a través de la clave que puede
+#cualquier tipo de dato, una cadena, un entero, etc, pero no listas ni diccionarios
+diccionario = {'Clave1':[1,2,3],
+               'Clave2':True,
+               4:"numero"
+}
+print diccionario['Clave1']
+print diccionario['Clave2']
+print diccionario[4]
+
+
+##################
+##### Clases #####
+##################
+
+#En la vida cotidiana, conocemos los objetos, como una carro, una botella, una perdona, etc.
+#Esos objetos poseen ciertas caracteristicas, esas características, en programación orientada a objetos
+#las llamámos atributos del objeto, y a las acciones que puede realizar el objeto se conocen como métodos.
+#Podriamos crear un objeto llamado Humano, y sus atributos serian, la edad, estatura, nombre, cedula, nacionalidad
+#Y sus métodos serían, caminar, correr, levantarse, etc.
+#Una clase es una plantilla del cual proviene nuestro objeto, en ella establecemos los atributos y métodos que tendra un objeto.
+
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#Definimos una clase, por convención se usa la primera letra en mayúscula
+class Humano:
+	def __init__(self): #Definimos un método, es una función pero cuando está dentro de una clase es un método, éste método init python lo reconoce, cuando se cree un nuevo objeto, automáticamente se va a ejecutar este método. En la variable self se va a guardar la referencia al objeto que estemos creando
+		print "Soy un nuevo objeto"
+
+pedro = Humano() #Creamos un objeto que tiene como plantilla la clase Humano
+
+
+#********************
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#Definimos una clase, por convención se usa la primera letra en mayúscula
+class Humano:
+    def __init__(self): #Definimos un método, es una función pero cuando está dentro de una clase es un método, éste método init python lo reconoce, cuando se cree un nuevo objeto, automáticamente se va a ejecutar este método. En la variable self se va a guardar la referencia al objeto que estemos creando
+        print "Soy un nuevo objeto"
+
+    def hablar(self,mensaje):
+        print mensaje
+
+pedro = Humano() #Creamos el objeto
+raul = Humano() #Creamos el objeto
+pedro.hablar('Hola') #Le pasamos valores por parametro que recibirá el método
+raul.hablar('Hola, Pedro') #Le pasamos valores por parametro que recibirá el método
+
+#********************
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+class Humano:
+    def __init__(self):
+        self.edad = 25 #Agregamos un atributo, cada objeto que cree a partir de esta clase, tendra ese atributo
+        print "Soy un nuevo objeto"
+
+    def hablar(self,mensaje):
+        print mensaje
+
+pedro = Humano() #Creamos el objeto
+print "Soy Pedro y tengo", pedro.edad
+
+#********************
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+class Humano:
+    def __init__(self,edad):#Agregamos la variable edad
+        self.edad = edad #Tenemos el atributo edad y le asignamos la variable edad que recibiremos como argumento del método
+
+    def hablar(self,mensaje):
+        print mensaje
+
+pedro = Humano(26) #Enviamos por parámetro el valor que será recibido por el método, ya que está declarado el argumento edad junto a self
+raul = Humano(21) #Enviamos por parámetro el valor que será recibido por el método, ya que está declarado el argumento edad junto a self
+print "Soy Pedro y tengo", pedro.edad
+print "Soy Raul y tengo", raul.edad
+
+####################
+##### Herencia #####
+####################
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+class Humano:
+    def __init__(self,edad):
+        self.edad = edad
+
+    def hablar(self,mensaje):
+        print self.edad
+        print mensaje
+
+class IngSistemas(Humano): #Subclase que hereda de la Superclase, la subclase heredara todos los atributos y métodos de la Superclase
+    def programar(self,lenguaje):
+        print 'Voy a programar en ', lenguaje
+
+class LicDerecho(Humano):
+    def estudiarCaso(self,de):
+        print 'Debo estudiar el caso de ', de
+
+pedro = IngSistemas(26) #Objeto creado con la clase IngSistemas pero usa el método de la Superclase Humano
+raul = LicDerecho(27) #Objeto creado con la clase IngSistemas pero usa el método de la Superclase Humano
+print "Soy Pedro y tengo", pedro.edad
+print "Soy Raul y tengo", raul.edad
+pedro.hablar('Hola')
+raul.hablar('Hola, Pedro')
+
+#Usando el método programar y enviando valores al argumento que necesita
+#Usando el método estudiarCaso y enviando valores al argumento que necesita
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+class Humano:
+    def __init__(self,edad):
+        self.edad = edad
+
+    def hablar(self,mensaje):
+        print mensaje
+
+class IngSistemas(Humano):
+    def programar(self,lenguaje):
+        print 'Voy a programar en ', lenguaje
+
+class LicDerecho(Humano):
+    def estudiarCaso(self,de):
+        print 'Debo estudiar el caso de ', de
+
+pedro = IngSistemas(26)
+raul = LicDerecho(27)
+pedro.hablar('Hola')
+raul.hablar('Hola, Pedro')
+pedro.programar('Python') #Usando el método programar y enviando valores al argumento que necesita
+raul.estudiarCaso('Pedro')
+
+#Definimos el método init que sobrescribira al método heredado de Humano, cuando el objeto use el metodo init usará el suyo y no el heredado.
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+class Humano:
+    def __init__(self,edad):
+        self.edad = edad
+
+    def hablar(self,mensaje):
+        print mensaje
+
+class IngSistemas(Humano):
+    def __init__(self): #Definimos el método init que sobrescribira al método heredado de Humano, cuando el objeto use el metodo init usará el suyo y no el heredado
+        print 'Hola'
+
+    def programar(self,lenguaje):
+        print 'Voy a programar en ', lenguaje
+
+class LicDerecho(Humano):
+    def estudiarCaso(self,de):
+        print 'Debo estudiar el caso de ', de
+
+pedro = IngSistemas()
+raul = LicDerecho(27)
+pedro.hablar('Hola')
+raul.hablar('Hola, Pedro')
+pedro.programar('Python')
+raul.estudiarCaso('Pedro')
+
+#############################
+##### Herencia multiple #####
+#############################
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+class Humano:
+    def __init__(self,edad):
+        self.edad = edad
+
+    def hablar(self,mensaje):
+        print mensaje
+
+class IngSistemas(Humano):
+    def __init__(self):
+        print 'Hola'
+
+    def programar(self,lenguaje):
+        print 'Voy a programar en ', lenguaje
+
+class LicDerecho(Humano):
+    def estudiarCaso(self,de):
+        print 'Debo estudiar el caso de ', de
+
+class Estudioso(IngSistemas,LicDerecho): #Hereda de dos clases
+	pass #Palabra reservada, interpretada como vete! no hay nada que ver aquí. Cuando creamos una clase, forzosamente debe de existir un método y si no existe, usamos pass, en este ejemplo ya está heredando los métodos de otras clases
+
+pepe = Estudioso() #Creamos el objeto
+pepe.hablar('Hola, soy de herencia multiple') #Usando el método heredado de Humano, ya que la clase Estudioso hereda de IngSistemas y de LicDerecho, que a su vez heredan de Humano
+pepe.programar('C++') #Usando el método programar heredado
+pepe.estudiarCaso('Juan') #Usando el estudiarCaso heredado
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#Obtener el índice de un elemento de la lista
+lista = [1,"Dos",3]
+buscar = 1
+print lista.index(buscar) #Obtener el índice de un elemento de la lista
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#Buscando elementos en una lista
+lista = [1,"Dos",3]
+buscar = "Dos"
+if buscar in lista: #Buscar el eleménto en la lista
+	print lista.index(buscar) #Mostrar el índice del elemento
+else:
+	print "No esta el elemento" #Notificar si el elemento no existe
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#Agregando un nuevo elemento a la lista
+lista = [1,"Dos",3]
+print lista
+lista.append("Nuevo elemento") #Agregamos un nuevo elemento a la lista
+print lista
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#Contar el numero de elementos presentes en una lista
+lista = [1,"Dos",3,4,"Cinco",3]
+print lista.count(3) #Buscar y contar cuantas veces está un elemento en la lista.
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Insertando un nuevo elemento en la lista
+lista = [1,"Dos",3,4,"Cinco",3]
+print lista
+lista.insert(2,"Nuevo") #Insertamos un nuevo elemento en la lista, en este caso insertamos la cadena "Nuevo" en la posición 2, pero no sustituye, solo se inserta, el resto de valores se corren ascendentemente.
+print lista
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Juntar dos listas
+lista = [1,2,3]
+print lista
+lista2 = [5,6,7]
+lista.extend(lista2) #Método extend, juntar dos listas, podemos agregar una nueva lista al final de primera lista
+print lista
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Extraer y eliminar un elemento de la lista
+lista = [1,2,3]
+print lista
+lista.pop() #Elimina el último elemento de la lista si no especificamos un indice que borrar
+print lista
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Extraer y eliminar un elemento de la lista, indicando la posición
+lista = [1,2,3]
+print lista
+lista.pop(1) #Eliminamos el elemento que está en la posición 1 de la lista
+print lista
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#Método reverse, que invierte los elementos de la lista
+lista = [1,2,3]
+print lista
+lista.reverse()
+print lista

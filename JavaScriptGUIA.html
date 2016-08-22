@@ -475,6 +475,7 @@ var myObject = {
     'some string': 456,
     99999: 789
 };
+
 Funciones
 
 Las funciones contienen bloques de código que se ejecutaran repetidamente. A las mismas se le pueden pasar argumentos, y opcionalmente la función puede devolver un valor.
@@ -560,8 +561,6 @@ var myOtherFn = function() {
  
 myFn(myOtherFn);   // muestra en la consola 'hello world'
 
-
-
 </script>
 
 -------------------------------------
@@ -572,7 +571,7 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 <body>
     <script type="text/javascript">    
         var nombre; //declaramos la variable    
-        nombre="Argenis"; //asignamos el valor Morris a la variable    
+        nombre="David"; //asignamos el valor Morris a la variable    
         document.write(nombre); //imprimimos la variable
         document.write("<br />");
         nombre="Rafael"; //asignamos otro valor a la variable    
@@ -722,17 +721,16 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 
 -------------------------------------
 
-<!-- Declaración de variable, asignación  de valor, la escribimos en el DOM y activamos una función con ella-->
+<!-- Recoger un dato por teclado y escribirlo en el documento -->
+<!doctype html>
 <html>
-    <meta charset="utf-8"/>
+<head>
+<title></title>
+</head>
 <body>
     <script type="text/javascript">
-        var alerta;
-        alerta="<span onclick='miFuncion()'>Alerta</span>";
-        document.write(alerta);
-        function miFuncion() {
-            alert("Alertaaaaaaa");
-        }
+        nom=prompt("Por favor escriba su nombre","nombre");
+        document.write(nom);
     </script>
 </body>
 </html>
@@ -774,6 +772,7 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 
 -------------------------------------
 
+<!-- Ejempo de if pidiendo un dato -->
 <html>
     <meta charset="utf-8"/>
 <body>
@@ -807,7 +806,7 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
             //if (1 > 2) {
             if (a > 2) {
                 alert("Verdadero");
-                nombre="Argenis";
+                nombre="David";
                 document.write(nombre);
             }
             else {
@@ -976,6 +975,7 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 
 -------------------------------------
 
+<!-- Escribiendo en el DOM los elementos de un arreglo -->
 <html>
     <meta charset="utf-8"/>
 <body>
@@ -988,6 +988,27 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
         document.write(a[3],"<br />");
         document.write(a[4],"<br />");        
     </script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Escribiendo en el DOM los elementos de un arreglo -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf 8">
+</head>
+<body>
+<p id="caja"></p>
+<script type="text/javascript">
+var arreglo = ['uno',['uno_uno','uno_dos'],'dos','tres' ];
+document.write(arreglo + '<br />');
+document.write(arreglo[0] + '<br />');
+document.write(arreglo[1] + '<br />');
+document.write(arreglo[1][0]);
+ocument.write(arreglo[1][1]);
+</script>
 </body>
 </html>
 
@@ -1105,7 +1126,7 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
                 ind3 = email.lastIndexOf('@');
                 if ((ind1<=0) || (ind2<ind1) || (ind3 != ind1)) {
                     return "Correo invalido!";
-                }                    
+                }
                 else
                 {
                     return "Correo valido!";
@@ -1114,14 +1135,43 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
         </script>
     </head>
 <body>
-    <script type="text/javascript">    
+    <script type="text/javascript">
         correo = "admin@admin.com";
         document .write(correo+" "+checkemail(correo),'<br />');
-        correo= "admin.com";
+        correo = "admin.com";
         document.write(correo+" "+checkemail(correo));
         //correo=prompt("Por favor escriba su email");
-        //alert(correo+" "+checkemail(correo));        
-    </script>    
+        //alert(correo+" "+checkemail(correo));
+    </script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Validar direccion e-mail, pedir el dato -->
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <script type="text/javascript">
+            function checkemail(email) {
+                var ind1, ind2, ind3;
+                ind1 = email.indexOf('@');
+                ind2 = email.indexOf('.');
+                ind3 = email.lastIndexOf('@');
+                if ((ind1<=0) || (ind2<ind1) || (ind3 != ind1)) {
+                    return "Correo invalido!";
+                }
+                else {
+                    return "Correo valido!";
+                }
+            }
+        </script>
+    </head>
+<body>
+    <script type="text/javascript">
+        correo = prompt("Por favor escriba su email");
+        document .write(correo+" "+checkemail(correo),'<br />');
+    </script>
 </body>
 </html>
 
@@ -1155,7 +1205,6 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 </body>
 </html>
 
-
 -------------------------------------
 
 <!-- Comprobar si una cadena contiene ciertos caracteres o palabras -->
@@ -1175,86 +1224,6 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 <body>
     <button onclick="myFunction()">Probar</button>
     <p id="site"></p>
-</body>
-</html>
-
--------------------------------------
-
-<!-- Creacion de un modal grande -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <div class="container">
-      <h2>Modal grande</h2>
-      <!-- Trigger the modal with a button -->
-      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Abrir el modal</button>
-
-      <!-- Modal -->
-      <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog modal-lg"> <!-- modal-sm para que sea pequeño -->
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Cabecera del Modal </h4>
-            </div>
-            <div class="modal-body">
-              <p>Contenido del modal</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Boton cerrar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-</body>
-</html>
-
--------------------------------------
-
-<!-- Creacion de un modal pequeño -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <div class="container">
-      <h2>Modal pequeño</h2>
-      <!-- Trigger the modal with a button -->
-      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Abrir el modal</button>
-
-      <!-- Modal -->
-      <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog modal-sm"> <!-- modal-lg para que sea grande -->
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Cabecera del Modal </h4>
-            </div>
-            <div class="modal-body">
-              <p>Contenido del modal</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Boton cerrar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 </body>
 </html>
 
@@ -1281,7 +1250,7 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 <body>
     <form name="rellenar" action="#" method="get">
         <h2>Acceder</h2>
-        <p> USUARIO : <input name="usuario" type="text"/> </p> 
+        <p>USUARIO : <input name="usuario" type="text"/> </p> 
         <p>PASSWORD: <input name="pass" type="password" /></p>
         <p>Comentario</p>
         <p><textarea name="coment"></textarea></p>
@@ -1289,7 +1258,7 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
     </form>
     <br />
     <div id="caja">
-    </div>    
+    </div>
 </body>
 </html>
 
@@ -1351,7 +1320,7 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
             this.apellido = apellido; // Los atributos se referencian mediante this
             this.edad = edad;
         }
-        var p1 = new persona("Argenis","Osorio",25); //Para instanciar un objeto de una clase utilizaremos la sentencia new
+        var p1 = new persona("David","Webb",25); //Para instanciar un objeto de una clase utilizaremos la sentencia new
         var p2 = new persona("Maria","Perez",33);        
         //alert(p1.nombre + "-" + p1.edad);
         //alert(p2.nombre + "-" + p2.edad);
@@ -1604,10 +1573,8 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
             document.getElementById("p2").style.fontSize = "larger";
             //alert("sssssssss");
         }
-    </script>    
-    
+    </script>
 </head>
-
 <body>    
     <p id="p1">Hello World!</p>
     <p id="p2">Hello World!</p>
@@ -1638,15 +1605,14 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
         <a href="javascript:void(document.getElementById('ejemplo').style.fontSize='20px')">Aumenta el tamaño de la fuente solo de esta sección</a> <br />
         <a href="javascript:void(document.getElementById('ejemplo').style.fontSize='16px')">Tamaño normal</a> <br />
         <a href="javascript:void(document.getElementById('ejemplo').style.backgroundColor='yellow')">Cambia el color del fondo de esta sección</a> <br />
-        <a href="javascript:void(document.getElementById('ejemplo').style.backgroundColor='white')">Color normal</a> <br />    
+        <a href="javascript:void(document.getElementById('ejemplo').style.backgroundColor='white')">Color normal</a> <br />
     </div>
 </body>
 </html>
 
-
 -------------------------------------
 
-<!-- Agregadndo estilos CSS con funciones JS en elementos HTML -->
+<!-- Agregando estilos CSS con funciones JS en elementos HTML -->
 <html>
 <head>
     <meta charset="utf-8">
@@ -1674,7 +1640,7 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
         <label for="apellidos"><span>Apellidos:</span> <input id="apellidos" type="text" name="apellidos" /></label>
         <label for="email"><span>Correo electrónico:</span> <input id="email" type="text" name="email" /></label>
         <label>
-            <input type="submit" value="Enviar">
+            <input type="button" value="Enviar">
             <input type="reset" value="Cancelar">
         </label>
     </form>
@@ -1791,7 +1757,7 @@ function pregunta(){
       width:550px;
       height: 250px;
       color:#000;
-      background:#ccc;    
+      background:#ccc;
       border: ridge 1px;
     }
   </style>
@@ -1878,51 +1844,6 @@ function pregunta(){
 
 -------------------------------------
 
-<!-- Cargar en modal una pagina web o html externa, con boton cerrar -->
-<!-- Crear el archivo x.html-->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Example of Bootstrap 3 Modals with Remote URL</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-</head>
-<body>
-<div class="bs-example">
-    <!-- Button HTML (to Trigger Modal) -->
-    <a href="y.html" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#myModal">Launch Demo Modal</a>
-    
-    <!-- Modal HTML -->
-    <div id="myModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">             
-                <!-- Content will be loaded here from "remote.php" file -->
-            </div>
-        </div>
-    </div>
-</div>
-</body>
-</html>
-
-<!-- Crear el archivo y.html-->
-<div align="center">
-  <span style="text-align:right">
-    <button type="button" class="close" data-dismiss="modal">&times;</button>  
-  </span>
-  XXXXXXXXXXXXXXXX <br />
-  XXXXXXXXXXXXXXXX <br />
-  XXXXXXXXXXXXXXXX <br />
-  XXXXXXXXXXXXXXXX <br />
-  XXXXXXXXXXXXXXXX <br />
-  <span style="text-align:right">
-    <button type="button" class="btn btn-default" data-dismiss="modal">Boton cerrar</button>
-  </span>
-</div>
-
--------------------------------------
-
 <!-- Copiar texto de una caja de texto a otra -->
 <!DOCTYPE html>
 <html lang="es">
@@ -1935,12 +1856,14 @@ function pregunta(){
     </script>
 </head>
 <body>
-    <input type="text" name="text1" id="text1" onkeyup="copiar()">
-    <input type="text" name="text2" id="text2">
+    text 1<input type="text" name="text1" id="text1" onkeyup="copiar()">
+    <br />
+    text 2<input type="text" name="text2" id="text2">
 </body>
 </html>
 
 -------------------------------------
+
 <!-- Descargar en un .txt el contenido de un area de texto -->
 <html lang="es">
     <head>
@@ -1964,6 +1887,30 @@ function pregunta(){
 </html>
 
 -------------------------------------
+
+<!-- Descargar en un .txt el contenido de un campo de texto -->
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <script type="text/javascript">
+            window.onload = function() {
+                var texto = document.getElementById('texto');
+                texto.value = window.onload + '';
+                document.getElementById('link').onclick = function(code) {
+                    this.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(texto.value);
+                };
+            };
+        </script>
+    </head>
+<body>
+    Nombre: <input type="text" name="nombre" id="texto"><br />
+    <br />
+    <a href="#" id="link" download="contenido.txt">Descargar el contenido del textarea</a>  
+</body>
+</html>
+
+-------------------------------------
+
 <!-- Confirmación, validar envío de formulario en js-->
 <!-- alerta sobre el envio del formulario-->
 <html>
@@ -1988,6 +1935,7 @@ function pregunta(){
 </html>
 
 -------------------------------------
+
 <!-- Confirmación, validación de que los datos del formulario fueron enviados -->
 <!-- mediante una alerta -->
 <html>
@@ -2012,6 +1960,7 @@ function pregunta(){
 </html>
 
 -------------------------------------
+
 <!-- Validar que los campos no estén vacios, form-->
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -2171,7 +2120,6 @@ Si el campo contiene " " entonces la validacion no funciona
 </html>
 
 -------------------------------------
-
 <!-- Validar campos vacios de formulario, mostrar texto de alerta con estilo
 junto a la caja de texto -->
 <html>
@@ -2207,41 +2155,6 @@ junto a la caja de texto -->
     <span id="mensaje_error" class="mensaje_error_color"></span> <br />
     *Contraseña: <input type="password" name="password">
     <span id="mensaje_error2" class="mensaje_error_color"></span> <br />    
-    <input type="button" onclick="validar()" value="Enviar">
-  </form>
-</body>
-</html>
-
--------------------------------------
-
-<!-- Validar campos select si o no en formulario, cargar texarea nueva -->
-<html>
-<head>
-    <title>Confirmación de envío de formulario</title>
-    <meta charset="utf-8" />
-    <script language="JavaScript">
-      function validar() {
-        if (document.formulario.seleccion.value == 'n') {
-          document.getElementById("texarea").innerHTML = '¿Explique por que no?<br /><textarea name="texto" rows="10" cols="50"></textarea>';
-        }
-        else {
-          //alert("Incorrecto");
-        }
-      }
-    </script>
-</script>
-</head>
-<body>
-  <form name="formulario" action="#">
-    ¿Está de acuerdo?
-    <select name="seleccion">
-      <option value="">Seleccione</option>
-      <option value="s">Sí</option>
-      <option value="n">No</option>
-    </select>
-    <div id="texarea">
-    </div>
-    <br />
     <input type="button" onclick="validar()" value="Enviar">
   </form>
 </body>
@@ -2307,45 +2220,6 @@ no este vacío -->
     *Usuario: <input type="text" name="username"> <p />    
     <button>Enviar</button>
   </form>
-</body>
-</html>
-
--------------------------------------
-
-<!-- Crear elementos de formulario html dinámicamente con javascript -->
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>clone demo</title>
-  <script src="jquery-1.9.1.js" type="text/javascript"></script>
-  <!--script src="https://code.jquery.com/jquery-1.10.2.js"></script-->
-    <script type="text/javascript">
-        var contador = 1;
-        var limite = 3;
-        var cont_name = 1;
-        function addInput(divName){
-            if (contador == limite)  {
-                alert("Exedíste el límite de adición (" + contador + ") campos");
-            }
-            else {
-                var newdiv = document.createElement('div');
-                newdiv.innerHTML = "Nombre: "/* + (contador + 1) */+ "<input type='text' name='nombre"+cont_name+"'>";
-                document.getElementById(divName).appendChild(newdiv);
-                contador++;
-                cont_name++;
-            }
-        }
-    </script>
-</head>
-<body>
-<form method="get">
-    <div id="campo_dinamico">
-        Nombre: <input type="text" name="nombre">
-    </div>
-    <br />
-    <input type="button" value="Agregar campo" onClick="addInput('campo_dinamico');">
-</form>
 </body>
 </html>
 
@@ -2926,28 +2800,48 @@ Creamos el fichero cd_catalog.xml y lo llenamos con:
 
 -------------------------------------
 
-<!-- Uso de íconos de bootstrap -->
-<!-- Documentación y ejemplos en: http://getbootstrap.com/components/ -->
-<!DOCTYPE html>
+<!-- Agregar elementos de un formulario html dinámicamente con javascript -->
+<!doctype html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <meta charset="utf-8">
+    <title>clone demo</title>
+    <!--script src="jquery-1.9.1.js" type="text/javascript"></script-->
+    <script type="text/javascript">
+    var contador = 1;
+    var limite = 3;
+    var cont_name = 1;
+    function addInput(divName){
+        if (contador == limite)  {
+            alert("Exedíste el límite de adición (" + contador + ") campos");
+        }
+        else {
+            var newdiv = document.createElement('div');
+            newdiv.innerHTML = "Nombre: "/* + (contador + 1) */+ "<input type='text' name='nombre"+cont_name+"'>";
+            document.getElementById(divName).appendChild(newdiv);
+            contador++;
+            cont_name++;
+        }
+    }
+  </script>
+  <style type="text/css">
+  div {
+    border: ridge 1px red;
+  }
+  form {
+    border: ridge 1px green;
+  }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-    <button type="button" class="btn btn-default" aria-label="Left Align">
-      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-    </button>
-    <button type="button" class="btn btn-default btn-lg">
-      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-    </button>
-  </div>
+<form method="get">
+    <div id="campo_dinamico">
+        Nombre: <input type="text" name="nombre">
+    </div>
+    <br />
+    <input type="button" value="Agregar campo" onClick="addInput('campo_dinamico');">
+    <input type="submit" value="Enviar">
+</form>
 </body>
 </html>
 
@@ -2963,8 +2857,18 @@ Creamos el fichero cd_catalog.xml y lo llenamos con:
 
 -------------------------------------
 
+<!-- -->
 
+-------------------------------------
 
+<!-- -->
 
+-------------------------------------
 
+<!-- -->
 
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
