@@ -2247,7 +2247,14 @@ La creación de los objetos JSON implica escribir datos, para ello:
     Los objetos JSON estan rodeados por llaves “{}”
     Llaves cuadradas [] guardan arreglos, incluyendo otros objetos JSON
 
-// Comentario dentro del json
+
+El formato JSON tiene la siguiente notación:
+
+{key : value, key2 : value2, key3 : value3,...}
+
+Y también puede ser serializado y multidimensional, por ejemplo:
+
+[{key : value, key2 : value2, key3 : value3, key : { key : value, key2 : value2, key3 : value3} },{key : value, key2 : value2, key3 : value3,...}]
 
 Ejemplo de un objeto JSON que guarda un usuario y password:
 
