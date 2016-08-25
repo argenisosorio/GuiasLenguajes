@@ -1,0 +1,48 @@
+Recompilar o Reconstruir paquetes Debian (.deb) desde los códigos fuente.
+
+Es común en el mundo del software libre estudiar el código fuente o corregir código erróneo. Para lograr esto, se necesita descargar el código fuente del programa.
+
+Para este ejemplo trabajaremos con las fuentes de Meld (Es una herramienta que permite al usuario ver los cambios entre, y fusionar, dos  archivos, dos directorios, o dos archivos con un ancestro común.)
+
+Primero creamos un directorio y entramos en el, allí trabajaremos y haremos las pruebas:
+
+$ mkdir tmp && cd tmp
+
+Luego, descargamos las fuentes del paquete Meld. Con las fuentes podemos hacer modificaciones, compilar e instalar el programa y construir o reconstruir un paquete original o con modificaciones.
+
+tmp$ apt-get source meld
+
+Eso nos descargará los siguientes directorios y ficheros:
+
+meld-3.12.1/
+meld_3.12.1-2.debian.tar.xz
+meld_3.12.1-2.dsc
+meld_3.12.1.orig.tar.xz
+
+Un paquete fuente generalmente consiste de tres archivos: .dsc, .orig.tar.gz y .debian.tar.gz (o .diff.gz). Ellos permiten la creación de paquetes binarios .deb, partir de los archivos de código fuente del programa, escritos en un lenguaje de programación.
+
+El fichero .dsc (Debian Source Control) en español: Control de Fuente Debian, es un archivo de texto corto que contiene una cabecera RFC 2822 que describe el paquete fuente e indica qué otros archivos forman parte del mismo, similar a la del fichero control que esta en el directorio raiz en la carpeta debian.
+
+El fichero .dsc es utilizado por dbpkg-source para descomprimir el paquete en el directorio raiz, como descargamos las fuentes con apt-get se nos crea el directorio raíz por defecto, es este caso meld-3.12.1/.
+
+¿Que es dpkg-source?
+Es una herramienta de manipulación de paquetes fuente de Debian, empaqueta y desempaqueta los archivos fuente.
+
+Con cada paquete descargado existe un directorio debian/ que contiene los archivos necesarios para crear un paquete .deb, en este caso ese directorio esta dentro de la carpeta meld-3.12.1/ que es el directorio raíz de las fuentes.
+
+Entramos en el directorio raíz de las fuentes:
+
+temp$ cd meld-3.12.1/
+
+Ahora ejecutamos el comando que construirá nuestro .deb en el directorio tmp/ 
+
+tmp/meld-3.12.1$ dpkg-buildpackage -rfakeroot
+
+¿Que es dpkg-buildpackage? Es un programa que automatiza el proceso de construcción de un paquete Debian.
+
+¿Y fakeroot? Proporciona un entorno de raíz temporal, elimina la necesidad de convertirse en root para la construcción del paquete.
+
+Al final, dentro de nuestro directorio tmp/ tendremos nuestro .deb construido
+
+tmp/
+  meld_3.12.1-2_all.deb
