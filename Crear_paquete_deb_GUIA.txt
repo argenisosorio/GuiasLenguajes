@@ -1,0 +1,144 @@
+Crear un paquete .deb desde cero.
+
+¿Qué es un paquete .deb?
+
+.deb es la extensión del formato de paquetes de software de la distribución de Linux, Debian GNU/Linux y derivadas.
+
+El programa predeterminado para manejar estos paquetes es dpkg, generalmente usando apt/aptitude.
+
+¿Qué es dpkg?
+
+dpkg es la base del sistema de gestión de paquetes de Debian GNU/Linux. Se utiliza para instalar, configurar, construir, quitar, y proporcionar información sobre los paquetes .deb. 
+
+En este ejemplo crearemos un paquete.deb a partir de un script.sh de prueba.
+
+Creamos el script.sh
+
+$ touch script.sh
+
+Luego lo llenamos con el siguiente contenido:
+
+#!/bin/bash
+VAL=10
+echo $VAL
+
+Guardamos, este script imprime el valor de una variable precargada.
+
+Podemos probarlo con:
+
+$ bash script.sh
+
+Los scripts de ejecución de la mayoría de programas instalados en GNU - Linux Debian se guardan la ruta /usr/bin del sistema, por tanto crearemos un paquete que siga esa regla.
+
+Creamos un directorio donde guardaremos todos los ficheros que irán dentro de nuestro paquete. Podemos usar cualquier nombre, luego entramos en el directorio creado.
+
+$ mkdir tmp && cd tmp
+
+Dentro de la carpeta "tmp" creamos otro directorio.
+
+tmp$ mkdir mipaquete
+
+Dentro del directorio creado "mipaquete" crearemos otra carpeta llamada "usr".
+
+tmp$ cd mipaquete
+
+tmp/mipaquete$ mkdir usr
+
+Luego, dentro de la carpeta "usr" crearemos otra carpeta llamada "bin"
+
+tmp/mipaquete$ cd usr
+
+tmp/mipaquete/usr$ mkdir bin
+
+Ahora movemos el script.sh a ese directorio "tmp/mipaquete/usr/bin"
+
+$ cd
+
+$ mv script.sh tmp/mipaquete/usr/bin/
+
+Ahora creamos otro directorio junto a la carpeta "mipaquete" llamado DEBIAN, que contendra el fichero de paquete de control. Este es un fichero con un determinado formato y que proporciona informacion del contenido del paquete .deb.
+
+tmp$ mkdir DEBIAN
+
+Dentro de la carpeta "DEBIAN" Creamos el fichero de control con:
+
+tmp$ cd DEBIAN
+
+tmp/DEBIAN$ touch control
+
+Luego, el fichero "control" lo llenamos con lo siguiente:
+
+Descripción de como llenar el fichero control:
+
+Package: NombreDelPaquete (no se permiten espacios o caracteres _)
+Priority: optional
+Section: misc
+Maintainer: NombreDelCreador <email>
+Architecture: all
+Version: 1.0
+Depends: NombrePaquete1, NombrePaquete2,... (si tiene alguna dependencia)
+Description: Descripción corta del paquete
+ Y aqui una descripción larga (No eliminar el espacio inicial al comienzo de esta línea)
+(Por último, se elimina esta linea y se deja una linea vacia)
+
+Ejemplo de fichero "control" para nuestra prueba:
+
+Package: Script
+Priority: optional
+Section: misc
+Maintainer: Argenis Osorio <aosorio@mail.com>
+Architecture: all
+Version: 1.0
+Depends:
+Description: Este script imprime el valor de una variable precargada.
+ Este script imprime el valor de una variable precargada, usa una cabecera que lo distingue como script de bash
+
+Guardamos el fichero modificado y cambiamos los permisos del directorio "tmp":
+
+$ cd
+
+$ sudo chown -R root.root tmp/
+
+Antes de construir nuestro paquete, nuestro directorio debería tener el siguiente contenido:
+
+tmp/
+  DEBIAN/
+    control
+  mipaquete/
+    usr/
+      bin/
+        script.sh
+
+Por último creamos el paquete en formato .deb, ejemplo:
+
+$ dpkg -b paquete /ruta/del/paquete/nombre_paquete.deb
+
+Creamos el .deb de nuestra prueba
+
+$ dpkg -b tmp /home/debian/mipaquete.deb
+
+El comando nos muestra:
+
+dpkg-deb: construyendo el paquete `script' en `/home/debian/mipaquete.deb'.
+
+Me generara mipaquete.deb con el script listo para instalar.
+
+Listar el contenido de nuestro paquete
+$ dpkg -c mipaquete.deb
+
+Desempaquetamos el contenido del paquete en una ruta, necesario es crear la ruta donde se va a guardar antes de ejecutar el comando.
+$ dpkg -x mipaquete.deb /home/debian/tmp/
+
+Mostrar información sobre el paquete, sobre las dependencias y las versiones de las mismas, con esto veremos el contenido que escribimos en el fichero control.
+$ dpkg --info mipaquete.deb
+
+Package: Script
+Priority: optional
+Section: misc
+Maintainer: Argenis Osorio <aosorio@cenditel.gob.ve>
+Architecture: all
+Version: 1.0
+Depends:
+Description: Este script imprime el valor de una variable precargada.
+ Este script imprime el valor de una variable precargada, usa una cabecera que lo distingue como script de bash.
+

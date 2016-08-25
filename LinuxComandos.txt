@@ -1854,7 +1854,7 @@ El programa predeterminado para manejar estos paquetes es dpkg, generalmente usa
 
 --- Estructura interna ---
 
-Los paquetes deb son archivos ar estándar de Unix que incluyen dos archivos tar en formato gzip, bzip2 o lzma: uno de los cuales alberga la información de control y el otro los datos.
+Los paquetes deb son archivos estándar de Unix que incluyen dos archivos tar en formato gzip, bzip2 o lzma: uno de los cuales alberga la información de control y el otro los datos.
 
 Estos paquetes contienen tres archivos:
 -debian-binary - número de versión del formato deb. Este es "2.0" para las versiones actuales de Debian.
@@ -1871,7 +1871,9 @@ dpkg es la herramienta para instalar un paquete Debian, para hacer esto utilizam
 
 --- Ejemplo de instalación de un paquete con dpkg ---
 
-$ dpkg -c dsc-nombre-paquete-xxx_i386.deb // Listar contenido del paquete.
+$ dpkg -c dsc-nombre-paquete-xxx_i386.deb // Listar o mostrar el contenido del paquete.
+
+$ dpkg -L xxx // Lista los ficheros instalados en el sistema, que pertenecen al paquete xxx.
 
 $ dpkg -x dsc-nombre-paquete-xxx_i386.deb /home/dir/ // Desempaquetamos el contenido del paquete en una ruta, necesario es crear la ruta antes.
 
@@ -1881,7 +1883,11 @@ $ dpkg -x dsc-nombre-paquete-xxx_i386.deb /home/dir/ // Desempaquetamos el conte
 
 # dpkg -r nombre-del-paquete // Desinstalar paquete con dpkg, Este comando removerá el paquete, pero dejara los archivos de configuracion intactos, esto es util en caso que hubieras realizado cambios en ellos y quieras una copia para usos posteriores. Pero si deseas quitar todo rastro del paquete debes usar purge.
 
+$ dpkg -force -r xxx.deb // Forzar la desinstalación del paquete xxx.deb.
+
 # dpkg -P nombre-del-paquete // Ahora no quedará rastro del paquete antes instalado.
+
+$ dpkg --info nombre_paquete.deb // Muestra información sobre el paquete, sobre las dependencias y las versiones de las mismas, lo que mostrario con un aptitude show.
 
 $ dpkg --get-selections // Para listar el total de paquetes instalados.
 
@@ -1891,8 +1897,11 @@ $ dpkg --get-selections // Para listar el total de paquetes instalados.
 
 # apt-get dselect-upgrade // Instalación de la lista
 
-El comando dpkg -l da la lista de paquetes instalados pero con mayor información. Sin embargo, no es posible utilizarlo
-para instalar una lista de paquetes. 
+$ dpkg -l // Da la lista de paquetes instalados pero con mayor información. Sin embargo, no es posible utilizarlo para instalar una lista de paquetes. 
+
+$ dpkg -l xxx // Lista los paquetes instalados que coincidan con el nombre xxx
+
+$ dpkg -l *xxx* // Lista los paquetes que contienen la cadena xx en su nombre de paquete.
 
 ###########################################
 ##### Descargando los paquetes fuente #####
