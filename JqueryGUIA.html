@@ -3499,6 +3499,188 @@ El JSON = mi.json
 
 -------------------------------------
 
+<!-- Jquery show - Mostrar los elementos que esten ocultos display: none-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>show demo</title>
+  <style>
+  p {
+    background: yellow;
+  }
+  </style>
+  <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+</head>
+<body>
+ 
+<button>Show it</button>
+<p style="display: none">Hello  2</p>
+ 
+<script>
+$( "button" ).click(function() {
+  $( "p" ).show( "slow" );
+});
+</script>
+ 
+</body>
+</html>
+
+-------------------------------------
+
+<!-- show y hide elementos del dom, simple -->
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+    $("#hide").click(function(){
+        $("p").hide();
+    });
+    $("#show").click(function(){
+        $("p").show();
+    });
+});
+</script>
+</head>
+<body>
+<p>If you click on the "Hide" button, I will disappear.</p>
+<button id="hide">Hide</button>
+<button id="show">Show</button>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- show y hide elementos del dom, agregándole un valor como parámetro al metodo hide -->
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+    $("button").click(function(){
+        $("p").hide(1000);
+    });
+});
+</script>
+</head>
+<body>
+<button>Hide</button>
+<p>This is a paragraph with little content.</p>
+<p>This is another small paragraph.</p>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- show y hide elementos del dom -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>show demo</title>
+  <style>
+  div {
+    background: #def3ca;
+    margin: 3px;
+    width: 80px;
+    display: none;
+    float: left;
+    text-align: center;
+  }
+  </style>
+  <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+</head>
+<body>
+ 
+<button id="showr">Show</button>
+<button id="hidr">Hide</button>
+<div>Hello 3,</div>
+<div>how</div>
+<div>are</div>
+<div>you?</div>
+ 
+<script>
+$( "#showr" ).click(function() {
+  $( "div" ).first().show( "fast", function showNext() {
+    $( this ).next( "div" ).show( "fast", showNext );
+  });
+});
+ 
+$( "#hidr" ).click(function() {
+  $( "div" ).hide( 1000 );
+});
+</script>
+ 
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Método slide, desliza elementoss arriba y abajo. -->
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+<script> 
+$(document).ready(function(){
+    $("#flip").click(function(){
+        $("#panel").slideToggle("slow");
+    });
+});
+</script>
+
+<style> 
+#panel, #flip {
+    padding: 5px;
+    text-align: center;
+    background-color: #e5eecc;
+    border: solid 1px #c3c3c3;
+}
+
+#panel {
+    padding: 50px;
+    display: none;
+}
+</style>
+</head>
+<body>
+<div id="flip">Click to slide the panel down or up</div>
+<div id="panel">Hello world!</div>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- -->
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
 <!-- -->
 
 -------------------------------------
