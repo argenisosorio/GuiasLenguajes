@@ -2561,6 +2561,48 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
+<!-- Menu css desplegable -->
+<html>
+  <head> 
+    <title>Titulo</title>
+    <meta charset="UTF-8" />
+  </head>
+  <style type="text/css">
+    #menu{padding-left:25px; margin-top:15px;}
+    #menu li{list-style:none; float:left;}
+    #menu li a{display:block; width:200px;
+    height:20px; background:#99cccc;
+    border:1px solid; padding:2px;
+    text-decoration:none;
+    text-align:center; color:#000;
+    font-family:arial; font-size:15px;
+    font-weight:bold;}
+    #menu li a:hover{background:navy;
+    border-color:transparent;
+    color:#ffcc00;}
+    #menu li ul{display:none; position:absolute;}
+    #menu li ul li {display:block; float:none;
+    position:relative; padding:0px;}
+    #menu li:hover ul{display:block; padding-left:0px;}
+    #menu li ul li a{display:block;}
+  </style>
+<body>
+  <ul id="menu">
+  <li><a href="url...">HOME</a></li>
+  <li><a href="url...">THEESPECTROMANIA</a></li>
+  <li><a href="url...">HTML</a>
+  <ul>
+  <li><a href="url...">CENTER</a></li>
+  <li><a href="url...">FONT</a></li>
+  </ul></li>
+  <li><a href="url...">CSS</a>
+  <ul>
+  <li><a href="url...">GRADIENT</a></li>
+  <li><a href="url...">BORDES</a></li>
+  </ul></li>
+</body>
+</html>
+
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx

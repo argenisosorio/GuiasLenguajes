@@ -156,6 +156,56 @@ usar el caracter # seguido por el nombre del id de la siguiente forma:
 
 -------------------------------------
 
+<!-- Probando selectores, clases dentro de clases -->
+<!doctype html>
+<html lang="en">
+<head>  
+  <title>Prueba Selectores</title>
+  <meta charset="UTF-8">
+  <script src="jquery-1.9.1.js" type="text/javascript"></script>
+  <style type="text/css">
+  .nivel_1 {
+    width: 500px;
+    height: 500px;
+    border: ridge 1px red;
+  }
+  .nivel_2 {
+    width: 450px;
+    height: 450px;
+    border: ridge 1px green;
+  }
+  .nivel_3 {
+    width: 400px;
+    height: 400px;
+    border: ridge 1px blue;
+  }
+  </style>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $('.nivel_1').click(function() {
+      alert("Nivel_1");
+    });
+    $('.nivel_2').click(function() {
+      alert("Nivel_2");
+    });
+    $('.nivel_3').click(function() {
+      alert("Nivel_3");
+    });
+  });
+  </script>
+</head>
+<body>
+  <div class="nivel_1">Nivel_1
+    <div class="nivel_2">Nivel_2
+      <div class="nivel_3">Nivel_3
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+-------------------------------------
+
 *Dato: Los Jquery descargados como: jquery-1.9.1.js representan una librería que 
 se puede manipular para hacer modificaciones, el codigo viene indentado para ser mas 
 legible, a diferencia de las librerías con la extensión .min.js como: jquery-1.9.1.min.js
