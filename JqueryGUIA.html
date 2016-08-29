@@ -3704,7 +3704,55 @@ $(document).ready(function(){
 
 -------------------------------------
 
-<!-- -->
+<!-- show y hide elementos del dom, select -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+<style type="text/css">
+#negacion {
+  display: none;
+}
+</style>
+</head>
+<body>
+<form action="" method="get">
+  ¿Está de acuero?<br />
+  <select name="formulario" id="formulario_select">
+    <option value=""></option>
+    <option value="s">Sí</option>
+    <option value="n">No</option>
+  </select>
+  <br />
+  <br />
+  <div id="negacion">
+    ¿Por que no?<br />
+    <input type="text" name="por_que_no"> <br />
+  </div>
+  <br />
+  <input type="submit" value="Enviar">
+</form>
+<br />
+</body>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("select").change(function() {
+    var formulario = $(this).val();
+      if (formulario == '') {
+        $( "#negacion" ).hide();
+      }
+      if (formulario == 's') {
+        $( "#negacion" ).hide();
+      }
+      if (formulario == 'n') {
+        $( "#negacion" ).show();
+      }
+    });
+  });
+</script>
+</html>
+
 -------------------------------------
 
 <!-- -->
