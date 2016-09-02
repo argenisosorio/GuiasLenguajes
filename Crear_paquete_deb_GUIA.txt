@@ -10,6 +10,21 @@ El programa predeterminado para manejar estos paquetes es dpkg, generalmente usa
 
 dpkg es la base del sistema de gestión de paquetes de Debian GNU/Linux. Se utiliza para instalar, configurar, construir, quitar, y proporcionar información sobre los paquetes .deb. 
 
+**Nota: usando deb-src:
+Hay que asegurarte que tenemos algunos "repositorios de código fuente" configurados en el ordenador.
+Abrimos el fichero /etc/apt/sources.list y comprobamos que tienemos una o más lineas que empiecen con deb-src.
+Estas lineas se necesitan para trabajar con los paquetes de código fuente. 
+
+**Nota: Descargando las dependencias necesarias para crear el paquete
+
+Para construir casi cualquier programa, necesitarás algunas dependencias instaladas. Las dependencias son los programas o librerías que se necesitan para
+compilar tu programa. Normalmente son un montón de paquetes acabados en -dev, pero también pueden ser otras cosas com automake o gcc, dependerá de la
+cantidad de herramientas de desarrollo que ya hayas instalado en la máquina.
+
+apt te proporciona una manera muy fácil para instalar las dependencias que necesitas:
+
+$ sudo apt-get build-dep nombre_paquete
+
 En este ejemplo crearemos un paquete.deb a partir de un script.sh de prueba.
 
 Creamos el script.sh

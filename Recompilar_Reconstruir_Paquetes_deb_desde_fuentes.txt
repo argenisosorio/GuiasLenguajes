@@ -2,6 +2,21 @@ Recompilar o Reconstruir paquetes Debian (.deb) desde los códigos fuente.
 
 Es común en el mundo del software libre estudiar el código fuente o corregir código erróneo. Para lograr esto, se necesita descargar el código fuente del programa.
 
+**Nota: usando deb-src:
+Hay que asegurarte que tenemos algunos "repositorios de código fuente" configurados en el ordenador.
+Abrimos el fichero /etc/apt/sources.list y comprobamos que tienemos una o más lineas que empiecen con deb-src.
+Estas lineas se necesitan para trabajar con los paquetes de código fuente.
+
+
+**Nota: Descargando las dependencias necesarias para crear el paquete
+Para construir casi cualquier programa, necesitarás algunas dependencias instaladas. Las dependencias son los programas o librerías que se necesitan para
+compilar tu programa. Normalmente son un montón de paquetes acabados en -dev, pero también pueden ser otras cosas com automake o gcc, dependerá de la cantidad
+de herramientas de desarrollo que ya hayas instalado en la máquina.
+
+apt te proporciona una manera muy fácil para instalar las dependencias que necesitas:
+
+$ sudo apt-get build-dep nombre_paquete
+
 Para este ejemplo trabajaremos con las fuentes de Meld (Es una herramienta que permite al usuario ver los cambios entre, y fusionar, dos  archivos, dos directorios, o dos archivos con un ancestro común.)
 
 Primero creamos un directorio y entramos en el, allí trabajaremos y haremos las pruebas:

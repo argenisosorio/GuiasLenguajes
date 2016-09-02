@@ -102,6 +102,12 @@ $ man nombre_comando  // Muestra el manual de una comando donde como: ls, grep, 
 // Dentro de los manuales podemos presionar "h" para ver las opciones tenemos del manual, ejemplo "/delete"
 para hacer una busqueda de la cadena "delete" dentro del manual.
 
+$ whatis nombre_programa // Si no desea ver la página de manual completa sino sólo una descripción corta para confirmar que es lo que está buscando, ingrese whatis programa.
+
+Ejemplo:
+$ whatis scp
+scp (1)     - copia segura (programa de copia de ficheros remotos)
+
 $ cal // Muestra un calendario
 
 $ pwd // Muestra la ruta en la que te encuentras
@@ -456,6 +462,8 @@ $ apt-cache show nombre_paquete // Ver informacion del paquete, version, depende
 
 $ apt-cache search nombre_paquete // Buscar un paquete en los repositorios.
 
+$ aptitude versions nombre_paquete // Muestra las versiones de los paquetes listados en la línea de órdenes.
+
 # aptitude remove Nombre_paquete // Elimina o Desinstala el paquete.
 
 # aptitude purge Nombre_Paquete // Elimina el paquete y sus archivos de configuracion.
@@ -469,6 +477,32 @@ $ apt-get download nombre_paquete // Descarga el fichero .deb del paquete dado a
 $ aptitude update // Actualizar la lista de paquetes disponibles.
 
 $ dpkg -l | grep nombre_paquete // Saber si un paquete está instalado y su version.
+
+##### Comparación de las ordenes en apt-get y aptitude #####
+
+### Acción ###
+Instalar cualquiercosa
+Buscar cualquiercosa
+Eliminar cualquiercosa
+Lista recursiva de dependencias de cualquiercosa
+Mostrar el estado de cualquiercosa
+apt-cache policy cualquiercosa
+Descargar código fuente de cualquiercosa y crear un paquete .deb
+
+### apt-get ###
+apt-get install cualquiercosa
+apt-cache search cualquiercosa
+apt-get remove cualquiercosa
+apt-cache rdepends cualquiercosa
+apt-get source --compile cualquiercosa
+
+### aptitude ###
+aptitude install cualquiercosa
+aptitude search cualquiercosa
+aptitude remove cualquiercosa
+aptitude search ~Dcualquiercosa
+aptitude versions cualquiercosa
+?
 
 ####################################################
 ##### Saber la version instalada de un paquete #####
@@ -1937,11 +1971,17 @@ postgresql (Probar)
 ssh (Configurar y Probar)
 Sudo
 vlc player
+
+============
+** Para compilacion y construcción de paquetes **
 gcc
 build-essential
 dpkg-dev
 fakeroot
 cmake
+devscripts
+==========
+
 meld
 git (Configurarlo)
 vim (Configurarlo)
