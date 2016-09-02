@@ -1323,7 +1323,7 @@ chmod ugo-x test (quita permiso x (ejecucion) a todos, user,group,others)
 chmod o-rwx test (quita permisos rwx a others) 
 chmod u=rwx,g=rx (da permisos rwx a user, rx a group y ninguno a others)
 
-chmod -R u=rwx,g=rx,o=rx /dir/dir2/dir3 // Ejemplo de como otorgar permisos a un directorio específico.
+chmod -R u=rwx,g=rx,o=rx /dir/dir2/dir3 // Ejemplo de como otorgar permisos a un directorio específico, estos serían los permisos predeterminados de un directorio.
 
 ##### chmod en octal ######
 
@@ -1750,21 +1750,6 @@ Si tiene un paquete fuente, puede utilizar dpkg-source (del paquete role="pkg") 
 
 $ dpkg-source -x package_0.7-1.dsc
 
-##########################################
-##### Trabajando con paquetes Debian #####
-##########################################
-
-Gonz-*alo help - ***Pendiente***
-./configure
-
-dpkg-source
-
-dpkg-source -x evince_3.14.1-2+deb8u1.dsc
-
-cd evince-3.14.1/
-
-dpkg-buildpackage -rfakeroot
-
 ########################
 ##### Dependencias #####
 ########################
@@ -1946,10 +1931,10 @@ $ sudo fuser -vki  /var/lib/dpkg/lock // Solución
 luego seguimos con...
 
 terminator
-aptitude
-apache
-postgresql
-ssh
+aptitude (Configurarlo)
+apache (Probarlo)
+postgresql (Probar)
+ssh (Configurar y Probar)
 Sudo
 vlc player
 gcc
@@ -1958,20 +1943,19 @@ dpkg-dev
 fakeroot
 cmake
 meld
-git
-vim
-Virtual Box
+git (Configurarlo)
+vim (Configurarlo)
+Virtual Box (Opcional)
 Sublime
     -Instalar el .deb de la página o buscar en los repos, > a v2.
 python-pip
 virtualenv
 virtualenvwrapper
 curl
-qpdfview
-python
+python (Probarlo)
 python-requests
-django
-ruby
+django (Opcional)
+ruby (Probarlo)
 ruby on rails
 Paquete para dar formatos a unidades usb
 firefox
@@ -1979,4 +1963,3 @@ Adblock
 Private Tab
 Firebug
 Youtube Video Downloader
-
