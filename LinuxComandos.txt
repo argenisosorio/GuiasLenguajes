@@ -788,7 +788,7 @@ $ wget www.ejemplo_web.com // Descargar toda una página completa, wget no está
 $ wget -p www.ejemplo_web.com  // Lo mismo que lo anterior pero con esta opción -p descarga además todos los elementos extras necesarios de la página
 como hojas de estilos, imágenes en línea, etc.
 
-$ wget -c ftp://sunsite.doc.ic.ac.uk/ls-lR.Z // -c ó --continue, reanudar una descarga de wget si se detuvo por caída de red, cancelación de proceso, etc.
+$ wget -c ftp://sunsite.doc.ic.ac.uk/ls-lR.Z // -c ó --continue, reanudar una descarga de wget si se detuvo por caída de red, cancelación de proceso, etc. Se lanza el comando de nuevo con el enlace para reanudar.
 
 $ wget http://ejemplo.com/programa.tar.gz  ftp://otrositio.com/descargas/video.mpg // Indicar más de una descarga a la vez, incluso con distintos protocolos o extensiones
 
@@ -1911,12 +1911,11 @@ al final ponemos la ruta hasta nuestro dispositivo, la que vimos con df -h
 ##### source.list example  #####
 ################################
 
-#Debian GNU/Linux 8 (Jessie) Estable
+# Debian GNU/Linux 8 (Jessie) Estable
 
-#Repositorio Oficial
+# Repositorio Oficial
 deb http://http.us.debian.org/debian/ jessie main contrib non-free
 deb-src http://http.us.debian.org/debian/ jessie main contrib non-free
-
 deb http://httpredir.debian.org/debian/ jessie main
 deb-src http://httpredir.debian.org/debian/ jessie main
 
@@ -1924,17 +1923,11 @@ deb-src http://httpredir.debian.org/debian/ jessie main
 deb http://httpredir.debian.org/debian/ jessie-updates main
 deb-src http://httpredir.debian.org/debian/ jessie-updates main
 
-#Repositorio de Seguridad
+# Repositorio de Seguridad
 deb http://security.debian.org/ jessie/updates main contrib non-free
 deb-src http://security.debian.org/ jessie/updates main contrib non-free
 deb http://security.debian.org/ jessie/updates main
 deb-src http://security.debian.org/ jessie/updates main
-
-#Repositorio Multimedia
-#aptitude install deb-multimedia-keyring
-#deb http://www.deb-multimedia.org testing main non-free
-#deb http://www.deb-multimedia.org jessie main non-free
-#deb-src http://www.deb-multimedia.org jessie main non-free
 
 #----------------------------------
 
