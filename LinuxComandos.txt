@@ -1961,23 +1961,25 @@ Si da problemas con el fichero dir/dir/lock por ejemplo, lo borramos
 
 No se pudo bloquear /var/lib/dpkg/lock - open (11: Recurso no disponible temporalmente)
 
-$ sudo fuser -vki  /var/lib/dpkg/lock // Solución
+Solución...
+
+$ sudo fuser -vki  /var/lib/dpkg/lock
 
 luego seguimos con...
 
-terminator
-aptitude (Configurarlo)
-apache (Probarlo)
+terminator (Configurar, luego)
+aptitude (Probar)
+sudo (Configurar y Probar)
+apache (Probar)
 postgresql (Probar)
 ssh (Configurar y Probar)
-Sudo
 vlc player
 rsync
 
 ============
 ** Para compilacion y construcción de paquetes **
-gcc
 build-essential
+gcc
 dpkg-dev
 fakeroot
 cmake
@@ -1985,21 +1987,23 @@ devscripts
 ==========
 
 meld
-git (Configurarlo)
+git (Configurarlo, Probarlo)
 vim (Configurarlo)
+.bashrc (Configurarlo, alias, etc...)
 Virtual Box (Opcional)
 Sublime
     -Instalar el .deb de la página o buscar en los repos, > a v2.
+python (Probarlo)
 python-pip
 virtualenv
 virtualenvwrapper
 curl
-python (Probarlo)
 python-requests
 django (Opcional)
 ruby (Probarlo)
-ruby on rails
+ruby on rails (Opcional)
 Paquete para dar formatos a unidades usb
+audacity
 firefox
 Adblock --> https://addons.mozilla.org/es/firefox/addon/adblock-plus/
 Private Tab --> https://addons.mozilla.org/es/firefox/addon/private-tab/
