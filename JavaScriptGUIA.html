@@ -2236,14 +2236,27 @@ no este vacío -->
 
 -------------------------------------
 
-<!-- Función onclick para redireccionar url al hacer click -->
-<button id="myButton" class="float-left submit-button" >Home</button>
-
+<!-- Funciónes onclick para redireccionar url al hacer click -->
+<html>
+<head>
+  <title></title>
+</head>
+<body>
+<button id="myButton" class="float-left submit-button" >GO</button>
+<br />
+<br />
+<button type="button" onclick="miFuncion()">miFuncion</button>
 <script type="text/javascript">
     document.getElementById("myButton").onclick = function () {
         location.href = "www.yoursite.com";
     };
+    function miFuncion() {
+        //alert("Activaste la funcion miFuncion()");
+        location.href = "www.yoursite.com";
+    }
 </script>
+</body>
+</html>
 
 -------------------------------------
 
