@@ -2880,6 +2880,132 @@ Creamos el fichero cd_catalog.xml y lo llenamos con:
 
 -------------------------------------
 
+<!-- -->
+
+-------------------------------------
+
+<!-- The split() method is used to split a string into an array of substrings, and returns the new array.
+Tip: If an empty string ("") is used as the separator, the string is split between each character. -->
+<!DOCTYPE html>
+<html>
+<body>
+<p>Cadena = "How are you doing today?</p>
+<p>Click the button to display the array values after the split.</p>
+<button onclick="myFunction()">Try it</button>
+<p id="demo"></p>
+<script>
+function myFunction() {
+    var str = "How are you doing today?";
+    var res = str.split(" ");
+    document.getElementById("demo").innerHTML = res;
+}
+</script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- The split() method other example -->
+<!DOCTYPE html>
+<html>
+<body>
+Cadena = How are you doing today?
+<p id="demo"></p>
+<script>
+window.onload = function() {
+  var str = "How are you doing today?";
+  var res = str.split("");
+  document.getElementById("demo").innerHTML = res;
+}
+</script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- The split() method Utilizar una letra como separador -->
+<!DOCTYPE html>
+<html>
+<body>
+<p>Click the button to display the array values after the split.</p>
+<button onclick="myFunction()">Try it</button>
+<p id="demo"></p>
+<script>
+function myFunction() {
+    var str = "How are you doing today?";
+    var res = str.split("o");
+    document.getElementById("demo").innerHTML = res;
+}
+</script>
+</body>
+</html>
+
+
+-------------------------------------
+
+<!-- The split() method Utilizar un parametro para el limite -->
+<!DOCTYPE html>
+<html>
+<body>
+<p>Click the button to display the array values after the split.</p>
+<button onclick="myFunction()">Try it</button>
+<p id="demo"></p>
+<script>
+function myFunction() {
+    var str = "How are you doing today?";
+    var res = str.split(" ", 2);
+    document.getElementById("demo").innerHTML = res;
+}
+</script>
+</body>
+</html>
+
+
+-------------------------------------
+
+<!-- Contador, usando una variable e incrementandola con cada acción -->
+<!DOCTYPE html>
+<html>
+    <head>
+      <script type="text/javascript">
+        contador = 1;
+        function Contador() {
+          alert("Alerta!" + contador);
+          contador++;
+        }
+      </script>
+    </head>
+<body>
+  <form>
+      <input type="button" value="Hacer click" onclick="Contador()"/>
+  </form>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
 -------------------------------------
 
 <!-- -->

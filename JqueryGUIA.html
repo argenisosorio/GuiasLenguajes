@@ -1,4 +1,4 @@
-<!-- Guía Jquery by dM -->
+T<!-- Guía Jquery by dM -->
 
 --- ¿Qué es JQuery? ---
 
@@ -683,7 +683,7 @@ Nombre: <input type="text">
           $(this).html(texto);//Mouse fuera del elemento
         }
       );
-    }); 
+    });
  </script>
  <style type="text/css">
    #caja {
@@ -698,6 +698,36 @@ Nombre: <input type="text">
   <div id="caja">
     Posicione el mouse arriba
   </div>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- hover sobre una lista, agregar una cadena junto al elemento de la lista -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>hover demo</title>  
+  <script src="jquery-1.9.1.js" type="text/javascript"></script>
+</head>
+<body> 
+<ul>
+  <li>Milk</li>
+  <li>Bread</li>
+  <li class="fade">Chips</li>
+  <li class="fade">Socks</li>
+</ul> 
+<script>
+$( "li" ).hover(
+  function() {
+    $( this ).append( $( "<span> ***</span>" ) );
+  }, function() {
+    $( this ).find( "span:last" ).remove();
+  }
+);
+</script>
+ 
 </body>
 </html>
 
@@ -2214,9 +2244,9 @@ fast – Rápido
 </body>
 </html>
 
-<!-- ********************************************************* -->
+-------------------------------------
 <!-- Para dar posicion al Popover(top,bottom,left,right) -->
-<!--DOCTYPE html>
+<DOCTYPE html>
 <html lang="en">
 <head>
   <title>Bootstrap Example</title>
@@ -2227,7 +2257,6 @@ fast – Rápido
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 </head>
 <body>
-
 <div class="container">
   <h3>Popover Example</h3>
   <ul class="list-inline">
@@ -2237,7 +2266,6 @@ fast – Rápido
     <li><a href="#" title="Header" data-toggle="popover" data-placement="right" data-content="Content">Right</a></li>
   </ul>
 </div>
-
 <script>
 $(document).ready(function(){
     $('[data-toggle="popover"]').popover();   
@@ -2245,11 +2273,11 @@ $(document).ready(function(){
 </script>
 
 </body>
-</html-->
+</html>
 
-<!-- ********************************************************* -->
+-------------------------------------
 <!-- Para cerrar el Popover haciendo click en cualquier lugar del doc-->
-<!--DOCTYPE html>
+<DOCTYPE html>
 <html lang="en">
 <head>
   <title>Bootstrap Example</title>
@@ -2273,9 +2301,35 @@ $(document).ready(function(){
 </script>
 
 </body>
-</html-->
+</html>
 
 -------------------------------------
+
+<!-- Popover, al dar click muestra una pestaña con una cabecera y un cuerpo y link interno -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="jquery-1.9.1.js" type="text/javascript"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script>
+      $(document).ready(function(){
+        $("[data-toggle=popover]").popover({html:true})
+      });
+    </script>
+</head>
+<body>
+    <div align="center">
+      <h3>Ejemplo de Popover con enlace</h3>
+      <button data-toggle="popover" data-content="Link: <a href='#'>Ir</a>" data-html="true"> Example </button>
+    </div>
+</body>
+</html>
+
+---------------------------------- 
 
 <!-- Popover con hover -->
 <!DOCTYPE html>
@@ -3919,11 +3973,68 @@ $(document).ready(function(){
 
 -------------------------------------
 
-<!-- -->
+<!-- Metodo jQuery que recorre elementos usando un selector -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>each demo</title>
+  <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+</head>
+<body>
+<ul>
+  <li>foo</li>
+  <li>bar</li>
+</ul>
+<script>
+$(document).ready(function(){
+    $( "li" ).each(function( index ) {
+      alert( index + ": " + $( this ).text() );
+  });
+});
+</script>
+</body>
+</html>
 
 -------------------------------------
 
-<!-- -->
+<!-- Metodo jQuery each() Itera sobre los divs y le asigna una propiead de color. -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>each demo</title>
+  <style>
+  div {
+    color: red;
+    text-align: center;
+    cursor: pointer;
+    font-weight: bolder;
+    width: 300px;
+  }
+  </style>
+  <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+</head>
+<body>
+ 
+<div>Click here</div>
+<div>to iterate through</div>
+<div>these divs.</div>
+ 
+<script>
+$( document.body ).click(function() {
+  $( "div" ).each(function( i ) {
+    if ( this.style.color !== "blue" ) {
+      this.style.color = "blue";
+    } else {
+      this.style.color = "";
+    }
+  });
+});
+</script>
+ 
+</body>
+</html>
 
 -------------------------------------
 
