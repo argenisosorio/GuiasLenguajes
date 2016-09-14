@@ -142,7 +142,9 @@ $ cd .. // retroceder un directorio
 
 $ cd ../../ // Retroceder dos directorios (../) representa un directorio
 
-$ mkdir // Crear carpeta
+$ mkdir nombre_carpeta // Crear carpeta
+
+$ mkdir -p carpeta1/carpeta2 // Crear una carpeta con otra carpeta dentro, encadenar la creación.
 
 && // El operador '&&' sirver para continuar con la ejecucion de comadnos en el shell, ejemplo:
 
@@ -1912,6 +1914,11 @@ al final ponemos la ruta hasta nuestro dispositivo, la que vimos con df -h
 ##### source.list example  #####
 ################################
 
+**The format is
+deb <respository server/mirror> <repository name> <sub branches of the repo>
+
+-----
+
 # Debian GNU/Linux 8 (Jessie) Estable
 
 # Repositorio Oficial
@@ -1929,6 +1936,18 @@ deb http://security.debian.org/ jessie/updates main contrib non-free
 deb-src http://security.debian.org/ jessie/updates main contrib non-free
 deb http://security.debian.org/ jessie/updates main
 deb-src http://security.debian.org/ jessie/updates main
+
+# Testing repository - main, contrib and non-free branches
+#deb http://http.us.debian.org/debian testing main non-free contrib
+#deb-src http://http.us.debian.org/debian testing main non-free contrib
+
+# Testing security updates repository
+#deb http://security.debian.org/ testing/updates main contrib non-free
+#deb-src http://security.debian.org/ testing/updates main contrib non-free
+
+# Unstable repo main, contrib and non-free branches, no security updates here
+#deb http://http.us.debian.org/debian unstable main non-free contrib
+#deb-src http://http.us.debian.org/debian unstable main non-free contrib
 
 #----------------------------------
 
@@ -1952,6 +1971,7 @@ deb http://ftp.debian.org/debian/ wheezy-backports main
 ########################################################
 ##### Recommended installation packages for Debian #####
 ########################################################
+
 Actualizar el source.list 
 
 # apt-get update
@@ -1968,46 +1988,48 @@ $ sudo fuser -vki  /var/lib/dpkg/lock
 
 luego seguimos con...
 
+##### Programas para el Sistema #####
 terminator (Configurar, luego)
-aptitude (Probar)
+vim (Configurarlo)
+.bashrc (Configurarlo, alias, etc...)
 sudo (Configurar y Probar)
+aptitude (Probar)
+ssh (Configurar y Probar)
+git (Configurarlo, Probarlo)
+vlc player
+
 apache (Probar)
 postgresql (Probar)
-ssh (Configurar y Probar)
-vlc player
+Virtual Box (Opcional)
+Paquete para dar formatos a unidades usb
 rsync
+meld
+audacity
 
-============
-** Para compilacion y construcción de paquetes **
+#####  Para compilacion y construcción de paquetes #####
 build-essential
 gcc
 dpkg-dev
 fakeroot
 cmake
 devscripts
-==========
 
-meld
-git (Configurarlo, Probarlo)
-vim (Configurarlo)
-.bashrc (Configurarlo, alias, etc...)
-Virtual Box (Opcional)
-Sublime
-    -Instalar el .deb de la página o buscar en los repos, > a v2.
+##### Desarrollo #####
+curl
+Sublime (Instalar el .deb de la página o buscar en los repos, > a v2.)
 python (Probarlo)
 python-pip
 virtualenv
 virtualenvwrapper
-curl
 python-requests
 django (Opcional)
 ruby (Probarlo)
 ruby on rails (Opcional)
-Paquete para dar formatos a unidades usb
-audacity
-firefox
+
+##### Navegador Web #####
+Firefox
 Adblock --> https://addons.mozilla.org/es/firefox/addon/adblock-plus/
 Private Tab --> https://addons.mozilla.org/es/firefox/addon/private-tab/
 Firebug --> https://addons.mozilla.org/es/firefox/addon/firebug/
-Youtube Video Downloader
+Youtube Video Downloader --> https://addons.mozilla.org/es/firefox/search/?q=youtube&appver=&platform=
 Save as PDF --> https://addons.mozilla.org/es/firefox/addon/save-as-pdf/
