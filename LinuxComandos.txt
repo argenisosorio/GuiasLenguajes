@@ -822,6 +822,8 @@ $ wget --mirror http://ejemplo_web.com/
 
 $ wget -m http://ejemplo_web.com/ // De este modo obtienes una copia (un espejo) completa del sitio.
 
+$ wget -r -l7 www.ejemplo.com // -l7 (nivel de profundidad) de descargara, es decir descargará en esa profundidad de subdirectorios. De forma predeterminada wget emplea 5.
+
 #################
 ##### jigdo #####
 #################
@@ -1426,9 +1428,9 @@ $ cclive -F https://www.youtube.com/watch?v=Lfj667lLLnE // Comprobar los formato
 
 $ cclive -f fmt22_720p https://www.youtube.com/watch?v=LtzFg4JiL5E // Se elige el formato y se pasa en el comando.
 
-###############################
-##### Cifrado de ficheros #####
-###############################
+#############################################
+##### Cifrado de ficheros gpg, otros... #####
+#############################################
 
 El cifrado simétrico y asimétrico.
 
@@ -1537,6 +1539,84 @@ $ ls
 ClavePublica_username.gpg // Fichero generado que contiene la clave pública
 
 Este archivo ahora se puede difundir por el medio que queramos.
+
+
+--- Subir una clave pública a un servidor de claves ---
+
+Los servidores de claves suelen ser de acceso público (al no haber mucho problema por difundir una clave pública) y en este caso
+subiremos una clave a los servidores del MIT (pgp.mit.edu) usando el comando:
+
+$ gpg --send-keys --keyserver [Dirección del servidor] [ID de la clave pública] (al igual que antes la ID es 88651986).
+
+$ gpg --send-keys --keyserver pgp.mit.edu 88651986
+
+Entramos a --> https://pgp.mit.edu/ y buscamos nuestra clave pública por El Nombre y Apellido que añadimos cuando la estuvimos creando.
+
+***Cifrando un fichero
+
+$ vim x.txt // Creamos el fichero, lo llenamos con algo de texto para la prueba, lo guardamos.
+
+gpg --encrypt --recipient [ID de la clave] [Archivo] // Cifrar con una clave pública.
+
+gpg --encrypt --recipient 88651986 x.txt // Ciframos el fichero con la clave publica creada para la prueba.
+
+Nos creará un fichero: x.txt.gpg // Fichero cifrado con la clave pública
+
+***Descifrar un archivo con la clave privada
+
+$ gpg -d [Archivo] e introduciendo la contraseña que creamos para salvaguardar la clave privada.
+
+$ gpg -d x.txt.gpg
+
+Nos mostrará
+
+Necesita una frase contraseña para desbloquear la clave secreta
+del usuario: "Name_user Last_name (comment) <mail@mail.xxx>"
+clave RSA de 2048 bits, ID 88651986, creada el 201x-xx-xx(ID de clave primaria 5F829889)
+
+Introduzca frase contraseña:
+
+---
+
+La contraseña es la clave privada, la cual solo tendremos nosotros y nunca compartiremos, pues es la que nos permite descifrar los ficheros
+que fueron cifrados con nuestra clave publica.
+
+--- Firmar archivos ---
+
+Una de las medidas de seguridad básicas al pasar un mensaje o fichero es asegurarnos que el emisor es quien dice ser, para asegurarnos de esto
+digitalmente existe la firma digital, podemos cifrar y a su vez firmar ficheros, que es lo que haremos con el comando:
+
+$ gpg -u [ID de la clave] --output [Archivo resultante] --sign [Archivo para firmar]
+
+...e introduciendo la contraseña de la clave privada.
+
+$ gpg -u 88651986 --output x_firmado.txt.gpg --sign x.txt
+
+...
+
+Necesita una frase contraseña para desbloquear la clave secreta
+del usuario: "xxx xxx (xx) <mail@mail.xxx>"
+clave RSA de 2048 bits, ID 88651986, creada el 201x-xx-xx
+
+Introduzca frase contraseña: 
+
+...
+
+nos generará el fichero:
+
+x_firmado.txt.gpg
+
+--- Verificar y descifrar un archivo firmado ---
+
+Cualquiera con la clave pública asociada a la que ha firmado el documento puede leerlo, de la misma forma que desciframos un archivo
+(gpg -d [Archivo]) o verificándolo únicamente con el comando gpg --verify [Archivo].
+
+$ gpg --verify x_firmado.txt.gpg 
+
+muestra...
+
+gpg: Firmado el xxx xx xx 201x xx:xx:xx VET usando clave RSA ID 88651986
+gpg: Firma correcta de "User_name Last_name (comment) <user@mail.xxx>"
 
 #####################################
 ##### Configurar sudo en Debian #####
@@ -2013,6 +2093,14 @@ dpkg-dev
 fakeroot
 cmake
 devscripts
+autoconf
+automake
+dh-make
+debhelper
+autotools-dev
+gnupg
+lintian
+quilt
 
 ##### Desarrollo #####
 curl
