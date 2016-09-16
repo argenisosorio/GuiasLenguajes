@@ -70,6 +70,12 @@ $ git checkout Nombre_Rama // Cambiarse de rama
 
 $ git branch -v // Para ver los ultimos commits de cada rama.
 
+$ git push origin master // Subir los cambios al repositorio remoto en la rama master
+
+$ git push origin nombre_rama // Estando en otra rama local, Subir los cambios al repositorio remoto en la rama master, si no existe la rama, la creará.
+
+$ git push -f origin master // git push -f <remote> <branch> Forzar el push para sobreescribir los ficheros en el repositorio remoto.
+
 ----- Mezclando Ramas -----
 
 Para fusionar dos ramas, en este caso una rama de desarrollo con la rama master se hace un git merge, para realizar la mezcla vamos
