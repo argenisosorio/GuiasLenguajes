@@ -1426,11 +1426,19 @@ $ man cclive // Manual del paquete.
 $ cclive -F https://www.youtube.com/watch?v=Lfj667lLLnE // Comprobar los formatos disponibles antes de descargar el video.
 // Se podrá ver un listado de formatos disponibles separados por "|"
 
-$ cclive -f fmt22_720p https://www.youtube.com/watch?v=LtzFg4JiL5E // Se elige el formato y se pasa en el comando.
+$ cclive -f fmt22_720p https://www.youtube.com/watch?v=LtzFg4JiL5E // Se elige el formato y se pasa en el comando, luego comenzará la descarga.
+
+$ cclive -f best http://www.youtube.com/xxxxxx // Download the best available format of the media.
 
 #############################################
 ##### Cifrado de ficheros gpg, otros... #####
 #############################################
+
+$aptitude search gnupg // Revisar si está instalado gnupg
+
+GnuPG es una herramienta de GNU para la comunicación y el almacenamiento de datos de manera segura. Se puede utilizar para
+cifrar datos y para crear firmas digitales. Incluye capacidad avanzada de gestión de claves y cumple con el estándar de
+Internet OpenPGP propuesto tal como se describe en el RFC 4880. 
 
 El cifrado simétrico y asimétrico.
 
@@ -1990,6 +1998,25 @@ Luego, estando desmontado la unidad usb, pero conectado al puerto
 Esperamos y listo. Con la opción -F 32 le decimos que será formateada como Fat32, y con la opción -n le ponemos una etiqueta o nombre al dispositivo y
 al final ponemos la ruta hasta nuestro dispositivo, la que vimos con df -h
 
+###################
+##### dh-make #####
+###################
+
+dh-make es una herramienta para convertir archivos de código fuente en paquetes de código fuente de Debian
+
+-Configuraración: Primero debemos configurar las variables de entorno $DEBEMAIL y $DEBFULLNAME que son utilizadas por varias herramientas
+de mantenimiento de Debian para obtener el nombre y correo electrónico del constructor o mantenedor de los paquetes.
+
+En el /home/user editamos el fichero .bashrc le añadimos al final lo siguiente:
+
+export DEBFULLNAME="Argenis Osorio"
+
+export DEBEMAIL=aosorio@cenditel.gob.ve
+
+Guardamos...
+
+Con esto tendríamos configurado dh-make.
+
 ################################
 ##### source.list example  #####
 ################################
@@ -2016,6 +2043,10 @@ deb http://security.debian.org/ jessie/updates main contrib non-free
 deb-src http://security.debian.org/ jessie/updates main contrib non-free
 deb http://security.debian.org/ jessie/updates main
 deb-src http://security.debian.org/ jessie/updates main
+
+#----------------------------------
+
+#Debian GNU/Linux Testing & Unstable
 
 # Testing repository - main, contrib and non-free branches
 #deb http://http.us.debian.org/debian testing main non-free contrib
@@ -2047,6 +2078,33 @@ deb-src http://ftp.debian.org/debian wheezy-updates main contrib non-free
 
 #Backports
 deb http://ftp.debian.org/debian/ wheezy-backports main
+
+#----------------------------------
+
+#Debian GNU/Linux 7 (Wheezy) Estable - CENDITEL
+
+deb http://debian.cenditel/debian/ wheezy main
+deb-src http://debian.cenditel/debian/ wheezy main
+
+deb http://security.debian.org/ wheezy/updates main
+deb-src http://security.debian.org/ wheezy/updates main
+
+# wheezy-updates, previously known as 'volatile'
+deb http://debian.cenditel/debian/ wheezy-updates main
+deb-src http://debian.cenditel/debian/ wheezy-updates main
+
+#----------------------------------
+
+# Debian GNU/Linux 8 (Jessie) Estable - CENDITEL
+
+deb http://debian.cenditel/debian/ jessie main
+deb-src http://debian.cenditel/debian/ jessie main
+
+# jessie-updates, previously known as 'volatile'
+deb http://debian.cenditel/debian/ jessie-updates main
+deb-src http://debian.cenditel/debian/ jessie-updates main
+
+#deb http://tibisay.cenditel.gob.ve/repositorio jessie main
 
 ########################################################
 ##### Recommended installation packages for Debian #####

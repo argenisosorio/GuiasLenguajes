@@ -89,6 +89,16 @@ $ git checkout fichero.xxx // Si no deja hacer el pull, descartar cambios en ese
 $ git status origin master // Comparar la rama local con la rama del repositorio, nos dirá si estamos atrás o delante del repo, y por cuantos commits.
 Si estamos detrás, con un pull nos traeremos los cambios del repo, si estamos delante, se hará un merge o una mezcla del repo local y el remoto y así tendra todos los cambios listos, luego en el status del repo local, pedirá hacer un push para estabilizar todos los cambios en el repo remoto.
 
+----- Borrando ramas remotas -----
+
+Imagina que ya has terminado con una rama remota. Es decir, tanto tu como tus colaboradores habeis completado una determinada funcionalidad y la habeis incorporado (merge) a la rama master en el remoto (o donde quiera que tengais la rama de código estable). Puedes borrar la rama remota utilizando la un tanto confusa sintaxis: git push [nombreremoto] :[rama]. Por ejemplo, si quieres borrar la rama serverfix del servidor, puedes utilizar:
+
+$ git push origin :serverfix
+To git@github.com:schacon/simplegit.git
+ - [deleted]         serverfix
+
+Y... ¡Boom!. La rama en el servidor ha desaparecido. Puedes grabarte a fuego esta página, porque necesitarás ese comando y, lo más probable es que hayas olvidado su sintaxis. Una manera de recordar este comando es dándonos cuenta de que proviene de la sintaxis git push [nombreremoto] [ramalocal]:[ramaremota]. Si omites la parte [ramalocal], lo que estás diciendo es: "no cojas nada de mi lado y haz con ello [ramaremota]".
+
 ---------------------------
 
 $ git checkout XXXXXX123456 // Este comando sirve para moverse entre los commits, cada commit genera una
