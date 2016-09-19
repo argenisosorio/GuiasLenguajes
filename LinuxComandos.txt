@@ -129,7 +129,7 @@ ejemplo: ls *.txt
 
 $ ls -R // Listar los directorios y subdirectorios asi como ficehros de un directorio.
 
-$ \du // Para ver la lista de carpetas y sub carpetas, los directorios que existen 
+$ du // Para ver la lista de carpetas y sub carpetas, los directorios que existen 
 dentro de donde se encuentre situado
 
 $ cd // Cambiar de directorio, nos lleva al home del usuario.
@@ -1588,7 +1588,6 @@ ClavePublica_username.gpg // Fichero generado que contiene la clave pública
 
 Este archivo ahora se puede difundir por el medio que queramos.
 
-
 --- Subir una clave pública a un servidor de claves ---
 
 Los servidores de claves suelen ser de acceso público (al no haber mucho problema por difundir una clave pública) y en este caso
@@ -1599,6 +1598,13 @@ $ gpg --send-keys --keyserver [Dirección del servidor] [ID de la clave pública
 $ gpg --send-keys --keyserver pgp.mit.edu 88651986
 
 Entramos a --> https://pgp.mit.edu/ y buscamos nuestra clave pública por El Nombre y Apellido que añadimos cuando la estuvimos creando.
+
+***Importar la clave desde el archivo o servidor de claves
+
+Para poder usar la clave pública para cifrar o comprobar la identidad del remitente tenemos que importar previamente la clave, desde un archivo
+debemos de usar el comando gpg --import [Archivo de la clave pública] //
+
+$ gpg --import CPub.gpg 
 
 ***Cifrando un fichero
 
