@@ -41,6 +41,8 @@ $ cat /etc/*-release // Ver info del sistema (Probado en Debian GNU/Linux 7 whee
 $ ifconfig // Siendo root, permite desplegar numerosos parámetros de las interfaces de red residentes  en el núcleo,
 como la dirección ip (dinámica o estática), o la máscara de red entre otros.
 
+$ ip addr// Para ver el estatus de las conexiones de red, este comando le mostrará su dirección IP, el tipo de conexión que está utilizando, etc.
+
 $ apt-get moo // Huevo de pascua, muestra una vaca.
 
 --- ip publica ---
@@ -1175,14 +1177,46 @@ sh prueba // Ejecutar un programa con bash, script guardado sin extension.
 #Ejemplo de programa en bash para ejecutar aplicaciones instaladas en el SO.
 #!/bin/bash
 #val=10
-val1='#########################\n'
-val2='##### Abriendo Meld #####\n'
-val3='#########################\n'
-#echo $val1
-#echo $val2
-#echo $val3
-echo $val1 $val2 $val3
+val='##### Abriendo Meld #####'
+echo $val
 /usr/bin/meld
+
+------------------------
+
+#Ejemplo de programa en bash que crea un fichero en el directorio en que se ejecuta.
+#!/bin/bash
+touch FFF.txt
+
+------------------------
+
+# Ejemplo de programa en bash que crea un fichero en un directorio específico.
+#!/bin/bash
+touch /home/aosorio/FFF.txt
+
+------------------------
+
+#Crear una carpeta, entrar en la carpeta y crear un fichero dentro.
+#!/bin/bash
+mkdir proyecto &&
+cd proyecto &&
+touch FFF.txt
+
+------------------------
+
+#Comprimir un directorio con un script de bash.
+#!/bin/bash
+DIRS="proyecto"
+tar -cvf backup.tar $DIRS
+
+------------------------
+
+#A Simple Bash Example
+#!/bin/bash  
+echo "This is a shell script"  
+ls -lah
+echo "I am done running ls"  
+SOMEVAR='text stuff'
+echo "$SOMEVAR"
 
 ------------------------
 
@@ -1196,6 +1230,12 @@ function hola {
 echo $HOLA
 hola
 echo $HOLA
+
+-----------------------
+
+#Abrir un fichero específico con el editor gedit
+#!/bin/bash
+gedit /home/user/try.txt
 
 -----------------------
 
