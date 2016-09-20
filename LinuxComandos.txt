@@ -1036,6 +1036,8 @@ Para copiar un directorio completo de mi ordenador al servidor, por ejemplo /hom
 
 $ scp -r /home/mario/carpeta usuario@dominio.com:/home/usuario
 
+$ scp -r /home/mario/carpeta usuario@dominio.com: // Con los dos puntos al final se copiara automáticamente en el home del usuario.
+
 --- COPIAR UN DIRECTORIO COMPLETO DE SERVIDOR A LOCAL ---
 Para copiar un directorio completo del servidor al local, por ejemplo /home/usuario/carpeta a /home/user/docs, añadimos un -r en el comando:
 
@@ -1574,7 +1576,7 @@ pub   1559C/88651986 2017-01-01
 uid                  username_lastname (Enunciado de la clave) <username@email.com>
 sub   2048g/55GD33FG 2017-01-01
 
---- Exportar y enviar la clave pública ---
+*** Exportar y enviar la clave pública ***
 
 El objetivo de esta pareja de claves es que cualquiera nos pueda mandar un archivo cifrado
 que solo veremos nosotros y esto se hace difundiendo la clave pública que acabamos de crear
@@ -1588,7 +1590,7 @@ ClavePublica_username.gpg // Fichero generado que contiene la clave pública
 
 Este archivo ahora se puede difundir por el medio que queramos.
 
---- Subir una clave pública a un servidor de claves ---
+*** Subir una clave pública a un servidor de claves ***
 
 Los servidores de claves suelen ser de acceso público (al no haber mucho problema por difundir una clave pública) y en este caso
 subiremos una clave a los servidores del MIT (pgp.mit.edu) usando el comando:
