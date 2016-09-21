@@ -1482,7 +1482,23 @@ GnuPG es una herramienta de GNU para la comunicación y el almacenamiento de dat
 cifrar datos y para crear firmas digitales. Incluye capacidad avanzada de gestión de claves y cumple con el estándar de
 Internet OpenPGP propuesto tal como se describe en el RFC 4880. 
 
-El cifrado simétrico y asimétrico.
+--- Anillo de claves ---
+
+GPG tiene un repositorio de claves (anillo de claves) donde guarda todas las que tenemos almacenadas en nuestro sistema,
+ya sean privadas o públicas (como comenté, con la clave pública cifraremos un mensaje que solo podrá descifrar el
+que posee la clave privada).
+
+Más adelante cuando veamos un anillo de claves debemos de recordar que pub hace referencia a la clave pública y sub hace referencia
+a la privada (y que tenemos que tener a buen recaudo).
+
+Servidores de claves
+
+Para que nos cifren un mensaje tenemos que compartir la clave pública de nuestro par de claves para cifrar, y como es un poco
+engorroso difundir una clave a muchas personas existen los servidores de claves PGP (compatibles con GPG), donde subiré una
+clave pública para el que quiera probar los ejemplos. Unos ejemplos de servidores son estos: pgp.rediris.es (español, aunque falla algunas veces)
+o pgp.mit.edu (americano, del MIT y a mi no me ha dado problemas).
+
+--- El cifrado simétrico y asimétrico ---
 
 -En el cifrado simétrico, ciframos el archivo con una clave X
 Para descifrarlo y obtener el archivo original, utilizamos la misma clave X.
@@ -1608,7 +1624,15 @@ debemos de usar el comando gpg --import [Archivo de la clave pública] //
 
 $ gpg --import CPub.gpg 
 
-***Cifrando un fichero
+Al tener la clave ya en mi anillo de claves me contesta que no hay cambios.
+
+Para realizar la importación desde el servidor tenemos que usar el comando
+
+$ gpg --keyserver [Dirección del servidor] --recv-keys [ID de la clave]
+
+$ gpg --keyserver pgp.mit.edu --recv-keys 5616846865
+
+*** Cifrar un fichero ***
 
 $ vim x.txt // Creamos el fichero, lo llenamos con algo de texto para la prueba, lo guardamos.
 
@@ -1618,7 +1642,7 @@ gpg --encrypt --recipient 88651986 x.txt // Ciframos el fichero con la clave pub
 
 Nos creará un fichero: x.txt.gpg // Fichero cifrado con la clave pública
 
-***Descifrar un archivo con la clave privada
+*** Descifrar un archivo con la clave privada ***
 
 $ gpg -d [Archivo] e introduciendo la contraseña que creamos para salvaguardar la clave privada.
 
