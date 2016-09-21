@@ -721,6 +721,22 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 
 -------------------------------------
 
+<!-- Pedir datos y guardarlo en una variable -->
+<html>
+  <head>
+      <title>XXX</title>
+      <meta charset="UTF-8">
+  </head>
+<script type = "text/javascript" language = "javascript">
+    var nombre=prompt("Nombre de Usuario:");
+    alert(nombre);
+</script>
+<body>
+</body>
+</html>
+
+-------------------------------------
+
 <!-- Recoger un dato por teclado y escribirlo en el documento -->
 <!doctype html>
 <html>
@@ -1259,6 +1275,30 @@ ocument.write(arreglo[1][1]);
     <br />
     <div id="caja">
     </div>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Capturar datos de un formulario y guardarlos en una variable -->
+<html>
+    <head>
+        <title></title>
+        <meta charset="utf-8">
+    </head>
+    <style type="text/css">
+    </style>
+    <script type="text/javascript">
+        function mostrar() {
+            numero_proyecto = document.formulario.numero_proyecto.value
+            alert(numero_proyecto);
+        }
+    </script>
+<body>
+    <form name="formulario" action="#" method="get">
+        Número de Proyecto: <input name="numero_proyecto" type="text"/><br />
+        <input type="button" value="Hacer click" onclick="mostrar()"/>
+    </form>
 </body>
 </html>
 

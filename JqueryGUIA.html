@@ -1,4 +1,19 @@
-T<!-- Guía Jquery by dM -->
+<!-- Guía Jquery by dM -->
+
+<html>
+  <head>
+      <title>XXX</title>
+      <!--script src="jquery-1.9.1.js" type="text/javascript"></script-->
+      <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+      <meta charset="UTF-8">
+  </head>
+  <script type="text/javascript"> 
+  $("document").ready(function () {
+  });
+</script>
+<body>
+</body>
+</html>
 
 --- ¿Qué es JQuery? ---
 
@@ -469,6 +484,54 @@ el (id) define que funcion usará -->
        <input type="button" id="boton" value="Enviar" />
        <div id="saludo"></div>
     </form>
+ </body>
+</html>
+
+-------------------------------------
+
+<!-- Capturar datos de un formulario y guardarlos en una variable -->
+<html>
+ <head>
+   <title>prueba</title>
+   <meta charset="UTF-8">
+   <script src="jquery-1.9.1.js" type="text/javascript"></script>
+   <script type="text/javascript"> 
+      $(document).ready(function(){ 
+         $("#boton").click(function(){
+            var nombre = $("#nombre").val();
+            alert(nombre);
+         });
+      }); 
+   </script>
+ </head>
+ <body>
+    <form action="javascript:void(0);">
+       <b>Nombre: </b><input type="text" id="nombre" />
+       <input type="button" id="boton" value="Enviar" />
+    </form>
+ </body>
+</html>
+
+-------------------------------------
+
+<!-- Capturar datos de un formulario y guardarlos en una variable, con button -->
+<html>
+ <head>
+   <title>prueba</title>
+   <meta charset="UTF-8">
+   <script src="jquery-1.9.1.js" type="text/javascript"></script>
+   <script type="text/javascript"> 
+      $(document).ready(function(){ 
+         $("button").click(function(){
+            var nombre = $("#nombre").val();
+            alert(nombre);
+         });
+      }); 
+   </script>
+ </head>
+ <body>
+   <b>Nombre: </b><input type="text" id="nombre" />
+   <button>Mostrar</button>
  </body>
 </html>
 
@@ -3343,6 +3406,29 @@ El JSON = mi.json
   "lastName": "Connor",
   "age": 25
 }
+
+-------------------------------------
+
+<!-- Cargar un página o elemento dentro de un iframe -->
+<html>
+  <head>
+      <title>XXX</title>
+      <!--script src="jquery-1.9.1.js" type="text/javascript"></script-->
+      <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+      <meta charset="UTF-8">
+  </head>
+  <script type="text/javascript"> 
+  $("document").ready(function () {
+    $("button").click(function(){
+      $("#content").attr("src","http://xxxxxx.xxx");
+  });
+  });
+</script>
+<body>
+  <iframe id="content" src="about:blank"></iframe>
+  <button>Get External Content</button>
+</body>
+</html>
 
 -------------------------------------
 
