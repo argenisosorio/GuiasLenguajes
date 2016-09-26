@@ -74,7 +74,7 @@ $ git push origin master // Subir los cambios al repositorio remoto en la rama m
 
 $ git push origin nombre_rama // Estando en otra rama local, Subir los cambios al repositorio remoto en la rama master, si no existe la rama, la creará.
 
-$ git push -f origin master // git push -f <remote> <branch> Forzar el push para sobreescribir los ficheros en el repositorio remoto.
+$ git push -f origin master // git push -f <remote> <branch> forzar el push para sobreescribir los ficheros en el repositorio remoto.
 
 ----- Mezclando Ramas -----
 
@@ -111,9 +111,12 @@ $ git checkout XXXXXX123456 // Este comando sirve para moverse entre los commits
 etiqueta, un identificador muy largo alfanumerico, estas etiquetas identifican una version del proyecto
 lo que permite restaurar el proyecto a estados anteriores donde XXXXXX123456 representa la etiqueta del commit al que queremos ir.
 
-//Una vez movidos a ese commit especifico del historial se puede crear una nueva rama desde ese punto, si hacemos git log nos mostrara
-los commits que habian hasta ese momento y el ultimo es en el que nos encontramos, si queremos volver a tener los commits anteriores 
-solo hacemos git checkout a la rama en que estabamos antes o a alguna rama especifica.
+//Una vez movidos a ese commit especifico del historial se puede crear una nueva rama desde ese punto con:
+
+$ git checkout -b Nombre_Rama
+
+Si hacemos git log nos mostrara los commits que habian hasta ese momento y el ultimo es en el que nos encontramos, si queremos
+volver a tener los commits anteriores solo hacemos git checkout a la rama en que estabamos antes o a alguna rama especifica.
 
 $ git checkout -f master // Para forzar volver a la rama master por ejemplo, a veces no nos deja porque no commitemos algunos cambios, como logs, etc.
 

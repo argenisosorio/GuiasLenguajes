@@ -2857,6 +2857,35 @@ $( "button" ).click(function() {
 
 -------------------------------------
 
+<!-- .toggle() Mostrar u ocultar los elementos coincidentes, efecto slow -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>toggle demo</title>
+  <style>
+  p {
+    background: #dad;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  </style>
+  <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+</head>
+<body>
+<button>Toggle 'em</button>
+<p>Hiya</p>
+<p>Such interesting text, eh?</p>
+<script>
+$( "button" ).click(function() {
+  $( "p" ).toggle( "slow" );
+});
+</script>
+</body>
+</html>
+
+-------------------------------------
+
 <!-- Utilización de un parser JSON en jQuery
 Evaluar una variable que contiene notación JSON.
 -->
