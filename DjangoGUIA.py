@@ -487,3 +487,11 @@ Password: **********
 Password (again): *********
 Superuser created successfully.
 
+
+##### Permisos de contenido según el usuario #####
+
+{% if user.is_staff %}
+<h1>Soy Admin </h1>
+{% else %}
+<h1>No soy Admin </h1>
+{% endif %}
