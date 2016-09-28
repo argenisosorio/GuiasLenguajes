@@ -124,6 +124,14 @@ $ git diff // Si se hacen cambios o se agregaron archivos al proyecto este coman
 ultimos cambios hechos el ultimo commit hecho, es recomendable revisar esos cambios antes de agregarlos al seguimiento de git
 y por supuesto antes de hacer un commit.
 
+$ git diff nombre_fichero.xxx // Ver solo los cambios o modificaciones de ese fichero, por ejemplo, si hacemos un git status y se muestra:
+
+#	modified:   a.txt
+#	modified:   b.html
+#	modified:   b.py
+
+$ git diff a.txt // Mostrar solo los cambios del fichero especificado.
+
 ---------
 
 //Luego de hacer el commit en la rama master y luego de haber creado la rama desarrollo y hacer el commit

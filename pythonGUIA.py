@@ -500,7 +500,12 @@ while True:
 ##### Listas #####
 ##################
 
-#TEORIA PENDIENTE
+'''
+La lista es un tipo de datos versátil disponible en Python, que puede escribirse
+como una lista de valores separados por comas (cosas) entre corchetes.
+Lo importante de una lista es que los elementos de una lista
+no tienen por qué ser del mismo tipo.
+'''
 
 lista = [2,"tres",True,["uno",10]] #Cada elemento de la lista contiene un indice, desde el 0,1,2...
 print lista
@@ -534,9 +539,7 @@ lista = ["casa","carro","perro","gato","ventana","puerta"]
 lista[0:1] = 5,6 #Sustituir valores en las posiciones
 print lista
 
-###########################
-##### Listas, métodos #####
-###########################
+#********************
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -544,7 +547,6 @@ lista = [1,"Dos",3]
 buscar = 1
 print buscar in lista #Se traduciría como: ¿Buscar esta en la lista?
 #Nos devolvería un True porque si está ese valor en la lista
-
 
 ###########################
 ##### VARIABLE GLOBAL #####
@@ -569,7 +571,13 @@ function()
 ##### Tuplas #####
 ##################
 
-#TEORIA PENDIENTE
+'''
+Una tupla es una secuencia de objetos de Python.
+Las tuplas son secuencias, al igual que las listas.
+Las diferencias entre tuplas y las listas son, las tuplas
+no se pueden actualizar a diferencia de las listas y las
+tuplas utilizan paréntesis, mientras que las listas utilizan corchetes.
+'''
 
 # Imprimiendo el contenido de una tupla
 tupla = (1,True,"hola")
@@ -586,7 +594,12 @@ print tupla[2]
 ##### Diccionarios #####
 ########################
 
-#TEORIA PENDIENTE
+'''
+Los diccionarios en Python son un tipo de estructuras de datos que permite guardar un conjunto
+no ordenado de pares clave-valor, siendo las claves únicas dentro de un mismo diccionario
+(es decir que no pueden existir dos elementos con una misma clave).
+Los diccionarios son estructuras de datos muy extendidos en otros lenguajes de programación.
+'''
 
 #Imprimiendo el contenido del diccionario
 diccionario = {'Clave1':[1,2,3],
@@ -865,6 +878,21 @@ lista = [1,2,3]
 print lista
 lista.reverse()
 print lista
+
+###################
+##### Métodos #####
+###################
+
+#The method len() returns the number of elements in the list.
+#len(list)
+lista = ["Proyecto1","Proyecto2","Proyecto3"]
+print lista
+print len(lista)
+
+#Otro Ejemplo
+list1, list2 = [123, 'xyz', 'zara'], [456, 'abc']
+print "First list length : ", len(list1)
+print "Second list length : ", len(list2)
 
 ########################################################
 ##### Usando APIs con el Modulo Requests de Python #####
