@@ -1472,17 +1472,23 @@ $ cclive -f fmt22_720p https://www.youtube.com/watch?v=LtzFg4JiL5E // Se elige e
 
 $ cclive -f best http://www.youtube.com/xxxxxx // Download the best available format of the media.
 
-#############################################
-##### Cifrado de ficheros gpg, otros... #####
-#############################################
+#################################################################################
+##### Cifrado de ficheros gpg, cifrado simétrico, asimétrico, firma digital #####
+#################################################################################
 
-$aptitude search gnupg // Revisar si está instalado gnupg
+$ aptitude search gnupg // Revisar si está instalado gnupg
+
+##### ¿Qué es GnuPG? (GNU Privacy Guard) #####
+
+Es un derivado libre de PGP y su utilidad es la de cifrar y firmar digitalmente, siendo además
+multiplataforma (podéis descargarlo desde la página oficial) aunque viene incorporado en algunos
+sistemas Linux, como en Ubuntu o Debian.
 
 GnuPG es una herramienta de GNU para la comunicación y el almacenamiento de datos de manera segura. Se puede utilizar para
 cifrar datos y para crear firmas digitales. Incluye capacidad avanzada de gestión de claves y cumple con el estándar de
 Internet OpenPGP propuesto tal como se describe en el RFC 4880. 
 
---- Anillo de claves ---
+##### Anillo de claves #####
 
 GPG tiene un repositorio de claves (anillo de claves) donde guarda todas las que tenemos almacenadas en nuestro sistema,
 ya sean privadas o públicas (como comenté, con la clave pública cifraremos un mensaje que solo podrá descifrar el
@@ -1491,14 +1497,14 @@ que posee la clave privada).
 Más adelante cuando veamos un anillo de claves debemos de recordar que pub hace referencia a la clave pública y sub hace referencia
 a la privada (y que tenemos que tener a buen recaudo).
 
-Servidores de claves
+##### Servidores de claves #####
 
 Para que nos cifren un mensaje tenemos que compartir la clave pública de nuestro par de claves para cifrar, y como es un poco
 engorroso difundir una clave a muchas personas existen los servidores de claves PGP (compatibles con GPG), donde subiré una
 clave pública para el que quiera probar los ejemplos. Unos ejemplos de servidores son estos: pgp.rediris.es (español, aunque falla algunas veces)
 o pgp.mit.edu (americano, del MIT y a mi no me ha dado problemas).
 
---- El cifrado simétrico y asimétrico ---
+##### El cifrado simétrico y asimétrico #####
 
 -En el cifrado simétrico, ciframos el archivo con una clave X
 Para descifrarlo y obtener el archivo original, utilizamos la misma clave X.
@@ -1514,12 +1520,6 @@ cifrado debemos de mandarle nuestra clave pública (que está vinculada a la pri
 podrán mandar de forma confidencial ese archivo que solo nosotros podremos
 descifrar con la clave privada.
 
---- ¿Qué es GnuPG? (GNU Privacy Guard) ---
-
-Es un derivado libre de PGP y su utilidad es la de cifrar y firmar digitalmente, siendo además
-multiplataforma (podéis descargarlo desde la página oficial) aunque viene incorporado en algunos
-sistemas Linux, como en Ubuntu o Debian.
-
 ##### Cifrado simétrico #####
 
 El cifrado simétrico es el tipo de cifrado más sencillo que hay, es más rápido de procesar y por desgracia
@@ -1529,11 +1529,11 @@ Crear un fichero cualquiera de ejemplo
 
 $ touch prueba.txt
 
-Dentro del fichero copiaremos algun texto de prueba para comprobar luego con el descifrado.
+Dentro del fichero copiaremos algún texto de prueba para comprobar luego con el descifrado.
 
 Luego en el shell escribimos el comando gpg con el parámetro -c para cifrar y -d para descifrar.
 
---- Parámetros básicos de gpg ---
+##### Parámetros básicos de gpg #####
 
 -c // Encrypt with a symmetric cipher using a passphrase. The default symmetric cipher used is CAST5,
 
@@ -1550,7 +1550,7 @@ $ man gpg // Ver el Manual de gpg
 
 ##### Cifrado asimétrico #####
 
---- Generar las claves---
+*** Generar las claves ***
 
 Para poder cifrar asimétricamente primero tenemos que crear la pareja de claves
 (pública y privada) con el comando gpg --gen-key
@@ -1585,6 +1585,7 @@ anillo de claves, lo importante de este paso es que veremos la identificación d
 que es necesaria para poderlas exportar y enviar.
 
 $ gpg -k // Visualizar anillo de claves
+
 /home/user/.gnupg/pubring.gpg
 --------------------------------
 
@@ -1592,7 +1593,7 @@ pub   1559C/88651986 2017-01-01
 uid                  username_lastname (Enunciado de la clave) <username@email.com>
 sub   2048g/55GD33FG 2017-01-01
 
-*** Exportar y enviar la clave pública ***
+##### Exportar y enviar la clave pública #####
 
 El objetivo de esta pareja de claves es que cualquiera nos pueda mandar un archivo cifrado
 que solo veremos nosotros y esto se hace difundiendo la clave pública que acabamos de crear
@@ -1601,12 +1602,13 @@ que solo veremos nosotros y esto se hace difundiendo la clave pública que acaba
 $ gpg -output [archivo destino] --export [ID de a clave pública] (la clave pública generada antes tiene la ID 88651986).
 
 $ gpg --output ClavePublica_username.gpg --export 88651986
+
 $ ls
 ClavePublica_username.gpg // Fichero generado que contiene la clave pública
 
 Este archivo ahora se puede difundir por el medio que queramos.
 
-*** Subir una clave pública a un servidor de claves ***
+##### Subir una clave pública a un servidor de claves #####
 
 Los servidores de claves suelen ser de acceso público (al no haber mucho problema por difundir una clave pública) y en este caso
 subiremos una clave a los servidores del MIT (pgp.mit.edu) usando el comando:
@@ -1617,10 +1619,10 @@ $ gpg --send-keys --keyserver pgp.mit.edu 88651986
 
 Entramos a --> https://pgp.mit.edu/ y buscamos nuestra clave pública por El Nombre y Apellido que añadimos cuando la estuvimos creando.
 
-***Importar la clave desde el archivo o servidor de claves
+##### Importar la clave desde el archivo o servidor de claves #####
 
 Para poder usar la clave pública para cifrar o comprobar la identidad del remitente tenemos que importar previamente la clave, desde un archivo
-debemos de usar el comando gpg --import [Archivo de la clave pública] //
+debemos de usar el comando gpg --import [Archivo de la clave pública]
 
 $ gpg --import CPub.gpg 
 
@@ -1632,7 +1634,11 @@ $ gpg --keyserver [Dirección del servidor] --recv-keys [ID de la clave]
 
 $ gpg --keyserver pgp.mit.edu --recv-keys 5616846865
 
-*** Cifrar un fichero ***
+##### Borrar una clave de mi anillo de claves #####
+
+$ gpg --delete-keys id_key // Pasamos el id de la clave que queremos borrar.
+
+##### Cifrar un fichero #####
 
 $ vim x.txt // Creamos el fichero, lo llenamos con algo de texto para la prueba, lo guardamos.
 
@@ -1642,7 +1648,7 @@ gpg --encrypt --recipient 88651986 x.txt // Ciframos el fichero con la clave pub
 
 Nos creará un fichero: x.txt.gpg // Fichero cifrado con la clave pública
 
-*** Descifrar un archivo con la clave privada ***
+##### Descifrar un archivo con la clave privada #####
 
 $ gpg -d [Archivo] e introduciendo la contraseña que creamos para salvaguardar la clave privada.
 
@@ -1661,7 +1667,7 @@ Introduzca frase contraseña:
 La contraseña es la clave privada, la cual solo tendremos nosotros y nunca compartiremos, pues es la que nos permite descifrar los ficheros
 que fueron cifrados con nuestra clave publica.
 
---- Firmar archivos ---
+##### Firmar archivos #####
 
 Una de las medidas de seguridad básicas al pasar un mensaje o fichero es asegurarnos que el emisor es quien dice ser, para asegurarnos de esto
 digitalmente existe la firma digital, podemos cifrar y a su vez firmar ficheros, que es lo que haremos con el comando:
@@ -1686,7 +1692,7 @@ nos generará el fichero:
 
 x_firmado.txt.gpg
 
---- Verificar y descifrar un archivo firmado ---
+##### Verificar y descifrar un archivo firmado #####
 
 Cualquiera con la clave pública asociada a la que ha firmado el documento puede leerlo, de la misma forma que desciframos un archivo
 (gpg -d [Archivo]) o verificándolo únicamente con el comando gpg --verify [Archivo].
