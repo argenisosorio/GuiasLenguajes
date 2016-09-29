@@ -4153,6 +4153,141 @@ $( document.body ).click(function() {
 
 -------------------------------------
 
+<!-- .length() Nos da el número de elementos que contenga el objeto jQuery. -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>length demo</title>
+  <style>
+  body {
+    cursor: pointer;
+  }
+  div {
+    width: 50px;
+    height: 30px;
+    margin: 5px;
+    float: left;
+    background: green;
+  }
+  span {
+    color: red;
+  }
+  </style>
+  <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+</head>
+<body>
+  <div></div>
+  <div></div>
+  <div></div>
+  <span></span>
+<script>
+    var n = $( "div" ).length;
+    $("span").text("There are " + n + " divs");
+</script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- .size() Nos da el número de elementos que contenga el objeto jQuery.
+The .size() method is deprecated as of jQuery 1.8. Use the .length property instead.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>size demo</title>
+  <style>
+  body {
+    cursor: pointer;
+    min-height: 100px;
+  }
+  div {
+    width: 50px;
+    height: 30px;
+    margin: 5px;
+    float: left;
+    background: blue;
+  }
+  span {
+    color: red;
+  }
+  </style>
+  <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+</head>
+<body>
+<span></span>
+<div></div>
+<div></div>
+<script>
+    var n = $( "div" ).size();
+    $( "span" ).text( "There are " + n + " divs.");
+</script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- html() Añadir un poco de html en cada div. -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>html demo</title>
+  <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+</head>
+<body>
+<span>Hello</span>
+<div></div>
+<div></div>
+<div></div>
+<script>
+$("div").html("<b>Hello, again</b>" );
+</script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Encontrar el elemento padre de cada párrafo que coincida con una clase "x" o "y" -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>parent demo</title>
+  <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+</head>
+<body>
+<div><p>Hello</p></div>
+<div class="x"><p>Hello Again</p></div>
+<div class="y"><p>Hello Again</p></div>
+<div class="x"><p>Hello Again</p></div>
+<script type="text/javascript">
+    $( "p" ).parent( ".x" ).css( "background", "yellow" );
+    $( "p" ).parent( ".y" ).css( "background", "blue" );
+</script>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
 <!-- -->
 
 -------------------------------------
@@ -4172,3 +4307,21 @@ $( document.body ).click(function() {
 <!-- -->
 
 -------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
