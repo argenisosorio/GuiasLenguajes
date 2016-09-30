@@ -87,9 +87,10 @@ user pts/3        2015-07-31 12:37 02:53        8351 (:192.168.0.240)
 
 //Aqui observamos que hay una conexion externa a traves de ssh a nuestro servidor proveniente de la maquina
 (192.168.0.240) demarcada por el id process 8351 la cual podemos cancelar, pero no refusar esa conexion, el usuario seguirá conectado por ssh.
+
 $ kill -9 8351
 
-# pkill -9 -t pts/3 // Acabar con una conexión externa, se envió la señal -9 que indica matar (KILL) el proceso, la opción -t indica que se basará
+$ pkill -9 -t pts/3 // Acabar con una conexión externa, se envió la señal -9 que indica matar (KILL) el proceso, la opción -t indica que se basará
 en un atributo de nombre de terminal y se indica después el nombre de la terminal en si pts/3. Este es el comando que sí funciona para 
 refusar conexiones externas.
 
@@ -416,6 +417,8 @@ w // navegar palabra por palabra en el fichero
 :/palabra // Para hacer una busqueda de una palabra dentro del archivo
 n // Para ir a la siguiente coincidencia.
 N // Para ir a la coincidencia anterior
+
+:set nu // Enumerar las líneas del fichéro.
 
 :123 // Ir a la linea (x) donde 123 es el número de linea a la cual queremos ir.
 
