@@ -158,15 +158,21 @@ nombredb=# CREATE TABLE nombre_tabla (id serial primary key, nombre_campo varcha
 ########## Hacer un dump de una base de datos ##########
 ########################################################
 
-$ pg_dump -U username -W -h host basename > basename.sql
+Significa hacer una copia de seguridad de una base de datos, generando un fichero .sql
+que contiene todos los comandos y sentencias para crear los esquemas de una base de datos, además
+de alvergar registros previos, si existiesen.
 
-$ pg_dump -U username -W -h 127.0.0.1 basename > basename.sql
+$ pg_dump -U username -W -h host databasename > databasename.sql
+
+$ pg_dump -U username -W -h 127.0.0.1 databasename > basename.sql
+
+pg_dump -U username dbsaename > databasename.sql
 
 ##########################################################
 ########## Restaurar/Importar una base de datos ##########
 ##########################################################
 
-// Se debe tener creado el usuario con la contraseña y la base de datos, luego el dum sustituira a la bd creada
+// Se debe tener creado el usuario con la contraseña y la base de datos, luego el dump sustituirá a la bd creada
 
 psql -h localhost -U nombre_usuario -d nombre_bd -f /ruta/al/archivo.sql
 
@@ -181,15 +187,20 @@ psql -h 127.0.0.1 -U usuario_cliente -d banco_db -f banco_db.sql
 
 ----- Otra forma -----
 
-// Se debe tener creado el usuario con la contraseña y la base de datos, luego el dum sustituira a la bd creada
+// Se debe tener creado el usuario con la contraseña y la base de datos, luego el dump sustituirá a la bd creada
 
 psql -U username -W -h localhost nombre_base < dump_base.sql
 
 -U Se refiere al Usuario, en este caso puede ser el usuario propietario de la base de datos o el usuario postgres
+
 -W Con este parámetro conseguiremos que nos solicite el password del usuario antes especificado
--h Con este indicamos cuál es el servidor PostgreSQL al que nos conectaremos para obtener nuestro dump, si estamos local podemos colocar localhost sino ponemos la IP del servidor PostgreSQL
-basename Este es el ultimo parámetro realmente en esta linea de comando, por esa razon no tiene alguna letra que indique que el siguiente parámetro es el nombre de la base de datos
-basename.sql Esta parte en realidad solo indica que la salida de nuestro comando pg_dump la guarde en un archivo basename.sql
+
+-h Con este indicamos cuál es el servidor PostgreSQL al que nos conectaremos para obtener nuestro dump, si estamos
+local podemos colocar localhost sino ponemos la IP del servidor PostgreSQL
+
+databasename // Este es el ultimo parámetro realmente en esta linea de comando, por esa razon no tiene alguna letra que indique que
+el siguiente parámetro es el nombre de la base de datos basename.sql Esta parte en realidad solo indica que la salida de nuestro
+comando pg_dump la guarde en un archivo databasename.sql
 
 Ejemplo:
 $ pg_dump -U usuario -h 127.0.0.1 nombre_database > nombre_database.sql
