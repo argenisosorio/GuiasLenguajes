@@ -932,7 +932,7 @@ print r.headers['content-type']
 
 Contiene la llamada a la librería instalada "import requests", creamos una variable "r"
 y le asignames una solicitud GET a la api de logeo de github, donde le pasaremos el nombre de usuario y la contraseña, al ejecutarlo
-no data una respuesta gracias a los print que declaramos, hora de probarlo:
+nos dara una respuesta gracias a los print que declaramos, hora de probarlo:
 
 $ python postrequest.py
 
@@ -945,3 +945,22 @@ application/json; charset=utf-8
 
 200
 application/json; charset=utf-8
+
+-----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Ejemplo pidiendo los datos al usuario.
+import requests
+username = raw_input("Username: ")
+password = raw_input("Password: ")
+r = requests.get('https://api.github.com', auth=(username, password))
+print r.status_code
+print r.headers['content-type']
+
+
+
+
+
+
+
