@@ -537,6 +537,62 @@ el (id) define que funcion usará -->
 
 -------------------------------------
 
+<!-- Capturar datos de un formulario y guardarlos en una variable, otro ejemplo -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Seleccion de campo de texto</title>
+        <script src="jquery-1.9.1.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <form>
+            Usuario<input type="text" name="user">
+        </form>
+        <button id="btn">Mostrar</button>
+        <script type="text/javascript">
+            $(document).ready(function() {
+            $('#btn').click(function () {
+                var user = $("input[type='text']").eq(0).val();
+                alert(user);
+                });
+            });
+        </script>        
+    </body>
+</html>
+
+-------------------------------------
+
+<!-- Seleccionando campos de texto de un formulario, cambiando datos -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Seleccion de campo de texto</title>
+        <script src="jquery-1.9.1.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <form>
+            <input type="text" name="user" value="David">
+            <input type="text" name="addr" value="Caracas">
+            <input type="text" name="city" value="Venezuela">
+        </form>
+        <p>Output: <span id="out"></span></p>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                // Selecciono el primer iput(posicion 0) y obtengo su valor.
+                var user = $("input[type='text']").eq(0).val();
+                
+                //Una vez que obtengo el valor, lo imprimo en la etiqueta span.
+                $('#out').text(user);
+             
+                // Si queremos reemplazar el texto de un iput
+                $("input[type='text']").eq(1).val('Otro texto');
+            });
+        </script>        
+    </body>
+</html>
+
+-------------------------------------
+
 <!-- Validacion sencilla de campo vacío con alert -->
 <html>
  <head>
@@ -4272,7 +4328,41 @@ $("div").html("<b>Hello, again</b>" );
 
 -------------------------------------
 
-<!-- -->
+<!-- Eliminar y agregar clases con JQuery -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Seleccion de campo de texto</title>
+        <script src="jquery-1.9.1.js" type="text/javascript"></script>
+    </head>
+    <style type="text/css">
+    .green {
+        background: green;
+        color: white;
+        width: 400px;
+    }
+    .yellow {
+        background: yellow;
+        color: white;
+        width: 300px;
+    }
+    </style>
+    <body>
+        <ul class="green">
+            <li>Articulo 1</li>
+            <li>Articulo 2</li>
+            <li>Articulo 3</li>
+        </ul>
+        <button id="boton">Cambiar</button>
+    </body>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#boton").click(function(){
+            $('ul').removeClass('green').addClass('yellow');
+        });
+    });
+    </script>
+</html>
 
 -------------------------------------
 

@@ -76,6 +76,51 @@ preexistentes. Sin embargo, debido a la diferente naturaleza y prestaciones de l
 el framework no puede garantizar la compatibilidad completa. Se soportan diferentes SGBDRs
 incluyendo MySQL, PostgreSQL, SQLite, IBM DB2 y Oracle.
 
+##### ¿Cómo instalar con Ruby on Rails? #####
+
+De --> http://www.rubyonrails.org.es/instala.html
+
+En general, instalar Rails es tan sencillo como gem install rails, pero primero hay que tener el lenguaje Ruby y
+el gestor de librerías Rubygems en el sistema.
+
+# GNU/Linux #
+
+Linux es un entorno habitual para servidores, con lo que muchos desarrolladores lo escogen minimizando así las diferencias
+entre el entorno de desarrollo y el de producción.
+
+# RVM #
+Evita administrar Ruby, RubyGems y demás con el gestor de paquetes de tu distribución ya que estos suelen estar desactualizados.
+En su lugar, puedes emplear "RVM". RVM te permite instalar y mantener varias versiones de ruby a la vez. Puedes encontrar más información
+sobre Ruby Version Mananger (RVM) en https://rvm.io
+
+# Instalamos los paquetes del S.O. requeritos por RVM: #
+
+$ sudo apt-get install -y git-core subversion
+
+Este comando puede variar entre versiones y distribuciones, 
+
+# Instalación de la firma #
+
+El RVM a partir de la versión 1.26 introduce versiones firmadas y comprobación automática de las mismas.
+Para ello necesitamos instalar dicha firma. En caso contrario podría darnos problemas al instalar RVM.
+
+$ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+  
+# Instalación rápida de RVM #
+
+$ \curl -sSL https://get.rvm.io | bash -s stable --rails --ruby
+  
+Este comando instala las últimas versiones estables de rvm, ruby y rails.
+Ejecutaremos este comando después de instalar la firma. Al ejecutar esto se produce un montón de salida por pantalla.
+
+Una vez finalizado este proceso, RVM nos dice que ejecutemos un comando que empieza por source... o que reiniciemos las shells abiertas
+Por sencillez, cerramos la ventana de la consola y abrimos una nueva.
+
+# Comprueba la configuración #
+
+$ type rvm | head -1
+rvm: es una función // Será la salida si todo se instaló correctamente.
+
 ##### PRUEBAS #####
 #-Lo primero es comprobar que tienes instalada alguna versión reciente de Ruby:
 $ ruby -v
