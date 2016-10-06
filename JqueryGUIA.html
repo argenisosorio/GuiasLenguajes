@@ -4328,6 +4328,39 @@ $("div").html("<b>Hello, again</b>" );
 
 -------------------------------------
 
+<!-- Agregar clases con JQuery -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Seleccion de campo de texto</title>
+        <script src="jquery-1.9.1.js" type="text/javascript"></script>
+    </head>
+    <style type="text/css">
+    .green {
+        background: green;
+        color: white;
+        width: 400px;
+    }
+    </style>
+    <body>
+        <ul>
+            <li>Articulo 1</li>
+            <li>Articulo 2</li>
+            <li>Articulo 3</li>
+        </ul>
+        <button id="boton">Cambiar</button>
+    </body>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#boton").click(function(){
+            $('ul').addClass('green');
+        });
+    });
+    </script>
+</html>
+
+-------------------------------------
+
 <!-- Eliminar y agregar clases con JQuery -->
 <!DOCTYPE html>
 <html>
