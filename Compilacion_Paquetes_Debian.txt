@@ -1,4 +1,6 @@
-Fundamentos de la compilacion de programas en GNU - Linux
+### Guía Compilacion_Paquetes_Debian by dM ###
+
+##### Fundamentos de la compilacion de programas en GNU - Linux #####
 
 ¿Qué es "compilar"?
 
@@ -219,3 +221,249 @@ Es un script en bash con una funcion especial y que existe en el directorio con 
 configure se ejecuta con $ ./configure porque al ser un script en el directorio fuente del programa a instalar, se debe llamar desde este directorio con ./ delante para definir que nos referimos al configure del directorio donde nos encontramos y para que sistema lo pueda encontrar.
 
 El ejecutar configure + make + make install es el método mas común de instalación de un programa cuando lo compilamos nosotros mismos, pero no es el único y algunos programas tienen sus propios métodos de configuracion/compilacion/instalacion.
+
+----------
+
+##### Crear un paquete .deb desde cero. #####
+
+¿Qué es un paquete .deb?
+
+.deb es la extensión del formato de paquetes de software de la distribución de Linux, Debian GNU/Linux y derivadas.
+
+El programa predeterminado para manejar estos paquetes es dpkg, generalmente usando apt/aptitude.
+
+¿Qué es dpkg?
+
+dpkg es la base del sistema de gestión de paquetes de Debian GNU/Linux. Se utiliza para instalar, configurar, construir, quitar, y proporcionar información sobre los paquetes .deb. 
+
+**Nota: usando deb-src:
+Hay que asegurarte que tenemos algunos "repositorios de código fuente" configurados en el ordenador.
+Abrimos el fichero /etc/apt/sources.list y comprobamos que tienemos una o más lineas que empiecen con deb-src.
+Estas lineas se necesitan para trabajar con los paquetes de código fuente. 
+
+**Nota: Descargando las dependencias necesarias para crear el paquete
+
+Para construir casi cualquier programa, necesitarás algunas dependencias instaladas. Las dependencias son los programas o librerías que se necesitan para
+compilar tu programa. Normalmente son un montón de paquetes acabados en -dev, pero también pueden ser otras cosas com automake o gcc, dependerá de la
+cantidad de herramientas de desarrollo que ya hayas instalado en la máquina.
+
+apt te proporciona una manera muy fácil para instalar las dependencias que necesitas:
+
+$ sudo apt-get build-dep nombre_paquete
+
+En este ejemplo crearemos un paquete.deb a partir de un script.sh de prueba.
+
+Creamos el script.sh
+
+$ touch script.sh
+
+Luego lo llenamos con el siguiente contenido:
+
+#!/bin/bash
+VAL=10
+echo $VAL
+
+Guardamos, este script imprime el valor de una variable precargada.
+
+Podemos probarlo con:
+
+$ bash script.sh
+
+Los scripts de ejecución de la mayoría de programas instalados en GNU - Linux Debian se guardan la ruta /usr/bin del sistema, por tanto crearemos un paquete que siga esa regla.
+
+Creamos un directorio donde guardaremos todos los ficheros que irán dentro de nuestro paquete. Podemos usar cualquier nombre, luego entramos en el directorio creado.
+
+$ mkdir tmp && cd tmp
+
+Dentro de la carpeta "tmp" creamos otro directorio.
+
+tmp$ mkdir mipaquete
+
+Dentro del directorio creado "mipaquete" crearemos otra carpeta llamada "usr".
+
+tmp$ cd mipaquete
+
+tmp/mipaquete$ mkdir usr
+
+Luego, dentro de la carpeta "usr" crearemos otra carpeta llamada "bin"
+
+tmp/mipaquete$ cd usr
+
+tmp/mipaquete/usr$ mkdir bin
+
+Ahora movemos el script.sh a ese directorio "tmp/mipaquete/usr/bin"
+
+$ cd
+
+$ mv script.sh tmp/mipaquete/usr/bin/
+
+Ahora creamos otro directorio junto a la carpeta "mipaquete" llamado DEBIAN, que contendra el fichero de paquete de control. Este es un fichero con un determinado formato y que proporciona informacion del contenido del paquete .deb.
+
+tmp$ mkdir DEBIAN
+
+Dentro de la carpeta "DEBIAN" Creamos el fichero de control con:
+
+tmp$ cd DEBIAN
+
+tmp/DEBIAN$ touch control
+
+Luego, el fichero "control" lo llenamos con lo siguiente:
+
+Descripción de como llenar el fichero control:
+
+Package: NombreDelPaquete (no se permiten espacios o caracteres _)
+Priority: optional
+Section: misc
+Maintainer: NombreDelCreador <email>
+Architecture: all
+Version: 1.0
+Depends: NombrePaquete1, NombrePaquete2,... (si tiene alguna dependencia)
+Description: Descripción corta del paquete
+ Y aqui una descripción larga (No eliminar el espacio inicial al comienzo de esta línea)
+(Por último, se elimina esta linea y se deja una linea vacia)
+
+Ejemplo de fichero "control" para nuestra prueba:
+
+Package: Script
+Priority: optional
+Section: misc
+Maintainer: Argenis Osorio <aosorio@mail.com>
+Architecture: all
+Version: 1.0
+Depends:
+Description: Este script imprime el valor de una variable precargada.
+ Este script imprime el valor de una variable precargada, usa una cabecera que lo distingue como script de bash
+
+Guardamos el fichero modificado y cambiamos los permisos del directorio "tmp":
+
+$ cd
+
+$ sudo chown -R root.root tmp/
+
+Antes de construir nuestro paquete, nuestro directorio debería tener el siguiente contenido:
+
+tmp/
+  DEBIAN/
+    control
+  mipaquete/
+    usr/
+      bin/
+        script.sh
+
+Por último creamos el paquete en formato .deb, ejemplo:
+
+$ dpkg -b paquete /ruta/del/paquete/nombre_paquete.deb
+
+Creamos el .deb de nuestra prueba
+
+$ dpkg -b tmp /home/debian/mipaquete.deb
+
+El comando nos muestra:
+
+dpkg-deb: construyendo el paquete `script' en `/home/debian/mipaquete.deb'.
+
+Me generara mipaquete.deb con el script listo para instalar.
+
+Listar el contenido de nuestro paquete
+$ dpkg -c mipaquete.deb
+
+Desempaquetamos el contenido del paquete en una ruta, necesario es crear la ruta donde se va a guardar antes de ejecutar el comando.
+$ dpkg -x mipaquete.deb /home/debian/tmp/
+
+Mostrar información sobre el paquete, sobre las dependencias y las versiones de las mismas, con esto veremos el contenido que escribimos en el fichero control.
+$ dpkg --info mipaquete.deb
+
+Package: Script
+Priority: optional
+Section: misc
+Maintainer: Argenis Osorio <aosorio@cenditel.gob.ve>
+Architecture: all
+Version: 1.0
+Depends:
+Description: Este script imprime el valor de una variable precargada.
+ Este script imprime el valor de una variable precargada, usa una cabecera que lo distingue como script de bash.
+
+-----------
+
+##### Recompilar o Reconstruir paquetes Debian (.deb) desde los códigos fuente #####
+
+Es común en el mundo del software libre estudiar el código fuente o corregir código erróneo. Para
+lograr esto, se necesita descargar el código fuente del programa.
+
+**Nota: usando deb-src:
+Hay que asegurarte que tenemos algunos "repositorios de código fuente" configurados en el ordenador.
+Abrimos el fichero /etc/apt/sources.list y comprobamos que tienemos una o más lineas que empiecen con deb-src.
+Estas lineas se necesitan para trabajar con los paquetes de código fuente.
+
+**Nota: Descargando las dependencias necesarias para crear el paquete
+Para construir casi cualquier programa, necesitarás algunas dependencias instaladas. Las dependencias son
+los programas o librerías que se necesitan para compilar tu programa. Normalmente son un montón de paquetes
+acabados en -dev, pero también pueden ser otras cosas com automake o gcc, dependerá de la cantidad
+de herramientas de desarrollo que ya hayas instalado en la máquina.
+
+apt te proporciona una manera muy fácil para instalar las dependencias que necesitas:
+
+$ sudo apt-get build-dep nombre_paquete
+
+Para este ejemplo trabajaremos con las fuentes de Meld (Es una herramienta que permite al usuario ver los
+cambios entre, y fusionar, dos  archivos, dos directorios, o dos archivos con un ancestro común.)
+
+Primero creamos un directorio y entramos en el, allí trabajaremos y haremos las pruebas:
+
+$ mkdir tmp && cd tmp
+
+Luego, descargamos las fuentes del paquete Meld. Con las fuentes podemos hacer modificaciones, compilar e
+instalar el programa y construir o reconstruir un paquete original o con modificaciones.
+
+tmp$ apt-get source meld
+
+Eso nos descargará los siguientes directorios y ficheros:
+
+meld-3.12.1/
+meld_3.12.1-2.debian.tar.xz
+meld_3.12.1-2.dsc
+meld_3.12.1.orig.tar.xz
+
+Un paquete fuente generalmente consiste de tres archivos: .dsc, .orig.tar.gz y .debian.tar.gz (o .diff.gz).
+Ellos permiten la creación de paquetes binarios .deb, partir de los archivos de código fuente del programa, escritos
+en un lenguaje de programación.
+
+El fichero .dsc (Debian Source Control) en español: Control de Fuente Debian, es un archivo de texto corto que contiene
+una cabecera RFC 2822 que describe el paquete fuente e indica qué otros archivos forman parte del mismo, similar a
+la del fichero control que esta en el directorio raiz en la carpeta debian.
+
+Hay que notar que el paquete fuente también tiene dependencias (Build-Depends) completamente distintas de aquellas del paquete
+binario ya que indican las herramientas necesarias para compilar el software en cuestión y construir su paquete binario.
+
+El fichero .dsc es utilizado por dbpkg-source para descomprimir el paquete en el directorio raiz, como descargamos las
+fuentes con apt-get se nos crea el directorio raíz por defecto, es este caso meld-3.12.1/.
+
+El archivo .orig.tar.gz es un compendio que contiene el código fuente como es provisto por el desarrollador original.
+Se le pide a los encargados de paquetes Debian que no modifiquen este compendio para poder verificar fácilmente el origen
+e integridad del archivo (comparándolo simplemente con una suma de verificación) y para respetar los deseos de algunos autores.
+
+El archivo .debian.tar.gz contiene todas las modificaciones realizadas por el desarrollador Debian, especialmente el agregado
+de un directorio debian que contiene las instrucciones para construir un paquete Debian.
+
+¿Que es dpkg-source?
+Es una herramienta de manipulación de paquetes fuente de Debian, empaqueta y desempaqueta los archivos fuente.
+
+Con cada paquete descargado existe un directorio debian/ que contiene los archivos necesarios para crear un paquete
+.deb, en este caso ese directorio esta dentro de la carpeta meld-3.12.1/ que es el directorio raíz de las fuentes.
+
+Entramos en el directorio raíz de las fuentes:
+
+temp$ cd meld-3.12.1/
+
+Ahora ejecutamos el comando que construirá nuestro .deb en el directorio tmp/ 
+
+tmp/meld-3.12.1$ dpkg-buildpackage -rfakeroot
+
+¿Que es dpkg-buildpackage? Es un programa que automatiza el proceso de construcción de un paquete Debian.
+
+¿Y fakeroot? Proporciona un entorno de raíz temporal, elimina la necesidad de convertirse en root para la construcción del paquete.
+
+Al final, dentro de nuestro directorio tmp/ tendremos nuestro .deb construido
+
+tmp/
+  meld_3.12.1-2_all.deb
