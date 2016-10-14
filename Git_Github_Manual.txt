@@ -333,6 +333,21 @@ Click Add collaborator.
 The user will receive an email inviting them to the repository.
 Once they accept your invitation, they will have collaborator access to your repository.
 
+##### ¿Qué es un pull request? #####
+
+Un pull request es una petición que el propietario de un fork de un repositorio hace al propietario del repositorio original
+para que este último incorpore los commits que están en el fork.
+
+Ejemplo:
+-El usuario A crea un repositorio X en github: https://github.com/A/X
+-El usuario B crea un fork (bifurcación) para trabajar en él: https://github.com/B/X
+-Los dos usuarios realizan modificaciones cada uno en su repositorio, cada uno de ellos hace un commit y posteriormente un push.
+Cada uno sube los cambios a su correspondiente repositorio.
+-El usuario B configura un repositorio remoto adicional (upstream) e incorpora, haciendo un merge, los cambios en el código que hizo A.
+Después de hacer el merge, B hace un push para actualizar su repositorio remoto.
+
+En el caso del ejemplo, el usuario B le enviará la petición a A para que este último incorpore los commits que tiene en su fork.
+
 ##### Otros #####
 
 $ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con el certificado
