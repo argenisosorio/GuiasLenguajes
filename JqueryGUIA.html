@@ -4505,6 +4505,48 @@ $("div").html("<b>Hello, again</b>" );
 
 -------------------------------------
 
+<!-- Recorrer, obtener y mostrar los valores de una tabla each(), similar a la anterior -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="jquery-1.9.1.js" type="text/javascript"></script>
+</head>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("button").click(function(){
+            $("#tabla td").each(function(){
+              var valor=$(this).html();
+              alert(valor);
+            })
+        });
+    });
+</script>
+<body>
+    <button>Recorrer</button>
+    <br />
+    <table id="tabla" border="1" cellspacing="5" cellpadding="5">
+        <tr>
+            <td>val 1</td>
+            <td>val 2</td>
+            <td>val 3</td>
+        </tr>
+        <tr>
+            <td>val 4</td>
+            <td>val 5</td>
+            <td>val 6</td>
+        </tr>
+        <tr>
+            <td>val 7</td>
+            <td>val 8</td>
+            <td>val 9</td>
+        </tr>
+    </table>
+</body>
+</html>
+
+-------------------------------------
+
 <!-- Recorrer, obtener y sumar los valores de una tabla con each() -->
 <!DOCTYPE html>
 <html>
