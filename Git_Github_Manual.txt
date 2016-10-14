@@ -60,6 +60,40 @@ $ git commit --amend -m "comentario commit corregido" // Corregir algun error en
 
 $ git commit --amend // Corregir un error en el commit, abrira un editor de texto
 
+---
+
+$ git rebase -i hash-del-commit~1 // Correguir un commit particular:
+
+git rebase -i hash-del-commit~1 para pedir hacer rebase interactivo de la rama actual a partir del commit anterior
+(~1) al que estás queriendo modificar. Eso disparará tu editor por defecto con un listado de todos los commits que
+existen desde ese hasta el tope de tu rama, indicando pick, hash y mensaje de cada uno. Algo como:
+
+pick abcdef0 Mensaje del commit más nuevo
+pick bcdef01 Mensaje del commit anterior
+pick fde2152 Mensaje del commit a editar
+
+Cambiar pick por r o reword en la línea del commit a editar. ejemplo:
+
+pick abcdef0 Mensaje del commit más nuevo
+pick bcdef01 Mensaje del commit anterior
+r fde2152 Mensaje del commit a editar
+
+Guardar el fichero y salir, git va a volver hasta ese commit y abrirá el editor nuevamente, pero esta vez con el mensaje
+del commit ahí presente. Algo como:
+
+Mensaje del commit a editar
+
+Este mensaje es el que habías escrito en el primer
+git commit, y que ahora querés reemplazar por uno nuevo
+
+Editar el mensaje para corregirlo, guardamos el archivo, salimos del editor, y git aplicará todos los commits que faltaban para que tu
+rama quede igual, excepto por tener el mensaje actualizado.
+
+No olvidar que se está modificando la historia de tu repositorio, por lo que si habías publicado el commit al que estás editando
+el mensaje o cualquiera de sus sucesores podés generar conflictos.
+
+---
+
 $ git reset --hard HEAD~1 // Borrar el ultimo commit hecho.
 
 $ git checkout -b Nombre_Rama // Crear una rama y cambiarse a ella.
