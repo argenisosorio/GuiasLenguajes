@@ -4399,11 +4399,109 @@ $("div").html("<b>Hello, again</b>" );
 
 -------------------------------------
 
-<!-- -->
+<!-- Obtener todos los valores de una fila de una tabla -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="jquery-1.9.1.js" type="text/javascript"></script>
+    <script>
+    $(document).ready(function(){
+        $(".boton").click(function(){
+            var valores="";
+            // Obtenemos todos los valores contenidos en los <td> de la fila seleccionada
+            $(this).parents("tr").find("td").each(function(){
+                valores+=$(this).html()+"\n";
+            });
+            alert(valores);
+        });
+    });
+    </script>
+    <style>
+        .boton {
+            cursor:pointer;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <table border="1" cellspacing="0" cellpadding="5">
+        <tr>
+            <td>val 1</td>
+            <td>val 2</td>
+            <td>val 3</td>
+            <td class="boton">coger valores de la fila</td>
+        </tr>
+        <tr>
+            <td>val 4</td>
+            <td>val 5</td>
+            <td>val 6</td>
+            <td class="boton">coger valores de la fila</td>
+        </tr>
+        <tr>
+            <td>val 7</td>
+            <td>val 8</td>
+            <td>val 9</td>
+            <td class="boton">coger valores de la fila</td>
+        </tr>
+    </table>
+</body>
+</html>
 
 -------------------------------------
 
-<!-- -->
+<!-- Recorrer, obtener y mostrar los valores de una tabla each() -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="jquery-1.9.1.js" type="text/javascript"></script>
+    <script>
+    $(document).ready(function(){
+        $(".boton").click(function(){
+            //eq(0): Identifica el numero de la fila, en este caso el número 0 que es la primera.
+            $('#tabla tr').eq(0).each(function () {
+                //(this).find('td'):  Encontrar los td de esa fila específica.
+                $(this).find('td').each(function () {
+                    alert($(this).html());
+                })
+            })
+            $('#tabla tr').eq(1).each(function () {
+                $(this).find('td').each(function () {
+                    alert($(this).html());
+                })
+            })
+            $('#tabla tr').eq(2).each(function () {
+                $(this).find('td').each(function () {
+                    alert($(this).html());
+                })
+            })
+        });
+    });
+    </script>
+</head>
+<body>
+    <button class="boton" >Recorrer</button>
+    <br />
+    <table id="tabla" border="1" cellspacing="5" cellpadding="5">
+        <tr>
+            <td>val 1</td>
+            <td>val 2</td>
+            <td>val 3</td>
+        </tr>
+        <tr>
+            <td>val 4</td>
+            <td>val 5</td>
+            <td>val 6</td>
+        </tr>
+        <tr>
+            <td>val 7</td>
+            <td>val 8</td>
+            <td>val 9</td>
+        </tr>
+    </table>
+</body>
+</html>
 
 -------------------------------------
 
