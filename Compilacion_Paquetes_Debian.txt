@@ -200,6 +200,18 @@ que están ausentes en su sistema. Por eso, siempre es recomendable investigar c
 que se tiene suficiente espacio para la instalación. No todas las dependencias son absolutamente necesarias, algunas sólo dan soporte adicional para ciertas
 funciones o efectos visuales que extienden las características del programa en sí mismo.
 
+Muchas veces cuando ejecutamos un programa, pero más frecuente cuando estamos instalando algún programa en Unix/Linux nos podemos enfrentar
+con errores de dependencias de librerías. Esto se da por diversos motivos pero hay un comando que nos indica las dependencias de librerías
+que tiene cada programa, el comando es ldd.
+
+ldd es un comando que enlista las dependencias dinámicas de archivos ejecutables o de objetos compartidos.
+
+Si el archivo es un archivo ejecutable o un objeto compartido, ldd enlista las rutas de todas las librerías u objetos compartidos que son cargados
+cuando es ejecutado el programa o cuando es cargado el objeto compartido. Si los objetos compartidos no tuvieran permisos de ejecución ldd enviará
+un mensaje de advertencia antes de intentar procesar el archivo. Ejemplo:
+
+$ ldd /usr/bin/python2.7 // Ver las dependencias de una librería o ejecutable
+
 ########################
 ##### Metapaquetes #####
 ########################
