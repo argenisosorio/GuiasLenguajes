@@ -121,7 +121,26 @@ Por sencillez, cerramos la ventana de la consola y abrimos una nueva.
 $ type rvm | head -1
 rvm: es una función // Será la salida si todo se instaló correctamente.
 
+En el directorio:
+ 
+/home/user/.rvm/gems
+
+Se creararn las instancias de desarrollo que necesitamos, por lo tanto si instalamos:
+
+$ rvm install 2.3
+
+Se creara un gemset o directorio para esa instalación:
+
+/home/user/.rvm/gems/ruby-2.3.0
+
+Es aquí donde se guardaran las gemas que necesitemos en determinado proyecto. Para usar ese entorno específico usamos:
+
+$ rvm use 2.3 // Y así para los demas que se creen.
+
+###################
 ##### PRUEBAS #####
+###################
+
 #-Lo primero es comprobar que tienes instalada alguna versión reciente de Ruby:
 $ ruby -v
 ruby 2.2.1p85
