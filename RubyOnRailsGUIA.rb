@@ -137,6 +137,17 @@ Es aquí donde se guardaran las gemas que necesitemos en determinado proyecto. P
 
 $ rvm use 2.3 // Y así para los demas que se creen.
 
+$ rvm list # Para listar las instalaciones de Ruby existentes y ver cual se está usando
+
+rvm rubies
+
+   ruby-2.2.4 [ x86_64 ]
+=* ruby-2.3.0 [ x86_64 ]
+
+# => - current
+# =* - current && default
+#  * - default
+
 ###################
 ##### PRUEBAS #####
 ###################

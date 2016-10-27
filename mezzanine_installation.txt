@@ -1,0 +1,120 @@
+###########################################################
+##### Instalación de Mezzanine - CMC basado en Django #####
+###########################################################
+
+# aptitude update
+
+# aptitude install build-essential
+
+# aptitude install cvs subversion git-core mercurial
+
+# aptitude install python-setuptools python-dev python2.7-dev python-software-properties libpq-dev libjpeg-dev python-imaging
+
+# aptitude install libtiff4-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev
+
+# curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python -
+
+# curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python -
+
+$ pip install virtualenv
+
+######################################
+##### Creamos un entorno virtual #####
+######################################
+
+$ virtualenv mezzanine_env
+
+$ cd mezzanine_env
+
+$ source /bin/activate
+
+(mezzanine_env)$ pip install mezzanine
+
+###############################################
+##### Creamos un nuevo proyecto mezzanine #####
+###############################################
+
+...En otro directorio
+
+(mezzanine_env)$ mezzanine-project mezzanine_project
+
+(mezzanine_env)$ cd mezzanine_project
+
+(mezzanine_env)$ python manage.py migrate
+
+(mezzanine_env)$ python manage.py createsuperuser
+
+add username, mail and password...
+
+###########################################
+##### Corremos el servidor de pruebas #####
+###########################################
+
+(mezzanine_env)$ python manage.py runserver 0.0.0.0:8000
+
+########################################
+##### Poner la interfáz en español #####
+########################################
+
+En el settings.py
+
+# Language code for this installation. All choices can be found here:
+# http://www.i18nguy.com/unicode/language-identifiers.html
+#LANGUAGE_CODE = "en"
+LANGUAGE_CODE = "es-VE"
+
+# Supported languages
+LANGUAGES = (
+    #('en', _('English')),
+    ('es', _('Spanish')),
+)
+
+###########################################
+##### Añadiendo/Creando un nuevo tema #####
+###########################################
+
+Creamos una aplicación de Django, genérica, creamos los directorios (templates y static) correspondientes
+
+$ python manage.py startapp app_name
+
+Agregamos la aplicación/tema creado al principio de las INSTALLED_APPS del proyecto (importante)
+
+Si tenemos un tema descargado, agregaremos sus plantillas y estáticos a nuestra aplicación creada.
+
+##### Estructura de una app/tema #####
+
+└── tema
+    ├── admin.py
+    ├── admin.pyc
+    ├── apps.py
+    ├── __init__.py
+    ├── __init__.pyc
+    ├── migrations
+    │   ├── __init__.py
+    │   └── __init__.pyc
+    ├── models.py
+    ├── models.pyc
+    ├── templates
+    │   ├── base.html
+    │   ├── index.html
+    │   └── search_results.html
+    ├── tests.py
+    └── views.py
+
+##############################################
+##### Templates a usar en un tema propio #####
+##############################################
+
+/Entornos_virtuales/mezzanine/lib/python2.7/site-packages/mezzanine/core/templates
+
+################
+##### Tips #####
+################
+
+-Configuración del Nombre de sitio y descripción del navbar en -> Opciones del panel de administración.
+
+-Se habilita enlace hacia publicaciones "blog" en el panel lateral izquierdo del index
+
+<img src="{{STATIC_URL}}/media/uploads/img/2.jpg"></img> // Para cargar una imágen desde los estáticos.
+
+<link href="{{STATIC_URL}}/css/theme.css" rel="stylesheet"> // Para agregar los estilos a la página.
