@@ -4584,7 +4584,16 @@ $("div").html("<b>Hello, again</b>" );
 
 -------------------------------------
 
-<!-- -->
+<!-- Controlando 2 o más carousel's de Bootstrap -->
+Cambie el href en sus enlaces de nav del carrusel para emparejar el valor del id del carrusel que usted está controlando. Ese valor href es cómo el arranque determina qué diapositiva. Por lo tanto, tendrá que cambiar lo siguiente:
+
+<a class="carousel-control left" href="#carousel-1" data-slide="prev">&lsaquo;</a>
+<a class="carousel-control right" href="#carousel-1" data-slide="next">&rsaquo;</a>
+
+And for the second carousel:
+
+<a class="carousel-control left" href="#carousel-2" data-slide="prev">&lsaquo;</a>
+<a class="carousel-control right" href="#carousel-2" data-slide="next">&rsaquo;</a>
 
 -------------------------------------
 
