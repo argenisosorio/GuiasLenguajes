@@ -3024,7 +3024,33 @@ function myFunction() {
 
 -------------------------------------
 
-<!-- -->
+<!-- onscroll Event, entra en una funcion al scrollear -->
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div {
+    border: 1px solid black;
+    width: 200px;
+    height: 200px;
+    overflow: scroll;
+}
+</style>
+</head>
+<body>
+<p>Try the scrollbar in div.</p>
+<div onscroll="myFunction()">
+    In my younger and more vulnerable years my father gave me some advice that I've been turning over in my mind ever since.
+    <br />
+    In my younger and more vulnerable years my father gave me some advice that I've been turning over in my mind ever since.
+</div>
+<script type="text/javascript">
+    function myFunction() {
+        alert("Scrolled");
+    }
+</script>
+</body>
+</html>
 
 -------------------------------------
 

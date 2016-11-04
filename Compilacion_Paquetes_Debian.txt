@@ -63,7 +63,9 @@ $ dpkg -x dsc-nombre-paquete-xxx_i386.deb /home/dir/ // Desempaquetamos el conte
 
 # dpkg -l | grep nombre-del-paquete // Comprobar la instalación, Deberías ver ii delante del nombre del paquete en la salida en pantalla, ello significaría que el programa ha sido correctamente instalado.
 
-# dpkg -r nombre-del-paquete // Desinstalar paquete con dpkg, Este comando removerá el paquete, pero dejara los archivos de configuracion intactos, esto es util en caso que hubieras realizado cambios en ellos y quieras una copia para usos posteriores. Pero si deseas quitar todo rastro del paquete debes usar purge.
+# dpkg -r nombre-del-paquete // Desinstalar paquete con dpkg, Este comando removerá el paquete, pero dejara los archivos de configuracion intactos, esto es util en caso que hubieras realizado cambios en ellos y quieras una copia para usos posteriores. Pero si deseas quitar todo rastro del paquete debes usar purge
+
+$ dpkg --purge package_name // dpkg --purge is used to remove the package binaries and the configuration files.
 
 $ dpkg -force -r xxx.deb // Forzar la desinstalación del paquete xxx.deb.
 

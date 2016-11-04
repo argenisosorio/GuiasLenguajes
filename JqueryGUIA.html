@@ -4597,11 +4597,46 @@ And for the second carousel:
 
 -------------------------------------
 
-<!-- -->
+<!-- Función que hace desaparecer el .navbar al hacer scroll -->
+<script type="text/javascript">
+  $("document").ready(function () {
+      $(function () {
+          $(window).scroll(function () {
+              // set distance user needs to scroll before we start fadeIn
+              if ($(this).scrollTop() > 100) {
+                  $('.navbar').fadeOut();
+              } else {
+                  $('.navbar').fadeIn();
+              }
+          });
+      });
+  });
+</script>
 
 -------------------------------------
 
-<!-- -->
+<!-- The fadeIn() method gradually changes the opacity, for selected elements, from hidden to visible (fading effect). -->
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+    $(".btn1").click(function(){
+        $("p").fadeOut()
+    });
+    $(".btn2").click(function(){
+        $("p").fadeIn();
+    });
+});
+</script>
+</head>
+<body>
+<p>This is a paragraph.</p>
+<button class="btn1">Fade out</button>
+<button class="btn2">Fade in</button>
+</body>
+</html>
 
 -------------------------------------
 
