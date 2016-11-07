@@ -38,6 +38,12 @@ $ uname -mrs // Saber mi version de Kernel especifica, recomendada
 
 $ cat /etc/*-release // Ver info del sistema (Probado en Debian GNU/Linux 7 wheezy)
 
+$ echo "Texto al final del archivo" >> archivo.txt // Escribir una cadena de texto al final de un fichero.
+
+$ sed -i '1i xxxxx' archivo.txt // Insertar una cadena de texto "xxxxx" al principio de un fichero.
+
+$ sed -i '$a xxx' archivo.txt // Insertar una cadena al final del fichero, funciona como el método echo.
+
 $ ifconfig // Siendo root, permite desplegar numerosos parámetros de las interfaces de red residentes  en el núcleo,
 como la dirección ip (dinámica o estática), o la máscara de red entre otros.
 
@@ -1841,6 +1847,43 @@ Es para usuarios y desarrolladores que desean crear bases de datos, buscar y edi
 Utiliza una interfaz de tipo hoja de cálculo familiar y no necesita aprender comandos SQL complicados.
 
 # aptitude install sqlitebrowser
+
+#################################################
+##### Enlaces físicos y simbólicos en Linux #####
+#################################################
+
+##### Enlaces físicos #####
+
+Un enlace físico no es más que una etiqueta o un nuevo nombre asociado a un archivo. Es una forma de identificar el mismo
+contenido con diferentes nombres. Éste enlace no es una copia separada del archivo anterior sino un nombre diferente
+para exactamente el mismo contenido.
+
+$ ln archivo.txt nuevo_nombre.txt // Para crear un enlace físico en Linux del archivo archivo.txt a nuevo_nombre.txt
+
+El enlace aparecerá como otro archivo más en el directorio y apuntará al mismo contenido de archivo.txt.
+Cualquier cambio que se haga se reflejará de la misma manera tanto para archivo.txt como para nuevo_nombre.txt.
+
+Un enlace se puede borrar usando el comando rm de la misma manera en que se borra un archivo, sin embargo el contenido del
+iniodo no se eliminará mientras haya un enlace físico que le haga referencia. Esto puede tener varias ventajas, pero también
+puede complicar la tarea de seguimiento de los archivos.
+
+Un enlace físico tampoco puede usarse para hacer referencia a directorios o a archivos en otros equipos.
+
+##### Enlaces simbólicos #####
+
+Un enlace simbólico también puede definirse como una etiqueta o un nuevo nombre asociado a un archivo pero a diferencia de los enlaces físicos
+el enlace simbólico no contiene los datos del archivo, simplemente apunta al registro del sistema de archivos donde se encuentran los datos.
+Tiene mucha similitud a un acceso directo en guindows o un alias en OS X.
+
+$ ln -s archivo.txt nuevo_nombre.txt // Para crear un enlace simbólico del archivo archivo.txt a nuevo_nombre.txt.
+
+Éste enlace también aparecerá como otro archivo más en el directorio y apuntará al mismo contenido de archivo.txt, reflejando todos los cambios
+que se hagan tanto para archivo.txt como para nuevo_nombre.txt.
+
+Sobre un enlace simbólico también se pueden usar todos los comandos básicos de archivos (rm, mv, cp, etc). sin embargo cuando el archivo original
+es borrado o movido a una ubicación diferente el enlace dejará de funcionar y se dice que el enlace está roto.
+
+Un enlace simbólico permite enlazar directorios y, usando NFS, también permite enlazar archivos fuera del equipo.
 
 ################################
 ##### source.list example  #####
