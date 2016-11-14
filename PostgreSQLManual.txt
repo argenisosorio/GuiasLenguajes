@@ -166,7 +166,9 @@ $ pg_dump -U username -W -h host databasename > databasename.sql
 
 $ pg_dump -U username -W -h 127.0.0.1 databasename > basename.sql
 
-pg_dump -U username dbsaename > databasename.sql
+$ pg_dump -U username dbsaename > databasename.sql
+
+$ pg_dump -U usuario -h 127.0.0.1 nombre_database > nombre_database.sql
 
 ##########################################################
 ########## Restaurar/Importar una base de datos ##########
@@ -189,7 +191,7 @@ psql -h 127.0.0.1 -U usuario_cliente -d banco_db -f banco_db.sql
 
 // Se debe tener creado el usuario con la contraseña y la base de datos, luego el dump sustituirá a la bd creada
 
-psql -U username -W -h localhost nombre_base < dump_base.sql
+$ psql -U username -W -h localhost nombre_base < dump_base.sql
 
 -U Se refiere al Usuario, en este caso puede ser el usuario propietario de la base de datos o el usuario postgres
 
@@ -201,9 +203,6 @@ local podemos colocar localhost sino ponemos la IP del servidor PostgreSQL
 databasename // Este es el ultimo parámetro realmente en esta linea de comando, por esa razon no tiene alguna letra que indique que
 el siguiente parámetro es el nombre de la base de datos basename.sql Esta parte en realidad solo indica que la salida de nuestro
 comando pg_dump la guarde en un archivo databasename.sql
-
-Ejemplo:
-$ pg_dump -U usuario -h 127.0.0.1 nombre_database > nombre_database.sql
 
 #########################
 ##### Configuración #####
