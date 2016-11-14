@@ -1127,6 +1127,29 @@ $ firefox
 
 $ firefox & nautilus &
 
+##### El error ssh remote host identification has changed #####
+
+Cuando el sistema base guarda una llave de acceso a un host, pero el host cambió, entonces la llave no funciona y arroja el típico erro:
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ECDSA key sent by the remote host is
+...
+...
+...
+
+Entonces borramos ese host roto, llave perdida, etc.
+
+$ ssh-keygen -R <host>
+
+Ejemplo:
+
+$ ssh-keygen -R 192.168.3.10
+
 #############################################
 ##### Programación shell-script (bash) ######
 #############################################
