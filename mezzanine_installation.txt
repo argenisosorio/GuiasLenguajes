@@ -91,6 +91,41 @@ y
 
 $ pip install python-dateutil
 
+###################################################
+##### Añadiendo compatibilidad con postgresql #####
+###################################################
+
+# aptitude install python-psycopg2
+
+# pip install postgres
+
+# pip install db-psycopg2
+
+--- Añadiendo la db de postgres ---
+
+Editar el local_settings.py
+
+DATABASES = {
+    "default": {
+        # Ends with "postgresql_psycopg2", "mysql", "sqlite3" or "oracle".
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        # DB name or path to database file if using sqlite3.
+        "NAME": "xxx",
+        # Not used with sqlite3.
+        "USER": "xxx",
+        # Not used with sqlite3.
+        "PASSWORD": "p4ssw0rd",
+        # Set to empty string for localhost. Not used with sqlite3.
+        "HOST": "127.0.0.1",
+        # Set to empty string for default. Not used with sqlite3.
+        "PORT": "",
+    }
+}
+
+----
+
+ALLOWED_HOSTS = ["xxxxx.org.ve"]
+
 ###########################################
 ##### Añadiendo/Creando un nuevo tema #####
 ###########################################
