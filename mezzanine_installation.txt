@@ -176,6 +176,10 @@ Si tenemos un tema descargado, agregaremos sus plantillas y estáticos a nuestra
 
 <link href="{{STATIC_URL}}/css/theme.css" rel="stylesheet"> // Para agregar los estilos a la página.
 
-- Habilitar videos embebidos en los post: 
+-Habilitar videos embebidos en los post: 
 
 It actually needs to be changed in the admin. Log in to your admin, then in the top left hover over 'Site', then click on 'Settings'. Scroll down and you should see a setting called 'Rich text filter level'. Change this setting to low and then save. You should be able to embed your video now.
+
+-Only in development, in settings.py for skip error to migrate, etc the allowed_hosts
+
+ALLOWED_HOSTS = ["*"]
