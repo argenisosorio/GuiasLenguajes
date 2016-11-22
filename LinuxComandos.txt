@@ -1,8 +1,8 @@
-##### Guía de comandos en Linux by dM #####
+##### Guía de comandos en GNU - Linux by dM #####
 
-###################################################################################
-##### Probados en: Debian GNU/Linux 7 (wheezy) y algunos en Debian 8 (Jessie) #####
-###################################################################################
+#############################################################################################
+##### Probados en: Debian GNU/Linux 7 (wheezy) y algunos en Debian GNU/Linux 8 (Jessie) #####
+#############################################################################################
 
 Crtl + h // Mostrar archivos ocultos de un directorio, en el entorno grafico
 
@@ -430,6 +430,12 @@ n // Para ir a la siguiente coincidencia.
 N // Para ir a la coincidencia anterior
 
 :set nu // Enumerar las líneas del fichéro.
+
+Si queremos que se enumeren siempre las lineas editamos el fichero:
+
+# vim /etc/vim/vimrc
+
+y quitámos las comillas (") a la línea que tiene a set number y guardamos.
 
 :123 // Ir a la linea (x) donde 123 es el número de linea a la cual queremos ir.
 
@@ -2020,7 +2026,11 @@ luego seguimos con...
 ##### Programas para el Sistema #####
 terminator (Configurar, luego)
 vim (Configurarlo)
+
 .bashrc (Configurarlo, alias, etc...)
+    alias ll='ls -l --color'
+    alias buscar='grep --color -n -Ir'
+
 sudo (Configurar y Probar)
 aptitude (Probar)
 ssh (Configurar y Probar)

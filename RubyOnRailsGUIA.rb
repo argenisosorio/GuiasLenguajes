@@ -587,3 +587,31 @@ $ rake db:migrate #Se crearon las tablas correspondientes en la
 #http://127.0.0.1:3000/posts
 #Podemos visualizar la lista de publicaciones asi como enlaces a las operaciones
 #CRUD que se crearon
+
+##### List of available datatypes - models #####
+
+Here are all the Rails 4 (ActiveRecord migration) datatypes:
+
+    :binary
+    :boolean
+    :date
+    :datetime
+    :decimal
+    :float
+    :integer
+    :bigint
+    :primary_key
+    :references
+    :string
+    :text
+    :time
+    :timestamp
+
+If you use PostgreSQL, you can also take advantage of these:
+
+    :hstore
+    :json
+    :array
+    :cidr_address
+    :ip_address
+    :mac_address
