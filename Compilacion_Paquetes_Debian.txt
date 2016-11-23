@@ -1,5 +1,9 @@
 ### Guía Compilacion_Paquetes_Debian by dM ###
 
+¿Qué es empaquetamiento?
+
+Empaquetamiento es la posibilidad de tomar el código fuente de un programa y compilarlo, generando un "paquete" que es un instalador para Debian (formato .deb) de ese programa.
+
 #########################
 ##### dpkg - debian #####
 #########################
@@ -59,7 +63,7 @@ $ dpkg -L xxx // Lista los ficheros instalados en el sistema, que pertenecen al 
 
 $ dpkg -x dsc-nombre-paquete-xxx_i386.deb /home/dir/ // Desempaquetamos el contenido del paquete en una ruta, necesario es crear la ruta antes.
 
-# dpkg -i man-db_2.7.0.2-5_amd64.deb // El comando desempaquetara, configurara y comprobará las dependencias del paquete, si hay paquetes sin instalar, lo notificara, una vez instalados los paquetes necesarios, el paquete pendiente por configurar lo hará automaticamente, completando así la instalacion, se podrá comprobar con un aptitude show nombre_paquete.
+# dpkg -i man-db_2.7.0.2-5_amd64.deb // El comando desempaquetara, configurara y comprobará las dependencias del paquete, si hay paquetes sin instalar, lo notificara, una vez instalados los paquetes necesarios, el paquete pendiente por configurar lo hará automaticamente, completando así la instalacion, se podrá comprobar con un aptitude show nombre_paquete. Si agregamos un paquete generado por nosotros a un repositorio personalizado podremos contar con la resolución automática de dependencias lo cual no pasa si se instala con dpkg.
 
 # dpkg -l | grep nombre-del-paquete // Comprobar la instalación, Deberías ver ii delante del nombre del paquete en la salida en pantalla, ello significaría que el programa ha sido correctamente instalado.
 
@@ -500,9 +504,10 @@ configure se ejecuta con $ ./configure porque al ser un script en el directorio 
 
 El ejecutar configure + make + make install es el método mas común de instalación de un programa cuando lo compilamos nosotros mismos, pero no es el único y algunos programas tienen sus propios métodos de configuracion/compilacion/instalacion.
 
-----------
 
+#############################################
 ##### Crear un paquete .deb desde cero. #####
+#############################################
 
 ¿Qué es un paquete .deb?
 

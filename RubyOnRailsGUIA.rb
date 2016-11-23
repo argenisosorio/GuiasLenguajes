@@ -129,6 +129,8 @@ Se creararn las instancias de desarrollo que necesitamos, por lo tanto si instal
 
 $ rvm install 2.3
 
+$ rvm install 2.2.1 // Instalando una version específica
+
 Se creara un gemset o directorio para esa instalación:
 
 /home/user/.rvm/gems/ruby-2.3.0
@@ -147,6 +149,8 @@ rvm rubies
 # => - current
 # =* - current && default
 #  * - default
+
+rvm uninstall ruby-2.2.4 // Desinstalar una versión específica de ruby
 
 ###################
 ##### PRUEBAS #####
