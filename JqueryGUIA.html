@@ -1205,6 +1205,7 @@ cambiar de tamaño y se cierra con el icono de 'x' por defecto.-->
 </html>
 
 -------------------------------------
+
 <!--
 ########### Bootstrap ###########
 
@@ -1214,7 +1215,7 @@ web responsive o adaptables a todo tipo de pantallas y dispositivos.
 Librería muy utilizda para páginas que son visualizadas en pc y dispositivos
 móbiles como smartphones y tablets.
 -->
--------------------------------------
+
 -------------------------------------
 
 <!DOCTYPE html>
@@ -3828,6 +3829,225 @@ $(document).ready(function(){
 
 -------------------------------------
 
+<!-- show and hide element when scroll page -->
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+<style type="text/css">
+h1 {
+    position: fixed;
+    color: red;
+}
+.contenedor {
+    width: 900px;
+    height: 3000px;
+    border: ridge 1px;
+    padding: 10px;
+}
+.cuadro {
+    width: 99%;
+    height: 600px;
+    border: ridge 1px;
+}
+
+.green {
+    background-color: green;
+    display: none;
+}
+
+.blue {
+    background-color: blue;
+}
+</style>
+<script type="text/javascript">
+$("document").ready(function () {
+    $(function () {
+        $(window).scroll(function () {
+            // set distance user needs to scroll before we start fadeIn
+            if ($(this).scrollTop() > 100) {
+                $('h1').fadeOut("slow");
+            } else {
+                $('h1').fadeIn("slow");
+            }
+        });
+    });
+
+    $(function () {
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 1) {
+                $('.cuadro.green').show( "slow" );
+            } else {
+                $('.cuadro.green').hide( "slow" );
+            }
+        });
+    });
+});
+
+</script>
+</head>
+<body>
+<h1>Tittle</h1>
+<div class="contenedor">
+    <br />
+    <br />
+    <br />
+    <div class="cuadro green">
+    </div>
+    <br />
+    <br />
+    <br />
+    <!--div class="cuadro blue">
+    </div-->
+</div>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- show and hide elements when scroll -->
+<!DOCtype html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="jquery-1.9.1.js" type="text/javascript"></script>
+<style>
+* {
+    box-sizing: border-box;
+}
+.row:after {
+    content: "";
+    clear: both;
+    display: block;
+}
+[class*="col-"] {
+    float: left;
+    padding: 15px;
+}
+html {
+    font-family: "Lucida Sans", sans-serif;
+}
+.header {
+    background-color: #9933cc;
+    color: #ffffff;
+    padding: 15px;
+}
+.menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.menu li {
+    padding: 8px;
+    margin-bottom: 7px;
+    background-color :#33b5e5;
+    color: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.menu li:hover {
+    background-color: #0099cc;
+}
+.aside {
+    background-color: #33b5e5;
+    padding: 15px;
+    color: #ffffff;
+    text-align: center;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+}
+.footer {
+    background-color: #0099cc;
+    color: #ffffff;
+    text-align: center;
+    font-size: 12px;
+    padding: 15px;
+}
+/* For desktop: */
+.col-1 {width: 8.33%;}
+.col-2 {width: 98%;}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%;}
+.col-5 {width: 41.66%;}
+.col-6 {width: 50%;}
+.col-7 {width: 58.33%;}
+.col-8 {width: 66.66%;}
+.col-9 {width: 75%;}
+.col-10 {width: 83.33%;}
+.col-11 {width: 91.66%;}
+.col-12 {width: 100%;}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    [class*="col-"] {
+        width: 100%;
+    }
+}
+
+.c {
+    display: none;
+}
+</style>
+
+<script type="text/javascript">
+$("document").ready(function () {
+    $(function () {
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('.c').show( "slow" );
+            } else {
+                $('.c').hide( "slow" );
+            }
+        });
+    });
+});
+</script>
+
+
+</head>
+<body>
+<div class="header">
+    <h1>Cabecera</h1>
+</div>
+<div class="row">
+    <div class="col-2">
+        <div class="aside a">
+            <h2>What?</h2>
+            <p>Chania is a city on the island of Crete.</p>
+            <h2>Where?</h2>
+            <p>Crete is a Greek island in the Mediterranean Sea.</p>
+            <h2>How?</h2>
+            <p>You can reach Chania airport from all over Europe.</p>
+        </div>
+        <br />
+        <br />
+        <div class="aside b">
+            <h2>What?</h2>
+            <p>Chania is a city on the island of Crete.</p>
+            <h2>Where?</h2>
+            <p>Crete is a Greek island in the Mediterranean Sea.</p>
+            <h2>How?</h2>
+            <p>You can reach Chania airport from all over Europe.</p>
+        </div>
+        <br />
+        <br />
+        <div class="aside c">
+            <h2>C</h2>
+            <p>Chania is a city on the island of Crete.</p>
+            <h2>C</h2>
+            <p>Crete is a Greek island in the Mediterranean Sea.</p>
+            <h2>C</h2>
+            <p>You can reach Chania airport from all over Europe.</p>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <p>Footer</p>
+</div>
+</body>
+</html>
+
+-------------------------------------
+
 <!-- show y hide elementos del dom, agregándole un valor como parámetro al metodo hide -->
 <!DOCTYPE html>
 <html>
@@ -4678,6 +4898,133 @@ $(document).ready(function(){
 <p>This is a paragraph.</p>
 <button class="btn1">Fade out</button>
 <button class="btn2">Fade in</button>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- The fadeIn() method gradually changes the opacity, for selected elements, from hidden to visible (fading effect).
+  Desapareciendo una etiqueta cuando se scrollea
+-->
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+<style type="text/css">
+h1 {
+    position: fixed;
+    color: red;
+}
+.contenedor {
+    width: 500px;
+    height: 1500px;
+    border: ridge 1px;
+}
+</style>
+<script type="text/javascript">
+$("document").ready(function () {
+    $(function () {
+        $(window).scroll(function () {
+            // set distance user needs to scroll before we start fadeIn
+            if ($(this).scrollTop() > 100) {
+                $('h1').fadeOut("slow");
+            } else {
+                $('h1').fadeIn("slow");
+            }
+        });
+    });
+});
+
+</script>
+</head>
+<body>
+<h1>Tittle</h1>
+<div class="contenedor">
+    <br />
+    <br />
+    <br />
+    <h2>This is a paragraph.</h2>
+</div>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- The fadeIn() method gradually changes the opacity, for selected elements, from hidden to visible (fading effect).
+Haciendo desaparecer un bloque cuando se scrollea
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+<style type="text/css">
+h1 {
+    position: fixed;
+    color: red;
+}
+.contenedor {
+    width: 900px;
+    height: 3000px;
+    border: ridge 1px;
+    padding: 10px;
+}
+.cuadro {
+    width: 99%;
+    height: 600px;
+    border: ridge 1px;
+}
+
+.green {
+    background-color: green;
+}
+
+.blue {
+    background-color: blue;
+}
+</style>
+<script type="text/javascript">
+$("document").ready(function () {
+    $(function () {
+        $(window).scroll(function () {
+            // set distance user needs to scroll before we start fadeIn
+            if ($(this).scrollTop() > 100) {
+                $('h1').fadeOut("slow");
+            } else {
+                $('h1').fadeIn("slow");
+            }
+        });
+    });
+
+    $(function () {
+        $(window).scroll(function () {
+            // set distance user needs to scroll before we start fadeIn
+            if ($(this).scrollTop() > 100) {
+                $('.cuadro.green').fadeOut("slow");
+            } else {
+                $('.cuadro').fadeIn("slow");
+            }
+        });
+    });
+
+});
+
+</script>
+</head>
+<body>
+<h1>Tittle</h1>
+<div class="contenedor">
+    <br />
+    <br />
+    <br />
+    <div class="cuadro green">
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="cuadro blue">
+    </div>
+</div>
 </body>
 </html>
 
