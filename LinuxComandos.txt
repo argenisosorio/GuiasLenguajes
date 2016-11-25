@@ -104,6 +104,10 @@ $ clear // Limpia la pantalla
 
 $ date // Muestra la fecha
 
+# date --set 1998-11-02 // Asignar la fecha manualmente
+
+# date --set 21:08:00 // Asignar la hora manualmente
+
 $ man nombre_comando  // Muestra el manual de una comando donde como: ls, grep, aptitude etc...
 
 // Dentro de los manuales podemos presionar "h" para ver las opciones tenemos del manual, ejemplo "/delete"
@@ -449,8 +453,8 @@ En /etc/vim en el fichero vimrc descomentamos la linea
 ########## Cambiar el pass del root ##########
 ##############################################
 
-su: ****** // Acceder como root
-passwd // Nos pedira que introduzcamos la nueva contraseña y la confirmacion para cambiar la clave de root
+$ su: ****** // Acceder como root
+# passwd // Nos pedira que introduzcamos la nueva contraseña y la confirmacion para cambiar la clave de root
 
 root@debian:/home/user# passwd
 Introduzca la nueva contraseña de UNIX: ****** 
@@ -933,7 +937,9 @@ $ rmvirtualenv nombre_virtualenv // Remover o borrar un entorno virtual.
 
 ##### Usando virtualenv #####
 
-Installation: Instala python-virtualenv.
+Installation: 
+
+# aptitude install python-virtualenv
 
 -Crear un virtualenv:
 
@@ -2002,6 +2008,19 @@ deb http://debian.cenditel/debian/ jessie-updates main
 deb-src http://debian.cenditel/debian/ jessie-updates main
 
 #deb http://tibisay.cenditel.gob.ve/repositorio jessie main
+
+#----------------------------------
+
+# Debian GNU/Linux 9 (Stretch) - CENDITEL
+
+deb http://debian.cenditel/debian stretch main
+deb-src http://debian.cenditel/debian stretch main
+
+deb http://debian.cenditel/debian stretch-updates main
+deb-src http://debian.cenditel/debian stretch-updates main
+
+deb http://debian.cenditel/debian-security stretch/updates main
+deb-src http://debian.cenditel/debian-security stretch/updates main
 
 ########################################################
 ##### Recommended installation packages for Debian #####
