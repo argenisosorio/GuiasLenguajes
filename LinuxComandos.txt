@@ -1920,6 +1920,96 @@ es borrado o movido a una ubicación diferente el enlace dejará de funcionar y 
 
 Un enlace simbólico permite enlazar directorios y, usando NFS, también permite enlazar archivos fuera del equipo.
 
+########################
+##### jaula chroot #####
+########################
+
+Con los programas chroot y debootstrap, es posible configurar un sistema Debian aislado en el cual poder entrar
+y hacer pruebas, sin temor alguno a destruir su sistema principal.
+
+Definimos un directorio en la raíz del sistema donde se ejecutará el sistema enjaulado, en este ejemplo lo mostrare para
+debían Wheezy pero siguiendo la misma secuencia y sustituyendo adecuadamente se puede instalar cualquier versión de debían.
+
+$ sudo mkdir /home/user/jaulas/wheezy
+
+Instalamos la aplicación necesaria para ejecutar la jaula:
+
+$ sudo apt-get install debootstrap
+
+Creamos la jaula 
+
+$ sudo debootstrap wheezy /home/user/jaulas/wheezy http://ftp.us.debian.org/debian/
+
+o usamos un repo local o mas cercano para que las descarga de los ficheros sea mas rápida
+
+$ sudo debootstrap wheezy /home/user/jaulas/wheezy http://debian.cenditel/debian/
+
+Cuando termine, dependiendo de la velocidad de descarga, habrá creado todo el sistema básico para correr
+debían wheezy en el directorio definido.
+
+Antes de ejecutar la jaula se deben montar algunos directorios:
+
+$ sudo mount -o bind /proc /home/user/jaulas/wheezy/proc 
+
+Si senecesita conexión a periféricos como un módem usb o una impresora estos se guardan en el directorio /dev/
+por ende tambien se debe montar.
+
+$ sudo mount -o bind /dev/ /home/user/jaulas/wheezy/dev/ 
+
+$ sudo mount -o bind /dev/ /home/user/jaulas/wheezy/dev/pts 
+
+Para accecer a la jaula o ejecutarla debes ser usuario root o usar sudo
+
+$ sudo chroot /home/user/jaulas/wheezy
+
+A partir de este momento ya tienes el sistema listo y puedes hacer cualquier tipo de prueba sin que corra riesgo
+tu sistema base para salir de la jaula y continuar con tu sistema solo debes ejecutar:
+
+# exit
+
+##### Nota #####
+Este sistema solo puede ejecutar aplicaciones en el terminal si se requiere interfaz gráfica se debe utilizar una
+aplicación como Xnest que su utilización te detallo a continuación:
+
+$ sudo apt-get xnest
+
+Ejecución:
+
+En terminal 1 ejecutas 
+
+$ Xnest -ac -geometry 800x600 :1 
+
+en un segundo terminal inicias la jaula 
+
+# sudo chroot /jaulas/wheezy 
+
+y dentro de la jaula ejecutas 
+
+# export DISPLAY=localhost:1 
+
+En este momento toda aplicación que ejecutes en dicha jaula que posea interfaz gráfica se mostrara en la pantalla
+mostrada por Xnest adicionalmente cabe destacar que puedes colocar cualquier geometria de ventana al ejecutar xnest 
+
+- Cada ves que reinicies la pc debes volver a montar los directorios /proc, /dev/pts y /dev, esto lo puedes automatizar
+agregando las siguientes siguientes lineas en el archivo /etc/fstab
+
+/proc		 /home/user/jaulas/wheezy/proc/	         auto	 bind 0	      0 
+/dev		 /home/user/jaulas/wheezy/dev/pts/	 auto	 bind 0	      0 
+/dev/pts	 /home/user/jaulas/wheezy/dev/pts/	 auto	 bind 0	      0
+
+Descargamos los paquetes locales y locales-all y ejecutamos:
+
+$ dpkg-reconfigure locales 
+
+Escogemos las configuraciones regionales que desea generar:
+
+es_VE.UTF-8 UTF-8
+
+Configuración regional predeterminada para el entorno del sistema:
+es_VE.UTF-8
+
+Listo, jaula de wheezy lista!
+
 ################################
 ##### source.list example  #####
 ################################
