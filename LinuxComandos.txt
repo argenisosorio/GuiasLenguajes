@@ -1956,7 +1956,9 @@ por ende tambien se debe montar.
 
 $ sudo mount -o bind /dev/ /home/user/jaulas/wheezy/dev/ 
 
-$ sudo mount -o bind /dev/ /home/user/jaulas/wheezy/dev/pts 
+$ sudo mount -o bind /dev/pts/ /home/user/jaulas/wheezy/dev/pts/
+
+$ sudo mount -o bind /sys/ /home/user/jaulas/wheezy/sys/ 
 
 Para accecer a la jaula o ejecutarla debes ser usuario root o usar sudo
 
