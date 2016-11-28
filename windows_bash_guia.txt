@@ -1,0 +1,496 @@
+#Guía bash by dM 63
+
+##################
+##### Teoría #####
+##################
+
+Batch Scripts are stored in simple text files containing lines with commands that get executed in sequence, one after the other. Scripting is a way by which one can alleviate this necessity by automating these command sequences in order to make one’s life at the shell easier and more productive.
+
+#############################
+##### Lista de comandos #####
+#############################
+ 
+HELP // Proporciona información de ayuda para los comandos de Windows.
+
+
+CD // Muestra el nombre del directorio actual o cambia a otro
+
+
+CLS // This batch command clears the screen, borra la pantalla.
+
+
+COPY // Copia uno o más archivos en otra ubicación.
+
+copy [source] [destination]
+
+@echo off
+:: Copiar un fichero de una ruta a otra
+copy C:\Users\Usuario\Desktop\prueba\1\x.txt C:\Users\Usuario\Desktop\prueba\2
+
+
+DATE // Muestra o establece la fecha.
+
+
+DEL // Elimina uno o más archivos.
+
+del [filename]
+
+@echo off
+:: Borrar un fichero específico
+del C:\Users\Usuario\Desktop\prueba\1\x.txt
+
+
+DIR // Muestra una lista de archivos y subdirectorios en un directorio.
+
+
+cmd // Another instance of command prompt will be invoked.
+
+
+EXIT // Sale del programa CMD.EXE (interfaz de comandos).
+
+
+MD // Crea un directorio.
+
+
+MKDIR // Crea un directorio.
+
+@echo off
+:: Crear un directorio en una ruta específica
+mkdir C:\Users\Usuario\Documents\X
+
+
+MOVE // Mueve uno o más archivos de un directorio a otro en la misma unidad.
+
+move [source] [destination]
+
+@echo off
+:: Mover un directorio a otro
+move C:\Users\Usuario\Desktop\prueba\1\x C:\Users\Usuario\Desktop\prueba\2
+
+@echo off
+:: Mover todos los ficheros de un directorio a otro
+move C:\Users\Usuario\Desktop\prueba\1\* C:\Users\Usuario\Desktop\prueba\2
+
+
+RMDIR // Quita un directorio.
+
+
+echo string or char // Imprimir por pantalla una cadena de caracteres
+
+@echo off
+:: Imprimir por pantalla una cadena
+echo Hola
+echo "Hola"
+pause
+
+
+START // Inicia otra ventana para ejecutar un programa o comando. This batch command starts a program in new window, or opens a document.
+
+@echo off
+:: Abrir un fichero específico
+start examples.txt
+
+@echo off
+:: Ejecutar una aplicación de Windows
+start calc
+
+@echo off
+:: Ejecutar una aplicació de Windows en bucle
+:bucle
+start calc.exe
+
+
+TASKLIST // Muestra todas las tareas en ejecución, incluidos los servicios.
+
+taskkill [taskname] // This batch command ends one or more tasks.
+
+@echo off
+:: Eliminar un proceso especìfico del sistema
+Taskkill /im mspaint.exe
+pause
+
+
+TREE // Muestra gráficamente la estructura de directorios de una unidad o ruta de acceso.
+
+
+TYPE // Muestra el contenido de un archivo de texto.
+
+
+VER // Muestra la versión de Windows.
+
+
+VOL // Muestra la etiqueta del volumen de la unidad y el número de serie del disco.
+
+
+pause // The command prompt will show the message “Press any key to continue….” to the user and wait for the user’s input.
+
+Presione una tecla para continuar
+:: Mostrar mensaje "Press any key to continue…." y esperar que presione 
+@echo off
+pause
+
+@echo off
+:: Usando diferentes pausas entre los eventos
+echo Presiona cualquier tecla para continuar
+pause
+dir/s
+pause > nul
+exit
+
+
+rd [directoryname] // This batch command removes directories, but the directories need to be empty before they can be removed.
+
+@echo off
+:: Borrar un directorio específico, debe estar vacio o no lo borra
+rd C:\Users\Usuario\Desktop\prueba\1\x
+
+
+REM // This batch command is used for remarks in batch files, preventing the content of the remark from being executed.
+
+
+Comments Using the :: Statement // The other way to create comments in Batch Script is via the :: command. Any text which follows the :: statement will be treated as comments and will not be executed. Following is the general syntax of this statement.
+
+@echo off
+:: This is a batch file
+
+
+TIME // This batch command sets or displays the time.
+
+@echo off
+:: This batch command sets or displays the time.
+time
+pause
+
+
+chkdsk // The above command starts checking the current disk for any errors.
+
+
+driverquery // The above command will display the information of all the device drivers installed on the current system.
+
+
+FIND [text] [destination] // Where text is the string which needs to be searched for and destination is the source in which the search needs to take place.
+
+@echo off
+:: Buscar una cadena dentro de un fichero específico
+FIND "Application" C:\tp\lists.txt
+pause
+
+
+format [drive] // Where drive is the drive which needs to be formatted.
+
+@echo off
+:: Formatear una unidad
+format D:\
+pause
+
+
+ipconfig // The above command will display the Windows IP configuration on the current machine.
+
+@echo off
+:: Mostrar las configuraciones de ip
+ipconfig
+pause
+
+
+ipconfig/all // The above command will display the Windows IP configuration on the current machine. to more
+
+
+More [filename] // The above command will display the contents of the file lists.txt one screen at a time.
+
+
+NET [variant] // Where its variants can be one of the following:
+
+net accounts
+net computer
+net config
+net continue
+net file
+net group
+net help
+net helpmsg
+net localgroup
+net name
+net pause
+net print
+net send
+net session
+net share
+net start
+net statistics
+net stop
+net time
+net use
+net user
+net view
+
+@echo off
+:: The above command will display the current accounts defined on the system.
+Net user
+pause
+
+
+PING [address]
+
+Ping 127.0.0.1 // The above command will send ICMP/IP "echo" packets to the destination address 192.168.0.1. Following is an example of the output.
+
+
+shutdown // If the user executing the batch files has the relevant rights, the computer will be shutdown.
+
+
+Sort [filename] // This batch command takes the input from a source file and sorts its contents alphabetically, from A to Z or Z to A. It prints the output on the console.
+
+@echo off
+:: ordenar alfanumericamente los elementos contenidos de un fichero, e imprimirlo por consola.
+sort C:\Users\Usuario\Desktop\prueba\1\x.txt
+pause
+
+
+systeminfo // This batch command shows configuration of a computer and its operating system.
+
+
+xcopy // This batch command copies files and directories in a more advanced way.
+
+@echo off
+:: Copiar ficheros de una ruta a otra
+xcopy C:\Users\Usuario\Desktop\prueba\1 C:\Users\Usuario\Desktop\prueba\2
+pause
+
+
+FC // This batch command lists the actual differences between two files.
+Fc [fileA] [fileB]
+FC lists.txt listsA.txt
+
+
+TITLE // This batch command sets the title displayed in the console window.
+
+TITLE [Titlename] // Where tilename is the new name to be given to the title of the command prompt window.
+
+@echo off
+:: Where tilename is the new name to be given to the title of the command prompt window.
+Title New Windows Title
+pause
+
+
+SET // Displays the list of environment variables on the current system.
+
+.
+.
+.
+USERDOMAIN=Usuario-PC
+USERNAME=Usuario
+USERPROFILE=C:\Users\Usuario
+.
+.
+.
+
+Set Command // The other way in which variables can be initialized is via the ‘set’ command. Following is the syntax of the set command.
+
+set variable_name=value
+
+@echo off
+:: Declarando una variable e imprimiendo el valor
+set message=Hello World
+echo %message%
+pause
+
+@echo off
+:: Declarando variables e imprimiendo el valor
+SET a=5
+SET b=10
+echo %a%
+echo %b%
+pause
+
+@echo off
+:: Realizando operaciones matemáticas con las variables
+SET /A a=5
+SET /A b=10
+SET /A c=%a% + %b%
+echo %c%
+SET /A c=%a% - %b%
+echo %c%
+SET /A c=%b% / %a%
+echo %c%
+SET /A c=%b% * %a%
+echo %c%
+pause
+
+@echo off
+:: Declarando variables, sumando e imprimiendo el valor
+SET /A a=5
+SET /A b=10
+SET /A c=%a% + %b%
+echo %c%
+pause
+
+@echo off
+:: Sumando una variable entera con un valor
+set var=13000
+set /A var=%var% + 100
+echo %var%
+pause
+
+@echo off
+:: Imprimiendo las variables de entorno del sistema
+echo %USERDOMAIN%
+echo %USERNAME%
+echo %USERPROFILE%
+echo %USERDOMAIN% %USERNAME% %USERPROFILE%
+pause
+
+
+Numeric Values, In Batch Script, it is also possible to define a variable to hold a numeric value. This can be done by using the /A switch. The following code shows a simple way in which numeric values can be set with the /A switch.
+
+@echo off
+:: Mostrar el directorio del usuario
+echo %USERPROFILE%
+pause
+
+
+@echo off
+:: Mostrar la fecha del sistema
+echo %DATE%
+pause
+
+Local vs Global Variables
+
+@echo off
+:: Local vs Global Variables
+set global_var=global_value
+echo %global_var%
+echo ------------
+SETLOCAL
+set local_var=local_value
+echo %local_var%
+ENDLOCAL
+pause
+
+@echo off
+:: Operaciones con variables locales y globales
+SET /A a=12
+SETLOCAL
+SET /A b=10
+SET /A c=%a% + %b%
+SET /A d=%a% - %b%
+SET /A e=%a% * %b%
+SET /A f=%a% / %b%
+echo %c% %d% %e% %f%
+ENDLOCAL
+pause
+
+Strings
+
+@echo off
+:: The following example shows how an empty string can be created and how to check for the existence of an empty string.
+SET a=
+SET b=Hello
+if [%a%] == [] echo "String A is empty"
+if [%b%] == [] echo "String B is empty "
+pause
+
+@echo off
+:: The following example shows how a string interpolation can be done with numeric values as well.
+SET a=Hello
+SET b=World
+SET /A d=50
+SET c=%a% %b% %d%
+echo %c%
+pause
+
+@echo off
+:: Concatenate two strings or a string and a character
+SET a=Hello
+SET b=World
+SET c=%a% and %b%
+echo %c%
+pause
+
+@echo off
+:: Remove The string substitution feature can also be used to remove a substring from another string.
+set str=Batch scripts xxx is easy.
+echo %str%
+set str=%str:xxx =%
+echo %str%
+pause
+
+@echo off
+:: This is used to remove the first and the last character of a string.
+set str=Batch
+echo %str%
+set str=%str:~1,-1%
+echo %str%
+pause
+
+@echo off
+:: Remove All Spaces, this is used to remove all spaces in a string via substitution.
+set str=W x Y z
+echo %str%
+set str=%str: =%
+echo %str%
+pause
+
+@echo off
+:: Replace a String. to replace a substring with another string use the string substitution feature.
+set str=This message needs changed.
+echo %str%
+set str=%str:needs=has%
+echo %str%
+pause
+
+
+Arrays
+
+@echo off
+::Creating an Array
+::An array is created by using the following set command.
+::set a[0]=1
+::Where 0 is the index of the array and 1 is the value assigned to the first element of the
+::array. Another way to implement arrays is to define a list of values and iterate through the list
+::of values. The following example show how this can be implemented.
+set list=1 2 3 4
+(for %%a in (%list%) do (
+echo %%a
+))
+pause
+
+@echo off
+:: Accessing Arrays, You can retrieve a value from the array by using subscript syntax, passing the index of the value you want to retrieve within square brackets immediately after the name of the array.
+set a[0]=10
+set a[1]=22
+set a[2]=abc
+echo %a[0]% %a[1]% %a[2]%
+pause
+
+################
+##### Tips #####
+################
+
+- Windows no nota diferencia entre mayúsculas y minúsculas en los comandos
+
+################################
+##### Creating Batch Files #####
+################################
+
+Batch files are normally created in notepad. Hence the simplest way is to open notepad and enter the commands required for the script. For this exercise, open notepad and enter the following statements.
+
+##############################
+##### Saving Batch Files #####
+##############################
+
+After your batch file is created, the next step is to save your batch file.Batch files have the extension of either .bat or .cmd. Some general rules to keep in mind when naming batch files:
+-Try to avoid spaces when naming batch files, it sometime creates issues when they are called from other scripts.
+-Don’t name them after common batch files which are available in the system such as ping.cmd.
+
+#################################
+##### Batch Script – Syntax #####
+#################################
+
+Normally, the first line in a batch file often consists of the following command.
+
+--- ECHO Command ---
+@echo off
+
+By default, a batch file will display its command as it runs. The purpose of this first command is to turn off this display. The command "echo off" turns off the display for the whole script, except for the "echo off" command itself. The "at" sign "@" in front makes the command apply to itself as well.
+
+--- Documentation - rem Command ---
+Very often batch files also contains lines that start with the "Rem" command. This is a way to enter comments and documentation. The computer ignores anything on a line following Rem. For batch files with increasing amount of complexity, this is often a good idea to have comments.

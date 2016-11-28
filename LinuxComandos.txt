@@ -1964,6 +1964,36 @@ Para accecer a la jaula o ejecutarla debes ser usuario root o usar sudo
 
 $ sudo chroot /home/user/jaulas/wheezy
 
+o creamos un script para montar los directorios, creamos el script: montar.sh
+
+---
+
+#!/bin/bash
+mount -o bind /proc /home/user/jaulas/wheezy/proc
+mount -o bind /dev/ /home/user/jaulas/wheezy/dev/
+mount -o bind /dev/pts/ /home/user/jaulas/wheezy/dev/pts/
+mount -o bind /sys/ /home/user/jaulas/wheezy/sys/
+
+---
+
+y lo ejecutamos con:
+
+# ./montar.sh
+
+Para desmontar por alguna razón (borrar la jaula por ejemplo), creamos un desmontar.sh:
+
+---
+
+#!/bin/bash
+umount /home/aosorio/jaulas/wheezy/proc
+umount /home/aosorio/jaulas/wheezy/dev/
+umount /home/aosorio/jaulas/wheezy/dev/pts/
+umount /home/aosorio/jaulas/wheezy/sys/
+
+---
+
+# ./desmontar
+
 A partir de este momento ya tienes el sistema listo y puedes hacer cualquier tipo de prueba sin que corra riesgo
 tu sistema base para salir de la jaula y continuar con tu sistema solo debes ejecutar:
 
@@ -1993,11 +2023,12 @@ En este momento toda aplicación que ejecutes en dicha jaula que posea interfaz 
 mostrada por Xnest adicionalmente cabe destacar que puedes colocar cualquier geometria de ventana al ejecutar xnest 
 
 - Cada ves que reinicies la pc debes volver a montar los directorios /proc, /dev/pts y /dev, esto lo puedes automatizar
-agregando las siguientes siguientes lineas en el archivo /etc/fstab
+agregando las siguientes siguientes lineas en el archivo /etc/fstab o corriendo un script con esas sentencias.
 
 /proc		 /home/user/jaulas/wheezy/proc/	         auto	 bind 0	      0 
 /dev		 /home/user/jaulas/wheezy/dev/pts/	 auto	 bind 0	      0 
 /dev/pts	 /home/user/jaulas/wheezy/dev/pts/	 auto	 bind 0	      0
+/sys             /home/aosorio/jaulas/wheezy/sys/        auto    bind 0       0
 
 Descargamos los paquetes locales y locales-all y ejecutamos:
 
@@ -2011,6 +2042,10 @@ Configuración regional predeterminada para el entorno del sistema:
 es_VE.UTF-8
 
 Listo, jaula de wheezy lista!
+
+##### Remover un entorno chroot #####
+
+Desmontar los directorios montados y borrar el directorio de que alverga la jaulea (wheezzy)
 
 ################################
 ##### source.list example  #####
