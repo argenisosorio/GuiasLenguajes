@@ -1097,6 +1097,10 @@ Para copiar un directorio completo del servidor al local, por ejemplo /home/usua
 
 $ scp -r usuario@dominio.com:/home/usuario/carpeta /home/user/docs
 
+---
+
+user$ scp x.txt 192.168.200.x // Si el servidor tiene el mismo usuario "user" en este caso, no hace falta especificarlo, solamente con la ip del servidor basta, pues toma el nombre del usuario del host para hacer la conexión y posterior copia.
+
 ####################################################################
 ##### Conexion por nautilus explorador de archivos/directorios #####
 ####################################################################
