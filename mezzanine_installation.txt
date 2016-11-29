@@ -1,24 +1,26 @@
-###########################################################
-##### Instalación de Mezzanine - CMC basado en Django #####
-###########################################################
+##### Instalación de Mezzanine - CMC basado en Django by dM #####
 
 Official website --> http://mezzanine.jupo.org/
 
-# aptitude update
+####################################################
+##### Instalación en GNU/Linux Debian 7 Wheezy #####
+####################################################
 
-# aptitude install build-essential
+# apt-get update
 
-# aptitude install cvs subversion git-core mercurial
+# apt-get install build-essential
 
-# aptitude install python-setuptools python-dev python2.7-dev python-virtualenv python-software-properties libpq-dev libjpeg-dev python-imaging
+# apt-get install cvs subversion git-core mercurial
 
-# aptitude install libtiff4-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev
+# apt-get install python-setuptools python-dev python2.7-dev python-virtualenv python-software-properties libpq-dev libjpeg-dev python-imaging
+
+# apt-get install libtiff4-dev libjpeg8-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev
 
 # curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | python - // Opcional
 
 # curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python - // Opcional
 
-#aptitude install python-virtualenv
+# apt-get install python-virtualenv
 
 ######################################
 ##### Creamos un entorno virtual #####
@@ -53,6 +55,23 @@ add username, mail and password...
 ###########################################
 
 (mezzanine_env)$ python manage.py runserver 0.0.0.0:8000
+
+----------------------------------------------------
+
+####################################################
+##### Instalación en GNU/Linux Debian 8 Jessie #####
+####################################################
+
+# apt-get install build-essential
+
+# apt-get install cvs subversion git-core mercurial
+
+# apt-get install python-dev python-setuptools python2.7-dev python-software-properties
+ libpq-dev libjpeg-dev python-imaging
+
+$ apt-get install libtiff5 libjpeg-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev python-pip
+
+$ pip install mezzanine
 
 ########################################
 ##### Poner la interfáz en español #####
@@ -187,3 +206,8 @@ It actually needs to be changed in the admin. Log in to your admin, then in the 
 ALLOWED_HOSTS = ["*"]
 
 -Para habilitar el acceso al sitio administrativo a los nuevos usuarios (publicadores) se les debe dar permisos del sitio también (example.com).
+
+-Para habilitar las miniaturas de los post, en settings.py:
+# BLOG_USE_FEATURED_IMAGE = True
+BLOG_USE_FEATURED_IMAGE = True
+y se sube una imagen destacada a la noticia para que la muestre en el post_list y en el post_detail
