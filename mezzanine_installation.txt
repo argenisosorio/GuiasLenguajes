@@ -100,15 +100,13 @@ Simply run the import_rss command where the rss-url argument contains the URL fo
 
 $ python manage.py import_rss --mezzanine-user=.. --rss-url=url
 
-$ pip install django-feedparser
+note: http://www.thel.gob.ve/rss.xml
 
-ó
+$ sudo pip install django-feedparser
 
-$ pip install feedparser
+$ sudo pip install feedparser
 
-y
-
-$ pip install python-dateutil
+$ sudo pip install python-dateutil
 
 ###################################################
 ##### Añadiendo compatibilidad con postgresql #####
@@ -211,3 +209,7 @@ ALLOWED_HOSTS = ["*"]
 # BLOG_USE_FEATURED_IMAGE = True
 BLOG_USE_FEATURED_IMAGE = True
 y se sube una imagen destacada a la noticia para que la muestre en el post_list y en el post_detail
+
+$ python manage.py collectstatic // Para copiar todos los estáticos requeridos por el servidor a la carpeta /statc/ definida en el settings.
+
+El widget del twitter timeline no funciona cuando se está en modo incógnito porque bloquea el rastreo.
