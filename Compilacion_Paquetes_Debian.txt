@@ -769,3 +769,15 @@ export DEBEMAIL=aosorio@cenditel.gob.ve
 Guardamos...
 
 Con esto tendríamos configurado dh-make.
+
+############################################
+##### Lintian - Debian package checker #####
+############################################
+
+Lintian es una utilidad para buscar errores en paquetes .deb, comprueba los paquetes en busca de incoherencias y errores comunes y es usado
+por los administradores de los repositorios de Debian para descartar solicitudes de inclusion de paquetes que no cumplan con los estándares
+del GNU/Linux Debian.
+
+# apt-get install lintian
+
+$ lintian name_package_0.0.1.deb // Nos mostrara el resultado de las comprobaciones de lintian.
