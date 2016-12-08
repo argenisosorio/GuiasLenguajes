@@ -340,53 +340,56 @@ space // Tecla espacio para avanzar, como page up
 ##### Comandos para copiar, mover, eliminar, otros #####
 ########################################################
 
-cp // Copiar un fichero o carpeta
+$ cp // Copiar un fichero o carpeta
 
-cp -r // Copiar un fichero o carpeta
+$ cp -r // Copiar un fichero o carpeta
 
-cp Nombre_de_archivo.txt /Carpeta/destino/a/copiar // Copiar un fichero en un directorio
+$ cp Nombre_de_archivo.txt /Carpeta/destino/a/copiar // Copiar un fichero en un directorio
 se debe estar situado en la carpeta del archivo a copiar
 
-cp Nombre_carpeta -r /Carpeta/destino/a/copiar // Copiar un directorio en otro, 
+$ cp Nombre_carpeta -r /Carpeta/destino/a/copiar // Copiar un directorio en otro, 
 se debe estar situado en la carpeta de la carpeta a copiar
 
-cp -r /home/usuario/carpeta1/ /home/usuario/carpeta2/ //Se pueden copiar archivos o carpetas especificando las
+$ cp -r /home/usuario/carpeta1/ /home/usuario/carpeta2/ //Se pueden copiar archivos o carpetas especificando las
 rutas completas, en este caso la primera ruta es el directorio o archivo a copiar y la segunda es la ruta donde
 se va a pegar lo copiado, ambas rutas separadas por un espacio en blanco.
 
-cp -r carpeta/ carpeta2/ // Ambas carpetas estan en el mismo directorio donde estamos situados, por lo tanto
+$ cp -r carpeta/ carpeta2/ // Ambas carpetas estan en el mismo directorio donde estamos situados, por lo tanto
 no hay que especificar las rutas completas de las carpetas involucradas
 
-cp nombre_fichero.xxx nombre_fichero2.xxx // Hacer una copia de un fichero y cambiarle el nombre.
+$ cp nombre_fichero.xxx nombre_fichero2.xxx // Hacer una copia de un fichero y cambiarle el nombre.
 
-cp -r carpeta1 carpeta2 // Hacer una copia de un directorio y cambiarle el nombre.
+$ cp -r carpeta1 carpeta2 // Hacer una copia de un directorio y cambiarle el nombre.
 
-mv // Mover un fichero o carpeta y/o cambiar su nombre
+$ mv // Mover un fichero o carpeta y/o cambiar su nombre
 
-mv /home/carpeta/archivo1.txt /home/carpeta2/ // Mover una carpeta o archivo especificando el directorio
+$ mv /home/carpeta/archivo1.txt /home/carpeta2/ // Mover una carpeta o archivo especificando el directorio
 de salida y el de llegada, si estan en el mismo directorio no hace falta poner las rutas completas.
 
-mv archivo1.txt archivo2.txt // Renombrar un archivo o carpeta 
+$ mv archivo1.txt archivo2.txt // Renombrar un archivo o carpeta 
 
-rmdir // Borrar una carpeta
+$ rmdir // Borrar una carpeta
 
-rm nombre_fichero // Borrar un fichero
+$ rm nombre_fichero // Borrar un fichero
 
-rm fichero1 fichero2 fichero3 // Borrar varios ficheros
+$ rm fichero1 fichero2 fichero3 // Borrar varios ficheros
 
-rm -r /directorio // Para borrar una carpeta, se le da la ruta del directorio a borrar
+$ rm -r /directorio // Para borrar una carpeta, se le da la ruta del directorio a borrar
 
-rm * // Borrar todos el contenido de una carpeta, se debe estar dentro del directorio
+$ rm * // Borrar todos el contenido de una carpeta, se debe estar dentro del directorio
 
 rm -r * // Borrar todo el contenido de una carpeta, incluyendo las carpetas de ese directorio
 se debe estar dentro del directorio
 
-sudo rm -rf /xxx/xxxx // rm: Comando "remove", eliminar. -rf: r de "recursivo" donde se borra todo y f de "force";
+$ sudo rm -rf /xxx/xxxx // rm: Comando "remove", eliminar. -rf: r de "recursivo" donde se borra todo y f de "force";
 nunca solicita confirmación. /xxx/xxx indica la ruta de los ficehros o carpetas a borrar.
 
-sudo -i // Pedir contraseña root, algunas versiones basadas en Debian
+$ rm -r !("try") // Borrar todos los elementos de un directorio exeptuando lo que está entre "", donde try es un directorio pero
+también puede ser un fichero, "x.txt" por ejemplo.
 
-su // Pedir contraseña del root
+$ sudo -i // Pedir contraseña root, algunas versiones basadas en Debian
+
+$ su // Pedir contraseña del root
 
 root@debian:/home/user# Ctrl + d //Para salir del root, tambien exit, funciona en algunas consolas como python, ruby, entre otras.
 
