@@ -1129,6 +1129,16 @@ $ scp -r usuario@dominio.com:/home/usuario/carpeta /home/user/docs
 
 user$ scp x.txt 192.168.200.x // Si el servidor tiene el mismo usuario "user" en este caso, no hace falta especificarlo, solamente con la ip del servidor basta, pues toma el nombre del usuario del host para hacer la conexión y posterior copia.
 
+###################
+##### sshpass #####
+###################
+
+Nos permite enviar el password de SSH en la misma línea con el paquete sshpass, ejemplo:
+
+$ sshpass -p «PASSWORD» ssh root@servidor
+
+$ sshpass -p 123456 ssh user@192.168.1.200 // Accedemos remotamente a ese servidor, si la contraseña coincide no debería pedir mas nada, y despliega el prompt del servidor.
+
 ####################################################################
 ##### Conexion por nautilus explorador de archivos/directorios #####
 ####################################################################
@@ -1379,9 +1389,26 @@ rsync -P ficehero /directorio/carpeta2 // Para copiar ficheros, archivos, etc.
 rsync -P -r /directorio/carpeta1_origen /directorio/carpeta2_destino // -r para copiar directorios se ponen las dos rutas: origen y destino separados por un espacio
 **Ojo con carpeta1, sin el / al final, lo cual significa que se va copiar la carpeta completa con su contenido y no solo su contenido.
 
-##################################
+##### Usando rsync desde python para copiar un fichero a un servidor #####
+
+$ python
+
+>>> import os
+>>> os.system("rsync -varz /home/user/xxx.txt user@192.168.1.100:")
+user@192.168.1.100's password: ******
+sending incremental file list
+xxx.txt
+
+sent 87 bytes  received 31 bytes  33.71 bytes/sec
+total size is 0  speedup is 0.00
+0
+>>> 
+
+// Fichero copiado al servidor!
+
+###################################
 ##### Crear alias de comandos #####
-##################################
+###################################
 
 Un alias es una palabra o frase que se asignara para 
 remplazar un comando, por lo generalmente se usa para
