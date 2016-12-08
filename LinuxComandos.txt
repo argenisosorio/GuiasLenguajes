@@ -2133,9 +2133,33 @@ Desmontar los directorios montados y borrar el directorio de que alverga la jaul
 **The format is
 deb <respository server/mirror> <repository name> <sub branches of the repo>
 
------
+#----------------------------------
 
-# Debian GNU/Linux 8 (Jessie) Estable
+##### Debian GNU/Linux 9 (stretch) Updates #####
+
+deb http://security.debian.org/ stretch/updates main contrib non-free
+deb-src http://security.debian.org/ stretch/updates main contrib non-free
+deb http://ftp.us.debian.org/debian/ stretch main contrib non-free
+
+#----------------------------------
+
+##### Debian GNU/Linux Testing & Unstable #####
+
+# Testing repository - main, contrib and non-free branches
+#deb http://http.us.debian.org/debian testing main non-free contrib
+#deb-src http://http.us.debian.org/debian testing main non-free contrib
+
+# Testing security updates repository
+#deb http://security.debian.org/ testing/updates main contrib non-free
+#deb-src http://security.debian.org/ testing/updates main contrib non-free
+
+# Unstable repo main, contrib and non-free branches, no security updates here
+#deb http://http.us.debian.org/debian unstable main non-free contrib
+#deb-src http://http.us.debian.org/debian unstable main non-free contrib
+
+#----------------------------------
+
+##### Debian GNU/Linux 8 (Jessie) Estable #####
 
 # Repositorio Oficial
 deb http://http.us.debian.org/debian/ jessie main contrib non-free
@@ -2155,23 +2179,7 @@ deb-src http://security.debian.org/ jessie/updates main
 
 #----------------------------------
 
-#Debian GNU/Linux Testing & Unstable
-
-# Testing repository - main, contrib and non-free branches
-#deb http://http.us.debian.org/debian testing main non-free contrib
-#deb-src http://http.us.debian.org/debian testing main non-free contrib
-
-# Testing security updates repository
-#deb http://security.debian.org/ testing/updates main contrib non-free
-#deb-src http://security.debian.org/ testing/updates main contrib non-free
-
-# Unstable repo main, contrib and non-free branches, no security updates here
-#deb http://http.us.debian.org/debian unstable main non-free contrib
-#deb-src http://http.us.debian.org/debian unstable main non-free contrib
-
-#----------------------------------
-
-#Debian GNU/Linux 7 (Wheezy) Estable
+##### Debian GNU/Linux 7 (Wheezy) Estable #####
 
 #Repositorio Oficial
 deb http://ftp.us.debian.org/debian/ wheezy main contrib
@@ -2190,7 +2198,21 @@ deb http://ftp.debian.org/debian/ wheezy-backports main
 
 #----------------------------------
 
-#Debian GNU/Linux 7 (Wheezy) Estable - CENDITEL
+##### Debian GNU/Linux 8 (Jessie) Estable - CENDITEL #####
+
+deb http://debian.cenditel/debian/ jessie main
+deb-src http://debian.cenditel/debian/ jessie main
+
+# jessie-updates, previously known as 'volatile'
+deb http://debian.cenditel/debian/ jessie-updates main
+deb-src http://debian.cenditel/debian/ jessie-updates main
+
+deb http://repositorio.cenditel.gob.ve/debian/ jessie main
+#deb http://tibisay.cenditel.gob.ve/repositorio jessie main
+
+#----------------------------------
+
+##### Debian GNU/Linux 7 (Wheezy) Estable - CENDITEL #####
 
 deb http://debian.cenditel/debian/ wheezy main
 deb-src http://debian.cenditel/debian/ wheezy main
@@ -2204,20 +2226,7 @@ deb-src http://debian.cenditel/debian/ wheezy-updates main
 
 #----------------------------------
 
-# Debian GNU/Linux 8 (Jessie) Estable - CENDITEL
-
-deb http://debian.cenditel/debian/ jessie main
-deb-src http://debian.cenditel/debian/ jessie main
-
-# jessie-updates, previously known as 'volatile'
-deb http://debian.cenditel/debian/ jessie-updates main
-deb-src http://debian.cenditel/debian/ jessie-updates main
-
-#deb http://tibisay.cenditel.gob.ve/repositorio jessie main
-
-#----------------------------------
-
-# Debian GNU/Linux 9 (Stretch) - CENDITEL
+##### Debian GNU/Linux 9 (Stretch) - CENDITEL #####
 
 deb http://debian.cenditel/debian stretch main
 deb-src http://debian.cenditel/debian stretch main
