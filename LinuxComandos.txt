@@ -1389,6 +1389,15 @@ rsync -P ficehero /directorio/carpeta2 // Para copiar ficheros, archivos, etc.
 rsync -P -r /directorio/carpeta1_origen /directorio/carpeta2_destino // -r para copiar directorios se ponen las dos rutas: origen y destino separados por un espacio
 **Ojo con carpeta1, sin el / al final, lo cual significa que se va copiar la carpeta completa con su contenido y no solo su contenido.
 
+##### rsync para copiar ficheros a un servidor a través de ssh #####
+
+-v : Verbose (try -vv for more detailed information)
+-e "ssh options" : specify the ssh as remote shell
+-a : archive mode
+-r : recurse into directories
+
+$ rsync -P -r -v -e ssh name_dir user@192.168.1.100:/home/use/dir/
+
 ##### Usando rsync desde python para copiar un fichero a un servidor #####
 
 $ python
