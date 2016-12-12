@@ -84,6 +84,15 @@ namedb=# SELECT nombre_campo,nombre_campo2 FROM nombre_tabla; // Hacer una consu
 
 namedb=# SELECT * FROM nombre_tabla; // Hacer una consulta de los datos de la tabla, (*) Significa que lea todas las columnas de la tabla.
 
+namedb=# select * from nombre_tabla limit n; // Hacer una consulta a los registros de una tabla especificando el número de registros
+a consultar donde n es un entero, ejemplo 5.
+
+namedb=# SELECT * FROM name_table ORDER BY id; // Consultar todos los registros de una tabla pero ordenándolos ascendentemente en referencia a un campo (id) en este caso.
+
+namedb=# SELECT * FROM name_table ORDER BY id ASC; // Consultar los registros de una tabla ordenandolos de manera ascendente en referencia a un campo específico.
+
+namedb=# SELECT * FROM name_table ORDER BY id DESC; // Consultar los registros de una tabla ordenandolos de manera descendente en referencia a un campo específico.
+
 namedb=# SELECT * FROM nombre_tabla WHERE nombre_campo='valor'; // Hacer una consulta de los datos de una tabla cuando coincida con el parametro establecido, cadena
 
 namedb=# SELECT * FROM nombre_tabla WHERE nombre_campo=3; // Hacer una consulta de los datos de una tabla cuando coincida con el parametro establecido, entero
