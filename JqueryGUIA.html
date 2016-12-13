@@ -2907,6 +2907,7 @@ $(document).ready(function(){
 <script>
 $( "button" ).click(function() {
   $( "p" ).toggle();
+  //$( "p" ).toggle("slow"); Para desaparecer lentamente
 });
 </script>
 </body>
@@ -2940,6 +2941,38 @@ $( "button" ).click(function() {
 </script>
 </body>
 </html>
+
+-------------------------------------
+
+<!-- toggle / show and hide element with one button -->
+<html>
+  <head>
+      <title>XXX</title>
+      <!--script src="jquery-1.9.1.js" type="text/javascript"></script-->
+      <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+      <meta charset="UTF-8">
+  </head>
+  <style type="text/css">
+  .a {
+    width: 600px;
+    height: 400px;
+    border: ridge 1px red;
+  }
+  </style>
+<body>
+  <div class="a">
+    <h1>XXXXXXXXXXX</h1>
+  </div>
+  <button class="show">Ver</button>
+</body>
+</html>
+<script type="text/javascript"> 
+  $("document").ready(function () {
+    $('.show').click(function() {
+      $('.a').toggle( "slow" );
+    });
+  });
+</script>
 
 -------------------------------------
 
@@ -3793,7 +3826,7 @@ El JSON = mi.json
 <button>Show it</button>
 <p style="display: none">Hello  2</p>
  
-<script>
+<script type="text/javascript">
 $( "button" ).click(function() {
   $( "p" ).show( "slow" );
 });

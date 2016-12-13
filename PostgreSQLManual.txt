@@ -56,6 +56,8 @@ Ctrl + l // Limpiar la consola de postgres
 
 # CREATE DATABASE nombre_db; // Crear una base de datos
 
+# CREATE DATABASE new_db WITH TEMPLATE original_db OWNER db_user; // Crear una copia de una database existente;
+
 # DROP DATABASE nombre_db; // Borrar una base de datos
 
 # CREATE DATABASE nombre_BaseDatosprueba OWNER nombre_usuario; // Creando una base de datos, debe estar creado el usuario
@@ -131,10 +133,16 @@ nombredb=# ALTER TABLE nombre_tabla DROP COLUMN nombre_columna CASCADE; // Para 
 nombredb=# ALTER TABLE nombre_tabla ALTER COLUMN nombre_campo TYPE tipo_campo; // Modificar el tipo de dato de una columna.
 
 nombredb=# UPDATE nombre_tabla SET nombre_campo='xxx' WHERE nombre_campo='xxxx'; // Modificar el registro de un campo
+
 Ejemplo:
+
 Prueba=# UPDATE usuarios SET nombre='Vitaly' WHERE cedula='12345678'; // En la base de datos prueba, vamos a actualizar un registro
 de la tabla usuarios que corresponde a la columna o campo nombre, el registro que se modificara sera el que corresponda con el parametro 
 pasado con WHERE, sera el parametro de busqueda en la columna, pero puede ser el id por ejemplo.
+
+# ALTER DATABASE name RENAME TO new_name // Cambiar el nombre de la database
+
+# ALTER DATABASE name OWNER TO new_owner // Cambiar el dueño de la database
 
 ***** Creando columna de autoincremento *****
 
