@@ -193,7 +193,7 @@ $ pg_dump -U usuario -h 127.0.0.1 nombre_database > nombre_database.sql
 
 // Se debe tener creado el usuario con la contraseña y la base de datos, luego el dump sustituirá a la bd creada
 
-psql -h localhost -U nombre_usuario -d nombre_bd -f /ruta/al/archivo.sql
+$ psql -h localhost -U nombre_usuario -d nombre_bd -f /ruta/al/archivo.sql
 
 Parametros:
 -h : Es la ip en donde esta el servidor de la base de datos, si esta trabajando localmente entonces es localhost o 127.0.0.1
@@ -202,7 +202,7 @@ Parametros:
 -f : Ruta del archivo sql, si esta en el directorio no hay que poner la ruta
 
 Ejemplo:
-psql -h 127.0.0.1 -U usuario_cliente -d banco_db -f banco_db.sql
+$ psql -h 127.0.0.1 -U usuario_cliente -d banco_db -f banco_db.sql
 
 ----- Otra forma -----
 
@@ -220,6 +220,24 @@ local podemos colocar localhost sino ponemos la IP del servidor PostgreSQL
 databasename // Este es el ultimo parámetro realmente en esta linea de comando, por esa razon no tiene alguna letra que indique que
 el siguiente parámetro es el nombre de la base de datos basename.sql Esta parte en realidad solo indica que la salida de nuestro
 comando pg_dump la guarde en un archivo databasename.sql
+
+##############################################
+##### Copiar una tabla a un fichero .csv #####
+##############################################
+
+Creamos un fichero .csv, en este ejemplo será "x.csv" y lo guardamos en el /home/user/ luego le damos permisos con:
+
+# chmod 777 x.csv
+
+Luego, desde la línea de comandos de postgres, nos conectamos a la db y ahí ponemos el comando de copia de la tabla que queremos:
+
+db_name=# \copy name_table to 'x.csv' csv header // Nos pasará los datos de la name_tabla al fichero .csv, separando los datos por filas y comas ",". Si se lanza de nuevo el comando el fichero se sobreescribe, no se duplica la data.
+
+##### Copiando columnas específicas de la tabla  #####
+
+db_name=# \COPY (select id from name_table) TO 'x.csv' DELIMITER ',' CSV HEADER;
+
+db_name=# \COPY (select id,username from name_table) TO 'x.csv' DELIMITER ',' CSV HEADER; // Copiando dos columnas específicas en el .csv
 
 #########################
 ##### Configuración #####
