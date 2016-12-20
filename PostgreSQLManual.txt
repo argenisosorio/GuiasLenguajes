@@ -239,6 +239,21 @@ db_name=# \COPY (select id from name_table) TO 'x.csv' DELIMITER ',' CSV HEADER;
 
 db_name=# \COPY (select id,username from name_table) TO 'x.csv' DELIMITER ',' CSV HEADER; // Copiando dos columnas específicas en el .csv
 
+Se puede usar el comando COPY sin "\" aunque a veces no permite las copias por los permisos insuficientes, asi que se usa "\".
+
+##### Copiando datos de un .csv a una tabla de la db #####
+
+El fichero csv debe contener la estructura adecuanda (campos), con las columnas y las comas así como la data, por ejemplo:
+
+---
+
+id,username
+1,admin
+
+---
+
+db_name=# \COPY name_table FROM '/home/user/x.csv' CSV header;
+
 #########################
 ##### Configuración #####
 #########################
