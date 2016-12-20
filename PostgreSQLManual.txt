@@ -99,7 +99,23 @@ namedb=# SELECT * FROM nombre_tabla WHERE nombre_campo='valor'; // Hacer una con
 
 namedb=# SELECT * FROM nombre_tabla WHERE nombre_campo=3; // Hacer una consulta de los datos de una tabla cuando coincida con el parametro establecido, entero
 
-GRANT ALL PRIVILEGES ON DATABASE nombre_BaseDatos TO nombre_usuario; // Al crear un usuario podemos darle permisos a una base de datos existente.
+postgres=# GRANT ALL PRIVILEGES ON DATABASE nombre_BaseDatos TO nombre_usuario; // Al crear un usuario podemos darle permisos a una base de datos existente.
+
+postgres=# ALTER ROLE name_user WITH SUPERUSER; // Cambiar los permisos de un usuario;
+
+where option can be:
+
+    | SUPERUSER | NOSUPERUSER
+    | CREATEDB | NOCREATEDB
+    | CREATEROLE | NOCREATEROLE
+    | CREATEUSER | NOCREATEUSER
+    | INHERIT | NOINHERIT
+    | LOGIN | NOLOGIN
+    | CONNECTION LIMIT connlimit
+    | [ ENCRYPTED | UNENCRYPTED ] PASSWORD 'password'
+    | VALID UNTIL 'timestamp'
+
+---
 
 nombredb=# DELETE FROM nombre_tabla; // Eliminar los registros de una tabla 
 
@@ -187,9 +203,9 @@ $ pg_dump -U username dbsaename > databasename.sql
 
 $ pg_dump -U usuario -h 127.0.0.1 nombre_database > nombre_database.sql
 
-##########################################################
-########## Restaurar / Importar una base de datos ##########
-##########################################################
+##################################################
+##### Restaurar / Importar una base de datos #####
+##################################################
 
 // Se debe tener creado el usuario con la contraseña y la base de datos, luego el dump sustituirá a la bd creada
 
@@ -220,6 +236,14 @@ local podemos colocar localhost sino ponemos la IP del servidor PostgreSQL
 databasename // Este es el ultimo parámetro realmente en esta linea de comando, por esa razon no tiene alguna letra que indique que
 el siguiente parámetro es el nombre de la base de datos basename.sql Esta parte en realidad solo indica que la salida de nuestro
 comando pg_dump la guarde en un archivo databasename.sql
+
+####################################################
+##### Restaurando .sql desde psql command line #####
+####################################################
+
+postgres=# \i [full path and file name with extension]
+
+postgres=# \i /home/user/dump.sql // Desde la db postgres (por defecto) importamos el .sql que creará la db automáticamente, con el nombre y el dueño originales.
 
 ##############################################
 ##### Copiar una tabla a un fichero .csv #####
