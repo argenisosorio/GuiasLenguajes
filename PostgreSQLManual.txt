@@ -160,7 +160,7 @@ pasado con WHERE, sera el parametro de busqueda en la columna, pero puede ser el
 
 # ALTER DATABASE name OWNER TO new_owner // Cambiar el dueño de la database
 
-***** Creando columna de autoincremento *****
+##### Creando columna de autoincremento #####
 
 Para crear una columna de autoincremento, ideal para la columna (id) se usa el tipo de dato (serial)
 
@@ -243,7 +243,9 @@ comando pg_dump la guarde en un archivo databasename.sql
 
 postgres=# \i [full path and file name with extension]
 
-postgres=# \i /home/user/dump.sql // Desde la db postgres (por defecto) importamos el .sql que creará la db automáticamente, con el nombre y el dueño originales.
+postgres=# \i /home/user/dump.sql // Desde la db postgres (por defecto) importamos el .sql que creará la db automáticamente, con el nombre y el dueño originales, esto en drupal, para hacerlo con django por ejemplo es:
+
+name_db=# \i /home/user/dump.sql // Conectado a la nueva db vacía, con el usuario y contraseña correctos, es decir, los originales, hacemos la restauración.
 
 ##############################################
 ##### Copiar una tabla a un fichero .csv #####
@@ -257,7 +259,9 @@ Luego, desde la línea de comandos de postgres, nos conectamos a la db y ahí po
 
 db_name=# \copy name_table to 'x.csv' csv header // Nos pasará los datos de la name_tabla al fichero .csv, separando los datos por filas y comas ",". Si se lanza de nuevo el comando el fichero se sobreescribe, no se duplica la data.
 
+######################################################
 ##### Copiando columnas específicas de la tabla  #####
+######################################################
 
 db_name=# \COPY (select id from name_table) TO 'x.csv' DELIMITER ',' CSV HEADER;
 
@@ -265,7 +269,9 @@ db_name=# \COPY (select id,username from name_table) TO 'x.csv' DELIMITER ',' CS
 
 Se puede usar el comando COPY sin "\" aunque a veces no permite las copias por los permisos insuficientes, asi que se usa "\".
 
+##########################################################
 ##### Copiando datos de un .csv a una tabla de la db #####
+##########################################################
 
 El fichero csv debe contener la estructura adecuanda (campos), con las columnas y las comas así como la data, por ejemplo:
 
