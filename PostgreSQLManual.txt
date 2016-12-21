@@ -263,6 +263,8 @@ db_name=# \copy name_table to 'x.csv' csv header // Nos pasará los datos de la 
 ##### Copiando columnas específicas de la tabla  #####
 ######################################################
 
+Crear el .csv y darle permisos.
+
 db_name=# \COPY (select id from name_table) TO 'x.csv' DELIMITER ',' CSV HEADER;
 
 db_name=# \COPY (select id,username from name_table) TO 'x.csv' DELIMITER ',' CSV HEADER; // Copiando dos columnas específicas en el .csv

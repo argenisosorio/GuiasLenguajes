@@ -283,7 +283,7 @@ $ du * // Muestra todos directorios y ficheros y el espacio que ocupan en el dis
 $ ping xxx // Donde xxx es el nombre de un host al cual enviaremos paquetes y comprobaremos si hay una conexion con ese host, util para saber si estamos conectados a internet por ejemplo:
     ping http://www.google.com.ve // Si hay conexion a internet enviara paquetes que seran recibidos, de lo contrario dara un error.
 
-$ glxgears // Siendo root, Ver si hay aceleracion grafica en la maquina, muestra unos engranajes de colores rodando, si es así, está correcta la instalacion del video.
+# glxgears // Siendo root, Ver si hay aceleracion grafica en la maquina, muestra unos engranajes de colores rodando, si es así, está correcta la instalacion del video.
 
 $ xrandr // Detectar las resoluciones de pantalla disponibles del sistema así como los hz correspondientes, la que
 tenga (*) es la que está siendo usada.
@@ -335,6 +335,8 @@ space // Tecla espacio para avanzar, como page up
 :g // Ir al inicio del texto
 
 :v //Invocar un editor de texto para el documento, por lo general usa vi pero puede usar nano automaticamente
+
+$ less +123 filename // Para ir a una línea específica de un fichero.
 
 ########################################################
 ##### Comandos para copiar, mover, eliminar, otros #####
@@ -508,7 +510,9 @@ el repositorio local se devolverá un código de error.
 
 $ aptitude install -s Nombre_Paquete // Hace una simulacion de la instalacion, podemos ver que procesos haría la instalación
 
-$ apt-get install -s Nombre_Paquete // Simulacion de instalacion con  apt-get install
+# apt-get install -y package // El -y Supone una respuesta afirmativa a todas las preguntas, de esta forma apt-get se ejecuta sin necesidad de intervención posterior para tomar decisiones, usar con cuidado.
+
+# apt-get install -s Nombre_Paquete // Simulacion de instalacion con  apt-get install
 
 $ apt-get source Nombre_paquete // Descargar las fuentes del paquete, para compilar e instalar. 
 
@@ -2164,6 +2168,13 @@ Listo, jaula de wheezy lista!
 ##### Remover un entorno chroot #####
 
 Desmontar los directorios montados y borrar el directorio de que alverga la jaulea (wheezzy)
+
+####################################################################
+##### codecs de audio y video para GNU/Linux Debian 7 (Wheezy) #####
+####################################################################
+
+
+# apt-get install ffmpeg flashplugin-nonfree libcurl3 freepats gstreamer0.10-ffmpeg gstreamer0.10-plugins-bad gstreamer0.10-plugins-ugly  libaccess-bridge-java libcdaudio1 libdc1394-22 libdvdnav4 libfftw3-3 libgif4 libid3tag0 libiptcdata0 libmms0  libmpeg2-4 libneon27-gnutls libofa0 libsidplay1 libsndfile1 libswscale0  openjdk-7-jre openjdk-7-jre-headless openjdk-7-jre-lib rhino ttf-arphic-uming ttf-baekmuk ttf-bengali-fonts ttf-devanagari-fonts ttf-gujarati-fonts ttf-indic-fonts ttf-kannada-fonts ttf-kochi-gothic ttf-liberation ttf-malayalam-fonts ttf-mscorefonts-installer ttf-oriya-fonts ttf-punjabi-fonts ttf-sazanami-mincho ttf-tamil-fonts ttf-telugu-fonts tzdata-java
 
 ################################
 ##### source.list example  #####
