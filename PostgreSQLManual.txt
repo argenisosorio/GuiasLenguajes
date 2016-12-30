@@ -247,9 +247,9 @@ postgres=# \i /home/user/dump.sql // Desde la db postgres (por defecto) importam
 
 name_db=# \i /home/user/dump.sql // Conectado a la nueva db vacía, con el usuario y contraseña correctos, es decir, los originales, hacemos la restauración.
 
-##############################################
-##### Copiar una tabla a un fichero .csv #####
-##############################################
+#######################################################
+##### Copiar datos de una tabla a un fichero .csv #####
+#######################################################
 
 Creamos un fichero .csv, en este ejemplo será "x.csv" y lo guardamos en el /home/user/ luego le damos permisos con:
 
@@ -257,7 +257,17 @@ Creamos un fichero .csv, en este ejemplo será "x.csv" y lo guardamos en el /hom
 
 Luego, desde la línea de comandos de postgres, nos conectamos a la db y ahí ponemos el comando de copia de la tabla que queremos:
 
-db_name=# \copy name_table to 'x.csv' csv header // Nos pasará los datos de la name_tabla al fichero .csv, separando los datos por filas y comas ",". Si se lanza de nuevo el comando el fichero se sobreescribe, no se duplica la data.
+db_name=# \copy name_table to 'x.csv' csv header; // Nos pasará los datos de la name_tabla al fichero .csv, separando los datos por filas y comas ",". Si se lanza de nuevo el comando el fichero se sobreescribe, no se duplica la data.
+
+######################################################################
+##### Copiar datos de una tabla where x='xxxx' a un fichero .csv #####
+######################################################################
+
+db_name=# \COPY (select * from name_table WHERE x='xxxx') to 'x.csv' csv header; // Copiando todos los campos.
+
+db_name=# \COPY (select id from name_table WHERE x='xxxx') to 'x.csv' csv header; // Especifícando un campo.
+
+db_name=# \COPY (select id,username from name_table WHERE x='xxxx') to 'x.csv' csv header; // Especifícando mas de un campo.
 
 ######################################################
 ##### Copiando columnas específicas de la tabla  #####
