@@ -99,6 +99,20 @@ namedb=# SELECT * FROM nombre_tabla WHERE nombre_campo='valor'; // Hacer una con
 
 namedb=# SELECT * FROM nombre_tabla WHERE nombre_campo=3; // Hacer una consulta de los datos de una tabla cuando coincida con el parametro establecido, entero
 
+name_db=# SELECT * FROM name_table WHERE id >= 5; // Consultar los datos de una tabla que sean mayores o iguales que.
+
+db_name=# select id from table where id>=25 order by id ASC; // Ordenar ascendente los registros mayores que.
+
+db_name=# select id from table WHERE id IN ( 25, 27 ); // Listar los registros de una tabla que esten en el rango de 25 y 27.
+
+db_name=# select id from table WHERE id NOT IN ( 25, 27 ); // Listar los registros de una tabla exepto los que sean iguales a 25 y 27.
+
+db_name=# select * from table WHERE id BETWEEN 2 and 5; // Listar los registro de una tabla cuyo valor del id esté entre 2 y 5 incluyéndo los mismos.
+
+db_name=# SELECT * FROM table WHERE name LIKE 'Pa%'; // Listar todos los registros cuyo name inicie con la porción de cadena 'Pa'.
+
+db_name=# SELECT name FROM table WHERE name LIKE 'Pa%'; // Listar todos los registros cuyo name inicie con la porción de cadena 'Pa'.
+
 postgres=# GRANT ALL PRIVILEGES ON DATABASE nombre_BaseDatos TO nombre_usuario; // Al crear un usuario podemos darle permisos a una base de datos existente.
 
 postgres=# ALTER ROLE name_user WITH SUPERUSER; // Cambiar los permisos de un usuario;
