@@ -378,6 +378,21 @@ echo "Fecha actual: " . date("d-m-Y") . "<br>";
 echo "Día del año: " . date("z") . "<br>";
 ?>
 
+<!-- Función time() -->
+<html>
+    <head>
+        <title>xxx</title>
+        <meta charset="UTF-8" />
+    </head>	    
+<body>
+<?php //Comienzo del lenguaje PHP  
+    $t=time();
+    echo($t . "<br>");
+    echo(date("Y-m-d",$t));
+?>
+</body>
+</html>
+
 <P>**********COMPARACIÓN DE CADENAS**********<P>
 <?php
 $cadenal = "Prueba";

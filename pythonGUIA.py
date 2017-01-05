@@ -958,9 +958,12 @@ r = requests.get('https://api.github.com', auth=(username, password))
 print r.status_code
 print r.headers['content-type']
 
+################################################
+##### Imprimir datetime de python y django #####
+################################################
 
-
-
-
-
-
+$ python
+>>> import datetime
+>>> now = datetime.datetime.now()
+>>> print now
+2017-01-05 04:08:15.932157
