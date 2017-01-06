@@ -392,6 +392,10 @@ echo "Día del año: " . date("z") . "<br>";
 ?>
 </body>
 </html>
+<?php //Comienzo del lenguaje PHP  
+#1481585907 Etiqueta timestamp de php
+echo date('Y-m-d H:i:s',1481585907);
+?>
 
 <P>**********COMPARACIÓN DE CADENAS**********<P>
 <?php

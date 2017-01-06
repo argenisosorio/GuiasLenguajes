@@ -266,7 +266,13 @@ $ lsusb // Este comando muestra todos los puertos USB y los detalles acerca de l
 
 $ lspci // Lista todos los componentes tipo pci (Peripheral Component Interconnec) como las tarjetas de red, de sonido o de televisión.
 
-$ free // Muestra el estado de la memoria RAM, total, usado, disponible, cached, buffers 
+$ free // Muestra el estado de la memoria RAM, total, usado, disponible, cached, buffers.
+
+$ free -m // Mostrar los datos en mb sin más.
+
+$ free -h // Para ver los resultados en mb o gb con letra al final.
+
+$ cat /proc/meminfo // Leer el fichero meminfo que contiene datos dinámicos de la memoria, similar a free.
 
 $ vmstat // Muestra el estado de la memoria virtual
 
@@ -1207,9 +1213,11 @@ $ firefox
 
 $ firefox & nautilus &
 
+###############################################################
 ##### El error ssh remote host identification has changed #####
+###############################################################
 
-Cuando el sistema base guarda una llave de acceso a un host, pero el host cambió, entonces la llave no funciona y arroja el típico erro:
+Cuando el sistema base guarda una llave de acceso a un host, pero el host cambió, entonces la llave no funciona y arroja el típico error:
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
