@@ -113,6 +113,8 @@ db_name=# SELECT * FROM table WHERE name LIKE 'Pa%'; // Listar todos los registr
 
 db_name=# SELECT name FROM table WHERE name LIKE 'Pa%'; // Listar todos los registros cuyo name inicie con la porción de cadena 'Pa'.
 
+db_name=# select id as identificador,title as título from table_noticia; Hacemos una consulta a una tabla, pero usamos la palabra AS para crer un alias para los nombres de los campos, muy util para generar consultas personalizadas y crear un .csv para hacer una migración de datos, por ejemplo.
+
 postgres=# GRANT ALL PRIVILEGES ON DATABASE nombre_BaseDatos TO nombre_usuario; // Al crear un usuario podemos darle permisos a una base de datos existente.
 
 postgres=# ALTER ROLE name_user WITH SUPERUSER; // Cambiar los permisos de un usuario;
