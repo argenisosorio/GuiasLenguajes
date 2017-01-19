@@ -384,6 +384,17 @@ def prueba():
 		print x #Imprimirá los los números 1, 3, 9 y 27
 prueba()
 
+"""
+Imprimir un numero x cantidad de veces
+"""
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+def prueba():
+    for i in range(5):
+        print("1")
+prueba()
+
+
 ##############
 ##### IF #####
 ##############
