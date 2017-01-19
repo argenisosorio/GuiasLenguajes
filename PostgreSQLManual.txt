@@ -275,6 +275,8 @@ Luego, desde la línea de comandos de postgres, nos conectamos a la db y ahí po
 
 db_name=# \copy name_table to 'x.csv' csv header; // Nos pasará los datos de la name_tabla al fichero .csv, separando los datos por filas y comas ",". Si se lanza de nuevo el comando el fichero se sobreescribe, no se duplica la data.
 
+db_name=# \copy name_table to '/home/user/x.csv' csv header; // Pasándole la ruta absoluta del fichero.
+
 -Nota: A veces falla en la copia: xxxxx.csv: Permiso denegado, por lo que se recomienda mover el .csv a /home/user/tmp/ para que no haya problema, y en el comando meter la ruta absoluta del fichero.
 
 ######################################################################

@@ -2202,6 +2202,23 @@ Ordenará por columnas, etc...
 
 $ cat file.csv | sed -e 's/,,/, ,/g' | column -s, -t | less -#5 -N -S
 
+#######################################
+##### Rutas relativas y absolutas #####
+#######################################
+
+- Una ruta o path es donde se localiza una carpeta o fichero dentro de nuestro sistema de ficheros.
+- Todos los comandos que se ejecuten sin especificar una ruta lo hará donde este situado.
+- Hay dos tipos de ruta que debemos diferenciar:
+
+***Ruta absoluta: Se indica toda la ruta del fichero incluyendo el directorio raíz. Por ejemplo:
+
+/home/user/folder/file.txt
+
+***Ruta relativa: Se indica la ruta a partir de donde este en ese momento situado. No se incluye el directorio raíz. Por ejemplo, si estamos en la
+ruta /home/user y queremos acceder al file.txt que esta dentro de folder, seria:
+
+folder/file.txt
+
 ################################
 ##### source.list example  #####
 ################################
