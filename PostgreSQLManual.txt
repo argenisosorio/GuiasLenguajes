@@ -16,10 +16,19 @@ $ su // hacerse root
 # su postgres // Acerce root de postgres
 # psql // Entrar a posgresql
 
+ó (sí está instalado sudo)
+
+$ sudo su postgres
+postgresql@xxx:$ psql
+
+---
+
 psql (9.x.x) // Al ver esto postgresql fue instalado correctamente
 Type "help" for help.
 
-postgres=# // Linea de comandos de postgresql
+postgres@xxx:$ psql name_db // Conectarse diréctamente a una db desde la línea de comandos.
+
+postgres=# // Línea de comandos de postgresql
 
 postgres=# help // Ayuda de postgresql
 Está usando psql, la interfaz de línea de órdenes de PostgreSQL.
@@ -149,7 +158,7 @@ y vuelve a crear la tabla con la misma estructura.
 // La diferencia con "delete" es la velocidad, es más rápido "truncate table" que "delete" (se nota cuando la cantidad
 de registros es muy grande) ya que éste borra los registros uno a uno.
 
-nombredb=# DROP TABLE nombre_tabla // elimina una tabla asi como sus registros.
+nombredb=# DROP TABLE nombre_tabla // Elimina una tabla asi como sus registros.
 
 nombredb=# ALTER TABLE nombre_tabla ADD nombre_campo tipo_campo; //Agregar un nuevo campo a una tabla.
 Ejemplo:
