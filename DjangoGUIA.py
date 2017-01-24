@@ -565,3 +565,11 @@ Superuser created successfully.
 {% else %}
 <h1>No soy Admin </h1>
 {% endif %}
+
+##### Ruta de instalación convencional de django ######
+
+
+$ python
+>>> import django
+>>> django.__file__
+'/usr/local/lib/python2.7/dist-packages/django/__init__.pyc'
