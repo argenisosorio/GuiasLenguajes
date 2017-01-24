@@ -3054,7 +3054,66 @@ div {
 
 -------------------------------------
 
-<!-- -->
+<!--
+###############################
+##### Funciones anónimas ######
+###############################
+-->
+
+Uno de los paradigmas usados en la programación es el Orientado Objetos, en el cual se intenta imaginar nuestro programa como un conjunto de objetos (en el sentido estricto de la palabra) que interactúan entre sí para dar como resultado la ejecución deseada. Personalmente me resulta muy claro imaginar una Pelota para entender correctamente este paradigma: una Pelota tiene un tamaño, peso y color (serán variables denominadas atributos) y es capaz de botar y rodar (funciones denominadas métodos).
+
+Como véis es un paradigma de lo más sencillo aunque al final resulta ser increíblemente potente por su capacidad de modularización, es decir, la posibilidad de diseñar objetos independientes y que una vez formados podamos olvidarnos de su comportamiento interno.
+
+Dicho esto quisiera centrarme en un aspecto concreto que presenta JavaScript en lo referente a los objetos y más concretamente a las funciones (huelga decir que en este lenguaje usar el paradigma orientado a objetos es lo más común). Y es que en JavaScript se dice que todo son objetos de una forma bastante literal, tanto que hasta las propias funciones son consideradas objetos que se pueden almacenar en variables. Este aspecto parecerá simple pero no es algo que se de en todos los lenguajes de programación; por ejemplo en C++:
+
+class Pelota {
+  int size;
+};
+
+Pelota crearPelota () {
+  return Pelota();
+}
+
+La creación de un objeto y de una función tienen declaraciones distintas y se usan (refiriéndome al paso como parámetros) de forma distinta. Sin embargo en JavaScript...
+
+var p1 = {},
+    p2 = function () {};
+
+... Objetos y funciones son creados de forma similar y pueden usarse de la misma forma. No es de extrañar que el resultado de esto es que una función pueda tener atributos y métodos como si de un objeto se tratase. Como resultado hemos obtenido una variable p2  que puede usarse con toda normalidad, solo que además es capaz de ejecutarse usando el operador ()  con o sin parámetros.
+
+Una vez asimilado este concepto podemos aproximar un nuevo dato: las funciones anónimas. En la mayoría los tipos básicos (números y cadenas de caracteres principalmente) pueden integrarse en la lógica del código sin necesidad de ser almacenados en variables. Es decir, para sumar 2 y 3 podemos escribir el código 2 + 3  sin necesidad de guardar estos datos en variables. Pues bien, como las funciones son variables, podemos crear una donde deseemos usarla sin necesidad de darle un nombre. Esto es lo que se conoce como funciones anónimas.
+
+function () {
+  console.log('Esta función no tiene un nombre')
+}
+
+Aunque en ese ejemplo el código escrito no tiene mucho sentido ya que no podemos llamar a una función sin nombre, se puede añadir un par de caracteres mas para que resulte efectivo:
+
+(function () {
+  console.log('Esta función no tiene nombre y\
+    se ejecutara inmediatamente');
+}());
+
+Con estas lineas hemos hecho tres cosas:
+
+    Agrupar el código escrito entre paréntesis para que no haya errores sintácticos con el resto del código.
+    Crear una función anónima (sin nombre) con un código a ejecutar.
+    Colocar ()  inmediatamente después de esta función para decir a JavaScript “¡oye! Ejecuta este código que estoy poniendo aquí como si se tratara de una función”.
+
+Con esta forma de crear funciones anónimas no es de extrañar que además se puedan mandar parámetros a la función sin ningún problema:
+
+(function (uno, dos, tres) {
+  console.log(uno);
+  console.log(dos);
+  console.log(tres);
+}(1, 2, 3));
+
+Y finalmente surge una pregunta: ¿de qué sirve crear una función anónima? Es cierto que parece una de esas feas costumbres que no hacen mas que ofuscar el código y hacerlo mas difícil de leer, pero al menos puedo mencionar dos casos en los que crear una función anónima resulta de lo mas practico y mantiene el código limpio:
+
+Queremos pasar como parámetro una función muy sencilla y definirla a parte seria cuanto menos innecesario. Esto puede darse por ejemplo cuando pasamos una función de comparación a una de ordenación o cuando usamos librerías como jQuery (muchos de sus métodos aceptan paso de funciones).
+
+Intentamos evitar a toda costa el uso de variables globales. Aunque este caso puede evitarse organizando el código de muchas formas, englobar el “main” de nuestro programa en una función anónima nos evita dejar esas tres o cuatro variables que necesitamos para que todo empiece a andar flotando en la memoria encapsulándolas dentro de la función.
+
 
 -------------------------------------
 

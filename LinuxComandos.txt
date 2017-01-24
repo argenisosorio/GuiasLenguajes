@@ -2340,6 +2340,9 @@ deb-src http://debian.cenditel/debian/ jessie-updates main
 deb http://repositorio.cenditel.gob.ve/debian/ jessie main
 #deb http://tibisay.cenditel.gob.ve/repositorio jessie main
 
+# Agregar la llave del repositorio al sistema
+# wget -q -O- http://repositorio.cenditel.gob.ve/debian/repositorio_cenditel.asc | apt-key add -
+
 #----------------------------------
 
 ##### CENDITEL mirror - Debian GNU/Linux 7 (Wheezy) Estable #####
@@ -2423,6 +2426,8 @@ virtualenv
 virtualenvwrapper
 python-requests
 django (Opcional)
+    pip install django-compressor (Opcional)
+    pip install south (Opcional)
 ruby (Probarlo)
 ruby on rails (Opcional)
 Qt-Creator (Opcional)

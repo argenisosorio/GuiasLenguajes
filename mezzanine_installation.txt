@@ -20,11 +20,9 @@ Official website --> http://mezzanine.jupo.org/
 
 # curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python - // Opcional
 
-# apt-get install python-virtualenv
+##### Usando un entorno virtual #####
 
-######################################
-##### Creamos un entorno virtual #####
-######################################
+- Creamos un entorno virtual
 
 $ virtualenv mezzanine_env
 
@@ -32,11 +30,11 @@ $ cd mezzanine_env
 
 $ source /bin/activate
 
+- Dentro del entorno virtual instalamos mezzanine
+
 (mezzanine_env)$ pip install mezzanine
 
-###############################################
 ##### Creamos un nuevo proyecto mezzanine #####
-###############################################
 
 ...En otro directorio
 
@@ -50,13 +48,9 @@ $ source /bin/activate
 
 add username, mail and password...
 
-###########################################
 ##### Corremos el servidor de pruebas #####
-###########################################
 
-(mezzanine_env)$ python manage.py runserver 0.0.0.0:8000
-
-----------------------------------------------------
+(mezzanine_env)$ python manage.py runserver 0.0.0.0:8000 
 
 ####################################################
 ##### Instalación en GNU/Linux Debian 8 Jessie #####
@@ -66,47 +60,29 @@ add username, mail and password...
 
 # apt-get install cvs subversion git-core mercurial
 
-# apt-get install python-dev python-setuptools python2.7-dev python-software-properties
- libpq-dev libjpeg-dev python-imaging
+# apt-get install python-dev python-setuptools python2.7-dev python-software-properties libpq-dev libjpeg-dev python-imaging
 
-$ apt-get install libtiff5 libjpeg-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev python-pip
+# apt-get install libtiff5 libjpeg-dev zlib1g-dev libfreetype6-dev liblcms2-dev libwebp-dev tcl8.5-dev tk8.5-dev python-pip
 
 $ pip install mezzanine
 
-########################################
-##### Poner la interfáz en español #####
-########################################
+##################################################################
+##### Instalación en GNU/Linux Debian 8 Jessie versión-corta #####
+##################################################################
 
-En el settings.py
+# apt-get install python-software-properties build-essential python python-dev libjpeg62-turbo-dev libssl-dev
 
-# Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
-#LANGUAGE_CODE = "en"
-LANGUAGE_CODE = "es-VE"
+# apt-get install python-pip
 
-# Supported languages
-LANGUAGES = (
-    #('en', _('English')),
-    ('es', _('Spanish')),
-)
+# pip install mezzanine
 
-######################################
-##### Instalar django-feedparser #####
-######################################
+# aptitude install postgresql postgresql-server
 
-Importing RSS
+# aptitude install python-psycopg2
 
-Simply run the import_rss command where the rss-url argument contains the URL for your RSS feed:
+# pip install postgres
 
-$ python manage.py import_rss --mezzanine-user=.. --rss-url=url
-
-note: http://www.thel.gob.ve/rss.xml
-
-$ sudo pip install django-feedparser
-
-$ sudo pip install feedparser
-
-$ sudo pip install python-dateutil
+# pip install db-psycopg2
 
 ###################################################
 ##### Añadiendo compatibilidad con postgresql #####
@@ -145,6 +121,23 @@ DATABASES = {
 
 ALLOWED_HOSTS = ["xxxxx.org.ve"]
 
+########################################
+##### Poner la interfáz en español #####
+########################################
+
+En el settings.py
+
+# Language code for this installation. All choices can be found here:
+# http://www.i18nguy.com/unicode/language-identifiers.html
+#LANGUAGE_CODE = "en"
+LANGUAGE_CODE = "es-VE"
+
+# Supported languages
+LANGUAGES = (
+    #('en', _('English')),
+    ('es', _('Spanish')),
+)
+
 ###########################################
 ##### Añadiendo/Creando un nuevo tema #####
 ###########################################
@@ -182,6 +175,24 @@ Si tenemos un tema descargado, agregaremos sus plantillas y estáticos a nuestra
 ##############################################
 
 /Entornos_virtuales/mezzanine/lib/python2.7/site-packages/mezzanine/core/templates
+
+######################################
+##### Instalar django-feedparser #####
+######################################
+
+Importing RSS
+
+Simply run the import_rss command where the rss-url argument contains the URL for your RSS feed:
+
+$ python manage.py import_rss --mezzanine-user=.. --rss-url=url
+
+note: http://www.thel.gob.ve/rss.xml
+
+$ sudo pip install django-feedparser
+
+$ sudo pip install feedparser
+
+$ sudo pip install python-dateutil
 
 ################
 ##### Tips #####
