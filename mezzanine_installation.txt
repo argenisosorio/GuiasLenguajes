@@ -198,25 +198,23 @@ $ sudo pip install python-dateutil
 ##### Tips #####
 ################
 
--Configuración del Nombre de sitio y descripción del navbar en -> Opciones del panel de administración.
+- Configuración del Nombre de sitio y descripción del navbar en -> Opciones del panel de administración.
 
--Se habilita enlace hacia publicaciones "blog" en el panel lateral izquierdo del index
+- Se habilita enlace hacia publicaciones "blog" en el panel lateral izquierdo del index
 
 <img src="{{STATIC_URL}}/media/uploads/img/2.jpg"></img> // Para cargar una imágen desde los estáticos.
 
 <link href="{{STATIC_URL}}/css/theme.css" rel="stylesheet"> // Para agregar los estilos a la página.
 
--Habilitar videos embebidos en los post: 
+- Habilitar videos embebidos en los post:
+    It actually needs to be changed in the admin. Log in to your admin, then in the top left hover over 'Site', then click on 'Settings'. Scroll down and you should see a setting called 'Rich text filter level'. Change this setting to low and then save. You should be able to embed your video now.
 
-It actually needs to be changed in the admin. Log in to your admin, then in the top left hover over 'Site', then click on 'Settings'. Scroll down and you should see a setting called 'Rich text filter level'. Change this setting to low and then save. You should be able to embed your video now.
+- Only in development, in settings.py for skip error to migrate, etc the allowed_hosts
+    ALLOWED_HOSTS = ["*"]
 
--Only in development, in settings.py for skip error to migrate, etc the allowed_hosts
+- Para habilitar el acceso al sitio administrativo a los nuevos usuarios (publicadores) se les debe dar permisos del sitio también (example.com).
 
-ALLOWED_HOSTS = ["*"]
-
--Para habilitar el acceso al sitio administrativo a los nuevos usuarios (publicadores) se les debe dar permisos del sitio también (example.com).
-
--Para habilitar las miniaturas de los post, en settings.py:
+- Para habilitar las miniaturas de los post, en settings.py:
 # BLOG_USE_FEATURED_IMAGE = True
 BLOG_USE_FEATURED_IMAGE = True
 y se sube una imagen destacada a la noticia para que la muestre en el post_list y en el post_detail
