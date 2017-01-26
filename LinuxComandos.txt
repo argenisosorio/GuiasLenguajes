@@ -997,6 +997,22 @@ $ rmvirtualenv nombre_virtualenv // Remover o borrar un entorno virtual.
 
 // Los entornos virtuales se crean en el directorio /home/user/.virtualenvs
 
+##### Tips #####
+
+En Debian GNU/Linux 8 (Jessie) a veces el comando mkvirtualenv no funciona por lo que hacemos lo siguiente:
+
+# apt-get install virtualenvwrapper
+
+$ vim .bashrc // Como usuario normal (NO ROOT), hay que agregar las variables con la ruta para virtualenv en el .bashrc, Agregar el siguiente contenido:
+
+# to virtualenvwrapper
+export WORKON_HOME=$HOME/django
+source /etc/bash_completion.d/virtualenvwrapper
+
+luego:
+
+$ source ~/.bachrc
+
 ##### Usando virtualenv #####
 
 Installation: 
@@ -1021,7 +1037,19 @@ $ source mi_env/bin/activate
 
 (mi_env)$ deactivate
 
---- Using Python 3 in virtualenv ---
+##### Usando Python 3 en virtualenvwrapper #####
+
+# aptitude install python3.4 python3-pip python3.4-dev python3-setuptools
+
+# aptitude install python3-virtualenv virtualenvwrapper
+
+$ mkvirtualenv --python=/usr/bin/python3 my_env
+
+$ workon my_env
+
+(my_env)$
+
+##### Usando Python 3 en virtualenv #####
 
 $ virtualenv -p python3 my_env
 
