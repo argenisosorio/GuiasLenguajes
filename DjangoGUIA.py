@@ -284,6 +284,7 @@ django-admin startproject NombreDelProyecto
 
 *****Configura el settings
 Configurar zona horaria, lenguaje
+--> Using Language Identifiers: http://www.i18nguy.com/unicode/language-identifiers.html
 
 *****Configurar la base de datos
 Elegir el motor y el nombre de la db, si se usa postgres esta debe estar creada y tner un usuario, si se
