@@ -791,13 +791,13 @@ $ history | grep xxx // Busqueda especifica de una comando usado, ejemplo: aptit
 $ grep --color=always -n "mysql" /var/www/prueba/2/datos.php // --color para colorear la palabra a buscar, 
 -n para listar la la linea del caracter buscado y al final ra ruta del archivo a buscar
 
-$ grep cadena_texto ./* -rIn //Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
+$ grep cadena_texto ./* -rIn // Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
 
-$ grep --color=always -n "cadena_texto" ./* -Ir //Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
+$ grep --color=always -n "cadena_texto" ./* -Ir // Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
 
 $ grep --color -n "cadena_texto" -Ir // No hace falta poner =always
 
-$ egrep -r "Saludo" . //Otra forma de busqueda.
+$ egrep -r "Saludo" . // Otra forma de busqueda.
 
 | grep xxx // filtra la busqueda con el parametro que le demos ejemplo:
 
@@ -814,15 +814,18 @@ $ find // Listar todos los archivos contenidos en el directorio actual y en los 
 $ find -name name_dir // Buscar un directorio specifico en el sistema.
 
 su:
-find / -type f -name NombreArchivo.html // Para mostrar el directorio del archivo que se 
-//quiera buscar, se debe saber el nombre del archivo
+find / -type f -name NombreArchivo.html // Para mostrar el directorio del archivo que se quiera buscar, se debe saber el nombre del archivo.
 
 file:///home/user/nombre_fichero.xxx // Abrir un fichero del directorio desde el navegador.
 
 $ locate nombre_del_archivo // Hacer una busqueda de un archivo en los directorios, se puede especificar un nombre con su extensión
 //o solo especificar una palabra, la busqueda se hara en todos los archivos que contengan la palabra o nombre de archivo escrita.
 
-$ locate "*.jpg" // Buscar todos los ficheros con la extension especificada
+$ locate .jpg // Buscar en todos los directorios los ficheros con la extension especificada
+
+$ locate "*.jpg" // Buscar en todos los directorios los ficheros con la extension especificada.
+
+$ locate .pdf | grep software // Buscar en todos los .pdf del sistema que contengan la palabra "software" en el nombre. Sí hace distinción entre mayúsculas, minúsculas y acéntos.
 
 $ sudo locate -c hola // Muestra cuantos archivos contienen la palabra "hola" en el nombre.
 
