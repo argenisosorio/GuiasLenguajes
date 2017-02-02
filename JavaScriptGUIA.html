@@ -600,6 +600,32 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 
 -------------------------------------
 
+<!-- Escribir un enlace o link al documento pidiendo la dirección al usuario -->
+<html>
+  <head>
+      <title>XXX</title>
+      <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+      <meta charset="UTF-8">
+  </head>
+  <script type="text/javascript"> 
+  $("document").ready(function () {
+    $("#boton1").click(function() {
+      //link=prompt("");
+      //document.write("<a href='http://www.as.com'>"+link+"</a>");
+      link=prompt("Por favor escriba el enlace","enlace");
+      document.write("<a href="+link+">Aquí</a>");
+    });
+  });
+</script>
+<body>
+<button id="boton1">Enlace</button>
+<p />
+<div id="x"></div>
+</body>
+</html>
+
+-------------------------------------
+
 <!-- Mostrar alerta en la pagina, se muestra al cargar la pagina -->
 <script type="text/javascript">
 	alert("Ejemplo de alerta con JavaScript");

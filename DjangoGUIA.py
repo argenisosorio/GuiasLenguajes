@@ -500,8 +500,7 @@ myproject/
 
 Ejemplos:
 
-// Declarando la clase Articulo y Comentarios para una publicacion,
-y estableciendo la relacion entre los comentarios y un articulo
+#Declarando la clase Articulo y Comentarios para una publicacion, y estableciendo la relacion entre los comentarios y un articulo
 
 from django.db import models
 
@@ -516,6 +515,32 @@ class Comentario(models.Model):
    cuerpo = models.TextField()
    fecha_pub = models.DateTimeField('fecha publicacion')
    articulo = models.ForeignKey(Articulo)
+
+---
+
+#Modelos para un blog, con un método la la fecha de publicación.
+#Más en --> https://tutorial.djangogirls.org/es/
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from django.db import models
+from django.utils import timezone
+
+class Post(models.Model):
+    author = models.ForeignKey('auth.User')
+    title = models.CharField(max_length=200)
+    text = models.TextField()
+    created_date = models.DateTimeField(
+            default=timezone.now)
+    published_date = models.DateTimeField(
+            blank=True, null=True)
+
+    def publish(self):
+        self.published_date = timezone.now()
+        self.save()
+
+    def __str__(self):
+        return self.title
 
 ##### Pasando un diccionario en el render #####
 
@@ -568,7 +593,6 @@ Superuser created successfully.
 {% endif %}
 
 ##### Ruta de instalación convencional de django ######
-
 
 $ python
 >>> import django

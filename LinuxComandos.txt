@@ -1129,6 +1129,9 @@ claves al conectar a los dispositivos y pasar los datos de cualquier otra aplica
 
 $ ssh Nombre_usuario@IP_servidor o nombre_servidor
 
+$ ssh 192.168.200.x // Si el servidor tiene el mismo usuario que el host, no hace falta especificarlo, solamente con la ip del servidor
+basta, pues toma el nombre del usuario del host para hacer la conexión.
+
 ssh user@192.168.0.240 // Asi se accede a un ordenador o servidor remoto, debemos poner el usuario que debe estar creado asi como la ip
 del server, nos pedira la clave de session, una vez adentro tenemos acceso a los archivos y podemos pedir el root para tener acceso total.
 ssh es muy usado por administradores de redes y de sistemas para acceder a las maquinas y los servidores y hacer cambios asi 
@@ -1148,29 +1151,37 @@ DISPLAY=:0.0 totem // Abrir el reproductor totem en el servidor
 
 DISPLAY=:0.0 nautilus // Abrir el explorador de archivos en el servidor
 
---- COPIAR ARCHIVOS DE LOCAL A SERVIDOR ---
+####################################################
+##### Copias de directorios o ficheros por scp #####
+####################################################
+
+##### COPIAR ARCHIVOS DE LOCAL A SERVIDOR #####
+
 Si queremos subir el archivo archivo.txt de nuestro ordenador a la carpeta /home/usuario del servidor, hacemos lo siguiente:
 
 $ scp archivo.txt usuario@dominio.com:/home/usuario // Se especifica el archivo a copiar, luego el servidor y luego el directorio 
 en el servidor donde copiaremos el archivo.
 
---- COPIAR ARCHIVOS DE SERVIDOR A LOCAL ---
+##### COPIAR ARCHIVOS DE SERVIDOR A LOCAL #####
+
 Si queremos copiar el fichero archivo.txt del servidor a nuestro ordenador en la carpeta Documentos, hacemos lo siguiente:
 
 $ scp usuario@dominio.com:/home/usuario/archivo.txt /home/usuario/Documentos // Especificamos el servidor, luego la ruta y el archivo a copiar y luego el directorio local donde sera copiado el archivo.
 
---- COPIAR ARCHIVOS DE SERVIDOR A SERVIDOR ---
+##### COPIAR ARCHIVOS DE SERVIDOR A SERVIDOR #####
 
 $ scp usuario1@dominio1.com:/home/usuario1/archivo.txt usuario2@dominio2.com:/home/usuario2/
 
---- COPIAR UN DIRECTORIO COMPLETO DE LOCAL A SERVIDOR ---
+###### COPIAR UN DIRECTORIO COMPLETO DE LOCAL A SERVIDOR #####
+
 Para copiar un directorio completo de mi ordenador al servidor, por ejemplo /home/mario/carpeta a /home/usuario, añadimos un -r en el comando:
 
 $ scp -r /home/mario/carpeta usuario@dominio.com:/home/usuario
 
 $ scp -r /home/mario/carpeta usuario@dominio.com: // Con los dos puntos al final se copiara automáticamente en el home del usuario.
 
---- COPIAR UN DIRECTORIO COMPLETO DE SERVIDOR A LOCAL ---
+##### COPIAR UN DIRECTORIO COMPLETO DE SERVIDOR A LOCAL #####
+
 Para copiar un directorio completo del servidor al local, por ejemplo /home/usuario/carpeta a /home/user/docs, añadimos un -r en el comando:
 
 $ scp -r usuario@dominio.com:/home/usuario/carpeta /home/user/docs
