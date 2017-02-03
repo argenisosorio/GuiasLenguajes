@@ -592,12 +592,36 @@ Superuser created successfully.
 <h1>No soy Admin </h1>
 {% endif %}
 
-##### Ruta de instalación convencional de django ######
+#######################################################
+##### Ruta de instalación convencional de Django ######
+#######################################################
 
 $ python
 >>> import django
 >>> django.__file__
 '/usr/local/lib/python2.7/dist-packages/django/__init__.pyc'
+
+####################################################################
+##### Ruta de instalación de Django dentro de entorno virtual ######
+####################################################################
+
+/home/user/Entornos_virtuales/Django_1.10.1/local/lib/python2.7/site-packages/django
+
+####################################
+##### Recolectar los estáticos #####
+####################################
+
+Cuando el:
+
+$ python manage.py collectstatic
+
+falla, se pueden recolectar manualmente los estáticos, solo hay que buscar la ruta adecuada dentro del core de django, en
+un entorno virtual sería en:
+
+/home/user/Entornos_virtuales/Django_1.10.1/local/lib/python2.7/site-packages/django/contrib/admin/static/
+
+Dentro está la carpeta admin/ con todos los estáticos que necesita el servidor, sobre todo los estáticos del admin de django, por lo tanto
+podemos copiar esa carpeta admin/ a la carpeta static de nuestro proyecto.
 
 ###################################################################
 ##### Desplegar aplicación web en Django - pythonanywhere.com #####
