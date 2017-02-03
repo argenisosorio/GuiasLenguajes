@@ -653,4 +653,21 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "default.settings")
 
 application = get_wsgi_application()
 
+########################################
+##### Graficando modelos de Django #####
+########################################
 
+Cuando desarrollas en Django la logica la mandas a los modelos. A veces nos abastraemos de la capa y lo que se escribe en la base de datos, para esto
+siempre es bueno poder visualizar de manera gráfica los modelos del proyecto.
+
+Para Django existe una orma de poder graficar los modelos con PyGraphviz, que es un software de visualización.
+
+Para instalar PyGraphviz usaremos pip:
+
+$ pip install pygraphviz
+
+ya instalado la extensión, vamos a nuestro proyecto y ejecutamos:
+
+my_project$ ./manage.py graph_models -a -g -o mi_modelo.png
+
+Lo que nos creará un archivo PNG con el modelo de datos.
