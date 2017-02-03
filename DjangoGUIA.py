@@ -671,3 +671,20 @@ ya instalado la extensión, vamos a nuestro proyecto y ejecutamos:
 my_project$ ./manage.py graph_models -a -g -o mi_modelo.png
 
 Lo que nos creará un archivo PNG con el modelo de datos.
+
+Si obtienes un error como
+
+from django.conf import settings; ‘django_extensions’ in settings.INSTALLED_APPS
+ 
+Es porque debes instalar django-extensions con:
+
+$ pip install django django-extensions
+
+Y luego debes agregar django-extensions a las INSTALLED_APPS en tu archivo settings.py de tu proyecto
+ 
+
+INSTALLED_APPS = (
+    ...
+    'django_extensions',
+    ...
+)
