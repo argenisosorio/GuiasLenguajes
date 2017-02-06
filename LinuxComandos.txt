@@ -776,6 +776,19 @@ root@debian:/home/user# aptitude search mysql | grep mysql
 
 # mysql -p //acceder al mysql
 
+#################
+##### nginx #####
+#################
+
+Para ver la configuración de nginx del itio disponible:
+--> /etc/nginx/sites-enabled/nombre_del_sitio
+
+Para ver los logs del sitio disponible:
+--> /var/log/nginx/nombre_del_sitio.xxx.log
+
+Para ver en tiempo real el log del server del sitio:
+/var/log/nginx# tailf nombre_del_sitio.ve.access.log
+
 #############################################################################
 ##### Comandos para buscar ficheros, directorios, paquetes, historiales #####
 #############################################################################
