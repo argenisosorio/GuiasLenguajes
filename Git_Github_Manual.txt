@@ -114,6 +114,73 @@ $ git push origin nombre_rama // Estando en otra rama local, Subir los cambios a
 
 $ git push -f origin master // git push -f <remote> <branch> forzar el push para sobreescribir los ficheros en el repositorio remoto.
 
+##############################################
+##### Configurando el fichero .gitignore #####
+##############################################
+
+Cuando creamos un repositorio git dentro de un directorio, inicialmente se incluyen todos los archivos de dicho directorio dentro del control de
+versiones de git, para así poder seguir los cambios que se van realizando en el proceso de desarrollo.
+
+Ficheros .gitignore, es en estos archivos donde se incluyen las rutas de todos los directorios y ficheros que queremos excluir de git, es decir, que
+no queremos que sean rastreados.
+
+Básicamente git hace una lectura en todos los directorios dentro de la carpeta del proyecto, y cada vez que encuentre un archivo .gitignore lo lee para
+saber que otros archivos debe excluir.
+
+La ubicación del .gitignore depende de ti, puedes tener un único archivo global en el directorio principal o uno independiente dentro de cada carpeta que
+quieras configurar.
+
+##### Creando un archivo .gitignore #####
+
+Esto es muy sencillo, básicamente es un archivo de texto plano donde debes escribir las rutas que deseas excluir del repositorio, esto no quiere decir que los
+ficheros van a ser borrados, simplemente los cambios que hagas allí no se van a ver reflejados en ningún commit mientras la ruta se
+encuentre definida en el .gitignore.
+
+Es importante que el nombre sea exactamente ".gitignore" sin preposiciones, símbolos o cualquier otro caracter diferente a esto.
+
+Supón que tienes el siguiente directorio:
+
+--index.php
+--assets
+    css
+    main.css
+    variables.css
+--js
+    sidebar.js
+    main.js
+--contact.php
+--config.php
+--server_config.php
+
+Digamos que en tu archivoserver_config.php tienes información delicada sobre conexiones a tu servidor que no quieres incluir en el repositorio
+para compartirlo con tus colaboradores, ese tal vez sea el primer archivo que quieras excluir, para ello creas
+el archivo .gitignore y agregas la siguiente linea:
+
+server_config.php
+
+Ahora git incluirá todo el directorio menos ese archivo:
+
+--index.php
+--assets
+    css
+    main.css
+    variables.css
+--js
+    sidebar.js
+    main.js
+--contact.php
+--config.php
+XXX - server_config.php
+
+Bien, tal vez la carpeta assets/js se haya creado para hacer algunas pruebas de forma local y aun no quieras incluirla en el commit:
+
+server_config.php
+/assets/js
+
+Cuando referencias a una carpeta, todo lo que está dentro de ella se incluye como parte de los archivos sin seguimiento, pero si solo se quisiera
+omitir el contenido entonces sería
+
+/assets/js/
 
 ##### Eliminando varios archivos de Git que ya se han eliminado del disco #####
 
@@ -121,7 +188,7 @@ $ git add -u
 
 $ git commit -m "Deleted files manually"
 
------ Mezclando Ramas -----
+##### Mezclando Ramas #####
 
 Para fusionar dos ramas, en este caso una rama de desarrollo con la rama master se hace un git merge, para realizar la mezcla vamos
 a situarnos en la rama master escribimos el comando donde especificamos que rama queremos mezclar con master.
@@ -140,7 +207,7 @@ $ git checkout fichero.xxx // Si no deja hacer el pull, descartar cambios en ese
 $ git status origin master // Comparar la rama local con la rama del repositorio, nos dirá si estamos atrás o delante del repo, y por cuantos commits.
 Si estamos detrás, con un pull nos traeremos los cambios del repo, si estamos delante, se hará un merge o una mezcla del repo local y el remoto y así tendra todos los cambios listos, luego en el status del repo local, pedirá hacer un push para estabilizar todos los cambios en el repo remoto.
 
------ Borrando ramas remotas -----
+##### Borrando ramas remotas #####
 
 Imagina que ya has terminado con una rama remota. Es decir, tanto tu como tus colaboradores habeis completado una determinada funcionalidad y la habeis incorporado (merge) a la rama master en el remoto (o donde quiera que tengais la rama de código estable). Puedes borrar la rama remota utilizando la un tanto confusa sintaxis: git push [nombreremoto] :[rama]. Por ejemplo, si quieres borrar la rama serverfix del servidor, puedes utilizar:
 
@@ -242,7 +309,7 @@ quede desactualizada, se debe realizar el merge de master sobre development.
 
 Algo de teoría...
 
-¿Qué es un fork?
+##### ¿Qué es un fork? #####
 
 La palabra fork se traduce al castellano, dentro del contexto que nos ocupa, como bifurcación. Cuando hacemos un fork de un repositorio, se hace una copia exacta en crudo (en inglés “bare”) del repositorio original que podemos utilizar como un repositorio git cualquiera. Después de hacer fork tendremos dos repositorios git idénticos pero con distinta URL. Justo después de hacer el fork, estos dos repositorios tienen exactamente la misma historia, son una copia idéntica. Finalizado el proceso, tendremos dos repositorios independientes que pueden cada uno evolucionar de forma totalmente autónoma. De hecho, los cambios que se hacen el repositorio original NO se transmiten automáticamente a la copia (fork). Esto tampoco ocurre a la inversa: las modificaciones que se hagan en la copia (fork) NO se transmiten automáticamente al repositorio original.
 ¿Y en qué se diferencia un fork de un clon?
