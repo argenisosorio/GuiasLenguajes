@@ -173,7 +173,9 @@ textos, imagenes, vdeos, etc...) para este proyecto Django
 -Entrar al directorio (NombreDelProyecto)
 y ejecuta el comando:
 
-python manage.py runserver #Verás la siguiente salida en la línea de comandos:
+$ python manage.py runserver #Verás la siguiente salida en la línea de comandos:
+
+$ python manage.py check #Validar los modelos en busca de errores sin necesidad de correr el servidor.
 
 Validating models...
 
