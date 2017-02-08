@@ -497,13 +497,116 @@ myproject/
          test.txt
          prod.txt
 
+##############################
+##### Modelos en Django  #####
+##############################
 
------
+¿Qué es un modelo?
 
-Ejemplos:
+- En Django los modelos son como django tratara los datos, contendrá los campos de los objetos que queremos guardar.
+Generalmente django creara por cada modelo una tabla en la base de datos.
 
-#Declarando la clase Articulo y Comentarios para una publicacion, y estableciendo la relacion entre los comentarios y un articulo
+- Cada modelo es una clase python que hereda de django.db.models.Model
 
+- Cada atributo del modelo representa un campo de la tabla de la base de datos.
+
+##### Los campos #####
+
+Los campos son el tipo de objeto del atributo que guardara, hay varios tipos:
+
+AutoField: Es un IntegerField que se incrementa cuando creas un nuevo objeto, casi que no es necesario ya que django lo crea solo si no especificas otro campo como id.
+
+BigIntegerField: Representa un Entero de 64 bit, es como el IntegerField, solo que permite números desde el -9223372036854775808 hasta el 9223372036854775807. El campo por defecto de los formularios es el TextField.
+
+BooleanField: El campo de true/false. El campo por defecto de los formularios es un CheckboxInput. El vlaor por defecto es None si no defines el default.
+
+CharField: Para string pequeños, frases o palabras. El campo por defecto en los formularios es el TextInput.
+    max_length=20: Establece el tamaño máximo del string, es requerido.
+
+CommaSeparateIntegerField: Guarda una lista de enteros separados por coma. 
+    Max_length=20: Establece el valor máximo de los enteros, es requerido.
+
+DateField: Guarda una instancia de la fecha a partir de la clase datetime.date de python.
+    auto_now=True: Actualiza la fecha cada vez que se actualiza el objeto.
+    auto_now_add=True: Guarda la fecha de cuando se creo.
+
+DateTimeField: Como el DateField solo que guarda también la hora
+    auto_now=True: Actualiza la fecha cada vez que se actualiza el objeto.
+    auto_now_add=True: Guarda la fecha de cuando se creo.
+
+DecimalField: Guarda números decimales.
+    max_digits=5: Establece el numero de dígitos máximo, la suma de la parte entera y la decimal
+    decimal_places=2: Establece el número de dígitos de la parte decimal.
+
+EmailField: Es un CharField que comprueba lo introducido para verificar que sea un email.
+    max_length=75: Establece el tamaño máximo del email, es requerido.
+
+FileField: Sirve para guardar archivos en el servidor. En el formulario saldría el campo de escoger un fichero del ordenador. Tiene que estar definido el MEDIA_ROOT en el settings para que guarde los archivos. Guardara el archivo en la ruta especificada por el MEDIA_ROOT.
+    upload_to='/videos': Subirá el archivo a la carpeta vídeos alojada en la carpeta definida por MEDIA_ROOT. (Requerido)
+    FileField(upload_to='/video'[, max_length=100, **options]): si se quiere poner los atributos opcionales tendrán que añadirse así.
+
+FilePathField: Sirve para mostrar los archivos accesible de una carpeta siguiendo una restricción si se quiera, para hacer alguna operación sobre ellos.
+    FilePathField(path=None[, match=None,recursive=False, max_length=100, **options])
+        path (requerido): directorio del que sacara FilePathField las opciones.
+        match: filtro por el que pasaran los archivos, se usaran expresiones regulares.
+        recursive: False por defecto, especifica si entran las subcarpetas de la ruta indicada por path.
+        max_length: Indica el tamaño máximo del nombre del archivo.
+
+FloatField: Campo que guarda una instancia del modelo Float de python.
+
+ImageField: Como el FileField pero solo acepta formatos de imágenes. Tiene dos campos opcionales mas que el FielField
+    height_field: Representa el alto máximo de la imagen.
+    width_field: Representa el ancho máximo de la imagen.
+
+IntegerField: Guarda un entero.
+
+IPAddressField: Guarda un string que coincida con el formato ip (192.168.0.1).
+
+GenericIPAddressField: Guarda una ip, ya sea ipv4 o ipv6. Para saber como las guarda Doc Django.
+
+NullBooleanField: Como el BooleanField pero permite null.
+
+PositiveIntegerField: Guarda un entero mayor o igual que cero.
+
+SlugField:  Campo que guarda una pequeña etiqueta (letras, números, guiones) suele usarse en las url.
+
+TextField: Campo que guarda texto.
+
+TimeField: Guarda una hora, comparte los campos con DateField
+    auto_now=True: Actualiza la hora cada vez que se actualiza el objeto.
+    auto_now_add=True: Guarda la hora de cuando se creo.
+URLField: Guarda una dirección html, comprueba que lo introducido sea una dirección html.
+
+##### Campos de relación #####
+
+ForeignKey:  Para referir objetos a un objeto, un modelo puede referirse a un modelo, pero un modelo puede estar referido a mas de uno, es lo que se llama un many-to-one referencia.
+
+ManyToManyField: Para guardar una referencia a varios objetos de la misma clase. Hay que definir la clase con la que se relaciona. Va guardando las referencias a esos objetos en una lista con las primary keys referncia.
+
+OneToOneField: Es como el ForeignKey pero tiene unique=True, por lo que solo puede haber una referencia a ese objeto.
+
+##### Opciones que tiene todos los campos #####
+
+null=True: Permite que los valores puedan ser null.
+blank=True: Permite que el campo se pueda quedar en blanco.
+choices=meses: Permite asignar un diccionario de elementos a un objetos para que los valores solo sean los contenidos en el diccionario. La clave del diccionario sera lo que se guarda en la base de datos, el valor asociado sera lo que se mostrar en el formulario que lo use.
+db_column: El nombre de la columna donde django guardara el campo, si no se especifica guarda el nombre del campo.
+db_index=True: Sirve para indexar el campo en las búsqueda de django. Por defecto django busca entre las PK de la base de datos, si añades esto también buscara entre esos datos y no tendrás que acceder directamente al objeto para comprobar el campo en las búsquedas.
+db_tablespace: El nombre al que se referencia para buscar si ha sido indicado como index.
+default: El valor por defecto que tiene el modelo, si se va a guardar un valor distinto a vació se guardara con el valor por defecto.
+editable=False: Indica si el valor se puede modificar, si es falso no aparecerá en el admin ni similares.
+error_messages={null:"Hay que darle un valor",blank:"No se puede dejar en blanco",invalid="El valor introducido es erróneo", invalid_choice:"Has escogido un valor inadecuado", unique="Este valor ya existe"}: Como se ve en el ejemplo hacer referencia a los mensajes que se mostraran si se produce ese error. No hace falta crear todos los mensajes. Si no los creas saldrá el que tiene por defecto.
+help_text="Inserta un nombre": Un texto que aparecerá en forma de ayuda en el campo del formulario.
+primary_key=True: Para asignar que el campos es la clave primaria del modelo.
+unique=True: Indica que el valor es único, solo podrá haber uno en la base de datos.
+unique_for_date='pub_date': El valor de esta propiedad tendrá que existir como campo del modelo y tendrá que ser del tipo DateField o DateTimeField. Lo que hace es no dejar que haya un elemento con el mismo valor del campo y el mismo día.
+unique_for_month='pub_date': El valor de esta propiedad tendrá que existir como campo del modelo y tendrá que ser del tipo DateField o DateTimeField. Lo que hace es no dejar que haya un elemento con el mismo valor del campo y el mismo mes.
+unique_for_year='pub_date': El valor de esta propiedad tendrá que existir como campo del modelo y tendrá que ser del tipo DateField o DateTimeField. Lo que hace es no dejar que haya un elemento con el mismo valor del campo y el mismo año.
+verbose_name="Nombre de usuario": Nombre del campo comprensible por humanos, si no se crea django lo generar automáticamente, convirtiendo los guiones en espacios.
+validators=[]: Una lista de validaciones para el campo referencia.
+
+##### Declarando la clase Articulo y Comentarios para una publicacion, y estableciendo
+#la relacion entre los comentarios y un articulo #####
 from django.db import models
 
 class Articulo(models.Model):
@@ -518,9 +621,7 @@ class Comentario(models.Model):
    fecha_pub = models.DateTimeField('fecha publicacion')
    articulo = models.ForeignKey(Articulo)
 
----
-
-#Modelos para un blog, con un método la la fecha de publicación.
+#Modelos para un blog, con un método para la fecha de publicación.
 #Más en --> https://tutorial.djangogirls.org/es/
 
 #!/usr/bin/env python
@@ -544,7 +645,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+##############################################################################
 ##### Ejemplo de admin.py para mostrar los modelos en el admin de django #####
+##############################################################################
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -790,4 +893,3 @@ class PostEliminar(SuccessMessageMixin,DeleteView):
     </div>
   {% endfor %}
 {% endif %}
-
