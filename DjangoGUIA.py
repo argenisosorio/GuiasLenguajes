@@ -893,3 +893,17 @@ class PostEliminar(SuccessMessageMixin,DeleteView):
     </div>
   {% endfor %}
 {% endif %}
+
+
+### En un render ###
+
+messages = '¡Registro exitoso!'
+return render_to_response('base.login.html', {'messages': messages})
+
+En el template:
+
+{% if messages %}
+  <div class=" warning">
+    {{ messages }}
+  </div>
+{% endif %}
