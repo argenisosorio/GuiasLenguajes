@@ -58,19 +58,6 @@ $ git rm -f Nombre_fichero.xxx // Forzar el borrado del fichero.
 $ git rm --cached Nombre_archivo.xxx // Si un archivo fue modificado queda un registro de su nombre anterior en el cache
 para borrarlo se esa este comando.
 
-##### Ignorando un fichero que no se deja #####
-
-Cuando un fichero ya está bajo el control de versiones de git, git seguirá rastreando el archivo, no importa lo que escriba en .gitignore. Tienes que decir
-explícitamente a git que se olvide de ese fichero con:
-
-1-) Agregar el fichero a ignorar en el .gitignore
-
-2-) Remover el fichero del seguimiento con:
-$ git rm --cached projectname/settings.py
-
-3-) Hacer el commit del cambio con:
-$ git commit -m "Removido settings del seguimiento"
-
 ---
 
 $ git commit --amend -m "comentario commit corregido" // Corregir algun error en el texto del último commit
@@ -190,12 +177,25 @@ XXX - server_config.php
 Bien, tal vez la carpeta assets/js se haya creado para hacer algunas pruebas de forma local y aun no quieras incluirla en el commit:
 
 server_config.php
-/assets/js
+assets/js
 
 Cuando referencias a una carpeta, todo lo que está dentro de ella se incluye como parte de los archivos sin seguimiento, pero si solo se quisiera
 omitir el contenido entonces sería
 
-/assets/js/
+assets/js/
+
+##### Ignorando un fichero que no se deja en el .gitignore #####
+
+Cuando un fichero ya está bajo el control de versiones de git, git seguirá rastreando el archivo, no importa lo que escriba en .gitignore. Tienes que decir
+explícitamente a git que se olvide de ese fichero con:
+
+1-) Agregar el fichero a ignorar en el .gitignore
+
+2-) Remover el fichero del seguimiento con:
+$ git rm --cached projectname/settings.py
+
+3-) Hacer el commit del cambio con:
+$ git commit -m "Removido settings del seguimiento"
 
 #############################################
 ##### Ejemplo de .gitignore para Django #####
@@ -221,7 +221,9 @@ $ git add -u
 
 $ git commit -m "Deleted files manually"
 
+###########################
 ##### Mezclando Ramas #####
+###########################
 
 Para fusionar dos ramas, en este caso una rama de desarrollo con la rama master se hace un git merge, para realizar la mezcla vamos
 a situarnos en la rama master escribimos el comando donde especificamos que rama queremos mezclar con master.
