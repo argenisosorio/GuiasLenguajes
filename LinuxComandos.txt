@@ -2309,15 +2309,29 @@ El paquete Tasksel proporciona una interfaz sencilla para los usuarios que quier
 
 Después de instalar un sistema básico, usted puede instalar el DesktopEnvironment utilizando tasksel. La orden tasksel (ingresado como root) le muestra algunas opciones (de alto nivel de abstraccion) para instalar paquetes. Podría usted simplemente marcar la opción Desktop environment. Instalará los paquetes de Gnome y algunos paquetes considerados como estándar para un escritorio Debian.
 
-############################################################################
-##### Restaurar las conexiones de red del sistema - networking restart #####
-############################################################################
+########################################################################################
+##### Restaurar o reiniciar las conexiones de red del sistema - networking restart #####
+########################################################################################
 
 # /etc/init.d/networking restart
 
 # service networking restart
 
 # invoke-rc.d networking restart
+
+################################################################################
+##### Restaurar o reiniciar  las conexiones de red inalambrica del sistema #####
+################################################################################
+
+If you really want to reset the network adapter you usually need to unload and reload the kernel module that it uses.
+
+If you just want to reconfigure it you can usually do:
+
+# /etc/init.d/network-manager restart
+
+But if you just want a new dhcp lease (that's the technical name for obtain a new IP from the router), you just need to use:
+
+# dhclient -v eth1
 
 ################################
 ##### source.list example  #####
