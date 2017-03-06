@@ -588,21 +588,37 @@ OneToOneField: Es como el ForeignKey pero tiene unique=True, por lo que solo pue
 ##### Opciones que tiene todos los campos #####
 
 null=True: Permite que los valores puedan ser null.
+
 blank=True: Permite que el campo se pueda quedar en blanco.
+
 choices=meses: Permite asignar un diccionario de elementos a un objetos para que los valores solo sean los contenidos en el diccionario. La clave del diccionario sera lo que se guarda en la base de datos, el valor asociado sera lo que se mostrar en el formulario que lo use.
+
 db_column: El nombre de la columna donde django guardara el campo, si no se especifica guarda el nombre del campo.
+
 db_index=True: Sirve para indexar el campo en las búsqueda de django. Por defecto django busca entre las PK de la base de datos, si añades esto también buscara entre esos datos y no tendrás que acceder directamente al objeto para comprobar el campo en las búsquedas.
+
 db_tablespace: El nombre al que se referencia para buscar si ha sido indicado como index.
+
 default: El valor por defecto que tiene el modelo, si se va a guardar un valor distinto a vació se guardara con el valor por defecto.
+
 editable=False: Indica si el valor se puede modificar, si es falso no aparecerá en el admin ni similares.
+
 error_messages={null:"Hay que darle un valor",blank:"No se puede dejar en blanco",invalid="El valor introducido es erróneo", invalid_choice:"Has escogido un valor inadecuado", unique="Este valor ya existe"}: Como se ve en el ejemplo hacer referencia a los mensajes que se mostraran si se produce ese error. No hace falta crear todos los mensajes. Si no los creas saldrá el que tiene por defecto.
+
 help_text="Inserta un nombre": Un texto que aparecerá en forma de ayuda en el campo del formulario.
+
 primary_key=True: Para asignar que el campos es la clave primaria del modelo.
+
 unique=True: Indica que el valor es único, solo podrá haber uno en la base de datos.
+
 unique_for_date='pub_date': El valor de esta propiedad tendrá que existir como campo del modelo y tendrá que ser del tipo DateField o DateTimeField. Lo que hace es no dejar que haya un elemento con el mismo valor del campo y el mismo día.
+
 unique_for_month='pub_date': El valor de esta propiedad tendrá que existir como campo del modelo y tendrá que ser del tipo DateField o DateTimeField. Lo que hace es no dejar que haya un elemento con el mismo valor del campo y el mismo mes.
+
 unique_for_year='pub_date': El valor de esta propiedad tendrá que existir como campo del modelo y tendrá que ser del tipo DateField o DateTimeField. Lo que hace es no dejar que haya un elemento con el mismo valor del campo y el mismo año.
+
 verbose_name="Nombre de usuario": Nombre del campo comprensible por humanos, si no se crea django lo generar automáticamente, convirtiendo los guiones en espacios.
+
 validators=[]: Una lista de validaciones para el campo referencia.
 
 ##### Declarando la clase Articulo y Comentarios para una publicacion, y estableciendo
@@ -676,8 +692,9 @@ data = {
 }
 return render_to_response('piechart.html', data)
 
-
+##################################
 ##### Creating an admin user #####
+##################################
 
 First we’ll need to create a user who can login to the admin site. Run the following command:
 
@@ -697,8 +714,9 @@ Password: **********
 Password (again): *********
 Superuser created successfully.
 
-
+##################################################
 ##### Permisos de contenido según el usuario #####
+##################################################
 
 {% if user.is_staff %}
 <h1>Soy Admin </h1>
