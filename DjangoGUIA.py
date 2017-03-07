@@ -436,7 +436,7 @@ project
       jquery.js
 -----
 
-Recommended Django Project Layout
+##### Recommended Django Project Layout #####
 
 myproject/
     manage.py
@@ -496,6 +496,64 @@ myproject/
          dev.txt
          test.txt
          prod.txt
+
+##### Estructura recomendada por el desarrollador común #####
+
+myproject/
+    manage.py
+    myproject/
+        __init__.py
+        urls.py
+        wsgi.py
+        settings.py
+    app/
+        __init__.py
+        models.py
+        managers.py
+        views.py
+        urls.py
+    users/
+        __init__.py
+        models.py
+        views.py
+        urls.py
+    static/
+        css/
+            …
+        js/
+            …
+    templates/
+        base/
+            base.html
+        app/
+            index.html
+        users/
+            index.html
+    requirements/
+        base.txt
+        dev.txt
+        test.txt
+        prod.txt
+
+##############################################################
+##### Configuración del settings para los templates dirs #####
+##############################################################
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
 ##############################
 ##### Modelos en Django  #####
