@@ -907,7 +907,7 @@ INSTALLED_APPS = (
 ##### Mensajes / messages al hacer post #####
 #############################################
 
-- En la views.py
+#En el views.py
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -921,10 +921,8 @@ from .models import *
 from django.contrib.messages.views import SuccessMessageMixin
 
 
-
 class PostLista(ListView):
     model = Post
-
 
 
 class PostCrear(SuccessMessageMixin,CreateView):
@@ -934,13 +932,11 @@ class PostCrear(SuccessMessageMixin,CreateView):
     success_message = "Se creó la publicación con éxito"
 
 
-
 class PostActualizar(SuccessMessageMixin,UpdateView):
     model = Post
     fields = ['autor', 'titulo', 'cuerpo', 'fecha']
     success_url = reverse_lazy('post_lista')
     success_message = "Se actualizó la publicación con éxito"
-
 
 
 class PostEliminar(SuccessMessageMixin,DeleteView):
@@ -949,7 +945,7 @@ class PostEliminar(SuccessMessageMixin,DeleteView):
     success_url = reverse_lazy('post_lista')
     success_message = "Se eliminó la publicación con éxito"
 
-- En el template:
+#En el template:
 
 {% if messages %}
 <ul class="messages">
@@ -983,3 +979,89 @@ En el template:
     {{ messages }}
   </div>
 {% endif %}
+
+#########################################
+##### Uso de formularios / forms.py #####
+########################################
+
+#En el models.py
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from django.db import models
+from django.core.urlresolvers import reverse
+from datetime import datetime
+
+
+class Post(models.Model):
+    autor = models.CharField(max_length=50)
+    titulo = models.CharField(max_length=50)
+    cuerpo = models.TextField(max_length=5000)
+    fecha = models.DateField(default=datetime.now, help_text='')
+
+    def __unicode__(self):
+        return self.autor
+
+    def get_absolute_url(self):
+        return reverse('post_editar', kwargs={'pk': self.pk})
+
+#En el forms.py
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from django import forms
+from app_blog.models import Post
+from django.forms import (
+    TextInput, CharField, Select, RadioSelect, Textarea, CheckboxInput
+)
+
+class PostForm(forms.ModelForm):
+
+    class Meta:
+        model = Post
+
+        fields = [
+            'autor',
+            'titulo',
+            'cuerpo',
+            'fecha',
+        ]
+
+        widgets = {
+            'autor': forms.TextInput(attrs={
+                'class':'form-control input-md',
+                'style': 'min-width: 0; width: 50%; display: inline;',
+            }),
+            'titulo': forms.TextInput(attrs={
+                'class':'form-control input-md',
+                'style': 'min-width: 0; width: 50%; display: inline;',
+            }),
+            'cuerpo': forms.Textarea(attrs={
+                'class':'form-control input-md',
+                'style': 'min-width: 0; width: 50%; display: inline;',
+            }),
+            'fecha': forms.TextInput(attrs={
+                'class':'form-control input-md',
+                'style': 'min-width: 0; width: 50%;',
+            }),
+        }
+
+#En el views.py
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from django.http import HttpResponseRedirect, HttpResponse
+from django.views.generic import TemplateView, CreateView, ListView, UpdateView, DeleteView
+from django.views import generic
+from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse
+from django.shortcuts import render
+from .models import *
+from django.contrib.messages.views import SuccessMessageMixin
+from app_blog.forms import PostForm
+
+class PostCrear(SuccessMessageMixin,CreateView):
+    model = Post
+    form_class = PostForm
+    success_url = reverse_lazy('post_lista')
+    success_message = "Se creó la publicación con éxito"
