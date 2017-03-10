@@ -776,6 +776,14 @@ Superuser created successfully.
 ##### Permisos de contenido según el usuario #####
 ##################################################
 
+# Si el usuario está autenticado}
+{% if request.user.is_authenticated %}
+    Bienvenido: {{user.username}}
+{% else %}
+    Bienvenido: Anónimo
+{% endif %}
+
+# Si el usuario es admin
 {% if user.is_staff %}
 <h1>Soy Admin </h1>
 {% else %}
@@ -1045,6 +1053,42 @@ class PostForm(forms.ModelForm):
                 'style': 'min-width: 0; width: 50%;',
             }),
         }
+
+#Otra forma
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from django import forms
+from app_blog.models import Post
+from django.forms import (
+    TextInput, CharField, Select, RadioSelect, Textarea, CheckboxInput
+)
+
+
+class PostForm(forms.ModelForm):
+
+    autor = forms.CharField(widget=TextInput(attrs={
+            'class':'form-control input-md',
+            'style': 'min-width: 0; width: 50%; display: inline;',
+        }), required = True)
+    titulo = forms.CharField(widget=TextInput(attrs={
+            'class':'form-control input-md',
+            'style': 'min-width: 0; width: 50%; display: inline;',
+        }), required = True)
+    cuerpo = forms.CharField(widget=Textarea(attrs={
+            'class':'form-control input-md',
+            'style': 'min-width: 0; width: 50%; display: inline;',
+        }), required = True)
+
+    class Meta:
+
+        model = Post
+
+        fields = [
+            'autor',
+            'titulo',
+            'cuerpo',
+        ]
 
 #En el views.py
 
