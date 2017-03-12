@@ -1,7 +1,7 @@
 ### Guía Python by dM ###
 
-#Cabecera para los scripts de Python, indica al compilador o editor que se trata de un fichero python
-#La segunda linea da codificación UTF-8 al programa
+# Cabecera para los scripts de Python, indica al compilador o editor que se trata de un fichero python
+# La segunda linea da codificación UTF-8 al programa
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
