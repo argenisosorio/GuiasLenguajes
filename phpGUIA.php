@@ -1,26 +1,67 @@
 <!--  Guía PHP by dM -->
-<HTML>
-	<HEAD>
-	<TITLE>Ejemplo de HTML con PHP</TITLE>
-	</HEAD>
-	<meta charset="UTF-8" />
-<!-- -->
-<!-- <?php ?> -->
-<BODY>
-<P><h3>Guía PHP</h3></P>
-<?php 
-//Comentarios de línea en PHP y /* De varias líneas */ igual a C++
-#Comentarios de una línea en PHP
+
+<!-- Comentarios en HTML -->
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>XXX</title>
+        <meta charset="UTF-8">
+        <script src="jquery-1.9.1.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="styles.css" type="text/css"/>
+    </head>
+<body>
+</body>
+</html>
+
+----------
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>XXX</title>
+        <meta charset="UTF-8">
+    </head>
+<body>
+<!-- Uso de lenguaje php usanto la etiqueta script -->
+<script language="php">
+	echo ("XXXXXXXXX");
+</script>
+</body>
+</html>
+
+<!-- Bloque de código php -->
+<?php # Comienzo del código php
+echo "xxxxx"; # Contenido del bloque
+?> <!-- Final del código php -->
+
+<?php
+// Comentarios de línea en PHP
+
+# Comentarios de una línea en PHP
+
+/*
+Comentario de varias
+líneas, igual a C++
+*/
 ?>
 
-<!--**********OPERADORES ARITMÉTICOS PHP**********
+<?php // Inicio del bloque php
+
+##################################
+##### Operadores aritméticos #####
+##################################
+
 $a + $b //Suma las dos variables.
 $a - $b //Resta las dos variables.
 $a * $b //Multiplicación de las variables.
 $a / $b //División entre las dos variables.
 $a % $b //Módulo Resto de la división de $a entre $b -->
 
-<!--**********OPERADORES DE COMPARACIÓN PHP**********
+#####################################
+##### Operadores de comparación #####
+#####################################
+
 $a == $b //Igualdad Devuelve true si $a y $b son iguales.
 $a === $b //Identidad Verdadero si son iguales y del mismo tipo.
 $a != $b //Distinto True si son distintos.
@@ -30,7 +71,10 @@ $a > $b //Mayor que Cierto si $a es mayor que $b
 $a <= $b //Menor o igual Correcto si $a es menor o igual que $b
 $a >= $b //Mayor o igual Correcto si $a es mayor o igual que $b -->
 
-<!--**********OPERADORES DE ASIGNACIÓN COMBINADOS**********
+####################################
+##### Operadores de asignación #####
+####################################
+
 $a++ Incremento $a = $a +1
 $a~ Decremento $a = $a -1
 ++$a Incremento $a = $a +1
@@ -47,49 +91,119 @@ $a .= $b Concatenación $a = $a . $b
 $a >>= $b Desplazamiento a la derecha $a = $a >> $b
 $a <<= $b Desplazamiento a la izquierda $a = $a << $b -->
 
-**********VARIABLES**********<P>
-<?php //Comienzo del lenguaje PHP  
-$nombre="Argenis";
-$apellido="Osorio";
+############################
+##### Tipos de valores #####
+############################
+
+$bool = TRUE; // un valor booleano
+$str = "foo"; // una cadena
+$int = 12; // un entero
+echo gettype($bool); // imprime "boolean"
+echo gettype($str); // imprime "string"
+
+#####################
+##### Variables #####
+#####################
+
+##### Guardar valores en las variables #####
+
+$nombre="Olivier";
+$apellido="Dacourt";
 $edad=24;
 
-#echo Sirve para imprimir por pantalla las cadenas o variables que necesitemos mostrar
-echo '$nombre $apellido <br>'; //Las '' simples, permiten imprimir el contenido íntegro de caracteres que esté entre las comillas 
+#-----
+
+// php nota la diferencia entre mayúsculas y minúsculas en la declaración de variables
+$var = "Bob";
+$Var = "Joe";
+echo "$var, $Var"; // outputs "Bob, Joe"
+
+#-----
+
+// Declaraciones válidas e inválidas
+$4site = 'not yet'; // invalid; starts with a number
+$_4site = 'not yet'; // valid; starts with an underscore
+$tÃƒÂ¤yte = 'mansikka'; // valid; 'ÃƒÂ¤' is ASCII 228 (Extendido)
+
+################
+##### echo #####
+################
+
+# Sirve para imprimir por pantalla
+echo '$nombre <br /> $apellido '; // Las '' simples, permiten imprimir el contenido literal de caracteres que esté entre las comillas
 echo "El autor de esta página es: "; //Las "" dobles, permiten incluir variables para imprimirlas junto al texto
-echo ("$nombre $apellido de $edad años"); 
-?> <!--Final del Lenguaje PHP -->  
-<P>
+echo ("$nombre $apellido de $edad años"); // Usando la forma echo() original de la función;
+echo ("xxxx <br /> xxxxxxx");
 
-<U>Concatenación de cadenas</U><P>
+#-----
 
-<?php
+$a=2;
+$b=3;
+echo $a + $b; //Imprime 5
+
+#-----
+
+$a=2;
+$b="3";
+echo $a + $b; //Imprime 5
+
+#-----
+
+$a=2;
+$b="3a";
+echo $a + $b; //Imprime 5
+
+#-----
+
+$a=2;
+$b="a3";
+echo $a + $b; //Imprime 2
+
+##### Variables predefinidas #####
+
+// PHP proporciona una gran cantidad de variables predefinidas a cualquier script que se ejecute.
+// Algunas son:
+
+$GLOBALS // Contiene una referencia a cada variable disponible en el espectro de las variables del script.
+
+$_GET // Variables proporcionadas al script por medio de HTTP GET.
+
+$_POST // Variables proporcionadas al script por medio de HTTP POST.
+
+$_COOKIE // Variables proporcionadas al script por medio de HTTP cookies.
+
+$_SESSION // Variables registradas en la sesión del script.
+
+###########################
+##### Suma de Enteros #####
+###########################
+
+$cifra1=7;
+$cifra2=8;
+$suma=$cifra1+$cifra2;
+echo "La suma de $cifra1 y de $cifra2 es igual a: $suma";
+
+####################################
+##### Concatenación de cadenas #####
+####################################
+
+$cadenal = "Hola ";
+$cadena2 = "Mundo";
+$cadenal = $cadenal . $cadena2;
+echo $cadenal;
+
+#-----
+
 $cadenal = "Troya es ";
 $cadena2 = "madre de todos, ";
 $cadena3 = "peleen por ella!";
 $supercadena = $cadenal . $cadena2 . $cadena3;
 echo $supercadena;
-echo "<p>";
-
+echo "<br />";
 echo $cadenal . $cadena2 . $cadena3;
-?><P>
 
-<U>Otros ejemplos de concatenación</U><P>
-<?php
-$cadenal = "Hola ";
-$cadena2 = "Mundo";
-$cadenal = $cadenal . $cadena2;
-echo $cadenal;
-?><P>
+##### Sintáxis para múltiples líneas #####
 
-<?php
-$cadenal = "Hola ";
-$cadena2 = "Mundo";
-$cadenal .= $cadena2;
-echo $cadenal;
-?>
-
-<P>**********SINTÁXIS PARA MÚLTIPLES LÍNEAS**********<P>
-<?php
 $texto = <<<INICIO
 Existe en PHP una forma más de introducir cadenas, aparte de las comillas,
 muy recomendable para largos textos o un considerable conjunto de
@@ -97,152 +211,143 @@ etiquetas HTML. La sintaxis es muy sencilla y comienza con el operador
 (<<<) seguido de una etiqueta que indica el principio del texto. Después
 de esto podemos escribir un conjunto de caracteres muy numerosos y, para
 finalizar, la etiqueta de fin. El ejemplo muestra cómo almacenar un formulario
-en una variable: 
+en una variable:
 INICIO;
 echo $texto;
-?><P>
 
-<U>Ejemplo de Como PHP guarda el valor de las variables</U><P>
-<?php
-$a=2;
-$b=3;
-echo $a + $b; //Imprime 5
-echo "<p>";
+#-----
 
-$a=2;
-$b="3";
-echo $a + $b; //Imprime 5
-echo "<p>";
+$texto = <<<INICIO
+<h1>xxxx<h1>
+<br />
+<h2>xxxx<h2>
+<br />
+<h3>xxxx<h3>
+INICIO;
+echo $texto;
 
-$a=2;
-$b="3a";
-echo $a + $b; //Imprime 5
-echo "<p>";
+###################
+##### if else #####
+###################
 
-$a=2;
-$b="a3";
-echo $a + $b; //Imprime 2
-echo "<p>";
-?>
-
-**********SUMA DE ENTEROS PHP**********<P>
-<?php
-$cifra1=7;
-$cifra2=7;
-$suma=$cifra1+$cifra2;
-?>
-<?php echo "La suma de $cifra1 y de $cifra2 es igual a: $suma"; ?> <P>
-La suma de los enteros a y b da: <?php echo $cifra1+$cifra2; ?> <P>
-La suma es: <?php echo $suma; ?><P> 
-
-**********If else PHP**********<P>
-<?php
 $a=15;
 $b=10;
 if ($a>=$b) {
-echo ("Verdadero $a es mayor que $b <p>");
+	echo ("Verdadero $a es mayor que $b <p>");
 }
 else {
-echo ("Falso $a es menor que $b <p>");
+	echo ("Falso $a es menor que $b <p>");
 }
-?>
 
-<!--Otro ejemplo de IF else-->
-<?php
+#-----
+
 $dia=5;
-
 if ($dia == 1) {
-echo "El día es Lunes";
+	echo "El día es Lunes";
 }
 else { if ($dia == 2) {
-echo "El día es Martes";
+	echo "El día es Martes";
 }
 else {if ($dia == 3) {
-echo "El día es Miércoles";
+	echo "El día es Miércoles";
 }
 else {if ($dia == 4) {
-echo "El día es Jueves";
+	echo "El día es Jueves";
 }
 else {if ($dia == 5) {
-echo "El día es Viernes";
+	echo "El día es Viernes";
 }	
 }
 }
 }
-}		
-?>
-<P>
+}
 
-<!--OTRA FORMA CON ELSEIF-->
-<?php
+#-----
+
 $day=1;
 if ($day == 1) {
-echo "El día es Lunes";
+	echo "El día es Lunes";
 } elseif ($day == 2) {
-echo "El día es Martes";
+	echo "El día es Martes";
 } elseif ($day == 3) {
-echo "El día es Miércoles";
+	echo "El día es Miércoles";
 } elseif ($day == 4) {
-echo "El día es Jueves";
+	echo "El día es Jueves";
 } elseif ($day == 5) {
-echo "El día es Viernes";
+	echo "El día es Viernes";
 }
-?>
-<P>
 
-<?php #Otro IF en PHP
-	$num=2;
-	$num2=4;
-	$num3=6;
+#-----
 
-	echo "El numero mayor es: ";
-
-	if($num > $num2) {
-		if($num > $num3) {
-			echo $num;
-		}
+$num=2;
+$num2=4;
+$num3=6;
+echo "El numero mayor es: ";
+if($num > $num2) {
+	if($num > $num3) {
+		echo $num;
 	}
-
-	if($num2 > $num) {		
-		if($num2 > $num3) {
-			echo $num2;
-		}
-		
-		if($num3 > $num2) {
-			if($num3 > $num) {
-			echo $num3;
-		}		
-	}	
-
+}
+if($num2 > $num) {
+	if($num2 > $num3) {
+		echo $num2;
 	}
-?><P>
+}
+if($num3 > $num2) {
+	if($num3 > $num) {
+	echo $num3;
+	}
+}
 
-**********CONSTANTES**********<P>
-<?php
-define ("EMPRESA","Sistemas Osorio"); //Definimos primero la constante y su contenido
-echo EMPRESA; //Hay que destacar que el signo de $ no hace falta ponerlo
-?>
-<P>
+######################
+##### Constantes #####
+######################
 
-<!--Uso de un parrafo dentro de na constante-->
-<?php
+/*
+Una constante es un identificador para expresar un valor simple. Como el nombre sugiere, este
+valor no puede variar durante la ejecución del script.
+
+El nombre de una constante sigue las mismas reglas que cualquier etiqueta en PHP. Un nombre de
+constante válido empieza con una letra o un caracter de subrayado, seguido por cualquier
+número deletras, números, o subrayados
+
+Se puede definir una constante usando la función define(). Una vez definida, no puede ser
+modificada ni eliminada.
+
+Solo se puede definir como constantes valores escalares (boolean, integer, float y string).
+
+Para obtener el valor de una constante solo es necesario especificar su nombre. A diferencia de las
+variables, no se tiene que especificar el prefijo $.
+
+Las contantes y las variables (globales) se encuentran en un espacio de nombres
+distinto. Esto implica que por ejemplo TRUE y $TRUE son diferentes.
+
+Las contantes solo pueden ser definidas usando la función define(), nunca por simple
+asignación
+*/
+
+define("CONSTANT", "Hello world.");
+echo CONSTANT; // outputs "Hello world."
+echo Constant; // outputs "Constant" and issues a notice.
+
+#-----
+
+define ("CONSTANTE","Contenido_constante"); // Definimos primero la constante y su contenido
+echo CONSTANTE; // Hay que destacar que el signo de $ no hace falta ponerlo
+
+#-----
+
+// Agregando un texto largo y etiquetas html
 define ("CONSTANTE","El lenguaje SQL permite la comunicación con el sistema gestor de base de datos. Fue desarrollado<br>
 sobre un prototipo de gestor de b.d.d relacionales denominados system r<br>
 Diseñado por IBM desarrollado en los años 70, alrededor del 1979 oracle corp. Presento la primera<br>
-implementación comercial de SQL.<br>"); 
-echo CONSTANTE; 
-echo "<P>";
+implementación comercial de SQL.<br>");
+echo CONSTANTE;
 
-echo CONSTANTE; 
-echo "<P>";
+##################
+##### switch #####
+##################
 
-echo CONSTANTE; 
-echo "<P>";
-?>
-<P>
-
-**********SWITCH PHP**********<P>
-<?php
 $dia = 7 ;
 switch ($dia) {
 	case 1:
@@ -269,82 +374,116 @@ switch ($dia) {
 	default:
 	echo "El día de la semana es incorrecto";
 }
-?>
-<P>
 
-**********FOR EN PHP**********<P>
-<?php
+###############
+##### for #####
+###############
+
+#Imprimir los números del 1 al 19
 for ($x = 1; $x < 20; $x++) {
-if ($x == 10) {
-break;
-} else {
-echo "$x<br>";
+	echo "$x<br>";
 }
-}
-?>
-<P>
 
-**********WHILE EN PHP**********<P>
-<?php
+#-----
+
+#Imprimir los números del 1 al 9
+for ($x = 1; $x < 20; $x++) {
+	if ($x == 10) {
+		break;
+	}
+	else {
+		echo "$x<br>";
+	}
+}
+
+#################
+##### while #####
+#################
+
+#Imprimir los números del 1 al 10
 $num=1;
-while ($num <= 10){
-echo $num;
-$num++;
+while ($num <= 10) {
+	echo $num . "<br />";
+	$num++;
 }
-?>
 
-**********FUNCIONES PHP**********<P>
-<?php
-	$a = 6; //Variable Global
-	$b = 11; //Variable Global
+#####################
+##### Funciones #####
+#####################
 
-	function miFuncion() {
-		global $a, $b; //Variables Local
-		$b = $a + $b;
-	}
-	miFuncion();
-	echo $b;
-?>
-<P>
-	
-<!--Otra forma -->
-<?php
-	$aa = 5; //Variable Global
-	$bb = 10; //Variable Global
-	
-	function miFuncion2() {
-		$GLOBALS["bb"] = $GLOBALS["aa"] + $GLOBALS["bb"];
-	}
-	miFuncion2();
-	echo $bb;
-?><P>
+function miFuncion() {
+	$a = 6; // Declaración de variable
+	$b = 11; // Declaración de variable
+	$c = $a + $b; // Operación con las variables
+	echo $c; // Imprimir el resultado
+}
+miFuncion(); // Llamado de la función
 
+##### Variables globales y locales #####
 
-<U>Argumentos por defecto de las funciones</U><P>
+$a = 6; // Variable global
+$b = 12; // Variable global
+function miFuncion() {
+	global $a, $b; // Declaración de variables globales dentro de la función
+	$c = 1; // Variable local
+	$d = $a + $b + $c;
+	echo $d;
+}
+miFuncion();
 
-<?php
+#-----
+
+$a = 5; // Variable global
+$b = 10; // Variable global
+function miFuncion() {
+	$c = $GLOBALS["a"] + $GLOBALS["b"]; // Declarando variables globales dentro de la función
+	echo $c;
+}
+miFuncion();
+
+##### Parámetros en una función #####
+
+# Pasando valores por parámetros a una función
+function miFuncion($x) {
+	echo $x;
+}
+miFuncion(5);
+
+#-----
+
+# Pasando valores por parámetros a una función
+function miFuncion($a,$b) {
+	$c = $a + $b;
+	echo $c;
+}
+miFuncion(3,9);
+
+##### Consultar todas las variables predefinidas con phpinfo() #####
+
+phpinfo();
+
+###################################################
+##### Argumentos por defecto de las funciones #####
+###################################################
+
 function capitales($Pais,$Capital = "Madrid",$habitantes = "muchos") {
-return ("La capital de $Pais es $Capital y tiene $habitantes
-habitantes.<br>") ;
+	return ("La capital de $Pais es $Capital y tiene $habitantes habitantes.<br>") ;
 }
 echo capitales("España");
 echo capitales("Portugal","Lisboa");
 echo capitales("Francia","Paris","muchísimos");
-?><P>
 
-<U>Ejemplo de funciones matemáticas</U><P>
+##### Funciones matemáticas #####
 
-<?php
 echo sqrt(9); // Raíz cuadrada de 9 es 3
-echo "<p>";
+echo "<br />";
 echo rand(1,20); // Número aleatorio entre 1 y 20
-echo "<p>";
-echo pi(); //Número pi
-?><P>
+echo "<br />";
+echo pi(); // Número pi
 
-<U>Obtener fecha actual del sistema</U><P>
+##### Obtener fecha actual del sistema #####
 
-<!-- 
+/*
 a Imprime "am" o "pm" 
 A "AM" o "PM"
 h La hora en formato (01-12).
@@ -361,182 +500,380 @@ n Mes actual sin ceros (1 a 12).
 Y Año con 4 dígitos (2004).
 y Año con 2 dígitos (04).
 z Día del año (0 a 365).
-t Número de días que tiene el mes actual.-->
+t Número de días que tiene el mes actual.
+*/
 
-<?php
 echo date ("d");
 echo "/";
 echo date ("m");
 echo "/";
 echo date ("Y");
-?>
-<P>
 
-<U>Otra forma</U><P>
-<?php
+#----
+
 echo "Fecha actual: " . date("d-m-Y") . "<br>";
 echo "Día del año: " . date("z") . "<br>";
-?>
 
-<!-- Función time() -->
-<html>
-    <head>
-        <title>xxx</title>
-        <meta charset="UTF-8" />
-    </head>	    
-<body>
-<?php //Comienzo del lenguaje PHP  
-    $t=time();
-    echo($t . "<br>");
-    echo(date("Y-m-d",$t));
-?>
-</body>
-</html>
-<?php //Comienzo del lenguaje PHP  
-#1481585907 Etiqueta timestamp de php
-echo date('Y-m-d H:i:s',1481585907);
-?>
+##### Comparación de cadenas #####
 
-<P>**********COMPARACIÓN DE CADENAS**********<P>
-<?php
 $cadenal = "Prueba";
 $cadena2 = "Prueba";
-
-if (strcmp($cadenal,$cadena2) == 0) { # strcasecmp no hace distinción entre mayúsculas y minúsculas
-echo "Las dos cadenas son iguales";
-} elseif (strcmp($cadenal,$cadena2) < 0) {
-echo "La cadenal es menor que la cadena2";
-} else {
-echo "La cadenal es mayor que la cadena2" ;
+if (strcmp($cadenal,$cadena2) == 0) { 
+	echo "Las dos cadenas son iguales";
 }
-?>
 
-<P>**********SUSTITUCIÓN DE CADENAS**********<P>
+#----
 
-<?php
+$cadenal = "Prueba";
+$cadena2 = "prueba";
+if (strcasecmp($cadenal,$cadena2) == 0) { # strcasecmp no hace distinción entre mayúsculas y minúsculas
+	echo "Las dos cadenas son iguales";
+}
+
+##### Sustitución de cadenas #####
+
 $cadena = "Esta cadena tiene muchas letras";
 $cadena = str_replace("Esta","Este",$cadena);
 echo str_replace("cadena","conjunto",$cadena);
-?>
 
-<P>**********ORDENAMIENTO DE VALORES**********<P>
-<!-- 
-Función Explicación
-asort() Ordena de forma ascendente el array pasado como argumento.
-Ordena las parejas índice/valor atendiendo al dato. Es un buen
-método para los arrays asociativos.
-arsort() Igual que asort () , pero ordena en sentido descendente.
-ksort() Ordena de forma ascendente el array pasado como argumento.
-Ordena las parejas índice/valor atendiendo esta vez al índice.
-krsort() Igual que ksort (), pero ordena en sentido descendente.
-sort() Ordena de forma ascendente el array pasado como argumento. Se
-pierde el valor asociativo entre el índice y el valor.
-rsort() Igual, pero en orden descendente.  -->
+################
+#### array #####
+################
 
+// Un array puede ser creado por la construcción de lenguaje array(). Ésta toma un cierto número de arejas clave => valor separadas con coma.
+
+$matriz = array("foo" => "bar", 12 => true);
+echo $matriz["foo"]; // Imprime bar
+echo $matriz[12]; // Imprime 1
+
+#-----
+
+$arreglo = array(5,1,4,2,3);
+print_r($arreglo); // print_r() Función que permite imprimir matrices o arreglos
+
+#-----
+
+# Declaración de un arreglo, imprimir el contenido del arreglo, por posición
+$arreglo = array(5,1,4,2,3);
+echo $arreglo[0]."<br />";
+echo $arreglo[1]."<br />";
+echo $arreglo[2]."<br />";
+echo $arreglo[3]."<br />";
+echo $arreglo[4]."<br />";
+
+#-----
+
+# Recorrer e imprimir el contenido de un arreglo
+$arreglo = array(5,1,4,2,3) ;
+for ($x = 0; $x <= 4; $x++) {
+	echo $arreglo[$x];
+}
+
+#-----
+
+// Array como mapa de propiedades
+$mapa = array('version' => 5,
+			  'SO' => 'Linux',
+			  'idioma' => 'Español',
+			  'etiquetas_cortas' => true
+			  );
+print_r($mapa);
+
+#-----
+
+// foreach() para recorrer matrices o arrays
+$colores = array('rojo', 'azul', 'verde', 'amarillo');
+foreach ($colores as $color) {
+echo "$color <br />";
+}
+
+?> <!-- Final del código php -->
+
+############################
+##### xampp en windows #####
+############################
+
+Los proyectos se copian en -->  xampp/htdocs/
+
+Panel de administracion de xampp --> http://127.0.0.1/xampp/
+
+En el navegador para ver los proyectos --> 127.0.0.1/name_project
+
+Dashboard del PhpMyAdmin --> http://127.0.0.1/phpmyadmin/
+
+----------
+
+<!-- Guardar datos de un formulario en una variable -->
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>XXX</title>
+        <meta charset="UTF-8">
+    </head>
+<body>
+<form action="#" method="POST">
+	Username: <input type="text" name="username"><br />
+	<input type="submit" name="submit" value="Submit">
+</form>
 <?php
-	function recorre ($numero) {
-	foreach ($numero as $indice => $valor) {
-	echo "$indice: $valor<br>";
-	}
-	}
-
-	$pila =	array(5,1,4,2,3) ;
-	echo "Array sin ordenar<br>" ;
-	recorre($pila);
-	echo "Ordenación asort()<br>" ;
-	asort($pila);
-	recorre($pila);
-	echo "Ordenación arsort()<br>" ;
-	arsort($pila);
-	recorre($pila);
-	echo "Ordenación ksort()<br>";
-	ksort($pila);
-	recorre ($pila) ;
-	echo "Ordenación krsort()<br>";
-	krsort ($pila);
-	recorre($pila);
-	echo "Ordenación sort()<br>";
-	sort($pila);
-	recorre($pila);
-	echo "Ordenación rsort()<br>";
-	rsort($pila);
-	recorre($pila);
+$username = $_POST['username'];
+echo $username;
 ?>
-
-<P>**********CONECTAR CON LA BASE DE DATOS**********<P>
-
-<?php /*
-	$servidor = "localhost";
-	$usuario = "luis";
-	$pass = "secreto";
-	$base_datos = "Compras";
-	//Conexión al servidor de bases de datos
-	$descriptor = mysql_connect($servidor,$usuario, $pass) ;
-	//Se selecciona la base de datos
-	mysql_select_db($base_datos,$descriptor);
-	//Se cierra la conexión cuando terminemos
-	mysql__close ( $descriptor) ;
-	*/
-?>
-
-<!-- Otra forma y con comprobación de conexión -->
-
-<?php /*
-	$conexion=mysql_connect("localhost","root","") or die ("No se conecto");
-	mysql_select_db("baseDedatos",$conexion) or die ("No se pudo seleccionar");
-	$sql=mysql_query("INSERT INTO tabla(campo1,campo2,campo3,campo4,campo5) 
-	value('$valor1','$valor2','$valor3','$valor4','$valor5')",$conexion) or die ("No se almaceno");
-	*/
-?>	
-
-
-<P>**********CARGAR VARIABLES CON DATOS DE UN FORM**********<P>
-
-<!DOCTYPE html>
-<html>
-	<head>  
-		<title>Potencia</title>
-		<meta http-equiv="content-type" content="text/html;charset=utf-8" /> 
-	</head> 
-
-<body bgcolor="SteelBlue">
-  <div align="center">
-    </p><b>Titulo</b><p>
-  </div>
-
-  <div id="formulario" align="center">
-    <form action="#" method="post">
-      Numero (a): <input type="text" name="a"/> <br /><p></p>
-      Numero (b): <input type="text" name="b"/> <br /><p></p>
-      <input type="submit" value="Calcular"/>
-    </form>
-  </div>
-
-  <div align="center">
-    <p></p>
-    <?php
-       $a = $_REQUEST['a'];
-       $b = $_REQUEST['b'];
-       //echo $a;
-       //echo $b;
-       //echo "La cifra 1 es $a <br />";
-       //echo "La cifra 1 es $b";
-    ?>
-  </div>  
-
 </body>
 </html>
-  
-  
-  
 
-<P>**********XXX**********<P>
+----------
 
+<!-- Cargar variables con datos de un formulario e imprimirlas -->
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>XXX</title>
+        <meta charset="UTF-8">
+        <script src="jquery-1.9.1.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="styles.css" type="text/css"/>
+    </head>
+<body>  
+<form action="#" method="post">
+  Cifra 1: <input type="text" name="a"/>
+  <br />
+  Cifra 2: <input type="text" name="b"/>
+  <br />
+  <input type="submit" value="Enviar"/>
+</form>
+<?php
+   $a = $_REQUEST['a'];
+   $b = $_REQUEST['b'];
+   echo $a;
+   echo $b;
+?>
+</body>
+</html>
 
+----------
 
+<!-- Capturar datos desde un formulario y escribirlos en el documento -->
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>XXX</title>
+        <meta charset="UTF-8">
+        <script src="jquery-1.9.1.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="styles.css" type="text/css"/>
+    </head>
+<body>
+<form action="index.php" method="post">
+	Cifra 1: <input type="text" name="cifra1" required>
+	<p />
+	Cifra 2: <input type="text" name="cifra2" required>
+	<p />
+	<input type="submit" value="Registrar">
+	<input type="reset" value="Limpiar">
+</form>
+<?php
+if (array_key_exists('cifra1',$_POST) and array_key_exists('cifra2',$_POST)
+	and $_POST['cifra1']!="" and $_POST['cifra2']!="") {
+		$cifra1=$_POST['cifra1'];
+		$cifra2=$_POST['cifra2'];
+		echo $cifra1."<p />";
+		echo $cifra2;
+}
+?>
+</body>
+</html>
 
+----------
 
-<HR>
-</BODY>
-</HTML>
+<!-- Capturar datos desde un formulario y realizar operaciones con los datos -->
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>XXX</title>
+        <meta charset="UTF-8">
+        <script src="jquery-1.9.1.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="styles.css" type="text/css"/>
+    </head>
+<body>
+<form action="index.php" method="post">
+	Suma de dos cifras:
+	<p />
+	Cifra 1: <input type="text" name="cifra1" required>
+	<p />
+	Cifra 2: <input type="text" name="cifra2" required>
+	<p />
+	<input type="submit" value="Enviar">
+	<input type="reset" value="Limpiar">
+</form>
+<?php
+if (array_key_exists('cifra1',$_POST) and array_key_exists('cifra2',$_POST)
+	and $_POST['cifra1']!="" and $_POST['cifra2']!="") {
+		$cifra1=$_POST['cifra1'];
+		$cifra2=$_POST['cifra2'];
+		$resultado = $cifra1 + $cifra2;
+		echo "El resultado es: ".$resultado;
+}
+?>
+</body>
+</html>
 
+----------
+
+<!-- Capturar datos desde un formulario y realizar operaciones con los datos, pasando valores por parámetro a una función -->
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>XXX</title>
+        <meta charset="UTF-8">
+        <script src="jquery-1.9.1.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="styles.css" type="text/css"/>
+    </head>
+<body>
+<form action="index.php" method="post">
+	Suma de dos cifras:
+	<p />
+	Cifra 1: <input type="text" name="cifra1" required>
+	<p />
+	Cifra 2: <input type="text" name="cifra2" required>
+	<p />
+	<input type="submit" value="Enviar">
+	<input type="reset" value="Limpiar">
+</form>
+<?php
+if (array_key_exists('cifra1',$_POST) and array_key_exists('cifra2',$_POST)
+	and $_POST['cifra1']!="" and $_POST['cifra2']!="") {
+		$cifra1=$_POST['cifra1'];
+		$cifra2=$_POST['cifra2'];
+		function miFuncion($cifra1,$cifra2) {
+			$resultado = $cifra1 + $cifra2;
+			echo $resultado;
+		}
+		miFuncion($cifra1,$cifra2);
+}
+?>
+</body>
+</html>
+
+----------
+
+<!-- Capturar datos de un formulario para realizar operaciones (suma y multiplicacion) pasando valores por parámetro a una función -->
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>XXX</title>
+        <meta charset="UTF-8">
+        <script src="jquery-1.9.1.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="styles.css" type="text/css"/>
+    </head>
+<body>
+<form action="index.php" method="post">
+	Escribir dos cifras:
+	<p />
+	Cifra 1: <input type="text" name="cifra1" required>
+	<p />
+	Cifra 2: <input type="text" name="cifra2" required>
+	<p />
+	Escoja la operación:
+	<select name="var_select">
+	  <option value="suma">suma</option>
+	  <option value="multiplicacion">multiplicación</option>
+	</select>
+	<p />
+	<input type="submit" value="Enviar">
+	<input type="reset" value="Limpiar">
+</form>
+<?php
+if (array_key_exists('cifra1',$_POST) and array_key_exists('cifra2',$_POST) and array_key_exists('var_select',$_POST)
+	and $_POST['cifra1']!="" and $_POST['cifra2']!="" and $_POST['var_select']!="") {
+		$cifra1=$_POST['cifra1'];
+		$cifra2=$_POST['cifra2'];
+		$var_select=$_POST['var_select'];
+		if ($var_select=="suma") {
+			function suma($cifra1,$cifra2) {
+				$resultado = $cifra1 + $cifra2;
+				echo "El resultado es: ".$resultado;
+			}
+			suma($cifra1,$cifra2);
+		}
+		else {
+			function multiplicacion($cifra1,$cifra2) {
+				$resultado = $cifra1 * $cifra2;
+				echo "El resultado es: ".$resultado;
+			}
+			multiplicacion($cifra1,$cifra2);
+		}
+}
+?>
+</body>
+</html>
+
+----------
+
+<!-- Calculadora básica en php, capturar datos de un formulario para realizar operaciones basicas pasando valores por parámetro a una función -->
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>XXX</title>
+        <meta charset="UTF-8">
+        <script src="jquery-1.9.1.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="styles.css" type="text/css"/>
+    </head>
+<body>
+<form action="index.php" method="post">
+	Escribir dos cifras:
+	<p />
+	Cifra 1: <input type="text" name="cifra1" required>
+	<p />
+	Cifra 2: <input type="text" name="cifra2" required>
+	<p />
+	Escoja la operación:
+	<select name="var_select">
+	  <option value="suma">suma</option>
+	  <option value="resta">resta</option>
+	  <option value="multiplicacion">multiplicación</option>
+	  <option value="division">division</option>
+	</select>
+	<p />
+	<input type="submit" value="Enviar">
+	<input type="reset" value="Limpiar">
+</form>
+<?php
+if (array_key_exists('cifra1',$_POST) and array_key_exists('cifra2',$_POST) and array_key_exists('var_select',$_POST)
+	and $_POST['cifra1']!="" and $_POST['cifra2']!="" and $_POST['var_select']!="") {
+		$cifra1=$_POST['cifra1'];
+		$cifra2=$_POST['cifra2'];
+		$var_select=$_POST['var_select'];
+		if ($var_select=="suma") {
+			function suma($cifra1,$cifra2) {
+				$resultado = $cifra1 + $cifra2;
+				echo "El resultado es: ".$resultado;
+			}
+			suma($cifra1,$cifra2);
+		}
+		else { if ($var_select=="resta") {
+			function resta($cifra1,$cifra2) {
+				$resultado = $cifra1 - $cifra2;
+				echo "El resultado es: ".$resultado;
+			}
+			resta($cifra1,$cifra2);
+		}
+		else {if ($var_select=="multiplicacion") {
+			function multiplicacion($cifra1,$cifra2) {
+				$resultado = $cifra1 * $cifra2;
+				echo "El resultado es: ".$resultado;
+			}
+			multiplicacion($cifra1,$cifra2);
+		}
+		else {if ($var_select=="division") {
+			function division($cifra1,$cifra2) {
+				$resultado = $cifra1 / $cifra2;
+				echo "El resultado es: ".$resultado;
+			}
+			division($cifra1,$cifra2);
+		}
+		}
+		}
+		}
+}
+?>
+</body>
+</html>
