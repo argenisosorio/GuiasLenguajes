@@ -407,9 +407,26 @@ $ git commit -m "Comentario" // Hacemos el primer commit del proyecto, ejemplo: 
 
 $ git push origin master // Este comando es para subir el proyecto directamente a la rama master de nuestro repo.
 
-// Cabe mencionar que en el directorio .git descargado, en el archivo config estará por defecto
+// Cabe mencionar que en el proyecto git descargado, oculta está la carpeta .git, dentro en el fichero config estará por defecto
 escrita la URL de nuestro repo, lo que facilita subir los proyectos y los cambios directamente, por ello 
 el paso de la clonacion del repo.
+
+Ejemplo de un fichero config:
+
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        url = https://github.com/user/Project_name.git
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master
+
+-Nota: Podemos añadir este contenido a otro proyecto de git, cambiando el usuario y el nombre del proyecto, para
+que apunte al repositorio remoto que se desee, debe estar creado en github para que no haya problema al hacer el push.
 
 // Antes de subir los cambios nos pedira el user y pass de la cuenta github para realizar la autenticación
 
