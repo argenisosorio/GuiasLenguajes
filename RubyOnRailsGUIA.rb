@@ -76,7 +76,7 @@ preexistentes. Sin embargo, debido a la diferente naturaleza y prestaciones de l
 el framework no puede garantizar la compatibilidad completa. Se soportan diferentes SGBDRs
 incluyendo MySQL, PostgreSQL, SQLite, IBM DB2 y Oracle.
 
-##### ¿Cómo instalar con Ruby on Rails? #####
+##### ¿Cómo instalar Ruby on Rails? #####
 
 De --> http://www.rubyonrails.org.es/instala.html
 
@@ -165,7 +165,9 @@ $ sqlite3 --version
 3.7.13
 
 #Instalar Rails con el comando de RubyGems: gem install.
+#Podemos especificar la versión a instalar
 $ gem install rails
+$ sudo gem install rails --version 4.2.2
 
 #Comprobar la correcta instalacion de Rails
 $ rails --version 
@@ -619,3 +621,18 @@ If you use PostgreSQL, you can also take advantage of these:
     :cidr_address
     :ip_address
     :mac_address
+
+##### Activando un proyecto #####
+
+Al momento de clonar algun proyecto es sabido que cuenta con algunas dependencias
+específicas, ya sea una version de rails, sqlite3 u otras gemas, para instalar
+esas dependencias usaremos bundle, que no es mas que un script que instala
+lo que está descrito en el Gemfile, por eso instalamos bundle.
+
+##### Bundle #####
+
+It's time to install the Ruby libraries required by Diaspora
+
+$ gem install bundler
+
+$ bin/bundle install
