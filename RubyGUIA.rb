@@ -33,6 +33,13 @@ $ irb # Interactive Ruby Shell
 
 Ctrl + D # Salir de la Consola
 
+##################################
+##### Indentación del código #####
+##################################
+
+La indentación no es significativa pero es recomendable
+hacerla para una mejor lectura del código.
+
 **********Comentarios en ruby********* 
 
 # Comentario de una línea

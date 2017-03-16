@@ -152,6 +152,20 @@ rvm rubies
 
 rvm uninstall ruby-2.2.4 // Desinstalar una versión específica de ruby
 
+##### Cómo crear un gemset #####
+
+Podemos crear conjuntos de gemas separadas para cada proyecto. Tan sólo hay que especificar un nombre para ese gemset, y utilizar las
+herramientas que rvm proporciona (puedes escribir "rvm gemset" para ver todos los comandos disponibles). Por ejemplo, podemos crearnos un gemset
+para el proyecto 1, y cambiarnos a él:
+
+  $ rvm gemset create proyecto1
+  $ rvm gemset use proyecto1
+
+Es importante entender que el gemset se crea para el intérprete que estemos usando en ese momento. De modo que antes de crear un
+gemset, selecciona el intérprete adecuado.
+
+Una vez que estemos usando ese gemset instalaremos las gemas específicas de ese proyecto
+
 ###################
 ##### PRUEBAS #####
 ###################
@@ -312,6 +326,23 @@ $ bin/rails db:rollback STEP=X
 
 # Enlace al path de otro controlador
 <%= link_to "proyecto", proyecto_path%>
+
+#################################
+##### Activando un proyecto #####
+#################################
+
+Al momento de clonar algun proyecto es sabido que cuenta con algunas dependencias
+específicas, ya sea una version de rails, sqlite3 u otras gemas, para instalar
+esas dependencias usaremos bundle, que no es mas que un script que instala
+lo que está descrito en el Gemfile, por eso instalamos bundle.
+
+##### Bundle #####
+
+#It's time to install the Ruby libraries required by Diaspora
+
+$ gem install bundler
+
+$ bin/bundle install
 
 ##############################
 ##### Ejemplos prácticos #####
@@ -622,17 +653,4 @@ If you use PostgreSQL, you can also take advantage of these:
     :ip_address
     :mac_address
 
-##### Activando un proyecto #####
 
-Al momento de clonar algun proyecto es sabido que cuenta con algunas dependencias
-específicas, ya sea una version de rails, sqlite3 u otras gemas, para instalar
-esas dependencias usaremos bundle, que no es mas que un script que instala
-lo que está descrito en el Gemfile, por eso instalamos bundle.
-
-##### Bundle #####
-
-It's time to install the Ruby libraries required by Diaspora
-
-$ gem install bundler
-
-$ bin/bundle install
