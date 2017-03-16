@@ -1,5 +1,45 @@
 ### Guía Python by dM ###
 
+'''
+##### Estándares de Desarrollo #####
+
+Los estándares de desarrollo constituyen las normas o patrones de referencia que se deben implementar en el desarrollo de
+aplicaciones de software. Entre los estándares de desarrollo más comunes se encuentran: normas de codificación, normas y
+esquemas de seguridad, estándares de interfaz u/s, entre otros.
+
+##### Normas de Codificación #####
+
+Para el desarrollo de un sistema se pueden implementar algunos estándares básicos para su codificación, los cuales contemplan lo
+establecido en la PEP-8 --> https://www.python.org/dev/peps/pep-0008/
+
+Algunos puntos importantes que encontramos en el PEP8 son los siguientes:
+
+-Use sangría de 4 espacios, sin tabulaciones.
+
+-Las líneas no deberían sobrepasar los 79 caracteres.
+
+-Use líneas en blanco para separar funciones y clases, también para grandes bloques de código dentro de funciones.
+
+-Cuando sea posible, coloque los comentarios aparte del código de tal manera que en esa línea sólo haya comentarios.
+
+-Use cadenas de documentación (docstrings)
+
+-Use espacios a los lados de los operadores y después de comas, pero no directamente dentro de constructos
+con paréntesis. Ej: a = f(1, 2) + g(3, 4)
+
+-Nombre sus clases y funciones de forma consistente, como convención se utiliza CamelCase para las clases y
+minúsculas_con_guion_bajo para funciones y métodos. Siempre utilice self como el nombre para el primer argumento de un método.
+
+-No use codificaciones de caracteres lujosas si su código pretende ser utilizado en el ámbito internacional.
+Se prefiere que utilicen UTF-8. Tomar en cuenta el PEP-0263 colocando la directiva para codificación
+UTF-8 (# -*- coding: utf-8 -*-) a los archivos .py
+
+#### Estándares para la documentación del código fuente #####
+
+-La utilización de docstrings permite generar automáticamente documentación, como alternativas a utilizar para generar la
+documentación del proyecto tenemos doxygen o Sphinx.
+'''
+
 # Cabecera para los scripts de Python, indica al compilador o editor que se trata de un fichero python
 # La segunda linea da codificación UTF-8 al programa
 #!/usr/bin/env python
