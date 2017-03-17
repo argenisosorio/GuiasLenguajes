@@ -23,6 +23,7 @@ el formato oficial de paquete y canal de distribución de bibliotecas y aplicaci
 #####################################
 
 ##### Modelo #####
+
 En las aplicaciones web orientadas a objetos sobre bases de datos, el Modelo consiste en las clases que
 representan a las tablas de la base de datos.
 
@@ -39,6 +40,7 @@ El modelo representa:
 -Emmigraciones
 
 ##### Vista #####
+
 Es la lógica de visualización, o cómo se muestran los datos de las clases del Controlador.
 Con frecuencia en las aplicaciones web la vista consiste en una cantidad mínima de código incluido en HTML.
 
@@ -52,12 +54,14 @@ elementos de la página se describe separadamente de la acción del controlador 
 los fragmentos pueden invocarse unos a otros.
 
 ##### Controlador #####
+
 Las clases del Controlador responden a la interacción del usuario e invocan a la lógica
 de la aplicación, que a su vez manipula los datos de las clases del Modelo y muestra los
 resultados usando las Vistas. En las aplicaciones web basadas en MVC, los métodos del
 controlador son invocados por el usuario usando el navegador web.
 
 ##### Gemas #####
+
 Las gemas son plugins, paquetes y/o códigos añadidos a nuestros proyectos, que nos permiten
 nuevas funcionalidades, nuevas funciones predefinidas (como login de usuarios) o nuevas
 herramientas para el desarrollo como puedan ser Haml y SASS (la primera es una nueva
@@ -65,6 +69,7 @@ forma de template basada en html pero más sencilla y potente, y la segunda es i
 para el caso de las CSS). Para encontrar el listado de gemas disponibles puedes ir a RubyForge.
 
 ##### Soporte de Bases de Datos #####
+
 Dada que la arquitectura Rails favorece el uso de bases de datos se recomienda usar un
 SGBDR para almacenamiento de datos. Rails soporta la biblioteca SQLite por defecto.
 El acceso a la base de datos es totalmente abstracto desde el punto de vista del programador,
@@ -76,30 +81,33 @@ preexistentes. Sin embargo, debido a la diferente naturaleza y prestaciones de l
 el framework no puede garantizar la compatibilidad completa. Se soportan diferentes SGBDRs
 incluyendo MySQL, PostgreSQL, SQLite, IBM DB2 y Oracle.
 
+#########################################
 ##### ¿Cómo instalar Ruby on Rails? #####
+#########################################
 
 De --> http://www.rubyonrails.org.es/instala.html
 
 En general, instalar Rails es tan sencillo como gem install rails, pero primero hay que tener el lenguaje Ruby y
 el gestor de librerías Rubygems en el sistema.
 
-# GNU/Linux #
-
 Linux es un entorno habitual para servidores, con lo que muchos desarrolladores lo escogen minimizando así las diferencias
 entre el entorno de desarrollo y el de producción.
 
-# RVM #
+################################
+##### Ruby Version Mabager #####
+################################
+
 Evita administrar Ruby, RubyGems y demás con el gestor de paquetes de tu distribución ya que estos suelen estar desactualizados.
 En su lugar, puedes emplear "RVM". RVM te permite instalar y mantener varias versiones de ruby a la vez. Puedes encontrar más información
 sobre Ruby Version Mananger (RVM) en https://rvm.io
 
-# Instalamos los paquetes del S.O. requeritos por RVM: #
+##### Instalamos los paquetes del S.O. requeritos por RVM: #####
 
 $ sudo apt-get install -y git-core subversion
 
 Este comando puede variar entre versiones y distribuciones, 
 
-# Instalación de la firma #
+##### Instalación de la firma #####
 
 El RVM a partir de la versión 1.26 introduce versiones firmadas y comprobación automática de las mismas.
 Para ello necesitamos instalar dicha firma. En caso contrario podría darnos problemas al instalar RVM.
@@ -114,15 +122,15 @@ Este comando instala las últimas versiones estables de rvm, ruby y rails.
 Ejecutaremos este comando después de instalar la firma. Al ejecutar esto se produce un montón de salida por pantalla.
 
 Una vez finalizado este proceso, RVM nos dice que ejecutemos un comando que empieza por source... o que reiniciemos las shells abiertas
-Por sencillez, cerramos la ventana de la consola y abrimos una nueva.
+Por sencillez, cerramos la ventana de la consola y abrimos una nueva. A veces no pide hacer nada si no que termina directamente sin problemas.
 
-# Comprueba la configuración #
+##### Comprueba la configuración #####
 
 $ type rvm | head -1
 rvm: es una función // Será la salida si todo se instaló correctamente.
 
-En el directorio:
- 
+En el directorio se debe haber creado:
+    
 /home/user/.rvm/gems
 
 Se creararn las instancias de desarrollo que necesitamos, por lo tanto si instalamos:
@@ -133,9 +141,9 @@ $ rvm install 2.2.1 // Instalando una version específica
 
 Se creara un gemset o directorio para esa instalación:
 
-/home/user/.rvm/gems/ruby-2.3.0
+    /home/user/.rvm/gems/ruby-2.3.0
 
-Es aquí donde se guardaran las gemas que necesitemos en determinado proyecto. Para usar ese entorno específico usamos:
+Es aquí donde se guardaran las gemas que necesitemos en determinado proyecto. Para usar ese entorno específico de ruby:
 
 $ rvm use 2.3 // Y así para los demas que se creen.
 
@@ -150,9 +158,11 @@ rvm rubies
 # =* - current && default
 #  * - default
 
-rvm uninstall ruby-2.2.4 // Desinstalar una versión específica de ruby
+$ rvm uninstall ruby-2.2.4 // Desinstalar una versión específica de ruby
 
+################################
 ##### Cómo crear un gemset #####
+################################
 
 Podemos crear conjuntos de gemas separadas para cada proyecto. Tan sólo hay que especificar un nombre para ese gemset, y utilizar las
 herramientas que rvm proporciona (puedes escribir "rvm gemset" para ver todos los comandos disponibles). Por ejemplo, podemos crearnos un gemset
