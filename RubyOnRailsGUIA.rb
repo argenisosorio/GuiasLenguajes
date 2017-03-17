@@ -253,8 +253,11 @@ db/ #Contiene el esquema actual de tu base de datos, así como las migraciones d
 
 doc/ #Documentación detallada de tu aplicación.
 
-Gemfile Gemfile.lock #Estos archivos te permiten especificar qué dependencias de gemas son necesitadas
-#para tu aplicación Rails. Estos archivos son usados por la gema Bundler.
+Gemfile # Fichero donde se especifícan las dependencias del proyecto
+
+Gemfile.lock # Contienen una instantánea completa de todas las gemas de el Gemfile junto con la dependencia asociada a cada gema,
+
+# Estos archivos son usados por la gema Bundler que es la que permite instalar las dependencias.
 
 lib/ #Módulos extendidos para tu aplicación.
 
@@ -321,6 +324,9 @@ $ gem install rails -v 0.14.1
 ##### Comandos varios #####
 ###########################
 
+#Crear la db y hacer las migraciones descritas en el schema.rb
+$ rake db:create db:schema:load
+
 # Ver las rutas para todas las acciones estándar de las aplicaciones, direcciones REST, se
 #especifican cuales peticiones van por GET, POST, etc.
 $ rake routes
@@ -359,13 +365,14 @@ lo que está descrito en el Gemfile, por eso instalamos bundle.
 
 Bundler proporciona un entorno consistente para los proyectos de Ruby mediante el seguimiento y la instalación de las gemas exactas y las versiones que se necesitan. 
 
-Dentro del proyecto instalamos bundler:
-
+#Dentro del proyecto instalamos bundler:
 $ gem install bundler
 
-Luego instalamos las dependencias:
-
+#Luego instalamos las dependencias:
 $ bin/bundle install
+
+#Checks if the dependencies listed in Gemfile are satisfied by currently installed gems 
+$ bundle check
 
 ##############################
 ##### Ejemplos prácticos #####
