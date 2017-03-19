@@ -128,24 +128,52 @@ Por sencillez, cerramos la ventana de la consola y abrimos una nueva. A veces no
 
 $ type rvm | head -1
 rvm: es una función // Será la salida si todo se instaló correctamente.
+	
+##### Problema con la función (comprobación) #####
 
-En el directorio se debe haber creado:
+Después de la instalación, al momento de hacer la comprobación
+puede que muestre que rvm no es una función:
+
+rvm is not a function, because gnome-terminal run as no-login shell
+
+Esto lo arreglamos agregando una línea al fichero .bashrc, la siguiente:
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+y guardamos, luego actualizamos los cambios del fichero en el sistema con:
+
+$ source .bashrc
+
+Al momento de la instalación, rvm puede generar una línea como la que necesitamos pero que no funciona, algo
+como esto:
+
+$HOME/.rvm/scripts/rvm
+
+Pero esa no funciona asi que la comentamos o borramos, agregamos la anterior descrita, guardamos, actualizamos
+shell y luego volvemos a probar con la funcion inicial:
+
+$ type rvm | head -1
+rvm: es una función // Será la salida si todo se instaló correctamente.
+
+Si todo está bien se habrá creado el directorio:
     
 /home/user/.rvm/gems
 
-Se creararn las instancias de desarrollo que necesitamos, por lo tanto si instalamos:
+Según la version de ruby instalada inicialmente podremos ver nuestras instancias en:
 
-$ rvm install 2.3
+/home/user/.rvm/gems/
+    ruby-2.4.0/
 
-$ rvm install 2.2.1 // Instalando una version específica
+Suponiendo que se instaló esa versión de ruby, puesto que en el comando de instalación
+de rvm también especificamos que se instalan las últimas versiones de ruby y Rails.
 
-Se creara un gemset o directorio para esa instalación:
+$ rvm install 2.2.1 # Instalando una version específica
 
-    /home/user/.rvm/gems/ruby-2.3.0
+Se creara un gemset o instancia o directorio para esa versión de ruby en:
 
-Es aquí donde se guardaran las gemas que necesitemos en determinado proyecto. Para usar ese entorno específico de ruby:
-
-$ rvm use 2.3 // Y así para los demas que se creen.
+/home/user/.rvm/gems/ruby-2.2.1
+    ruby-2-2-1/
+        gems/ # Es aquí donde se guardaran las gemas para esa instancia y versió de ruby
 
 $ rvm list # Para listar las instalaciones de Ruby existentes y ver cual se está usando
 
@@ -158,30 +186,49 @@ rvm rubies
 # =* - current && default
 #  * - default
 
-$ rvm uninstall ruby-2.2.4 // Desinstalar una versión específica de ruby
+# En este caso vemos que tenemos dos instancias de ruby
+
+$ rvm use 2.3.0 // Para usar esa versión de ruby específica, algo así como acceder a un entorno
+virtual en python.
+
+$ rvm uninstall ruby-2.3.o // Desinstalar una versión específica de ruby
 
 ################################
 ##### Cómo crear un gemset #####
 ################################
 
-Podemos crear conjuntos de gemas separadas para cada proyecto. Tan sólo hay que especificar un nombre para ese gemset, y utilizar las
-herramientas que rvm proporciona (puedes escribir "rvm gemset" para ver todos los comandos disponibles). Por ejemplo, podemos crearnos un gemset
-para el proyecto 1, y cambiarnos a él:
+Podemos crear conjuntos de gemas separadas para cada proyecto. Tan sólo hay que especificar un nombre
+para ese gemset, y utilizar las
+herramientas que rvm proporciona (puedes escribir "rvm gemset" para ver todos los comandos disponibles).
+Por ejemplo, podemos crearnos un gemset para el proyecto 1, y cambiarnos a él:
 
 $ rvm gemset create proyecto1
 
-$ rvm gemset use proyecto1
-
-Es importante entender que el gemset se crea para el intérprete que estemos usando en ese momento. De modo que antes de crear un
-gemset, selecciona el intérprete adecuado.
+Es importante entender que el gemset se crea para el intérprete que estemos
+usando en ese momento. De modo que antes de crear un gemset, selecciona el intérprete adecuado es decir
+la version de ruby dentro de las disponibles.
 
 Una vez que estemos usando ese gemset instalaremos las gemas específicas de ese proyecto
 
-Ademas de versiones de gemas tambien es posible usar diferentes versiones de ruby, por lo tanto podemos crear la instancia con:
+Ademas de versiones de gemas tambien es posible usar diferentes versiones de ruby, por lo tanto,
+podemos crear una instancia y un gemset con:
 
-$ rvm install ruby-2.2
+$ rvm install ruby-2.2.5
 
-y luego crear un gemset para esa versión.
+y luego crear un gemset para esa versión:
+
+$ rvm gemset create proyecto1
+
+Esto creará el siguiente directorio:
+
+/home/user/.rvm/gems/
+    ruby-2.2.5@proyecto1 # Nuestro gemset recien generado
+    ruby-2.2.4/
+
+$ rvm gemset use ruby-2.2.5@proyecto1
+
+Ahora podemos instalar cualquier gema y quedara dentro de esa instancia o versión
+de ruby y en ese gemset específico.
 
 ###################
 ##### PRUEBAS #####
