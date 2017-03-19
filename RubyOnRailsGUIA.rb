@@ -94,7 +94,7 @@ Linux es un entorno habitual para servidores, con lo que muchos desarrolladores 
 entre el entorno de desarrollo y el de producción.
 
 ################################
-##### Ruby Version Mabager #####
+##### Ruby Version Manager #####
 ################################
 
 Evita administrar Ruby, RubyGems y demás con el gestor de paquetes de tu distribución ya que estos suelen estar desactualizados.
@@ -103,7 +103,7 @@ sobre Ruby Version Mananger (RVM) en https://rvm.io
 
 ##### Instalamos los paquetes del S.O. requeritos por RVM: #####
 
-$ sudo apt-get install -y git-core subversion
+$ sudo apt-get install -y git-core subversion nodejs
 
 Este comando puede variar entre versiones y distribuciones, 
 
@@ -230,18 +230,6 @@ $ rvm gemset use ruby-2.2.5@proyecto1
 Ahora podemos instalar cualquier gema y quedara dentro de esa instancia o versión
 de ruby y en ese gemset específico.
 
-###################
-##### PRUEBAS #####
-###################
-
-#-Lo primero es comprobar que tienes instalada alguna versión reciente de Ruby:
-$ ruby -v
-ruby 2.2.1p85
-
-#Se debe contar con SQLite 3 instalado correctamente, comprobar.
-$ sqlite3 --version
-3.7.13
-
 #Instalar Rails con el comando de RubyGems: gem install.
 #Podemos especificar la versión a instalar
 $ gem install rails
@@ -272,6 +260,12 @@ $ bundle show
 #############################################
 ##### Comandos básicos de Ruby on rails #####
 #############################################
+
+# Comprobar que tienes instalada alguna versión reciente de Ruby:
+$ ruby -v
+
+# Comprobar que tienes instalado SQLite 3 instalado correctamente.
+$ sqlite3 --version
 
 #Si quieres empezar un proyecto y ya tienes instalado RoR puedes comenzar con lo siguiente:
 #Abre tu terminal, ve a la carpeta en donde meterás tus archivos y escribe los siguientes comandos:
@@ -328,48 +322,13 @@ tmp/ #archivos temporales (como archivos de caché, PID y archivos de sesiones).
 
 vendor/ #Lugar para código de terceros. En una típica aplicación Rails, ésta incluye librerías y plugins.
 
-##################
-##### Bundle #####
-##################
-
-# Bundler proporciona un entorno consistente para proyectos de Ruby
-# mediante el seguimiento y la instalación de las versiones
-# y las gemas exactas que se necesitan.
-
-# Bundler es una salida del infierno de las dependencias, y asegura que las gemas
-# que necesita están presentes en el desarrollo, la puesta en escena, y la producción.
-# De empezar a trabajar en un proyecto es tan simple como paquete de instalación.
-
-# Documentacio en --> http://bundler.io/
-
-# En el Gemfile se especifican las dependencias de las gemas que usara nuestro proyecto, ejemplo:
-source 'https://rubygems.org'
-gem 'nokogiri'
-gem 'rack', '~>1.1'
-gem 'rspec', :require => 'spec' 
-
-# Visualizar las gemas instaladas en un proyecto
-$ bundle show
-
-# Detectar las gemas que están desactualizadas, bundle revisará cuáles de nuestras
-# gemas tienen nuevas versiones y nos las listará
-$ bundle outdated 
-
-# Si queremos actualizarlas todas podemos ejecutar
-$ bundle update
-
-# Si solo queremos actualizar una gema en particular.
-$ bundle update <nombre_de_la_gema>
+-----
 
 # Desinstalar una gema específica, a veces hay conflictos entre versiones de gemas a usar en el proyecto y las gemas instaladas.
 $ gem uninstall <gem-name>
 
 # Instalar una gema específica, usar el parametro "--version" acortado con "-v"
 $ gem install rails -v 0.14.1
-
-###########################
-##### Comandos varios #####
-###########################
 
 #Crear la db y hacer las migraciones descritas en el schema.rb
 $ rake db:create db:schema:load
@@ -388,7 +347,78 @@ $ DB=postgres bundle exec rake routes
 $ DB=postgres bin/rake db:migrate:status
 
 #Para moverse entre los estados de las migraciones donde X es el numero a retroceder
-$ bin/rails db:rollback STEP=X 
+$ bin/rails db:rollback STEP=X
+
+##################
+##### Bundle #####
+##################
+
+# Bundler proporciona un entorno consistente para proyectos de Ruby
+# mediante el seguimiento y la instalación de las versiones
+# y las gemas exactas que se necesitan.
+
+# Bundler es una salida del infierno de las dependencias, y asegura que las gemas
+# que necesita están presentes en el desarrollo, la puesta en escena, y la producción.
+# De empezar a trabajar en un proyecto es tan simple como paquete de instalación.
+
+# Bundler proporciona un entorno consistente para los proyectos de Ruby mediante el seguimiento y la instalación
+# de las gemas exactas y las versiones que se necesitan. 
+
+# Documentacio en --> http://bundler.io/
+
+Cuando creamos un proyecto en una version específica de rails, este instala todas
+las gemas necesarias para su funcionamiento, estas gemas están descritas en el fichero
+Gemfile.
+
+# En el Gemfile se especifican las dependencias de las gemas que usara nuestro proyecto, ejemplo:
+source 'https://rubygems.org'
+gem 'nokogiri'
+gem 'rack', '~>1.1'
+gem 'rspec', :require => 'spec'
+
+# Visualizar las gemas instaladas en un proyecto
+$ bundle show
+
+# Detectar las gemas que están desactualizadas, bundle revisará cuáles de nuestras
+# gemas tienen nuevas versiones y nos las listará
+$ bundle outdated 
+
+# Si queremos actualizarlas todas podemos ejecutar
+$ bundle update
+
+# Si solo queremos actualizar una gema en particular.
+$ bundle update <nombre_de_la_gema>
+	
+Pero si agregamos una gema que no es instalada automáticamente
+deberemos repasar la lista de dependencias para que se instalen
+las nuevas que no han sido instaladas, esto lo haremos con el comando:
+
+$ gem install bundler
+
+##### Activando un proyecto clonado o ya iniciado #####
+	
+#Dentro del proyecto instalamos bundler:
+$ gem install bundler
+
+#Luego instalamos las dependencias:
+$ bin/bundle install
+
+#Checks if the dependencies listed in Gemfile are satisfied by currently installed gems 
+$ bundle check
+
+Cuando trabajamos con un proyecto que fue generado en otra parte, lo mejor es instalar
+todas las dependencias y las mismas versiones con las cuales se genero el proyecto.
+Hablamos tanto de la version de ruby, RoR y bundle, aparte de las versiones de las gemas
+restantes que son descritas en el Gemfile, la version de bundle original la encontraremos
+el fichero Gemfile.lock que es un fichero generado a partir del gemfile al momento de la instalación
+de dependencias, se visualizara con un:
+
+BUNDLED WITH
+    1.xx.x
+
+Lo que nos lleva a instalar esa version de bundle para correr el servidor de ese proyecto, usamos:
+
+$ gem install bundler 1.xx.x
 
 #################
 ##### NOTAS #####
@@ -405,21 +435,6 @@ Al momento de clonar algun proyecto es sabido que cuenta con algunas dependencia
 específicas, ya sea una version de rails, sqlite3 u otras gemas, para instalar
 esas dependencias usaremos bundle, que no es mas que un script que instala
 lo que está descrito en el Gemfile, por eso instalamos bundle.
-
-##################
-##### Bundle #####
-##################
-
-Bundler proporciona un entorno consistente para los proyectos de Ruby mediante el seguimiento y la instalación de las gemas exactas y las versiones que se necesitan. 
-
-#Dentro del proyecto instalamos bundler:
-$ gem install bundler
-
-#Luego instalamos las dependencias:
-$ bin/bundle install
-
-#Checks if the dependencies listed in Gemfile are satisfied by currently installed gems 
-$ bundle check
 
 ##############################
 ##### Ejemplos prácticos #####
