@@ -411,95 +411,6 @@ Ctrl + r // En la consola, para hacer una busqueda de comandos usados baasndose 
 
 Shift + Page up <--> Page down // Moverse a traves de los logs de la consola, simula el scroll up/down del mouse
 
-####################################
-##### Editor de texto VI o VIM #####
-####################################
-
-// Es un editor de texto poderoso, muy usado en la comunidad de desarrolladores de Software Libre para escribir scripts, modificar ficheros
-de texto en el shell, programar etc. No posee botones y todas sus funcionalidades se usan a traves de comandos.
-Por lo general viene preinstalado en la mayoria de distribuciones, si no es así solo basta con un:
-
-# apt-get install vim // con apt-get
-
-# aptitude install vim // con aptitude
-
-----------------
-
---- Modos de uso ---
-
-// Al entrar a VIM para editar un fichero por primera vez, estamos en modo de comandos, quiere decir que no podemos editar el texto
-sino que solo podremos usar comandos.
-
-vim // Abrir vim, un fichero en blanco sin nombre ni contenido
-
-i // Tecleamos i para entrar en modo de edicion, podemos insertar texto
-
-escape // Pulsamos la tecla escape para salir del modo edicion o de cualquier otro modo, y volvemos al modo comandos.
-
-:q // En modo comandos escribimos :q para salir del editor sin guardar
-
-:q! // Salir del editor sin guardar ni pedir confirmacion
-
-:w nombre_fichero.xxx //Guardamos un fichero nuevo, le asignamos el nombre y la extension si es necesario.
-
-vim nombre_archivo.xxx // Nos aparecerá una ventana en negro, donde nos aparecerá el contenido del fichero o en negro si está vacío
-// En la parte inferior, nos aparecerán los mensajes o comandos que escribamos para manejar el editor, así como la línea en la que estamos, porcentaje del fichero, etc.
-
-:w // Guardar un documento
-
-:wq! // Guardar y salir, esta accion aplica a un fichero ya creado, que estemos editando.
-
-:f // Para saber el nombre y extensión del fichero abierto.
-
-u // Deshacer el ultimo cambio
-
-Ctrl + R // Rehacer el ultimo cambio
-
-yy // Copiar la linea
-
-dd // Eliminar una linea, en tal caso la corta y esta lista para pegarse
-
-p // Pegar una linea cortada
-
-guu // Convertir la linea actual en minusculas
-
-gUU // Convertir la linea actual en mayusculas
-
-g // Ir al principio del archivo
-
-G // Ir al final del documento
-
-w // navegar palabra por palabra en el fichero
-
-v // Entra en modo Visual. En este modo seleccionaremos un texto con los cursores, y
-después podremos cortar, copiar y pegar con los comandos:  
-  Copiar: y
-    Copiar el texto seleccionado en modo visual (de "yank".)
-  Cortar: c
-    Cortar el texto seleccionado en modo visual 
-  Pegar: p
-    Pegar el texto copiado o cortar en modo visual con anterioridad. 
-
-:/palabra // Para hacer una busqueda de una palabra dentro del archivo
-n // Para ir a la siguiente coincidencia.
-N // Para ir a la coincidencia anterior
-
-:set nu // Enumerar las líneas del fichéro.
-
-Si queremos que se enumeren siempre las lineas editamos el fichero:
-
-# vim /etc/vim/vimrc
-
-y quitámos las comillas (") a la línea que tiene a set number y guardamos.
-
-:123 // Ir a la linea (x) donde 123 es el número de linea a la cual queremos ir.
-
-:syntax on // Sirve para dar color al codigo que estemos editando, VIM reconoce la sintaxis de muchos lenguajes y
-la resalta en colores como muchos otros editores graficos como gedit, sublime, ninja, komodo, Geany.
-
-En /etc/vim en el fichero vimrc descomentamos la linea 
-"syntax on // Quitamos las (") para que quede activado directamente la coloracion de codigos
-
 ##############################################
 ########## Cambiar el pass del root ##########
 ##############################################
@@ -708,6 +619,144 @@ $ unzip archivo.zip // Descomprimir el fichero
 
 $ zip -r carpeta.zip nombre_carpeta // Comprimir directorios y su contenido
 
+#####################
+##### Programas #####
+#####################
+
+#########################################
+########## Terminal Terminator ##########
+#########################################
+
+//Gran herramienta para los desarrolladores, permite abrir multiples terminales
+y poder ordenarlos, muy personalizable, entre muchas otras cosas. **RECOMENDADO**
+
+Paquete: terminator / multiple GNOME terminals in one window
+
+aptitude install terminator // Para instalarlo
+apt-get install terminator
+
+Dentro de Terminator:
+Ctrl + Shift + o // Abrir un terminal horizontal y paralelo
+Ctrl + Shift + e // Abrir un terminal vertical y paralelo
+Ctrl + Shift + t // Abrir una nueva pestaña en el terminal
+Alt + flechas // Moverse por los terminales
+Ctrl + Shift + w // Cerrar un terminal
+Ctrl + Shift + x // Maximizar un terminal, igual para salir
+Ctrl + Shift + z // Maximizar un terminal(aumentado), igual para salir
+Ctrl + Shift + flechas // Cambiar el tamaño a voluntad de un terminal
+Ctrl + (+) // Aumentar tamaño de fuente, el (+) del Qwerty
+Ctrl + (-) // Minimizar tamaño de fuente, el (-) del Qwerty 
+Ctrl + d // Si no hay sesion de usuario abierta, como root y otros cerrará la pestaña o ventana.
+f11 // Pantalla completa.
+
+#################################
+### DIA - Editor de diagramas ###
+#################################
+
+Es un editor de diagramas, grafos, gráficas, etc. Ofrece soporte para diagramas de estructuras
+estáticas en UML (diagramas de clases), diagramas de  Entidad-Relación, diagramas de redes y mucho más.
+Los diagramas se pueden exportar a postscript y a otros formatos.
+
+$ aptitude install dia
+
+################
+##### Meld #####
+################
+
+Es una herramienta gráfica para hacer archivos diff y fusionarlos.
+Permite al usuario ver los cambios entre, y fusionar, dos archivos, dos directorios, o dos archivos con un ancestro común.
+
+$ aptitude install meld
+
+####################################
+##### Editor de texto VI o VIM #####
+####################################
+
+// Es un editor de texto poderoso, muy usado en la comunidad de desarrolladores de Software Libre para escribir scripts, modificar ficheros
+de texto en el shell, programar etc. No posee botones y todas sus funcionalidades se usan a traves de comandos.
+Por lo general viene preinstalado en la mayoria de distribuciones, si no es así solo basta con un:
+
+# apt-get install vim // con apt-get
+
+# aptitude install vim // con aptitude
+
+----------------
+
+--- Modos de uso ---
+
+// Al entrar a VIM para editar un fichero por primera vez, estamos en modo de comandos, quiere decir que no podemos editar el texto
+sino que solo podremos usar comandos.
+
+vim // Abrir vim, un fichero en blanco sin nombre ni contenido
+
+i // Tecleamos i para entrar en modo de edicion, podemos insertar texto
+
+escape // Pulsamos la tecla escape para salir del modo edicion o de cualquier otro modo, y volvemos al modo comandos.
+
+:q // En modo comandos escribimos :q para salir del editor sin guardar
+
+:q! // Salir del editor sin guardar ni pedir confirmacion
+
+:w nombre_fichero.xxx //Guardamos un fichero nuevo, le asignamos el nombre y la extension si es necesario.
+
+vim nombre_archivo.xxx // Nos aparecerá una ventana en negro, donde nos aparecerá el contenido del fichero o en negro si está vacío
+// En la parte inferior, nos aparecerán los mensajes o comandos que escribamos para manejar el editor, así como la línea en la que estamos, porcentaje del fichero, etc.
+
+:w // Guardar un documento
+
+:wq! // Guardar y salir, esta accion aplica a un fichero ya creado, que estemos editando.
+
+:f // Para saber el nombre y extensión del fichero abierto.
+
+u // Deshacer el ultimo cambio
+
+Ctrl + R // Rehacer el ultimo cambio
+
+yy // Copiar la linea
+
+dd // Eliminar una linea, en tal caso la corta y esta lista para pegarse
+
+p // Pegar una linea cortada
+
+guu // Convertir la linea actual en minusculas
+
+gUU // Convertir la linea actual en mayusculas
+
+g // Ir al principio del archivo
+
+G // Ir al final del documento
+
+w // navegar palabra por palabra en el fichero
+
+v // Entra en modo Visual. En este modo seleccionaremos un texto con los cursores, y
+después podremos cortar, copiar y pegar con los comandos:  
+  Copiar: y
+    Copiar el texto seleccionado en modo visual (de "yank".)
+  Cortar: c
+    Cortar el texto seleccionado en modo visual 
+  Pegar: p
+    Pegar el texto copiado o cortar en modo visual con anterioridad. 
+
+:/palabra // Para hacer una busqueda de una palabra dentro del archivo
+n // Para ir a la siguiente coincidencia.
+N // Para ir a la coincidencia anterior
+
+:set nu // Enumerar las líneas del fichéro.
+
+Si queremos que se enumeren siempre las lineas editamos el fichero:
+
+# vim /etc/vim/vimrc
+
+y quitámos las comillas (") a la línea que tiene a set number y guardamos.
+
+:123 // Ir a la linea (x) donde 123 es el número de linea a la cual queremos ir.
+
+:syntax on // Sirve para dar color al codigo que estemos editando, VIM reconoce la sintaxis de muchos lenguajes y
+la resalta en colores como muchos otros editores graficos como gedit, sublime, ninja, komodo, Geany.
+
+En /etc/vim en el fichero vimrc descomentamos la linea 
+"syntax on // Quitamos las (") para que quede activado directamente la coloracion de codigos
+
 #####################################
 ########## Instalar APACHE ##########
 #####################################
@@ -801,6 +850,148 @@ Para ver los logs del sitio disponible:
 
 Para ver en tiempo real el log del server del sitio:
 /var/log/nginx# tailf nombre_del_sitio.ve.access.log
+
+#################
+##### RSYNC #####
+#################
+
+Es una aplicación que ofrece transmisión eficiente de datos, que opera también con datos comprimidos y cifrados.
+Mediante una técnica de delta encoding, permite sincronizar archivos y directorios entre dos máquinas de una red
+o entre dos ubicaciones en una misma máquina, minimizando el volumen de datos transferidos.
+Muy recomendable para hacer respaldos en discos externos.
+
+aptitude install rsync // Instalarlo desde los repositorios de debian
+
+Parametros: -P para mostrar el progreso de la copia y -r cuando se van a copiar directorios
+
+rsync -P ficehero /directorio/carpeta2 // Para copiar ficheros, archivos, etc. 
+
+rsync -P -r /directorio/carpeta1_origen /directorio/carpeta2_destino // -r para copiar directorios se ponen las dos rutas: origen y destino separados por un espacio
+**Ojo con carpeta1, sin el / al final, lo cual significa que se va copiar la carpeta completa con su contenido y no solo su contenido.
+
+##### rsync para copiar ficheros a un servidor a través de ssh #####
+
+-v : Verbose (try -vv for more detailed information)
+-e "ssh options" : specify the ssh as remote shell
+-a : archive mode
+-r : recurse into directories
+
+$ rsync -P -r -v -e ssh name_dir_or_filename user@192.168.1.100:/home/use/dir/
+
+##### Usando rsync desde python para copiar un fichero a un servidor #####
+
+$ python
+
+>>> import os
+>>> os.system("rsync -varz /home/user/xxx.txt user@192.168.1.100:")
+user@192.168.1.100's password: ******
+sending incremental file list
+xxx.txt
+
+sent 87 bytes  received 31 bytes  33.71 bytes/sec
+total size is 0  speedup is 0.00
+0
+>>> 
+
+// Fichero copiado al servidor!
+
+################################################
+##### CCLive - Descargar videos de youtube #####
+################################################
+
+CCLive es una aplicación que nos permite descargar un vídeo que esté en YouTube
+hacia nuestro ordenador mediante un simple comando. Por defecto guarda los vídeos en webm.
+
+$ aptitude show cclive //Para ver si lo tenemos en los repos, y ver la descripción, si es así.
+
+$ aptitude install cclive // Instalación, como root.
+
+ó
+
+$ sudo apt-get install cclive // Instalación, como root.
+
+$ cclive https://www.youtube.com/watch?v=yWVrvce5R9 // Descargar un video pasando la url de youtube.
+
+$ cclive URL1 URL2 URL3 URL4 // Soporta varias URLs a la vez, para bajar mas de 1 video.
+
+$ cclive < urls.txt // Descargar un vídeo detrás de otro, desde un archivo de texto plano con todas las URLs (en líneas diferentes).
+
+$ man cclive // Manual del paquete.
+
+$ cclive -F https://www.youtube.com/watch?v=Lfj667lLLnE // Comprobar los formatos disponibles antes de descargar el video.
+// Se podrá ver un listado de formatos disponibles separados por "|"
+
+$ cclive -f fmt22_720p https://www.youtube.com/watch?v=LtzFg4JiL5E // Se elige el formato y se pasa en el comando, luego comenzará la descarga.
+
+$ cclive -f best http://www.youtube.com/xxxxxx // Download the best available format of the media.
+
+###########################################
+##### Formatear pendrives desde linux #####
+###########################################
+
+# aptitude install dosfstools
+
+Luego de instalar el paquede, montamos el pendrive, solo esta montado si aparece el nombre de la unidad en /media, luego escribimos:
+
+$ df -h
+
+Visualizamos la ruta de nuestro usb, ejemplo /dev/sdc1 que es el puerto donde está montado, luego desmontamos el pendrive.
+
+$ umount /media/nombre_usb
+
+Luego, estando desmontado la unidad usb, pero conectado al puerto
+
+# mkfs.vfat -F 32 -n Nombre_usb /dev/sdc1
+
+Esperamos y listo. Con la opción -F 32 le decimos que será formateada como Fat32, y con la opción -n le ponemos una etiqueta o nombre al dispositivo y
+al final ponemos la ruta hasta nuestro dispositivo, la que vimos con df -h
+
+#########################
+##### sqlitebrowser #####
+#########################
+
+Herramienta de alta calidad visual para crear, diseñar y editar archivos de bases de datos compatibles con SQLite.
+Es para usuarios y desarrolladores que desean crear bases de datos, buscar y editar datos.
+Utiliza una interfaz de tipo hoja de cálculo familiar y no necesita aprender comandos SQL complicados.
+
+# aptitude install sqlitebrowser
+
+#########################################################
+##### Quemar o grabar una imagen iso en un pendrive #####
+#########################################################
+
+# dd if=[imagen] of=[dispositivo]
+
+En donde imagen es la ruta completa a la imagen ISO que deseas grabar y dispositivo la ruta completa hacia el pendrive, no la ruta con el nombre del pendrive, por ejemplo:
+
+dd if=/home/user/Descargas/debian-testing-i386-businesscard.iso of=/dev/media/sdb
+
+-----
+
+$ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con el certificado
+digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando.
+
+################################################
+##### Instalación de gnome en sistema base #####
+################################################
+
+# apt-get install gnome-shell
+
+# apt-get install gnome-core
+
+# apt-get install gnome
+
+# apt-get install task-gnome-desktop
+
+# apt-get install task-spanish-desktop
+
+########################################################
+##### Instalación de gnome classic en sistema base #####
+########################################################
+
+Probado en Ubuntu 11 y 12 nada más, puede que funcione en anteriores o superiores.
+
+# apt-get install gnome-panel // Luego de reiniciar, saldrá en las opciones de escritorio antes de iniciar sesión.
 
 #############################################################################
 ##### Comandos para buscar ficheros, directorios, paquetes, historiales #####
@@ -961,34 +1152,6 @@ which you can interrupt safely with Ctrl-C if you do not want to wait.
 
 OK: Checksums match, image is good!  
 
-#########################################
-########## Terminal Terminator ##########
-#########################################
-
-//Gran herramienta para los desarrolladores, permite abrir multiples terminales
-y poder ordenarlos, muy personalizable, entre muchas otras cosas. **RECOMENDADO**
-
-Paquete: terminator / multiple GNOME terminals in one window
-
-aptitude install terminator // Para instalarlo
-apt-get install terminator
-
-Dentro de Terminator:
-Ctrl + Shift + o // Abrir un terminal horizontal y paralelo
-Ctrl + Shift + e // Abrir un terminal vertical y paralelo
-Ctrl + Shift + t // Abrir una nueva pestaña en el terminal
-Alt + flechas // Moverse por los terminales
-Ctrl + Shift + w // Cerrar un terminal
-Ctrl + Shift + x // Maximizar un terminal, igual para salir
-Ctrl + Shift + z // Maximizar un terminal(aumentado), igual para salir
-Ctrl + Shift + flechas // Cambiar el tamaño a voluntad de un terminal
-Ctrl + (+) // Aumentar tamaño de fuente, el (+) del Qwerty
-Ctrl + (-) // Minimizar tamaño de fuente, el (-) del Qwerty 
-Ctrl + d // Si no hay sesion de usuario abierta, como root y otros cerrará la pestaña o ventana.
-f11 // Pantalla completa.
-
------------------
-
 ################################################
 ########## Ambiente virtual en Python ##########
 ################################################
@@ -1143,12 +1306,6 @@ $ pip show package // Para ver si un paquete está instalado, si es así, mostra
 ########## Conexion remota con ssh ##########
 #############################################
 
-# aptitude install ssh
-
---> configurarlo
-
-# aptitude install openssh-server
-
 SSH (Secure SHell) es el nombre de un protocolo y del programa que lo implementa, y sirve para acceder
 a máquinas remotas a través de una red. Permite manejar por completo la computadora mediante un intérprete
 de comandos, y también puede redirigir el tráfico de X para poder ejecutar programas gráficos si tenemos ejecutando un Servidor X (en sistemas Unix y Windows).
@@ -1157,17 +1314,19 @@ Además de la conexión a otros dispositivos, SSH nos permite copiar datos de fo
 (tanto archivos sueltos como simular sesiones FTP cifradas), gestionar claves RSA para no escribir
 claves al conectar a los dispositivos y pasar los datos de cualquier otra aplicación por un canal seguro tunelizado mediante SSH.
 
-$ ssh Nombre_usuario@IP_servidor o nombre_servidor
+# aptitude install ssh openssh-server // Instalar ssh y el servidor de ssh que permite conexiones remotas.
 
-$ ssh 192.168.200.x // Si el servidor tiene el mismo usuario que el host, no hace falta especificarlo, solamente con la ip del servidor
-basta, pues toma el nombre del usuario del host para hacer la conexión.
+$ ssh Nombre_usuario@IP_servidor o nombre_servidor // Conectarse a otra máquina o servidor
 
 ssh user@192.168.0.240 // Asi se accede a un ordenador o servidor remoto, debemos poner el usuario que debe estar creado asi como la ip
 del server, nos pedira la clave de session, una vez adentro tenemos acceso a los archivos y podemos pedir el root para tener acceso total.
 ssh es muy usado por administradores de redes y de sistemas para acceder a las maquinas y los servidores y hacer cambios asi 
 como monitorear los procesos que esten ejecutando, especialmente en maquinas virtuales si varios proyectos corren en un mismo servidor.
 
-Conectado al servidor, podemos enviar mensajes o abrir programas remotamente, ejemplo:
+$ ssh 192.168.200.x // Si el servidor tiene el mismo usuario que el host, no hace falta especificarlo, solamente con la ip del servidor
+basta, pues toma el nombre del usuario del host para hacer la conexión.
+
+Estando conectados al servidor, podemos enviar mensajes o abrir programas remotamente, ejemplo:
 
 echo "mensaje" > /dev/pts/2 // Enviar mensaje a traves del shell a otro usuario, en el servidor o local, debe haber un shell abierto que sea receptor
 Se puede hacer localmente para probar, con (who) veremos la identificacion de cada shell, si estamos conectados remotamente, comprobaremos si hay shells
@@ -1180,6 +1339,75 @@ $totem o $nautilus // Deberia abrir el programa en el servidor, ya esportada la 
 DISPLAY=:0.0 totem // Abrir el reproductor totem en el servidor
 
 DISPLAY=:0.0 nautilus // Abrir el explorador de archivos en el servidor
+
+###########################################
+##### X11 forwarding a través de ssh  #####
+###########################################
+
+X11, es el servidor gráfico que usan casi todas las distribuciones Linux. Este servidor permite, entre otras cosas,
+forwarding a través de SSH. Esto significa que es posible ejecutar apliaciones gráficas de una máquina remota exportando el display a nuestro escritorio.
+Es decir, la aplicación se ejecuta en el servidor remoto, pero la interfaz gráfica la visualizamos en nuestro escritorio local.
+
+Ejemplo:
+1- En el servidor, editar el archivo /etc/ssh/ssh_config y modificar la opción X11Forwarding o ForwardX11 para que quede así:
+
+X11Forwarding yes
+
+ó
+
+ForwardX11 yes
+
+Luego de este cambio, posiblemente sea necesario reiniciar el demonio ssh. La forma de hacer esto varía de acuerdo a cada distribución Linux.
+Lo más sencillo es reiniciar la máquina.
+
+2- En el escritorio local, loguearse al servidor a través de ssh utilizando el parámetro -X:
+
+$ ssh -X user@hostname
+
+Donde user es el nombre de usuario utilizado para loguearse en el servidor y hostname es el ip o el alias del servidor.
+
+3- Para ejecutar una aplicación, simplemente hay que hacerlo desde el terminal. Por ejemplo:
+
+$ firefox
+
+$ nautilus
+
+$ evince
+
+Cuando ejecutamos una aplicación gráficamente la consola se bloqueara con el proceso en ejecución, por lo que podemos usar &
+para que se ejecute el proceso, construya el entorno grafico del programa y luego dezplace el proceso para poder seguir usando la
+consola, ejemplo:
+
+$ firefox
+
+ó
+
+$ firefox & nautilus &
+
+###############################################################
+##### El error ssh remote host identification has changed #####
+###############################################################
+
+Cuando el sistema base guarda una llave de acceso a un host, pero el host cambió, entonces la llave no funciona y arroja el típico error:
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ECDSA key sent by the remote host is
+...
+...
+...
+
+Entonces borramos ese host roto, llave perdida, etc.
+
+$ ssh-keygen -R <host>
+
+Ejemplo:
+
+$ ssh-keygen -R 192.168.3.10
 
 ####################################################
 ##### Copias de directorios o ficheros por scp #####
@@ -1249,75 +1477,6 @@ Nombre de usuario: // Nombre de usuario, de sesion de ese servidor
 Contraseña: // Contraseña de la sesion de usuario del servidor
 
 Si todo esta bien deberia entrar a explorar los directorios del servidor.
-
-###########################################
-##### X11 forwarding a través de ssh  #####
-###########################################
-
-X11, como supongo la mayoría de Uds. sabrá, es el servidor gráfico que usan casi todas las distribuciones Linux. Este servidor permite, entre otras cosas,
-forwarding a través de SSH. Esto significa que es posible ejecutar apliaciones gráficas de una máquina remota exportando el display a nuestro escritorio.
-Es decir, la aplicación se ejecuta en el servidor remoto, pero la interfaz gráfica la visualizamos en nuestro escritorio local.
-
-Ejemplo:
-1- En el servidor, editar el archivo /etc/ssh/ssh_config y modificar la opción X11Forwarding o ForwardX11 para que quede así:
-
-X11Forwarding yes
-
-ó
-
-ForwardX11 yes
-
-Luego de este cambio, posiblemente sea necesario reiniciar el demonio ssh. La forma de hacer esto varía de acuerdo a cada distribución Linux.
-Lo más sencillo es reiniciar la máquina.
-
-2- En el escritorio local, loguearse al servidor a través de ssh utilizando el parámetro -X:
-
-$ ssh -X user@hostname
-
-Donde user es el nombre de usuario utilizado para loguearse en el servidor y hostname es el ip o el alias del servidor.
-
-3- Para ejecutar una aplicación, simplemente hay que hacerlo desde el terminal. Por ejemplo:
-
-$ firefox
-
-$ nautilus
-
-$ evince
-
-Cuando ejecutamos una aplicación gráficamente la consola se bloqueara con el proceso en ejecución, por lo que podemos usar &
-para que se ejecute el proceso, construya el entorno grafico del programa y luego dezplace el proceso para poder seguir usando la
-consola, ejemplo:
-
-$ firefox
-
-ó
-
-$ firefox & nautilus &
-
-###############################################################
-##### El error ssh remote host identification has changed #####
-###############################################################
-
-Cuando el sistema base guarda una llave de acceso a un host, pero el host cambió, entonces la llave no funciona y arroja el típico error:
-
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
-@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
-Someone could be eavesdropping on you right now (man-in-the-middle attack)!
-It is also possible that a host key has just been changed.
-The fingerprint for the ECDSA key sent by the remote host is
-...
-...
-...
-
-Entonces borramos ese host roto, llave perdida, etc.
-
-$ ssh-keygen -R <host>
-
-Ejemplo:
-
-$ ssh-keygen -R 192.168.3.10
 
 #############################################
 ##### Programación shell-script (bash) ######
@@ -1464,50 +1623,6 @@ echo $a
 Imprimir
 #echo $a
 
-#################
-##### RSYNC #####
-#################
-
-Es una aplicación que ofrece transmisión eficiente de datos, que opera también con datos comprimidos y cifrados.
-Mediante una técnica de delta encoding, permite sincronizar archivos y directorios entre dos máquinas de una red
-o entre dos ubicaciones en una misma máquina, minimizando el volumen de datos transferidos.
-Muy recomendable para hacer respaldos en discos externos.
-
-aptitude install rsync // Instalarlo desde los repositorios de debian
-
-Parametros: -P para mostrar el progreso de la copia y -r cuando se van a copiar directorios
-
-rsync -P ficehero /directorio/carpeta2 // Para copiar ficheros, archivos, etc. 
-
-rsync -P -r /directorio/carpeta1_origen /directorio/carpeta2_destino // -r para copiar directorios se ponen las dos rutas: origen y destino separados por un espacio
-**Ojo con carpeta1, sin el / al final, lo cual significa que se va copiar la carpeta completa con su contenido y no solo su contenido.
-
-##### rsync para copiar ficheros a un servidor a través de ssh #####
-
--v : Verbose (try -vv for more detailed information)
--e "ssh options" : specify the ssh as remote shell
--a : archive mode
--r : recurse into directories
-
-$ rsync -P -r -v -e ssh name_dir_or_filename user@192.168.1.100:/home/use/dir/
-
-##### Usando rsync desde python para copiar un fichero a un servidor #####
-
-$ python
-
->>> import os
->>> os.system("rsync -varz /home/user/xxx.txt user@192.168.1.100:")
-user@192.168.1.100's password: ******
-sending incremental file list
-xxx.txt
-
-sent 87 bytes  received 31 bytes  33.71 bytes/sec
-total size is 0  speedup is 0.00
-0
->>> 
-
-// Fichero copiado al servidor!
-
 ###################################
 ##### Crear alias de comandos #####
 ###################################
@@ -1597,25 +1712,6 @@ make install
 
 // Si no hay errores ya deberíamos poder usar el programa instalado.
 
-#################################
-### DIA - Editor de diagramas ###
-#################################
-
-Es un editor de diagramas, grafos, gráficas, etc. Ofrece soporte para diagramas de estructuras
-estáticas en UML (diagramas de clases), diagramas de  Entidad-Relación, diagramas de redes y mucho más.
-Los diagramas se pueden exportar a postscript y a otros formatos.
-
-$ aptitude install dia
-
-################
-##### Meld #####
-################
-
-Es una herramienta gráfica para hacer archivos diff y fusionarlos.
-Permite al usuario ver los cambios entre, y fusionar, dos archivos, dos directorios, o dos archivos con un ancestro común.
-
-$ aptitude install meld
-
 ########################################
 ##### Cambiar permisos de usuarios #####
 ########################################
@@ -1693,36 +1789,6 @@ $ chown -R usuario archivo/carpeta
 $ chown usuario *
 
 # chown -R root archivo/carpeta
-
-################################################
-##### CCLive - Descargar videos de youtube #####
-################################################
-
-CCLive es una aplicación que nos permite descargar un vídeo que esté en YouTube
-hacia nuestro ordenador mediante un simple comando. Por defecto guarda los vídeos en webm.
-
-$ aptitude show cclive //Para ver si lo tenemos en los repos, y ver la descripción, si es así.
-
-$ aptitude install cclive // Instalación, como root.
-
-ó
-
-$ sudo apt-get install cclive // Instalación, como root.
-
-$ cclive https://www.youtube.com/watch?v=yWVrvce5R9 // Descargar un video pasando la url de youtube.
-
-$ cclive URL1 URL2 URL3 URL4 // Soporta varias URLs a la vez, para bajar mas de 1 video.
-
-$ cclive < urls.txt // Descargar un vídeo detrás de otro, desde un archivo de texto plano con todas las URLs (en líneas diferentes).
-
-$ man cclive // Manual del paquete.
-
-$ cclive -F https://www.youtube.com/watch?v=Lfj667lLLnE // Comprobar los formatos disponibles antes de descargar el video.
-// Se podrá ver un listado de formatos disponibles separados por "|"
-
-$ cclive -f fmt22_720p https://www.youtube.com/watch?v=LtzFg4JiL5E // Se elige el formato y se pasa en el comando, luego comenzará la descarga.
-
-$ cclive -f best http://www.youtube.com/xxxxxx // Download the best available format of the media.
 
 #################################################################################
 ##### Cifrado de ficheros gpg, cifrado simétrico, asimétrico, firma digital #####
@@ -2034,52 +2100,6 @@ ftp, file (archivos locales, p.e., un directorio que contiene un CD-ROM) y ssh, 
 No olvide ejecutar el comando apt-get update después de modificar el archivo /etc/apt/sources.list. Debe hacer
 esto para permitir a APT obtener la lista de paquetes de las fuentes que especificó.
 
-#########################################################
-##### Quemar o grabar una imagen iso en un pendrive #####
-#########################################################
-
-# dd if=[imagen] of=[dispositivo]
-
-En donde imagen es la ruta completa a la imagen ISO que deseas grabar y dispositivo la ruta completa hacia el pendrive, no la ruta con el nombre del pendrive, por ejemplo:
-
-dd if=/home/user/Descargas/debian-testing-i386-businesscard.iso of=/dev/media/sdb
-
------
-
-$ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con el certificado
-digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando.
-
-###########################################
-##### Formatear pendrives desde linux #####
-###########################################
-
-# aptitude install dosfstools
-
-Luego de instalar el paquede, montamos el pendrive, solo esta montado si aparece el nombre de la unidad en /media, luego escribimos:
-
-$ df -h
-
-Visualizamos la ruta de nuestro usb, ejemplo /dev/sdc1 que es el puerto donde está montado, luego desmontamos el pendrive.
-
-$ umount /media/nombre_usb
-
-Luego, estando desmontado la unidad usb, pero conectado al puerto
-
-# mkfs.vfat -F 32 -n Nombre_usb /dev/sdc1
-
-Esperamos y listo. Con la opción -F 32 le decimos que será formateada como Fat32, y con la opción -n le ponemos una etiqueta o nombre al dispositivo y
-al final ponemos la ruta hasta nuestro dispositivo, la que vimos con df -h
-
-#########################
-##### sqlitebrowser #####
-#########################
-
-Herramienta de alta calidad visual para crear, diseñar y editar archivos de bases de datos compatibles con SQLite.
-Es para usuarios y desarrolladores que desean crear bases de datos, buscar y editar datos.
-Utiliza una interfaz de tipo hoja de cálculo familiar y no necesita aprender comandos SQL complicados.
-
-# aptitude install sqlitebrowser
-
 #################################################
 ##### Enlaces físicos y simbólicos en Linux #####
 #################################################
@@ -2116,28 +2136,6 @@ Sobre un enlace simbólico también se pueden usar todos los comandos básicos d
 es borrado o movido a una ubicación diferente el enlace dejará de funcionar y se dice que el enlace está roto.
 
 Un enlace simbólico permite enlazar directorios y, usando NFS, también permite enlazar archivos fuera del equipo.
-
-################################################
-##### Instalación de gnome en sistema base #####
-################################################
-
-# apt-get install gnome-shell
-
-# apt-get install gnome-core
-
-# apt-get install gnome
-
-# apt-get install task-gnome-desktop
-
-# apt-get install task-spanish-desktop
-
-########################################################
-##### Instalación de gnome classic en sistema base #####
-########################################################
-
-Probado en Ubuntu 11 y 12 nada más, puede que funcione en anteriores o superiores.
-
-# apt-get install gnome-panel // Luego de reiniciar, saldrá en las opciones de escritorio antes de iniciar sesión.
 
 ########################
 ##### jaula chroot #####
@@ -2269,7 +2267,6 @@ Desmontar los directorios montados y borrar el directorio de que alverga la jaul
 ####################################################################
 ##### codecs de audio y video para GNU/Linux Debian 7 (Wheezy) #####
 ####################################################################
-
 
 # apt-get install ffmpeg flashplugin-nonfree libcurl3 freepats gstreamer0.10-ffmpeg gstreamer0.10-plugins-bad gstreamer0.10-plugins-ugly  libaccess-bridge-java libcdaudio1 libdc1394-22 libdvdnav4 libfftw3-3 libgif4 libid3tag0 libiptcdata0 libmms0  libmpeg2-4 libneon27-gnutls libofa0 libsidplay1 libsndfile1 libswscale0  openjdk-7-jre openjdk-7-jre-headless openjdk-7-jre-lib rhino ttf-arphic-uming ttf-baekmuk ttf-bengali-fonts ttf-devanagari-fonts ttf-gujarati-fonts ttf-indic-fonts ttf-kannada-fonts ttf-kochi-gothic ttf-liberation ttf-malayalam-fonts ttf-mscorefonts-installer ttf-oriya-fonts ttf-punjabi-fonts ttf-sazanami-mincho ttf-tamil-fonts ttf-telugu-fonts tzdata-java
 
