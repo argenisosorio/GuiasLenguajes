@@ -8,9 +8,9 @@
       <meta charset="UTF-8">
   </head>
   <script type="text/javascript"> 
-  $("document").ready(function () {
-  });
-</script>
+    $("document").ready(function () {
+    });
+  </script>
 <body>
 </body>
 </html>
@@ -5376,7 +5376,14 @@ $("document").ready(function () {
 
 -------------------------------------
 
-<!-- -->
+<!-- Función para hacer desaparecer automáticamente las notificaciones (alerts) de bootstrap -->
+<script type="text/javascript"> 
+  $("document").ready(function () {
+    $(".alert-success").fadeTo(2000, 500).slideUp(200, function(){
+        $(".alert-success").effect( 'blind' , "slow" );
+    });
+  });
+</script>
 
 -------------------------------------
 
