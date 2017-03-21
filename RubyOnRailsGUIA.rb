@@ -286,6 +286,7 @@ app/assets #Aquí guardaremos las imagenes, javascripts y las hojas de estilo.
   images - javascripts - stylesheets
 
 config/ #Configura las reglas de ejecución de la aplicación, rutas, base de datos y más.
+  application.rb # El propósito de este archivo es configurar cosas para toda la aplicación.  
 
 config.ru #Configuración Rack para servidores basados en Rack usados para iniciar la aplicación.
 

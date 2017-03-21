@@ -1,18 +1,24 @@
+### Guía Ruby by dM ###
+
+# Cabecera para los scripts de ruby, indica al compilador o editor que se trata de un fichero ruby
 #!/usr/bin/ruby
 
-#### Guía Ruby by dM ####
+##### Instalación en Debian #####
 
-#Instalación en Debian:
- aptitude install ruby 
+# apt-get install ruby 
 
-#Características:
-#-Casi todo es un objeto
-#-Son innecesarias las declaraciones de variables
-#-Las variables no tienen tipo
-#-La sintaxis es simple y consistente
-#-La gestión de memoria se realiza automáticamente
+'''
+Características:
+-Casi todo es un objeto
+-Son innecesarias las declaraciones de variables
+-Las variables no tienen tipo
+-La sintaxis es simple y consistente
+-La gestión de memoria se realiza automáticamente
+'''
 
-**********Consola de Ruby**********
+###########################
+##### Consola de Ruby #####
+###########################
 
 $ ruby -v # Para saber mi version de Ruby
 
@@ -33,14 +39,9 @@ $ irb # Interactive Ruby Shell
 
 Ctrl + D # Salir de la Consola
 
-##################################
-##### Indentación del código #####
-##################################
-
-La indentación no es significativa pero es recomendable
-hacerla para una mejor lectura del código.
-
-**********Comentarios en ruby********* 
+###############################
+##### Comentarios en ruby #####
+###############################
 
 # Comentario de una línea
 
@@ -50,7 +51,22 @@ hacerla para una mejor lectura del código.
   lineas
 =end
 
-**********Imprimir por pantalla**********
+'''
+Comentarios
+de Multiple
+Línea
+'''
+
+##################################
+##### Indentación del código #####
+##################################
+
+La indentación no es significativa pero es recomendable
+hacerla para una mejor lectura del código.
+
+#################################
+##### Imprimir por pantalla #####
+#################################
 
 puts "¿Por qué estas aqui?" #Agrega una linea en blanco al final, como un fin de línea.
 
@@ -60,7 +76,9 @@ print "Hola\nRuby\n3\n" # \n Salto de linea.
 
 print "Hola\tRuby\t3\t" # \t Tabulación
 
-**********Operaciones básicas**********
+###############################
+##### Operaciones básicas #####
+###############################
 
 #Ruby permite hacer operaciones aritmeticas básicas
 
@@ -74,7 +92,9 @@ print "Hola\tRuby\t3\t" # \t Tabulación
 
 2 ** 2
 
-**********Creando un archivo**********
+##############################
+##### Creando un archivo #####
+##############################
 
 #Los archivos o los programas de ruby se guardan con la 
 #extencion (.rb)
@@ -94,7 +114,9 @@ puts "Hola Ruby 2"
 ruby ejemplo.rb #Se debe estar en el directorio del archivo o en su defecto
 #le pasamos la ruta del archivo--> ruby /home/user/ejemplo.rb
 
-**********VARIABLES**********
+#####################
+##### Variables #####
+#####################
 
 #En ruby las variables no tienen tipos
 
@@ -111,7 +133,7 @@ mi_string = "Ruby"
 #En ruby, las cadenas son objetos pertenecientes a la clase String
 #¡no confundir con pertenecientes al tipo String!
 
-**********Mostrando el valor de una variable**********
+##### Mostrando el valor de una variable #####
 
 nombre = "David Webb" #Declaramos una variable y le asignamos una cadena
 puts "#{nombre}" #Imprimimos el valor de la variable declarada y cargada
@@ -131,7 +153,9 @@ puts "tengo #{edad}"
 puts "mis ojos son de color #{ojos} "
 puts "y mi cabello es de color #{cabello}"
 
-**********Usando métodos**********
+##########################
+##### Usando métodos #####
+##########################
 
 "David Webb".length #Nos sirve para contar la cantidad de caracteres de una cadena, como el metodo de JavaScript
 #10
@@ -149,7 +173,9 @@ puts "y mi cabello es de color #{cabello}"
 # Convertimos la cadena a minusculas, luego la invertimos y hacemos que se transforme en mayusculas
 #"BBEW"
 
-**********Capturando datos**********
+############################
+##### Capturando datos #####
+############################
 
 # (gets) es el método de Ruby que obtiene datos de parte de los usuarios. 
 # Cuando se obtienen datos, Ruby agrega automáticamente una línea en blanco (o línea nueva) después de esos datos; 
@@ -183,7 +209,9 @@ apellido = gets.chomp
 print "¿Cuál es tu Ciudad? "
 ciudad = gets.chomp
 
-********** if **********
+##############
+##### if #####
+##############
 
 print "Entero, por favor: "
 num_usuario = Integer(gets.chomp)
@@ -196,7 +224,10 @@ else
   puts "¡Elegiste cero!"
 end
 
-********** Funciones **********
+#####################
+##### Funciones #####
+#####################
+
 #Una funcion de suma
 #-Como vimos anteriormente, en ruby las variables no tienen tipos
 #-Esto implica que al pasar variables a funciones, estas no necesitan tipo
@@ -225,9 +256,8 @@ fun2
 #print fun1
 #print fun2
 
-
-**********Usando métodos**********
-**********Usando métodos**********
-**********Usando métodos**********
-**********Usando métodos**********
-**********Usando métodos**********
+#####Usando métodos#####
+#####Usando métodos#####
+#####Usando métodos#####
+#####Usando métodos#####
+#####Usando métodos#####
