@@ -798,13 +798,19 @@ Superuser created successfully.
 ##### login_required #####
 ##########################
 
-# Trabaja con el from django.contrib.auth.decorators import login_required
+# Trabaja con el from django.contrib.auth.decorators import login_required en las urls
 # url(r'^lista$', login_required(views.PostLista.as_view()), name='post_lista'),
 # url(r'^detalle/(?P<pk>\d+)$', login_required(views.PostDetalle), name='post_detalle'),
 
 # Variable en el settings.py, url a la que se redirecciona cuando no hay usuario logeado
 # y se intenta acceder a una url protegida. 
 LOGIN_URL = "/login"
+
+# Usandolo en una función en views.py
+@login_required(login_url='/')
+def index(request):
+    user = request.user
+    return render_to_response('index.html', {'usuario':user},context_instance=RequestContext(request))
 
 ##################################################
 ##### Permisos de contenido según el usuario #####
