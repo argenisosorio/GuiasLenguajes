@@ -117,6 +117,8 @@ $ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804B
 $ \curl -sSL https://get.rvm.io | bash -s stable --rails --ruby
   
 Este comando instala las últimas versiones estables de rvm, ruby y rails.
+Nos pedirá la contraseña de root en algun momento, es recomendable según la documentación que nos pida la contraseña, en vez de
+ejecutar el comando anterior como root.
 Ejecutaremos este comando después de instalar la firma. Al ejecutar esto se produce un montón de salida por pantalla.
 
 Una vez finalizado este proceso, RVM nos dice que ejecutemos un comando que empieza por source... o que reiniciemos las shells abiertas
