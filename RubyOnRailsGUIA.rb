@@ -105,7 +105,7 @@ Instalaremos RVM desde el sitio web del proyecto, por lo que no confiamos en los
 Debian para la instalación real. sin embargo, RVM utiliza el gestor de paquetes para instalar las dependencias de los
 programas que gestiona, por lo que debemos asegurarnos de que los repositorios estén actualizados:
 
-# sudo apt-get update
+# apt-get update
 
 # apt-get install git-core subversion nodejs curl
 
