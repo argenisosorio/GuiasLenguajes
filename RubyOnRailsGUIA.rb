@@ -101,9 +101,13 @@ sobre Ruby Version Mananger (RVM) en https://rvm.io
 
 ##### Instalamos los paquetes del S.O. requeritos por RVM: #####
 
-$ sudo apt-get install -y git-core subversion nodejs curl
+Instalaremos RVM desde el sitio web del proyecto, por lo que no confiamos en los repositorios predeterminados de
+Debian para la instalación real. sin embargo, RVM utiliza el gestor de paquetes para instalar las dependencias de los
+programas que gestiona, por lo que debemos asegurarnos de que los repositorios estén actualizados:
 
-Este comando puede variar entre versiones y distribuciones, 
+# sudo apt-get update
+
+# apt-get install git-core subversion nodejs curl
 
 ##### Instalación de la firma #####
 
