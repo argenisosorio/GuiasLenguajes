@@ -6,9 +6,7 @@
 ### Rails 4.2.4 ################################
 ################################################
 
-#########################
 ##### Ruby on Rails #####
-#########################
 
 Es un framework de aplicaciones web de código abierto escrito en Ruby, siguiendo el paradigma
 de la arquitectura Modelo Vista Controlador (MVC). Trata de combinar la simplicidad con la
@@ -177,6 +175,8 @@ Se creara un gemset o instancia o directorio para esa versión de ruby en:
 
 $ rvm list # Para listar las instalaciones de Ruby existentes y ver cual se está usando
 
+---
+
 rvm rubies
 
    ruby-2.2.4 [ x86_64 ]
@@ -186,12 +186,13 @@ rvm rubies
 # =* - current && default
 #  * - default
 
+---
+
 # En este caso vemos que tenemos dos instancias de ruby
 
-$ rvm use 2.3.0 // Para usar esa versión de ruby específica, algo así como acceder a un entorno
-virtual en python.
+$ rvm use 2.3.0 # Para usar esa versión de ruby específica, algo así como acceder a un entorno virtual en python.
 
-$ rvm uninstall ruby-2.3.o // Desinstalar una versión específica de ruby
+$ rvm uninstall ruby-2.3.o # Desinstalar una versión específica de ruby
 
 ################################
 ##### Cómo crear un gemset #####
@@ -230,9 +231,14 @@ $ rvm gemset use ruby-2.2.5@proyecto1
 Ahora podemos instalar cualquier gema y quedara dentro de esa instancia o versión
 de ruby y en ese gemset específico.
 
-#Instalar Rails con el comando de RubyGems: gem install.
+##################################################################
+##### Instalar Rails con el comando de RubyGems: gem install #####
+##################################################################
+
+# Instalar la última version disponible
+$ gem install rails 
+
 #Podemos especificar la versión a instalar
-$ gem install rails
 $ sudo gem install rails --version 4.2.2
 
 #Comprobar la correcta instalacion de Rails
@@ -255,20 +261,57 @@ $ bundle show
 #DB: Si creamos un proyecto, rails esta configurado para usar por defecto una db de Sqlite3 y 
 #crear las tablas y campos en ella cuando se haga un rake, si cambiamos a otra base de datos
 #en la conf de la aplicacion, será necesario hacer de nuevo un rake db:migrate para que vuelva
-#a crear la estructura en la nueva db
+#a crear la estructura en la nueva db.
 
-#############################################
-##### Comandos básicos de Ruby on rails #####
-#############################################
+##################
+##### Bundle #####
+##################
 
-# Comprobar que tienes instalada alguna versión reciente de Ruby:
-$ ruby -v
+# Bundler proporciona un entorno consistente para proyectos de Ruby
+# mediante el seguimiento y la instalación de las versiones
+# y las gemas exactas que se necesitan.
 
-# Comprobar que tienes instalado SQLite 3 instalado correctamente.
-$ sqlite3 --version
+# Bundler es una salida del infierno de las dependencias, y asegura que las gemas
+# que necesita están presentes en el desarrollo, la puesta en escena, y la producción.
+# De empezar a trabajar en un proyecto es tan simple como paquete de instalación.
 
-#Si quieres empezar un proyecto y ya tienes instalado RoR puedes comenzar con lo siguiente:
-#Abre tu terminal, ve a la carpeta en donde meterás tus archivos y escribe los siguientes comandos:
+# Bundler proporciona un entorno consistente para los proyectos de Ruby mediante el seguimiento y la instalación
+# de las gemas exactas y las versiones que se necesitan. 
+
+# Documentacio en --> http://bundler.io/
+
+Cuando creamos un proyecto en una version específica de rails, este instala todas
+las gemas necesarias para su funcionamiento, estas gemas están descritas en el fichero
+Gemfile.
+
+# En el Gemfile se especifican las dependencias de las gemas que usara nuestro proyecto, ejemplo:
+source 'https://rubygems.org'
+gem 'nokogiri'
+gem 'rack', '~>1.1'
+gem 'rspec', :require => 'spec'
+
+# Visualizar las gemas instaladas en un proyecto
+$ bundle show
+
+# Detectar las gemas que están desactualizadas, bundle revisará cuáles de nuestras
+# gemas tienen nuevas versiones y nos las listará
+$ bundle outdated 
+
+# Si queremos actualizarlas todas podemos ejecutar
+$ bundle update
+
+# Si solo queremos actualizar una gema en particular.
+$ bundle update <nombre_de_la_gema>
+  
+Pero si agregamos una gema que no es instalada automáticamente
+deberemos repasar la lista de dependencias para que se instalen
+las nuevas que no han sido instaladas, esto lo haremos con el comando:
+
+$ gem install bundler
+
+#######################################
+##### Crear un proyecto con rails #####
+#######################################
 
 $ rails new prueba
 #Se genera una nueva carpeta dentro del directorio, esa carpeta sera la aplicacion
@@ -277,7 +320,9 @@ $ rails new prueba
 #se instalaron todas las gemas, verificar errores etc. Las gemas que se instalan son las mencionadas
 #en el gemfile que esta en el directorio de la aplicacion creada.
 
-#Al crear la aplicacion se generaran los directorios y subdirectorios de la misma:
+#####################################################
+##### Estructura básica de un proyecto en rails #####
+#####################################################
 
 app/ #Contiene los controllers, models, views, helpers, mailers y assets para tu aplicación.
 
@@ -323,7 +368,18 @@ tmp/ #archivos temporales (como archivos de caché, PID y archivos de sesiones).
 
 vendor/ #Lugar para código de terceros. En una típica aplicación Rails, ésta incluye librerías y plugins.
 
------
+#############################################
+##### Comandos básicos de Ruby on rails #####
+#############################################
+
+# Comprobar que tienes instalada alguna versión reciente de Ruby:
+$ ruby -v
+
+# Comprobar que tienes instalado SQLite 3 instalado correctamente.
+$ sqlite3 --version
+
+#Si quieres empezar un proyecto y ya tienes instalado RoR puedes comenzar con lo siguiente:
+#Abre tu terminal, ve a la carpeta en donde meterás tus archivos y escribe los siguientes comandos:
 
 # Desinstalar una gema específica, a veces hay conflictos entre versiones de gemas a usar en el proyecto y las gemas instaladas.
 $ gem uninstall <gem-name>
@@ -350,54 +406,17 @@ $ DB=postgres bin/rake db:migrate:status
 #Para moverse entre los estados de las migraciones donde X es el numero a retroceder
 $ bin/rails db:rollback STEP=X
 
-##################
-##### Bundle #####
-##################
-
-# Bundler proporciona un entorno consistente para proyectos de Ruby
-# mediante el seguimiento y la instalación de las versiones
-# y las gemas exactas que se necesitan.
-
-# Bundler es una salida del infierno de las dependencias, y asegura que las gemas
-# que necesita están presentes en el desarrollo, la puesta en escena, y la producción.
-# De empezar a trabajar en un proyecto es tan simple como paquete de instalación.
-
-# Bundler proporciona un entorno consistente para los proyectos de Ruby mediante el seguimiento y la instalación
-# de las gemas exactas y las versiones que se necesitan. 
-
-# Documentacio en --> http://bundler.io/
-
-Cuando creamos un proyecto en una version específica de rails, este instala todas
-las gemas necesarias para su funcionamiento, estas gemas están descritas en el fichero
-Gemfile.
-
-# En el Gemfile se especifican las dependencias de las gemas que usara nuestro proyecto, ejemplo:
-source 'https://rubygems.org'
-gem 'nokogiri'
-gem 'rack', '~>1.1'
-gem 'rspec', :require => 'spec'
-
-# Visualizar las gemas instaladas en un proyecto
-$ bundle show
-
-# Detectar las gemas que están desactualizadas, bundle revisará cuáles de nuestras
-# gemas tienen nuevas versiones y nos las listará
-$ bundle outdated 
-
-# Si queremos actualizarlas todas podemos ejecutar
-$ bundle update
-
-# Si solo queremos actualizar una gema en particular.
-$ bundle update <nombre_de_la_gema>
-	
-Pero si agregamos una gema que no es instalada automáticamente
-deberemos repasar la lista de dependencias para que se instalen
-las nuevas que no han sido instaladas, esto lo haremos con el comando:
-
-$ gem install bundler
-
+#######################################################
 ##### Activando un proyecto clonado o ya iniciado #####
-	
+#######################################################
+
+'''
+Al momento de clonar algun proyecto es sabido que cuenta con algunas dependencias
+específicas, ya sea una version de rails, sqlite3 u otras gemas, para instalar
+esas dependencias usaremos bundle, que no es mas que un script que instala
+lo que está descrito en el Gemfile, por eso instalamos bundle.
+'''
+
 #Dentro del proyecto instalamos bundler:
 $ gem install bundler
 
@@ -420,22 +439,6 @@ BUNDLED WITH
 Lo que nos lleva a instalar esa version de bundle para correr el servidor de ese proyecto, usamos:
 
 $ gem install bundler 1.xx.x
-
-#################
-##### NOTAS #####
-#################
-
-# Enlace al path de otro controlador
-<%= link_to "proyecto", proyecto_path%>
-
-#################################
-##### Activando un proyecto #####
-#################################
-
-Al momento de clonar algun proyecto es sabido que cuenta con algunas dependencias
-específicas, ya sea una version de rails, sqlite3 u otras gemas, para instalar
-esas dependencias usaremos bundle, que no es mas que un script que instala
-lo que está descrito en el Gemfile, por eso instalamos bundle.
 
 ##############################
 ##### Ejemplos prácticos #####
@@ -475,7 +478,7 @@ localhost:3000/Empleados
   ó
 localhost:3000/Alumnos
 
---- Otro ejemplo--- 
+##### Otro ejemplo #####
 
 #Creando una aplicacion de (prueba) saludar y dar la hora
 
@@ -617,7 +620,7 @@ end
 
 #Guardamos y ya podremos ver las variables impresas en la vista
 
-#####  Creando aplicacion blog (controladores, vistas y rutas a mano) #####
+##### Creando aplicacion blog (controladores, vistas y rutas a mano) #####
 
 $ rails new blog #Creamos nuestra aplicacion
 
@@ -718,32 +721,39 @@ $ rake db:migrate #Se crearon las tablas correspondientes en la
 #Podemos visualizar la lista de publicaciones asi como enlaces a las operaciones
 #CRUD que se crearon
 
-##### List of available datatypes - models #####
+#################
+##### NOTAS #####
+#################
+
+# Enlace al path de otro controlador
+# <%= link_to "proyecto", proyecto_path%>
+
+#################################################
+##### Lista de los tipos de datos - modelos #####
+#################################################
 
 Here are all the Rails 4 (ActiveRecord migration) datatypes:
 
-    :binary
-    :boolean
-    :date
-    :datetime
-    :decimal
-    :float
-    :integer
-    :bigint
-    :primary_key
-    :references
-    :string
-    :text
-    :time
-    :timestamp
+  :binary
+  :boolean
+  :date
+  :datetime
+  :decimal
+  :float
+  :integer
+  :bigint
+  :primary_key
+  :references
+  :string
+  :text
+  :time
+  :timestamp
 
 If you use PostgreSQL, you can also take advantage of these:
 
-    :hstore
-    :json
-    :array
-    :cidr_address
-    :ip_address
-    :mac_address
-
-
+  :hstore
+  :json
+  :array
+  :cidr_address
+  :ip_address
+  :mac_address
