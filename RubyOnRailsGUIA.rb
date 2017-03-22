@@ -101,7 +101,7 @@ sobre Ruby Version Mananger (RVM) en https://rvm.io
 
 ##### Instalamos los paquetes del S.O. requeritos por RVM: #####
 
-$ sudo apt-get install -y git-core subversion nodejs
+$ sudo apt-get install -y git-core subversion nodejs curl
 
 Este comando puede variar entre versiones y distribuciones, 
 
@@ -113,8 +113,6 @@ Para ello necesitamos instalar dicha firma. En caso contrario podría darnos pro
 $ gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
   
 # Instalación rápida de RVM #
-
-# apt-get install curl
 
 $ \curl -sSL https://get.rvm.io | bash -s stable --rails --ruby
   
