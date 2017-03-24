@@ -125,7 +125,7 @@ user pts/3        2015-07-31 12:37 02:53        8351 (:192.168.0.240)
 
 $ pkill -9 -t pts/3 // Acabar con una conexión externa, se envió la señal -9 que indica matar (KILL) el proceso, la opción -t indica que se basará
 en un atributo de nombre de terminal y se indica después el nombre de la terminal en si pts/3. Este es el comando que sí funciona para 
-refusar o eliminar conexiones externas o eliminar 
+refusar o eliminar conexiones externas.
 
 $ last // listar los ultimos usuarios conectados
 
@@ -362,7 +362,10 @@ $ cp Nombre_de_archivo.txt /Carpeta/destino/a/copiar // Copiar un fichero en un 
 se debe estar situado en la carpeta del archivo a copiar
 
 $ cp Nombre_carpeta -r /Carpeta/destino/a/copiar // Copiar un directorio en otro, 
-se debe estar situado en la carpeta de la carpeta a copiar
+se debe estar situado en la carpeta de la carpeta a copiar.
+
+- Saber la ruta de un directorio //  Desde el explorador de archivar (nautilus) desde cualquier directorio
+sin importar el nivel donde estemos, tecleamos Ctrl + l esto nos dirá la ruta completa hasta el directorio.
 
 $ cp -r /home/usuario/carpeta1/ /home/usuario/carpeta2/ //Se pueden copiar archivos o carpetas especificando las
 rutas completas, en este caso la primera ruta es el directorio o archivo a copiar y la segunda es la ruta donde
@@ -955,6 +958,8 @@ Es para usuarios y desarrolladores que desean crear bases de datos, buscar y edi
 Utiliza una interfaz de tipo hoja de cálculo familiar y no necesita aprender comandos SQL complicados.
 
 # aptitude install sqlitebrowser
+
+$ sqlitebrowser // Para ejecutarlo
 
 #########################################################
 ##### Quemar o grabar una imagen iso en un pendrive #####
