@@ -830,7 +830,6 @@ Include /etc/phpmyadmin/apache.conf //Esta linea se agrega al final de la config
 
 /etc/init.d/xxx restart // xxx mysql, apache etc... restart
 
-
 ###########################################
 ########## Instalar MySQL server ##########
 ###########################################
@@ -853,6 +852,35 @@ Para ver los logs del sitio disponible:
 
 Para ver en tiempo real el log del server del sitio:
 /var/log/nginx# tailf nombre_del_sitio.ve.access.log
+
+###################################
+##### Configurar el localhost #####
+###################################
+
+En el fichero /etc/hosts está configurado el localhost de la máquina, el contenido
+puede ser parecido a:
+
+---
+
+127.0.0.1      localhost
+127.0.1.1       debian8.debian8 debian8
+
+---
+
+Esto quiere decir que cuando accedamos desde el navegador a "localhost"
+entonces estaremos accediento a 127.0.0.1.
+
+Para hacer una prueba agregaremos y comentaremos una línea al fichero:
+
+---
+
+#127.0.0.1      localhost
+127.0.1.1       debian8.debian8 debian8
+127.0.0.1        www.x.x
+
+---
+
+Lo que hicimos es cambiar localhost por una url arbitraria, ahora si accedemos a www.x.x accederemos a 127.0.0.1
 
 #################
 ##### RSYNC #####
