@@ -22,15 +22,15 @@
   <meta charset="utf-8">
   <title>XXXXXX</title>
   <script src="jquery-1.9.1.js" type="text/javascript"></script>
-  <link rel="stylesheet" href="estilo.css" type="text/css"/>
+  <link rel="stylesheet" href="styles.css" type="text/css"/>
 </head>
 <body>
-  <div id="completo">
-    <div id="cabecera">
-      Cabecera
+  <div id="containter">
+    <div id="header">
+        Header
     </div>
-    <div id="cuerpo">
-      Cuerpo
+    <div id="body">
+        Body
     </div>
     <div id="footer">
         Footer
@@ -46,51 +46,53 @@
 ---------------
 
 <html>
-	<head>
-		<title>Page Title</title>
-	</head>
+    <head>
+        <title>Page Title</title>
+    </head>
     <link rel="stylesheet" href="estilo.css" type="text/css"/> <!--Llamada de un fichero de estilos-->
     <script src="jquery-1.9.1.js" type="text/javascript"></script> <!--Llamada de un fichero js-->
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script> <!--Llamada de un fichero js de un servidor externo-->
 <body>
-	<h1>This is a Heading</h1>
-	<p>This is a paragraph.</p>
 </body>
 </html>
 
 --------------
 
 <html>
-
-	<head> <!-- CABECERA -->
-		<title>Titulo</title> <!-- TITULO, se verá reflejado en la barra y pestañas del navegador -->
-		<meta http-equiv="content-type" content="text/html;charset=utf-8" /> <!--Sirve entre otras cosas para poder usar los acentos en HTML-->
-		<meta charset="UTF-8" /> <!-- La que usa wikipedia -->
-	</head>
-
+    <head> <!-- CABECERA -->
+        <title>Titulo</title> <!-- TITULO, se verá reflejado en la barra y pestañas del navegador -->
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" /> <!-- Deficne la codificación de caracteres 
+        que va a ser interpretada por el navegador, sirve también para poder usar los acentos en HTML -->
+        <meta charset="UTF-8" /> <!-- La que usa wikipedia -->
+    </head>
 <body> <!-- CUERPO, donde va el contenido de la página -->
-
 <center><h2>Pagina Web</h2></center>
 <p>
 <p align="justify"> El fútbol o futbol (del inglés británico football), también conocido como fútbol asociación, balompié o soccer, es un deporte de equipo jugado entre dos conjuntos de once jugadores cada uno y cuatro árbitros que se ocupan de que las normas se cumplan correctamente. Es ampliamente considerado el deporte más popular del mundo, pues participan en él unos 270 millones de personas. <p>
 
 <p align="justify"> El terreno de juego es rectangular de césped natural o artificial, con una portería o arco a cada lado del campo. El objetivo del juego es desplazar con cualquier parte del cuerpo que no sea los brazos o las manos, y mayoritariamente con los pies (de ahí su nombre), una pelota a través del campo para intentar introducirla dentro de la portería contraria, acción que se denomina marcar un gol. El equipo que logre más goles al cabo del partido, de una duración de 90 minutos, es el que resulta ganador del encuentro. <p>
+</body>
+</html>
 
-<!-- COMENTARIOS/TEXTO  -->	
 
-****************VARIOS****************
-
+<!-- Desabilitar el click derecho, se pone encima del HEAD
+========================================================== -->
 <script type="text/javascript"> 
-document.oncontextmenu = function(){return false;}
-</script> //Desabilitar el click derecho, se pone encima del HEAD
+    document.oncontextmenu = function(){return false;}
+</script>
 
-<a href="#"><img src="1.PNG" onmouseover="this.src='2.PNG' " onmouseout="this.src='1.PNG' "/> </a> //Botón Rollover con dos imágenes
+--------------
 
-****************PÁRRAFOS****************
+<!-- Botón Rollover con dos imágenes
+========================================================== -->
+<a href="#"><img src="1.PNG" onmouseover="this.src='2.PNG' " onmouseout="this.src='1.PNG' "/> </a>
 
+
+<!-- Etiquepas para párrafos
+========================================================== -->
 <p> Sirve para separar parrafos y dejar espacios en blanco
 
-<br> Sirve como fin de línea o como un punto y aparte	
+<br> Sirve como fin de línea o como un punto y aparte    
 
 &nbsp; &nbsp; Crear espacios en blanco entre las palabras
 
@@ -104,15 +106,16 @@ document.oncontextmenu = function(){return false;}
 
 <center></center> Sirve para alinear un encabezado o un parrafo al centro de la pagina
 
-//HTML5 elimina el uso de center y recomienda el uso de CSS para alinear los textos etc, tambien es valido usar la etiqueta DIV a la cual se le pueden dar atributos como id="nombre_identificador" y align="justify,center,left o right" para alinear.
+<!-- HTML5 elimina el uso de center y recomienda el uso de CSS para alinear los textos etc, tambien es valido usar la etiqueta DIV a la cual se le pueden dar atributos como id="nombre_identificador" y align="justify,center,left o right" para alinear -->
 
 <div id="cuerpo" align="left"> 
-	Hola....
+    Hola....
 </div>
 
 <p align="left"></p> Sirve para justificar un parrafo a LEFT, CENTER, RIGHT o JUSTIFY 
 
-****************TIPOS DE LETRA, EFECTOS Y MÁS****************
+<!-- TIPOS DE LETRA, EFECTOS Y MÁS 
+========================================================== -->
 
 <h1></h1> Le da tamaño al texto, varia del 1 al 6
 
@@ -130,7 +133,7 @@ font-style: italic // Cursiva en css
 
 <u></u> Subrayado
 
-<strike></strike> Texto tachado	
+<strike></strike> Texto tachado    
 
 <s></s> Texto tachado
 
@@ -138,15 +141,16 @@ font-style: italic // Cursiva en css
 
 <sub></sub> Subíndice
 
-<marquee></marquee> El texto se desplaza de derecha a izquierda repetidamente	
+<marquee></marquee> El texto se desplaza de derecha a izquierda repetidamente    
 
 <font size="7px">TEXTO</font> Para asignar tamaño al texto, se denota en pixeles el tamaño
 
 <font color="red">TEXTO</font> Para dar color al texto, red, green, orange, blue etc...
 
-<font face="arial">TEXTO</font> Tipo de fuente del texto			
+<font face="arial">TEXTO</font> Tipo de fuente del texto            
 
-****************COLORES Y FONDO****************	
+<!-- COLORES Y FONDO
+========================================================== -->
 
 <body text="red"></body> Para dar color a todo el texto de la página
 
@@ -158,7 +162,8 @@ font-style: italic // Cursiva en css
 
 <body alink="yellow"></body> Color de enlaces ya visitados
 
-****************LISTAS****************	
+<!-- LISTAS
+========================================================== -->
 
 <ol> ó <ul> Tipo de demarcacion de una lista, numerica y punto
 <li>techo</li>
@@ -166,7 +171,6 @@ font-style: italic // Cursiva en css
 <li>ventana</li>
 
 <OL type=A> De tipos A,a,I,i,1
-/////
 
 <ol> Los famosos más insoportables de la televisión:
     <li>Antonio Bandelas</li>
@@ -174,8 +178,8 @@ font-style: italic // Cursiva en css
     <li>Robert Downey Jr.</li>
 </ol>
 
-xxxxxxxxxx listas con estilos xxxxxxxxxx
-
+<!-- Listas con estilos
+========================================================== -->
 <html>
 <head>
     <title></title>
@@ -212,7 +216,8 @@ xxxxxxxxxx listas con estilos xxxxxxxxxx
 </body>
 </html>
 
-****************LINKS O ENLACES****************	
+<!-- LINKS O ENLACES
+========================================================== -->
 
 <a href="LINK">Título del enlace</a> Crear un link
 
@@ -238,29 +243,27 @@ height="180"
 
 <a href="#" title="Ejemplo de título">ENLACE</a> Sirve para ayadir un Título o pequeño texto sobre un enlace determinado, al posar el cursor sobre el enlace se observará el texto
 
-_____________________________________________________________________________________
+<!-- Abrir enlace en una nueva pestaña -->
+<a href="pagina.html" target="_blank">abrir enlace en una nueva pestaña</a>
 
-<body> Enlaces Locales, sirve para trasladarse a sitios determinados dentro de la misma página, por ejemplo secciones de la página.
-	
+-----
+<!-- Enlaces Locales, sirve para trasladarse a sitios determinados dentro de la misma página, por
+ejemplo secciones de la página -->
+<body>
 <h2>Enlaces Locales</h2>
 <h3><a name="indice">Indice</a></h3>
-
 <ul>
-	<li><a href="#uno">Seción 1</a>  
-	<li><a href="#dos">Seción 2</a>  
-	<li><a href="#tres">Seción 3</a>  
-	<li><a href="#cuatro">Seción 4</a>    
-</ul>	
-
+    <li><a href="#uno">Seción 1</a>  
+    <li><a href="#dos">Seción 2</a>  
+    <li><a href="#tres">Seción 3</a>  
+    <li><a href="#cuatro">Seción 4</a>    
+</ul>
 <hr>
-
 <h3><a name="uno">Sección 1</a></h3>
 
-
-11111111111111111111111111 <br>	
+11111111111111111111111111 <br>    
 
 <hr>
-
 
 <h3><a name="dos">Sección 2</a></h3>
 
@@ -268,13 +271,11 @@ ________________________________________________________________________________
 
 <hr>
 
-
 <h3><a name="tres">Sección 3</a></h3>
 
 333333333333333333333333333333
 
 <hr>
-
 
 <h3><a name="cuatro">Sección 4</a></h3>
 
@@ -282,13 +283,14 @@ ________________________________________________________________________________
 
 </body>
 
-****************TABLAS****************	
+<!-- Tablas
+========================================================== -->
 
 <table border="3px" cellpadding="10px" cellspacing="10px" style="width:100%"> Creacion de una tabla
 <caption>Tabla</caption> Título de la tabla
-<tr><td>1</td>	<td>2</td> <td>3</td> </tr>
-<tr><td>4</td>	<td>5</td> <td>6</td> </tr>
-<tr><td>7</td>	<td>8</td> <td>9</td> </tr>
+<tr><td>1</td>    <td>2</td> <td>3</td> </tr>
+<tr><td>4</td>    <td>5</td> <td>6</td> </tr>
+<tr><td>7</td>    <td>8</td> <td>9</td> </tr>
 </table>
 
 <td bgcolor="red"> Para dar color a una celda
@@ -298,8 +300,7 @@ style="width:100%" Ancho de la tabla
 style="text-align:center" Centrar elementos(texto) de las celdas
 style="width:100%;text-align:center" Dos atributos en el estilo separados por ;
 
-xxxxxxxxxxxxxxxx Tablas con cabecera, cuerpo y pies xxxxxxxxxxxxxxxx
-<!-- El orden de uso de thead tbody y tfoot no altera el resultado
+<!-- Tablas con cabecera, cuerpo y pies. El orden de uso de thead tbody y tfoot no altera el resultado
 siempre los mostrara en orden en la vista -->
 <html>
 <head>
@@ -340,8 +341,7 @@ siempre los mostrara en orden en la vista -->
 </body>
 </html>
 
-xxxxxxxxxxxxxxxx Tabla con estilo xxxxxxxxxxxxxxxx
-
+<!-- Tabla con estilo -->
 <html>
     <head>
         <title></title>
@@ -388,8 +388,7 @@ xxxxxxxxxxxxxxxx Tabla con estilo xxxxxxxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxx Tabla con estilo e identificador xxxxxxxxxxxxxxxx
-
+<!-- Tabla con estilo e identificador -->
 <html>
     <head>
         <title></title>
@@ -428,8 +427,7 @@ xxxxxxxxxxxxxxxx Tabla con estilo e identificador xxxxxxxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxx Tabla con estilo e identificador en th, td xxxxxxxxxxxxxxxx
-
+<!-- Tabla con estilo e identificador en th, td -->
 <!DOCtype html>
 <html>
 <head>
@@ -513,8 +511,7 @@ table#t01 th    {
 </body>
 </html>
 
-xxxxxxxxxxxxxxxx Tabla con estilo e identificador en th, td con hover xxxxxxxxxxxxxxxx
-
+<!-- Tabla con estilo e identificador en th, td con hover -->
 <!DOCtype html>
 <html>
 <head>
@@ -625,15 +622,13 @@ table#t01 tr:nth-child(odd):hover {
 </body>
 </html>
 
-**********91 etiquetas disponibles en HTML**********
-
-a, abbr, acronym, address, applet, area, b, base, basefont, bdo, big, blockquote, body, br, button,	caption, center, cite, code, col, colgroup, dd, del, dfn, dir, div, dl, dt, em, fieldset, font, form, frame, frameset, h1, h2, h3, h4, h5, h6, head, hr, html, i, iframe, img, input, ins, isindex, kbd, label, legend, li,
+<!-- 91 etiquetas disponibles en HTML 
+a, abbr, acronym, address, applet, area, b, base, basefont, bdo, big, blockquote, body, br, button,    caption, center, cite, code, col, colgroup, dd, del, dfn, dir, div, dl, dt, em, fieldset, font, form, frame, frameset, h1, h2, h3, h4, h5, h6, head, hr, html, i, iframe, img, input, ins, isindex, kbd, label, legend, li,
 link, map, menu, meta, noframes, noscript, object, ol, optgroup, option, p, param, pre, q, s, samp, script, select, small, span, strike, strong, style, sub, sup, table, tbody, td, textarea, tfoot, th, thead, title, tr, tt, u, ul, var
-	
+-->
 
-######################
-##### GET y POST #####
-######################
+<!-- GET y POST
+========================================================== -->
 
 Se suele prestar a confusión ya que tanto GET como POST son métodos del protocolo HTTP el cual esta compuesto por un envío al servidor conocido como petición (request) y una respuesta a dicha solicitud (response).
 
@@ -649,50 +644,56 @@ Las llamadas GET pueden ser cacheadas (historial del navegador), indexadas por b
 
 Generalmente usamos links para ejecutar llamadas GET ya que la idea del link es simplemente “solicitar” una información (página) al servidor y que sea devuelta como una respuesta. Mientras usamos formularios para actualizar datos de productos, clientes, noticias, etc, también teniendo en cuenta que por el método POST también se puede enviar mucha más cantidad de datos que por GET.
 
-****************formULARIOS****************
+<!-- Formularios -forms
+========================================================== -->
+
+<!-- Atributos de un formulario -->
+required // Atributo que hace que el campo sea obligatorio llenarlo
+size="10" // Atributo que se puede añadir al input
+maxlength="10" // Atributo del input para limitar el número de caracteres permitidos en los campos
+autocomplete=off // Atributo para evitar recordar los datos introducidos en los campos
+placeholder="Tu Nombre" //Texto de ejemplo dentro del campo del formulario, a manera de ejemplos
 
 <form action="datos.php" method="get"> formulario de USUARIO y CONTRASEÑA también method="post"
-Nombre: <input type="text" name="nombre" autocomplete=off><br />
-Contraseña: <input type="password" name="contrasena"><br />
-<input type="submit" value="Enviar">
-<input type="reset" value="Borrar">
-<input type=image src="guardar.png" width="25" height="15"> Imagen como boton submit
-<a href="#"><img src="guardar.png" alt="Enviar"></a> Imagen como boton submit
-<input type="image" name="imageField" src="guardar.png" /> Imagen como boton submit
+    Nombre: <input type="text" name="nombre" autocomplete=off><br />
+    Contraseña: <input type="password" name="contrasena"><br />
+    <input type="submit" value="Enviar">
+    <input type="reset" value="Borrar">
+    <input type=image src="guardar.png" width="25" height="15"> Imagen como boton submit
+    <a href="#"><img src="guardar.png" alt="Enviar"></a> Imagen como boton submit
+    <input type="image" name="imageField" src="guardar.png" /> Imagen como boton submit
 </form>
 
-*****HTML agrega nuevos tipos de formularios y validacion de campos sin el uso de JavaScript*****
-
+<!-- HTML agrega nuevos tipos de formularios y validacion de campos sin el uso de JavaScript -->
 <div id="formulario1">
-	<h4>LOGIN</h4>
-	<form action="#" method="GET"> 
-		Nombre: <input type="text" name="nombre"><br />      
-		Contraseña: <input type="password" name="contrasena"><br /> <p></p>          
-		Búsqueda: <input type="search"> <br />
-		Números: <input type="number"> <br />
-		Rango: <input type="range"> <br />
-		Color: <input type="color"> <br />
-		NMobNum: <input type="tel"> <br />
-		URL: <input type="url"> <br />
-		E-Mail: <input type="email"> <br /> 
-		<input type="submit" value="Enviar">
-		<input type="reset" value="Borrar">
-	</form>
+    <h4>LOGIN</h4>
+    <form action="#" method="GET"> 
+        Nombre: <input type="text" name="nombre"><br />      
+        Contraseña: <input type="password" name="contrasena"><br /> <p></p>          
+        Búsqueda: <input type="search"> <br />
+        Números: <input type="number"> <br />
+        Rango: <input type="range"> <br />
+        Color: <input type="color"> <br />
+        NMobNum: <input type="tel"> <br />
+        URL: <input type="url"> <br />
+        E-Mail: <input type="email"> <br /> 
+        <input type="submit" value="Enviar">
+        <input type="reset" value="Borrar">
+    </form>
 </div>
 
-	
-**************
+    
+------
 
 <form action="#" method="get">
-	Usuario: <input type="text" name="user" placeholder="Tu Usuario" required> <br />
-	Usuario: <input type="text" name="user" placeholder="Tu Usuario" disabled="disabled" required> <br />
-	Contraseña: <input type="password" name="pass" placeholder="Tu clave" required> <br />
-	<input type="submit" value="Enviar">
-	<input type="reset" value="Borrar">
+    Usuario: <input type="text" name="user" placeholder="Tu Usuario" required> <br />
+    Usuario: <input type="text" name="user" placeholder="Tu Usuario" disabled="disabled" required> <br />
+    Contraseña: <input type="password" name="pass" placeholder="Tu clave" required> <br />
+    <input type="submit" value="Enviar">
+    <input type="reset" value="Borrar">
 </form>
 
--------- Limpio --------
-
+<!-- Básico para login -->
 <form action="#" method="get">
     Usuario: <input type="text" name="user"> <br />
     Contraseña: <input type="password" name="pass"> <br />
@@ -702,28 +703,21 @@ Contraseña: <input type="password" name="contrasena"><br />
 
 --------
 
--->Botón enviar
+<!-- Botón enviar -->
 <form action="" method="get">
     Nombre: <input type="text" name="nombre"> <br />
     <!--input type="submit" value="Enviar"-->
     <button>Enviar</button>
 </form>
 
-required // Atributo que hace que el campo sea obligatorio llenarlo
-size="10" // Atributo que se puede añadir al input
-maxlength="10" // Atributo del input para limitar el número de caracteres permitidos en los campos
-autocomplete=off // Atributo para evitar recordar los datos introducidos en los campos
-placeholder="Tu Nombre" //Texto de ejemplo dentro del campo del formulario, a manera de ejemplos
-
-<input type="button" value="Pulseme"> Crea un boton generico de HTML y nosotros asignamos su funcionamiento
-
+<!-- textarea -->
 <form>
     <textarea name="texto" rows="10" cols="50">
         Hola hdspm
     </textarea>
 </form>
 
-Formulario de Selección
+<!-- Formulario de Selección -->
 <select name="carlist" form="carform">
   <option value="volvo">Volvo</option>
   <option value="saab">Saab</option>
@@ -731,7 +725,8 @@ Formulario de Selección
   <option value="audi">Audi</option>
 </select>
 
-<form action="datos.php" method="get"> Tipo Checkbox
+<!-- Checkbox -->
+<form action="datos.php" method="get">
     ¿Cuáles son sus pasatiempos favoritos?<br>
     <input type="checkbox" name="pasa" value="tv">TV<br>
     <input type="checkbox" name="pasa" value="libros">Libros<br>
@@ -739,13 +734,15 @@ Formulario de Selección
     <input type="checkbox" name="pasa" value="otros">Otros<br>
 </form>
 
-<form action="foto.php" method="post" accept="image/jpg"> Subir una imagen a la página o al servidor
-Ingrese la foto: <input type="file" name="foto"><br />
-<input type="submit" value="Enviar">
-<input type="reset" value="Borrar">
+<!-- Subir una imagen a la página o al servidor -->
+<form action="foto.php" method="post" accept="image/jpg">
+    Ingrese la foto: <input type="file" name="foto"><br />
+    <input type="submit" value="Enviar">
+    <input type="reset" value="Borrar">
 </form>
 
-<form action="colores.php" method="get"> formulario tipo radio
+<!-- Tipo radio -->
+<form action="colores.php" method="get"> 
     Elija un color<br>
     <input type="radio" name="col" value="red">Rojo<br>
     <input type="radio" name="col" value="blue">Azul<br>
@@ -754,58 +751,58 @@ Ingrese la foto: <input type="file" name="foto"><br />
     <input type="reset" value="Borrar">
 </form>
 
-****************ESTILOS****************
+<!-- Estilos
+========================================================== -->
 
 <div style="color:red;font-size:20px">
-	hola
+    hola
 </div>
 
 <p style="color:green;font-size:30px">
-	hola
+    hola
 </p>
 
 <h1 style="color:green;font-size:10px">Título grande</h1>
 
 <p style="font-size:15px;color:red;font-family: Verdana">Un párrafo verdaderamente espectacular</p>
 
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+------
 
 <html>
-	<head>
-		<title>Ejemplo de estilos con CSS</title>
-		<style>
-  			h1 { color: red;  font-family: Arial;   font-size: large;  }
-  			p  { color: blue; font-family: Verdana; font-size: medium; }
-		</style>
-	</head> 
+    <head>
+        <title>Ejemplo de estilos con CSS</title>
+        <style>
+              h1 { color: red;  font-family: Arial;   font-size: large;  }
+              p  { color: blue; font-family: Verdana; font-size: medium; }
+        </style>
+    </head> 
 <body>
   <h1>Titular de la página</h1>
   <p>CSS permite separar los contenidos de la página y la información sobre su aspecto. En el ejemplo anterior, dentro de la propia página HTML se crea una zona especial en la que se incluye toda la información relacionada con los estilos de la página.</p>
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxx
+------
 
 <html>
-	<head>
-	<title>Titulo</title>
-		<style>
-			div {
-				float: justify; 
-				border: ridge 1px red;
-				margin: 20px;
-			}
-		</style>
-	</head>	
+    <head>
+    <title>Titulo</title>
+        <style>
+            div {
+                float: justify; 
+                border: ridge 1px red;
+                margin: 20px;
+            }
+        </style>
+    </head>    
 <body> 
-	<div>
-		<P>El fútbol femenino ha tenido un crecimiento lento en el fútbol moderno, principalmente por obstáculos sociales y culturales que no permiten el ingreso pleno de la mujer al deporte.29 El primer encuentro femenino bajo las reglas del fútbol asociación del cual se tienen registros sucedió en 1892 en Glasgow, Escocia.30 A finales de 1921 el fútbol femenino fue prohibido en Inglaterra, hecho que no le permitió expandirse al resto del mundo.</P>
-	</div>	
+    <div>
+        <P>El fútbol femenino ha tenido un crecimiento lento en el fútbol moderno, principalmente por obstáculos sociales y culturales que no permiten el ingreso pleno de la mujer al deporte.29 El primer encuentro femenino bajo las reglas del fútbol asociación del cual se tienen registros sucedió en 1892 en Glasgow, Escocia.30 A finales de 1921 el fútbol femenino fue prohibido en Inglaterra, hecho que no le permitió expandirse al resto del mundo.</P>
+    </div>    
 </body>
 </html>
 
-xxxxxxxxxx LLamado de id y class en CSS xxxxxxxxxx
-
+<!-- LLamado de id y class en CSS -->
 <html>
 <head>
     <title></title>
@@ -850,29 +847,27 @@ xxxxxxxxxx LLamado de id y class en CSS xxxxxxxxxx
 </body>
 </html>
 
-****************HOVER****************
-
+<!-- hover -->
 <!DOCtype html>
 <html>
-	<head>
-		<title>Prueba</title>
-		<style>
-			b {
-				color:red;
-			}
+    <head>
+        <title>Prueba</title>
+        <style>
+            b {
+                color:red;
+            }
 
-			b:hover {
-				color:green;
-			}
-	    </style>  
-	</head>
+            b:hover {
+                color:green;
+            }
+        </style>  
+    </head>
 <body>
-	<b>Hola lince</b> 
+    <b>Hola lince</b> 
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Hover con imagenes xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- Hover con imagenes -->
 <html>
     <head>
         <title>Estilo para codigo basico</title>
@@ -890,8 +885,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Hover con imagenes xxxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Hover con imagenes con id xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- Hover con imagenes con id -->
 <html>
     <head>
         <title>XXXXXX</title>
@@ -911,8 +905,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Hover con imagenes con id xxxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-****************Estilo en <div> con el id y el class****************
-
+<!-- Estilo en <div> con el id y el class -->
 <html>
     <head>    
         <title>Titulo</title>
@@ -940,8 +933,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Hover con imagenes con id xxxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
---- En el mismo div ---
-
+<!-- En el mismo div -->
 <html>
     <head>
         <title></title>
@@ -962,8 +954,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Hover con imagenes con id xxxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
---- Llamado de id y class en linea css ---
-
+<!-- Llamado de id y class en linea css -->
 <html>
     <head>
         <title></title>
@@ -983,8 +974,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Hover con imagenes con id xxxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-****************Centrar/alinear un elemento <div> medio/medio****************
-
+<!-- Centrar/alinear un elemento <div> medio/medio -->
 <html>
     <head>
         <title></title>
@@ -1012,8 +1002,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Hover con imagenes con id xxxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-****************Menu con estilos****************
-
+<!-- Menu con estilos -->
 <html>
 <head>
     <title></title>
@@ -1073,8 +1062,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Hover con imagenes con id xxxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Menu horizontal, listas con estilos xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- Menu horizontal, listas con estilos -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -1086,11 +1074,9 @@ ul {
     overflow: hidden;
     background-color: #333;
 }
-
 li {
     float: left;
 }
-
 li a {
     display: block;
     color: white;
@@ -1098,26 +1084,22 @@ li a {
     padding: 14px 16px;
     text-decoration: none;
 }
-
 li a:hover {
     background-color: #111;
 }
 </style>
 </head>
 <body>
-
-<ul>
-  <li><a class="active" href="#home">Home</a></li>
-  <li><a href="#news">News</a></li>
-  <li><a href="#contact">Contact</a></li>
-  <li><a href="#about">About</a></li>
-</ul>
-
+    <ul>
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about">About</a></li>
+    </ul>
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Bootstrap botones xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- Bootstrap botones -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -1131,8 +1113,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Bootstrap botones xxxxxxxxxxxxxxxxxxxxxxxxxxx
 <button type="button" class="btn btn-danger">Danger</button>
 <button type="button" class="btn btn-link">Link</button>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Bootstrap Buttons tamaños xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- Bootstrap Buttons tamaños -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -1143,8 +1124,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Bootstrap Buttons tamaños xxxxxxxxxxxxxxxxxxxxxxxxxx
 <button type="button" class="btn btn-primary btn-sm">Small</button>
 <button type="button" class="btn btn-primary btn-xs">XSmall</button>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Block Level Buttons xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- Block Level Buttons -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -1164,9 +1144,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Block Level Buttons xxxxxxxxxxxxxxxxxxxxxxxxxxx
   <button type="button" class="btn btn-default btn-sm btn-block">Button 2</button>
 </div>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx iconos Bootstrap xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-<!-- Uso de íconos de bootstrap -->
+<!-- iconos Bootstrap -->
 <!-- Documentación y ejemplos en: http://getbootstrap.com/components/ -->
 <!DOCTYPE html>
 <html lang="en">
@@ -1191,55 +1169,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx iconos Bootstrap xxxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-<!DOCtype html>
-<html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-</head>
-<body>
-	<div class="container">
-	  <h2>Button Styles</h2>
-	  <button type="button" class="btn btn-default">Default</button>
-	  <button type="button" class="btn btn-primary">Primary</button>
-	  <button type="button" class="btn btn-success">Success</button>
-	  <button type="button" class="btn btn-info">Info</button>
-	  <button type="button" class="btn btn-warning">Warning</button>
-	  <button type="button" class="btn btn-danger">Danger</button>
-	  <button type="button" class="btn btn-link">Link</button>
-	</div>
-</body>
-</html>
-
-----------
-
-<!DOCtype html>
-<html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-</head>
-<body>
-	<div class="container">
-	  <h2>Button Tags</h2>
-	  <a href="#" class="btn btn-info" role="button">Link Button</a>
-	  <button type="button" class="btn btn-info">Button</button>
-	  <input type="button" class="btn btn-info" value="input Button">
-	  <input type="submit" class="btn btn-info" value="Submit Button">
-	</div>
-</body>
-</html>
-
-xxxxxxxxxxxxxxxxxxxxxxxxxx formulario, campo de busqueda con estilo xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- formulario, campo de busqueda con estilo -->
 <html>
 <head>
     <meta charset="utf-8" />
@@ -1289,8 +1219,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx formulario, campo de busqueda con estilo xxxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx formulario, Campo de busqueda con estilo 2 xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- formulario, Campo de busqueda con estilo 2 -->
 <html>
 <head>
     <style>
@@ -1329,9 +1258,9 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx formulario, Campo de busqueda con estilo 2 xxxxxxxxxx
         <button>Buscar</button>
     </form>
 
-	<p />
+    <p />
 
-	<form action="#" method="get" id="search">
+    <form action="#" method="get" id="search">
         <label> Nombre: <input type="text" name="nombre"> </label> <p />
         <label> Apellido: <input type="text" name="nombre" >  </label> <p />
         <label> Cedula: <input type="text" name="nombre" > </label> <p />
@@ -1341,11 +1270,11 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx formulario, Campo de busqueda con estilo 2 xxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Etiqueta span xxxxxxxxxxxxxxxxxxxxxxxxxxx
-<!--La etiqueta <span> permite agrupar varios elementos en línea seguidos dentro de un
+<!-- La etiqueta span
+permite agrupar varios elementos en línea seguidos dentro de un
 mismo bloque (por ejemplo, varias palabras seguidas en un párrafo),
 para después darles formato con la hoja de estilo, tambien podemos declarar
-clases para identificar etiquetas y luego llamarlas en los estilos-->
+clases para identificar etiquetas y luego llamarlas en los estilos -->
 <html>
 <head>
   <meta charset="utf-8">  
@@ -1366,26 +1295,23 @@ href="https://en.wikipedia.org/wiki/Image:First_Web_Server.jpg">foto</a>)</p>
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Estilo para div, mostrar codigos como ejemplo xxxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxx y uso de estilo en <span></span> xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- Estilo para div, mostrar codigos como ejemplo y uso de estilo en <span></span> -->
 <html>
     <head>
         <title>Estilo para codigo basico</title>
         <meta charset="UTF-8" />
     </head>
 
-	<style>
-	    #code {
-	    	background-color: #2B3047;
-	        width:50%;
-	        color: white;
-	        border-radius: 15px;
-	        border: ridge 1px;	  
-	    }	    
-	</style>
+    <style>
+        #code {
+            background-color: #2B3047;
+            width:50%;
+            color: white;
+            border-radius: 15px;
+            border: ridge 1px;      
+        }        
+    </style>
 <body>
-
 <h2>Archivos</h2>
 <h3>Archivos - Carga un archivo y verifica</h3>
 Carga un archivo a través de un formulario y retorna un json con la información de la firma.
@@ -1395,128 +1321,126 @@ Carga un archivo a través de un formulario y retorna un json con la informació
 <p />
 Ejemplo:
 <div id="code">
-	<pre>
-	<span style="color:#5376FF">var</span> formData <span style="color:#CB0630">= new</span> formData();
-	formData.append("upload", $("#file-sign")[0].files[0]);            
-	$.ajax({
-	         url: "https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/firmados",
-	         type: "post",
-	         datatype: "json",
-	         data: formData,
-	         cache: false,
-	         contenttype: false,
-	         processData: false,
-	         headers: {"Authorization":"Basic YWRtaW46YWRtaW4="},
-	         <span style="color:#CB0630">success:</span> <span style="color:#5376FF">function</span>(response) {
-	                <span style="color:#5376FF">var</span> json = JSON.stringify(response);
-	                <span style="color:#5376FF">alert</span>(json);
-	         },
-	         <span style="color:#CB0630">error:</span> <span style="color:#5376FF">function</span>(response){
-	                <span style="color:#5376FF">alert</span>("error: " + response.error.toString());
-	         }
-	});
-	</pre>
+    <pre>
+    <span style="color:#5376FF">var</span> formData <span style="color:#CB0630">= new</span> formData();
+    formData.append("upload", $("#file-sign")[0].files[0]);            
+    $.ajax({
+             url: "https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/firmados",
+             type: "post",
+             datatype: "json",
+             data: formData,
+             cache: false,
+             contenttype: false,
+             processData: false,
+             headers: {"Authorization":"Basic YWRtaW46YWRtaW4="},
+             <span style="color:#CB0630">success:</span> <span style="color:#5376FF">function</span>(response) {
+                    <span style="color:#5376FF">var</span> json = JSON.stringify(response);
+                    <span style="color:#5376FF">alert</span>(json);
+             },
+             <span style="color:#CB0630">error:</span> <span style="color:#5376FF">function</span>(response){
+                    <span style="color:#5376FF">alert</span>("error: " + response.error.toString());
+             }
+    });
+    </pre>
 </div>
 </body>
 </html>
 <!--span style="color:#CB0630"></span>
 <span style="color:#5376FF"></span-->
 
------ Ejemplo practico -----
-
+<!-- Ejemplo practico -->
 <html>
     <head>
         <title>Estilo para codigo basico</title>
         <meta charset="UTF-8" />
     </head>
 
-	<style>
-	    #code {
-	    	background-color: #141830;
-	        width:50%;
-	        color: white;
-	        border-radius: 15px;
-	        border: ridge 1px;	        
-	    }	    
-	</style>
+    <style>
+        #code {
+            background-color: #141830;
+            width:50%;
+            color: white;
+            border-radius: 15px;
+            border: ridge 1px;            
+        }        
+    </style>
 <body>
 Ejemplo:
 <div id="code">
-	<pre>	
-	<span style="color:aqua">var</span> formData <span style="color:red">= new</span> formData();
-		formData.append("<span style="color:Khaki">upload</span>", <span style="color:red">$</span>(<span style="color:Khaki">"#file-sign"</span>)[<span style="color:DarkViolet">0</span>].files[<span style="color:DarkViolet">0</span>]);
-		<span style="color:red">$</span>.ajax({
-		         url: <span style="color:Khaki">"https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/firmados"</span>,
-		         type: <span style="color:Khaki">"post"</span>,
-		         datatype: <span style="color:Khaki">"json"</span>,
-		         data: formData,
-		         cache: <span style="color:DarkViolet">false</span>,
-		         contenttype: <span style="color:DarkViolet">false</span>,
-		         processData: <span style="color:DarkViolet">false</span>,
-		         headers: {<span style="color:Khaki">"Authorization"</span>:<span style="color:Khaki">"Basic YWRtaW46YWRtaW4="</span>},
-		         <span style="color:Lime">success</span>: <span style="color:aqua">function</span>(<span style="color:orange">response</span>) {
-		                <span style="color:aqua">var</span> json <span style="color:red">=</span> JSON.stringify(response);
-		                <span style="color:aqua">alert</span>(json);
-		         },
-		         <span style="color:Lime">error</span>: <span style="color:aqua">function</span>(<span style="color:orange">response</span>){
-		                <span style="color:aqua">alert</span>(<span style="color:Khaki">"error: "</span> <span style="color:red">+</span> response.<span style="color:aqua">error</span>.<span style="color:aqua">toString</span>());
-		         }
-		});		
-	</pre>
+    <pre>    
+    <span style="color:aqua">var</span> formData <span style="color:red">= new</span> formData();
+        formData.append("<span style="color:Khaki">upload</span>", <span style="color:red">$</span>(<span style="color:Khaki">"#file-sign"</span>)[<span style="color:DarkViolet">0</span>].files[<span style="color:DarkViolet">0</span>]);
+        <span style="color:red">$</span>.ajax({
+                 url: <span style="color:Khaki">"https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/firmados"</span>,
+                 type: <span style="color:Khaki">"post"</span>,
+                 datatype: <span style="color:Khaki">"json"</span>,
+                 data: formData,
+                 cache: <span style="color:DarkViolet">false</span>,
+                 contenttype: <span style="color:DarkViolet">false</span>,
+                 processData: <span style="color:DarkViolet">false</span>,
+                 headers: {<span style="color:Khaki">"Authorization"</span>:<span style="color:Khaki">"Basic YWRtaW46YWRtaW4="</span>},
+                 <span style="color:Lime">success</span>: <span style="color:aqua">function</span>(<span style="color:orange">response</span>) {
+                        <span style="color:aqua">var</span> json <span style="color:red">=</span> JSON.stringify(response);
+                        <span style="color:aqua">alert</span>(json);
+                 },
+                 <span style="color:Lime">error</span>: <span style="color:aqua">function</span>(<span style="color:orange">response</span>){
+                        <span style="color:aqua">alert</span>(<span style="color:Khaki">"error: "</span> <span style="color:red">+</span> response.<span style="color:aqua">error</span>.<span style="color:aqua">toString</span>());
+                 }
+        });        
+    </pre>
 </div>
 </body>
 </html>
 <!--span style="color:Lime"></span-->
 
------ Ejemplo practico con numeracion de lineas -----
+<!-- Ejemplo practico con numeración de lineas -->
 <html>
     <head>
         <title>Estilo para codigo basico</title>
         <meta charset="UTF-8" />
     </head>
 
-	<style>
-	    #code {
-	    	background-color: #141830;
-	        width:50%;
-	        color: white;
-	        border-radius: 15px;
-	        border: ridge 1px;	        
-	    }
-	</style>
+    <style>
+        #code {
+            background-color: #141830;
+            width:50%;
+            color: white;
+            border-radius: 15px;
+            border: ridge 1px;            
+        }
+    </style>
 <body>
 Ejemplo:
-<div id="code">	
+<div id="code">    
 <pre>
-<span style="color:gray"> 1</span>	<span style="color:aqua">var</span> formData <span style="color:red">= new</span> formData();
-<span style="color:gray"> 2</span>		formData.append("<span style="color:Khaki">upload</span>", <span style="color:red">$</span>(<span style="color:Khaki">"#file-sign"</span>)[<span style="color:DarkViolet">0</span>].files[<span style="color:DarkViolet">0</span>]);
-<span style="color:gray"> 3</span>		<span style="color:red">$</span>.ajax({
-<span style="color:gray"> 4</span>		         url: <span style="color:Khaki">"https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/firmados"</span>,
-<span style="color:gray"> 5</span>		         type: <span style="color:Khaki">"post"</span>,
-<span style="color:gray"> 6</span>		         datatype: <span style="color:Khaki">"json"</span>,
-<span style="color:gray"> 7</span>		         data: formData,
-<span style="color:gray"> 8</span>		         cache: <span style="color:DarkViolet">false</span>,
-<span style="color:gray"> 9</span>		         contenttype: <span style="color:DarkViolet">false</span>,
-<span style="color:gray"> 10</span>		         processData: <span style="color:DarkViolet">false</span>,
-<span style="color:gray"> 11</span>		         headers: {<span style="color:Khaki">"Authorization"</span>:<span style="color:Khaki">"Basic YWRtaW46YWRtaW4="</span>},
-<span style="color:gray"> 12</span>		         <span style="color:Lime">success</span>: <span style="color:aqua">function</span>(<span style="color:orange">response</span>) {
-<span style="color:gray"> 13</span>		                <span style="color:aqua">var</span> json <span style="color:red">=</span> JSON.stringify(response);
-<span style="color:gray"> 14</span>		                <span style="color:aqua">alert</span>(json);
-<span style="color:gray"> 15</span>		         },
-<span style="color:gray"> 16</span>		         <span style="color:Lime">error</span>: <span style="color:aqua">function</span>(<span style="color:orange">response</span>){
-<span style="color:gray"> 17</span>		                <span style="color:aqua">alert</span>(<span style="color:Khaki">"error: "</span> <span style="color:red">+</span> response.<span style="color:aqua">error</span>.<span style="color:aqua">toString</span>());
-<span style="color:gray"> 18</span>		         }
-<span style="color:gray"> 19</span>		});		
+<span style="color:gray"> 1</span>    <span style="color:aqua">var</span> formData <span style="color:red">= new</span> formData();
+<span style="color:gray"> 2</span>        formData.append("<span style="color:Khaki">upload</span>", <span style="color:red">$</span>(<span style="color:Khaki">"#file-sign"</span>)[<span style="color:DarkViolet">0</span>].files[<span style="color:DarkViolet">0</span>]);
+<span style="color:gray"> 3</span>        <span style="color:red">$</span>.ajax({
+<span style="color:gray"> 4</span>                 url: <span style="color:Khaki">"https://murachi.cenditel.gob.ve/Murachi/0.1/archivos/firmados"</span>,
+<span style="color:gray"> 5</span>                 type: <span style="color:Khaki">"post"</span>,
+<span style="color:gray"> 6</span>                 datatype: <span style="color:Khaki">"json"</span>,
+<span style="color:gray"> 7</span>                 data: formData,
+<span style="color:gray"> 8</span>                 cache: <span style="color:DarkViolet">false</span>,
+<span style="color:gray"> 9</span>                 contenttype: <span style="color:DarkViolet">false</span>,
+<span style="color:gray"> 10</span>                 processData: <span style="color:DarkViolet">false</span>,
+<span style="color:gray"> 11</span>                 headers: {<span style="color:Khaki">"Authorization"</span>:<span style="color:Khaki">"Basic YWRtaW46YWRtaW4="</span>},
+<span style="color:gray"> 12</span>                 <span style="color:Lime">success</span>: <span style="color:aqua">function</span>(<span style="color:orange">response</span>) {
+<span style="color:gray"> 13</span>                        <span style="color:aqua">var</span> json <span style="color:red">=</span> JSON.stringify(response);
+<span style="color:gray"> 14</span>                        <span style="color:aqua">alert</span>(json);
+<span style="color:gray"> 15</span>                 },
+<span style="color:gray"> 16</span>                 <span style="color:Lime">error</span>: <span style="color:aqua">function</span>(<span style="color:orange">response</span>){
+<span style="color:gray"> 17</span>                        <span style="color:aqua">alert</span>(<span style="color:Khaki">"error: "</span> <span style="color:red">+</span> response.<span style="color:aqua">error</span>.<span style="color:aqua">toString</span>());
+<span style="color:gray"> 18</span>                 }
+<span style="color:gray"> 19</span>        });        
 </pre>
 </div>
 </body>
 </html>
 <span style="color:gray"></span>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Uso de !important en CSS xxxxxxxxxxxxxxxxxxxxxxxxxxx
-<!-- El atributo !important señala que si hay dos propiedas con diferentes valores,
+<!-- Uso de !important en CSS
+El atributo !important señala que si hay dos propiedas con diferentes valores,
 aquella propiedad que tenga este atributo sera la que sea usada -->
-
 <html>
     <head>
     <title>Titulo</title>
@@ -1542,8 +1466,7 @@ aquella propiedad que tenga este atributo sera la que sea usada -->
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Estilo en boton html xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- Estilo en boton html -->
 <html>
   <head>
     <title>Titulo</title>
@@ -1566,8 +1489,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Estilo en boton html xxxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx boton hover con css xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- boton hover con css -->
 <!DOCtype html>
 <html>
 <head>
@@ -1616,8 +1538,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx boton hover con css xxxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Alineacion en linea de bloques adaptables xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- Alineacion en linea de bloques adaptables -->
 <html>
     <head>
         <title></title>
@@ -1625,7 +1546,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Alineacion en linea de bloques adaptables xxxxxxxxxxx
     </head>
     <style>
       #contenedor .bloque{
-        display: inline-block;  /* Es esencial para que se muestren los bloques en línea */
+        display: inline-block; /* Es esencial para que se muestren los bloques en línea */
         height:300px;
         width: 300px;
         border:1px solid #333;
@@ -1644,8 +1565,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Alineacion en linea de bloques adaptables xxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Diseño adaptable en cascada xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- Diseño adaptable en cascada -->
 <html>
     <head>
         <title></title>
@@ -1702,8 +1622,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Diseño adaptable en cascada xxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Campo de busqueda - buscar/search con estilo xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- Campo de busqueda - buscar/search con estilo -->
 <html>
 <head>
 <style>
@@ -1739,8 +1658,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Campo de busqueda - buscar/search con estilo xxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Ejemplo de fichero .css xxxxxxxxxxxxxxxxxxxxxxxxxxx
-
+<!-- Ejemplo de fichero .css -->
 body, html {
     margin:0;
     padding:0;
@@ -1839,8 +1757,7 @@ body, html {
     margin: 20px 20px 20px 20px;    
 }
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Pagina para crear tutoriales xxxxxxxxxxxxxxxxxxxxxxxxxx
-xxxxxxxxxxxxxxxxxxxxxxxxxx de instalacion con estilos xxxxxxxxxxxxxxxxxxxxxxxxxxx
+<!-- Página para crear tutoriales de instalación con estilos -->
 <html>
     <head>
         <title>Estilo para codigo basico</title>
@@ -1907,7 +1824,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx de instalacion con estilos xxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Validacion de campos con html5 xxxxxxxxxxxxxxxxxxxxxxxxxxx
+<!-- Validacion de campos con html5 -->
 <html>
 <head>
     <title>Validacion de campos con html5</title>
@@ -1924,7 +1841,7 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Validacion de campos con html5 xxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxx Mensaje de alerta con css xxxxxxxxxxxxxxxxxxxxxxxxxxx
+<!-- Mensaje de alerta con css -->
 <!DOCtype html>
 <html>
 <head>
@@ -1932,7 +1849,6 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Mensaje de alerta con css xxxxxxxxxxxxxxxxxxxxxxxxxxx
   <title>xxxxxx</title>
   <style type="text/css">
     @import url('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
-     
     .isa_info, .isa_success, .isa_warning, .isa_error {
     margin: 10px 0px;
     padding:12px;
@@ -1962,16 +1878,13 @@ xxxxxxxxxxxxxxxxxxxxxxxxxx Mensaje de alerta con css xxxxxxxxxxxxxxxxxxxxxxxxxxx
 </head>
 <body>
   <div class="isa_info">Replace this text with your own text.</div>
-   
   <div class="isa_success">Replace this text with your own text.</div>
-   
   <div class="isa_warning">Replace this text with your own text.</div>
-   
   <div class="isa_error">Replace this text with your own text.</div>
 </body>
 </html>
 
-xxxxxxxxxx Sueltos de css xxxxxxxxxx
+<!-- Sueltos de css -->
 
 textarea {
   background: url(images/benice.png) center center no-repeat;
@@ -1992,8 +1905,7 @@ Sombra interior leve
 -moz-box-shadow: inset 0px 1px 28px -9px rgba(0,0,0,1);
 box-shadow: inset 0px 1px 28px -9px rgba(0,0,0,1);
 
-xxxxxxxxxx Colores web xxxxxxxxxx
-
+<!-- Colores web -->
 Nombre   Código hex
 HTML       RGB
 
@@ -2023,8 +1935,7 @@ opacity: 0.5; // Opacidad en la imagen o bloque, transparencia, bloque transpare
 background:rgba(0,0,0,0.5); // Color transparente en los css
 }
 
-xxxxxxxxxx Ejemplo / Plantilla con cuerpos y estilos definidos xxxxxxxxxx
-
+<!-- Ejemplo / Plantilla con cuerpos y estilos definidos -->
 <html>
     <head>
         <title>zxx</title>
@@ -2057,7 +1968,6 @@ body, html {
     background-color: #5B0101;
     /*background:url("../imagenes/follaje.jpg") 100%;*/
 }
-
 #completo {
     height: 610px;
     width:1000px;
@@ -2144,8 +2054,7 @@ body, html {
 }
 </style>
 
-xxxxxxxxxx Ejemplo de sitio responsivo xxxxxxxxxx
-
+<!-- Ejemplo de sitio responsivo -->
 <!DOCtype html>
 <html>
 <head>
@@ -2257,23 +2166,17 @@ html {
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-Estilos para un sitio responsive, para un tamaño determinado de pantalla, aquí se definen
-el tamaño máximo de las pantallas y los estilos personalizados para cada tamaño.
-
+<!-- Estilos para un sitio responsive, para un tamaño determinado de pantalla, aquí se definen
+el tamaño máximo de las pantallas y los estilos personalizados para cada tamaño. -->
 <style type="text/css">
-
 @media only screen and (max-width: 768px) {
     /* For mobile phones: */
     [class*="col-"] {
         width: 100%;
     }
-
     img {
         width: 100%;
     }
-
     .title_post_carousel {
         color: #d11e22;
         font-weight: bold;
@@ -2283,67 +2186,7 @@ el tamaño máximo de las pantallas y los estilos personalizados para cada tama�
         font-size: 10px;
     }
 }
-
 </style>
-
-xxxxxxxxxx centrando a <div id="completo"> xxxxxxxxxx
-
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>ddd</title>
-</head>
-<body>
-<div id="completo">
-    <div id="cabecera">
-        <h1>Cabecera</h1>
-    </div>
-    <div id="cuerpo">
-        XXXXXXXXXXXXXxx
-    </div>
-    <div id="footer">
-        Footer
-    </div>
-</div>
-</body>
-</html>
-<style type="text/css">
-#completo {
-    height: 700px;
-    width:70%;
-    background-color: #FFFFFF;
-    margin: auto;
-    border:ridge 1px;
-}
-#cabecera {
-    background-color: #F2F2F2;
-    height: 80px;
-    width:97%;
-    margin: auto;
-    border:ridge 1px;
-    margin-top: 15px;
-}
-#cuerpo {
-    background-color: #F2F2F2;
-    height: 500px;
-    width:97%;    
-    margin: auto;
-    overflow: auto;
-    border:ridge 1px;
-    margin-top: 15px;
-}
-#footer {
-    background-color: #F2F2F2;
-    height: 50px;
-    width:97%;
-    margin: auto;
-    border:ridge 1px;
-    margin-top: 15px;
-}
-</style>
-
-------------------------------
 
 <!-- Poner una imagen/favicon a la página -->
 <!DOCtype html>
@@ -2361,8 +2204,6 @@ xxxxxxxxxx centrando a <div id="completo"> xxxxxxxxxx
   </div>
 </body>
 </html>
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 <!-- Trabajando con display block, inline, inlineblock -->
 <!DOCTYPE html>
@@ -2382,23 +2223,20 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
     <p class="inlineblock">Soy un elemento con comportamiento en bloque de linea</p>
   </body>
 </html>
-
 <style type="text/css">
 .block { /*Si acepta width y height*/
   display: block;
   padding: 10px;
   background: blue;
   color: white;
-}
- 
+} 
  
 .inline { /* No acepta width ni height */
   display: inline;
   padding: 10px;
   margin-left: 50px;
   background: pink;
-}
- 
+} 
 .inlineblock { /*Permite width, height, tener elementos vecinos, margin y padding */
   display: inline-block;
   width: 160px;
@@ -2408,8 +2246,6 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   color: white;
 }
 </style>
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 <!-- Uso de varias clases en un mismo div -->
 <html>
@@ -2446,8 +2282,6 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
 <!-- Iframe, Permite insertar o incrustar un documento HTML dentro de un documento HTML principal -->
 <!doctype html>
 <html lang="en">
@@ -2467,8 +2301,6 @@ iframe {
 </iframe>
 </body>
 </html>
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 <!-- Menu css con pestañas desplegables, lista -->
 <!DOCTYPE html>
@@ -2608,8 +2440,6 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
 <!-- Menu css desplegable -->
 <html>
   <head> 
@@ -2652,8 +2482,6 @@ xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 </body>
 </html>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
 <!-- Negrita desde el css -->
 <style type="text/css">
 span {
@@ -2662,14 +2490,8 @@ span {
 </style>
 <span>La Sociedad del Talento - Cmdte. Hugo Chávez Frías, 10 de noviembre de 2006.</span>
 
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-<a href="pagina.html" target="_blank">abrir enlace en una nueva pestaña</a>
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+<!-- Uso del acénto y la ñ -->
+Acci&oacute;n <br />
+A&ntilde;adir <br />
+Espec&iacute;fico <br />
