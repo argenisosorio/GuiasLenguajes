@@ -484,9 +484,9 @@ localhost:3000/Empleados
   ó
 localhost:3000/Alumnos
 
-##### Otro ejemplo #####
-
-#Creando una aplicacion de (prueba) saludar y dar la hora
+####################################################################
+##### Creando una aplicacion de (prueba) saludar y dar la hora #####
+####################################################################
 
 $ rails new prueba
 
@@ -705,7 +705,9 @@ Rails.application.routes.draw do
 $ bin/rake routes #En la carpeta del proyecto, podremos ver las rutas establecidas para los controladores
 #y vistas de nuestra aplicación 
 
+###################################################################################
 ##### Creando aplicacion para hacer publicaciones (autor, titulo y contenido) #####
+###################################################################################
 
 $ rails new publicaciones
 
@@ -717,22 +719,12 @@ $ rails generate controller welcome index #Generamos el controlador y las vista
 #de nuestra pagina principal
 
 $ rails generate scaffold Post autor:string titulo:string contenido:text 
-# Se generaron los controladores y vistas que contienen los formularios
-#con los campos establecidos
+# Se generaron los controladores y vistas que contienen los formularios con los campos establecidos
 
-$ rake db:migrate #Se crearon las tablas correspondientes en la 
-#base de datos de desarrollo Sqlite3
+$ rake db:migrate #Se crearon las tablas correspondientes en la base de datos de desarrollo Sqlite3
 
-#http://127.0.0.1:3000/posts
-#Podemos visualizar la lista de publicaciones asi como enlaces a las operaciones
-#CRUD que se crearon
-
-#################
-##### NOTAS #####
-#################
-
-# Enlace al path de otro controlador
-# <%= link_to "proyecto", proyecto_path%>
+# http://127.0.0.1:3000/posts
+# Podemos visualizar la lista de publicaciones asi como enlaces a las operaciones CRUD que se crearon
 
 #################################################
 ##### Lista de los tipos de datos - modelos #####
@@ -740,26 +732,33 @@ $ rake db:migrate #Se crearon las tablas correspondientes en la
 
 Here are all the Rails 4 (ActiveRecord migration) datatypes:
 
-  :binary
-  :boolean
-  :date
-  :datetime
-  :decimal
-  :float
-  :integer
-  :bigint
-  :primary_key
-  :references
-  :string
-  :text
-  :time
-  :timestamp
+:binary
+:boolean
+:date
+:datetime
+:decimal
+:float
+:integer
+:bigint
+:primary_key
+:references
+:string
+:text
+:time
+:timestamp
 
 If you use PostgreSQL, you can also take advantage of these:
 
-  :hstore
-  :json
-  :array
-  :cidr_address
-  :ip_address
-  :mac_address
+:hstore
+:json
+:array
+:cidr_address
+:ip_address
+:mac_address
+
+#################
+##### NOTAS #####
+#################
+
+# Enlace al path de otro controlador
+# <%= link_to "proyecto", proyecto_path%>

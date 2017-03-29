@@ -253,11 +253,11 @@ Hola
 como estan
 
 print "Hola \t como estan" # \t Permite hacer una tabulacion
-Hola 	 como estan
+Hola      como estan
 
 print "Hola \n\tcomo estan" # \n\t Salto de Linea y tabulacion al mismo tiempo
 Hola 
-	como estan
+    como estan
 
 print""" 
 Linea 1
@@ -273,76 +273,81 @@ Linea 3
 Linea 4
 
 ###################
-##### FUNCIÓN #####
+##### Función #####
 ###################
 
 def funcion(): #Declaramos el nombre de la Función
-	print "Esto es una funcion" #Contenido de la Función
-	print "Rictusempra y Sectusempra" #Contenido de la Función
+    print "Esto es una funcion" #Contenido de la Función
+    print "Rictusempra y Sectusempra" #Contenido de la Función
 
 funcion() #Invocación de la Función
 
 ##################################
-##### FUNCIÓN con parámetros #####
+##### Función con parámetros #####
 ##################################
 
 #---Función con un parámetro:
 def funcion(alguien): #Podemos pasar un parametro a la función
-	print "Hola",alguien,"!" 
+    print "Hola",alguien,"!" 
 funcion("Argenis") #Llamamos la función y le pasamos una cadena como parámetro 
 
 #---Función con mas de un parámetro:
 def funcion(nombre,apellido):
-	print "Hola",nombre,apellido,"!" 
+    print "Hola",nombre,apellido,"!" 
 funcion("Argenis","Osorio")
+
+# Simulando que recibe el id y username
+def funcion(id,username):
+    print "id:",id,"username:",username
+funcion(1,"admin")
 
 #---Función de suma con declaración de variables:
 def prueba(): 
-	num = 1
-	num2 = 2 
-	suma = num+num2
-	print"La suma es",suma
+    num = 1
+    num2 = 2 
+    suma = num+num2
+    print"La suma es",suma
 prueba()
 
 #---otro Ejemplo:
 def prueba(): 
-	num = 10
-	print num * 3 #El resultado es 30
+    num = 10
+    print num * 3 #El resultado es 30
 prueba()
 
 #---otro Ejemplo:
 def prueba(): 
-	x = [1, 2, 3, 4]
-	print x #Imprime: [1, 2, 3, 4]
+    x = [1, 2, 3, 4]
+    print x #Imprime: [1, 2, 3, 4]
 prueba()
 
 # Imprimiento un elemento de la lista
 def prueba(): 
-	x = [1, 2, 3, 4]
-	#print x #Imprime: [1, 2, 3, 4]
-	print x[2]
+    x = [1, 2, 3, 4]
+    #print x #Imprime: [1, 2, 3, 4]
+    print x[2]
 prueba()
     
 #---Ejemplo de Función Matemática:
 def cuadrado(num): #Calcula el cuadrado de un número dado
-	print num*num
+    print num*num
 
 cuadrado(5) #Para invocarala y darle el valor a calcular (5 por ejemplo)
 
 #---Otro ejemplo de Función Matemática:
 def cuadrado2(): #Creamos una nueva función
-	n = input("Ingrese un número: ") #Pedira al usuario que introduzca un número
-	cuadrado(n) #Pasara el valor introducido a la funcion matematica declarada anteriormente (Cuadrado de un número)
+    n = input("Ingrese un número: ") #Pedira al usuario que introduzca un número
+    cuadrado(n) #Pasara el valor introducido a la funcion matematica declarada anteriormente (Cuadrado de un número)
 
 cuadrado2() #Ejecutara la función, nos pedira un numero, realizara los calculos y mostrara el resultado
 
 #Usando las dos funciones
 def cuadrado(num): #Calcula el cuadrado de un número dado
-	print num*num
+    print num*num
 
 def cuadrado2(): #Creamos una nueva función
-	n = input("Ingrese un número: ") #Pedira al usuario que introduzca un número
-	cuadrado(n) #Pasara el valor introducido a la funcion matematica declarada anteriormente (Cuadrado de un número)
+    n = input("Ingrese un número: ") #Pedira al usuario que introduzca un número
+    cuadrado(n) #Pasara el valor introducido a la funcion matematica declarada anteriormente (Cuadrado de un número)
 
 cuadrado2()
 
@@ -354,29 +359,29 @@ cuadrado2()
 
 #Este programa convierte millas, pies , pulgadas y kilometros a metros
 def main():       
-	print "Este programa convierte millas, pies, pulgadas y kilometros a metros"
-	millas = input("Cuantas millas?: ")
-	pies = input("Cuantos pies?: ")
-	pulgadas = input("Cuantas pulgadas?: ")
-	km = input("Cuantas kilometros?: ")
+    print "Este programa convierte millas, pies, pulgadas y kilometros a metros"
+    millas = input("Cuantas millas?: ")
+    pies = input("Cuantos pies?: ")
+    pulgadas = input("Cuantas pulgadas?: ")
+    km = input("Cuantas kilometros?: ")
         metros = 1609.344 * millas
-	metros2 = 0.3048 * pies
-	metros3 = 0.0254 * pulgadas 
-	metros4 = 1000 * km	
-	print millas, "millas son:",metros,"metros"
-	print pies, "pies son:",metros2,"metros"
-	print pulgadas, "pulgadas son:",metros3,"metros"
-	print km, "kilometros son:",metros4,"metros"
+    metros2 = 0.3048 * pies
+    metros3 = 0.0254 * pulgadas 
+    metros4 = 1000 * km    
+    print millas, "millas son:",metros,"metros"
+    print pies, "pies son:",metros2,"metros"
+    print pulgadas, "pulgadas son:",metros3,"metros"
+    print km, "kilometros son:",metros4,"metros"
 main()
 
 #Llevar horas a minutos y segundos
 def funcion ():
-	print "Llevar horas a minutos y segundos"
-	horas = input("Cantidad de horas: ")	
-	minutos = 60 * horas 
-	segundos = 3600 * horas 
-	print horas, "horas " "son", minutos, "minutos"
-	print horas, "horas " "son", segundos, "Segundos"
+    print "Llevar horas a minutos y segundos"
+    horas = input("Cantidad de horas: ")
+    minutos = 60 * horas 
+    segundos = 3600 * horas 
+    print horas, "horas " "son", minutos, "minutos"
+    print horas, "horas " "son", segundos, "Segundos"
 funcion()
 
 #########################
@@ -391,19 +396,19 @@ print 3 * "programas "
 programas programas programas 
 
 #Ejemplo
-def prueba(): 
-	nombre="Christopher"
-	print nombre+" Robinson" #Imprime: Christopher Robinson
-	print nombre * 3 #Imprime: #Imprime: ChristopherChristopherChristopher
+def prueba():
+    nombre="Christopher"
+    print nombre+" Robinson" #Imprime: Christopher Robinson
+    print nombre * 3 #Imprime: #Imprime: ChristopherChristopherChristopher
 prueba()
 
 #Otro Ejemplo
 def prueba(): 
-	nom = raw_input ("Ingrese un Nombre: ") #Nos pedirá un Nombre
-	ape = raw_input ("Ingrese un apellido: ") #Nos pedirá un Apellido
+    nom = raw_input ("Ingrese un Nombre: ") #Nos pedirá un Nombre
+    ape = raw_input ("Ingrese un apellido: ") #Nos pedirá un Apellido
 
-	print "El nombre completo es",nom,ape,"!" #Imprime: El nombre completo es Argenis Osorio !
-	print "El nombre completo es",nom+ape,"!" #Imprime: El nombre completo es ArgenisOsorio !
+    print "El nombre completo es",nom,ape,"!" #Imprime: El nombre completo es Argenis Osorio !
+    print "El nombre completo es",nom+ape,"!" #Imprime: El nombre completo es ArgenisOsorio !
 prueba()
 
 ###############
@@ -411,17 +416,17 @@ prueba()
 ###############
 
 def prueba(): 
-	n1 = 0	
-	n2 = 10
-	for x in range(n1, n2):
-		print x #Imprime números del 0 hasta el 1 usando el cilco repetitivo 
-		#print x+x
+    n1 = 0    
+    n2 = 10
+    for x in range(n1, n2):
+        print x #Imprime números del 0 hasta el 1 usando el cilco repetitivo
+        #print x+x
 prueba()
 
 #---Secuencia a mano
 def prueba(): 
-	for x in [1, 3, 9, 27]:
-		print x #Imprimirá los los números 1, 3, 9 y 27
+    for x in [1, 3, 9, 27]:
+        print x #Imprimirá los los números 1, 3, 9 y 27
 prueba()
 
 """
@@ -443,15 +448,15 @@ prueba()
 nota = input ("Escriba la nota: ")
 
 if nota == 1:
-	print "*****Cambiese de carrera*****"
+    print "*****Cambiese de carrera*****"
 if nota < 10:
-	print "*****SUPENDIO! bruto*****"
+    print "*****SUPENDIO! bruto*****"
 if nota == 10:
-	print "*****APROBO! DE LECHE*****"
+    print "*****APROBO! DE LECHE*****"
 if nota > 10:
-	print "*****APROBO! parece que chuleteandose*****"
+    print "*****APROBO! parece que chuleteandose*****"
 if nota == 20:
-	print "*****NO INVENTE! que usted nunca ha sacado 20*****"
+    print "*****NO INVENTE! que usted nunca ha sacado 20*****"
 
 ###################
 ##### IF ELSE #####
@@ -459,24 +464,24 @@ if nota == 20:
 
 usuario = raw_input ("USUARIO: ")
 if usuario == "canaima":
-	print "*****ACCESO CONCEDIDO*****"
+    print "*****ACCESO CONCEDIDO*****"
 else:
-	print "*****ACCESO DENEGADO*****"
+    print "*****ACCESO DENEGADO*****"
 
 #---Con números
 password = input ("CONTRASENA: ")
 
 if password == 19592165:
-	print "*****ACCESO CONCEDIDO*****"
+    print "*****ACCESO CONCEDIDO*****"
 else:
-	print "*****USUARIO DENEGADO*****"
+    print "*****USUARIO DENEGADO*****"
 
 #---Con (not) negacion
 x = input("Ingrese un numero: ")
 if x > 0:
-	print "Numero positivo"
+    print "Numero positivo"
 if not (x > 0):
-	print "Numero no positivo"
+    print "Numero no positivo"
 
 ################
 ##### ELIF #####
@@ -484,22 +489,22 @@ if not (x > 0):
 
 x = input("Ingrese un numero: ")
 if x > 0:
-	print "Numero positivo"
+    print "Numero positivo"
 elif x == 0:
-	print "Igual a 0"
+    print "Igual a 0"
 else:
-	print "Numero negativo"
+    print "Numero negativo"
 
 #---Con (for) 
 i = input("Cuantos numeros quiere procesar?: ")
 for j in range(0,i):
-	x = input("Ingrese un numero: ")
-	if x > 0:
-	     	print "Numero positivo"
-	elif x == 0:
-	     	print "Igual a 0"
-	else:
-		print "Numero negativo"
+    x = input("Ingrese un numero: ")
+    if x > 0:
+             print "Numero positivo"
+    elif x == 0:
+             print "Igual a 0"
+    else:
+        print "Numero negativo"
 
 #################
 ##### WHILE #####
@@ -514,14 +519,14 @@ print "Gracias por su colaboracion"
 #---Otro Ejemplo
 Datos = "Si"
 while Datos == "Si":
-	x = input("Ingrese un numero: ")
-	if x > 0:
-		print "Numero positivo"
-	elif x == 0:
-		print "Igual a 0"
-	else:
-		print "Numero negativo"
-	Datos = input("Quiere seguir? S o N: ")
+    x = input("Ingrese un numero: ")
+    if x > 0:
+        print "Numero positivo"
+    elif x == 0:
+        print "Igual a 0"
+    else:
+        print "Numero negativo"
+    Datos = input("Quiere seguir? S o N: ")
 
 #---Ciclo con Centinela
 #Uso de un valor distinguido Ejemplo (*) si se lee, le indica al programa que el usuario desea salir del ciclo
@@ -532,20 +537,20 @@ while x <> "*":
         elif x == 0:
             print "Igual a 0"
         else:
-            print "Numero negativo"	
-	x = input ("Ingrese un numero ("*" para terminar): ")
+            print "Numero negativo"    
+    x = input ("Ingrese un numero ("*" para terminar): ")
 
 #---Usando break para salir del ciclo
 while True:
-	x = input("Ingrese un numero '*' para terminar: ")
+    x = input("Ingrese un numero '*' para terminar: ")
         if x == '*':
-        	break
+            break
         elif x > 0:
-        	print "Numero positivo"
+            print "Numero positivo"
         elif x == 0:
-        	print "Igual a 0"
+            print "Igual a 0"
         else:
-		print "Numero negativo"
+        print "Numero negativo"
 
 ##################
 ##### Listas #####
@@ -606,12 +611,12 @@ print buscar in lista #Se traduciría como: ¿Buscar esta en la lista?
 a = 5
 
 def function():
-	global a
-	a = 42
-	print a
+    global a
+    a = 42
+    print a
 
 def function2():
-	print myglobal
+    print myglobal
 
 
 print a
@@ -692,11 +697,10 @@ print diccionario[4]
 # -*- coding: utf-8 -*-
 #Definimos una clase, por convención se usa la primera letra en mayúscula
 class Humano:
-	def __init__(self): #Definimos un método, es una función pero cuando está dentro de una clase es un método, éste método init python lo reconoce, cuando se cree un nuevo objeto, automáticamente se va a ejecutar este método. En la variable self se va a guardar la referencia al objeto que estemos creando
-		print "Soy un nuevo objeto"
+    def __init__(self): #Definimos un método, es una función pero cuando está dentro de una clase es un método, éste método init python lo reconoce, cuando se cree un nuevo objeto, automáticamente se va a ejecutar este método. En la variable self se va a guardar la referencia al objeto que estemos creando
+        print "Soy un nuevo objeto"
 
 pedro = Humano() #Creamos un objeto que tiene como plantilla la clase Humano
-
 
 #********************
 #!/usr/bin/env python
@@ -851,7 +855,7 @@ class LicDerecho(Humano):
         print 'Debo estudiar el caso de ', de
 
 class Estudioso(IngSistemas,LicDerecho): #Hereda de dos clases
-	pass #Palabra reservada, interpretada como vete! no hay nada que ver aquí. Cuando creamos una clase, forzosamente debe de existir un método y si no existe, usamos pass, en este ejemplo ya está heredando los métodos de otras clases
+    pass #Palabra reservada, interpretada como vete! no hay nada que ver aquí. Cuando creamos una clase, forzosamente debe de existir un método y si no existe, usamos pass, en este ejemplo ya está heredando los métodos de otras clases
 
 pepe = Estudioso() #Creamos el objeto
 pepe.hablar('Hola, soy de herencia multiple') #Usando el método heredado de Humano, ya que la clase Estudioso hereda de IngSistemas y de LicDerecho, que a su vez heredan de Humano
@@ -871,9 +875,9 @@ print lista.index(buscar) #Obtener el índice de un elemento de la lista
 lista = [1,"Dos",3]
 buscar = "Dos"
 if buscar in lista: #Buscar el eleménto en la lista
-	print lista.index(buscar) #Mostrar el índice del elemento
+    print lista.index(buscar) #Mostrar el índice del elemento
 else:
-	print "No esta el elemento" #Notificar si el elemento no existe
+    print "No esta el elemento" #Notificar si el elemento no existe
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-

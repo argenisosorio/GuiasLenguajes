@@ -374,15 +374,15 @@ basado en los modelos de la base de datos, podemos usar el modelo como base para
 forms, creamos el template con el formulario, el metodo etc
 
 <FORM method="POST"> {% csrf_token %} #Este token lo agregamos por segridad, Django lo exige
-		{{ form }}
-		<input type="submit" value="Enviar">
+        {{ form }}
+        <input type="submit" value="Enviar">
 </FORM>
 
 *****En la vista creamos una clase que contendra nuestro modelo
 
 class RegistrarAlumno(CreateView):
-	template_name = "registrar.html"
-	model = Alumno
+    template_name = "registrar.html"
+    model = Alumno
 
 Con esto mandamos a la plantilla declarada un form el cual recibe el form en el template
 asignado
@@ -401,11 +401,11 @@ archvos estaticos, se debe guardar a nivel de las plantillas
  Con esto llamamos nuestro CSS en la plantilla:
 
  <head>
-	<title>PAGOS</title> 
-	<meta http-equiv="content-type" content="text/html;charset=utf-8" /> 
-	<meta charset="UTF-8" /> 
-	{% load staticfiles %}	
-	<link rel="stylesheet" type="text/css" href="{% static 'css/estilo.css' %}" />
+    <title>PAGOS</title> 
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" /> 
+    <meta charset="UTF-8" /> 
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/estilo.css' %}" />
 </head>
 
 *****Agregando imagenes a la plantilla
@@ -419,10 +419,11 @@ Ejemplo:
 
 <img src="{{STATIC_URL}}css/Img/gris.JPG"></img> Agregando una imagen local 
 
+####################################
 ##### Estructura de un proyecto ####
+####################################
 
-# Algunos directorios
-# debemos crearlos nosotros por ejemplo: templates, static, admin.py
+# Algunos directorios debemos crearlos nosotros por ejemplo: templates, static, admin.py
 
 project
   manage.py
@@ -436,7 +437,7 @@ project
     templates/
       app/
         base.html
-        index.html      
+        index.html
     admin.py
     tests.py
     models.py
@@ -516,7 +517,10 @@ myproject/
          test.txt
          prod.txt
 
-##### Estructura recomendada por el desarrollador común #####
+'''
+Estructura con los templates fuera de las aplicaciones
+Es un tipo de proyecto menos modular
+'''
 
 myproject/
     manage.py
@@ -553,6 +557,8 @@ myproject/
         dev.txt
         test.txt
         prod.txt
+
+# La siguiente configuración de los templates dirs aplica a la estructura menos modular.
 
 ##############################################################
 ##### Configuración del settings para los templates dirs #####
@@ -752,7 +758,9 @@ from .models import Post
 
 admin.site.register(Post)
 
+###############################################
 ##### Pasando un diccionario en el render #####
+###############################################
 
 xdata = ["Apple", "Apricot", "Avocado", "Banana", "Boysenberries", "Blueberries", "Dates", "Grapefruit", "Kiwi", "Lemon"]
 ydata = [52, 48, 160, 94, 75, 71, 490, 82, 46, 17]
@@ -771,6 +779,25 @@ data = {
     }
 }
 return render_to_response('piechart.html', data)
+
+##################################################
+##### Pasando un diccionario en TemplateView #####
+##################################################
+
+#views.py
+class Xxx(TemplateView):
+    template_name = "index.html"
+    form_class = XxxForm
+
+    def get(self,request):
+       data = {'x': "xxxx", 'y': "yyyy"}
+       return render(request,self.template_name, {'data':data})
+
+#index.html
+<div id="content">
+  {{ data.x }}<br />
+  {{ data.y }}
+</div>
 
 ##################################
 ##### Creating an admin user #####

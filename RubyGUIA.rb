@@ -92,9 +92,9 @@ print "Hola\tRuby\t3\t" # \t Tabulación
 
 2 ** 2
 
-##############################
-##### Creando un archivo #####
-##############################
+#####################################################
+##### Creación y ejecución de un script de ruby #####
+#####################################################
 
 #Los archivos o los programas de ruby se guardan con la 
 #extencion (.rb)
@@ -133,7 +133,9 @@ mi_string = "Ruby"
 #En ruby, las cadenas son objetos pertenecientes a la clase String
 #¡no confundir con pertenecientes al tipo String!
 
+##############################################
 ##### Mostrando el valor de una variable #####
+##############################################
 
 nombre = "David Webb" #Declaramos una variable y le asignamos una cadena
 puts "#{nombre}" #Imprimimos el valor de la variable declarada y cargada
