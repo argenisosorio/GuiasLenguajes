@@ -1339,6 +1339,18 @@ $ pip install Package --upgrade // Para actualizar un paquete a su última versi
 
 $ pip install --upgrade Package package==1.x.x // Actualizar un paquete a una versión específica.
 
+##### Error: ImportError: No module named packaging.version #####
+
+Puede que alguna vez a pip le pique el trasero y no deje realizar acciones
+de búsqueda, actualización etc.. entonces moveremos unos ficheros:
+
+$ cd /usr/local/lib/python2.7/dist-packages
+
+$ mv pkg_resources/ pkg_resources_bak/
+
+Funcionó cuando se instalo en el sistema base, si está en un entorno virtual la
+ruta será diferente.
+
 #############################################
 ########## Conexion remota con ssh ##########
 #############################################

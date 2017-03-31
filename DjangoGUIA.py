@@ -901,6 +901,21 @@ un entorno virtual sería en:
 Dentro está la carpeta admin/ con todos los estáticos que necesita el servidor, sobre todo los estáticos del admin de django, por lo tanto
 podemos copiar esa carpeta admin/ a la carpeta static de nuestro proyecto.
 
+####################################################
+##### Personalizar templates del administrador #####
+####################################################
+
+Para poder personalizar las plantillas del administrador es recomendable no trabajar directamente
+en los templates del core del framework si no copiar esos templates en nuestro proyecto.
+
+El sitio de administración muestra "Administración de Django" en la cabecera porque esto es lo que se incluye en la plantilla
+admin/base_site.html. Por defecto, esta plantilla se encuentra en el directorio de plantillas de administración de
+Django, django/contrib/admin/templates, que puedes encontrar buscando en tu directorio site-packages de Python, o donde sea
+que Django fue instalado. Para personalizar esta plantilla base_site.html, copia la original dentro de un subdirectorio
+llamado admin dentro de cualquier directorio este usando TEMPLATE_DIRS. Por ejemplo, si tu TEMPLATE_DIRS
+incluye "/home/misplantillas", entonces copia django/contrib/admin/templates/admin/base_site.html
+a /home/misplantillas/admin/base_site.html. No te olvides del subdirectorio admin.
+
 ###################################################################
 ##### Desplegar aplicación web en Django - pythonanywhere.com #####
 ###################################################################
