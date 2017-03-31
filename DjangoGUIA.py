@@ -5,6 +5,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+#A veces solo es necesario usar la segunda línea
+
+# -*- coding: utf-8 -*-
+
 '''
 ##### Estándares de Desarrollo #####
 
@@ -373,10 +377,10 @@ y podemos llenarla de datos
 basado en los modelos de la base de datos, podemos usar el modelo como base para los 
 forms, creamos el template con el formulario, el metodo etc
 
-<FORM method="POST"> {% csrf_token %} #Este token lo agregamos por segridad, Django lo exige
+<form method="POST"> {% csrf_token %} #Este token lo agregamos por segridad, Django lo exige
         {{ form }}
         <input type="submit" value="Enviar">
-</FORM>
+</form>
 
 *****En la vista creamos una clase que contendra nuestro modelo
 
@@ -671,7 +675,7 @@ ManyToManyField: Para guardar una referencia a varios objetos de la misma clase.
 
 OneToOneField: Es como el ForeignKey pero tiene unique=True, por lo que solo puede haber una referencia a ese objeto.
 
-##### Opciones que tiene todos los campos #####
+##### Opciones que tienen todos los campos #####
 
 null=True: Permite que los valores puedan ser null.
 
@@ -746,6 +750,15 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+############################
+##### *args y **kwargs #####
+############################
+
+La sintaxis especial, * args y **kwargs en definiciones de funciones se utiliza para pasar un número variable
+de argumentos a una función. El forma simple (*args) se utiliza para pasar una lista de argumentos de longitud
+variable sin palabra clave y la forma de doble asterisco (**kwargs) se utiliza para pasar una lista de
+argumentos con palabras clave de longitud variable.
 
 ##############################################################################
 ##### Ejemplo de admin.py para mostrar los modelos en el admin de django #####

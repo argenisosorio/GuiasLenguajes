@@ -45,6 +45,10 @@ documentación del proyecto tenemos doxygen o Sphinx.
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+#A veces solo es necesario usar la segunda línea
+
+# -*- coding: utf-8 -*-
+
 #Comentarios de línea en Python
 
 """ Comentarios de 
@@ -216,6 +220,30 @@ print 7 / 2
 
 #MODULO
 print 7%3
+
+# += Suma un valor al valor de la variable y asigna el nuevo valor producto de la suma a la variable
+x = 3
+x += 2
+print x
+5
+
+# -= Resta un valor al valor de la variable y asigna el nuevo valor producto de la resta a la variable
+x = 10
+x -= 2
+print x
+8
+
+# *= Multiplica un valor por el valor de la variable y asigna el nuevo valor producto de la multiplicación a la variable
+x = 10
+print x
+x *= 2
+print x
+
+# /= Divide un valor entre el valor de la variable y asigna el nuevo valor producto de la multiplicación a la variable
+x = 10
+print x
+x /= 2
+print x
 
 ######################
 ##### VARIABLES ######
@@ -471,7 +499,7 @@ else:
 #---Con números
 password = input ("CONTRASENA: ")
 
-if password == 19592165:
+if password == 123:
     print "*****ACCESO CONCEDIDO*****"
 else:
     print "*****USUARIO DENEGADO*****"

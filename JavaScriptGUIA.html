@@ -85,7 +85,6 @@ console.log(miPais.substring(0,3)); //Usá console.log para mostrar las tres pri
 
 ##### Sintaxis básica #####
 
-
 Declaración simple de variable:
 
 var foo = 'Hola Mundo';
@@ -107,31 +106,33 @@ var foo = function() {
 
 -------------------------------------
 
-Operadores básicos
+######################
+##### Operadores #####
+######################
 
 Los operadores básicos permiten manipular valores.
 
-Concatenación
+##### Concatenación #####
 
 var foo = 'hello';
 var bar = 'world';
 console.log(foo + ' ' + bar); // la consola de depuración muestra 'hello world'
 
-Multiplicación y división
+##### Multiplicación y división #####
 
 2 * 3; 2 / 3;
 
-Incrementación y decrementación
+##### Incrementación y decrementación #####
 
 var i = 1;
 var j = ++i;  // incrementación previa:  j es igual a 2; i es igual a 2
 var k = i++;  // incrementación posterior: k es igual a 2; i es igual a 3
 
-Operaciones con números y cadenas de caracteres
+##### Operaciones con números y cadenas de caracteres #####
 
 En JavaScript, las operaciones con números y cadenas de caracteres (en inglés strings) pueden ocasionar resultados no esperados.
 
-Suma vs. concatenación
+##### Suma vs concatenación #####
 
 var foo = 1;
 var bar = '2';
@@ -154,7 +155,7 @@ console.log(foo + +bar);
 
 Los operadores lógicos permiten evaluar una serie de operandos utilizando operaciones AND y OR.
 
-Operadores lógicos AND y OR
+##### Operadores lógicos AND y OR #####
 
 var foo = 1;
 var bar = 0;
@@ -167,12 +168,17 @@ foo && bar;  // devuelve 0, el cual es falso (false)
 foo && baz;  // devuelve 2, el cual es verdadero (true)
 baz && foo;  // devuelve 1, el cual es verdadero (true)
 
-El operador || (OR lógico) devuelve el valor del primer operando, si éste es verdadero; caso contrario devuelve el segundo operando. Si ambos operandos son falsos devuelve falso (false). El operador && (AND lógico) devuelve el valor del primer operando si éste es falso; caso contrario devuelve el segundo operando. Cuando ambos valores son verdaderos devuelve verdadero (true), sino devuelve falso.
+El operador || (OR lógico) devuelve el valor del primer operando, si éste es verdadero; caso contrario devuelve el segundo
+operando. Si ambos operandos son falsos devuelve falso (false). El operador && (AND lógico) devuelve el valor del primer operando
+si éste es falso; caso contrario devuelve el segundo operando. Cuando ambos valores son verdaderos devuelve verdadero (true),
+sino devuelve falso.
 
-Puede consultar la sección "Elementos Verdaderos y Falsos" para más detalles sobre que valores se evalúan como true y cuales se evalúan como false.
+Puede consultar la sección "Elementos Verdaderos y Falsos" para más detalles sobre que valores se evalúan como true y cuales se
+evalúan como false.
 
-Nota
-Puede que a veces note que algunos desarrolladores utilizan esta lógica en flujos de control en lugar de utilizar la declaración if. Por ejemplo:
+**Nota:
+Puede que a veces note que algunos desarrolladores utilizan esta lógica en flujos de control en lugar de utilizar la declaración
+if. Por ejemplo:
 
 // realizar algo con foo si foo es verdadero
 foo && doSomething(foo);
@@ -229,7 +235,7 @@ if (bar) {
     }
 }
 
-Elementos verdaderos y falsos
+##### Elementos verdaderos y falsos #####
 
 Para controlar el flujo adecuadamente, es importante entender qué tipos de valores son "verdaderos" y cuales "falsos". A veces, algunos valores pueden parecer una cosa pero al final terminan siendo otra.
 
@@ -253,7 +259,7 @@ Variables condicionales utilizando el operador ternario
 
 A veces se desea establecer el valor de una variable dependiendo de cierta condición. Para hacerlo se puede utilizar una declaración if/else, sin embargo en muchos casos es más conveniente utilizar el operador ternario. [Definición: El operador ternario evalúa una condición; si la condición es verdadera, devuelve cierto valor, caso contrario devuelve un valor diferente.]
 
-El operador ternario
+##### El operador ternario #####
 
 // establecer a foo igual a 1 si bar es verdadero;
 // caso contrario, establecer a foo igual a 0
@@ -279,7 +285,8 @@ switch (foo) {
     break;
 }
 
-Las declaraciones switch son poco utilizadas en JavaScript, debido a que el mismo comportamiento es posible obtenerlo creando un objeto, el cual posee más potencial ya que es posible reutilizarlo, usarlo para realizar pruebas, etc. Por ejemplo:
+Las declaraciones switch son poco utilizadas en JavaScript, debido a que el mismo comportamiento es posible obtenerlo creando un
+objeto, el cual posee más potencial ya que es posible reutilizarlo, usarlo para realizar pruebas, etc. Por ejemplo:
 
 var stuffToDo = {
     'bar' : function() {
@@ -301,20 +308,22 @@ if (stuffToDo[foo]) {
     stuffToDo['default']();
 }
 
-Bucles
+##################
+##### Bucles #####
+##################
 
 Los bucles (en inglés loops) permiten ejecutar un bloque de código un determinado número de veces.
-
-Bucles
 
 // muestra en la consola 'intento 0', 'intento 1', ..., 'intento 4'
 for (var i=0; i<5; i++) {
     console.log('intento ' + i);
 }
 
-Note que en el ejemplo se utiliza la palabra var antes de la variable i, esto hace que dicha variable quede dentro del "alcance" (en inglés *scope) del bucle. Más adelante en este capítulo se examinará en profundidad el concepto de alcance.*
+Note que en el ejemplo se utiliza la palabra var antes de la variable i, esto hace que dicha variable quede
+dentro del "alcance" (en inglés *scope) del bucle. Más adelante en este capítulo se examinará en profundidad
+el concepto dealcance.*
 
-Bucles utilizando for
+##### Bucles utilizando for #####
 
 Un bucle utilizando for se compone de cuatro estados y posee la siguiente estructura:
 
@@ -338,7 +347,7 @@ for (var i = 0, limit = 100; i < limit; i++) {
     // en la consola será "Actualmente en 99"
 }
 
-Bucles utilizando while
+##### Bucles utilizando while #####
 
 Un bucle utilizando while es similar a una declaración condicional if, excepto que el cuerpo va a continuar ejecutándose hasta que la condición a evaluar sea falsa.
 
@@ -353,7 +362,8 @@ while (i < 100) {
     i++; // incrementa la variable i
 }
 
-Puede notar que en el ejemplo se incrementa el contador dentro del cuerpo del bucle, pero también es posible combinar la condición y la incrementación, como se muestra a continuación:
+Puede notar que en el ejemplo se incrementa el contador dentro del cuerpo del bucle, pero también es
+posible combinar la condición y la incrementación, como se muestra a continuación:
 
 Bucle utilizando while con la combinación de la condición y la incrementación
 
@@ -365,7 +375,7 @@ while (++i < 100) {
 
 Se comienza en -1 y luego se utiliza la incrementación previa (++i).
 
-Bucles utilizando do-while
+##### Bucles utilizando do-while #####
 
 Este bucle es exactamente igual que el bucle utilizando while excepto que el cuerpo es ejecutado al menos una vez antes que la condición sea evaluada.
 
@@ -407,9 +417,27 @@ for (var i = 0; i < 10; i++) {
     console.log('Hello');
 }
 
-Arrays
+#############################################
+##### Acceder a elementos del árbol DOM #####
+#############################################
 
-Los arrays (en inglés arrays) son listas de valores con índice-cero (en inglés zero-index), es decir, que el primer elemento del array está en el índice 0. éstos son una forma práctica de almacenar un conjunto de datos relacionados (como cadenas de caracteres), aunque en realidad, un array puede incluir múltiples tipos de datos, incluso otros arrays.
+Seleccionar un nodo de elemento individual
+  getElementById(): utiliza el valor del atributo id de un elemento.
+  querySelector(): Utiliza un selector CSS, y regresa el primer elemento coincidente.
+
+Selecciona un multiples elementos (lista de nodos)
+  getElementsByClassName(): Selecciona todos los elementos que tienen un valor especifico por su atributo de clase CSS.
+  getElementsByTagName(): Selecciona todos los elementos que tengan un nombre de etiqueta específica.
+  querySelectorAll(): Usa un selector CSS para seleccionar todos los elementos que hagan match.
+
+##################
+##### Arrays #####
+##################
+
+Los arrays (en inglés arrays) son listas de valores con índice-cero (en inglés zero-index), es decir, que
+el primer elemento del array está en el índice 0. éstos son una forma práctica de almacenar un conjunto de
+datos relacionados (como cadenas de caracteres aunque en realidad, un array puede incluir múltiples tipos
+de datos, incluso otros arrays.
 
 Un array simple
 
@@ -443,7 +471,9 @@ var myArray = [ 'h', 'e', 'l', 'l', 'o' ];
 var myString = myArray.join('');   // 'hello'
 var mySplit = myString.split('');  // [ 'h', 'e', 'l', 'l', 'o' ]
 
-Objetos
+###################
+##### Objetos #####
+###################
 
 Los objetos son elementos que pueden contener cero o más conjuntos de pares de nombres claves y valores asociados a dicho objeto. Los nombres claves pueden ser cualquier palabra o número válido. El valor puede ser cualquier tipo de valor: un número, una cadena, un array, una función, incluso otro objeto.
 
@@ -476,9 +506,12 @@ var myObject = {
     99999: 789
 };
 
-Funciones
+#####################
+##### Funciones #####
+#####################
 
-Las funciones contienen bloques de código que se ejecutaran repetidamente. A las mismas se le pueden pasar argumentos, y opcionalmente la función puede devolver un valor.
+Las funciones contienen bloques de código que se ejecutaran repetidamente. A las mismas se le pueden
+pasar argumentos, y opcionalmente la función puede devolver un valor.
 
 Las funciones pueden ser creadas de varias formas:
 
@@ -585,16 +618,16 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 <!-- Escribir html en un documento a traves de js -->
 <html>
 <body>
-	<script type="text/javascript">    
-	    document.write("<h1>Encabezado</h1>");
-	    document.write("<p>Parrafo 1</p>");
-	    document.write("<p>Parrafo 2</p>");    
-	    document.write("<h3>Encabezado</h3>");
-	</script>
+    <script type="text/javascript">    
+        document.write("<h1>Encabezado</h1>");
+        document.write("<p>Parrafo 1</p>");
+        document.write("<p>Parrafo 2</p>");    
+        document.write("<h3>Encabezado</h3>");
+    </script>
 
-	<script type="text/javascript">
-	    document.write("hola mundo");
-	</script>
+    <script type="text/javascript">
+        document.write("hola mundo");
+    </script>
 </body>
 </html>
 
@@ -628,7 +661,7 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 
 <!-- Mostrar alerta en la pagina, se muestra al cargar la pagina -->
 <script type="text/javascript">
-	alert("Ejemplo de alerta con JavaScript");
+    alert("Ejemplo de alerta con JavaScript");
 </script>
 
 -------------------------------------
@@ -3143,7 +3176,20 @@ Intentamos evitar a toda costa el uso de variables globales. Aunque este caso pu
 
 -------------------------------------
 
-<!-- -->
+<!-- El método trim() elimina los espacios en blanco al principio y al final de una cadena -->
+<!DOCTYPE html>
+<html>
+<body>
+<p>Click the button to alert the string with removed whitespace.</p>
+<button onclick="myFunction()">Try it</button>
+<script type="text/javascript">
+function myFunction() {
+    var str = "       Hello World!       ";
+    alert(str.trim());
+}
+</script>
+</body>
+</html>
 
 -------------------------------------
 
