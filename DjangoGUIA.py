@@ -1149,7 +1149,7 @@ class PostForm(forms.ModelForm):
             }),
         }
 
-#Otra forma
+##### Otra forma #####
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
