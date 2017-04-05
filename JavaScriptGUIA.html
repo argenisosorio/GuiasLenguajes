@@ -3193,11 +3193,63 @@ function myFunction() {
 
 -------------------------------------
 
-<!-- -->
+<!-- 
+Base64 es un término genérico para una serie de esquemas de codificación similares que codifican
+datos binarios tratándolos numéricamente y traduciéndolos en una representación de base 64.
+El término Base64 se origina a partir de una codificación de transferencia de contenido MIME específica.
+Los esquemas de codificación Base64 se usan comúnmente cuando existe la necesidad de codificar datos binarios
+que necesitan ser almacenados y transferidos a través de medios diseñados para tratar con datos textuales.
+Esto es para asegurar que los datos permanezcan intactos sin modificaciones durante el transporte. Base64 se
+utiliza comúnmente en una serie de aplicaciones, incluyendo correo electrónico a través de MIME, y el almacenamiento
+de datos complejos en XML.
+La función .atob() descodifica una cadena de datos que ha sido codificada utilizando la codificación
+en base-64. Puedes utilizar el método btoa() para codificar y transmitir datos que, de otro modo podrían generar
+problemas de comunicación. Luego de ser transmitidos se puede usar el método atob() para decodificar los datos
+de nuevo.
+-->
+<html>
+    <head>
+        <title>XXX</title>
+        <meta charset="UTF-8">
+    </head>
+<body>
+<script type="text/javascript">
+    var texto = "Hola mundo"
+    alert("El texto original es: "+texto);
+    // Codificar cadena
+    var encoded_texto = btoa(texto);
+    alert("El texto codificado es: "+encoded_texto);
+    // Decodificar cadena
+    var decoded_texto = atob(encoded_texto); 
+    alert("El texto decodificado es: "+decoded_texto);
+</script>
+</body>
+</html>
 
 -------------------------------------
 
-<!-- -->
+<!--
+-Pedir al usuario que introduzca el texto a codificar en Base64, y luego mostrarlo decodificado.
+-La btoa() sirve para codificar datos en base-64. 
+-La función .atob() descodifica una cadena de datos que ha sido codificada en base-64.
+-->
+<html>
+    <head>
+        <title>XXX</title>
+        <meta charset="UTF-8">
+    </head>
+<body>
+<script type="text/javascript">
+    texto=prompt("Por favor escriba el texto a codificar:");
+    // Codificar cadena
+    var encoded_texto = btoa(texto);
+    alert("El texto codificado es: "+encoded_texto);
+    // Decodificar cadena
+    var decoded_texto = atob(encoded_texto); 
+    alert("El texto decodificado es: "+decoded_texto);
+</script>
+</body>
+</html>
 
 -------------------------------------
 
