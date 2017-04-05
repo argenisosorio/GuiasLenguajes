@@ -440,7 +440,7 @@ lo que está descrito en el Gemfile, por eso instalamos bundle.
 #Dentro del proyecto instalamos bundler:
 $ gem install bundler 1.xx.x
 
-#Luego instalamos las dependencias:
+#Luego, dentro del proyecto instalamos las dependencias(gemas) específicas para ese proyecto:
 $ bin/bundle install
 
 #Checks if the dependencies listed in Gemfile are satisfied by currently installed gems 
