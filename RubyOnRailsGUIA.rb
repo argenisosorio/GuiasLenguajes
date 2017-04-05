@@ -417,21 +417,6 @@ $ bin/rails db:rollback STEP=X
 #######################################################
 
 '''
-Al momento de clonar algun proyecto es sabido que cuenta con algunas dependencias
-específicas, ya sea una version de rails, sqlite3 u otras gemas, para instalar
-esas dependencias usaremos bundle, que no es mas que un script que instala
-lo que está descrito en el Gemfile, por eso instalamos bundle.
-'''
-
-#Dentro del proyecto instalamos bundler:
-$ gem install bundler
-
-#Luego instalamos las dependencias:
-$ bin/bundle install
-
-#Checks if the dependencies listed in Gemfile are satisfied by currently installed gems 
-$ bundle check
-
 Cuando trabajamos con un proyecto que fue generado en otra parte, lo mejor es instalar
 todas las dependencias y las mismas versiones con las cuales se genero el proyecto.
 Hablamos tanto de la version de ruby, RoR y bundle, aparte de las versiones de las gemas
@@ -445,6 +430,21 @@ BUNDLED WITH
 Lo que nos lleva a instalar esa version de bundle para correr el servidor de ese proyecto, usamos:
 
 $ gem install bundler 1.xx.x
+
+Al momento de clonar algun proyecto es sabido que cuenta con algunas dependencias
+específicas, ya sea una version de rails, sqlite3 u otras gemas, para instalar
+esas dependencias usaremos bundle, que no es mas que un script que instala
+lo que está descrito en el Gemfile, por eso instalamos bundle.
+'''
+
+#Dentro del proyecto instalamos bundler:
+$ gem install bundler 1.xx.x
+
+#Luego instalamos las dependencias:
+$ bin/bundle install
+
+#Checks if the dependencies listed in Gemfile are satisfied by currently installed gems 
+$ bundle check
 
 ##############################
 ##### Ejemplos prácticos #####
