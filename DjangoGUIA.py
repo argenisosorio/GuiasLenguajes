@@ -1235,3 +1235,98 @@ class RegisterForm(UserCreationForm):
         if commit:
             user.save()
             return user
+
+#####################################
+##### Validación de formularios #####
+#####################################
+
+'''
+Los validadores son funciones simples que toman un solo argumento y disparan un ValidationError
+en el caso de que una entrada sea no válida. Estos nos sirven para crear alarmas cuando los usuarios
+insertan información errónea en los campos de un formulario de nuestra app.
+
+##### ¿Cómo crear un validador en Django? #####
+
+Supongamos que queremos validar el campo cuerpo que tenemos disponible en nuestro modelo Post.
+Lo primero que tenemos que hacer es declarar un método dentro de la misma clase (PostForm), en donde
+definiremos toda nuestra lógica de validación para un campo del formulario en especifico.
+
+Vamos a validar el numéro de caractéres mínimo del campo del cuerpo. Para eso definimos el método
+clean_cuerpo, si el número de caractéres escrito en el formulario no es mayor a 3 no dejará guardar
+los datos del formulario y mostrara el error "El cuerpo debe tener mas de 3 caractéres", de momento
+solo lo mostrara si renderizamos el formulario completo {{ form }}.
+
+Por convención debemos denominar nuestro método con el prefijo clean seguido del nombre del campo.
+En nuestro caso seria clean_cuerpo
+
+Siempre debemos obtener el diccionario de data que proviene del formulario de manera limpia, para eso
+utilizamos la siguiente instrucción: cuerpo = self.cleaned_data['cuerpo']
+'''
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from django import forms
+from app_blog.models import Post
+from django.forms import (
+    TextInput, CharField, Select, RadioSelect, Textarea, CheckboxInput
+)
+
+class PostForm(forms.ModelForm):
+
+    class Meta:
+        model = Post
+
+        fields = [
+            'autor',
+            'titulo',
+            'cuerpo',
+        ]
+
+        widgets = {
+            'autor': forms.TextInput(attrs={
+                'class':'form-control input-md',
+                'style': 'min-width: 0; width: 100%; display: inline;',
+            }),
+            'titulo': forms.TextInput(attrs={
+                'class':'form-control input-md',
+                'style': 'min-width: 0; width: 100%; display: inline;',
+            }),
+            'cuerpo': forms.Textarea(attrs={
+                'class':'form-control input-md',
+                'style': 'min-width: 0; width: 100%; display: inline;',
+            }),
+        }
+
+    def clean_cuerpo(self):
+        """
+        Método que verifica si el campo cuerpo es menor a 3 caractéres.
+        """
+        cuerpo = self.cleaned_data['cuerpo']
+
+        if len(cuerpo) < 3:
+            raise forms.ValidationError("El cuerpo debe tener mas de 3 caractéres")
+        return cuerpo
+
+##### Otra comparación #####
+
+    def clean_cuerpo(self):
+        """
+        Método que verifica si el campo cuerpo coincide con una cadena arbitraria.
+        """
+        cuerpo = self.cleaned_data['cuerpo']
+
+        if (cuerpo!='admin'):
+            raise forms.ValidationError("El texto de cuerpo no coincide con la cadena")
+        return cuerpo
+
+
+def clean_cuerpo(self):
+        """
+        Método que verifica si el campo cuerpo es diferente al campo título.
+        """
+        cuerpo = self.cleaned_data['cuerpo']
+        titulo = self.cleaned_data['titulo']
+
+        if (cuerpo!=titulo):
+            raise forms.ValidationError("El texto de cuerpo no coincide con el texto del título")
+        return cuerpo

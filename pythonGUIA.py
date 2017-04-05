@@ -966,12 +966,18 @@ print lista
 ##### Métodos #####
 ###################
 
-#The method len() returns the number of elements in the list.
-#len(list)
+# -*- coding: utf-8 -*-
+#El método len() devuelve el número de elementos de la lista, una variable, etc.
+a = "casa"
+print len(a)
+
+# -*- coding: utf-8 -*-
+#El método len() devuelve el número de elementos de la lista, una variable, etc.
 lista = ["Proyecto1","Proyecto2","Proyecto3"]
 print lista
 print len(lista)
 
+# -*- coding: utf-8 -*-
 #Otro Ejemplo
 list1, list2 = [123, 'xyz', 'zara'], [456, 'abc']
 print "First list length : ", len(list1)
