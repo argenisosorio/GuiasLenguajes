@@ -1245,3 +1245,27 @@ print data['Fruteria'][1]["Verdura"][1]["Nombre"]
 print data['Fruteria'][1]["Verdura"][1]["Cantidad"]
 print data['Fruteria'][1]["Verdura"][2]["Nombre"]
 print data['Fruteria'][1]["Verdura"][2]["Cantidad"]
+
+##################
+##### Base64 #####
+##################
+
+# -*- coding: utf-8 -*-
+# Codificar con base64 una imágen
+with open("path/of/file.*", "rb") as f:
+    data = f.read()
+    print data.encode("base64")
+
+---
+
+# -*- coding: utf-8 -*-
+#Decodificar una cadena en base64 y convertirla en imágen
+import base64
+image = """
+Aqui iría la cadena superlarga
+generada con la codificación en base64
+"""
+imgdata = base64.b64decode(image)
+filename = 'fff.png'  #Nombre con el que se va a crear la imágen 
+with open(filename, 'wb') as f:
+    f.write(imgdata)
