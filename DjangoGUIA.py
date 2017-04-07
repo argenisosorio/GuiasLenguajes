@@ -802,9 +802,10 @@ class Xxx(TemplateView):
     template_name = "index.html"
     form_class = XxxForm
 
-    def get(self,request):
-       data = {'x': "xxxx", 'y': "yyyy"}
-       return render(request,self.template_name, {'data':data})
+    #def get(self,request):
+    def get(self,request,*args, **kwargs):
+        data = {'x': "xxxx", 'y': "yyyy"}
+        return render(request,self.template_name, {'data':data})
 
 #index.html
 <div id="content">

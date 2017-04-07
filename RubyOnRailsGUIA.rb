@@ -388,6 +388,8 @@ $ sqlite3 --version
 #Abre tu terminal, ve a la carpeta en donde meterás tus archivos y escribe los siguientes comandos:
 
 # Desinstalar una gema específica, a veces hay conflictos entre versiones de gemas a usar en el proyecto y las gemas instaladas.
+# Si no se deja desinstalar la podemos borrar directamente donde fue instalada, si se uso rvm entonces seguro está
+# instanciada en .rvm/gems/ruby-x.x.x/cache y .rvm/gems/ruby-2.2.1/gems en el home del usuario
 $ gem uninstall <gem-name>
 
 # Instalar una gema específica, usar el parametro "--version" acortado con "-v"
@@ -412,11 +414,25 @@ $ DB=postgres bin/rake db:migrate:status
 #Para moverse entre los estados de las migraciones donde X es el numero a retroceder
 $ bin/rails db:rollback STEP=X
 
+###########################################
+##### Servidor de desarrollo de Rails #####
+###########################################
+
+#Por defecto rails lanza su servidor en el puerto 3000 del localhost pero podemos iniciarlo en otro puerto dandole el parametro -p ejemplo:
+#Usos del server: server [options]
+-p, --port=port  --- Runs Rails on the specified port.
+                     Default: 3000
+-b, --binding=ip --- Binds Rails to the specified ip.
+                     Default: 0.0.0.0
+
+$ rails server -P 8080 #Si visitamos 127.0.0.1:8080 comprobaremos el cambio de puerto
+
+$ rails s -b 192.168.xx.xx -p 80 #Correr el servidor asignándole una ip y un puerto
+
 #######################################################
 ##### Activando un proyecto clonado o ya iniciado #####
 #######################################################
 
-'''
 Cuando trabajamos con un proyecto que fue generado en otra parte, lo mejor es instalar
 todas las dependencias y las mismas versiones con las cuales se genero el proyecto.
 Hablamos tanto de la version de ruby, RoR y bundle, aparte de las versiones de las gemas
@@ -435,7 +451,6 @@ Al momento de clonar algun proyecto es sabido que cuenta con algunas dependencia
 específicas, ya sea una version de rails, sqlite3 u otras gemas, para instalar
 esas dependencias usaremos bundle, que no es mas que un script que instala
 lo que está descrito en el Gemfile, por eso instalamos bundle.
-'''
 
 #Dentro del proyecto instalamos bundler:
 $ gem install bundler 1.xx.x
@@ -469,20 +484,14 @@ $ rails s
 $ rails server #Se visita la direccion 127.0.0.1/3000 para comprobar que el servidor esta corriendo
 #Ctrl + C para  detener el servidor
 
-#Por defecto rails lanza su servidor en el puerto 3000 del localhost pero podemos iniciarlo en otro puerto dandole el parametro -p ejemplo:
+#Por defecto rails lanza su servidor en el puerto 3000 del localhost.
 
-#Usos del server: server [options]
--p, --port=port  --- Runs Rails on the specified port.
-                     Default: 3000
--b, --binding=ip --- Binds Rails to the specified ip.
-                     Default: 0.0.0.0
-
-$ rails server -P 8080 #Si visitamos 127.0.0.1:8080 comprobaremos el cambio de puerto
-
-#Listo. Ahora se ingresa a la siguiente dirección en el navegador para utilizar la aplicación desarrollada:
+#Ahora se ingresa a la siguiente dirección en el navegador para utilizar la aplicación desarrollada:
 localhost:3000/Empleados
   ó
 localhost:3000/Alumnos
+
+#Según el ejemplo que se haya utilizado
 
 ####################################################################
 ##### Creando una aplicacion de (prueba) saludar y dar la hora #####

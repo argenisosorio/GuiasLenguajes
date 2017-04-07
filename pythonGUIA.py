@@ -1056,3 +1056,190 @@ $ python
 >>> now = datetime.datetime.now()
 >>> print now
 2017-01-05 04:08:15.932157
+
+##########################
+##### Manejando json #####
+##########################
+
+# -*- coding: utf-8 -*-
+# Imprimir datos de un diccionario
+import json
+data = {"Fruteria":[{"Fruta":[{"Nombre":"Manzana","Cantidad":10},{"Nombre":"Pera","Cantidad":20}]}]}
+print data
+print "-----"
+#Nos devuelve el string con el JSON
+data_string = json.dumps(data)
+print data_string
+
+---
+
+# -*- coding: utf-8 -*-
+# Decodificar JSON
+# Para decodificar un JSON a vamos a hacer uso de la función json_loads(String)
+import json
+data = {"Fruteria":[{"Fruta":[{"Nombre":"Manzana","Cantidad":10},{"Nombre":"Pera","Cantidad":20}]}]}
+data_string = json.dumps(data)
+print 'ENCODED:', data_string
+decoded = json.loads(data_string)
+print 'DECODED:', decoded
+
+---
+
+# -*- coding: utf-8 -*-
+# Decodificar JSON
+# Imprimir valores del json, por posíción
+import json
+data = {
+  "Fruteria":[
+    {
+      "Fruta":[
+        {
+          "Nombre":"Manzana","Cantidad":10
+          },
+          {
+            "Nombre":"Pera","Cantidad":20
+          },
+          {
+            "Nombre":"Naranja","Cantidad":30
+          }
+      ]
+    },
+    {
+      "Verdura":[
+        {
+          "Nombre":"Lechuga","Cantidad":80
+        },
+        {
+          "Nombre":"Tomate","Cantidad":15
+        },
+        {
+          "Nombre":"Pepino","Cantidad":50
+        }
+      ]
+    }
+  ]
+}
+#encoded
+data_string = json.dumps(data)
+#Decoded
+decoded = json.loads(data_string)
+print "Tenemos "+str(decoded["Fruteria"][0]["Fruta"][0]["Cantidad"])+" Manzanas"
+print "Tenemos "+str(decoded["Fruteria"][0]["Fruta"][1]["Cantidad"])+" Peras"
+print "Tenemos "+str(decoded["Fruteria"][0]["Fruta"][2]["Cantidad"])+" Naranjas"
+print "Tenemos "+str(decoded["Fruteria"][1]["Verdura"][0]["Cantidad"])+" Lechugas"
+print "Tenemos "+str(decoded["Fruteria"][1]["Verdura"][1]["Cantidad"])+" Tomates"
+print "Tenemos "+str(decoded["Fruteria"][1]["Verdura"][2]["Cantidad"])+" Pepino"
+
+---
+
+# -*- coding: utf-8 -*-
+# Decodificar JSON
+# Imprimir valores del json, por posíción
+import json
+data = {
+  "Fruteria":[
+    {
+      "Fruta":[
+        {
+          "Nombre":"Manzana","Cantidad":10
+          },
+          {
+            "Nombre":"Pera","Cantidad":20
+          },
+          {
+            "Nombre":"Naranja","Cantidad":30
+          }
+      ]
+    },
+    {
+      "Verdura":[
+        {
+          "Nombre":"Lechuga","Cantidad":80
+        },
+        {
+          "Nombre":"Tomate","Cantidad":15
+        },
+        {
+          "Nombre":"Pepino","Cantidad":50
+        }
+      ]
+    }
+  ]
+}
+# Mostrando la data completa
+print "*****Data total*****"
+print data
+
+# Mostrando la data del primer hijo
+print "*****Data Frutas*****"
+print data['Fruteria'][0]
+
+# Mostrando la data del segundo hijo
+print "*****Data Verduras*****"
+print data['Fruteria'][1]
+
+---
+
+# -*- coding: utf-8 -*-
+# Decodificar JSON
+# Imprimir valores del json, por posíción, accediendo al último nivel
+import json
+data = {
+  "Fruteria":[
+    {
+      "Fruta":[
+        {
+          "Nombre":"Manzana","Cantidad":10
+          },
+          {
+            "Nombre":"Pera","Cantidad":20
+          },
+          {
+            "Nombre":"Naranja","Cantidad":30
+          }
+      ]
+    },
+    {
+      "Verdura":[
+        {
+          "Nombre":"Lechuga","Cantidad":80
+        },
+        {
+          "Nombre":"Tomate","Cantidad":15
+        },
+        {
+          "Nombre":"Pepino","Cantidad":50
+        }
+      ]
+    }
+  ]
+}
+# Mostrando la data completa
+print "*****Data total*****"
+print data
+
+# Mostrando la data del primer hijo
+print "*****Data Frutas*****"
+print data['Fruteria'][0]
+
+# Mostrando la data del segundo hijo
+print "*****Data Verduras*****"
+print data['Fruteria'][1]
+
+# Mostrando la data de los elementos de Frutas
+print "*****Data de elementos de Frutas *****"
+print data['Fruteria'][0]["Fruta"][0]["Nombre"]
+print data['Fruteria'][0]["Fruta"][0]["Cantidad"]
+print data['Fruteria'][0]["Fruta"][1]["Nombre"]
+print data['Fruteria'][0]["Fruta"][1]["Cantidad"]
+print data['Fruteria'][0]["Fruta"][2]["Nombre"]
+print data['Fruteria'][0]["Fruta"][2]["Cantidad"]
+
+# Mostrando la data de los elementos de Verduras
+print "*****Data de elementos de Verduras *****"
+print data['Fruteria'][1]["Verdura"][0]["Nombre"]
+print data['Fruteria'][1]["Verdura"][0]["Cantidad"]
+print data['Fruteria'][1]["Verdura"][1]["Nombre"]
+print data['Fruteria'][1]["Verdura"][1]["Cantidad"]
+print data['Fruteria'][1]["Verdura"][2]["Nombre"]
+print data['Fruteria'][1]["Verdura"][2]["Cantidad"]
