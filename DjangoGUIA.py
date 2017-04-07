@@ -755,10 +755,16 @@ class Post(models.Model):
 ##### *args y **kwargs #####
 ############################
 
-La sintaxis especial, * args y **kwargs en definiciones de funciones se utiliza para pasar un número variable
+La sintaxis especial, *args y **kwargs en definiciones de funciones se utiliza para pasar un número variable
 de argumentos a una función. El forma simple (*args) se utiliza para pasar una lista de argumentos de longitud
 variable sin palabra clave y la forma de doble asterisco (**kwargs) se utiliza para pasar una lista de
-argumentos con palabras clave de longitud variable.
+argumentos con palabras clave de longitud variable o diccionarios, un ejemplo sería:
+
+def get_context_data(self, **kwargs):
+
+equivale a:
+
+def get_context_data(self, pk, id_x, id_y):
 
 ##############################################################################
 ##### Ejemplo de admin.py para mostrar los modelos en el admin de django #####
@@ -1331,3 +1337,15 @@ def clean_cuerpo(self):
         if (cuerpo!=titulo):
             raise forms.ValidationError("El texto de cuerpo no coincide con el texto del título")
         return cuerpo
+
+##############################################
+##### Pasando varios parametros a la url #####
+##############################################
+
+# En el template
+<td>
+   <a href="{% url 'search' pk id_x id_y %}"><button class="btn btn-success">Detail
+</td>
+
+# En la url
+url(r'^search/(?P<pk>\d+)/(?P<id_x>\d+)/(?P<id_y>\d+)$', ParticipacionCreate.as_view(), name = "search"),

@@ -966,6 +966,8 @@ print lista
 ##### Métodos #####
 ###################
 
+##### len() #####
+
 # -*- coding: utf-8 -*-
 #El método len() devuelve el número de elementos de la lista, una variable, etc.
 a = "casa"
