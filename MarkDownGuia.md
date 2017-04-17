@@ -10,9 +10,7 @@ Muy usado en los textos descriptores de proyectos de software.
 
 Usando las etiquetas, las podemos probar desde un editor online en --> http://dillinger.io/
 
-###################
 ##### Headers #####
-###################
 
 # H1
 ## H2
@@ -27,9 +25,7 @@ Xxxxxx
 Yyyy
 ---
 
-####################
 ##### Emphasis #####
-####################
 
 Emphasis, aka italics, with *asterisks* or _underscores_.
 
@@ -39,9 +35,7 @@ Combined emphasis with **asterisks and _underscores_**.
 
 Strikethrough uses two tildes. ~~Scratch this.~~
 
-#################
 ##### Lists #####
-#################
 
 1. First ordered list item
 2. Another item
@@ -56,16 +50,12 @@ Strikethrough uses two tildes. ~~Scratch this.~~
 - Or minuses
 + Or pluses
 
-#################
 ##### Links #####
-#################
 
 // Agregar enlaces al documento, se mostrara un enlace convencional.
 [Texto del link](https://link.com)
 
-##################
 ##### Images #####
-##################
 
 Reference-style: 
 ![alt text][logo]
@@ -76,9 +66,7 @@ Inline-style:
 
 [logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 2"
 
-#######################################
-#### Code and Syntax Highlighting #####
-#######################################
+##### Code and Syntax Highlighting #####
 
 Inline `code` has `back-ticks around` it. Indicated the languaje code to colored the syntax
 
@@ -93,10 +81,7 @@ print s
 print s
 print s
 ```
-
-##################
 ##### Tables #####
-##################
 
 Tables aren't part of the core Markdown spec, but they are part of GFM and Markdown Here supports them. They are an easy way of adding tables to your email -- a task that would otherwise require copy-pasting from another application.
 
@@ -115,9 +100,7 @@ Markdown | Less | Pretty
 *Still* | `renders` | **nicely**
 1 | 2 | 3
 
-###########################
 ##### Horizontal Rule #####
-###########################
 
 Three or more...
 
