@@ -44,10 +44,20 @@ minúsculas_con_guion_bajo para funciones y métodos. Siempre utilice self como 
 Se prefiere que utilicen UTF-8. Tomar en cuenta el PEP-0263 colocando la directiva para codificación
 UTF-8 (# -*- coding: utf-8 -*-) a los archivos .py
 
-#### Estándares para la documentación del código fuente #####
+##### Estándares para la documentación del código fuente #####
 
 -La utilización de docstrings permite generar automáticamente documentación, como alternativas a utilizar para generar la
 documentación del proyecto tenemos doxygen o Sphinx.
+
+Cabecera para los scripts de Python, indica al compilador o editor que se trata de un fichero python
+La segunda linea da codificación UTF-8 al programa
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+A veces solo es necesario usar la segunda línea
+
+# -*- coding: utf-8 -*-
 
 ##################
 ##### TEORIA #####
@@ -791,7 +801,9 @@ class Post(models.Model):
         self.published_date = timezone.now()
         self.save()
 
-    def __str__(self):
+    #def __unicode__(self): Para python 2.x
+        #return self.title
+    def __str__(self): # Para python 3.x
         return self.title
 
 ############################
@@ -1010,7 +1022,10 @@ Django, django/contrib/admin/templates, que puedes encontrar buscando en tu dire
 que Django fue instalado. Para personalizar esta plantilla base_site.html, copia la original dentro de un subdirectorio
 llamado admin dentro de cualquier directorio este usando TEMPLATE_DIRS. Por ejemplo, si tu TEMPLATE_DIRS
 incluye "/home/misplantillas", entonces copia django/contrib/admin/templates/admin/base_site.html
-a /home/misplantillas/admin/base_site.html. No te olvides del subdirectorio admin.
+a /home/misplantillas/admin/base_site.html. No te olvides del subdirectorio admin, entonces asi Django encuentra las plantillas por
+defecto de la interfaz de administración primero en nuestros directorios templates, lo que sucede es que, por defecto, Django
+automáticamente busca plantillas dentro del subdirectorio templates/ de cada paquete de aplicación
+como alternativa, si no consigue nada usara las plantillas de su core.
 
 ###################################################################
 ##### Desplegar aplicación web en Django - pythonanywhere.com #####
@@ -1565,3 +1580,45 @@ con el contexto dado.
 El primer argumento de render_to_response() debe ser el nombre de la plantilla a utilizar.
 El segundo argumento, si es pasado, debe ser un diccionario para usar en la creación de un Context para esa plantilla.
 Si no se le pasa un segundo argumento, render_to_response() utilizará un diccionario vacío.
+
+###############################################################
+##### Agregar nuestros modelos al sitio del administrador #####
+###############################################################
+
+Para poder agregar, cambiar y borrar objetos en las tablas de la base de datos usando la interfaz
+por defecto del administrador de Django es necesario declarar esos modelos en un fichero específico.
+
+Dentro del directorio interno algún proyecto generado (project/app), existe un archivo
+vacio llamado admin.py, creado automáticamente por el comando startapp
+agreguémosle las siguientes líneas de código, para registrar nuestros tres modelos:
+
+En app/admin.py
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from django.contrib import admin
+from .models import Mymodel, MyModel2
+
+admin.site.register(Mymodel)
+admin.site.register(MyModel2)
+
+Y si recargamos la interfáz de administración ya podremos listar los objetos de nuestras tablas de la base de datos.
+
+#####################################################
+##### Estatus de usuarios en el admin de django #####
+#####################################################
+
+La opción "Activo" define si el usuario está activo en todo sentido. Si está
+desactivada, el usuario no tendrá acceso a ninguna URL que requiera
+identificación.
+
+La opción Es "staff" indica que el usuario está habilitado a ingresar a la interfaz
+de administración (por ejemplo, indica que el usuario es considerado un
+miembro del staff en tu organización). Como el mismo sistema de usuarios
+puede usarse para controlar el acceso al sitio público (es decir, sitios
+restringidos no administrativos. Mira él capítulo 12.), esta opción diferencia
+entre usuarios públicos y administradores.
+
+La opción es "superusuario" da al usuario completo e irrestricto acceso a todos
+los elementos de la interfaz de administración, y sus permisos regulares son
+ignorados.

@@ -1,7 +1,37 @@
 ### Guía Python by dM ###
 
-'''
+#########################
+##### Zen of Python #####
+#########################
+
+>>> import this
+The Zen of Python, by Tim Peters
+
+"""
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren't special enough to break the rules.
+Although practicality beats purity.
+Errors should never pass silently.
+Unless explicitly silenced.
+In the face of ambiguity, refuse the temptation to guess.
+There should be one-- and preferably only one --obvious way to do it.
+Although that way may not be obvious at first unless you're Dutch.
+Now is better than never.
+Although never is often better than *right* now.
+If the implementation is hard to explain, it's a bad idea.
+If the implementation is easy to explain, it may be a good idea.
+Namespaces are one honking great idea -- let's do more of those!
+"""
+
+####################################
 ##### Estándares de Desarrollo #####
+####################################
 
 Los estándares de desarrollo constituyen las normas o patrones de referencia que se deben implementar en el desarrollo de
 aplicaciones de software. Entre los estándares de desarrollo más comunes se encuentran: normas de codificación, normas y
@@ -34,22 +64,24 @@ minúsculas_con_guion_bajo para funciones y métodos. Siempre utilice self como 
 Se prefiere que utilicen UTF-8. Tomar en cuenta el PEP-0263 colocando la directiva para codificación
 UTF-8 (# -*- coding: utf-8 -*-) a los archivos .py
 
-#### Estándares para la documentación del código fuente #####
+##### Estándares para la documentación del código fuente #####
 
 -La utilización de docstrings permite generar automáticamente documentación, como alternativas a utilizar para generar la
 documentación del proyecto tenemos doxygen o Sphinx.
-'''
 
-# Cabecera para los scripts de Python, indica al compilador o editor que se trata de un fichero python
-# La segunda linea da codificación UTF-8 al programa
+Cabecera para los scripts de Python, indica al compilador o editor que se trata de un fichero python
+La segunda linea da codificación UTF-8 al programa:
+
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-#A veces solo es necesario usar la segunda línea
+A veces solo es necesario usar la segunda línea:
 
 # -*- coding: utf-8 -*-
 
-#Comentarios de línea en Python
+---
+
+# Comentarios de línea en Python
 
 """ Comentarios de 
 Múltiple Línea """
@@ -71,7 +103,7 @@ Múltiple Línea '''
 
 #Se usa el punto decimal (.) en lugar de coma (,) para representar valores no enteros, es la notación que utiliza Python
 
-'''Palabras Reservadas en Python:
+##### Palabras Reservadas en Python #####
 
 and        del       from     not      while
 as         elif      global   or       with
@@ -81,23 +113,22 @@ class      exec      in       raise
 continue   finally   is       return
 def        for       lambda   try
 
-'''
 
-#Expresiones booleanas de comparación en Python
+##### Expresiones booleanas de comparación en Python #####
 
-'''Expresión  ---  Significado
+Expresión  ---  Significado
 
-   a == b          a es igual a b
+a == b          a es igual a b
 
-   a != b          a es distinto de b
+a != b          a es distinto de b
 
-   a < b           a es menor que b
+a < b           a es menor que b
 
-   a <= b          a es menor o igual que b
+a <= b          a es menor o igual que b
 
-   a > b           a es mayor que b
+a > b           a es mayor que b
 
-   a >= b          a es mayor o igual que b
+a >= b          a es mayor o igual que b
 
 Ejemplos:
 
@@ -125,13 +156,11 @@ False
 4<6
 True
 
-'''
-
 ##############################
 ##### OPERADORES LÓGICOS #####
 ##############################
 
-'''Expresión --- Significado
+Expresión --- Significado
 
 a and b   --- El resultado es True solamente si a es True y b es True de lo contrario el resultado es False
 a or b    --- El resultado es True si a es True o b es True de lo contrario el resultado es False
@@ -158,13 +187,12 @@ True
 True
 >>> not (5>2)
 False
-'''
 
 ##################################
 ##### OPERCIONES MATEMÁTICAS #####
 ##################################
 
-#Python permite utilizar las operaciones  +  -  *  /  (división entera) y ** (potenciación)
+# Python permite utilizar las operaciones  +  -  *  /  (división entera) y ** (potenciación)
 
 5*7
 35
@@ -186,39 +214,39 @@ b = 11.3
 c = 5
 d = 3.5
 
-#SUMA
+# SUMA
 print a + b
 37.3
 
-#RESTA
+# RESTA
 print c - a
 -21
 
-#MULTIPLICACION
+# MULTIPLICACION
 print d * c
 17.5
 
-#EXPONENTE
+# EXPONENTE
 print c ** 2
 25
 
-#DIVISION
+# DIVISION
 #El resultado sera un entero
 #Asi los datos tengan decimales y el resultado real tenga decimales Ejemplo: 0.1923
 #Toma unicamente la parte izquerda del punto decimal 
 print c / a
 0
 
-#DIVISION
+# DIVISION
 #Convierte lo que esta en parentesis a flotante o real
 print float(c) / a
 0.192307692308
 
-#DIVISION ENTERA 
+# DIVISION ENTERA 
 print 7 / 2
 3
 
-#MODULO
+# MODULO
 print 7%3
 
 # += Suma un valor al valor de la variable y asigna el nuevo valor producto de la suma a la variable
@@ -655,13 +683,11 @@ function()
 ##### Tuplas #####
 ##################
 
-'''
 Una tupla es una secuencia de objetos de Python.
 Las tuplas son secuencias, al igual que las listas.
 Las diferencias entre tuplas y las listas son, las tuplas
 no se pueden actualizar a diferencia de las listas y las
 tuplas utilizan paréntesis, mientras que las listas utilizan corchetes.
-'''
 
 # Imprimiendo el contenido de una tupla
 tupla = (1,True,"hola")
@@ -673,17 +699,14 @@ print tupla[0]
 print tupla[1]
 print tupla[2]
 
-
 ########################
 ##### Diccionarios #####
 ########################
 
-'''
 Los diccionarios en Python son un tipo de estructuras de datos que permite guardar un conjunto
 no ordenado de pares clave-valor, siendo las claves únicas dentro de un mismo diccionario
 (es decir que no pueden existir dos elementos con una misma clave).
 Los diccionarios son estructuras de datos muy extendidos en otros lenguajes de programación.
-'''
 
 #Imprimiendo el contenido del diccionario
 diccionario = {'Clave1':[1,2,3],
@@ -708,12 +731,10 @@ print diccionario['Clave1']
 print diccionario['Clave2']
 print diccionario[4]
 
-
 ##################
 ##### Clases #####
 ##################
 
-'''
 En la vida cotidiana, conocemos los objetos, como una carro, una botella, una perdona, etc.
 Esos objetos poseen ciertas caracteristicas, esas características, en programación orientada a objetos
 las llamámos atributos del objeto, y a las acciones que puede realizar el objeto se conocen como métodos.
@@ -726,7 +747,6 @@ Self es simplemente el nombre convencional para el primer argumento de un métod
 Por ejemplo, un método definido de la forma meth(self, a, b, c) debe ser llamado
 con x.meth(a, b, c), por alguna instancia de la clase x, en la cual ocurre la definición;
 de esta forma el método llamado pensara que es llamado como meth(x, a, b, c)
-'''
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -998,7 +1018,6 @@ print "Second list length : ", len(list2)
 
 #Requests es una librería para HTTP
 
-'''
 Para este ejemplo aclaremos:
 
 Github y Stackoverflow proporcionan su API para extraer diversos tipos de datos.
@@ -1009,7 +1028,6 @@ StackOverflow: http://api.stackexchange.com/docs
 
 Pero ¿qué es lo que usamos para comunicarse con estas API?
 Trabajar con HTTP es una tarea dolorosa. Python incluye un módulo llamado urllib2 pero trabajar con él puede llegar a ser engorroso.
-'''
 
 ### Solicitudes HTTP ###
 
