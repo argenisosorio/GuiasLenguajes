@@ -9,8 +9,9 @@
 
 # -*- coding: utf-8 -*-
 
-'''
+####################################
 ##### Estándares de Desarrollo #####
+####################################
 
 Los estándares de desarrollo constituyen las normas o patrones de referencia que se deben implementar en el desarrollo de
 aplicaciones de software. Entre los estándares de desarrollo más comunes se encuentran: normas de codificación, normas y
@@ -47,11 +48,11 @@ UTF-8 (# -*- coding: utf-8 -*-) a los archivos .py
 
 -La utilización de docstrings permite generar automáticamente documentación, como alternativas a utilizar para generar la
 documentación del proyecto tenemos doxygen o Sphinx.
-'''
 
+##################
 ##### TEORIA #####
+##################
 
-'''
 Framework de desarrollo web de codigo abierto escrito en Python
 (todo lo que se haga dentro de Django sera en Python)
 
@@ -74,12 +75,12 @@ y las consultas en SQL seran a nivel de Python.
 -Django trae su propio administrador por defecto:
 Podemos gestionar todos los datos de nuestro proyecto
 con el administrador.
-'''
 
+####################################
 ##### PATRON DE DESARROLLO MVT #####
+####################################
 
-'''
----Modelo-vista-controlador---
+##### Modelo-vista-controlador #####
 
 -Modelo: Se encarga de manipular toda la informacion
 de nuestro proyecto que este en nuestras bases de datos.
@@ -90,7 +91,7 @@ esta informacion almacenada.
 -Controlador: Es el que se encarga de hacer
 la comunicacion entre el modelo y las vista
 
----Modelo-vista-template---
+##### Modelo-vista-template #####
 
 (Ahora Django hara el papel de el controlador, que se encargaba
 de la comunicacion de los modelos y las vistas)
@@ -103,14 +104,13 @@ a mostrar y en que template.
 
 -Template: Es el que se encarga de coger toda la informacion, organizarla
 y ver como se va a mostrar.
-'''
 
+###########################
 ##### Instalar Django #####
+###########################
 
-'''
--Django está escrito completamente en Python
-por lo que el primer paso en la instalación de Django 
-#es el asegurarse de que Python esta instalado.
+Django está escrito completamente en Python por lo que el primer paso en la instalación de Django 
+es el asegurarse de que Python esta instalado.
 
 -Bajar Django de: http://www.python.org/download/
 Ejemplo: Django-1.5.12.tar.gz
@@ -124,11 +124,12 @@ Ejemplo: Django-1.5.12
 
 -Recomendada: Tambien podemos realizar la instalación desde PIP
 que es un repositorio de paquetes python facil de manejar.
-'''
 
-##### VERIFICACION DE INSTALACION #####
+#######################################
+##### Verificación de instalación #####
+#######################################
 
--Dentro de Python ejecutamos:
+-Dentro de la consola de Python ejecutamos:
 >>> import django
 >>> django.VERSION # Nos mostrara la version de Django instalada
 (1, 5, 12, 'final', 0)
@@ -138,7 +139,9 @@ que es un repositorio de paquetes python facil de manejar.
 >>> print(django.get_version()) #Nos mostrar la version de Django Instalada
 1.5.12
 
+##########################################
 ##### Compatibilidad / Base de Datos #####
+##########################################
 
 Django es compatible con cuatro motores de base de datos:
 
@@ -147,7 +150,9 @@ Django es compatible con cuatro motores de base de datos:
 -MySQL (http://www.mysql.com/) #Django requiere MySQL 4.0 o superior
 -Oracle (http://www.oracle.com/)
 
-##### CREANDO UN PROYECTO #####
+###############################
+##### Creando un proyecto #####
+###############################
 
 -Un proyecto es una colección de ajustes de una instancia de Django
 incluyendo la configuración de la base de datos, las opciones
@@ -222,37 +227,59 @@ python manage.py runserver 8080 #Arranca el servido en el puerto 8080
 
 python manage.py runserver 0.0.0.0:8000 #Cambiando la direccion IP
 
+#############################################
 ##### Configuración de la base de datos #####
+#############################################
 
-En settings.py se pueden configurar los privilegios, nombre, etc a la base de datos. 
+En settings.py se pueden configurar los privilegios, nombre, etc a la base de datos.
+y ya existen unas variables predeterminadas a las cuales podemos cambiar el valor
+según se necesite, entre ellas están las variables de conexión con la base de datos como:
 
-ENGINE -- Ya sea 'django.db.backends.postgresql_psycopg2', 'django.db.backends.mysql'
+ENGINE: Ya sea 'django.db.backends.postgresql_psycopg2', 'django.db.backends.mysql'
 o 'django.db.backends.sqlite3'. Otros backends también están disponibles.
 
-NAME -- El nombre de tu base de datos. Si estás usando SQLite la base de datos
+NAME: El nombre de tu base de datos. Si estás usando SQLite la base de datos
 será un archivo en tu ordenador; en tal caso, NAME debería ser la ruta absoluta
 incluyendo nombre de archivo, de dicho archivo. Si el archivo
 no existe se creará automáticamente cuando sincronices la base
 de datos por primera vez.
 
-USER -- El usuario de la base de datos (no usado en SQLite).
+USER: El usuario de la base de datos (no usado en SQLite).
 
-PASSWORD -- La contraseña de la base de datos (no usado en SQLite).
+PASSWORD: La contraseña de la base de datos (no usado en SQLite).
 
-HOST -- La máquina donde está ubicada la base de datos.
+HOST: La máquina donde está ubicada la base de datos.
 Déjalo como una cadena vacía si la base de datos está en la misma
 máquina física (no usado en SQLite).
 
-(Si las bases de datos son algo nuevo para ti te recomendamos usar
-simplemente SQLite (poniendo en ENGINE 'django.db.backends.sqlite3'). 
-SQLite viene incluido como parte de Python 2.5 y superior
-así que no tendrás que instalar nada.)
+PORT: Le indica a Django qué puerto usar cuando se conecte a la base de datos. Si
+estás utilizando SQLite, deja este en blanco. En otro caso, si dejas este en blanco,
+el adaptador de base de datos subyacente usará el puerto por omisión acorde al
+servidor de base de datos. En la mayoría de los casos, el puerto por omisión está
+bien, por lo tanto puedes dejar este en blanco.
 
-(Si se esta usando PostgreSQL o MySQL, se debe haber creado una base de datos.
-Lo puedes hacer con el comando "CREATE DATABASE nombre_basededatos;"
-en el intérprete interactivo de tu base de datos)
+'PORT': '5432', # Puerto por defecto de postgresql, generalmente no es necesario especificar uno
+# porque así lo tomará por defecto.
 
--En settings.py, la variable INSTALLED_APPS contiene el nombre de todas
+Fragmento tomado de un settings.py sobre éste tópico:
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'database',                      # Or path to database file if using sqlite3.
+        # The following settings are not used with sqlite3:
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',                      # Set to empty string for default.
+    }
+}
+
+##########################
+##### INSTALLED_APPS #####
+##########################
+
+En el settings.py, la variable INSTALLED_APPS contiene el nombre de todas
 las aplicaciones Django que están activadas en esta instancia de Django.
 Las aplicaciones pueden ser empacadas y distribuidas para ser usadas por otros proyectos.
 
@@ -263,7 +290,12 @@ Por defecto, INSTALLED_APPS contiene las siguientes aplicaciones, todas ellas vi
 -django.contrib.sessions -- Un framework para manejar sesiones.
 -django.contrib.sites -- Un framework para manejar múltiples sitios con una única instalación Django.
 
-##### Creando APLICACIONES #####
+################################
+##### Aplicación de Django ##### 
+################################
+
+Es una colección de archivos de código fuente, incluyendo modelos y vistas, que conviven en un solo
+paquete de Python y representen una aplicación completa de Django.
 
 -La aplicacion se creara en el directorio (NombreDelProyecto) con:
 
@@ -281,26 +313,11 @@ Un modelo de Django es una descripción de los datos en la base de datos, esta e
 - views.py: En este archivo es donde pondremos todas las funciones que necesitemos
 ejecutar en nuestro proyecto
 
---- Las variables las llamo en mi template así: {{ variable }}
+Las variables las llamo en mi template así: {{ variable }}
 
---- render()
--Es un idioma muy común para cargar una template llenar un contexto
-y retornar un objeto HttpResponse con el resultado de una template
-renderizada.
--La función render toma como primer argumento la solicitud (objeto
-request), el nombre de una template como segundo argumento y un
-diccionario como tercer argumento. Este devuelve un objeto
-HttpResponse de la template solicitada renderizada con el contexto
-dado.
-
---- render_to_response()
-
--El primer argumento de render_to_response() debe ser el nombre de la plantilla a utilizar.
--El segundo argumento, si es pasado, debe ser un diccionario para usar en la creación de un
-Context para esa plantilla.
--Si no se le pasa un segundo argumento, render_to_response() utilizará un diccionario vacío.
-
-##### Creando proyectos #####
+#######################
+##### Tips varios #####
+#######################
 
 *****Crear el proyecto
 django-admin startproject NombreDelProyecto
@@ -317,7 +334,7 @@ usa sqlite3 no hace falta crearla, solo agregando el nombre Django la crea
 Descomentar las lineas correspondientes en el settings/apps y en el urls
 
 *****Sincronisar la db
-python manage.py syncdb
+python manage.py syncdb #Anterior a Django 1.7.x
 
 *****Crear el super usuario
 Escribir el user, pass y email del superuser
@@ -378,8 +395,8 @@ basado en los modelos de la base de datos, podemos usar el modelo como base para
 forms, creamos el template con el formulario, el metodo etc
 
 <form method="POST"> {% csrf_token %} #Este token lo agregamos por segridad, Django lo exige
-        {{ form }}
-        <input type="submit" value="Enviar">
+    {{ form }}
+    <input type="submit" value="Enviar">
 </form>
 
 *****En la vista creamos una clase que contendra nuestro modelo
@@ -586,6 +603,32 @@ TEMPLATES = [
         },
     },
 ]
+
+#######################
+##### Comentarios #####
+#######################
+
+Al igual que en HTML o en un lenguaje de programación como Python, el lenguaje de
+plantillas de Django permite usar comentarios. Para designar un comentario, usa
+{# #}
+{# Esto es un comentario #}
+Este comentario no será mostrado cuando la plantilla sea renderizada.
+Un comentario no puede abarcar múltiples líneas. Esta limitación mejora la
+performance del analizador sintáctico de plantillas. En la siguiente plantilla, la salida
+del renderizado mostraría exactamente lo mismo que la plantilla (esto es, la etiqueta
+comentario no será tomada como comentario):
+
+Esto es una {# Esto no es
+un comentario #}
+prueba.
+
+Si quieres usar un comentario que abarque varias líneas, usa la etiqueta {%
+comment %}, así:
+ 
+{% comment %}
+    Este es un comentario
+    que abarca varias líneas
+{% endcomment %}
 
 ##############################
 ##### Modelos en Django  #####
@@ -858,6 +901,52 @@ LOGIN_URL = "/login"
 def index(request):
     user = request.user
     return render_to_response('index.html', {'usuario':user},context_instance=RequestContext(request))
+
+################################
+##### if/else en templates #####
+################################
+
+La etiqueta {% if %} evalúa una variable, y si esta es "true" (esto es, existe, no está
+vacía y no es un valor Boolean falso), el sistema mostrará todo lo que hay entre
+{% if %} y {% endif %}, por ejemplo:
+
+{% if es_fin_de_semana %}
+    <p>¡Bienvenido fin de semana!</p>
+{% endif %}
+
+La etiqueta {% else %} es opcional:
+ 
+{% if es_fin_de_semana %}
+    <p>¡Bienvenido fin de semana!</p>
+{% else %}
+    <p>De vuelta al trabajo.</p>
+{% endif %}
+
+############################
+##### for en templates #####
+############################
+
+La etiqueta {% for %} permite iterar sobre cada uno de los elementos de una
+secuencia. Como en la sentencia for de Python, la sintaxis es for X in Y, dónde Y es la
+secuencia sobre la que se hace el bucle y X es el nombre de la variable que se usará
+para cada uno de los ciclos del bucle.
+Cada vez que atravesamos el bucle, el sistema de plantillas renderizará todo entre
+{% for %} y {% endfor %}.
+Por ejemplo, puedes usar lo siguiente para mostrar una lista de atletas tomadas de
+la variable lista_atletas:
+
+<ul>
+{% for atleta in lista_atletas %}
+    <li>{{ atleta.nombre }}</li>
+{% endfor %}
+</ul>
+
+# Cuando instanciamos un objeto en la vista, para ser renderizado en la plantilla usamos:
+<ul>
+{% for objeto in objetos %}
+    <li>{{ objeto.attr }}</li>
+{% endfor %}
+</ul>
 
 ##################################################
 ##### Permisos de contenido según el usuario #####
@@ -1349,3 +1438,130 @@ def clean_cuerpo(self):
 
 # En la url
 url(r'^search/(?P<pk>\d+)/(?P<id_x>\d+)/(?P<id_y>\d+)$', ParticipacionCreate.as_view(), name = "search"),
+
+###################
+##### Filtros #####
+###################
+
+Los filtros de plantillas son formas simples de alterar el valor de una variable antes de mostrarla.
+Los filtros se parecen a esto:
+
+{{ nonmbre|lower }}
+
+Esto muestra el valor de {{ nombre }} después de aplicarle el filtro lower, el cual
+convierte el texto a minúscula. Usa una pipe o tubería (|) para aplicar el filtro.
+
+Los filtros pueden ser encadenados, esto quiere decir que, la salida de uno de los
+filtros puede ser aplicada al próximo. Aquí un ejemplo que toma el primer elemento
+de una lista y la convierte a mayusculas:
+
+{{ mi_lista|first|upper }} 
+
+Algunos filtros toman argumentos.
+Un filtro con argumentos se ve de este modo:
+ 
+{{ bio|truncatewords:"30" }}
+
+Esto muestra las primeras 30 palabras de la variable bio. Los argumentos de los
+filtros están siempre entre comillas dobles.
+
+##### Herencia de plantillas #####
+
+Para trabajar correctamente en Django se usará el sistema de plantillas para crear páginas HTML
+enteras, sin este tipo de sistemas de plantillas nos preguntaríamos ¿Cómo reducimos la duplicación y la redundancia
+de las áreas comunes de las páginas, como por ejemplo, los paneles de navegación?
+Una forma clásica de solucionar este problema es usar includes, insertando dentro
+de las páginas HTML a "incluir" una página dentro de otra. Es más, Django admite
+esta aproximación, con la etiqueta {% include %} Pero la
+mejor forma de solucionar este problema con Django es usar una estrategia más
+elegante llamada herencia de plantillas.
+En esencia, la herencia de plantillas te deja construir una plantilla base "esqueleto"
+que contenga todas las partes comunes de tu sitio y definir "bloques" que las
+plantillas hijas puedan sobrescribir.
+
+Ejemplo de plantilla base:
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      {% block title %}Base{% endblock %}
+    </title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/theme.css' %}" />
+  </head>
+  <body>
+    <div class="container theme-showcase" role="main">
+      {% block header %}
+        <h1>Header</h1>
+      {% endblock %}
+      <br />
+      {% block body %}
+        <h1>body</h1>
+      {% endblock %}
+      <br />
+      {% block footer %}
+        <h1>footer</h1>
+      {% endblock %}
+    </div>
+  </body>
+</html>
+
+{% extends "base/base.html" %}
+{% block title %}Demo{% endblock %}
+{% block header %}
+<!-- Sobreescribiendo el contenido de los bloques -->
+  <h1>hhh</h1>
+{% endblock %}
+<br />
+{% block body %}
+  <h1>bbb</h1>
+{% endblock %}
+<br />
+{% block footer %}
+  <h1>fff</h1>
+{% endblock %}
+
+#########################################
+##### Etiqueta include en templates #####
+#########################################
+
+{% include %} Esta etiqueta te permite incluir el contenido de otra plantilla. El
+argumento para esta etiqueta debería ser el nombre de la plantilla a incluir, y el
+nombre de la plantilla puede ser una variable string hard-coded (entre comillas),
+entre simples o dobles comillas. En cualquier momento que tengas el mismo código
+en varias etiquetas, considera utilizar la etiqueta {% include %} para eliminar la
+redundancia entre las plantillas.
+Estos dos ejemplos incluyen el contenido de la plantilla nav.html. Los ejemplos son
+equivalentes e ilustran que cualquier modo de comillas está permitido:
+ 
+{% include 'nav.html' %} 
+{% include "nav.html" %} 
+
+Por convención las plantillas que van a ser incluidas se guardan en un
+directorio "includes". En el ejemplo incluímos el contenido de la plantilla includes/nav.html:
+
+{% include 'includes/nav.html' %}
+
+####################
+##### render() #####
+####################
+
+La función llamada render(), se encuentra en el módulo django.shortcuts.
+
+Es un idioma muy común para cargar una template llenar un contexto y retornar un objeto HttpResponse con el resultado
+de una template renderizada.
+
+La función render toma como primer argumento la solicitud (objeto request), el nombre de una template como segundo
+argumento y un diccionario como tercer argumento. Este devuelve un objeto HttpResponse de la template solicitada renderizada
+con el contexto dado.
+
+################################
+##### render_to_response() #####
+################################
+
+El primer argumento de render_to_response() debe ser el nombre de la plantilla a utilizar.
+El segundo argumento, si es pasado, debe ser un diccionario para usar en la creación de un Context para esa plantilla.
+Si no se le pasa un segundo argumento, render_to_response() utilizará un diccionario vacío.

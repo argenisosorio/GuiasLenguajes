@@ -713,13 +713,20 @@ print diccionario[4]
 ##### Clases #####
 ##################
 
-#En la vida cotidiana, conocemos los objetos, como una carro, una botella, una perdona, etc.
-#Esos objetos poseen ciertas caracteristicas, esas características, en programación orientada a objetos
-#las llamámos atributos del objeto, y a las acciones que puede realizar el objeto se conocen como métodos.
-#Podriamos crear un objeto llamado Humano, y sus atributos serian, la edad, estatura, nombre, cedula, nacionalidad
-#Y sus métodos serían, caminar, correr, levantarse, etc.
-#Una clase es una plantilla del cual proviene nuestro objeto, en ella establecemos los atributos y métodos que tendra un objeto.
+'''
+En la vida cotidiana, conocemos los objetos, como una carro, una botella, una perdona, etc.
+Esos objetos poseen ciertas caracteristicas, esas características, en programación orientada a objetos
+las llamámos atributos del objeto, y a las acciones que puede realizar el objeto se conocen como métodos.
+Podriamos crear un objeto llamado Humano, y sus atributos serian, la edad, estatura, nombre, cedula, nacionalidad
+Y sus métodos serían, caminar, correr, levantarse, etc.
+Una clase es una plantilla del cual proviene nuestro objeto, en ella establecemos los atributos y métodos que tendra un objeto.
 
+¿Que es self?
+Self es simplemente el nombre convencional para el primer argumento de un método en Python.
+Por ejemplo, un método definido de la forma meth(self, a, b, c) debe ser llamado
+con x.meth(a, b, c), por alguna instancia de la clase x, en la cual ocurre la definición;
+de esta forma el método llamado pensara que es llamado como meth(x, a, b, c)
+'''
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
