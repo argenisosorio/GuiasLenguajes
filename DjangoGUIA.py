@@ -278,8 +278,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'database',                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
+        'USER': 'admin',
+        'PASSWORD': 123456,
         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
@@ -1622,3 +1622,15 @@ entre usuarios públicos y administradores.
 La opción es "superusuario" da al usuario completo e irrestricto acceso a todos
 los elementos de la interfaz de administración, y sus permisos regulares son
 ignorados.
+
+#################################################
+##### Integracions de postgresql con django #####
+#################################################
+
+# aptitude install postgresql postgresql-server libpq-dev python-dev
+
+# aptitude install python-psycopg2
+
+# pip install postgres
+
+# pip install db-psycopg2

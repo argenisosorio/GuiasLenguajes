@@ -681,7 +681,6 @@ placeholder="Tu Nombre" //Texto de ejemplo dentro del campo del formulario, a ma
         <input type="reset" value="Borrar">
     </form>
 </div>
-
     
 ------
 
@@ -2495,3 +2494,53 @@ span {
 Acci&oacute;n <br />
 A&ntilde;adir <br />
 Espec&iacute;fico <br />
+
+-----
+
+<!-- Agregar un botón responsive a la página para subir / top -->
+
+
+<!-- Antes del cierre de la etiqueta footer has de insertar este código HTML:-->
+<a class="go-top" href="#">
+  <!--span class="glyphicon glyphicon-chevron-up" aria-hidden="true"></span-->
+  Subir
+</a>
+
+<!-- Justo antes de cerrar la etiqueta body al final del documento HTML, has de insertar este código de jQuery: -->
+<script type="text/javascript">
+  $(document).ready(function() {
+    // Show or hide the sticky footer button
+    $(window).scroll(function() {
+      if ($(this).scrollTop() > 200) {
+        $('.go-top').fadeIn(200);
+      } else {
+        $('.go-top').fadeOut(200);
+      }
+    });
+    // Animate the scroll to top
+    $('.go-top').click(function(event) {
+      event.preventDefault();
+
+      $('html, body').animate({scrollTop: 0}, 300);
+    })
+  });
+</script>
+
+<!-- Agregamos los estilos al botón -->
+<style type="text/css">
+.go-top {
+    position: fixed;
+    bottom: 2em;
+    right: 2em;
+    text-decoration: none;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.3);
+    font-size: 12px;
+    padding: 1em;
+    display: none;
+}
+
+.go-top:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+</style>

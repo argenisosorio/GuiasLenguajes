@@ -345,9 +345,18 @@ sus datos usando el lenguaje estándar SQL. phpPgAdmin estuvo basado en phpMyAdm
 provee las mismas funcionalidades y más a los usuarios del servidor de base de datos PostgreSQL.
 
 Instalacion:
-$ aptitude install phppgadmin
+
+# aptitude install phppgadmin
 
 http://localhost/phppgadmin/ // Interfaz grafica en el navegador web
+
+########################
+##### ppgadmin III #####
+########################
+
+pgAdmin is the leading graphical Open Source management, development and administration tool for PostgreSQL.
+
+# aptitude install pgadmin3
 
 ##############################
 ##### Boolean Data Type ######
@@ -384,3 +393,28 @@ Los comentarios dentro un fichero .sql se escriben con:
 
 -- Comentario línea 1
 -- Comentario línea 2
+
+############################################
+##### Creando relaciones en las tablas #####
+############################################
+
+En el siguiente ejemplo tenemos dos tablas, una de entidades(estados) y otra de municipios, cada tabla tiene una llave
+primaria, pero la tabla de municipios esta relacionada con la llave primaria de la tabla de entidades.
+
+CREATE TABLE entidad (
+  codigo_entidad varchar(100) PRIMARY KEY,
+  nombre varchar(100));
+
+CREATE TABLE municipio (
+    codigo_municipio varchar(100) PRIMARY KEY,
+    nombre varchar(100),
+    codigo_entidad integer REFERENCES entidad
+);
+
+Añadiendo la tabla parroquia a la secuencia de relaciones.
+
+CREATE TABLE parroquia (
+    codigo_parroquia varchar(100) PRIMARY KEY,
+    nombre varchar(100),
+    codigo_municipio varchar REFERENCES municipio
+);
