@@ -764,8 +764,11 @@ verbose_name="Nombre de usuario": Nombre del campo comprensible por humanos, si 
 
 validators=[]: Una lista de validaciones para el campo referencia.
 
-##### Declarando la clase Articulo y Comentarios para una publicacion, y estableciendo
-#la relacion entre los comentarios y un articulo #####
+'''
+Declarando la clase Articulo y Comentarios para una publicacion, y estableciendo
+la relacion entre los comentarios y un articulo
+'''
+
 from django.db import models
 
 class Articulo(models.Model):
@@ -1634,3 +1637,98 @@ ignorados.
 # pip install postgres
 
 # pip install db-psycopg2
+
+##############################################
+##### Generar json a partir de un modelo #####
+##############################################
+
+Generar un fichero json con los datos de los modelos de una aplicación:
+
+$ python manage.py dumpdata app_name > data.json
+
+Generar un fichero json con a partir de un modelo específico de la aplicación:
+
+$ python manage.py dumpdata app_name.model_name > data.json
+
+Esta generación por lo general es usada para crear un json con data inicial
+que puede ser cargada en la db si necesidad de hacer un volvado de datos.
+De esta manera podemos tener usuarios, permisos u otro tipo de data que seran cargados
+automáticamente a partir de un comando:
+
+$ python manage.py loaddata initial_data.json
+
+Ejemplo:
+
+Generamos un proyecto en django, migramos y creamos un usuario administrador, ahora vamos a generar
+un fichero que tendra los datos del usuario creado, y haremos referencia al modelo que gestiona los usuarios
+
+$ python manage.py dumpdata auth.user > auth_user.json
+
+En ese fichero json estan los datos de usuario que se creo
+
+Borramos la db, la volvemos a generar con migrate, como es obvio esta nueva db no tiene usuarios creados, entonces:
+
+$ python manage.py loaddata auth_user.json
+
+Installed 1 object(s) from 1 fixture(s) # Sera el mensaje si agregó el usuario con éxito
+
+Con esto ya estará disponible el usuario en la db con todos los demas datos que corresponden a ese modelo.
+
+Es posible hacer un dumpdata de todos los modelos en general, no especificando un modelo en particula
+
+$ python manage.py dumpdata > data.json
+
+################################
+##### Relaciones en Django #####
+################################
+
+Ejemplo de como hacer una relacion triple, usando estados, municipios y parroquias.
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from django.db import models
+from django.core.urlresolvers import reverse
+
+
+class Entidad(models.Model):
+    """!
+    Clase que contiene los Estados
+    """
+    codigo = models.CharField(max_length=50)
+    nombre = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        """!
+        Método que muestra la información sobre el Estado
+        """
+        return self.nombre
+
+
+class Municipio(models.Model):
+    """!
+    Clase que contiene los Municipios
+    """
+    codigo = models.CharField(max_length=50)
+    entidad = models.ForeignKey(Entidad)
+    nombre = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        """!
+        Método que muestra la información sobre el Municipio
+        """
+        return self.nombre
+
+
+class Parroquia(models.Model):
+    """!
+    Clase que contiene las Parroquias
+    """
+    codigo = models.CharField(max_length=50)
+    Municipio = models.ForeignKey(Municipio)
+    nombre = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        """!
+        Método que muestra la información sobre la Parroquia
+        """
+        return self.nombre
