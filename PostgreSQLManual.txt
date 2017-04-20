@@ -358,6 +358,10 @@ pgAdmin is the leading graphical Open Source management, development and adminis
 
 # aptitude install pgadmin3
 
+Pgadmin nos permite generar un json a partir de los datos de una tabla, con una secuencia sql directamente:
+
+SELECT array_to_json(array_agg(name_table)) FROM name_table;
+
 ##############################
 ##### Boolean Data Type ######
 ##############################
