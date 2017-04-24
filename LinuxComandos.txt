@@ -783,7 +783,36 @@ por lo que si visitamos 127.0.0.1:80 accederemos al servicio
 
 Sus archivos e configuracion están en etc/apache2
 
-$ sudo service apache2 restart // Restart apache para guardar los cambios
+$ sudo service apache2 restart // Restart apache para guardar los cambios.
+
+$ sudo service apache2 stop // Detener el servicio de apache.
+
+##### Borrar apache #####
+
+# apt-get --purge remove apache2*
+
+# rm -fr /etc/apache2
+
+##########################
+##### Instalar Nginx #####
+##########################
+
+No debe estar instalado Apache porque puede dar problemas, como por ejemplo
+que ambos servidores usar algunos puertos por defecto, lo que conlleva a colisiones.
+
+# apt-get install nginx
+
+Si visitamos 127.0.0.1 ó la ip de la máquina asignada por red veremos
+la plantilla por defecto de Nginx, que significa que está corriendo
+el servicio. Esta plantilla esta en /var/www/index.html
+
+$ sudo systemctl stop nginx // To stop your web server
+
+$ sudo systemctl start nginx // To start the web server when it is stopped, type
+
+$ sudo systemctl restart nginx // To stop and then start the service again
+
+$ sudo systemctl reload nginx // If you are simply making configuration changes, Nginx can often reload without dropping connections.
 
 ###############################################
 ########## Instalar y configurar PHP ##########

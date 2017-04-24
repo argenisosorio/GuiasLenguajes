@@ -1638,9 +1638,9 @@ ignorados.
 
 # pip install db-psycopg2
 
-##############################################
-##### Generar json a partir de un modelo #####
-##############################################
+####################################################################
+##### Generar json a partir de un modelo (dumpdata y loaddata) #####
+####################################################################
 
 Generar un fichero json con los datos de los modelos de una aplicación:
 
@@ -1677,6 +1677,26 @@ Con esto ya estará disponible el usuario en la db con todos los demas datos que
 Es posible hacer un dumpdata de todos los modelos en general, no especificando un modelo en particula
 
 $ python manage.py dumpdata > data.json
+
+##### Especificando app #####
+
+$ python manage.py dumpdata app > app.json
+
+##### Especificando tabla #####
+
+$ python manage.py dumpdata app.table > app_table.json
+
+##### Excluyendo modelos #####
+
+$ python manage.py dumpdata --exclude auth.permission > db.json
+
+##### Indentando la data #####
+
+$ python manage.py dumpdata --indent 2 > data.json
+
+##### Dando formato al fichero #####
+
+$ python manage.py dumpdata auth.user --indent 2 --format xml > user.xml
 
 ################################
 ##### Relaciones en Django #####
