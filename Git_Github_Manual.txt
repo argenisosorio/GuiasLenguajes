@@ -197,6 +197,28 @@ $ git rm --cached projectname/settings.py
 3-) Hacer el commit del cambio con:
 $ git commit -m "Removido settings del seguimiento"
 
+##### Ignorando settings globales #####
+
+Es probable que en algún momento se trabaje con un proyecto modular, es decir que los componentes
+de dicho proyecto pueden ser ejecutados por separado pero a su vez se pueden comunicar cuando se
+necesite, entonces, al ser sub proyectos o aplicaciones es posible que cada uno posea un fichero
+de configuración y que por alguna razón queremos ignorarlo, si estas aplicaciones forman
+parte de un proyecto entonces es posible que tengas un fichero .gitignore global y que abarca todos
+los subdirectorios, entonces de manera manual, si queremos omitir esos archivos de configuración sería
+tal que asi:
+
+project/app1/settings
+project/app2/settings
+
+Con eso estaríamos omitiendo los settings de esas aplicaciones
+pero si declaramos un settings en el gitignore
+
+settings
+
+Entonces se omitiran de manera global todos los ficheros que coincidan, es decir, no
+hay que especificar la ruta completa de los ficheros a omitir, para este caso, puede
+ser que si lo amerite para otro casos.
+
 #############################################
 ##### Ejemplo de .gitignore para Django #####
 #############################################
