@@ -80,7 +80,36 @@ $ ip addr// Para ver el estatus de las conexiones de red, este comando le mostra
 
 $ apt-get moo // Huevo de pascua, muestra una vaca.
 
---- ip publica ---
+###################################
+##### Ip pública e Ip privada #####
+###################################
+
+##### Ip Pública #####
+
+Es la que tiene asignada cualquier equipo o dispositivo conectado de forma directa a Internet.
+
+Algunos ejemplos son: los servidores que alojan sitios web como Google, los router o modems que dan a acceso a Internet, otros
+elementos de hardware que forman parte de su infraestructura, etc.
+
+Las Ip públicas son siempre únicas. No se pueden repetir. Dos equipos con IP de ese tipo pueden conectarse directamente entre sí.
+Por ejemplo, tu router con un servidor web. O dos servidores web entre sí.
+
+##### Ip Privada #####
+
+Se utiliza para identificar equipos o dispositivos dentro de una red doméstica o privada.
+En general, en redes que no sean la propia Internet y utilicen su mismo protocolo (el mismo "idioma" de comunicación).
+
+Las Ip privadas están en cierto modo aisladas de las públicas. Se reservan para ellas determinados rangos de direcciones. Son estos:
+
+Estas Ip deben ser únicas dentro de una misma red. Cada equipo o dispositivo ha de tener la suya, distinta de la de los demás.
+De lo contrario habría problemas. Sería como si dos vecinos tuvieran el mismo nombre y la misma dirección física.
+El cartero nunca sabría a quién corresponde la carta que les envíen.
+
+Las Ip privadas sí pueden repetirse en redes distintas (como en la tuya y la de una empresa).
+Los equipos o dispositivos con esas IP pueden conectarse entre sí SÓLO dentro de la red a que pertenecen.
+No hay conflictos porque las redes están separadas. Igual que no los hay entre dos direcciones físicas iguales de ciudades distintas.
+
+#### Saber la ip pública #####
 
 Una forma de averigar esa ip pública es haciendo uso del comando curl. Si no tenéis instalado el paquete habrá que instalarlo,
 
@@ -798,7 +827,7 @@ $ sudo service apache2 stop // Detener el servicio de apache.
 ##########################
 
 No debe estar instalado Apache porque puede dar problemas, como por ejemplo
-que ambos servidores usar algunos puertos por defecto, lo que conlleva a colisiones.
+que ambos servidores usan algunos puertos por defecto, lo que conlleva a colisiones.
 
 # apt-get install nginx
 
@@ -814,11 +843,47 @@ $ sudo systemctl restart nginx // To stop and then start the service again
 
 $ sudo systemctl reload nginx // If you are simply making configuration changes, Nginx can often reload without dropping connections.
 
+##### Archivos de configuración de Nginx #####
+
+Los archivos de configuración de Nginx se encuentran en /etc/nginx/
+.
+├── conf.d
+├── fastcgi.conf
+├── fastcgi_params
+├── koi-utf
+├── koi-win
+├── mime.types
+├── naxsi_core.rules
+├── naxsi.rules
+├── naxsi-ui.conf.1.4.1
+├── nginx.conf
+├── proxy_params
+├── scgi_params
+├── sites-available
+│   ├── default
+├── sites-enabled
+│   ├── default -> ../sites-available/default
+├── uwsgi_params
+└── win-utf
+
+Donde el archivo de configuración principal es nginx.conf y los directorios principales de configuración son sites-available y sites-enabled.
+
+El archivo de configuración principal es donde configuraríamos las opciones del servidor web Nginx que afectan a todos los hosts
+virtuales que tengamos configurados (todas las página web alojadas).
+
+En el directorio sites-available crearíamos los archivos de configuración específicos de cada host virtual.
+
+En el directorio sites-enabled crearíamos enlaces simbólicos a los archivos de configuración que hayamos creado
+en sites-available, para que Nginx tenga en cuenta esa configuración (activarla).
+
+Se puede observar que por defecto tenemos creado el archivo de configuración "default" que está habilitado y por eso tiene un enlace
+simbólico en "sites-enabled".
+
 ###############################################
 ########## Instalar y configurar PHP ##########
 ###############################################
 
-apt-get install php5 php5-mysql php5-gd libapache2-mod-php5
+# apt-get install php5 php5-mysql php5-gd libapache2-mod-php5
 
 // Una vez que se hayan descargado e instalado los paquetes de PHP, solo tienes que reiniciar el 
 servidor Apache para que el servicio esté disponible. Para hacerlo solo tienes que teclear los siguientes comandos:
@@ -1395,8 +1460,8 @@ index-url = http://pypi.cenditel/simple/
 Luego actualizamos el pip y listo, si estamos usando un entorno virtual de python
 entonces ejecutaremos los comandos dentro del entorno virtual.
 
-$ pip install --upgrade pip
-$ pip install package_name --trusted-host pypi.cenditel
+$ sudo pip install --upgrade pip
+$ sudo pip install package_name --trusted-host pypi.cenditel
 
 #############################################
 ########## Conexion remota con ssh ##########
