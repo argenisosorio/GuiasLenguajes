@@ -1752,3 +1752,13 @@ class Parroquia(models.Model):
         Método que muestra la información sobre la Parroquia
         """
         return self.nombre
+
+################################################
+##### ALLOWED_HOSTS = [] en el settings.py #####
+################################################
+
+Es una variable que contiendrá una lista de cadenas que representan los nombres
+de host/dominio que ese sitio de Django puede servir.
+
+Esta es una medida de seguridad para evitar ataques de encabezado HTTP Host, que son posibles
+incluso bajo muchas configuraciones de servidor web aparentemente seguras.
