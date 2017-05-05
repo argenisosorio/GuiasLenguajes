@@ -657,68 +657,75 @@ Generalmente django creara por cada modelo una tabla en la base de datos.
 
 Los campos son el tipo de objeto del atributo que guardara, hay varios tipos:
 
-AutoField: Es un IntegerField que se incrementa cuando creas un nuevo objeto, casi que no es necesario ya que django lo crea solo si no especificas otro campo como id.
+**AutoField: Es un IntegerField que se incrementa cuando creas un nuevo objeto, casi que no es
+necesario ya que django lo crea solo si no especificas otro campo como id.
 
-BigIntegerField: Representa un Entero de 64 bit, es como el IntegerField, solo que permite números desde el -9223372036854775808 hasta el 9223372036854775807. El campo por defecto de los formularios es el TextField.
+**BigIntegerField: Representa un Entero de 64 bit, es como el IntegerField, solo que permite números
+desde el -9223372036854775808 hasta el 9223372036854775807. El campo por defecto de los formularios es el TextField.
 
-BooleanField: El campo de true/false. El campo por defecto de los formularios es un CheckboxInput. El vlaor por defecto es None si no defines el default.
+**BooleanField: El campo de true/false. El campo por defecto de los formularios es un CheckboxInput.
+El vlaor por defecto es None si no defines el default.
 
-CharField: Para string pequeños, frases o palabras. El campo por defecto en los formularios es el TextInput.
+**CharField: Para string pequeños, frases o palabras. El campo por defecto en los formularios es el TextInput.
     max_length=20: Establece el tamaño máximo del string, es requerido.
 
-CommaSeparateIntegerField: Guarda una lista de enteros separados por coma. 
+**CommaSeparateIntegerField: Guarda una lista de enteros separados por coma. 
     Max_length=20: Establece el valor máximo de los enteros, es requerido.
 
-DateField: Guarda una instancia de la fecha a partir de la clase datetime.date de python.
+**DateField: Guarda una instancia de la fecha a partir de la clase datetime.date de python.
     auto_now=True: Actualiza la fecha cada vez que se actualiza el objeto.
     auto_now_add=True: Guarda la fecha de cuando se creo.
 
-DateTimeField: Como el DateField solo que guarda también la hora
+**DateTimeField: Como el DateField solo que guarda también la hora
     auto_now=True: Actualiza la fecha cada vez que se actualiza el objeto.
     auto_now_add=True: Guarda la fecha de cuando se creo.
 
-DecimalField: Guarda números decimales.
+**DecimalField: Guarda números decimales.
     max_digits=5: Establece el numero de dígitos máximo, la suma de la parte entera y la decimal
     decimal_places=2: Establece el número de dígitos de la parte decimal.
 
-EmailField: Es un CharField que comprueba lo introducido para verificar que sea un email.
+**EmailField: Es un CharField que comprueba lo introducido para verificar que sea un email.
     max_length=75: Establece el tamaño máximo del email, es requerido.
 
-FileField: Sirve para guardar archivos en el servidor. En el formulario saldría el campo de escoger un fichero del ordenador. Tiene que estar definido el MEDIA_ROOT en el settings para que guarde los archivos. Guardara el archivo en la ruta especificada por el MEDIA_ROOT.
-    upload_to='/videos': Subirá el archivo a la carpeta vídeos alojada en la carpeta definida por MEDIA_ROOT. (Requerido)
-    FileField(upload_to='/video'[, max_length=100, **options]): si se quiere poner los atributos opcionales tendrán que añadirse así.
+**FileField: Sirve para guardar archivos en el servidor. En el formulario saldría el campo de escoger un
+fichero del ordenador. Tiene que estar definido el MEDIA_ROOT en el settings para que guarde los archivos.
+Guardara el archivo en la ruta especificada por el MEDIA_ROOT.
+upload_to='/videos': Subirá el archivo a la carpeta vídeos alojada en la carpeta definida por MEDIA_ROOT. (Requerido)
+FileField(upload_to='/video'[, max_length=100, **options]): si se quiere poner los atributos opcionales tendrán que añadirse así.
 
-FilePathField: Sirve para mostrar los archivos accesible de una carpeta siguiendo una restricción si se quiera, para hacer alguna operación sobre ellos.
-    FilePathField(path=None[, match=None,recursive=False, max_length=100, **options])
-        path (requerido): directorio del que sacara FilePathField las opciones.
-        match: filtro por el que pasaran los archivos, se usaran expresiones regulares.
-        recursive: False por defecto, especifica si entran las subcarpetas de la ruta indicada por path.
-        max_length: Indica el tamaño máximo del nombre del archivo.
+**FilePathField: Sirve para mostrar los archivos accesible de una carpeta siguiendo una restricción si se quiera, para
+hacer alguna operación sobre ellos.
+FilePathField(path=None[, match=None,recursive=False, max_length=100, **options])
+    path (requerido): directorio del que sacara FilePathField las opciones.
+    match: filtro por el que pasaran los archivos, se usaran expresiones regulares.
+    recursive: False por defecto, especifica si entran las subcarpetas de la ruta indicada por path.
+    max_length: Indica el tamaño máximo del nombre del archivo.
 
-FloatField: Campo que guarda una instancia del modelo Float de python.
+**FloatField: Campo que guarda una instancia del modelo Float de python.
 
-ImageField: Como el FileField pero solo acepta formatos de imágenes. Tiene dos campos opcionales mas que el FielField
+**ImageField: Como el FileField pero solo acepta formatos de imágenes. Tiene dos campos opcionales mas que el FielField
     height_field: Representa el alto máximo de la imagen.
     width_field: Representa el ancho máximo de la imagen.
 
-IntegerField: Guarda un entero.
+**IntegerField: Guarda un entero.
 
-IPAddressField: Guarda un string que coincida con el formato ip (192.168.0.1).
+**IPAddressField: Guarda un string que coincida con el formato ip (192.168.0.1).
 
-GenericIPAddressField: Guarda una ip, ya sea ipv4 o ipv6. Para saber como las guarda Doc Django.
+**GenericIPAddressField: Guarda una ip, ya sea ipv4 o ipv6. Para saber como las guarda Doc Django.
 
-NullBooleanField: Como el BooleanField pero permite null.
+**NullBooleanField: Como el BooleanField pero permite null.
 
-PositiveIntegerField: Guarda un entero mayor o igual que cero.
+**PositiveIntegerField: Guarda un entero mayor o igual que cero.
 
-SlugField:  Campo que guarda una pequeña etiqueta (letras, números, guiones) suele usarse en las url.
+**SlugField:  Campo que guarda una pequeña etiqueta (letras, números, guiones) suele usarse en las url.
 
-TextField: Campo que guarda texto.
+**TextField: Campo que guarda texto.
 
-TimeField: Guarda una hora, comparte los campos con DateField
+**TimeField: Guarda una hora, comparte los campos con DateField
     auto_now=True: Actualiza la hora cada vez que se actualiza el objeto.
     auto_now_add=True: Guarda la hora de cuando se creo.
-URLField: Guarda una dirección html, comprueba que lo introducido sea una dirección html.
+
+**URLField: Guarda una dirección html, comprueba que lo introducido sea una dirección html.
 
 ##### Campos de relación #####
 

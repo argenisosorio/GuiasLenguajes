@@ -47,7 +47,20 @@ A  principal.html // Agregado
 AM principal2.html // Agregado y modificado, se debe agregar otra ver para aceptar los cambios
 ?? principal3.html // Archivo agregado al directorio pero no agregado al seguimiento de Git
 
-$ git add Nombre_archivo.xxx // Agregar un fichero específico al seguimiento de Git
+$ git add Nombre_archivo.xxx // Agregar un fichero específico al seguimiento de Git, esto es útil si tenemos muchos ficheros
+con modificaciones pero solo queremos subir los cambios de algunos específicos, no de todos, entonces los agregamos manualmente.
+
+Ejemplo de varios archivos modificados, solo agregaremos algunos al seguimiento de git:
+
+	modified:    fichero1.xxx
+	modified:    fichero2.xxx
+	modified:    fichero3.xxx
+	modified:    fichero4.xxx
+	modified:    fichero4.xxx
+
+$ git add fichero1.xxx fichero2.xxx fichero3.xxx // Agregando ficheros específicos al seguimiento de git.
+
+El resto seguira esperando por una accion, como ser eliminado, seguir siendo modificado o agregado al seguimiento.
 
 $ git rm Nombre_fichero.xxx // Borrar un fichero de manera segura, puesto que lo borra del directorio y del seguimiento de git, es un error
 común borrar los archivos directamente y estos siguen estando en el seguimiento de git por lo que se lia bastantes veces
