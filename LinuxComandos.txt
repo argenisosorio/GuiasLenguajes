@@ -1570,6 +1570,43 @@ Ejemplo:
 
 $ ssh-keygen -R 192.168.3.10
 
+##########################################################
+##### Generar llaves para ssh para saltar contraseña #####
+##########################################################
+
+Si el host desea conectarse al servidor, sin tener que escribir password cada vez que se intente conectarse
+puede usar este método donde se generan claves publica y privada.
+
+// Generamos las claves en el host
+$ ssh-keygen -b 4096 -t rsa
+
+No generar frase de paso: simplemente presionemos [Enter], un segundo después volvemos a presionar [Enter],
+y un segundo después volvemos una vez más a presionar [Enter]. O sea, presionaríamos [Enter] un total de tres
+(3) veces, solo lo presionamos… no escribimos nada.
+
+Eso nos va a generar las claves en:
+
+/home/user/.ssh
+  id_rsa // Es nuestra llave privada.
+  id_rsa.pub // Es nuestra llave pública.
+  known_hosts // Es un fichero ya existente en ese directorio.
+
+Enviamos la llave publica para el home del servidor:
+
+$ scp /home/.ssh/id_rsa.pub user@192.168.12.x:
+
+Luego en el servidor renombraremos la clave publica a:
+
+$ mv id_rsa.pub authorized_keys
+
+Luego moveremos ese nuevo fichero a .ssh
+
+$ mv authorized_keys .ssh/
+
+Luego quedaría intentar conectarse desde el host al servidor, si todo está bien no debería pedir contraseña.
+
+**Es funcional, pero hubo una vez que no se que coño paso y no quizo funcionar, las demas pruebas si fueron exitosas.
+
 ####################################################
 ##### Copias de directorios o ficheros por scp #####
 ####################################################
