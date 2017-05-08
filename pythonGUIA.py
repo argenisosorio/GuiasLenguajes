@@ -1294,3 +1294,12 @@ imgdata = base64.b64decode(image)
 filename = 'fff.png'  #Nombre con el que se va a crear la imágen 
 with open(filename, 'wb') as f:
     f.write(imgdata)
+
+#######################################################
+##### Script para copiar un fichero a un servidor #####
+#######################################################
+
+# -*- coding: utf-8 -*-
+import os
+#os.system("scp FILE USER@SERVER:PATH")
+os.system("scp ff.jpg user@192.168.x.x:/home/user/tmp")

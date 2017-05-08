@@ -443,18 +443,36 @@ Ctrl + r // En la consola, para hacer una busqueda de comandos usados baasndose 
 
 Shift + Page up <--> Page down // Moverse a traves de los logs de la consola, simula el scroll up/down del mouse
 
-##############################################
-########## Cambiar el pass del root ##########
-##############################################
+########################################################
+########## Cambiar el pass del usuario y root ##########
+########################################################
 
-$ su: ****** // Acceder como root
-# passwd // Nos pedira que introduzcamos la nueva contraseña y la confirmacion para cambiar la clave de root
+##### Usuario normal #####
 
-root@debian:/home/user# passwd
-Introduzca la nueva contraseña de UNIX: ****** 
-Vuelva a escribir la nueva contraseña de UNIX: ***** 
+$ passwd
+
+// Nos mostrara lo siguiente:
+
+Cambiando la contraseña de user.
+(actual) contraseña de UNIX:******
+Introduzca la nueva contraseña de UNIX:*****
+Vuelva a escribir la nueva contraseña de UNIX:*****
+
+##### Usuario root #####
+
+Primero nos logeamos como root:
+
+$ su
+
+Luego lo mismo de arriba:
+
+# passwd
+
+// Nos pedira que introduzcamos la nueva contraseña y la confirmacion para cambiar la clave de root
+
+Introduzca la nueva contraseña de UNIX:****** 
+Vuelva a escribir la nueva contraseña de UNIX:***** 
 passwd: contraseña actualizada correctamente
-root@debian:/home/user#
 
 #########################################################
 ########## Instalacion de programas y paquetes ##########
@@ -815,6 +833,8 @@ Sus archivos e configuracion están en etc/apache2
 $ sudo service apache2 restart // Restart apache para guardar los cambios.
 
 $ sudo service apache2 stop // Detener el servicio de apache.
+
+$ sudo service apache2 status // Ver el estado del servicio
 
 ##### Borrar apache #####
 
@@ -1501,6 +1521,10 @@ DISPLAY=:0.0 totem // Abrir el reproductor totem en el servidor
 
 DISPLAY=:0.0 nautilus // Abrir el explorador de archivos en el servidor
 
+$ sudo service ssh restart // Reiniciar el servicio de ssh, a veces se hace para que sirvan algunos cambios de configuración.
+
+$ sudo service ssh status // Para ver el estado del servicio.
+
 ###########################################
 ##### X11 forwarding a través de ssh  #####
 ###########################################
@@ -1544,6 +1568,55 @@ $ firefox
 ó
 
 $ firefox & nautilus &
+
+######################################
+##### Escritorio remoto, por ssh #####
+######################################
+
+Esta guía nos permitirá ejecutar un escritorio remoto a través de una conexión por ssh,
+el cliente debe estar en modo consola, puede usar tty1 por ejemplo.
+
+Primer paso, instalar openssh-server en el cliente y en el servidor
+
+# apt-get install openssh-server openssh-client
+	
+Una vez hecho esto configuramos el servidor para que sea accesible desde los clientes:
+	
+$ sudo nano /etc/ssh/ssh_config
+
+Hay tres lineas del archivo que deberían quedar así:
+ForwardAgent yes
+ForwardX11 yes
+ForwardX11Trusted yes
+
+Guardamos y abrimos otro archivo:
+	
+$ sudo nano/etc/ssh/sshd_config
+
+Debe aparecer la siguiente línea:
+ForwardX11 yes
+
+Una vez hecho esto reiniciamos el servidor ssh:
+
+$ sudo service ssh restart
+
+Luego nos conectamos por ssh al servidor, con el parámetro -X que nos permitirá levantar gráficos en el cliente.
+
+$ ssh -X username@ip_server
+
+##### startx #####
+
+Para iniciar o levantar el modo gráfico
+
+$ startx -- :DISPLAY // Arrancar el servidor gráfico indicándole el DISPLAY, por defecto el primer DISPLAY es 0 (al cual accedemos con Cntrl+Alt+F7).
+
+---
+	
+$ sudo startx // Levantará una sesión de escritorio como root, el cliente debe estár en modo ttyX.
+
+ó
+
+$ gnome-session // Puede que falle a veces, si es que el cliente ya tiene una interáz gráfica corriendo, por eso se recomienda que esté en ttyX.
 
 ###############################################################
 ##### El error ssh remote host identification has changed #####
