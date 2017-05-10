@@ -258,6 +258,8 @@ $ top  // Listar los procesos de ejecución del sistema (y más cosas) en tiempo
 
 // Cada proceso tiene un identificador (PID) proccess ID, entonces podemos matar ese proceso con:
 
+$ kill xxxx // Matar un proceso donde xxxx es el identificador del proceso.
+
 $ kill -9 xxxx // Matar un proceso donde xxxx es el identificador del proceso.
 
 $ ps // Muestra los procesos actuales del sistema y acepta varios parametros como:
@@ -269,7 +271,7 @@ $ ps -ef // Visualiza información sobre "todos" los procesos del sistema con ma
 ps -ef | grep evince // Filtrar la búsqueda, en este caso, buscando el proceso que alberga el visor pdf evince.
 
 ps -ef | grep ssh // Filtrar la búsqueda para ver las conexiones ssh activas, nuevamente se aclara que podemos matar esos procesos
-con kill-9 xxx pasandole el PID process.
+con kill -9 xxx pasandole el PID process.
 
 $ ps -l // Muestra algunos detalles de los procesos del sistema
 

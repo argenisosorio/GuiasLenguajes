@@ -1769,3 +1769,58 @@ de host/dominio que ese sitio de Django puede servir.
 
 Esta es una medida de seguridad para evitar ataques de encabezado HTTP Host, que son posibles
 incluso bajo muchas configuraciones de servidor web aparentemente seguras.
+
+##########################################
+##### Ejemplo de conexión con sqlite #####
+##########################################
+
+# Database
+# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
+###########################################################
+##### Sobrescribiendo métodos de las clases genéricas #####
+###########################################################
+
+Las clases genéricas de Django simplifican el tiempo de creación de aplicaciones, puesto que
+están predefinidas para realizar acciones específicas como crear, leer, eliminar, y detallar objetos,
+pero a veces necesitamos realizar tareas mas complejas que van mas allá de lo que nos ofrecen por defecto
+algunas de estas clases, es por ello que es común sobrescribir los métodos de estas clases y adaptarlos a
+las necesidades que se tengan.
+
+Para encontrar ejemplos de las cláses y su métodos: --> https://ccbv.co.uk/projects/Django/1.11/
+
+# Ejemplo: Creando un post en una aplicación tipo blog y usando los métodos por defecto.
+
+class PostCrear(SuccessMessageMixin,CreateView):
+    """
+    Clase que permite crear un post
+    """
+    model = Post
+    form_class = PostForm
+    success_url = reverse_lazy('post_lista')
+    success_message = "Se creó la publicación con éxito"
+
+    def get(self, request, *args, **kwargs):
+        """
+        Método de la clase que imprime cuando se accede por get a la clase para crear posts
+        """
+        self.object = None
+        print "Accediendo por GET"
+        return super(PostCrear, self).get(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        """
+        Método de la clase que imprime que usuario creó la publicación
+        """
+        self.object = None
+        print "********************************"
+        print "Usuario:("+(request.user.username)+") creo la publicacion con exito"
+        print "********************************"
+        return super(PostCrear, self).post(request, *args, **kwargs)

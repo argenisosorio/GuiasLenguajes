@@ -1303,3 +1303,14 @@ with open(filename, 'wb') as f:
 import os
 #os.system("scp FILE USER@SERVER:PATH")
 os.system("scp ff.jpg user@192.168.x.x:/home/user/tmp")
+
+#################################################
+##### Script para usar comandos del sistema #####
+#################################################
+
+Básicamente es lo mismo que el comando anterior solo que
+permite utilizar comandos de unix.
+
+# -*- coding: utf-8 -*-
+import os
+os.system("mkdir new_folder")
