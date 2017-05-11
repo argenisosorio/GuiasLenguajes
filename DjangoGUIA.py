@@ -144,6 +144,12 @@ que es un repositorio de paquetes python facil de manejar.
 >>> django.VERSION # Nos mostrara la version de Django instalada
 (1, 5, 12, 'final', 0)
 
+De igual forma podemos comprobar versiones de otros paquetes que estén instalados: ejemplo:
+
+>>> import django_extensions # Si estuviése instalado.
+>>> django_extensions.VERSION
+(1, 7, 4)
+
 -Otra forma:
 >>> import django # Si el Comando se ejecuta sin errores es que Django esta instalado
 >>> print(django.get_version()) #Nos mostrar la version de Django Instalada

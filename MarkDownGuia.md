@@ -115,3 +115,10 @@ Asterisks
 ___
 
 Underscores
+
+## Captures
+
+For show image and tooltip description in the README.md
+
+![Capture1.png](Capture1.png "Capture1.png")
+![Capture1.png](captures/plantilla.png "Capture1.png")
