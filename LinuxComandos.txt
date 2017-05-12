@@ -154,7 +154,7 @@ user pts/3        2015-07-31 12:37 02:53        8351 (:192.168.0.240)
 
 $ pkill -9 -t pts/3 // Acabar con una conexión externa, se envió la señal -9 que indica matar (KILL) el proceso, la opción -t indica que se basará
 en un atributo de nombre de terminal y se indica después el nombre de la terminal en si pts/3. Este es el comando que sí funciona para 
-refusar o eliminar conexiones externas.
+refusar o eliminar conexiones externas. A veces pide su.
 
 $ last // listar los ultimos usuarios conectados
 
@@ -813,9 +813,9 @@ En /etc/vim en el fichero vimrc descomentamos la linea
 ########## Instalar APACHE ##########
 #####################################
 
-$ sudo apt-get install apache2 // Instalar servidor apache, 127.0.0.1 o LocalHost es para iniciarlo
+$ sudo apt-get install apache2 // Instalar servidor apache, 127.0.0.1 o Localhost en el navegador para visualizar el index de apache.
 
-/var/www/ o /var/www/html // Es la carpeta de donde podemos guardar nuestros proyectos, ficheros etc 
+/var/www/ ó /var/www/html // Es la carpeta de donde podemos guardar nuestros proyectos, ficheros etc 
 puesto que es la carpeta por defecto de Apache para ese fin, varia según la version de Apache, probablemente
 sea la segunda opción.
 
@@ -823,9 +823,7 @@ $ chmod -R 777 /var/www/html // Cambiar los permisos de /var/www puesto que solo
 -R para que los permisos se hagan de forma recursiva, esto se hace porque al pegar ficheros
 o carpetas estas no tiene los permisos de lectura/escritura necesarios.
 
-sudo aptitude search php // Realizar una búsqueda en los repositorios del paquete que se quiere encontrar
-
-http://192.xxx.xx.xxx/ //La direccion ip sirve para acceder al directorio del servidor
+http://192.xxx.xx.xxx/ // La direccion ip sirve para acceder al directorio del servidor
 
 127.0.0.1:80 // Apache cuando está en ejecucion siempre está escuchando por el puerto 80
 por lo que si visitamos 127.0.0.1:80 accederemos al servicio
@@ -997,6 +995,71 @@ Para hacer una prueba agregaremos y comentaremos una línea al fichero:
 ---
 
 Lo que hicimos es cambiar localhost por una url arbitraria, ahora si accedemos a www.x.x accederemos a 127.0.0.1
+
+###################################
+##### Generar certificado ssl #####
+###################################
+
+Hay que configurar el sitio a proteger en /etc/hosts
+
+# aptitude install openssl
+
+$ mkdir -p /etc/nginx/ssl_keys/ // Opcional, solo si se trabaja con Nginx web server.
+
+1-) Generar la clave RSA:
+
+$ openssl genrsa -des3 -out x.gob.ve.key 1024
+
+-genrsa: Genera la clave rsa. En criptografía, RSA (Rivest, Shamir y Adleman) es un sistema criptográfico de clave pública
+
+-des3: Triple-DES Cipher. En criptografía el Triple DES se llama al algoritmo que hace triple cifrado del DES. También es conocido
+como TDES o 3DES, fue desarrollado por IBM en 1998. Data Encryption Standard (DES) es un algoritmo de cifrado, es decir,
+un método para cifrar información. El algoritmo fue controvertido al principio, con algunos elementos de diseño
+clasificados, una longitud de clave relativamente corta, Hoy en día, DES se considera inseguro para muchas aplicaciones.
+Esto se debe principalmente a que el tamaño de clave de 56 bits es corto; las claves de DES se han roto en menos de 24 horas. 
+
+-out: Archivo de salida
+
+-1024: Podemos especificar el tamaño de la clave ( 1024, 2048)
+
+2-) Generar CSR (Petición de Firma de Certificado
+
+$ openssl req -new -key x.gob.ve.key -out x.gob.ve.csr
+
+-Realiza una petición para la firma con clave privada especificado. Al realizarlo nos pide datos:
+
+Req: Genera Certificate Signing Request (CSR) 
+-new: Nuevo CRS
+-key: Clave rsa creada anteriormente
+Country Name (2 letter code) []:
+State or Province Name (full name) []:
+Locality Name (eg, city) []:
+Organization Name (eg, company) []:
+Organizational Unit Name (eg, section) []:
+Common Name (eg, your name or your server's hostname) []: 
+  **El "Common Name" debe corresponder con la URL que queremos Securizar. Si la URL a poner por
+  SSL es x.gob.ve, este campo debe contener exactamente eso.
+Email Address []:
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:
+An optional company name []:
+
+3-) Eliminar Clave Privada DES3
+
+$ cp x.gob.ve.key x.gob.ve.key.gob
+
+$ openssl rsa -in x.gob.ve.key.gob -out x.gob.ve.key
+
+4-) Generar Certificado Autofirmado.
+
+$ openssl x509 -req -days 365 -in x.gob.ve.csr -signkey x.gob.ve.key -out x.gob.ve.crt
+
+Al final nos Deben quedar 4 ficheros: .cert, .crs, .key, .gob
+  x.gob.ve.crt // Este es el certificado final.
+  x.gob.ve.csr
+  x.gob.ve.key
+  x.gob.ve.key.gob
 
 #################
 ##### RSYNC #####

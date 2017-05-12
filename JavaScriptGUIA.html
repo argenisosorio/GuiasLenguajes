@@ -3339,7 +3339,29 @@ de nuevo.
 
 -------------------------------------
 
-<!-- -->
+<!-- Contador de caractéres escritos en un textarea -->
+<html>
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+  </head>
+<body>
+<form action="#" method="post">
+  <label>¿Como está el clima?</label>
+  <br />
+  <textarea cols="40" rows="5" name="texto" onKeyDown="cuenta()" onKeyUp="cuenta()"></textarea>
+  <br />
+  Caractéres:</td>
+  <span name=caracteres></span>
+  <input type="text" name=caracteres size=4>
+</form>
+<script type="text/javascript">
+  function cuenta(){
+    document.forms[0].caracteres.value=document.forms[0].texto.value.length
+  }
+</script>
+</body>
+</html>
 
 -------------------------------------
 
