@@ -5386,8 +5386,16 @@ $("document").ready(function () {
 </script>
 
 -------------------------------------
+<!-- Recargar la página con un click-->
+<button class='refresh-page'>Refresh</button>
 
-<!-- -->
+<script type="text/javascript">
+$(document).ready(function() {
+  $('.refresh-page').click(function(){
+    location.reload();
+  });
+});
+</script>
 
 -------------------------------------
 
