@@ -899,6 +899,17 @@ en sites-available, para que Nginx tenga en cuenta esa configuración (activarla
 Se puede observar que por defecto tenemos creado el archivo de configuración "default" que está habilitado y por eso tiene un enlace
 simbólico en "sites-enabled".
 
+Para ver la configuración de nginx del sitio disponible:
+--> /etc/nginx/sites-enabled/nombre_del_sitio
+
+##### Ver los logs #####
+
+Para ver los logs del sitio disponible:
+--> /var/log/nginx/nombre_del_sitio.xxx.log
+
+Para ver en tiempo real el log del server del sitio:
+/var/log/nginx# tailf nombre_del_sitio.ve.access.log
+
 ###############################################
 ########## Instalar y configurar PHP ##########
 ###############################################
@@ -953,19 +964,6 @@ apt-get install mysql-server
 root@debian:/home/user# aptitude search mysql | grep mysql
 
 # mysql -p //acceder al mysql
-
-#################
-##### nginx #####
-#################
-
-Para ver la configuración de nginx del itio disponible:
---> /etc/nginx/sites-enabled/nombre_del_sitio
-
-Para ver los logs del sitio disponible:
---> /var/log/nginx/nombre_del_sitio.xxx.log
-
-Para ver en tiempo real el log del server del sitio:
-/var/log/nginx# tailf nombre_del_sitio.ve.access.log
 
 ###########################################
 ##### Configurar el localhost / hosts #####
