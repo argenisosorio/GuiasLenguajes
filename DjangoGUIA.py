@@ -1434,7 +1434,7 @@ class PostForm(forms.ModelForm):
             raise forms.ValidationError("El cuerpo debe tener mas de 3 caractéres")
         return cuerpo
 
-##### Otra comparación #####
+    ##### Otra comparación #####
 
     def clean_cuerpo(self):
         """
@@ -1447,7 +1447,7 @@ class PostForm(forms.ModelForm):
         return cuerpo
 
 
-def clean_cuerpo(self):
+    def clean_cuerpo(self):
         """
         Método que verifica si el campo cuerpo es diferente al campo título.
         """
@@ -1457,6 +1457,52 @@ def clean_cuerpo(self):
         if (cuerpo!=titulo):
             raise forms.ValidationError("El texto de cuerpo no coincide con el texto del título")
         return cuerpo
+
+##### Otras validaciones #####
+
+def clean_username(self):
+    """
+    Método que valida si un nombre de usuario ya existe
+    """
+    username = self.cleaned_data['username']
+    try:
+        user_var = User.objects.get(username=username)
+    except user_var.DoesNotExist:
+        print "***** El usuario no existe *****"
+        return username
+    print "***** El usuario ya existe *****"
+
+##### Para que muestre el mensaje de error en el template usaremos un if #####
+
+{% extends "base/base.html" %}
+{% block titulo %}Crear{% endblock %}
+{% block cuerpo %}
+<h2>Publicar artículo</h2>
+<div class="well well-post_list cuerpo_post">
+    <form method="post">{% csrf_token %}
+        <b>Autor:</b><br />
+        {{ form.autor }}
+        <br />
+        <br />
+        <b>Titulo:</b><br />
+        {{ form.titulo }}
+        <br />
+        <br />
+        <b>Contenido:</b><br />
+        {{ form.cuerpo }}
+        <!-- Mostrando mensaje cuando hay error -->
+        {% if form.cuerpo.errors %}
+            <p>{{ form.cuerpo.errors}}</p>
+        {% endif %}
+        <br />
+        <br />
+        {{ form.fecha }}
+        <a href="{% url 'post_lista' %}"><button type="button" class="btn btn-primary">Volver</button></a>
+        <button class="btn btn-info" type="reset">Limpiar</button>
+        <button class="btn btn-success" type="submit">Publicar</button>
+    </form>
+</div>
+{% endblock %}
 
 ##############################################
 ##### Pasando varios parametros a la url #####
