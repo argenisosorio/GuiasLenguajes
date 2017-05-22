@@ -1175,7 +1175,7 @@ class PostEliminar(SuccessMessageMixin,DeleteView):
     success_url = reverse_lazy('post_lista')
     success_message = "Se eliminó la publicación con éxito"
 
-#En el template:
+    #En el template:
 
 {% if messages %}
 <ul class="messages">
@@ -1503,6 +1503,106 @@ def clean_username(self):
     </form>
 </div>
 {% endblock %}
+
+#######################################################
+###### Método save del UserCreationForm de django #####
+#######################################################
+
+class UserForm(UserCreationForm):
+    """
+    Clase del formulario que registra los usuarios
+    """
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name',  'email', 'username', 'password1', 'password2')
+
+    first_name = forms.CharField(
+        label=("Nombres"),
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            'required': 'true',
+            'title':'Ingrese su nombre completo',
+            'id': 'first_name',
+            'data-toggle': 'tooltip',
+            'placeholder': 'Nombres'
+        })
+    )
+    
+    last_name = forms.CharField(
+        label=("Apellidos"),
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            'required': 'true',
+            'title':'Ingrese sus apellidos completo',
+            'id': 'last_name',
+            'data-toggle': 'tooltip',
+            'placeholder': 'Apellidos'
+        })
+    )
+
+    email = forms.CharField(
+        label=("Email"),
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'email',
+            'placeholder': 'Dirección de correo',
+            'required': 'true',
+            'data-toggle': 'tooltip',
+            'title':'Ingrese su email',
+            'id': 'email',
+        })
+    )
+
+    username = forms.CharField(max_length=30, label=("Usuario"),
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'required': 'true',
+            'placeholder': 'Nombre de usuario',
+            'title':'Ingrese el nombre de usuario',
+            'data-toggle': 'tooltip',
+            'id': 'username',
+        })
+    )
+
+    password1 = forms.CharField(
+        label=("Contraseña"),
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'required': 'true',
+            'placeholder': 'Contraseña',
+            'title':'Ingrese la contraseña de su preferencia',
+            'data-toggle': 'tooltip',
+            'id': 'password1',
+        })
+    )
+
+    password2 = forms.CharField(
+        label=("Contraseña (confirmación)"),
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'type': 'password',
+            'required': 'true',
+            'placeholder': 'Vuelva a ingresar la contraseña elegida',
+            'data-toggle': 'tooltip',
+            'id': 'password2',
+        })
+    )
+
+    def save(self, commit = True):
+        """
+        Metodo que crea el objeto usuario en la db y guarda los valores del
+        formulario, también establece la condicion de estatus inactivo del usuario.
+        """
+        user = User.objects.create_user(self.cleaned_data['username'],
+                                     self.cleaned_data['email'],
+                                     self.cleaned_data['password1'])
+        user.is_active = False
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.save()
+        return user
 
 ##############################################
 ##### Pasando varios parametros a la url #####
