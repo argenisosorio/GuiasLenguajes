@@ -1332,37 +1332,6 @@ class PostCrear(SuccessMessageMixin,CreateView):
     success_url = reverse_lazy('post_lista')
     success_message = "Se creó la publicación con éxito"
 
-##################################################
-##### forms.py para el modelo User de django #####
-##################################################
-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-from django import forms
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
-
-
-class RegisterForm(UserCreationForm):
-    first_name = forms.CharField(label='First Name')
-    last_name = forms.CharField(label='Last Name')
-    email = forms.EmailField(label='Email Address')
-
-    class Meta:
-        model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
-  
-
-    def save(self, commit=True):
-        user = super(RegisterForm, self).save(commit=False)
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
-        user.email = self.cleaned_data['email']
-        user.set_password(self.cleaned_data['password1'])
-        if commit:
-            user.save()
-            return user
-
 #####################################
 ##### Validación de formularios #####
 #####################################
@@ -1462,7 +1431,7 @@ class PostForm(forms.ModelForm):
 
 def clean_username(self):
     """
-    Método que valida si un nombre de usuario ya existe
+    Método que valida si un nombre de usuario a registrar ya existe
     """
     username = self.cleaned_data['username']
     try:
@@ -1471,6 +1440,16 @@ def clean_username(self):
         print "***** El usuario no existe *****"
         return username
     print "***** El usuario ya existe *****"
+
+def clean_email(self):
+    """
+    Método que valida si el email a registrar ya existe
+    """
+    email = self.cleaned_data['email']
+    if User.objects.filter(email=email).exists():
+        print "Este email ya está registrado"
+        raise forms.ValidationError("Este email ya está registrado.")
+    return email
 
 ##### Para que muestre el mensaje de error en el template usaremos un if #####
 
@@ -1503,6 +1482,37 @@ def clean_username(self):
     </form>
 </div>
 {% endblock %}
+
+##################################################
+##### forms.py para el modelo User de django #####
+##################################################
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+
+
+class RegisterForm(UserCreationForm):
+    first_name = forms.CharField(label='First Name')
+    last_name = forms.CharField(label='Last Name')
+    email = forms.EmailField(label='Email Address')
+
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+  
+
+    def save(self, commit=True):
+        user = super(RegisterForm, self).save(commit=False)
+        user.first_name = self.cleaned_data['first_name']
+        user.last_name = self.cleaned_data['last_name']
+        user.email = self.cleaned_data['email']
+        user.set_password(self.cleaned_data['password1'])
+        if commit:
+            user.save()
+            return user
 
 #######################################################
 ###### Método save del UserCreationForm de django #####
