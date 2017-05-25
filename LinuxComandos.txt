@@ -1533,7 +1533,7 @@ ruta será diferente.
 ###########################################
 
 Para usar los repositorios py.pi internos de Cenditel
-vamos al directorio /home/usuario/.pip
+vamos al directorio /home/usuario/.pip/
 y creamos dentro el fichero pip.conf
 Agregamos el siguiente contenido al fichero creado y guardamos:
 
@@ -1543,8 +1543,19 @@ index-url = http://pypi.cenditel/simple/
 Luego actualizamos el pip y listo, si estamos usando un entorno virtual de python
 entonces ejecutaremos los comandos dentro del entorno virtual.
 
-$ sudo pip install --upgrade pip
-$ sudo pip install package_name --trusted-host pypi.cenditel
+$ pip install --upgrade pip
+$ pip install package_name --trusted-host pypi.cenditel
+
+##### Nota #####
+
+Hay paquetes que requieren permisos de superusuario, entonces al usar sudo, o estar como
+superusuarios ya no hará efecto el pip.conf que está en /home/usuario/.pip/
+entonces, para que sirva con el root tambien crearemos el pip.conf pero en el home del root
+que está en /root/.pip/
+
+# touch /root/.pip/pip.conf
+
+# nano /root/.pip/pip.conf // Y hacemos lo mismo que arriba, copiamos el contenido, guardamos y listo.
 
 #############################################
 ########## Conexion remota con ssh ##########
