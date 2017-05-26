@@ -2566,6 +2566,22 @@ Ahora, con esa ip hacemos lo siguiente:
 // Para habilitar el acceso a esa página
 # iptables -I INPUT -s 111.222.333.444 -j ACCEPT
 
+##### Otra forma #####
+
+Para bloquear sitios vamos a modificar el archivo hosts, abrimos un terminal y escribimos la siguiente
+linea de comando:
+
+// Como super usuario abrimos el fichero /etc/hosts con el editor gedit, puede ser nano vi, vim, u otro.
+
+# gedit /etc/hosts
+
+Ahora para bloquear en este ejemplo YouTube vamos a escribir esto al principio del archivo:
+
+127.0.0.1 www.youtube.com
+127.0.0.1 youtube.com
+
+Guardamos y listo.
+
 ################################
 ##### source.list example  #####
 ################################
