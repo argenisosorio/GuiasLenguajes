@@ -2549,6 +2549,23 @@ la lista de SO disponibles y sus opciones.
 
 /etc/default/grub
 
+###################################################
+##### Bloquear acceso localmente a una pagina #####
+###################################################
+
+$ ping www.pagina_a_bloquear.com
+
+Eso va a hacer ping o enviar paquetes a esa web y nos mostrara la ip pública
+del sitio, es decir un número con este formato: 111.222.333.444
+
+Ahora, con esa ip hacemos lo siguiente:
+
+// Para bloquear el acceso a esa página
+# iptables -I INPUT -s 111.222.333.444 -j DROP
+
+// Para habilitar el acceso a esa página
+# iptables -I INPUT -s 111.222.333.444 -j ACCEPT
+
 ################################
 ##### source.list example  #####
 ################################
