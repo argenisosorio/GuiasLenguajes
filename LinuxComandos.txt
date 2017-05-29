@@ -813,6 +813,12 @@ En /etc/vim en el fichero vimrc descomentamos la linea
 ########## Instalar APACHE ##########
 #####################################
 
+Servidor HTTP Apache es un servidor web HTTP de código abierto, para plataformas
+Unix (BSD, GNU/Linux, etc.), Microsoft Guindows, Macintosh y otras, que implementa
+el protocolo HTTP/1.1
+
+##### Instalación #####
+
 $ sudo apt-get install apache2 // Instalar servidor apache, 127.0.0.1 o Localhost en el navegador para visualizar el index de apache.
 
 /var/www/ ó /var/www/html // Es la carpeta de donde podemos guardar nuestros proyectos, ficheros etc 
@@ -842,9 +848,14 @@ $ sudo service apache2 status // Ver el estado del servicio
 
 # rm -fr /etc/apache2
 
-##########################
-##### Instalar Nginx #####
-##########################
+#################
+##### Nginx #####
+#################
+
+Nginx (pronunciado en inglés "engine X") es un servidor web/proxy inverso ligero de alto rendimiento y un proxy
+para protocolos de correo electrónico (IMAP/POP3).
+
+##### Instalación #####
 
 No debe estar instalado Apache porque puede dar problemas, como por ejemplo
 que ambos servidores usan algunos puertos por defecto, lo que conlleva a colisiones.
@@ -909,6 +920,67 @@ Para ver los logs del sitio disponible:
 
 Para ver en tiempo real el log del server del sitio:
 /var/log/nginx# tailf nombre_del_sitio.ve.access.log
+
+#################
+##### uWSGI #####
+#################
+
+uWSGI es una implementación de WSGI capaz de servir aplicaciones Python, pero que además apunta a proveer la pila de
+software completa para implementar servicios de hosting.
+
+Suele trabajar conjuntamente con un servidor web como Nginx.
+
+##### Instalación #####
+
+# pip install uwsgi
+
+##### Directorios #####
+
+Luego de la instalación se crearon los siguientes directorios:
+
+/usr/bin/uwsgi
+/usr/lib/uwsgi
+/etc/uwsgi
+/usr/share/uwsgi
+/usr/share/man/man1/uwsgi.1.gz
+
+##### Configuración #####
+
+Al igual que con nginx, es común que con uwsgi se crean archivos de configuración
+específicos por si hay pruebas o si se va a servir mas de un sitio, ademas
+de trabajar con enlaces simbólicosa esas configuraciones, entonces en /etc/uwsgi/
+se pueden tener dos directorios:
+
+/etc/uwsgi/apps-available // Directorio la las configuraciones de los sitios disponibles.
+
+/etc/uwsgi/apps-enabled // Directorio de los sitios habilitados, con enlaces simbólicos a las configuraciones
+en /etc/uwsgi/apps-available.
+
+En este ejemplo, el archivo de configuración es un .xml con el nombre del sitio servido por nginx.
+
+├── apps-available
+│   ├── README
+│   └── www-prueba.com.xml
+└── apps-enabled
+    ├── README
+    └── www-prueba.com.xml -> ../apps-available/www-prueba.com.xml
+
+##### Ejemplo de archivo de configuración .xml #####
+
+<uwsgi>
+        <threads>10</threads>
+        <workers>1</workers>
+        <master/>
+        <uid>name_project</uid>
+        <gid>nogroup</gid>
+        <log-x-forwarded-for/>
+        <post-buffering>4096</post-buffering>
+        <max-requests>1000</max-requests>
+        <chmod-socket>666</chmod-socket>        
+        <chdir>/var/www/path_project/</chdir>
+        <module>wsgi</module>
+        <plugins>python27</plugins>
+</uwsgi>
 
 ###############################################
 ########## Instalar y configurar PHP ##########
