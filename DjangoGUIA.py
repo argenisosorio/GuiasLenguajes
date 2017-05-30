@@ -1986,3 +1986,29 @@ class PostCrear(SuccessMessageMixin,CreateView):
         print "Usuario:("+(request.user.username)+") creo la publicacion con exito"
         print "********************************"
         return super(PostCrear, self).post(request, *args, **kwargs)
+
+########################
+##### http y https #####
+########################
+
+Es común que cuando un proyecto esté en producción se protejan
+los accesos a las páginas usando certificados ssl y se pueda
+navegar usando https, pero en realidad solo es necesario en las
+páginas donde se envian datos, como puede ser un login o un formulario
+de consulta, o las páginas del administrador, las cuales si deben
+cifrarse por seguridad, entonces podemos usar la variable SECURE_SSL_REDIRECT
+como True en el settings, que hace que  todo vaya por https, y la variable
+SECURE_REDIRECT_EXEMPT que es una lista de las urls que no queremos que
+vayan por https, para nuestro cas necesitamos lo opuesto, entoncesagregando una
+expresión regular con negación al valor de la variable logramos que
+hiciera lo contrario , entonces quedaría así:
+
+SECURE_SSL_REDIRECT = True
+SECURE_REDIRECT_EXEMPT = ['^(?!admin).*$']
+
+Usando entonces el middleware de django por defecto, y esas dos variables
+logramos que todo lo que vaya desde /admin será con https.
+
+Para un set mas configurable se puede usar el middleware personalizado:
+--> https://github.com/argenisosorio/django_ssl_secure_redirect
+En sustitución del middleware de django.

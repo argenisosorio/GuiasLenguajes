@@ -282,8 +282,8 @@ $ poweroff // Apagar la maquina, se debe ser root para ejecutarlo.
 $ reboot // Reiniciar la maquina.
 
 $ file xxx // donde xxx es el nombre de un fichero, nos dira el tipo de fichero que es.
-    Ejemplo: file index.html
-    index.html: HTML document, UTF-8 Unicode text
+Ejemplo: file index.html
+index.html: HTML document, UTF-8 Unicode text
 
 $ file * // Nos dira el tipo de archivo de todos los ficheros del directorio
 
@@ -324,7 +324,7 @@ $ du // Muestra una lista de los directorios y el espacio que ocupan en el disco
 $ du * // Muestra todos directorios y ficheros y el espacio que ocupan en el disco
 
 $ ping xxx // Donde xxx es el nombre de un host al cual enviaremos paquetes y comprobaremos si hay una conexion con ese host, util para saber si estamos conectados a internet por ejemplo:
-    ping http://www.google.com.ve // Si hay conexion a internet enviara paquetes que seran recibidos, de lo contrario dara un error.
+ping http://www.google.com.ve // Si hay conexion a internet enviara paquetes que seran recibidos, de lo contrario dara un error.
 
 # glxgears // Siendo root, Ver si hay aceleracion grafica en la maquina, muestra unos engranajes de colores rodando, si es así, está correcta la instalacion del video.
 
@@ -557,10 +557,10 @@ aptitude versions cualquiercosa
 xxx --version // Saber la version de algun paquete que tengamos instalado.
 
 Ejemplo:
-    bash --version
-    gcc --version
-    python --version
-    ruby --version
+bash --version
+gcc --version
+python --version
+ruby --version
 
 #####################################################
 ########## Comprimir/Descomprimir archivos ##########
@@ -648,11 +648,11 @@ Uso: unrar [OPTION...] ARCHIVE [FILE...] [DESTINATION]
 -x, --extract              Extract files from archive (default)
 -t, --list                 List files in archive
 -f, --force                Overwrite files when extracting
-    --extract-newer        Only extract newer files from the archive
-    --extract-no-paths     Don't create directories while extracting
+--extract-newer        Only extract newer files from the archive
+--extract-no-paths     Don't create directories while extracting
 -p, --password             Decrypt archive using a password
 -?, --help                 Give this help list
-    --usage                Give a short usage message
+--usage                Give a short usage message
 -V, --version              Print program version
 
 ejemplo:
@@ -782,12 +782,12 @@ w // navegar palabra por palabra en el fichero
 
 v // Entra en modo Visual. En este modo seleccionaremos un texto con los cursores, y
 después podremos cortar, copiar y pegar con los comandos:  
-  Copiar: y
-    Copiar el texto seleccionado en modo visual (de "yank".)
-  Cortar: c
-    Cortar el texto seleccionado en modo visual 
-  Pegar: p
-    Pegar el texto copiado o cortar en modo visual con anterioridad. 
+Copiar: y
+Copiar el texto seleccionado en modo visual (de "yank".)
+Cortar: c
+Cortar el texto seleccionado en modo visual 
+Pegar: p
+Pegar el texto copiado o cortar en modo visual con anterioridad. 
 
 :/palabra // Para hacer una busqueda de una palabra dentro del archivo
 n // Para ir a la siguiente coincidencia.
@@ -962,24 +962,24 @@ En este ejemplo, el archivo de configuración es un .xml con el nombre del sitio
 │   ├── README
 │   └── www-prueba.com.xml
 └── apps-enabled
-    ├── README
-    └── www-prueba.com.xml -> ../apps-available/www-prueba.com.xml
+├── README
+└── www-prueba.com.xml -> ../apps-available/www-prueba.com.xml
 
 ##### Ejemplo de archivo de configuración .xml #####
 
 <uwsgi>
-        <threads>10</threads>
-        <workers>1</workers>
-        <master/>
-        <uid>name_project</uid>
-        <gid>nogroup</gid>
-        <log-x-forwarded-for/>
-        <post-buffering>4096</post-buffering>
-        <max-requests>1000</max-requests>
-        <chmod-socket>666</chmod-socket>        
-        <chdir>/var/www/path_project/</chdir>
-        <module>wsgi</module>
-        <plugins>python27</plugins>
+<threads>10</threads>
+<workers>1</workers>
+<master/>
+<uid>name_project</uid>
+<gid>nogroup</gid>
+<log-x-forwarded-for/>
+<post-buffering>4096</post-buffering>
+<max-requests>1000</max-requests>
+<chmod-socket>666</chmod-socket>        
+<chdir>/var/www/path_project/</chdir>
+<module>wsgi</module>
+<plugins>python27</plugins>
 </uwsgi>
 
 ###############################################
@@ -1107,8 +1107,8 @@ Locality Name (eg, city) []:
 Organization Name (eg, company) []:
 Organizational Unit Name (eg, section) []:
 Common Name (eg, your name or your server's hostname) []: 
-  **El "Common Name" debe corresponder con la URL que queremos Securizar. Si la URL a poner por
-  SSL es x.gob.ve, este campo debe contener exactamente eso.
+**El "Common Name" debe corresponder con la URL que queremos Securizar. Si la URL a poner por
+SSL es x.gob.ve, este campo debe contener exactamente eso.
 Email Address []:
 Please enter the following 'extra' attributes
 to be sent with your certificate request
@@ -1126,10 +1126,10 @@ $ openssl rsa -in x.gob.ve.key.gob -out x.gob.ve.key
 $ openssl x509 -req -days 365 -in x.gob.ve.csr -signkey x.gob.ve.key -out x.gob.ve.crt
 
 Al final nos Deben quedar 4 ficheros: .cert, .crs, .key, .gob
-  x.gob.ve.crt // Este es el certificado final.
-  x.gob.ve.csr
-  x.gob.ve.key
-  x.gob.ve.key.gob
+x.gob.ve.crt // Este es el certificado final.
+x.gob.ve.csr
+x.gob.ve.key
+x.gob.ve.key.gob
 
 #################
 ##### RSYNC #####
@@ -1725,9 +1725,9 @@ el cliente debe estar en modo consola, puede usar tty1 por ejemplo.
 Primer paso, instalar openssh-server en el cliente y en el servidor
 
 # apt-get install openssh-server openssh-client
-	
+
 Una vez hecho esto configuramos el servidor para que sea accesible desde los clientes:
-	
+
 $ sudo nano /etc/ssh/ssh_config
 
 Hay tres lineas del archivo que deberían quedar así:
@@ -1736,7 +1736,7 @@ ForwardX11 yes
 ForwardX11Trusted yes
 
 Guardamos y abrimos otro archivo:
-	
+
 $ sudo nano/etc/ssh/sshd_config
 
 Debe aparecer la siguiente línea:
@@ -1757,7 +1757,7 @@ Para iniciar o levantar el modo gráfico
 $ startx -- :DISPLAY // Arrancar el servidor gráfico indicándole el DISPLAY, por defecto el primer DISPLAY es 0 (al cual accedemos con Cntrl+Alt+F7).
 
 ---
-	
+
 $ sudo startx // Levantará una sesión de escritorio como root, el cliente debe estár en modo ttyX.
 
 ó
@@ -1806,9 +1806,9 @@ y un segundo después volvemos una vez más a presionar [Enter]. O sea, presiona
 Eso nos va a generar las claves en:
 
 /home/user/.ssh
-  id_rsa // Es nuestra llave privada.
-  id_rsa.pub // Es nuestra llave pública.
-  known_hosts // Es un fichero ya existente en ese directorio.
+id_rsa // Es nuestra llave privada.
+id_rsa.pub // Es nuestra llave pública.
+known_hosts // Es un fichero ya existente en ese directorio.
 
 Enviamos la llave publica para el home del servidor:
 
@@ -2151,10 +2151,10 @@ This is free software: you are free to change and redistribute it.
 There is NO WARRANTY, to the extent permitted by law.
 
 Por favor seleccione tipo de clave deseado:
-   (1) RSA and RSA (default)
-   (2) DSA and Elgamal
-   (3) DSA (sólo firmar)
-   (4) RSA (sólo firmar)
+(1) RSA and RSA (default)
+(2) DSA and Elgamal
+(3) DSA (sólo firmar)
+(4) RSA (sólo firmar)
 Su elección:
 
 // GPG nos permite elegir el tipo de clave que queremos usar, hay opciones que solo permiten firmar
@@ -2337,8 +2337,8 @@ especificamente para manejar acciones que no puedan ser manejadas por aptitude, 
 /etc/apt/sources.list // APT utiliza un archivo que enlista las "fuentes" en donde se encuentran los paquetes. Este archivo es: /etc/apt/sources.list
 
 El contenido de este archivo, normalmente sigue este formato:
-    deb http://host/debian distribución sección1 sección2 sección3
-    deb-src http://host/debian distribución sección1 sección2 sección3
+deb http://host/debian distribución sección1 sección2 sección3
+deb-src http://host/debian distribución sección1 sección2 sección3
 
 Los renglones arriba mencionados son ficticios y no deberán ser usados. La primera palabra en cada línea, deb o deb-src, indican
 el tipo del archivo: ya sea que contenga paquetes binarios (deb), esto es, los paquetes pre-compilados que normalmente se usan
@@ -2347,16 +2347,16 @@ contienen los cambios necesarios para "debianizar" el programa.
 
 Generalmente se encuentra lo siguiente por defecto en el archivo sources.list:
 
-     # See sources.list(5) for more information, especialy
-     # Remember that you can only use http, ftp or file URIs
-     # CDROMs are managed through the apt-cdrom tool.
-     deb http://http.us.debian.org/debian stable main contrib non-free
-     deb http://non-us.debian.org/debian-non-US stable/non-US main contrib non-free
-     deb http://security.debian.org stable/updates main contrib non-free
-     
-     # Uncomment if you want the apt-get source function to work
-     #deb-src http://http.us.debian.org/debian stable main contrib non-free
-     #deb-src http://non-us.debian.org/debian-non-US stable/non-US main contrib non-free
+# See sources.list(5) for more information, especialy
+# Remember that you can only use http, ftp or file URIs
+# CDROMs are managed through the apt-cdrom tool.
+deb http://http.us.debian.org/debian stable main contrib non-free
+deb http://non-us.debian.org/debian-non-US stable/non-US main contrib non-free
+deb http://security.debian.org stable/updates main contrib non-free
+
+# Uncomment if you want the apt-get source function to work
+#deb-src http://http.us.debian.org/debian stable main contrib non-free
+#deb-src http://non-us.debian.org/debian-non-US stable/non-US main contrib non-free
 
 Éstas son las líneas necesarias para una instalación básica de Debian. La primer línea deb apunta al archivo en el servidor oficial
 la segunda línea apunta hacia el archivo del servidor non-US y la tercera línea apunta hacia el archivo del servidor de
@@ -2574,7 +2574,7 @@ folder/file.txt
 tty es la consola que nos permite en GNU/Linux acceder a nuestro sistema operativo fuera de su entorno gráfico (X-Window).
 En general disponemos de hasta seis terminales, para acceder:
 
-    Ctrl + Alt + F1 para acceder a la primera, F2 para la segunda y así hasta F6 para la sexta y F7 para volver al entorno gráfico.
+Ctrl + Alt + F1 para acceder a la primera, F2 para la segunda y así hasta F6 para la sexta y F7 para volver al entorno gráfico.
 
 No debemos confundir las consolas tty con la que habitualmente usamos sobre el entorno gráfico X-Window.
 
@@ -2621,9 +2621,9 @@ la lista de SO disponibles y sus opciones.
 
 /etc/default/grub
 
-###################################################
-##### Bloquear acceso localmente a una pagina #####
-###################################################
+#######################################################
+##### Bloquear acceso localmente a una página web #####
+#######################################################
 
 $ ping www.pagina_a_bloquear.com
 
@@ -2653,6 +2653,29 @@ Ahora para bloquear en este ejemplo YouTube vamos a escribir esto al principio d
 127.0.0.1 youtube.com
 
 Guardamos y listo.
+
+#################################################
+##### w3m - Nnavegador web desde la consola #####
+#################################################
+
+w3m es un navegador web basados en texto/paginador.
+
+# apt-get install w3m
+
+$ w3m https://www.debian.org // Para iniciar el navegador en modo interactivo
+
+$ w3m https://www.debian.org -dump // Volcado de una página con formato de salida estándar
+
+##### Atajos de teclado en modo interactivo #####
+
+Salir del navegador: q
+Página anterior: B
+Descargar página actual: a
+Ir a inicio: g
+Saltar al final: G
+Desplazarse hacia arriba una página: -
+Desplazarse hacia abajo una página: +
+Abrir URL: U
 
 ################################
 ##### source.list example  #####
@@ -2810,19 +2833,19 @@ $ sudo fuser -vki  /var/lib/dpkg/lock
 luego seguimos con...
 
 ##### Programas para el Sistema #####
+
 terminator (Configurar, luego)
 vim (Configurarlo)
 
 .bashrc (Configurarlo, alias, etc...)
-    alias ll='ls -l --color'
-    alias buscar='grep --color -n -Ir'
+alias ll='ls -l --color'
+alias buscar='grep --color -n -Ir'
 
 sudo (Configurar y Probar)
 aptitude (Probar)
 ssh (Configurar y Probar)
 git (Configurarlo, Probarlo)
 vlc player
-
 apache (Probar)
 postgresql (Probar)
 Virtual Box (Opcional)
@@ -2833,6 +2856,7 @@ audacity
 tree // Muestra un árbol de directorios con sangría, en color.
 
 #####  Para compilacion y construcción de paquetes #####
+
 build-essential
 gcc
 dpkg-dev
@@ -2850,6 +2874,7 @@ quilt
 packaging-dev
 
 ##### Desarrollo #####
+
 curl
 Sublime (Instalar el .deb de la página o buscar en los repos, > a v2.)
 python (Probarlo)
@@ -2866,12 +2891,20 @@ ruby (Probarlo)
 ruby on rails (Opcional)
 Qt-Creator (Opcional)
 
-##### Navegador Web #####
-Firefox
+##### Navegador Web Firefox #####
+
 Adblock --> https://addons.mozilla.org/es/firefox/addon/adblock-plus/
+
 Private Tab --> https://addons.mozilla.org/es/firefox/addon/private-tab/
+
 Firebug --> https://addons.mozilla.org/es/firefox/addon/firebug/
+
 Youtube Video Downloader --> https://addons.mozilla.org/es/firefox/addon/download-youtube/
+
 Youtube - Ver videos mientras se leen comentarios --> https://addons.mozilla.org/es/firefox/addon/pop-up-play/
+
 Save as PDF --> https://addons.mozilla.org/es/firefox/addon/save-as-pdf/
-Google Translator for Firefox --> http://translatorforfirefox.blogspot.com/
+
+Google Translator for Firefox --> https://addons.mozilla.org/es/firefox/addon/google-translator-for-firefox/?src=userprofile ó
+http://translatorforfirefox.blogspot.com/
+
