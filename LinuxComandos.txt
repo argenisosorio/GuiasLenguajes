@@ -958,28 +958,28 @@ en /etc/uwsgi/apps-available.
 
 En este ejemplo, el archivo de configuración es un .xml con el nombre del sitio servido por nginx.
 
-├── apps-available
-│   ├── README
-│   └── www-prueba.com.xml
-└── apps-enabled
-├── README
-└── www-prueba.com.xml -> ../apps-available/www-prueba.com.xml
+apps-available
+    README
+    www-prueba.com.xml
+apps-enabled
+    README
+    www-prueba.com.xml -> ../apps-available/www-prueba.com.xml
 
 ##### Ejemplo de archivo de configuración .xml #####
 
 <uwsgi>
-<threads>10</threads>
-<workers>1</workers>
-<master/>
-<uid>name_project</uid>
-<gid>nogroup</gid>
-<log-x-forwarded-for/>
-<post-buffering>4096</post-buffering>
-<max-requests>1000</max-requests>
-<chmod-socket>666</chmod-socket>        
-<chdir>/var/www/path_project/</chdir>
-<module>wsgi</module>
-<plugins>python27</plugins>
+    <threads>10</threads>
+    <workers>1</workers>
+    <master/>
+    <uid>name_project</uid>
+    <gid>nogroup</gid>
+    <log-x-forwarded-for/>
+    <post-buffering>4096</post-buffering>
+    <max-requests>1000</max-requests>
+    <chmod-socket>666</chmod-socket>        
+    <chdir>/var/www/path_project/</chdir>
+    <module>wsgi</module>
+    <plugins>python27</plugins>
 </uwsgi>
 
 ###############################################
@@ -2514,10 +2514,10 @@ mostrada por Xnest adicionalmente cabe destacar que puedes colocar cualquier geo
 - Cada ves que reinicies la pc debes volver a montar los directorios /proc, /dev/pts y /dev, esto lo puedes automatizar
 agregando las siguientes siguientes lineas en el archivo /etc/fstab o corriendo un script con esas sentencias.
 
-/proc		 /home/user/jaulas/wheezy/proc/	         auto	 bind 0	      0 
-/dev		 /home/user/jaulas/wheezy/dev/pts/	 auto	 bind 0	      0 
-/dev/pts	 /home/user/jaulas/wheezy/dev/pts/	 auto	 bind 0	      0
-/sys             /home/aosorio/jaulas/wheezy/sys/        auto    bind 0       0
+/proc      /home/user/jaulas/wheezy/proc/        auto     bind 0       0
+/dev       /home/user/jaulas/wheezy/dev/pts/     auto     bind 0       0
+/dev/pts   /home/user/jaulas/wheezy/dev/pts/     auto     bind 0       0
+/sys       /home/aosorio/jaulas/wheezy/sys/      auto     bind 0       0
 
 Descargamos los paquetes locales y locales-all y ejecutamos:
 
