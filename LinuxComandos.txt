@@ -913,13 +913,49 @@ simbólico en "sites-enabled".
 Para ver la configuración de nginx del sitio disponible:
 --> /etc/nginx/sites-enabled/nombre_del_sitio
 
+Si se quiere comprobar la sintaxis de los archivos de configuración luego de realizar algun cambio,
+o si es la primera vez que se configura, usaremos el siguiente comando:
+
+$ nginx -t
+
+Si todo está bien, la salida sería algo como esto:
+
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+Si hay algun error, en este ejemplo, unas "sssssss" al principio del fichero, entonces el error sería:
+
+nginx: [emerg] unknown directive "ssssssssssssss" in /etc/nginx/sites-enabled/www.name-site.com:3
+nginx: configuration file /etc/nginx/nginx.conf test failed
+
 ##### Ver los logs #####
 
 Para ver los logs del sitio disponible:
 --> /var/log/nginx/nombre_del_sitio.xxx.log
 
-Para ver en tiempo real el log del server del sitio:
+Para ver en tiempo real el log de accesos del server del sitio:
 /var/log/nginx# tailf nombre_del_sitio.ve.access.log
+
+Para ver en tiempo real el log de errores del server del sitio:
+/var/log/nginx# tailf nombre_del_sitio.ve.error.log
+
+##### A debugging log #####
+
+To enable a debugging log, nginx needs to be configured to support debugging during the build:
+
+./configure --with-debug .../tailf
+
+
+Then the debug level should be set with the error_log directive:
+
+#error_log /path/to/log error; // Normal error log.
+error_log /path/to/log debug;
+
+$ sudo systemctl restart nginx // Reiniciamos para que se aplique el cambio.
+
+Ahora si vemos el error log con $ tailf nombre_del_sitio.ve.error.log
+veremos una especie de monitor que nos mostrará otra o mas información
+que el error.log normal.
 
 #################
 ##### uWSGI #####
