@@ -1,20 +1,26 @@
 # Guías y Códigos de...
 
 - C
+- QT
 - C++
+- Git
+- PHP
 - HTML
 - HAML
-- PHP
-- Python
 - Ruby
-- Ruby on Rails
-- Django
-- JavaScript
-- Jquery
-- MySQL
-- PostgreSQL
 - SCSS
+- MySQL
+- Django
+- Python
+- Jquery
+- Markdown
 - AngularJS
+- PostgreSQL
+- JavaScript
+- Bash Script
+- Ruby on Rails
+- Windows Bash script
+- Mezzanine/Django CMS
+- Empaquetamiento en GNU/Linux Debian
 - Manual del Administrador de Debian 8
 - Comandos de Linux y muchos más para practicar y aprender.
-
