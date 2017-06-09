@@ -1258,11 +1258,11 @@ class PostEliminar(SuccessMessageMixin,DeleteView):
     #En el template:
 
 {% if messages %}
-<ul class="messages">
-{% for message in messages %}
-<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-{% endfor %}
-</ul>
+  <ul class="messages">
+    {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
 {% endif %}
 
 ó
@@ -1275,7 +1275,6 @@ class PostEliminar(SuccessMessageMixin,DeleteView):
     </div>
   {% endfor %}
 {% endif %}
-
 
 ### En un render ###
 
@@ -2092,3 +2091,274 @@ logramos que todo lo que vaya desde /admin será con https.
 Para un set mas configurable se puede usar el middleware personalizado:
 --> https://github.com/argenisosorio/django_ssl_secure_redirect
 En sustitución del middleware de django.
+
+##############################################################
+##### Clases y funciones para crear un usuario de Django #####
+##############################################################
+
+#urls.py
+url(r'^crear_usuario/$', UsuarioCreate.as_view(), name='registro'),
+
+#forms.py
+class UserForm(UserCreationForm):
+    """
+    Clase del formulario que registra los usuarios
+    """
+    first_name = forms.CharField(
+        label=("Nombres"),
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            'required': 'true',
+            'title':'Ingrese su nombre completo',
+            'id': 'first_name',
+            'data-toggle': 'tooltip',
+            'placeholder': 'Nombres',
+        })
+    )
+    
+    last_name = forms.CharField(
+        label=("Apellidos"),
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            'required': 'true',
+            'title':'Ingrese sus apellidos completo',
+            'id': 'last_name',
+            'data-toggle': 'tooltip',
+            'placeholder': 'Apellidos',
+        })
+    )
+
+    email = forms.CharField(
+        label=("Email"),
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'email',
+            'placeholder': 'Dirección de correo',
+            'required': 'true',
+            'data-toggle': 'tooltip',
+            'title':'Ingrese su email',
+            'id': 'email',
+        })
+    )
+
+    username = forms.CharField(max_length=30, label=("Usuario"),
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'required': 'true',
+            'placeholder': 'Nombre de usuario',
+            'title':'Ingrese el nombre de usuario',
+            'data-toggle': 'tooltip',
+            'id': 'username',
+        })
+    )
+
+    password1 = forms.CharField(
+        label=("Contraseña"),
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'required': 'true',
+            'placeholder': 'Contraseña',
+            'title':'Ingrese la contraseña de su preferencia',
+            'data-toggle': 'tooltip',
+            'id': 'password1',
+        })
+    )
+
+    password2 = forms.CharField(
+        label=("Contraseña (confirmación)"),
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'type': 'password',
+            'required': 'true',
+            'placeholder': 'Vuelva a ingresar la contraseña elegida',
+            'data-toggle': 'tooltip',
+            'id': 'password2',
+        })
+    )
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name',  'email', 'username', 'password1', 'password2',)
+
+    def clean_username(self):
+        """
+        Método que verifica si el campo username es menor a 3 caractéres.
+        Autor: Argenis Osorio (aosorio@cenditel.gob.ve)
+        Fecha: 19-05-2017
+        """
+        username = self.cleaned_data['username']
+        if len(username) < 3:
+            raise forms.ValidationError("El username debe tener mas de 3 caractéres")
+        return username
+
+    def clean_email(self):
+        """
+        Método que valida si el email a registrar ya existe
+        Autor: Argenis Osorio (aosorio@cenditel.gob.ve)
+        Fecha: 19-05-2017
+        """
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Este email ya está registrado.")
+        return email
+
+#views.py
+class UsuarioCreate(SuccessMessageMixin,CreateView):
+    """
+    Clase que registra los usuarios del sistema
+    Autor: Argenis Osorio (aosorio@cenditel.gob.ve)
+    Fecha: 22-05-2017
+    """
+    model = User
+    form_class = UserForm
+    template_name = "registro.html"
+    success_url = reverse_lazy('usuario:acceso')
+    success_message = "¡Registro exitoso! debe esperar la activacion de su cuenta"
+
+    def form_valid(self,form):
+        """
+        Método que verifica si el formulario es válido, en cuyo caso procede a registrar los datos del usuario.
+        Autor: Argenis Osorio (aosorio@cenditel.gob.ve)
+        Fecha: 22-05-2017
+        """
+        self.object = form.save(commit=False)
+        self.object.username = form.cleaned_data['username']
+        self.object.first_name = form.cleaned_data['first_name']
+        self.object.last_name = form.cleaned_data['last_name']
+        self.object.set_password(form.cleaned_data['password1'])
+        self.object.email = form.cleaned_data['email']
+        self.object.is_active = 0
+        self.object.save()
+
+        return super(UsuarioCreate, self).form_valid(form)
+
+
+##########################################################################
+##### Clases y funciones para editar el perfil del usuario de Django #####
+##########################################################################
+
+#urls.py
+url(r'^perfil/(?P<pk>\d+)$', login_required(views.edit_profile), name="perfil"),
+
+#forms.py
+class EditProfileForm(forms.ModelForm):
+    """
+    Clase del formulario que permite editar el perfil del usuario autenticado.
+    Autor: Argenis Osorio (aosorio@cenditel.gob.ve)
+    Fecha: 03-04-2017
+    """
+    first_name = forms.CharField(
+        label=("Nombres"),
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            #'required': 'true',
+            'title':'Ingrese su nombre completo',
+            'id': 'first_name',
+            'data-toggle': 'tooltip',
+            'placeholder': 'Nombres',
+        })
+    )
+    
+    last_name = forms.CharField(
+        label=("Apellidos"),
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'text',
+            #'required': 'true',
+            'title':'Ingrese sus apellidos completo',
+            'id': 'last_name',
+            'data-toggle': 'tooltip',
+            'placeholder': 'Apellidos',
+        })
+    )
+
+    email = forms.CharField(
+        label=("Email"),
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'type': 'email',
+            'placeholder': 'Dirección de correo',
+            'required': 'true',
+            'data-toggle': 'tooltip',
+            'title':'Ingrese su email',
+            'id': 'email',
+        })
+    )
+
+    username = forms.CharField(max_length=30, label=("Usuario"),
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'required': 'true',
+            'placeholder': 'Nombre de usuario',
+            'title':'Ingrese el nombre de usuario',
+            'data-toggle': 'tooltip',
+            'id': 'username',
+        })
+    )
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name',  'email', 'username',)
+
+#views.py
+def edit_profile(request, pk):
+    """
+    Función que permite editar el perfil del usuarios autenticado.
+    Autor: Argenis Osorio (argenisosorio580@hotmail.com)
+    Fecha: 20-03-2017
+    """
+    user = User.objects.get(pk=request.user.pk)
+    if request.method == 'GET':
+        form = EditProfileForm(instance=user)
+    else:
+        form = EditProfileForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+        messages = '¡Perfil actualizado!'
+        return render_to_response('user_profile.html', {'form': form, 'messages': messages}, context_instance=RequestContext(request))
+    return render(request, 'user_profile.html', {'form':form})
+
+ó
+#views.py con clases genéricas
+class PerfilUpdate(SuccessMessageMixin,UpdateView):
+    """
+    Clase que gestiona la actualización del perfil
+    """
+    model = User
+    template_name = "user_profile.html"
+    form_class = EditProfileForm
+    success_message = "¡Perfil actualizado!"
+
+    def get_success_url(self, **kwargs):
+        """
+        Metodo que permite definir la url con el pk del usuario autenticado.
+        """
+        return reverse_lazy('usuario:perfil', kwargs={'pk': self.kwargs['pk']})
+
+    def get_initial(self, **kwargs):
+        """
+        Metodo para agregar valores de inicio al formulario
+        """
+        initial = super(PerfilUpdate, self).get_initial()
+        usuario = User.objects.get(pk=self.request.user.pk)
+        initial['username'] = usuario.username
+        initial['first_name'] = usuario.first_name
+        initial['last_name'] = usuario.last_name
+        initial['email'] = usuario.email
+        return initial
+
+    def form_valid(self,form):
+        """
+        Metodo que valida si el formulario es valido
+        """
+        self.object = form.save()
+        self.object.username = form.cleaned_data['username']
+        self.object.first_name = form.cleaned_data['first_name']
+        self.object.last_name = form.cleaned_data['last_name']
+        self.object.email = form.cleaned_data['email']
+        self.object.save()
+
+        return super(PerfilUpdate, self).form_valid(form)
