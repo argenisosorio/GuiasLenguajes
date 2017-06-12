@@ -431,7 +431,7 @@ tar -cvf backup.tar $DIRS
 gedit /home/user/try.txt
 ----------------------
 
-#!/bin/sh
+#!/bin/bash
 #Cambiar la fecha y/u hora manualmente
 echo -e '\n#####################################################'
 echo '# Script para cambiar la fecha y/u hora manualmente #'
@@ -450,7 +450,7 @@ case $var in
     read mes
     echo 'Introduzca el anio con 4 dígitos:'
     read anio
-    echo -e "La fecha y hora es:"
+    #echo -e "La fecha y hora es:"
     sudo date --set $anio-$mes-$dia
     echo -e "\n¡Listo!\n"
     ;;
@@ -460,7 +460,7 @@ case $var in
     read hora
     echo 'Introduzca el minuto con doble dígito:'
     read minuto
-    echo -e "La fecha y hora es:"
+    #echo -e "La fecha y hora es:"
     sudo date --set $hora:$minuto:00
     echo -e "\n¡Listo!\n"
     ;;

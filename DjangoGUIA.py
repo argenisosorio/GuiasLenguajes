@@ -646,6 +646,14 @@ comment %}, así:
     que abarca varias líneas
 {% endcomment %}
 
+#########################################################
+##### Tiempo de expiración de la sesión del usuario #####
+#########################################################
+
+# Variable del settings.py que indica que la sesión del usuario durará 10 min
+# SESSION AGE 10 Minutes
+SESSION_COOKIE_AGE = 10*60
+
 ##############################
 ##### Modelos en Django  #####
 ##############################
