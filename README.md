@@ -5,22 +5,22 @@
 - C++
 - Git
 - PHP
+- Ruby
 - HTML
 - HAML
-- Ruby
 - SCSS
+- Jquery
 - MySQL
 - Django
 - Python
-- Jquery
 - Markdown
-- AngularJS
-- PostgreSQL
 - JavaScript
+- AngularJS
 - Bash Script
+- PostgreSQL
 - Ruby on Rails
 - Windows Bash script
-- Mezzanine/Django CMS
-- Empaquetamiento en GNU/Linux Debian
+- Mezzanine CMS basado en Django
 - Manual del Administrador de Debian 8
+- Empaquetamiento en GNU/Linux Debian
 - Comandos de Linux y muchos más para practicar y aprender.
