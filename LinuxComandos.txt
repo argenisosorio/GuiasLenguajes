@@ -2717,6 +2717,49 @@ Desplazarse hacia arriba una página: -
 Desplazarse hacia abajo una página: +
 Abrir URL: U
 
+#####################################################
+##### apg - generador automático de contraseñas #####
+#####################################################
+
+apg (Automatic Password Generator)
+
+// Instalación
+# apt-get install apg
+
+Apg es capaz de generar un listado de contraseñas.
+
+Usa un algoritmo para generar contraseñas pronunciables e inpronunciables
+también permite generar contraseñas aleatorias definidas a partir de conjuntos
+de símbolos definidos por el usuario (dígitos, letras mayúsculas y minúsculas, y símbolos especiales.)
+
+Por defecto, apg genera 6 contraseñas con caracteres alfanuméricos que además son pronunciables (en inglés)
+
+$ apg
+
+Please enter some random data (only first 16 are significant)
+(eg. your old password):>
+OrwefdyetEc6 (Or-wef-dyet-Ec-SIX)
+9ovCaulvac5 (NINE-ov-Caulv-ac-FIVE)
+EryidribMeb7 (Er-yi-drib-Meb-SEVEN)
+beoddIcox2 (be-odd-Ic-ox-TWO)
+Oamyalirl6 (Oam-yal-irl-SIX)
+IgPiham1 (Ig-Pi-ham-ONE)
+
+Ahora generemos 4 contraseñas con una longitud mínima de 8 caracteres, máxima de 12
+y que además sean impronunciables, usan el segundo algoritmos:
+
+-n x = Número de contraseñas a generar.
+-m x = Mínimo de caractéres que deberá tener la contraseña.
+-x x = Máximo de caractéres que deberá tener la contraseña.
+
+$ apg -n 4 -m 8 -x 8 -a 1
+
+// Mínimo 8 máximo 12, incluyendo caractéres especiales
+$ apg -n 4 -m 8 -x 8 -a 1
+
+// Mínimo 8 máximo 12, incluyendo caractéres especiales en menor medida
+$ apg -n 4 -m 8 -x 12 -a 0
+
 ################################
 ##### source.list example  #####
 ################################
