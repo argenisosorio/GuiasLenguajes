@@ -3365,7 +3365,21 @@ de nuevo.
 
 -------------------------------------
 
-<!-- -->
+<!-- Forzar a la página actual a ir por https -->
+<html>
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+  </head>
+<body>
+<script type="text/javascript">
+// Forzar a la página actual a ir por https
+if (window.location.protocol !== 'https:') {
+    window.location = 'https://' + window.location.hostname + window.location.pathname + window.location.hash;
+}
+</script>
+</body>
+</html>
 
 -------------------------------------
 

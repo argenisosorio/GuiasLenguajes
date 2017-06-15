@@ -898,6 +898,14 @@ class Xxx(TemplateView):
   {{ data.y }}
 </div>
 
+##############################################
+##### Declarando variable en el template #####
+##############################################
+
+{% with name="World" greeting="Hello" %}
+    <div>{{ greeting }} {{name}}!</div>
+{% endwith %}
+
 ##################################
 ##### Creating an admin user #####
 ##################################
@@ -988,7 +996,7 @@ la variable lista_atletas:
 ##### Permisos de contenido según el usuario #####
 ##################################################
 
-# Si el usuario está autenticado}
+# Si el usuario está autenticado
 {% if request.user.is_authenticated %}
     Bienvenido: {{user.username}}
 {% else %}
@@ -1043,6 +1051,15 @@ STATICFILES_DIRS = (
 
 Ahora las dos carpetas serán servidas desde mysite/static/ por la definición de la variable STATIC_URL.
 
+Su proyecto probablemente también tendrá activos estáticos que no están vinculados a una aplicación en particular.
+Además de usar un directorio static/ dentro de sus aplicaciones, puede definir una lista de directorios (STATICFILES_DIRS)
+en su archivo de configuración donde Django también buscará archivos estáticos. Por ejemplo:
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/var/www/static/',
+]
+
 **STATIC_URL, es la variable que va a definir la url donde se encuentras
 los archivos estáticos a ser servidos.
 
@@ -1068,22 +1085,31 @@ Valor predeterminado: '' (Cadena vacía)
 
 Ejemplo: "/var/www/example.com/media/"
 
+**STATIC_ROOT
+La ruta absoluta del directorio donde collectstatic va a colectar los estaticos, esto para entornos de producción.
+Establezca la configuración STATIC_ROOT en el directorio desde el que desea servir estos archivos, por ejemplo:
+
+STATIC_ROOT = "/var/www/example.com/static/"
+
+**MEDIA_ROOT
+Esta es la ruta absoluta a la carpeta que mantendrá las subidas del usuario.
+Por ejemplo MEDIA_ROOT = "/User/Timmy/Sites/Pho/root/media/".
+
 MEDIA_ROOT y STATIC_ROOT deben tener valores diferentes. Antes de que STATIC_ROOT se introdujera, era
 común confiar o fallback en MEDIA_ROOT para también servir archivos estáticos; Sin embargo, ya que
 esto puede tener serias implicaciones de seguridad, hay una comprobación de validación para evitarlo.
 
 **MEDIA_URL
-
 Valor predeterminado: '' (Cadena vacía)
 
 URL que maneja los medios servidos desde MEDIA_ROOT, utilizados para administrar archivos almacenados.
 Debe terminar en una barra inclinada si se establece en un valor no vacío. Tendrá que configurar estos
 archivos para que se publiquen en entornos de desarrollo y producción.
 
-Si desea utilizar {{MEDIA_URL}} en sus plantillas, añada 'django.template.context_processors.media' en la
-opción 'context_processors' de TEMPLATES.
+MEDIA_URL = "media/"
 
-Ejemplo: "http://media.example.com/"
+Si desea utilizar {{ MEDIA_URL }} en sus plantillas, añada 'django.template.context_processors.media' en la
+opción 'context_processors' de TEMPLATES.
 
 #######################################################
 ##### Agregando enlaces a archivos para descargas #####
