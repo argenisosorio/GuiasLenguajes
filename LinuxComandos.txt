@@ -2638,6 +2638,33 @@ Después de instalar un sistema básico, usted puede instalar el DesktopEnvironm
 
 # invoke-rc.d networking restart
 
+#### Para maquinas virtuales #####
+
+Cuando se va a conectar por wireless, para que el dhcp le asigne una dirección ip
+modificamos el fichero:
+
+/etc/network/interfaces
+
+Y quedará así:
+
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+#auto lo
+#iface lo inet loopback
+auto eth0
+iface eth0 inet dhcp
+
+---
+
+Guardamos y reiniciamos las interfaces de redes con los tres comandos de arriba, esto
+es para cuando una máquina virtual no agarra internet inalambrico, tambien debe estar
+habilitada el adaptador de conexión inalambrica en el panel de configuración de la maquina virtual.
+Dentro de la máquina virtual parecerá que esta conectado por cable.
+
 ################################################################################
 ##### Restaurar o reiniciar  las conexiones de red inalambrica del sistema #####
 ################################################################################
