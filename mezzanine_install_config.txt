@@ -176,7 +176,19 @@ Si tenemos un tema descargado, agregaremos sus plantillas y estáticos a nuestra
 
 /Entornos_virtuales/mezzanine/lib/python2.7/site-packages/mezzanine/core/templates // Desde entornos virtuales
 
-/usr/local/lib/python2.7/dist-packages/mezzanine/core // Desde sistema base
+/usr/local/lib/python2.7/dist-packages/mezzanine/core/templates // Desde sistema base
+
+#################################################
+##### Colectando los estaticos del servidor #####
+#################################################
+
+ Para copiar todos los estáticos requeridos por el servidor a la carpeta /statc creada manualmente
+ y definida en el settings usamos:
+
+$ python manage.py collectstatic
+
+Esto copiara todos los ficheros estáticos usados por el servidor hacia la carpeta /static de nuestro proyecto
+donde serán manipulados por nosotros y así podremos agregar nuestros estáticos determinados
 
 ######################################
 ##### Instalar django-feedparser #####
@@ -270,8 +282,6 @@ class AuthenticationForm(forms.Form):
 # BLOG_USE_FEATURED_IMAGE = True
 BLOG_USE_FEATURED_IMAGE = True
 y se sube una imagen destacada a la noticia para que la muestre en el post_list y en el post_detail
-
-$ python manage.py collectstatic // Para copiar todos los estáticos requeridos por el servidor a la carpeta /statc/ definida en el settings.
 
 - El widget del twitter timeline no funciona cuando se está en modo incógnito porque bloquea el rastreo.
 

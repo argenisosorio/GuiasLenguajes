@@ -646,13 +646,20 @@ comment %}, así:
     que abarca varias líneas
 {% endcomment %}
 
-#########################################################
-##### Tiempo de expiración de la sesión del usuario #####
-#########################################################
+############################
+##### Tiempo de sesión #####
+############################
 
-# Variable del settings.py que indica que la sesión del usuario durará 10 min
-# SESSION AGE 10 Minutes
-SESSION_COOKIE_AGE = 10*60
+#Variable del settings.py que indica que a los 40min se destruye la sesión creada de algún usuario autenticado.
+# SESSION AGE 40 Minutes
+#SESSION_COOKIE_AGE = 40*60
+
+#######################################################
+##### Cerrar sesión cuando se cierra el navegador #####
+#######################################################
+
+#Variable del settings.py
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 ##############################
 ##### Modelos en Django  #####
@@ -1246,6 +1253,22 @@ INSTALLED_APPS = (
     'django_extensions',
     ...
 )
+
+###################################################
+##### Definiendo todos los fields en la clase #####
+###################################################
+
+#En views.py
+class PostCrear(SuccessMessageMixin,CreateView):
+    model = Post
+    fields = '__all__'
+    success_url = reverse_lazy('post_lista')
+    success_message = "Se creó la publicación con éxito"
+
+#En forms.py
+class Meta:
+    model = Post
+    fields = '__all__'
 
 #############################################
 ##### Mensajes / messages al hacer post #####
@@ -2396,3 +2419,12 @@ class PerfilUpdate(SuccessMessageMixin,UpdateView):
         self.object.save()
 
         return super(PerfilUpdate, self).form_valid(form)
+
+####################################
+##### Redirigir una url a otra #####
+####################################
+
+from django.views.generic import RedirectView
+
+urlpatterns = patterns('',
+    url(r'^some-page/$', RedirectView.as_view(url='/')),
