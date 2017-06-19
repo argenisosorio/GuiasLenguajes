@@ -268,12 +268,16 @@ $ ps -e // Visualiza información sobre "todos" los procesos del sistema.
 
 $ ps -ef // Visualiza información sobre "todos" los procesos del sistema con mas detalles, así pues se puede detener un proceso con kill -9 PID_number.
 
-ps -ef | grep evince // Filtrar la búsqueda, en este caso, buscando el proceso que alberga el visor pdf evince.
+$ps -ef | grep evince // Filtrar la búsqueda, en este caso, buscando el proceso que alberga el visor pdf evince.
 
-ps -ef | grep ssh // Filtrar la búsqueda para ver las conexiones ssh activas, nuevamente se aclara que podemos matar esos procesos
+$ ps -ef | grep ssh // Filtrar la búsqueda para ver las conexiones ssh activas, nuevamente se aclara que podemos matar esos procesos
 con kill -9 xxx pasandole el PID process.
 
-$ ps -l // Muestra algunos detalles de los procesos del sistema
+$ ps aux // Muestra los procesos del sistema de sistema, similar a ps -ef.
+
+$ ps aux | grep firefox // Mostrar información de proceso/s específico/s.
+
+$ ps -l // Muestra algunos detalles de los procesos del sistema.
 
 $ ps l //  Muestra mas detalles de los procesos del sistema.
 
