@@ -5399,6 +5399,73 @@ $(document).ready(function() {
 
 -------------------------------------
 
+<!-- (this). Seleccionar el elemento html que coincida /Selects the current HTML element -->
+<!DOCTYPE html>   
+<html>
+<head>
+<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+    $(this).toggle("slow");
+  });
+});
+</script>
+</head>
+<body>
+  <button>Click me 1</button>
+  <button>Click me 2</button>
+  <button>Click me 3</button>
+  <button>Click me 4</button>
+</body>
+</html>
+
+Otro ejemplo con mas niveles
+
+<!-- Seleccionar un elemento para ocultar/mostrar compartiendo las clases -->
+<script type="text/javascript">
+$("document").ready(function () {
+  $( ".ver_mas" ).click(function() {
+    $(this).find(".oculto").toggle("slow");
+  });
+});
+</script>
+
+-------------------------------------
+
+<!-- find() para buscar elementos. Comienza con todos los párrafos y busca elementos de la extensión descendente, igual que $( "p span" ) -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>find demo</title>
+  <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+</head>
+<body> 
+<p>
+  <span>Hello</span>, how are you?
+</p>
+<p>
+  Me? I'm <span>good</span>.
+</p>
+<span>Hello</span>, how are you? 
+<script type="text/javascript">
+  $( "p" ).find( "span" ).css( "color", "red" );
+</script> 
+</body>
+</html>
+
+-------------------------------------
+
+<!-- -->
+
+-------------------------------------
+
+<!-- -->
+
+
+-------------------------------------
+
 <!-- -->
 
 -------------------------------------

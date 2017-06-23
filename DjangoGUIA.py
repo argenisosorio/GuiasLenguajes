@@ -792,6 +792,12 @@ verbose_name="Nombre de usuario": Nombre del campo comprensible por humanos, si 
 
 validators=[]: Una lista de validaciones para el campo referencia.
 
+on_delete: Se utiliza para decirle a Django qué hacer con instancias de modelo que dependen de la instancia de modelo que elimine.
+(Por ejemplo, una relación de ForeignKey). El on_delete = models.CASCADE le dice a Django que coloque en cascada el efecto
+de supresión, es decir, continúe eliminando también los modelos dependientes.
+
+user = models.OneToOneField(User, on_delete=models.CASCADE)
+
 '''
 Declarando la clase Articulo y Comentarios para una publicacion, y estableciendo
 la relacion entre los comentarios y un articulo
