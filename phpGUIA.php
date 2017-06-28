@@ -1,5 +1,34 @@
 <!--  Guía PHP by dM -->
 
+###############################################
+########## Instalar y configurar PHP ##########
+###############################################
+
+# apt-get install php5 php5-mysql php5-gd
+
+-Este cuando se va a usar apache: libapache2-mod-php5
+
+// Una vez que se hayan descargado e instalado los paquetes de PHP, solo tienes que reiniciar el
+servidor Apache para que el servicio esté disponible. Para hacerlo solo tienes que teclear los siguientes comandos:
+
+/etc/init.d/apache2 restart
+
+// Para probar que tu servicio esta trabajando puedes crear un pequeño archivo y verlo en tu navegador.
+// Para hacer esto puedes teclear los siguientes comandos:
+
+nano /var/www/testphp.php
+
+// agrega las lineas siguientes
+
+<?php
+// Muestra toda la información, por defecto INFO_ALL
+phpinfo();
+?>
+
+Para ver este archivo abre tu navegador web y teclea la IP de tu servidor seguido del archivo que acabas de crear, por ejemplo:
+
+http://127.0.0.1/testphp.php // Si aparece la pagina azul pastel de PHP se instalo correctamente.
+
 <!-- Comentarios en HTML -->
 
 <!doctype html>
