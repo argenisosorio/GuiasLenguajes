@@ -1043,7 +1043,9 @@ $ tailf /var/log/uwsgi/app/name_site_com.log
 ########## Instalar y configurar PHP ##########
 ###############################################
 
-# apt-get install php5 php5-mysql php5-gd libapache2-mod-php5
+# apt-get install php5 php5-mysql php5-gd
+
+-Este cuando se va a usar apache: libapache2-mod-php5
 
 // Una vez que se hayan descargado e instalado los paquetes de PHP, solo tienes que reiniciar el 
 servidor Apache para que el servicio esté disponible. Para hacerlo solo tienes que teclear los siguientes comandos:
@@ -1064,7 +1066,7 @@ phpinfo();
 
 Para ver este archivo abre tu navegador web y teclea la IP de tu servidor seguido del archivo que acabas de crear, por ejemplo:
 
-http://127.0.0.1/testphp.php //Si aparece la pagina azul pastel de PHP se instalo correctamente
+http://127.0.0.1/testphp.php // Si aparece la pagina azul pastel de PHP se instalo correctamente
 
 ######################################################
 ########## Instalar y configurar phpMyAdmin ##########
@@ -1083,16 +1085,6 @@ http://localhost/phpmyadmin // Acceder al servicio
 Include /etc/phpmyadmin/apache.conf //Esta linea se agrega al final de la configuracion del apache para que reconozca el phpMyAdmin
 
 /etc/init.d/xxx restart // xxx mysql, apache etc... restart
-
-###########################################
-########## Instalar MySQL server ##########
-###########################################
-
-apt-get install mysql-server
-
-root@debian:/home/user# aptitude search mysql | grep mysql
-
-# mysql -p //acceder al mysql
 
 ###########################################
 ##### Configurar el localhost / hosts #####
@@ -1331,6 +1323,23 @@ digital del servidor a veces se debe saltar chequeo de la firma para bajar las f
 Probado en Ubuntu 11 y 12 nada más, puede que funcione en anteriores o superiores.
 
 # apt-get install gnome-panel // Luego de reiniciar, saldrá en las opciones de escritorio antes de iniciar sesión.
+
+###############################################
+##### Instalación de xfce en sistema base #####
+###############################################
+
+Xfce es un entorno de escritorio ligero para sistemas tipo UNIX. Su objetivo es ser rápido y usar pocos recursos
+del sistema, sin dejar de ser visualmente atractivo y fácil de usar.
+
+# aptitude install xfce4
+
+Luego instalamos utilidades extras, si se quiere, se le conoce como "goodies".
+
+# aptitude install xfce4-goodies
+
+# aptitude install lightdm
+
+Luego de eso, cuando reiniciemos la máquina, podremos elegir acceder con xfce como entorno de escritorio.
 
 #############################################################################
 ##### Comandos para buscar ficheros, directorios, paquetes, historiales #####
@@ -1674,6 +1683,7 @@ entonces ejecutaremos los comandos dentro del entorno virtual.
 
 $ pip install --upgrade pip
 $ pip install package_name --trusted-host pypi.cenditel
+$ pip install -r requirements.txt --trusted-host pypi.cenditel // Para instalar recursivamente un fichero de requerimientos.
 
 ##### Nota #####
 

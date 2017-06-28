@@ -1,0 +1,64 @@
+### Guía Instalación de Wordpress by dM ###
+
+// Instalamos Nginx server
+# apt-get install nginx
+
+Vamos a /var/www/html y dentro descargamos la última versión de Wordpress
+$ wget http://wordpress.org/latest.tar.gz
+
+// Extraemos el contenido del fichero, nos debe quedar una carpeta llamada wordpress.
+# tar -xzvf latest.tar.gz
+
+// Dentro de la consola de MySQL creamos el usuario y la contraseña del sistema de wordpress:
+mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY '123456';
+
+// Creamos la base de datos del sistema wordpress.
+mysql> CREATE DATABASE wordpress_db;
+
+// Sobre la base de datos recién creada le asignamos el usuario:
+mysql> GRANT ALL PRIVILEGES ON wordpress_db.* TO 'user'@'localhost';
+
+// Refrescamos el esquema de las tablas de MySQL.
+mysql> FLUSH PRIVILEGES;
+
+// Renombramos el archivo de configuración por defecto de wp-config-sample.php a wp-config.php
+# mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+
+
+// Editamos el fichero y agregamos la db_name, user y password que creamos en el paso anterior y guardamos.
+# vim /var/www/html/wordpress/wp-config.php
+
+Configuramos el fichero /etc/nginx/sites-available/default con lo siguiente:
+
+server {
+  listen   80;
+  #root /usr/share/nginx/html;
+  #Aqui va la ruta donde tenemos el directorio wordpress
+  root /var/www/html;
+  index index.php index.html index.htm;
+  server_name example.com;
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
+  error_page 404 /404.html;
+  error_page 500 502 503 504 /50x.html;
+  location = /50x.html {
+    root /usr/share/nginx/www;
+  }
+  # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+  location ~ \.php$ {
+    try_files $uri =404;
+    fastcgi_pass unix:/var/run/php5-fpm.sock;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include fastcgi_params;
+  }
+}
+
+// Reiniciamos nginx:
+# service nginx restart
+
+Visitamos la url http://127.0.0.1/wordpress/
+
+Con esto ya deberíamos ver nuestra interfáz de inicio de wordpress, donde llenaremos los campos del nombre
+del sitio, usuario, contraseña, correo, otros.
