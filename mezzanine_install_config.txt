@@ -66,6 +66,8 @@ add username, mail and password...
 
 $ pip install mezzanine
 
+$ pip install html5lib==0.999999999 // Si da problemas con html5parser e import keyviews al hacer una publicación
+
 ##################################################################
 ##### Instalación en GNU/Linux Debian 8 Jessie versión-corta #####
 ##################################################################
@@ -130,7 +132,9 @@ En el settings.py
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 #LANGUAGE_CODE = "en"
-LANGUAGE_CODE = "es-VE"
+#LANGUAGE_CODE = "es-VE"
+LANGUAGE_CODE = "ES"
+
 
 # Supported languages
 LANGUAGES = (
@@ -309,3 +313,4 @@ Variable del settings.py que indica que a los 40min se destruye la sesión cread
 
 # SESSION AGE 40 Minutes
 #SESSION_COOKIE_AGE = 40*60
+
