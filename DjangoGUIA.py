@@ -2434,3 +2434,59 @@ from django.views.generic import RedirectView
 
 urlpatterns = patterns('',
     url(r'^some-page/$', RedirectView.as_view(url='/')),
+
+##### Usando el select field para leer de datos de otro modelo #####
+
+
+#models.py
+# -*- coding: utf-8 -*-
+from django.db import models
+from django.core.urlresolvers import reverse
+
+
+class Familia(models.Model):
+    familiar = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.familiar
+
+
+class Persona(models.Model):
+    nombre = models.CharField(max_length=200)
+    cedula = models.CharField(max_length=8)
+    persona_familiar = models.ForeignKey(Familia)
+
+    def __unicode__(self):
+        return self.nombre
+
+    def get_absolute_url(self):
+        return reverse('registro:editar', kwargs={'pk': self.pk})
+
+#views.py
+# -*- coding: utf-8 -*-
+from django.http import HttpResponse
+from django.views.generic import TemplateView,ListView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.core.urlresolvers import reverse_lazy
+from registro.models import Persona
+
+
+class Consultar(ListView):
+    model = Persona
+
+
+class Registrar(CreateView):
+    model = Persona
+    fields = '__all__'
+    success_url = reverse_lazy('registro:consultar')
+
+
+class Editar(UpdateView):
+    model = Persona
+    fields = '__all__'
+    success_url = reverse_lazy('registro:consultar')
+
+
+class Borrar(DeleteView):
+    model = Persona
+    success_url = reverse_lazy('registro:consultar')
