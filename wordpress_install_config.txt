@@ -27,7 +27,6 @@ mysql> FLUSH PRIVILEGES;
 // Renombramos el archivo de configuración por defecto de wp-config-sample.php a wp-config.php
 # mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
 
-
 // Editamos el fichero y agregamos la db_name, user y password que creamos en el paso anterior y guardamos.
 # vim /var/www/html/wordpress/wp-config.php
 
@@ -36,7 +35,7 @@ Configuramos el fichero /etc/nginx/sites-available/default con lo siguiente:
 server {
   listen   80;
   #root /usr/share/nginx/html;
-  #Aqui va la ruta donde tenemos el directorio wordpress
+  ### Aqui va la ruta donde tenemos el directorio wordpress  
   root /var/www/html;
   index index.php index.html index.htm;
   server_name example.com;
@@ -57,6 +56,9 @@ server {
     include fastcgi_params;
   }
 }
+
+// Probamos la configuración de nginx que acabamos de hacer, si dice:OK segimos.
+# nginx -t
 
 // Reiniciamos nginx:
 # service nginx restart
