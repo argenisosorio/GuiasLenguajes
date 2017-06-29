@@ -116,3 +116,33 @@ Visitamos la url http://127.0.0.1/wordpress/
 
 Con esto ya deberíamos ver nuestra interfáz de inicio de wordpress, donde llenaremos los campos del nombre
 del sitio, usuario, contraseña, correo, otros.
+
+######################################
+##### Poner wordpress en español #####
+######################################
+
+Hay dos maneras de hacerlo, la primera es bajarse el wordpress en español directamente.
+
+La otra es bajarse el paquete de lenguajes donde viene incluido el idioma español o copiarse
+la carpeta languajes al directorio /var/www/html/wordpress/wp-content
+
+El contenido de la carpeta languajes debería ser:
+
+/var/www/html/wordpress/wp-content/languages
+  admin-es_ES.mo
+  admin-network-es_ES.mo
+  continents-cities-es_ES.mo
+  es_ES.mo  plugins
+  admin-es_ES.po
+  admin-network-es_ES.po
+  continents-cities-es_ES.po
+  es_ES.po  themes
+
+Ahora editamos el fichero de configuraión de wordpress /var/www/html/wordpress/wp-config.php
+
+Despues de la 62 o 63, donde quepa, y antes del la variable debub, declaramos la variable del lenguaje
+
+define('WPLANG', 'es_ES');
+
+Listo, si recargamos nuestro sitio ya debería estar en español, tanto la interfaz de administrador
+como el sitio en general.
