@@ -16,6 +16,7 @@
 - Markdown
 - JavaScript
 - AngularJS
+- WordPress
 - Bash Script
 - PostgreSQL
 - Ruby on Rails
