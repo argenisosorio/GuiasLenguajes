@@ -1,5 +1,12 @@
 ### Guía Instalación de Wordpress by dM ###
 
+###############################################
+##### Usando wordpress con servidor nginx #####
+###############################################
+
+// Instalamos MySQL server y lo configuramos
+# apt-get install mysql-server
+
 // Instalamos php
 # apt-get install php5 php5-mysql php5-gd php-fpm
 
@@ -62,6 +69,48 @@ server {
 
 // Reiniciamos nginx:
 # service nginx restart
+
+Visitamos la url http://127.0.0.1/wordpress/
+
+Con esto ya deberíamos ver nuestra interfáz de inicio de wordpress, donde llenaremos los campos del nombre
+del sitio, usuario, contraseña, correo, otros.
+
+################################################
+##### Usando wordpress con servidor apache #####
+################################################
+
+// Instalamos apache server
+# apt-get install apache2
+
+// Instalamos MySQL server y lo configuramos
+# apt-get install mysql-server
+
+// Instalamos php, en este caso el 5
+# apt-get install php5 php5-gd php5-mysql libapache2-mod-php5
+
+Vamos a /var/www/html que se creo luego de instalar apache y dentro descargamos la última versión de Wordpress
+$ wget http://wordpress.org/latest.tar.gz
+
+// Extraemos el contenido del fichero, nos debe quedar una carpeta llamada wordpress.
+# tar -xzvf latest.tar.gz
+
+// Dentro de la consola de MySQL creamos el usuario y la contraseña del sistema de wordpress:
+mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY '123456';
+
+// Creamos la base de datos del sistema wordpress.
+mysql> CREATE DATABASE wordpress_db;
+
+// Sobre la base de datos recién creada le asignamos el usuario:
+mysql> GRANT ALL PRIVILEGES ON wordpress_db.* TO 'user'@'localhost';
+
+// Refrescamos el esquema de las tablas de MySQL.
+mysql> FLUSH PRIVILEGES;
+
+// Renombramos el archivo de configuración por defecto de wp-config-sample.php a wp-config.php
+# mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+
+// Editamos el fichero y agregamos la db_name, user y password que creamos en el paso anterior y guardamos.
+# vim /var/www/html/wordpress/wp-config.php
 
 Visitamos la url http://127.0.0.1/wordpress/
 
