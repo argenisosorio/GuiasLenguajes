@@ -1092,6 +1092,39 @@ Para hacer una prueba agregaremos y comentaremos una línea al fichero:
 
 Lo que hicimos es cambiar localhost por una url arbitraria, ahora si accedemos a www.x.x accederemos a 127.0.0.1
 
+#######################################################
+##### Bloquear acceso localmente a una página web #####
+#######################################################
+
+$ ping www.pagina_a_bloquear.com
+
+Eso va a hacer ping o enviar paquetes a esa web y nos mostrara la ip pública
+del sitio, es decir un número con este formato: 111.222.333.444
+
+Ahora, con esa ip hacemos lo siguiente:
+
+// Para bloquear el acceso a esa página
+# iptables -I INPUT -s 111.222.333.444 -j DROP
+
+// Para habilitar el acceso a esa página
+# iptables -I INPUT -s 111.222.333.444 -j ACCEPT
+
+##### Otra forma #####
+
+Para bloquear sitios vamos a modificar el archivo hosts, abrimos un terminal y escribimos la siguiente
+linea de comando:
+
+// Como super usuario abrimos el fichero /etc/hosts con el editor gedit, puede ser nano vi, vim, u otro.
+
+# gedit /etc/hosts
+
+Ahora para bloquear en este ejemplo a Instagram, vamos a escribir al principio del archivo:
+
+127.0.0.1 instagram.com
+127.0.0.1 www.instagram.com
+
+Guardamos y listo.
+
 ###################################
 ##### Generar certificado ssl #####
 ###################################
@@ -2691,39 +2724,6 @@ Fichero de configuración donde se define el tiempo de espera del grup para most
 la lista de SO disponibles y sus opciones.
 
 /etc/default/grub
-
-#######################################################
-##### Bloquear acceso localmente a una página web #####
-#######################################################
-
-$ ping www.pagina_a_bloquear.com
-
-Eso va a hacer ping o enviar paquetes a esa web y nos mostrara la ip pública
-del sitio, es decir un número con este formato: 111.222.333.444
-
-Ahora, con esa ip hacemos lo siguiente:
-
-// Para bloquear el acceso a esa página
-# iptables -I INPUT -s 111.222.333.444 -j DROP
-
-// Para habilitar el acceso a esa página
-# iptables -I INPUT -s 111.222.333.444 -j ACCEPT
-
-##### Otra forma #####
-
-Para bloquear sitios vamos a modificar el archivo hosts, abrimos un terminal y escribimos la siguiente
-linea de comando:
-
-// Como super usuario abrimos el fichero /etc/hosts con el editor gedit, puede ser nano vi, vim, u otro.
-
-# gedit /etc/hosts
-
-Ahora para bloquear en este ejemplo a Instagram, vamos a escribir al principio del archivo:
-
-127.0.0.1 instagram.com
-127.0.0.1 www.instagram.com
-
-Guardamos y listo.
 
 #################################################
 ##### w3m - Nnavegador web desde la consola #####

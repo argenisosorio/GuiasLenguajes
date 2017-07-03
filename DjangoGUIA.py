@@ -1292,6 +1292,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from .models import *
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
 
 
 class PostLista(ListView):
@@ -1318,7 +1319,11 @@ class PostEliminar(SuccessMessageMixin,DeleteView):
     success_url = reverse_lazy('post_lista')
     success_message = "Se eliminó la publicación con éxito"
 
-    #En el template:
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(PostEliminar, self).delete(request, *args, **kwargs)
+
+#En el template:
 
 {% if messages %}
   <ul class="messages">
@@ -1333,8 +1338,22 @@ class PostEliminar(SuccessMessageMixin,DeleteView):
 {% if messages %}
   {% for message in messages %}
     <div class="alert alert-success" role="alert">
-      {% if message.tags %}{% endif %}>
+      {% if message.tags %}{% endif %}
       {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+
+con close alert:
+
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-success alert-dismissable">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        <strong>
+          {% if message.tags %}{% endif %}
+          {{ message }}
+        </strong>
     </div>
   {% endfor %}
 {% endif %}
