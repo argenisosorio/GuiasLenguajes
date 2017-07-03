@@ -1,4 +1,4 @@
-### Guía Instalación de Wordpress by dM ###
+### Guía Instalación y Configuración de Wordpress by dM ###
 
 ###############################################
 ##### Usando wordpress con servidor nginx #####
@@ -146,3 +146,44 @@ define('WPLANG', 'es_ES');
 
 Listo, si recargamos nuestro sitio ya debería estar en español, tanto la interfaz de administrador
 como el sitio en general.
+
+########################
+##### Los usuarios #####
+########################
+
+##### Roles de usuarios #####
+
+WordPress usa el concepto de Roles, y ofrece algunos prediseñados para dar a los administradores
+del blog la capacidad de controlar los poderes de lo que puede hacerse en el sitio, que poseen
+distintas usuarios. Un administrador puede otorgar acceso a las funciones de escribir y editar
+entradas, crear páginas, crear enlaces, crear categorías, moderar comentarios, administrar plugins,
+administrar temas y administrar usuarios. Una forma lógica y sencilla de asignar estas
+capacidades, es la capacidad de asignar Roles a las usuarios.
+
+WordPress tiene cinco Roles prediseñados: Administrador, Editor, Autor, Colaborador y Suscriptor. A cada
+rol se le permite realizar una serie de tareas llamadas Capacidades. Hay muchas Capacidades incluyendo
+publish_posts (publicar entradas), moderate_comments ((moderar comentarios), y edit_users (editar usuarias).
+
+Hay un conjunto de Capacidades preasignadas a cada Rol.
+
+Quienes tienen el Rol de Administrador se les otorga todas las Capacidades. Cada uno de los otros Roles tienen
+un número decreciente de Capacidades asignadas. Por ejemplo, el Rol de Suscriptor tan solo tiene la capacidad
+de lectura. Un Rol en particular no debería ser considerado como superior a otro Rol. Es mejor, considerar que
+los Roles definen las responsabilidades de los usuarios dentro del blog. 
+
+##### Sumario de Roles #####
+
+-Super Admin - Quien cuenta con acceso a la característica de administración de la red de blogs completa. (Referencia: Crear una red -en inglés).
+
+-Administrador - Quien tiene acceso a todas las características de administración de un sitio en particular.
+
+-Editor - Quien puede publicar y editar entradas, propias y de otros usuarios.
+
+-Autor - Quien puede publicar y editar sus propias entradas.
+
+-Colaborador - Quien puede escribir y editar sus propias entradas pero no publicarlas.
+
+-Subscriptor - Quien solamente puede editar su perfil.
+
+Al momento de instalar WordPress, una cuenta de Administrador con todas las Capacidades es creada automáticamente. 
+
