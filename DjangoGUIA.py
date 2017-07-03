@@ -1371,6 +1371,37 @@ En el template:
   </div>
 {% endif %}
 
+#### Usando los tags en los mensajes para mostrar el tipo de mensaje #####
+
+# views.py
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib import messages
+
+class Borrar(DeleteView):
+    model = Persona
+    success_url = reverse_lazy('registro:consultar')
+    success_message = "Se elimino una persona con éxito"
+
+    def delete(self, request, *args, **kwargs):
+        #messages.success(self.request, self.success_message)
+        #messages.warning(self.request, self.success_message)        
+        #messages.info(self.request, self.success_message)
+        #Falla con .danger por ahora :S
+        return super(Borrar, self).delete(request, *args, **kwargs)
+
+# base.html
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissable">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+        <strong>
+          {% if message.tags %}{% endif %}
+          {{ message }}
+        </strong>
+    </div>
+  {% endfor %}
+{% endif %}
+
 #########################################
 ##### Uso de formularios / forms.py #####
 ########################################
