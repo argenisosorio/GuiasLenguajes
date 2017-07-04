@@ -147,6 +147,28 @@ define('WPLANG', 'es_ES');
 Listo, si recargamos nuestro sitio ya debería estar en español, tanto la interfaz de administrador
 como el sitio en general.
 
+#################################
+##### Modificar/Crear temas #####
+#################################
+
+Por defecto hay tres temas predeterminados, que están en:
+
+/var/www/html/wordpress/wp-content/themes/twentyfifteen/
+/var/www/html/wordpress/wp-content/themes/twentyseventeen/
+/var/www/html/wordpress/wp-content/themes/twentysixteen/
+
+Si se quieren hacer pruebas o modificar un tema se puede crear una copia de la carpeta o cambiarle el nombre y activar el tema
+en el panel de administración, también está el caso de instalar o copiar un tema externo y solamente se deberá activar desde
+el panel de administración.
+
+Ademas se debe editar el fichero:
+
+/var/www/html/wordpress/wp-content/themes/mi_tema/style.css
+
+Editamos la línea que dice Theme Name y ponemos el nombre de nuestro tema, y así aparecera en el panel de administración:
+
+Theme Name: mi_tema
+
 ########################
 ##### Los usuarios #####
 ########################
@@ -185,5 +207,4 @@ los Roles definen las responsabilidades de los usuarios dentro del blog.
 
 -Subscriptor - Quien solamente puede editar su perfil.
 
-Al momento de instalar WordPress, una cuenta de Administrador con todas las Capacidades es creada automáticamente. 
-
+Al momento de instalar WordPress, una cuenta de Administrador con todas las Capacidades es creada automáticamente.
