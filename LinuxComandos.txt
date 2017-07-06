@@ -1125,6 +1125,31 @@ Ahora para bloquear en este ejemplo a Instagram, vamos a escribir al principio d
 
 Guardamos y listo.
 
+##################################################################
+##### Bloquear acceso localmente a una página web en Windows #####
+##################################################################
+
+Probado en 7
+
+Editamos con el blog de notas el fichero que está en:
+
+C:\Windows\system32\drivers\etc\hosts
+
+Nos encontraremos con algo como esto:
+
+127.0.0.1       localhost
+127.0.0.1       localhost
+127.0.0.1       localhost
+
+Para bloquear una página, solamente agregamos un par de lineas al final del fichero
+Por ejemplo, vamos a bloquear a instagram, entonces quedaría así:
+
+127.0.0.1       localhost
+127.0.0.1       www.instagram.com
+127.0.0.1       instagram.com
+
+Guardamos y listo, podemos agregar tantas webs como queramos.
+
 ###################################
 ##### Generar certificado ssl #####
 ###################################
