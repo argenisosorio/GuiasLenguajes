@@ -2695,3 +2695,96 @@ class Borrar(DeleteView):
         """
         print "***** El usuario: "+str(self.request.user)+", elimino a una persona el: "+str(datetime.now())+" *****"
         return super(Borrar, self).delete(self, request, *args, **kwargs)
+
+#################################################
+##### Usando las querys(consultas) QuerySet #####
+#################################################
+
+Un QuerySet es una lista de objetos de un modelo determinado. Un QuerySet te permite leer los
+datos de una base de datos, filtrarlos y ordenarlos.
+
+# Abrimos la consola interactiva de python que provee Django
+$ python manage.py shell
+
+# Importamos el modelo a consultar, en este caso consultaremos los objetos registrados del model User de Django
+>>> from django.contrib.auth.models import User
+
+# Si hay usuarios registrados nos mostrará la lista de objetos guardados
+>>> User.objects.all()
+[<User: admin>, <User: aosorio>, <User: dasd>, <User: dasdasd>, <User: dasda>]
+
+##### Crear objeto #####
+
+'''
+En este ejemplo tenemos un modelo Persona, con dos campos, nombre y cedula.
+'''
+
+# Importamos el modelo
+>>> from registro.models import Persona
+
+# Listamos los objetos
+>>> Persona.objects.all()
+[<Persona: aosorio>, <Persona: maria>]
+
+# Insertamos un nuevo objeto
+>>> Persona.objects.create(nombre='karla', cedula=12345678)
+<Persona: karla>
+
+# Listamos los objetos de nuevo, vemos que hay uno nuevo, el que creamos.
+>>> Persona.objects.all()
+[<Persona: aosorio>, <Persona: maria>, <Persona: karla>]
+
+##### Filtrar objetos #####
+
+'''
+Una parte importante de los QuerySets es la habilidad para filtrarlos. Digamos que queremos encontrar
+todos los posts cuyo autor es el User ola. Usaremos filter en vez de all.
+'''
+
+# Filtrar cuando un objeto con el campo username coincída con la cadena.
+>>> User.objects.filter(username='admin')
+[<User: admin>]
+
+# Filtrar cuando un objeto con el id coincída con el número.
+>>> User.objects.filter(id=1)
+[<User: admin>]
+
+##### Ordenando objetos #####
+
+'''
+Los QuerySets también te permiten ordenar la lista de objetos. Intentemos ordenarlos por el campo 
+'''
+
+>>> Persona.objects.all()
+[<Persona: aosorio>, <Persona: maria>, <Persona: karla>]
+
+# Ordenar los objetos por id
+>>> Persona.objects.order_by('id')
+[<Persona: aosorio>, <Persona: maria>, <Persona: karla>]
+
+# Con un - antes podemos invertir el ordenamiento
+>>> Persona.objects.order_by('-id')
+[<Persona: karla>, <Persona: maria>, <Persona: aosorio>]
+
+# Ordenar los objetos por cedula
+>>> Persona.objects.order_by('cedula')
+[<Persona: maria>, <Persona: karla>, <Persona: aosorio>]
+
+##### Limitando el número de objetos a consultar #####
+
+# Mostrar solo 5 objetos
+>>> Persona.objects.all()[:5]
+
+# Mostrar solo 2 objetos
+>>> Persona.objects.all()[:2]
+
+##### Mostrar los objetos de la lista #####
+
+>>> Persona.objects.all()[0]
+<Persona: aosorio>
+
+>>> Persona.objects.all()[1]
+<Persona: maria>
+
+>>> Persona.objects.all()[2]
+<Persona: karla>
