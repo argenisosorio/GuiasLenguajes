@@ -2696,6 +2696,33 @@ class Borrar(DeleteView):
         print "***** El usuario: "+str(self.request.user)+", elimino a una persona el: "+str(datetime.now())+" *****"
         return super(Borrar, self).delete(self, request, *args, **kwargs)
 
+########################################
+##### Creando una bitácora de logs #####
+########################################
+
+"""
+Creamos un modelo Bitacora, y hacemos un query para crear un objeto al realizar una acción específica.
+Para este ejemplo crea una entrada en la bitacora cuando visita una vista y guarda el usuario y la fecha.
+Así, si editamos el admin.py podemos ver la bitácora desde el admin, y podemos ordenar mejor el modelo,
+agregando fecha y hora por ejemplo.
+"""
+
+# models.py
+class Bitacora(models.Model):
+    entrada = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return self.entrada
+
+# views.py
+from registro.models import Bitacora
+
+
+def index(request):
+    a = "El usuario: "+str(request.user)+", accedio al index: "+str(datetime.now())
+    Bitacora.objects.create(entrada=a)
+    return render_to_response('registro/index.html', context_instance=RequestContext(request))
+
 #################################################
 ##### Usando las querys(consultas) QuerySet #####
 #################################################
