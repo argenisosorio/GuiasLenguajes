@@ -1011,16 +1011,17 @@ la variable lista_atletas:
 
 # Si el usuario está autenticado
 {% if request.user.is_authenticated %}
-    Bienvenido: {{user.username}}
+  Bienvenido: {{user.username}}
 {% else %}
-    Bienvenido: Anónimo
+  Bienvenido: Anónimo
 {% endif %}
 
 # Si el usuario es admin
-{% if user.is_staff %}
-<h1>Soy Admin </h1>
+{#% if user.is_staff %#}
+{% if user.is_superuser %}
+  <h1>Soy Admin </h1>
 {% else %}
-<h1>No soy Admin </h1>
+  <h1>No soy Admin </h1>
 {% endif %}
 
 #######################################################
