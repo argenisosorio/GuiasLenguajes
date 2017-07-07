@@ -1024,6 +1024,39 @@ la variable lista_atletas:
   <h1>No soy Admin </h1>
 {% endif %}
 
+##############################################################
+##### Permisos de contenido según el usuario en la vista #####
+##############################################################
+
+'''
+En este caso tenemos una vista que renderiza una bitacora de eventos
+y que solo se podrá acceder si es superusuario entonces queda así:
+'''
+
+class BitacoraView(ListView):
+    """
+    Clase que muestra la lista de entradas de la bitácora
+    """
+    model = Bitacora
+    template_name = "bitacora.html"
+
+    def get(self, request, *args, **kwargs):
+        self.object_list = self.get_queryset()
+        allow_empty = self.get_allow_empty()
+        if not allow_empty and len(self.object_list) == 0:
+            raise Http404(_(u"Empty list and '%(class_name)s.allow_empty' is False.")
+                          % {'class_name': self.__class__.__name__})
+        context = self.get_context_data(object_list=self.object_list)
+        #print "***** Entró por get"
+        if request.user.is_superuser:
+            #print "--------------------"
+            #print request.user
+            return self.render_to_response(context)
+        else:
+            #print "--------------------"
+            #print "No tiene permiso"
+            return render_to_response('index.html',context_instance=RequestContext(request))
+
 #######################################################
 ##### Ruta de instalación convencional de Django ######
 #######################################################
@@ -2761,6 +2794,13 @@ En este ejemplo tenemos un modelo Persona, con dos campos, nombre y cedula.
 # Listamos los objetos de nuevo, vemos que hay uno nuevo, el que creamos.
 >>> Persona.objects.all()
 [<Persona: aosorio>, <Persona: maria>, <Persona: karla>]
+
+##### Creando usuarios de django #####
+
+>>> from django.contrib.auth.models import User
+>>> user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+>>> user.last_name = 'Lennon'
+>>> user.save()
 
 ##### Filtrar objetos #####
 

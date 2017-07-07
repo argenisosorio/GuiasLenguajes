@@ -5564,8 +5564,66 @@ $("document").ready(function () {
 
 -------------------------------------
 
+<!-- El método .serialize() crea una cadena de texto standard con notación de una URL
+leyendo los valores del formulario. Se puede seleccionar individualmente o en grupo el
+conjunto de valores.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>serialize demo</title>
+  <script src="jquery-2.1.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+<form>
+  <select name="single">
+    <option>---</option>
+    <option>111</option>
+    <option>222</option>
+  </select>
+  <br />
+  <br />
+  <select name="multiple" multiple="multiple">
+    <option selected="selected">Mult1</option>
+    <option selected="selected">Mult2</option>
+    <option>Mult3</option>
+  </select>
+  <br />
+  <br />
+  <input type="checkbox" name="check" value="check1" id="ch1">
+    <label for="ch1">check1</label>
+  <input type="checkbox" name="check" value="check2" checked="checked" id="ch2">
+    <label for="ch2">check2</label>
+  <br />
+  <br />
+  <input type="radio" name="radio" value="radio1" checked="checked" id="r1">
+    <label for="r1">radio1</label>
+  <input type="radio" name="radio" value="radio2" id="r2">
+    <label for="r2">radio2</label>
+</form>
+<p>
+  <tt id="results"></tt>
+</p>
+<script type="text/javascript">
+  function showValues() {
+    var str = $( "form" ).serialize();
+    $( "#results" ).text( str );
+  }
+  $( "input[type='checkbox'], input[type='radio']" ).on( "click", showValues );
+  $( "select" ).on( "change", showValues );
+  showValues();
+</script>
+</body>
+</html>
+
+-------------------------------------
+
 <!-- -->
 
+-------------------------------------
+
+<!-- -->
 
 -------------------------------------
 
