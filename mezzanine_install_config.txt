@@ -20,38 +20,6 @@ Official website --> http://mezzanine.jupo.org/
 
 # curl https://raw.github.com/pypa/pip/master/contrib/get-pip.py | python - // Opcional
 
-##### Usando un entorno virtual #####
-
-- Creamos un entorno virtual
-
-$ virtualenv mezzanine_env
-
-$ cd mezzanine_env
-
-$ source /bin/activate
-
-- Dentro del entorno virtual instalamos mezzanine
-
-(mezzanine_env)$ pip install mezzanine
-
-##### Creamos un nuevo proyecto mezzanine #####
-
-...En otro directorio
-
-(mezzanine_env)$ mezzanine-project mezzanine_project
-
-(mezzanine_env)$ cd mezzanine_project
-
-(mezzanine_env)$ python manage.py migrate
-
-(mezzanine_env)$ python manage.py createsuperuser
-
-add username, mail and password...
-
-##### Corremos el servidor de pruebas #####
-
-(mezzanine_env)$ python manage.py runserver 0.0.0.0:8000 
-
 ####################################################
 ##### Instalación en GNU/Linux Debian 8 Jessie #####
 ####################################################
@@ -86,6 +54,129 @@ $ pip install html5lib==0.999999999 // Si da problemas con html5parser e import 
 
 # pip install db-psycopg2
 
+#####################################
+##### Usando un entorno virtual #####
+#####################################
+
+- Creamos un entorno virtual
+
+$ virtualenv mezzanine_env
+
+$ cd mezzanine_env
+
+$ source /bin/activate
+
+- Dentro del entorno virtual instalamos mezzanine
+
+(mezzanine_env)$ pip install mezzanine
+
+##### Creamos un nuevo proyecto mezzanine #####
+
+...En otro directorio
+
+(mezzanine_env)$ mezzanine-project mezzanine_project
+
+(mezzanine_env)$ cd mezzanine_project
+
+(mezzanine_env)$ python manage.py migrate
+
+(mezzanine_env)$ python manage.py createsuperuser
+
+add username, mail and password...
+
+##### Corremos el servidor de pruebas #####
+
+(mezzanine_env)$ python manage.py runserver 0.0.0.0:8000
+
+######################################
+##### Instalar django-feedparser #####
+######################################
+
+Nos sirve para importar RSS automaticamente a nuestro proyecto, como una manera de migrar post de un
+sitio a otro.
+
+Simply run the import_rss command where the rss-url argument contains the URL for your RSS feed:
+
+$ python manage.py import_rss --mezzanine-user=.. --rss-url=url
+
+note: http://www.thel.gob.ve/rss.xml
+
+$ sudo pip install django-feedparser
+
+$ sudo pip install feedparser
+
+$ sudo pip install python-dateutil
+
+###########################################
+##### Añadiendo/Creando un nuevo tema #####
+###########################################
+
+Creamos una aplicación de Django, genérica, creamos los directorios (templates y static) correspondientes
+
+$ python manage.py startapp app_name
+
+Agregamos la aplicación/tema creado al principio de las INSTALLED_APPS en el settings.py del proyecto (importante)
+
+Si tenemos un tema descargado, agregaremos sus plantillas y estáticos a nuestra aplicación creada.
+
+##### Estructura de una app/tema #####
+
+└── tema
+    ├── admin.py
+    ├── admin.pyc
+    ├── apps.py
+    ├── __init__.py
+    ├── __init__.pyc
+    ├── migrations
+    │   ├── __init__.py
+    │   └── __init__.pyc
+    ├── models.py
+    ├── models.pyc
+    ├── templates
+    │   ├── base.html
+    │   ├── index.html
+    │   └── search_results.html
+    ├── tests.py
+    └── views.py
+
+##############################################
+##### Templates a usar en un tema propio #####
+##############################################
+
+/usr/local/lib/python2.7/dist-packages/mezzanine/core/templates // Desde sistema base
+/usr/local/lib/python2.7/dist-packages/mezzanine/blog/templates/blog/ // Desde sistema base
+
+/Entornos_virtuales/mezzanine/lib/python2.7/site-packages/mezzanine/core/templates // Desde entornos virtuales
+/Entornos_virtuales/mezzanine/local/lib/python2.7/site-packages/mezzanine/blog/templates/blog/ // Desde entornos virtuales
+
+########################################
+##### Poner la interfáz en español #####
+########################################
+
+En el settings.py
+
+# Language code for this installation. All choices can be found here:
+# http://www.i18nguy.com/unicode/language-identifiers.html
+#LANGUAGE_CODE = "en"
+#LANGUAGE_CODE = "es-VE"
+LANGUAGE_CODE = "ES"
+
+
+# Supported languages
+LANGUAGES = (
+    #('en', _('English')),
+    ('es', _('Spanish')),
+)
+
+###############################
+##### Galeria de Imagenes #####
+###############################
+
+-Las imagenes que se suben a la galeria se guardan en mezzanine_project/static/media/uploads
+
+-La geleria solo acepta imagenes en formatos: jpg, jpeg, png
+es decir, en minusculas y no en .JPG, JPEG, PNG.
+
 ###################################################
 ##### Añadiendo compatibilidad con postgresql #####
 ###################################################
@@ -119,68 +210,53 @@ DATABASES = {
     }
 }
 
-----
+##########################################################
+##### Redirección a https para las páginas del admin #####
+##########################################################
 
-ALLOWED_HOSTS = ["xxxxx.org.ve"]
+Variable del settings.py
 
-########################################
-##### Poner la interfáz en español #####
-########################################
+# SECURE_SSL_REDIRECT If set to True, causes SecurityMiddleware to redirect all non-HTTPS requests to https
+#SECURE_SSL_REDIRECT = True
+#SECURE_REDIRECT_EXEMPT = ['^(?!administrador).*$']
 
-En el settings.py
+############################
+##### Tiempo de sesión #####
+############################
 
-# Language code for this installation. All choices can be found here:
-# http://www.i18nguy.com/unicode/language-identifiers.html
-#LANGUAGE_CODE = "en"
-#LANGUAGE_CODE = "es-VE"
-LANGUAGE_CODE = "ES"
+Variable del settings.py que indica que a los 40min se destruye la sesión creada de algun usuario autenticado.
 
+# SESSION AGE 40 Minutes
+#SESSION_COOKIE_AGE = 40*60
 
-# Supported languages
-LANGUAGES = (
-    #('en', _('English')),
-    ('es', _('Spanish')),
-)
+################
+##### Tips #####
+################
 
-###########################################
-##### Añadiendo/Creando un nuevo tema #####
-###########################################
+- El Nombre del sitio y descripción configurado en las opciones del panel de administración será mostrado en la pestaña de inicio.
 
-Creamos una aplicación de Django, genérica, creamos los directorios (templates y static) correspondientes
+- Los posts/publicaciones siempre estaran disponibles desde la url /blog
 
-$ python manage.py startapp app_name
+- Para permitir embeber videos y usar etiquetas html en el cuerpo de los post se debe desactivar el filto de texto enrriquecido en las
+opciones del panel de administracion.
 
-Agregamos la aplicación/tema creado al principio de las INSTALLED_APPS del proyecto (importante)
+- En entorno de desarrollo, configurar la variable del settings ALLOWED_HOSTS = ["*"] para que no de problemas el servidor de desarrollo
+con el host que levanta.
 
-Si tenemos un tema descargado, agregaremos sus plantillas y estáticos a nuestra aplicación creada.
+- Para habilitar el acceso al sitio administrativo a los nuevos usuarios (publicadores) se les debe dar permisos del sitio también (example.com).
 
-##### Estructura de una app/tema #####
+- Para habilitar las miniaturas de los post, en settings.py:
+# BLOG_USE_FEATURED_IMAGE = True
+BLOG_USE_FEATURED_IMAGE = True
+y se sube una imagen destacada a la noticia para que la muestre en el post_list y en el post_detail
 
-└── tema
-    ├── admin.py
-    ├── admin.pyc
-    ├── apps.py
-    ├── __init__.py
-    ├── __init__.pyc
-    ├── migrations
-    │   ├── __init__.py
-    │   └── __init__.pyc
-    ├── models.py
-    ├── models.pyc
-    ├── templates
-    │   ├── base.html
-    │   ├── index.html
-    │   └── search_results.html
-    ├── tests.py
-    └── views.py
+- El widget del twitter timeline no funciona cuando se está en modo incógnito porque bloquea el rastreo.
 
-##############################################
-##### Templates a usar en un tema propio #####
-##############################################
+- Agregar el dominio, ya sea del servidor de desarrollo o de pruebas en el Sites del panel de administración (junto a example.com) para que queden listas varias funcionalidades.
 
-/Entornos_virtuales/mezzanine/lib/python2.7/site-packages/mezzanine/core/templates // Desde entornos virtuales
+- /usr/local/lib/python2.7/dist-packages/mezzanine // Ruta de instalación de mezzanine.
 
-/usr/local/lib/python2.7/dist-packages/mezzanine/core/templates // Desde sistema base
+- El DEBUG = True y DATABASES = {...} funcionales son los de local_settings.py no los del settings.py
 
 #################################################
 ##### Colectando los estaticos del servidor #####
@@ -193,24 +269,6 @@ $ python manage.py collectstatic
 
 Esto copiara todos los ficheros estáticos usados por el servidor hacia la carpeta /static de nuestro proyecto
 donde serán manipulados por nosotros y así podremos agregar nuestros estáticos determinados
-
-######################################
-##### Instalar django-feedparser #####
-######################################
-
-Importing RSS
-
-Simply run the import_rss command where the rss-url argument contains the URL for your RSS feed:
-
-$ python manage.py import_rss --mezzanine-user=.. --rss-url=url
-
-note: http://www.thel.gob.ve/rss.xml
-
-$ sudo pip install django-feedparser
-
-$ sudo pip install feedparser
-
-$ sudo pip install python-dateutil
 
 #####################################
 ##### Captcha en el login admin #####
@@ -261,56 +319,3 @@ class AuthenticationForm(forms.Form):
 .
 .
 .
-
-################
-##### Tips #####
-################
-
-- Configuración del Nombre de sitio y descripción que será mostrado en la pestaña en -> Opciones del panel de administración.
-
-- Se habilita enlace hacia publicaciones "blog" en el panel lateral izquierdo del index para mejorar la navegación
-
-<img src="{{STATIC_URL}}/media/uploads/img/2.jpg"></img> // Para cargar una imágen desde los estáticos.
-
-<link href="{{STATIC_URL}}/css/theme.css" rel="stylesheet"> // Para agregar los estilos a la página.
-
-- Habilitar videos embebidos en los post:
-    It actually needs to be changed in the admin. Log in to your admin, then in the top left hover over 'Site', then click on 'Settings'. Scroll down and you should see a setting called 'Rich text filter level'. Change this setting to low and then save. You should be able to embed your video now.
-
-- Only in development, in settings.py for skip error to migrate, etc the allowed_hosts
-    ALLOWED_HOSTS = ["*"]
-
-- Para habilitar el acceso al sitio administrativo a los nuevos usuarios (publicadores) se les debe dar permisos del sitio también (example.com).
-
-- Para habilitar las miniaturas de los post, en settings.py:
-# BLOG_USE_FEATURED_IMAGE = True
-BLOG_USE_FEATURED_IMAGE = True
-y se sube una imagen destacada a la noticia para que la muestre en el post_list y en el post_detail
-
-- El widget del twitter timeline no funciona cuando se está en modo incógnito porque bloquea el rastreo.
-
-- Agregar el dominio, ya sea del servidor de desarrollo o de pruebas en el Sites del panel de administración (junto a example.com) para que queden listas varias funcionalidades.
-
-- /usr/local/lib/python2.7/dist-packages/mezzanine // Ruta de instalación de mezzanine.
-
-- El DEBUG = True y DATABASES = {...} funcionales son los de local_settings.py no los del settings.py
-
-##########################################################
-##### Redirección a https para las páginas del admin #####
-##########################################################
-
-Variable del settings.py
-
-# SECURE_SSL_REDIRECT If set to True, causes SecurityMiddleware to redirect all non-HTTPS requests to https
-#SECURE_SSL_REDIRECT = True
-#SECURE_REDIRECT_EXEMPT = ['^(?!administrador).*$']
-
-############################
-##### Tiempo de sesión #####
-############################
-
-Variable del settings.py que indica que a los 40min se destruye la sesión creada de algun usuario autenticado.
-
-# SESSION AGE 40 Minutes
-#SESSION_COOKIE_AGE = 40*60
-
