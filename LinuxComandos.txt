@@ -859,11 +859,23 @@ $ sudo service apache2 stop // Detener el servicio de apache.
 
 $ sudo service apache2 status // Ver el estado del servicio
 
+$ sudo service apache2 reload // Para recargar la configuración del servicio de Apache.
+
+$ sudo service apache2 force-reload // Forzar la recargar de configuración del servicio.
+
 ##### Borrar apache #####
 
 # apt-get --purge remove apache2*
 
 # rm -fr /etc/apache2
+
+##### log de accesos ######
+
+$ sudo tail -f /var/log/apache2/access.log // Para ver el log de acceso via Web al servidor Web Apache.
+
+##### log de errores #####
+
+$ sudo tail -f /var/log/apache2/error.log // Para depurar posibles errores del servidor.
 
 #################
 ##### Nginx #####
@@ -2815,6 +2827,41 @@ $ apg -n 4 -m 8 -x 12 -a 1
 
 // Mínimo 8 máximo 12, incluyendo caractéres especiales en menor medida
 $ apg -n 4 -m 8 -x 12 -a 0
+
+########################################
+##### Actualizar versión de Debian #####
+########################################
+
+En este ejemplo actualizaremos de la version 8 a la 9.
+
+1-) Actualizamos el source.list a que apunte a repos de 9 Stretch.
+
+##### CENDITEL mirror - Debian GNU/Linux 9 (Stretch) #####
+
+deb http://debian.cenditel/debian stretch main
+deb-src http://debian.cenditel/debian stretch main
+
+deb http://debian.cenditel/debian stretch-updates main
+deb-src http://debian.cenditel/debian stretch-updates main
+
+deb http://debian.cenditel/debian-security stretch/updates main
+deb-src http://debian.cenditel/debian-security stretch/updates main
+
+2-) Actualizamos la lista de los repositorios:
+# apt-get update
+
+3-) Actualizamos los paquetes del sistema, para que instale las versiones de 9 Stretch
+# apt-get upgrade
+
+4-) Finalmente actualizamos todo de manera inteligente:
+# apt-get dist-upgrade
+
+5-) Reiniciamos el sistema, con eso ya deberíamos estar en GNU/Linux Debian 9 Stretch.
+# reboot
+
+Hay que estar pendiente de la consola, porque seguro va a pedir revisión
+manual de algunos paquetes, donde te dirá siquieres conservar la versión
+y configuración actual, como ssh, vim, postgresql, otros...
 
 ################################
 ##### source.list example  #####
