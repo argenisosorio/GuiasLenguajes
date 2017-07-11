@@ -1,0 +1,21 @@
+##### Guía Instalación y Configuración de Xen by dM #####
+
+Xen es un hypervisor(Monitor de máquinas virtuales) de código abierto, el cual hace posible correr muchas instancias de un sistema operativo o inclusive diferentes sistemas operativos en paralelo dentro de una sola maquina (o host).
+
+##### Características #####
+
+-Pequeño consumo de RAM e interfaz (alrededor de 1MB en tamaño). Esto se debe a que Xen utiliza un microkernel diseñado para ser usado en poca cantidad de memoria RAM e interfaz limitada para los guest (invitados), esto a su vez lo hace mas robusto y seguro que otros Hipervisores.
+
+-Sistema operativo agnóstico: La mayoría de las instalaciones corren con Linux como un conjunto del sistema principal (a.k.a "domain 0" o "dominio 0"). Pero un número de otros sistemas operativos pueden ser usados en su lugar, incluyendo NetBSD y OpenSolaris.
+
+-Controlador aislado: Xen tiene la capacidad de alojar el controlador principal de un sistema para ejecutarlo en una maquina virtual. Si el controlador falla o su funcionamiento se ve comprometido, la maquina virtual (MV) contiene un controlador que puede ser reiniciado sin afectar el resto del sistema.
+
+-Paravirtualización: los invitados (guest) completamente paravirtualizados han sido optimizados para correr en una máquina virtual. Esto permite a los invitados ejecutarse mucho más rápido que con una extensión real de hardware (HVM siglas en inglés). Adicionalmente Xen puede correr en hardware que no soporta extensión real de hardware. 
+
+##### Tipos de invitados (Guest) #####
+
+Xen soporta ejecución con dos diferentes tipos de invitados: Paravirtualización (PV) y completa o Virtulización con Asistencia de Hardware (HVM). Ambos tipos de invitados pueden ser usados al mismo tiempo en un mismo sistema Xen. También es posible usar técnicas usadas para Paravirtualización en un invitado HVM: esencialmente creando una continuidad entre PV y HVM. Este enfoque es llamado PV en HVM. De nuevo invito a que lea el Xen Overview en el Wiki de Xen para más información. 
+
+##### Dominio 0 (Domain 0) #####
+
+Xen tiene un dominio especial llamado dominio 0 (Domain 0 en inglés) el cual contiene controladores de hardware así como también tiene un conjunto de herramientas para el control de las Maquinas Virtuales (MV). El Dominio 0 a menudo se le llama el "dom0".

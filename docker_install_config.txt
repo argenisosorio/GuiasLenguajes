@@ -1,0 +1,19 @@
+##### Guía Instalación y Configuración de Docker by dM #####
+
+// Actualizamos la lista de paquetes.
+# apt-get update
+
+// Instalamos/actualizamos los certificados del sistema.
+# apt-get install apt-transport-https ca-certificates
+
+// Añadir la clave GPG del repositorio del proyecto docker.
+# apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+
+// Añadir el repositorio del proyecto docker al /etc/apt/source.list
+deb https://apt.dockerproject.org/repo debian-jessie main"
+
+// Actualizamos la lista de paquetes, para que encuentre los del proyecto docker.
+# apt update
+
+// Instalar docker-engine
+# apt install docker-engine
