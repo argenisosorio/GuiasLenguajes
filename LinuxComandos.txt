@@ -31,7 +31,7 @@ las versiones de las lineas de comando también. En muchos casos, el shell es el
 
 Crtl + h // Mostrar archivos ocultos de un directorio, en el entorno grafico
 
-$ cat /etc/issue.net  //Para saber la versión de SO que tenemos.
+$ cat /etc/issue.net  // Para saber la versión de SO que tenemos.
 
 $ cat /etc/issue  // Para saber la versión de SO que tenemos.
 
@@ -61,7 +61,9 @@ $ lsb_release -a //También tenemos un comando que nos va a dar muchos más deta
 
 $ uname // Muestra información del sistema
 
-$ uname -a // Version de Kernel
+$ uname -a // Version de Kernel.
+
+$ uname -a // Version de Kernel, mas corta.
 
 $ uname -mrs // Saber mi version de Kernel especifica, recomendada
 
@@ -2563,10 +2565,6 @@ $ sudo mount -o bind /dev/pts/ /home/user/jaulas/wheezy/dev/pts/
 
 $ sudo mount -o bind /sys/ /home/user/jaulas/wheezy/sys/ 
 
-Para accecer a la jaula o ejecutarla debes ser usuario root o usar sudo
-
-$ sudo chroot /home/user/jaulas/wheezy
-
 o creamos un script para montar los directorios, creamos el script: montar.sh
 
 ---
@@ -2601,6 +2599,9 @@ A partir de este momento ya tienes el sistema listo y puedes hacer cualquier tip
 tu sistema base para salir de la jaula y continuar con tu sistema solo debes ejecutar:
 
 # exit
+
+// Para accecer a la jaula o ejecutarla debes ser usuario root o usar sudo
+# chroot /home/user/jaulas/wheezy
 
 ##### Nota #####
 Este sistema solo puede ejecutar aplicaciones en el terminal si se requiere interfaz gráfica se debe utilizar una
