@@ -2,9 +2,9 @@
 
 - C
 - QT
-- C++
-- Xen
 - Git
+- Xen
+- C++
 - PHP
 - Ruby
 - HTML
