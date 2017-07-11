@@ -3,6 +3,7 @@
 - C
 - QT
 - C++
+- Xen
 - Git
 - PHP
 - Ruby
@@ -11,6 +12,7 @@
 - SCSS
 - Jquery
 - MySQL
+- Docker
 - Django
 - Python
 - Markdown
