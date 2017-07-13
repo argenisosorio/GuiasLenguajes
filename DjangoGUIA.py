@@ -995,6 +995,35 @@ La etiqueta {% else %} es opcional:
     <p>De vuelta al trabajo.</p>
 {% endif %}
 
+
+# If else en una tabla con un for.
+{% for x in log %}
+<tr>
+    <td>{{ x.username }}</td>
+    <td>{{ x.status }}</td>
+    {% if x.status == 1 %}
+        <td>Active</td>
+    {% else %}
+        <td>Inactiva</td>
+    {% endif %}
+</tr>
+{% endfor %}
+
+# If else and elif en una tabla con un for.
+{% for x in log %}
+<tr>
+    <td>{{ x.user }}</td>
+    <td>{{ x.status }}</td>
+    {% if x.status == 1 %}
+        <td>Active</td>
+    {% elif x.status == 2 %}
+        <td>Inactive</td>
+    {% else %}
+        <td>Dead</td>
+    {% endif %}
+</tr>
+{% endfor %}
+
 ############################
 ##### for en templates #####
 ############################

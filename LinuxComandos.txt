@@ -75,11 +75,6 @@ $ sed -i '1i xxxxx' archivo.txt // Insertar una cadena de texto "xxxxx" al princ
 
 $ sed -i '$a xxx' archivo.txt // Insertar una cadena al final del fichero, funciona como el método echo.
 
-$ ifconfig // Siendo root, permite desplegar numerosos parámetros de las interfaces de red residentes  en el núcleo,
-como la dirección ip (dinámica o estática), o la máscara de red entre otros.
-
-$ ip addr// Para ver el estatus de las conexiones de red, este comando le mostrará su dirección ip, el tipo de conexión que está utilizando, etc.
-
 $ apt-get moo // Huevo de pascua, muestra una vaca.
 
 $ uptime // Indica cuánto tiempo ha estado funcionando el sistema, muestra:
@@ -128,8 +123,6 @@ Una forma de averigar esa ip pública es haciendo uso del comando curl. Si no te
 $ sudo apt-get install curl
 
 $ curl ifconfig.me // Nos mostrará nuestra ip pública.
-
-$ nmap -sT -O localhost // Ver que puertos estan escuchando 
 
 $ user@debian:/media$ umount nombre_device // Desmontar un dispositivo, pendrive, disco externo etc.
 
@@ -2828,6 +2821,71 @@ $ apg -n 4 -m 8 -x 12 -a 1
 
 // Mínimo 8 máximo 12, incluyendo caractéres especiales en menor medida
 $ apg -n 4 -m 8 -x 12 -a 0
+
+###############################
+##### Herramientas de red #####
+###############################
+
+$ ifconfig // Siendo root, permite desplegar numerosos parámetros de las interfaces de red residentes  en el núcleo,
+como la dirección ip (dinámica o estática), o la máscara de red entre otros.
+
+$ ip addr// Para ver el estatus de las conexiones de red, este comando le mostrará su dirección ip, el tipo de conexión que está utilizando, etc.
+
+$ nmap -sT -O localhost // Ver que puertos estan escuchando 
+
+##### Iproute2 #####
+
+Iproute2 es un paquete de herramientas muy potentes para administrar interfaces de red y conexiones en sistemas Linux.
+
+Este paquete reemplaza completamente las funcionalidades presentes en ifconfig, ya que este no viene instalado por defecto en GNU/Linux Debian 9 Stretch, ya que a ifconfig
+se le considera obsoleto.
+
+##### Instalar ifconfig y route en Debian 9 #####
+
+Lo primero que tenemos que hacer es abrir un terminal e instalar el paquete “net-tools”. Si en la instalación hemos elegido hacer “sudo” para ascender a superusuario para instalar paquetes, tecleamos:
+
+# apt-get  install net-tools
+
+##### Comparación de comandos de entre ifconfig e IP #####
+
+// Mostrar dispositivos de red y su configuración.
+$ ifconfig
+
+$ ip addr show
+
+ó
+
+$ ip link show
+
+// Activar una interfaz de red.
+$ ifconfig eth0 up
+
+$ ip link set eth0 up
+
+// Desactivar una interfaz de red.
+$ ifconfig eth0 down
+
+$ ip link set eth0 down
+
+// Establecer una dirección IP a una interfaz.
+$ ifconfig eth0 192.168.1.1
+
+$ ip address add 192.168.1.1 dev eth0
+
+// Eliminar una dirección IP de una interfaz.
+ifconfig no podrá hacer esto.
+
+$ ip address del 192.168.1.1 dev eth0
+
+// Añadir una interfaz virtual.
+$ ifconfig eth0:1 10.0.0.1/8
+
+$ ip addr add 10.0.0.1/8 dev eth0 label eth0:1
+
+// Para configurar una tarjeta de red física, por ejemplo, con ifconfig debemos teclear lo siguiente:
+$ ifconfig eth0 192.168.0.2 netmask 255.255.255.0
+
+$ ip addr add 192.168.0.2/24 dev eth0
 
 ########################################
 ##### Actualizar versión de Debian #####
