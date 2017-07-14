@@ -131,7 +131,7 @@ Por sencillez, cerramos la ventana de la consola y abrimos una nueva. A veces no
 ##### Comprueba la configuración #####
 
 $ type rvm | head -1
-rvm: es una función // Será la salida si todo se instaló correctamente.
+rvm: es una función # Será la salida si todo se instaló correctamente.
 	
 ##### Problema con la función (comprobación) #####
 

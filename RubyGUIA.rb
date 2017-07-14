@@ -258,8 +258,49 @@ fun2
 #print fun1
 #print fun2
 
-#####Usando métodos#####
-#####Usando métodos#####
-#####Usando métodos#####
-#####Usando métodos#####
-#####Usando métodos#####
+###################################
+##### Operaciones aritmeticas #####
+###################################
+
+#!/usr/bin/ruby
+def suma (a, b)
+    a + b
+end
+def resta (a, b)
+    a - b
+end
+def multiplicacion (a, b)
+    a * b
+end
+def division (a, b)
+    a * b
+end
+puts suma(3, 3)
+puts resta(10, 3)
+puts multiplicacion(5,5)
+puts division(100, 2)
+
+# Operaciones aritmeticas
+#!/usr/bin/ruby
+print "Dato 1: "
+a = gets.to_i
+
+print "Dato 2: "
+b = gets.to_i
+
+def suma (a, b)
+  a + b
+end
+def resta (a, b)
+  a - b
+end
+def multiplicacion (a, b)
+  a * b
+end
+def division (a, b)
+  a * b
+end
+puts suma(a, b)
+puts resta(a, b)
+puts multiplicacion(a, b)
+puts division(a, b)
