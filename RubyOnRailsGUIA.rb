@@ -1,4 +1,4 @@
-### Guía Ruby on Rails by dM ####
+##### Guía Ruby on Rails by dM #####
 
 Probados en: Debian GNU/Linux 7 y 8
 
