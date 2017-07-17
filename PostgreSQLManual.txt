@@ -1,4 +1,4 @@
-### Guía PostgreSQL by dM ###
+##### Guía PostgreSQL by dM #####
 
 #######################
 ##### Instalacion #####
@@ -9,6 +9,16 @@
 # aptitude install postgresql postgresql-server // Instalar la version de PostgreSQL
 
 $ sudo service postgresql restart // Reiniciar el servicio de PostgreSQL, para aplicar cambios etc.
+
+##############################
+##### Remover postgresql #####
+##############################
+
+Los siguientes paquetes se instalan por defecto en Debin Jessie 8, por eso
+los removemos manualmente, pero aplicará a las versiones que tenga instaladas,
+lo sabremos con un $ aptitude search postgresql
+
+# apt-get --purge remove postgresql-9.4 postgresql-client-9.4 postgresql-client-common postgresql-common
 
 ##### Entrar en la consola de postgresql #####
 
@@ -422,3 +432,16 @@ CREATE TABLE parroquia (
     nombre varchar(100),
     codigo_municipio varchar REFERENCES municipio
 );
+
+################################################################
+##### Cambiar codificación de una base de datos (encoding) #####
+################################################################
+
+postgres# update pg_database set encoding = pg_char_to_encoding('UTF8') where datname = 'database_name';
+
+// Para LATIN9
+postgres=# update pg_database set encoding=16 where datname='db_name';
+
+// Para LATIN1
+postgres=# update pg_database set encoding=16 where datname='db_name';
+
