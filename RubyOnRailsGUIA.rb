@@ -523,9 +523,63 @@ If you use PostgreSQL, you can also take advantage of these:
 :ip_address
 :mac_address
 
-#################
-##### NOTAS #####
-#################
+##########################################
+##### Ejemplo de .gitignore para RoR #####
+##########################################
+
+# Ignore bundler config.
+/.bundle
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-journal
+
+# Ignore all logfiles and tempfiles.
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore Byebug command history file.
+.byebug_history
+
+# Ignore de temporary files
+*.*.backup
+*.*~
+*.tar.gz
+*.log
+*.swp
+
+#####################################
+##### Trabajando los css y scss #####
+#####################################
+
+# Fichero creado automáticamente, son los estilos globales
+# incluídos automaticamente a todas las plantillas
+rails_project/app/assets/stylesheets/application.css
+
+# Si por ejemplo generamos un controlador 'welcome'
+# se creara una hoja de estilos .scss solo para ese controlador
+# Todo lo que declaremos ahí será incluído automaticamente en application.css
+rails_project/app/assets/stylesheets/welcome.scss
+
+######################################
+##### Trabajando los js y coffee #####
+######################################
+
+# Al igual que que con los css, al momento de crear un proyecto
+# se crea un fichero 'application.js' que estará disponible
+# para todas las vistas.
+rails_project/app/assets/javascripts/application.js
+
+# Cuando generamos un nuevo controlar y su vista, también
+# se creará su fichero .coffee para agregar contenido .js
+# que también será incluído automáticamente en application.js
+rails_project/app/assets/stylesheets/welcome.coffee
+
+################
+##### Tips #####
+################
 
 # Enlace al path de otro controlador
 # <%= link_to "proyecto", proyecto_path%>
