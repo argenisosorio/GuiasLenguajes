@@ -92,6 +92,12 @@ Linux es un entorno habitual para servidores, con lo que muchos desarrolladores
 lo escogen minimizando así las diferencias entre el entorno de desarrollo y el de producción.
 
 ##################################################################
+##### Instalar Ruby y Rails desde los repositorios de Debian #####
+##################################################################
+
+
+
+##################################################################
 ##### Instalar Rails con el comando de RubyGems: gem install #####
 ##################################################################
 
@@ -548,7 +554,15 @@ If you use PostgreSQL, you can also take advantage of these:
 *.*~
 *.tar.gz
 *.log
+*.swap
+*.swo
 *.swp
+*.bak
+*.save
+*.autosave
+
+# Rubinius's JIT
+*.rbc
 
 #####################################
 ##### Trabajando los css y scss #####

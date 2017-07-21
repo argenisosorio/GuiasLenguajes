@@ -8,7 +8,7 @@ es recomendable ponerla siempre al inicio de los scripts.
 ##### Instalación en Debian #####
 #################################
 
-# apt-get install ruby 
+# apt-get install ruby
 
 Características:
 -Casi todo es un objeto
@@ -170,6 +170,12 @@ puts "y mi cabello es de color #{cabello}"
 # Convertimos la cadena a minusculas, luego la invertimos y hacemos que se transforme en mayusculas
 # "BBEW"
 
+---
+
+#!/usr/bin/ruby
+nombre = "David Webb"
+puts nombre.reverse
+
 ############################
 ##### Capturando datos #####
 ############################
@@ -251,6 +257,43 @@ fun2
 #print fun1
 #print fun2
 
+##################
+##### Clases #####
+##################
+
+#!/usr/bin/ruby
+# Hola mundo usando funciones y clases
+class HolaMundo
+  def initialize()
+  end
+  def saluda()
+    puts "Hola Mundo" # Imprimimos el mensaje
+  end
+end
+
+objeto = HolaMundo.new()
+objeto.saluda
+gets()
+
+-----
+
+#!/usr/bin/ruby
+# Sumando dos cifras usando clases y funciones
+class Operacion
+  def initialize()
+  end
+  def SumaBasica()
+    num1 = 23.6
+    num2 = 7.4
+    puts "La suma es:"
+    puts num1 + num2
+  end
+end
+# Creamos el objeto de la clase Hola Mundo
+objeto = Operacion.new()
+objeto.SumaBasica
+gets()
+
 ###################################
 ##### Operaciones aritmeticas #####
 ###################################
@@ -297,3 +340,15 @@ puts suma(a, b)
 puts resta(a, b)
 puts multiplicacion(a, b)
 puts division(a, b)
+
+
+####################
+##### Archivos #####
+####################
+
+#!/usr/bin/ruby
+f = File.open("prueba.txt", "r")
+f.each_line do |line|
+  puts line
+end
+f.close

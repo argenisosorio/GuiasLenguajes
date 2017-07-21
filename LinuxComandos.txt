@@ -2731,7 +2731,18 @@ iface eth0 inet dhcp
 Guardamos y reiniciamos las interfaces de redes con los tres comandos de arriba, esto
 es para cuando una máquina virtual no agarra internet inalambrico, tambien debe estar
 habilitada el adaptador de conexión inalambrica en el panel de configuración de la maquina virtual.
-Dentro de la máquina virtual parecerá que esta conectado por cable.
+Dentro de la máquina virtual parecerá que esta conectado por cable.# The loopback network interface
+
+Cuando se instala el SO y no consigue ninguna red cableada, es posible que el router/DHCP no le haya
+asignado una dirección ip, entonces modificamos el mismo fichero para que quede así:
+
+auto lo
+iface lo inet loopback
+auto eth0
+iface eth0 inet dhcp
+
+Y reiniciamos las interfaces de red, con suerte obtendremos una dirección ip de la red.
+
 
 ################################################################################
 ##### Restaurar o reiniciar  las conexiones de red inalambrica del sistema #####
