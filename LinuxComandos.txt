@@ -87,6 +87,8 @@ Los parámetros que muestra son:
 -Los usuarios que están actualmente registrados
 -Tiempo de carga del sistema durante los últimos 1, 5 y 15 minutos.
 
+$ ls -l /etc/init.d/ // Saber cuantos demonios(daemons) del sistema están en ejecución.
+
 ###################################
 ##### Ip pública e Ip privada #####
 ###################################
@@ -260,6 +262,14 @@ Ctrl + flecha derecha o izquierda // Moverse en el prompt palabra a palabra, no 
 Ctrl + w // Borrar la palabra que esta antes del cursor en el shell
 
 $ top  // Listar los procesos de ejecución del sistema (y más cosas) en tiempo real, es una de las herramientas más importantes para un administrador.
+-Si presionamos "z" nos mostrara la salida con 2 colores, para distingir mejor la información.
+-"q" o "Ctrl+c" para salirse del monitor top.
+
+$ htop // Es otro monitor del sistema, parecido a top pero con un poco mas de herramientas, para instalarlo # apt-get install htop
+
+$ nmon // Es otro monitor de sistema, para instalarlo # apt-get install nmon
+Si quieren ver la información relacionada con el CPU presionan la tecla "c", con la memoria "m", del kernel "k" y discos "d".
+Segun vayamos usando las letras nos va mostrando lo que escogimos, muy útil y bonito.
 
 // Cada proceso tiene un identificador (PID) proccess ID, entonces podemos matar ese proceso con:
 
@@ -277,6 +287,8 @@ $ps -ef | grep evince // Filtrar la búsqueda, en este caso, buscando el proceso
 
 $ ps -ef | grep ssh // Filtrar la búsqueda para ver las conexiones ssh activas, nuevamente se aclara que podemos matar esos procesos
 con kill -9 xxx pasandole el PID process.
+
+$ ps -p xxxx -o etime // Saber el tiempo que lleva ejecutandose un proceso.
 
 $ ps aux // Muestra los procesos del sistema de sistema, similar a ps -ef.
 
@@ -560,7 +572,6 @@ aptitude search cualquiercosa
 aptitude remove cualquiercosa
 aptitude search ~Dcualquiercosa
 aptitude versions cualquiercosa
-?
 
 ####################################################
 ##### Saber la version instalada de un paquete #####

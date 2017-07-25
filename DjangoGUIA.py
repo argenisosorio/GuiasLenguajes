@@ -620,6 +620,18 @@ TEMPLATES = [
     },
 ]
 
+#################################################
+##### LANGUAGE_CODE, idioma de los mensajes #####
+#################################################
+
+Django por defecto muestra una variedad de mensajes
+en los templates, ya sea para validaciones en formularios u otros...
+
+Por ellos el cambio del codigo de lenguaje es muy importante, por ejemplo
+
+#LANGUAGE_CODE = 'en-us' Ver los mensajes en ingles
+#LANGUAGE_CODE = 'en-es' Ver los mensajes en español
+
 #######################
 ##### Comentarios #####
 #######################
@@ -2901,3 +2913,17 @@ Los QuerySets también te permiten ordenar la lista de objetos. Intentemos orden
 
 >>> Persona.objects.all()[2]
 <Persona: karla>
+
+#####################
+##### form.as_p #####
+#####################
+
+form.as_p nos permite renderizar un formulario de manera ordenada, tipo
+párrafo o tabla sin necesidad deincluir mas nada. Los unicos requerimientos
+es que en el forms.py estén descritas las clases de las que va a heredar, así
+como los otros atributos propios como label, requiered, etc.
+
+<form method="post">{% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Submit" />
+</form>
