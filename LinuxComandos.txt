@@ -903,9 +903,11 @@ el servicio. Esta plantilla esta en /var/www/index.html
 
 $ sudo systemctl stop nginx // To stop your web server
 
-$ sudo systemctl start nginx // To start the web server when it is stopped, type
+$ sudo systemctl start nginx // To start the web server when it is stopped, type.
+# service nginx start // En versiones anteriores de nginx.
 
 $ sudo systemctl restart nginx // To stop and then start the service again
+# service nginx reload // En versiones anteriores de nginx.
 
 $ sudo systemctl reload nginx // If you are simply making configuration changes, Nginx can often reload without dropping connections.
 
