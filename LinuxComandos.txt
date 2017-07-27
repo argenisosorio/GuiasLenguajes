@@ -1007,6 +1007,8 @@ que el error.log normal.
 
 # apt-get autoremove
 
+-----
+
 Ejemplo de configuración del fichero /etc/nginx/sites-available/default para servir proyectos de php:
 
 server {
@@ -1032,6 +1034,57 @@ server {
     fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
     include fastcgi_params;
   }
+}
+
+-----
+
+Ejemplo de configuración del fichero /etc/nginx/sites-available/domain.com para servir proyectos
+de python-django:
+
+server {
+        listen       xxx.xxx.xxx.xxx:80;
+        server_name  domain.com;
+
+#        access_log  /var/log/nginx/domain.com.access.log main;
+#        error_log   /var/log/nginx/domain.com.error.log  error;
+#        error_log   /var/log/nginx/domain.com.error.log  debug;
+
+        client_max_body_size      128M;
+#       client_body_buffer_size   128k;
+        fastcgi_buffers 8 128k;
+        fastcgi_buffer_size 256k;
+
+        root /var/www/project;
+
+        location = /favicon.ico {
+                return 204;
+        }
+
+        # serve static files directly
+        location ~* ^.+\.(jpg|jpeg|gif|css|png|js|ico)$ {
+                access_log        off;
+                expires           30d;
+                root   /var/www/project;
+        }
+
+        location /static/ {
+                root /var/www/cenditel/;
+                #alias /var/www/cenditel/;
+        }
+
+        location / {
+                include uwsgi_params;
+                uwsgi_param     UWSGI_SCHEME    $http_x_forwarded_protocol;
+                uwsgi_param     REMOTE_ADDR     $http_x_real_ip;
+                uwsgi_pass      unix:/var/run/uwsgi/app/domain.com/socket;
+                uwsgi_intercept_errors off;
+                uwsgi_read_timeout 600;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+                root   /var/www/nginx-default;
+        }
 }
 
 #################
