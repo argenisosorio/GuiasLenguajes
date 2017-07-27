@@ -87,7 +87,9 @@ Los parámetros que muestra son:
 -Los usuarios que están actualmente registrados
 -Tiempo de carga del sistema durante los últimos 1, 5 y 15 minutos.
 
-$ ls -l /etc/init.d/ // Saber cuantos demonios(daemons) del sistema están en ejecución.
+// Saber cuantos demonios(daemons) del sistema están en ejecución.
+// En esta ruta se encuentran algunos de los scripts que se ejecutan con el arrenque del SO.
+$ ls -l /etc/init.d/
 
 ###################################
 ##### Ip pública e Ip privada #####
@@ -547,6 +549,8 @@ $ apt-get download nombre_paquete // Descarga el fichero .deb del paquete dado a
 $ aptitude update // Actualizar la lista de paquetes disponibles.
 
 $ dpkg -l | grep nombre_paquete // Saber si un paquete está instalado y su version.
+
+# apt-get autoremove // Borra los paquetes huérfanos, o las dependencias que quedan instaladas después de haber instalado una aplicación y luego eliminarla, por lo que ya no son necesarias.
 
 ##### Comparación de las ordenes en apt-get y aptitude #####
 
@@ -1370,6 +1374,14 @@ digital del servidor a veces se debe saltar chequeo de la firma para bajar las f
 # apt-get install task-gnome-desktop
 
 # apt-get install task-spanish-desktop
+
+#####################################
+##### Remover gnome del sistema #####
+#####################################
+
+# apt-get autoremove --purge 'gnome*'
+
+# apt-get autoremove 
 
 ########################################################
 ##### Instalación de gnome classic en sistema base #####
@@ -3206,4 +3218,19 @@ Proporciona paquetes para nuevas versiones de determinadas aplicaciones que se v
 del periodo de vida de la versión. Sin embargo desde el sitio oficial (http://backports.debian.org/Instructions/)
 recomiendan utilizar este repositorio con precaución ya que en ocasiones pueden existir incompatibilidades
 de dependencias entre estos paquetes y los estables. 
+
+#################
+##### bind9 #####
+#################
+
+El Nombre de Dominio de Internet de Berkeley (BIND) implementa un servidor de nombres de dominio de Internet.
+BIND es el servidor de nombres más ampliamente utilizado en Internet, y tiene el
+respaldo del Consorcio de «Software» de Internet, www.isc.org.
+Este paquete proporciona el servidor y los archivos de configuración relacionados. 
+
+// Instalación del paquete bind9
+# apt-get install bind9 bind9-doc
+
+// Editamos /etc/resolv.conf para que lea el localhost
+nameserver 127.0.0.1
 
