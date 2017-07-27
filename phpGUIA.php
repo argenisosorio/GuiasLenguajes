@@ -8,7 +8,7 @@
 # apt-get install php5 php5-gd php5-mysql
 
 // Para usar con postgresql
-# apt-get install php5 php5-gd php5-psgql
+# apt-get install php5 php5-gd php5-pgsql
 
 -Este cuando se va a usar apache: libapache2-mod-php5
 

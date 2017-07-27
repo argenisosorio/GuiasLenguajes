@@ -887,6 +887,9 @@ $ sudo tail -f /var/log/apache2/access.log // Para ver el log de acceso via Web 
 
 $ sudo tail -f /var/log/apache2/error.log // Para depurar posibles errores del servidor.
 
+// Los archivos de configuración de apache están en el fichero:
+/etc/apache2/apache2.conf
+
 #################
 ##### Nginx #####
 #################
@@ -1003,6 +1006,33 @@ que el error.log normal.
 # apt-get purge nginx nginx-common
 
 # apt-get autoremove
+
+Ejemplo de configuración del fichero /etc/nginx/sites-available/default para servir proyectos de php:
+
+server {
+  listen   80;
+  #root /usr/share/nginx/html;
+  ### Aqui va la ruta donde tenemos el directorio del proyecto
+  root /var/www/html;
+  index index.php index.html index.htm;
+  server_name example.com;
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
+  error_page 404 /404.html;
+  error_page 500 502 503 504 /50x.html;
+  location = /50x.html {
+    root /usr/share/nginx/www;
+  }
+  # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+  location ~ \.php$ {
+    try_files $uri =404;
+    fastcgi_pass unix:/var/run/php5-fpm.sock;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include fastcgi_params;
+  }
+}
 
 #################
 ##### uWSGI #####
@@ -3234,3 +3264,4 @@ Este paquete proporciona el servidor y los archivos de configuración relacionad
 // Editamos /etc/resolv.conf para que lea el localhost
 nameserver 127.0.0.1
 
+En /etc/bind están los archivos de configuración del paquete.
