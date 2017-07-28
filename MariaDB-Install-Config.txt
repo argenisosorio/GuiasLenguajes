@@ -1,0 +1,32 @@
+##### Guía MariaDB by dM #####
+
+// Actualizamos los repositorios
+# apt-get update
+
+// Instalamos MariaDB
+# apt-get install mariadb-server
+
+Luego de la Instalación nos pedirá que escribamos una
+contraseña para el usuario root de mariadb.
+
+// Chequeamos la instalación con:
+$ mysql -V
+mysql  Ver 15.1 Distrib 10.0.30-MariaDB, for debian-linux-gnu (x86_64) using readline 5.2
+
+// Nos logeamos en MariaDB using el usuario root de MariaDB, nos pedirá el password
+$ mysql -u root -p
+
+// Para salir de la consola de MariaDB usamos:
+MariaDB [(none)]> exit
+MariaDB [(none)]> \q
+Ctrl + D
+
+// Para ver los comandos disponibles
+MariaDB [(none)]> \h
+
+// Crear un usuario y asignarle el password.
+MariaDB [(none)]> CREATE USER 'user_name' IDENTIFIED BY 'user123456';
+Query OK, 0 rows affected (0.00 sec)
+
+// Eliminar un usuario creado.
+MariaDB [(none)]> DROP USER sam;
