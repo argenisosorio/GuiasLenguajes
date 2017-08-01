@@ -2927,3 +2927,19 @@ como los otros atributos propios como label, requiered, etc.
   {{ form.as_p }}
   <input type="submit" value="Submit" />
 </form>
+
+#############################################
+##### Ejemplo de .gitignore para Django #####
+#############################################
+
+*.*.backup
+*.*~
+*.tar.gz
+*.pyc
+*.pyo
+*.log
+*.swp
+*.sqlite3
+*.db
+/project/app/migrations
+/project/settings.py
