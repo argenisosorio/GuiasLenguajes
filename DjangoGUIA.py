@@ -852,8 +852,28 @@ class Post(models.Model):
 
     #def __unicode__(self): Para python 2.x
         #return self.title
+
     def __str__(self): # Para python 3.x
         return self.title
+
+
+##################################
+##### Hello world con Django #####
+##################################
+
+# En urls.py
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+]
+
+# En views.py
+from django.http import HttpResponse
+
+def index(request):
+    return HttpResponse("Hello, world. You're at the polls index.")
 
 ############################
 ##### *args y **kwargs #####
@@ -874,7 +894,6 @@ def get_context_data(self, pk, id_x, id_y):
 ##### Ejemplo de admin.py para mostrar los modelos en el admin de django #####
 ##############################################################################
 
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.contrib import admin
 from .models import Post
