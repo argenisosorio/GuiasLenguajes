@@ -2804,6 +2804,44 @@ El paquete Tasksel proporciona una interfaz sencilla para los usuarios que quier
 
 Después de instalar un sistema básico, usted puede instalar el DesktopEnvironment utilizando tasksel. La orden tasksel (ingresado como root) le muestra algunas opciones (de alto nivel de abstraccion) para instalar paquetes. Podría usted simplemente marcar la opción Desktop environment. Instalará los paquetes de Gnome y algunos paquetes considerados como estándar para un escritorio Debian.
 
+################
+##### dhcp #####
+################
+
+DHCP (siglas en inglés de Dynamic Host Configuration Protocol, en español «protocolo de configuración dinámica de host») es un servidor
+que usa protocolo de red de tipo cliente/servidor en el que generalmente un servidor posee una lista de direcciones IP dinámicas y las
+va asignando a los clientes conforme éstas van quedando libres, sabiendo en todo momento quién ha estado en posesión de esa IP, cuánto
+tiempo la ha tenido y a quién se la ha asignado después. Así los clientes de una red IP pueden conseguir sus parámetros de configuración
+automáticamente.
+
+##### Asignación de direcciones IP #####
+
+Cada dirección IP debe configurarse manualmente en cada dispositivo y, si el dispositivo se mueve a otra subred, se debe configurar otra
+dirección IP diferente. El DHCP le permite al administrador supervisar y distribuir de forma centralizada las direcciones IP necesarias
+y, automáticamente, asignar y enviar una nueva IP si fuera el caso en que el dispositivo es conectado en un lugar diferente de la red.
+
+El protocolo DHCP incluye tres métodos de asignación de direcciones IP:
+
+// Asignación manual o estática
+Asigna una dirección IP a una máquina determinada. Se suele utilizar cuando se quiere controlar la asignación
+de dirección IP a cada cliente, y evitar, también, que se conecten clientes no identificados.
+
+// Asignación automática
+Asigna una dirección IP a una máquina cliente la primera vez que hace la solicitud al servidor DHCP y hasta que
+el cliente la libera. Se suele utilizar cuando el número de clientes no varía demasiado.
+
+// Asignación dinámica
+El único método que permite la reutilización dinámica de las direcciones IP. El administrador de la red determina un
+rango de direcciones IP y cada dispositivo conectado a la red está configurado para solicitar su dirección IP al servidor
+cuando la tarjeta de interfaz de red se inicializa. El procedimiento usa un concepto muy simple en un intervalo de tiempo
+controlable. Esto facilita la instalación de nuevas máquinas clientes.
+
+Algunas implementaciones de DHCP pueden actualizar el DNS asociado con los servidores para reflejar las nuevas direcciones IP
+mediante el protocolo de actualización de DNS establecido en RFC 2136 (Inglés).
+
+El DHCP es una alternativa a otros protocolos de gestión de direcciones IP de red, como el BOOTP (Bootstrap Protocol). DHCP es un
+protocolo más avanzado, pero ambos son los usados normalmente.
+
 ########################################################################################
 ##### Restaurar o reiniciar las conexiones de red del sistema - networking restart #####
 ########################################################################################
