@@ -1386,6 +1386,13 @@ class Meta:
     model = Post
     fields = '__all__'
 
+ó
+
+#En forms.py para incluírlos todos y excluir algunos.
+class Meta:
+    model = Post
+    exclude = ('id',)
+
 #############################################
 ##### Mensajes / messages al hacer post #####
 #############################################
@@ -2962,3 +2969,19 @@ como los otros atributos propios como label, requiered, etc.
 *.db
 /project/app/migrations
 /project/settings.py
+
+#######################################################
+##### Campos del user de django - table auth_user #####
+#######################################################
+
+id
+password
+last_login
+is_superuser
+first_name
+last_name
+email
+is_staff
+is_active
+date_joined
+username
