@@ -175,6 +175,8 @@ $ date // Muestra la fecha
 
 # date --set 21:08:00 // Asignar la hora manualmente
 
+$ mkdir /tmp/`date +\%Y\%m\%d` // Crear una carpeta que lleve por nombre la fecha, ejemplo: 20170807
+
 $ man nombre_comando  // Muestra el manual de una comando donde como: ls, grep, aptitude etc...
 
 // Dentro de los manuales podemos presionar "h" para ver las opciones tenemos del manual, ejemplo "/delete"
@@ -188,7 +190,7 @@ scp (1)     - copia segura (programa de copia de ficheros remotos)
 
 $ cal // Muestra un calendario
 
-$ pwd // Muestra la ruta en la que te encuentras
+$ pwd // (print work directory) Muestra la ruta en la que te encuentras.
 
 $ ls // Muestra lo que hay en la carpeta en la que te encuentras
 
@@ -2782,6 +2784,23 @@ $ cat file.csv | sed -e 's/,,/, ,/g' | column -s, -t | less -#5 -N -S
 ruta /home/user y queremos acceder al file.txt que esta dentro de folder, seria:
 
 folder/file.txt
+
+###############################
+##### Variables de entorno ####
+###############################
+
+Las variables de entorno contienen información a la que se accede a través del nombre de la
+variable (al igual que ocurre en los lenguajes de programación).
+
+Por ejemplo, PWD es una variable de entorno. Algo que puedo comprobar así:
+
+$ echo $PWD
+/home/user
+
+(lo que significa que el comando "pwd" es una llamada a "echo $PWD"
+
+// Consultar todas mis variables de entorno.
+$ env
 
 ########################
 ##### Terminal tty #####
