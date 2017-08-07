@@ -101,7 +101,7 @@ esta informacion almacenada.
 -Controlador: Es el que se encarga de hacer
 la comunicacion entre el modelo y las vista
 
-##### Modelo-vista-template #####
+##### Modelo-Vista-Template #####
 
 (Ahora Django hara el papel de el controlador, que se encargaba
 de la comunicacion de los modelos y las vistas)
@@ -291,6 +291,20 @@ DATABASES = {
     }
 }
 
+##########################################
+##### Ejemplo de conexión con sqlite #####
+##########################################
+
+# Database
+# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
+}
+
 ##########################
 ##### INSTALLED_APPS #####
 ##########################
@@ -428,7 +442,7 @@ asignado
 url(r'^registrar/$', RegistrarAlumno.as_view(), name='RegistrarAlumno'),
 ####Debemos revisar siempre los import, son muy importantes
 
-*****Declarando los CSS
+##### Declarando los CSS #####
 
 Creamos la carpeta static que contendra nuetros css, imagenes y demas
 archvos estaticos, se debe guardar a nivel de las plantillas
@@ -445,7 +459,7 @@ archvos estaticos, se debe guardar a nivel de las plantillas
     <link rel="stylesheet" type="text/css" href="{% static 'css/estilo.css' %}" />
 </head>
 
-*****Agregando imagenes a la plantilla
+##### Agregando imagenes a la plantilla #####
 
 Los archivos de media seran llamados de la carpeta Img
 que por lo general acompaña al css, se hace referencia a la 
@@ -454,7 +468,19 @@ Ejemplo:
 
 <img src="Imagen.jpg" width="200px" heigth="200px"></img>
 
-<img src="{{STATIC_URL}}css/Img/gris.JPG"></img> Agregando una imagen local 
+<img src="{{STATIC_URL}}css/Img/gris.JPG"></img> Agregando una imagen local
+
+######################
+##### Migrations #####
+######################
+
+Mediante la ejecución de makemigrations, le estás diciendo a Django que has hecho algunos cambios a
+sus modelos y que desea que los cambios se almacenarán como la migración.
+
+Las migraciones son cómo almacena Django cambios a sus modelos (y por tanto el esquema de base de datos)
+
+Si hay modelos declarados en una aplicación, se creará una carpeta "migrations" que contiene el esquema de la
+base de datos, muy similar a un fichero .sql, con los nombres de las tablas, sus campos, y las fechas en que se crearon.
 
 ####################################
 ##### Estructura de un proyecto ####
@@ -2306,20 +2332,6 @@ de host/dominio que ese sitio de Django puede servir.
 
 Esta es una medida de seguridad para evitar ataques de encabezado HTTP Host, que son posibles
 incluso bajo muchas configuraciones de servidor web aparentemente seguras.
-
-##########################################
-##### Ejemplo de conexión con sqlite #####
-##########################################
-
-# Database
-# https://docs.djangoproject.com/en/1.10/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 ###########################################################
 ##### Sobrescribiendo métodos de las clases genéricas #####
