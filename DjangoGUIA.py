@@ -424,7 +424,7 @@ y podemos llenarla de datos
 basado en los modelos de la base de datos, podemos usar el modelo como base para los 
 forms, creamos el template con el formulario, el metodo etc
 
-<form method="POST"> {% csrf_token %} #Este token lo agregamos por segridad, Django lo exige
+<form method="POST"> {% csrf_token %} # Este token lo agregamos por segridad, Django lo exige
     {{ form }}
     <input type="submit" value="Enviar">
 </form>

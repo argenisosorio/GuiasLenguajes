@@ -118,3 +118,61 @@ class TestView(APIView):
 ---
 
 # Corremos el servidor de desarrollo y visitamos la url que sirva, debemos ver nuestro mensaje
+
+################################################
+##### Serializando el model user de django #####
+################################################
+
+# En las urls.py de alguna app
+# -*- coding: utf-8 -*-
+from django.conf.urls import *
+from django.contrib import admin
+from series import views
+
+urlpatterns = [
+    url(r'^users/$', views.user_list),
+]
+
+# In serializer.py
+# -*- coding: utf-8 -*-
+from rest_framework import serializers
+from django.contrib.auth.models import User
+from .models import Serie
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'is_superuser', 'is_staff',
+        'is_active', 'date_joined', 'last_login')
+
+# In views.py
+# -*- coding: utf-8 -*-
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from series.models import Serie
+from series.serializers import SerieSerializer, UserSerializer
+from django.contrib.auth.models import User
+from rest_framework import viewsets
+
+
+def user_list(request):
+    """
+    List all users.
+    """
+    if request.method == 'GET':
+        usuarios = User.objects.all()
+        serializer = UserSerializer(usuarios, many=True)
+        return JSONResponse(serializer.data)
+
+
+class JSONResponse(HttpResponse):
+    """
+    An HttpResponse that renders its content into JSON.
+    """
+    def __init__(self, data, **kwargs):
+        content = JSONRenderer().render(data)
+        kwargs['content_type'] = 'application/json'
+        super(JSONResponse, self).__init__(content, **kwargs)

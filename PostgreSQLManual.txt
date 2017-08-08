@@ -240,6 +240,12 @@ $ pg_dump -U username db_name > db_ename.sql
 
 $ pg_dump -U usuario -h 127.0.0.1 nombre_database > nombre_database.sql
 
+##### postgresql dump ERROR: permiso denegado a la relación name_table #####
+
+// A veces no deja hacer el dump, porque dice que el usuario no tiene permisos en la tabla específica
+// Entonces escribimos el siguiente comando:
+name_db=# GRANT SELECT ON name_table TO PUBLIC;
+
 ##################################################
 ##### Restaurar / Importar una base de datos #####
 ##################################################

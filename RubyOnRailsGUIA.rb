@@ -95,7 +95,9 @@ lo escogen minimizando así las diferencias entre el entorno de desarrollo y el 
 ##### Instalar Ruby y Rails desde los repositorios de Debian #####
 ##################################################################
 
+# apt-get install ruby
 
+# apt-get install nodejs rails
 
 ##################################################################
 ##### Instalar Rails con el comando de RubyGems: gem install #####
