@@ -2323,6 +2323,33 @@ class Parroquia(models.Model):
         """
         return self.nombre
 
+#########################################################
+##### Serialización de consultas de django con json #####
+#########################################################
+
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+import json
+
+
+def index(request):
+    """
+    Index view, to tray.
+    """
+    # Consultamos todos los usuarios
+    usuarios = User.objects.all()
+    #print usuarios
+    # Covertimos los objetos del query en una lista mas limpia
+    lista = [{'pk': x.pk,'username': x.username} for x in usuarios]
+    #print lista
+    # Convertimos la lista en un json
+    serializado = json.dumps(lista)
+    #print serializado
+    # Descerializamos el json
+    deserializado = json.loads(serializado)
+    print deserializado
+    return HttpResponse("Hello, world!")
+
 ################################################
 ##### ALLOWED_HOSTS = [] en el settings.py #####
 ################################################
