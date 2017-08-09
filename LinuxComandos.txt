@@ -353,8 +353,9 @@ ping http://www.google.com.ve // Si hay conexion a internet enviara paquetes que
 
 $ ping -w n ip_num // Tiempo en segundos que se va a hacer ping donde n es un entero
 
-
-# glxgears // Siendo root, Ver si hay aceleracion grafica en la maquina, muestra unos engranajes de colores rodando, si es así, está correcta la instalacion del video.
+// Siendo root, Ver si hay aceleracion grafica en la maquina, muestra unos engranajes
+// de colores rodando, si es así, está correcta la instalacion del video.
+# glxgears 
 
 $ xrandr // Detectar las resoluciones de pantalla disponibles del sistema así como los hz correspondientes, la que
 tenga (*) es la que está siendo usada.
@@ -2917,7 +2918,7 @@ Y reiniciamos las interfaces de red, con suerte obtendremos una dirección ip de
 
 
 ################################################################################
-##### Restaurar o reiniciar  las conexiones de red inalambrica del sistema #####
+##### Restaurar o reiniciar las conexiones de red inalambrica del sistema #####
 ################################################################################
 
 If you really want to reset the network adapter you usually need to unload and reload the kernel module that it uses.

@@ -119,6 +119,17 @@ class TestView(APIView):
 
 # Corremos el servidor de desarrollo y visitamos la url que sirva, debemos ver nuestro mensaje
 
+###############################
+##### La clase Serializer #####
+###############################
+
+Para comenzar una API Web es necesario tener una forma de serializar y deserializar las instancias de
+los modelos en representaciones como JSON. Serializar significa tomar los objetos que provengan de los modelos
+para manipularlos y mostrarlos en el formato que se requiera, generalmente json a traves de una url.
+
+Podemos hacer esto declarando serializadores que trabajan muy similar a los formularios de Django.
+Crea un archivo en el directorio de alguna aplicación un fichero llamado serializers.py
+
 ################################################
 ##### Serializando el model user de django #####
 ################################################
@@ -176,3 +187,134 @@ class JSONResponse(HttpResponse):
         content = JSONRenderer().render(data)
         kwargs['content_type'] = 'application/json'
         super(JSONResponse, self).__init__(content, **kwargs)
+
+###########################################################
+##### Serializando el model user de django usando CBV #####
+###########################################################
+
+# En las urls.py de alguna app
+# -*- coding: utf-8 -*-
+from django.conf.urls import *
+from django.contrib import admin
+from series import views
+
+urlpatterns = [
+    url(r'^$', views.index, name='index'),    
+    url(r'^users/$', views.UsersList.as_view()),
+    url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
+]
+
+
+# In serializer.py
+# -*- coding: utf-8 -*-
+from rest_framework import serializers
+from django.contrib.auth.models import User
+
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'first_name', 'last_name', 'is_superuser', 'is_staff',
+        'is_active', 'date_joined', 'last_login')
+
+# In views.py
+# -*- coding: utf-8 -*-
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from series.serializers import UserSerializer
+from django.contrib.auth.models import User
+from rest_framework import viewsets
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+
+
+def index(request):
+    """
+    Index view, to tray.
+    """
+    return HttpResponse("Hello, world!")
+
+
+class JSONResponse(HttpResponse):
+    """
+    An HttpResponse that renders its content into JSON.
+    """
+    def __init__(self, data, **kwargs):
+        content = JSONRenderer().render(data)
+        kwargs['content_type'] = 'application/json'
+        super(JSONResponse, self).__init__(content, **kwargs)
+
+
+class UsersList(APIView):
+    """
+    List all Users
+    """
+    def get(self, request, format=None):
+        usuarios = User.objects.all()
+        serializer = UserSerializer(usuarios, many=True)
+        return Response(serializer.data)
+
+
+class UserDetail(APIView):
+    """
+    Retrieve, update or delete a user instance.
+    """
+    def get_object(self, pk):
+        try:
+            return User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        usuario = self.get_object(pk)
+        serializer = UserSerializer(usuario)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        usuario = self.get_object(pk)
+        serializer = UserSerializer(usuario, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        usuario = self.get_object(pk)
+        usuario.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+#######################################
+##### Utilizando ModelSerializers #####
+#######################################
+
+De la misma manera que Django ofrece las clases Form y ModelForm, REST framework incluye
+las clases Serializer y ModelSerializer para trabajar los modelos.
+
+# -*- coding: utf-8 -*-
+from django.forms import widgets
+from rest_framework import serializers
+from snippets.models import Snippet
+
+
+# In serializer.py
+class SnippetSerializer(serializers.ModelSerializer):
+    """
+    Utilizando ModelSerializers para mostrar la data
+    """
+    class Meta:
+        model = Snippet
+        fields = ('id', 'title', 'code', 'language')
+
+
+class SnippetSerializer(serializers.Serializer):
+    """
+    Utilizando Serializers para mostrar la data
+    """
+    pk = serializers.IntegerField(read_only=True)
+    title = serializers.CharField(required=False, allow_blank=True, max_length=100)
+    code = serializers.CharField(style={'base_template': 'textarea.html'})
+    language = serializers.CharField(required=False, allow_blank=True, max_length=50)
