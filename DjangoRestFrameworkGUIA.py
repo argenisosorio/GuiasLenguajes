@@ -318,3 +318,15 @@ class SnippetSerializer(serializers.Serializer):
     title = serializers.CharField(required=False, allow_blank=True, max_length=100)
     code = serializers.CharField(style={'base_template': 'textarea.html'})
     language = serializers.CharField(required=False, allow_blank=True, max_length=50)
+
+#######################################
+##### Paginar la lista de objetos #####
+#######################################
+
+Las vistas de listas de usuarios u otros modelos podrían terminar devolviendo un montón de instancias, así que
+es conveniente paginar los resultados, esto permite que el cliente API pase por cada una de las página individuales.
+
+# Variable de paginación en settings.py
+REST_FRAMEWORK = {
+    'PAGE_SIZE': 5
+}
