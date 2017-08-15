@@ -328,5 +328,18 @@ es conveniente paginar los resultados, esto permite que el cliente API pase por 
 
 # Variable de paginación en settings.py
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
     'PAGE_SIZE': 5
+}
+
+#################################
+##### Permisos del API-Rest #####
+#################################
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
 }
