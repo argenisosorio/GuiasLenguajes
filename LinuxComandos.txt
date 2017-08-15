@@ -3422,3 +3422,29 @@ a su equipo doméstico desde un sitio remoto, como por ejemplo un hotel. Todo el
 La conexión VPN a través de Internet es técnicamente una unión wide area network (WAN) entre los sitios pero al usuario le
 parece como si fuera un enlace privado— de allí la designación "virtual private network".
 
+###############################################
+##### Desactivar actualización en firefox #####
+###############################################
+
+Probado en Firefox 55 o menor. 
+
+La desactivación la podemos hacer desde la interfáz del navegador
+pero para hacerla a nivel de codigo editamos el fichero:
+
+firefox/defaults/pref/channel-prefs.js
+
+Nos quedará así:
+
+---
+
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+/*pref("app.update.channel", "release");*/
+pref("app.update.channel", "false");
+
+---
+
+Guardamos, reiniciamos el firefox y listo, actualizaciones desactivadas.
+
