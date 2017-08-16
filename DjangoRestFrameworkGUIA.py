@@ -343,3 +343,13 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAdminUser',
     ],
 }
+
+#############################
+##### Probando Api-rest #####
+#############################
+
+Si tenemos un api configurada, con permisos de usuario establecidos, podemos hacer una consulta a los datos
+pasandole el usuario y la contraseña además de la url que queremos consultar, usando curl serían de la
+siguiente manera.
+
+$ curl -H 'Accept: application/json; indent=4' -u username_admin:password123 http://127.0.0.1:8000/users/
