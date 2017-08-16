@@ -344,6 +344,16 @@ REST_FRAMEWORK = {
     ],
 }
 
+class EntidadViewSet(viewsets.ModelViewSet):
+    """!
+    Clase que gestiona los datos rest de las Entidades
+    """
+    queryset = Entidad.objects.all()
+    serializer_class = EntidadSerializer
+    # Si no se pasa esta variable todos los métodos están disponibles
+    # En este ejemplo solo habilitamos la visualización de datos por get
+    http_method_names = ['get','head']
+
 #############################
 ##### Probando Api-rest #####
 #############################
