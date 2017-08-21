@@ -367,3 +367,36 @@ $ curl -H 'Accept: application/json; indent=4' -u username_admin:password123 htt
 
 api/municipio?parroquia=123
 api/parroquia?municipio=12415
+
+###############################
+##### Usando DjangoFilter #####
+###############################
+
+# Instalamos Django Filter
+$ pip install django-filter
+
+
+# Agregamos lo siguiente al settings.py
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
+}
+
+# Ejemplo de urls para ver los usuarios de Django
+urlpatterns = [
+    url(r'^users/$', views.UsersList.as_view()),
+    url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail.as_view()),
+]
+
+# Usando las bondades de Django Filter en los views.py
+class UsersList(generics.ListAPIView):
+    """!
+    Clase que permite listar los datos rest de los usuarios
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    filter_fields = ('id', 'username', 'email',)
+
+# Si visitamos nuestra API Rest se debe haber activado una opción Filter o Filtros junto a los botones azules
+# de OPTIONS y GET que nos permitirá filtrar a traves de un formulario y obtener urls como la siguiente:
+
+http://192.168.12.148:8000/users/?id=1

@@ -260,6 +260,8 @@ Generalmente la estructura del fichero debería ser la siguiente:
 Es posible omitir algunas, lo que se desea es que el que lea este fichero, pueda correr con éxito
 el proyecto siguiendo los pasos descritos.
 
+Con (#) escribimos comentarios dentro de un fichero .gitignore
+
 #############################################
 ##### Ejemplo de .gitignore para Django #####
 #############################################
@@ -273,8 +275,8 @@ el proyecto siguiendo los pasos descritos.
 *.swp
 *.sqlite3
 *.db
-/project/app/migrations
-/project/settings.py
+#/project/app/migrations
+#/project/settings.py
 
 ###############################################################################
 ##### Eliminando varios archivos de Git que ya se han eliminado del disco #####

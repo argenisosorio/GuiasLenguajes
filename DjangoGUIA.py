@@ -3006,8 +3006,8 @@ como los otros atributos propios como label, requiered, etc.
 *.swp
 *.sqlite3
 *.db
-/project/app/migrations
-/project/settings.py
+#/project/app/migrations
+#/project/settings.py
 
 #######################################################
 ##### Campos del user de django - table auth_user #####
