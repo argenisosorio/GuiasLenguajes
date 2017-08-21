@@ -363,3 +363,7 @@ pasandole el usuario y la contraseña además de la url que queremos consultar, 
 siguiente manera.
 
 $ curl -H 'Accept: application/json; indent=4' -u username_admin:password123 http://127.0.0.1:8000/users/
+
+
+api/municipio?parroquia=123
+api/parroquia?municipio=12415

@@ -900,6 +900,28 @@ $ sudo tail -f /var/log/apache2/error.log // Para depurar posibles errores del s
 Nginx (pronunciado en inglés "engine X") es un servidor web/proxy inverso ligero de alto rendimiento y un proxy
 para protocolos de correo electrónico (IMAP/POP3).
 
+##### Ventajas de usar Nginx #####
+
+Se trata de un software multiplataforma, por lo tanto podremos instalarlo en la mayoría de nuestros servidores.
+
+Consume menos recursos que la mayoría de servicios que hacen su misma función.
+
+Nos proporciona un alto rendimiento soportando mayor carga y respondiendo mejor que sus competidores.
+
+Puede ser usado como proxy inverso cacheando el contenido de nuestros sitios web.
+
+Podemos integrarlo junto con Apache, de forma que Nginx procese contenido estático y Apache contenido dinámico.
+
+Puede usarse como balanceador de carga entre varios servidores, permitiéndonos así una mayor facilidad a la hora de escalar nuestros servidores.
+
+Es compatible con una gran variedad de CMS y aplicaciones actuales como pueden ser: Wordpress, Drupal, Prestashop, y muchas más.
+
+El proyecto Nginx tiene detrás a la empresa Nginx Inc. y también cuenta con el apoyo de una gran comunidad contribuyendo a mejorar y resolver dudas. También podemos recurrir a soporte profesional.
+
+##### Inconvenientes de usar Nginx #####
+
+No se integra con PHP de forma nativa. Es necesario usar FastCGI para poder integrarlo.
+
 ##### Instalación #####
 
 No debe estar instalado Apache porque puede dar problemas, como por ejemplo
@@ -1861,16 +1883,18 @@ Además de la conexión a otros dispositivos, SSH nos permite copiar datos de fo
 (tanto archivos sueltos como simular sesiones FTP cifradas), gestionar claves RSA para no escribir
 claves al conectar a los dispositivos y pasar los datos de cualquier otra aplicación por un canal seguro tunelizado mediante SSH.
 
-# aptitude install ssh openssh-server // Instalar ssh y el servidor de ssh que permite conexiones remotas.
+// Instalar ssh y el servidor de ssh que permite conexiones remotas.
+# aptitude install ssh openssh-server
 
-$ ssh Nombre_usuario@IP_servidor o nombre_servidor // Conectarse a otra máquina o servidor
+// Conectarse a otra máquina o servidor
+$ ssh Nombre_usuario@IP_servidor o nombre_servidor
 
-ssh user@192.168.0.240 // Asi se accede a un ordenador o servidor remoto, debemos poner el usuario que debe estar creado asi como la ip
+$ ssh user@192.168.0.240 // Asi se accede a un ordenador o servidor remoto, debemos poner el usuario que debe estar creado asi como la ip
 del server, nos pedira la clave de session, una vez adentro tenemos acceso a los archivos y podemos pedir el root para tener acceso total.
 ssh es muy usado por administradores de redes y de sistemas para acceder a las maquinas y los servidores y hacer cambios asi 
 como monitorear los procesos que esten ejecutando, especialmente en maquinas virtuales si varios proyectos corren en un mismo servidor.
 
-$ ssh 192.168.200.x // Si el servidor tiene el mismo usuario que el host, no hace falta especificarlo, solamente con la ip del servidor
+$ ssh 192.168.200.xxx // Si el servidor tiene el mismo usuario que el host, no hace falta especificarlo, solamente con la ip del servidor
 basta, pues toma el nombre del usuario del host para hacer la conexión.
 
 Estando conectados al servidor, podemos enviar mensajes o abrir programas remotamente, ejemplo:
@@ -1887,9 +1911,67 @@ DISPLAY=:0.0 totem // Abrir el reproductor totem en el servidor
 
 DISPLAY=:0.0 nautilus // Abrir el explorador de archivos en el servidor
 
-$ sudo service ssh restart // Reiniciar el servicio de ssh, a veces se hace para que sirvan algunos cambios de configuración.
+// Reiniciar el servicio de ssh, a veces se hace para que sirvan algunos cambios de configuración.
+$ sudo service ssh restart
 
-$ sudo service ssh status // Para ver el estado del servicio.
+// Para ver el estado del servicio.
+$ sudo service ssh status
+
+###########################
+##### Seguridad en ssh ####
+###########################
+
+Para hacer mas seguras las conexiones a través de ssh es necesario realizar ajustes adicionales en la configuración del servidor.
+Estos ajustes se deben realizar en el fichero de configuración del servidor que, por ejemplo, en Linux se encuentra en /etc/ssh/sshd_config
+
+-- Cambiar el puerto por defecto del servidor SSH --
+
+Por defecto los servidores SSH utilizan el puerto 22 para las conexiones. Cuando un pirata intente buscar la forma de conectarse a nuestro
+servidor SSH este probará en primer lugar con este puerto y, de estar abierto, comenzará el ataque.
+
+Si cambiamos el puerto por defecto por otro de nuestra elección evitaremos que utilicen el puerto 22 para establecer
+las conexiones, sin embargo, es fácil descubrir si este tipo de protocolos utilizan otros puertos adicionales para las conexiones.
+
+-- Bloquear el acceso root en las conexiones remotas --
+
+Es recomendable crear un único usuario para conectarse al servidor con una contraseña lo más fuerte posible de manera que no pueda
+ser explotada fácilmente, sin embargo, por defecto el usuario Root también puede conectarse al servidor SSH de forma remota evitando
+a un atacante el tener que adivinar el usuario y facilitándose el trabajo.
+
+Desactivando los permisos de Root para conectarse al servidor SSH complicaremos notablemente la tarea de explotación por fuerza bruta
+del servidor al tener que adivinar también el usuario establecido para permitir la conexión.
+
+El valor por defecto en el archivo de configuración que permite las conexiones de root es:
+
+    PermitRootLogin yes
+
+Debemos cambiarlo por:
+
+    PermitRootLogin no
+
+De esta manera las conexiones root quedarán bloqueadas evitando que usuarios no autorizados puedan realizar
+ataques de fuerza bruta contra nuestro servidor SSH para adivinar los credenciales del usuario Root.
+
+-- Configuraciones de seguridad adicionales --
+
+Existen otras configuraciones recomendadas para evitar las conexiones no deseadas a nuestro servidor SSH. Estas conexiones son:
+
+LoginGraceTime: Estableceremos el tiempo necesario para introducir la contraseña, evitando que el atacante tenga que “pensar mucho”.
+
+MaxAuthTries: Número de errores permitidos al introducir la contraseña antes de desconectarnos.
+
+MaxStartups: Número de logins simultáneos desde una IP, para evitar que se pueda utilizar la fuerza bruta con varias sesiones a la vez.
+
+AllowUsers: Este parámetro nos permite configurar los usuarios que podrán conectarse y desde la IP que lo podrán hacer. Una medida muy
+restrictiva pero a la vez muy segura ya que bloqueará todas las conexiones que no cumplan los dos parámetros.
+
+-- Reiniciar el servidor para aplicar los nuevos ajustes --
+
+Una vez realizados los ajustes debemos reiniciar el servidor para que se apliquen correctamente. Para ello teclearemos:
+
+$ sudo service ssh reload
+
+En pocos segundos el servidor volverá a arrancar con la nueva configuración aplicada y mucho más seguro que antes.
 
 ###########################################
 ##### X11 forwarding a través de ssh  #####
