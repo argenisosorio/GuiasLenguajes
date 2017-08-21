@@ -1973,6 +1973,78 @@ $ sudo service ssh reload
 
 En pocos segundos el servidor volverá a arrancar con la nueva configuración aplicada y mucho más seguro que antes.
 
+##### Ejemplo de configuración #####
+
+Port 432 (o el que se quiera menor a 1024)
+Protocol 2
+LoginGraceTime 30
+PermitRootLogin no
+MaxAuthTries 2
+MaxStartups 3
+AllowUsers jose  o también:
+AllowUsers jose maria@192.1.1.300
+
+---
+
+Port: Por default el demonio ssh funciona en el puerto 22, y precisamente muchos scripts de ataques están dirigidos a este puerto, el cambiar
+de puerto no garantiza que el servicio ya no será localizable, de hecho con herramientas como nmap o amap es sumamente fácil descubrir que un
+servicio ssh esta a la escucha en otro puerto distinto al 22, pero al menos no será localizable por varios scripts que de manera automática
+escanean redes y en cuanto a ssh se enfocan solo al puerto 22.
+
+Protocol 2: Hay dos versiones de ssh en cuanto a su protocolo de comunicación, la versión 1 y la versión 2. La 1 esta en desuso pero todavía
+se incluye por compatibilidad, tiene varias vulnerabilidades conocidas y su uso no es ya recomendable. Un error frecuente es dejar al demoinio
+ssh que permita el uso de las dos versiones (Protocol 2,1). Para evitar el uso del protocolo 1 y sus posibles ataques a este, basta con indicar
+en esta línea que solo admita comunicaciones de ssh basadas en el protocolo 2.
+
+LoginGraceTime 30: El número indica la cantidad de segundos en que la pantalla de login estará disponible para que el usuario capture su nombre
+de usuario y contraseña, si no lo hace el login se cerrará, evitando así dejar por tiempo indeterminado pantallas de login sin que nadie
+las use, o peor aun, que alguien este intentando mediante un script varias veces el adivinar un usuario y contraseña. Aqui conviene identificar
+en nuestros usuarios el tiempo promedio que tardan en ingresar su usuario y contraseña y darles unos cuantos segundos más de margen por los
+usuarios lentos para que ingresen sus credenciales. Si somos el único usuario del sistema considero que con 20 o 30 segundos es mas que suficiente.
+
+PermitRootLogin no: Esta es quizás la más importante directiva de seguridad que podemos indicar para fortalecer nuestro servidor ssh.
+Prácticamente todos los sistemas Linux y Unix crean por default al usuario root, entonces sabemos que existe!!!. Muchos ataques de fuerza bruta
+se concentran en atacar al usuario root con la esperanza de que tenga una contraseña débil (¡que es mas común de lo que pensamos!).
+
+Entonces si ya sabemos una parte de la ecuación (root) solo será cuestión de tiempo para que alguien con paciencia y suerte vulnere el sistema.
+Al poner en 'no' la variable PermitRootLogin el usuario root no tendrá permiso de acceder mediante ssh y por lo tanto cualquier intento de ataque
+directo a root será inútil. Con esto siempre tendremos que ingresar como un usuario normal y ya estando adentro entonces mediante su o sudo
+podremos usar funciones de root, no problem. Ahora bien, para el nombre de login del usuario normal te recomiendo que también NO uses palabras
+conocidas como: admin, manager, juan, pedro, sistemas, etc. Usa algo mas dífcil de adivinar como jgon (de juan gonzález) o sispat (de sistemas pato)
+o mejor aun también puedes combinar algún guión bajo o mayúsculas, minúsculas y números en la cuenta de login. Con lo anterior el hacker tendrá
+que atinarle o crackear tanto al nombre del usuario como su contraseña.
+
+MaxAuthTries 2: El número indica la cantidad de veces que podemos equivocarnos en ingresar el usuario y/o contraseña, en este caso después de dos
+intentos, se perderá o cerrará la conexión. Claro, es totalmente posible volver a intentarlo, pero como son dos intentos por vez, evitaremos ataques
+basados en la persistencia de la conexión, como se perderá al tercer intento de conexión, el ataque cesará.
+
+MaxStartups 3: El número indica la cantidad de pantallas de login, o cantidad de conexiones simultaneas de login que permitirá el sshd por ip que
+intente conectarse. Hay ataques muy efectivos que dividen el ataque en decenas y puede ser que en cientos (si el sistema atacado lo permite) de
+conexiones de login. Es decir, el ataque divide en una gran cantidad de logins los intentos por ingresar, aumentando sus posibilidades de más
+rapidamente adivinar al usuario y contraseña. Con esta directiva limitamos a tan solo 3 pantallas de login. Que quede claro, una vez logueados
+en el sistema, es posible tener mas de 3 terminales de ssh, se refiere exclusivamente a pantallas de login.
+
+AllowUsers: En sistemas donde se tiene varios usuarios, quizás existan varios que solo pueden acceder desde la LAN por ejemplo, o quizás solo
+desde ciertos equipos. O incluso que solo desde su PC puedan trabajar en Linux por lo que no hay razón para que se conecten remotamente
+via ssh. Con esta directiva podemos indicar los usuarios que pueden ingresar via ssh. Si solo indicamos al usuario:
+
+AllowUsers jose
+
+El usuario jose podrá ingresar desde cualquier PC en cualquier lugar, no se está validando el host.
+Si se quiere mas seguridad, es posible indicar también el host mediante el símbolo @
+
+AllowUsers jose@192.168.0.25     (solo desde la IP indicada)
+AllowUsers jose@192.168.0.*       (Toda la red indicada)
+AllowUsers jose@*.desarrollo.com  maria@contabilidad.com    
+  (aosorio desde cualquier equipo del dominio indicado, maria solo desde el equipo indicado)
+
+Como puede verse, bastan algunas cuantas directivas o variables bien configuradas en nuestro archivo /etc/ssh/sshd_config para incrementar
+enormemente la seguridad en este servicio, seguramente no estoy considerando alguna otra variable que también pudiera ser importante
+para la seguridad de ssh, si es así por favor házmelo saber para incluirla en este documento. Asi como también hay que tener en cuenta
+que hay variables que permiten el no acceso con contraseñas y sería más bien con certificados o llaves, las posibilidades son extensas y
+es posible incluso tener varios equipos Linux comunícandose entre si para respaldos, bases de datos, etc. con ssh y certificados de
+seguridad, evitando intervención humana, consulta la sección de servicios si es lo que buscas en tu empresa.
+
 ###########################################
 ##### X11 forwarding a través de ssh  #####
 ###########################################
