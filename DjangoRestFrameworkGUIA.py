@@ -375,6 +375,15 @@ api/parroquia?municipio=12415
 # Instalamos Django Filter
 $ pip install django-filter
 
+# Agregamos el paquete a las aplicaciones instaladas
+INSTALLED_APPS = [
+    .
+    .
+    .
+    'django_filters',
+    'app_name',
+]
+
 
 # Agregamos lo siguiente al settings.py
 REST_FRAMEWORK = {
