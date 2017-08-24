@@ -2208,6 +2208,17 @@ ignorados.
 
 # pip install db-psycopg2
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'name_db',  # Or path to database file if using sqlite3.
+        'USER': 'owner_bd',  # Not used with sqlite3.
+        'PASSWORD': 'password_bd',  # Not used with sqlite3.
+        'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '5432',  # Set to empty string for default. Not used with sqlite3.
+    }
+}
+
 ####################################################################
 ##### Generar json a partir de un modelo (dumpdata y loaddata) #####
 ####################################################################
@@ -2322,6 +2333,29 @@ class Parroquia(models.Model):
         Método que muestra la información sobre la Parroquia
         """
         return self.nombre
+
+-----
+
+from django.db import models
+
+class Reporter(models.Model):
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    email = models.EmailField()
+
+    def __str__(self):              # __unicode__ on Python 2
+        return "%s %s" % (self.first_name, self.last_name)
+
+class Article(models.Model):
+    headline = models.CharField(max_length=100)
+    pub_date = models.DateField()
+    reporter = models.ForeignKey(Reporter)
+
+    def __str__(self):              # __unicode__ on Python 2
+        return self.headline
+
+    class Meta:
+        ordering = ('headline',)
 
 #########################################################
 ##### Serialización de consultas de django con json #####
@@ -2763,6 +2797,12 @@ class Borrar(DeleteView):
     model = Persona
     success_url = reverse_lazy('registro:consultar')
 
+##### Ejemplo de instanciar otro modelo en un select field #####
+direccion = forms.ChoiceField(label="direccion", widget=Select(attrs={
+    'class':'form-control input-md',
+    'style': 'min-width: 0; width: 100%; display: inline;',
+}), choices = Direccion.objects.all().values_list('id','nombre_direccion'))
+
 ###################################################
 ##### Imprimiento la fecha y hora del sistema #####
 ###################################################
@@ -2942,7 +2982,7 @@ todos los posts cuyo autor es el User ola. Usaremos filter en vez de all.
 ##### Ordenando objetos #####
 
 '''
-Los QuerySets también te permiten ordenar la lista de objetos. Intentemos ordenarlos por el campo 
+Los QuerySets también te permiten ordenar la lista de objetos. Intentemos ordenarlos por el campo
 '''
 
 >>> Persona.objects.all()
