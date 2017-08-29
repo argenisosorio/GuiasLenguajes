@@ -800,6 +800,8 @@ null=True: Permite que los valores puedan ser null.
 
 blank=True: Permite que el campo se pueda quedar en blanco.
 
+blank=True,null=True # Para que de verdad acepte valores en blanco en la base de datos y en el formulario.
+
 choices=meses: Permite asignar un diccionario de elementos a un objetos para que los valores solo sean los contenidos en el diccionario. La clave del diccionario sera lo que se guarda en la base de datos, el valor asociado sera lo que se mostrar en el formulario que lo use.
 
 db_column: El nombre de la columna donde django guardara el campo, si no se especifica guarda el nombre del campo.
@@ -1065,6 +1067,13 @@ La etiqueta {% else %} es opcional:
     {% endif %}
 </tr>
 {% endfor %}
+
+# Comparando con una cadena de caracteres
+{% if x.tipo == "Acceso" %}
+  <td class="access">Acceso</td>
+{% else %}
+  <td>yyyy</td>
+{% endif %}
 
 # If else and elif en una tabla con un for.
 {% for x in log %}
@@ -3018,6 +3027,23 @@ Los QuerySets también te permiten ordenar la lista de objetos. Intentemos orden
 
 >>> Persona.objects.all()[2]
 <Persona: karla>
+
+##### Ejemplo de queryset para filtrar objetos #####
+
+class BitacoraView(ListView):
+    """
+    Clase que muestra la lista de entradas de la bitácora
+    """
+    model = Bitacora
+    template_name = "bitacora.html"
+
+    def get_queryset(self):
+        """
+        Método que filtra los datos de la tabla, solo muestra si coincide con el filtro
+        """
+        #queryset = Bitacora.objects.filter(tipo='Actualización')
+        queryset = Bitacora.objects.filter(tipo='Acceso')
+        return queryset
 
 #####################
 ##### form.as_p #####
