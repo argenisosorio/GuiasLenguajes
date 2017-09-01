@@ -2983,7 +2983,8 @@ Un enlace simbólico también puede definirse como una etiqueta o un nuevo nombr
 el enlace simbólico no contiene los datos del archivo, simplemente apunta al registro del sistema de archivos donde se encuentran los datos.
 Tiene mucha similitud a un acceso directo en guindows o un alias en OS X.
 
-$ ln -s archivo.txt nuevo_nombre.txt // Para crear un enlace simbólico del archivo archivo.txt a nuevo_nombre.txt.
+// Situados en "b" crearemos un enlace simbólico del fichero x.txt que está en la carpeta "a".
+b$ ln -s ../a/x.txt
 
 Éste enlace también aparecerá como otro archivo más en el directorio y apuntará al mismo contenido de archivo.txt, reflejando todos los cambios
 que se hagan tanto para archivo.txt como para nuevo_nombre.txt.
