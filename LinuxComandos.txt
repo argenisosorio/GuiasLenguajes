@@ -1116,6 +1116,7 @@ server {
   #root /usr/share/nginx/html;
   ### Aqui va la ruta donde tenemos el directorio del proyecto
   root /var/www/html;
+  ## Orden de prioridad de los archivos index
   index index.php index.html index.htm;
   server_name example.com;
   location / {
@@ -1136,69 +1137,20 @@ server {
   }
 }
 
------
-
-Ejemplo de configuración del fichero /etc/nginx/sites-available/domain.com para servir proyectos
-de python-django:
-
-server {
-        listen       xxx.xxx.xxx.xxx:80;
-        server_name  domain.com;
-
-#        access_log  /var/log/nginx/domain.com.access.log main;
-#        error_log   /var/log/nginx/domain.com.error.log  error;
-#        error_log   /var/log/nginx/domain.com.error.log  debug;
-
-        client_max_body_size      128M;
-#       client_body_buffer_size   128k;
-        fastcgi_buffers 8 128k;
-        fastcgi_buffer_size 256k;
-
-        root /var/www/project;
-
-        location = /favicon.ico {
-                return 204;
-        }
-
-        # serve static files directly
-        location ~* ^.+\.(jpg|jpeg|gif|css|png|js|ico)$ {
-                access_log        off;
-                expires           30d;
-                root   /var/www/project;
-        }
-
-        location /static/ {
-                root /var/www/cenditel/;
-                #alias /var/www/cenditel/;
-        }
-
-        location / {
-                include uwsgi_params;
-                uwsgi_param     UWSGI_SCHEME    $http_x_forwarded_protocol;
-                uwsgi_param     REMOTE_ADDR     $http_x_real_ip;
-                uwsgi_pass      unix:/var/run/uwsgi/app/domain.com/socket;
-                uwsgi_intercept_errors off;
-                uwsgi_read_timeout 600;
-        }
-
-        error_page   500 502 503 504  /50x.html;
-        location = /50x.html {
-                root   /var/www/nginx-default;
-        }
-}
-
 #################
-##### uWSGI #####
+##### uwsgi #####
 #################
 
-uWSGI es una implementación de WSGI capaz de servir aplicaciones Python, pero que además apunta a proveer la pila de
+UWSGI es una implementación de WSGI capaz de servir aplicaciones Python, pero que además apunta a proveer la pila de
 software completa para implementar servicios de hosting.
 
 Suele trabajar conjuntamente con un servidor web como Nginx.
 
 ##### Instalación #####
 
-# pip install uwsgi
+# apt-get install uwsgi uwsgi-core
+
+# pip install uwsgi // Para entornos virtuales, se recomienda instalar globalmente
 
 # apt-get install uwsgi-plugin-python // WSGI plugin for uWSGI (Python 2)          
 
@@ -1226,7 +1178,8 @@ se pueden tener dos directorios:
 /etc/uwsgi/apps-enabled // Directorio de los sitios habilitados, con enlaces simbólicos a las configuraciones
 en /etc/uwsgi/apps-available.
 
-En este ejemplo, el archivo de configuración es un .xml con el nombre del sitio servido por nginx.
+En este ejemplo, el archivo de configuración es un .xml en las aplicaciones disponibles, con un enlace
+simbólico en las aplicaciones habilitadas.
 
 apps-available
     README
@@ -1260,77 +1213,83 @@ $ tailf /var/log/uwsgi/app/name_site_com.log
 ##### Levantar un proyecto de Django, con uwsgi y nginx #####
 #############################################################
 
-En este ejemplo trabajaremos con un entorno virtual.
+En este ejemplo trabajaremos con un entorno virtual de python, y nuestro proyecto de Django se llama "prueba".
 
-// Instalamos nginx
-apt-get install nginx
+Instalamos nginx.
 
-// Instalamos uwsgi dentro del entorno virtual y el puglin
+# apt-get install nginx
 
-# apt-get install uwsgi
+Instalamos uwsgi globalmente y el plugin de uwsgi de python.
 
-# pip install uwsgi
+# apt-get install uwsgi uwsgi-core
 
 # apt-get install uwsgi-plugin-python // Para python 2.7
 
-Ahora vamos a configurar nginx y a mover la aplicación a al directorio final.
+El crear y mover ficheros o directorios lo harémos siempre como root.
+Ahora vamos a configurar nginx y a mover la aplicación "prueba" al directorio de trabajo /srv
 
-Movemos el directorio de la aplicación "prueba" a /srv
-
-En /etc/nginx/sites-available vamos a crear un fichero de configuración para nuestra aplicación de prueba
+En /etc/nginx/sites-available vamos a crear un fichero de configuración para nuestra aplicación "prueba"
 
 /etc/nginx/sites-available# touch prueba
 
-// Ahora vamos a editar empezar a crear la configuración.
+Ahora vamos a empezar a crear la configuración del sitio
+
 /etc/nginx/sites-available# vim prueba
 
-// Nuestro fichero debería quedar mas o menos así:
+Nuestro fichero debería quedar mas o menos así:
 
 server {
     #Puerto por el que va a escuchar el servidor
     listen 80;
 
     #Dirección ip de nuestra máquina
+    #Va a ser la url o dirección por donde se va a servir la aplicación
     server_name 192.168.12.148;
 
     #Codificación de caracteres de la configuración
-    charset utf−8;
+    charset utf-8;
 
-    client_max_body_size 20M;
+    # Cuerpo máximo del mensaje permitido en una petición
+    client_max_body_size 30M;
+
     client_body_buffer_size 128k;
 
     #Ruta en que está alojada la aplicación
-    root /srv/prueba;
+    #root /srv/prueba;
 
     # Habilitamos los logs de acceso de nginx
-    access_log /var/log/nginx/control.access.log;
+    access_log /var/log/nginx/prueba.access.log;
 
     # Habilitamos los logs de error de nginx
-    error_log /var/log/nginx/control.error.log;
-
-    location / {
-    }
+    error_log /var/log/nginx/prueba.error.log;
 
     # Le decimos al servidor donde estan los estáticos de la aplicación
-    location /static/.+$ {
-        root /srv/prueba/static;
+    location /static/ {
+        root /srv/prueba/;
     }
 
     # Configuración adicional para trabajar con uwsgi
-    location ~ ^/(?<ruta>/.*)?$ {
-        uwsgi_pass unix:/var/run/uwsgi/app/control/socket;
+    # Esto es necesario solo si el sistema va a correr por una ruta
+    #location ~ ^/(?<ruta>/.*)?$ {
+    #location ~ ^/{
+    location / {
+        uwsgi_pass unix:/var/run/uwsgi/app/prueba/socket;
         include uwsgi_params;
         uwsgi_param UWSGI_SCHEME $http_x_forwarded_protocol;
         uwsgi_param SCRIPT_NAME /;
-        uwsgi_param PATH_INFO $ruta;
+        # Esto es necesario solo si el sistema va a correr por una ruta
+        #adicional al dominio, ejemplo: domain/ruta_adicional
+        #uwsgi_param PATH_INFO $ruta;
+        # Tiempo de espera en la conexión de nginx con uwsgi.
+        uwsgi_read_timeout 600;
     }
 }
 
-// Ahora creamos un enlace simbólico de sites-available a sites-enabled
+Ahora creamos un enlace simbólico de sites-available a sites-enabled
 
-/etc/nginx/sites-enabled# ln -s ../sites-available/prueba
+# ln -s /etc/nginx/sites-available/prueba /etc/nginx/sites-enabled/
 
-// Nos quedará así.
+Al listar los directorios en sites-enabled nos quedará así:
 
 /etc/nginx/sites-enabled# ls -la
 total 8
@@ -1339,53 +1298,74 @@ drwxr-xr-x 6 root root 4096 ago 25 07:59 ..
 lrwxrwxrwx 1 root root   34 ago 25 07:59 default -> /etc/nginx/sites-available/default
 lrwxrwxrwx 1 root root   25 ago 25 08:31 prueba -> ../sites-available/prueba
 
-// Verificamos que esté bien la configuración del nginx
+Verificamos que esté bien la configuración del nginx con:
+
 # nginx -t
 nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
 nginx: configuration file /etc/nginx/nginx.conf test is successful
 
-// Ahora harémos las configuraciones de uwsgi en etc/uwsgi
+Ahora harémos las configuraciones de uwsgi en /etc/uwsgi
+
 etc/uwsgi# ls
 apps-available	apps-enabled
 
-Al igual que en nginx crearemos un fichero de configuración, pero este va a ser un xml:
+Al igual que en nginx crearemos un fichero de configuración, pero este va a ser un xml
+que se va a guardar en apps-available:
+
+Tenemos que tener mucho cuidado al momento de configurar este fichero, las rutas deben ser
+declaradas muy bien, especial énfasis en la ruta del entorno virtual, y el usuario del sistema y grupo
+dueño de la aplicación, así como la ruta local o dirección donde está alojada la aplicación.
+
+/etc/uwsgi/apps-available# vim prueba.xml
 
 <uwsgi>
         <threads>100</threads>
         <workers>2</workers>
         <master/>
         <chmod-socket>666</chmod-socket>
-        <home>/home/user/entornos_virtuales/Django_1.8.8</home>
+        <home>/home/user/Entornos_virtuales/Django_1.8.8</home>
         <socket>/var/run/uwsgi/app/prueba/socket</socket>
         <pidfile>/var/run/uwsgi/app/prueba/pid</pidfile>
-        <uid>user</uid>
-        <gid>user</gid>
+        <uid>root</uid>
+        <gid>root</gid>
         <log-x-forwarded-for/>
         <post-buffering>4096</post-buffering>
         <max-requests>1000</max-requests>
-        <chdir>/srv/control_beneficiarios</chdir>
+        <chdir>/srv/prueba</chdir>
         <pythonpath>/srv/prueba</pythonpath>
         <module>wsgi</module>
         <plugins>python27</plugins>
 </uwsgi>
 
-// Guardamos y ahora creamos el enlace simbolico en app-enabled
-/etc/uwsgi/apps-enabled# ln -s ../apps-available/prueba
+// Guardamos como prueba prueba.xml y ahora creamos el enlace simbolico en app-enabled
 
-// Reiniciamos nginx
+# ln -s /etc/uwsgi/apps-available/prueba.xml /etc/uwsgi/apps-enabled/
+
+// Reiniciar servicio de nginx
 # systemctl restart nginx
 
-// Reiniciamos uwsgi
+// Reiniciar el servicio de uwsgi
 # systemctl restart uwsgi
 
-// Ver los logs del sitio:
-/var/log/nginx/nombre_del_sitio.xxx.log
+Cada vez que se haga un cambio en la configuración de nginx reiniciaremos el servicio, y si el cambio
+es de python, es decir en el proyecto de Django entonces reiniciaremos el servicio de uwsgi.
 
-// Para ver en tiempo real el log de accesos del server del sitio:
-/var/log/nginx# tailf nombre_del_sitio.ve.access.log
+Si todo está bien, podemos visitar la ip local desde el navegador, 192.168.12.148 configurada en
+nginx y por la cual va a estar servida la aplicación.
 
-// Para ver en tiempo real el log de errores del server del sitio:
-/var/log/nginx# tailf nombre_del_sitio.ve.error.log
+Si la aplicación no se muestra nos ayudaremos con los logs a encontrar el error
+
+Para ver en tiempo real el log de accesos del servidor a nuestra aplicación:
+
+# tailf /var/log/nginx/prueba.access.log
+
+Para ver en tiempo real el log de errores del servidor en nuestra aplicación :
+
+# tailf /var/log/nginx/prueba.error.log
+
+Para ver en tiempo real el log de uwsgi:
+
+# tailf /var/log/uwsgi/app/prueba.log
 
 ######################################################
 ########## Instalar y configurar phpMyAdmin ##########
@@ -3812,5 +3792,3 @@ pref("app.update.channel", "false");
 ---
 
 Guardamos, reiniciamos el firefox y listo, actualizaciones desactivadas.
-
-
