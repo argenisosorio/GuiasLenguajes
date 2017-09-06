@@ -1215,6 +1215,9 @@ $ tailf /var/log/uwsgi/app/name_site_com.log
 
 En este ejemplo trabajaremos con un entorno virtual de python, y nuestro proyecto de Django se llama "prueba".
 
+El fichero wsgi.py que está junto al settings.py lo moveremos a la raíz del proyecto, esto para que uwsgi
+lo consiga con la configuración que haremos luego.
+
 Instalamos nginx.
 
 # apt-get install nginx
@@ -1349,6 +1352,10 @@ dueño de la aplicación, así como la ruta local o dirección donde está aloja
 
 Cada vez que se haga un cambio en la configuración de nginx reiniciaremos el servicio, y si el cambio
 es de python, es decir en el proyecto de Django entonces reiniciaremos el servicio de uwsgi.
+
+// Para no detener e iniciar los servicios y a su vez tumbar las conexiones usaremos reload en vez de restart:
+
+# systemctl reload nginx
 
 Si todo está bien, podemos visitar la ip local desde el navegador, 192.168.12.148 configurada en
 nginx y por la cual va a estar servida la aplicación.
