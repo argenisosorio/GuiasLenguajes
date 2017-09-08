@@ -2710,6 +2710,14 @@ class PerfilUpdate(SuccessMessageMixin,UpdateView):
     form_class = EditProfileForm
     success_message = "¡Perfil actualizado!"
 
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Metodo que redirecciona al usuario si no cuenta con los permisos
+        """
+        if int(self.request.user.id) != int(self.kwargs['pk']):
+           return render_to_response('home.template.html',context_instance=RequestContext(request))
+        return super(PerfilUpdate, self).dispatch(request, *args, **kwargs)
+
     def get_success_url(self, **kwargs):
         """
         Metodo que permite definir la url con el pk del usuario autenticado.
