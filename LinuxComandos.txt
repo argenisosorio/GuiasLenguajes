@@ -935,6 +935,35 @@ por lo que si visitamos 127.0.0.1:80 accederemos al servicio
 
 Sus archivos e configuracion están en etc/apache2
 
+├── apache2.conf
+├── conf-available
+│   ├── charset.conf
+│   ├── localized-error-pages.conf
+│   ├── other-vhosts-access-log.conf
+│   ├── security.conf
+│   └── serve-cgi-bin.conf
+├── conf-enabled
+│   ├── charset.conf -> ../conf-available/charset.conf
+│   ├── localized-error-pages.conf -> ../conf-available/localized-error-pages.conf
+│   ├── other-vhosts-access-log.conf -> ../conf-available/other-vhosts-access-log.conf
+│   ├── security.conf -> ../conf-available/security.conf
+│   └── serve-cgi-bin.conf -> ../conf-available/serve-cgi-bin.conf
+├── envvars
+├── magic
+├── mods-available
+├── mods-enabled
+├── ports.conf
+├── sites-available
+│   ├── 000-default.conf
+│   └── default-ssl.conf
+└── sites-enabled
+    └── 000-default.conf -> ../sites-available/000-default.conf
+
+// El archivo de configuración principal es:
+/etc/apache2/apache2.conf
+
+##### Comandos para gestionar apache #####
+
 $ sudo service apache2 restart // Restart apache para guardar los cambios.
 
 $ sudo service apache2 stop // Detener el servicio de apache.
@@ -944,6 +973,10 @@ $ sudo service apache2 status // Ver el estado del servicio
 $ sudo service apache2 reload // Para recargar la configuración del servicio de Apache.
 
 $ sudo service apache2 force-reload // Forzar la recargar de configuración del servicio.
+
+/etc/apache2/sites-available
+
+/etc/apache2/sites-enabled
 
 ##### Borrar apache #####
 
@@ -964,9 +997,6 @@ ip visitante || fecha y hora || Método de acceso || url visitada || codigo http
 ##### log de errores #####
 
 $ sudo tail -f /var/log/apache2/error.log // Para depurar posibles errores del servidor.
-
-// Los archivos de configuración de apache están en el fichero:
-/etc/apache2/apache2.conf
 
 #################
 ##### Nginx #####
@@ -1373,6 +1403,89 @@ Para ver en tiempo real el log de errores del servidor en nuestra aplicación :
 Para ver en tiempo real el log de uwsgi:
 
 # tailf /var/log/uwsgi/app/prueba.log
+
+##############################################################
+##### Levantar un proyecto de Django, con uwsgi y Apache #####
+##############################################################
+
+Instalamos apache
+
+# apt-get install apache2
+
+Esto nos creará el directorio /var/www/html/
+
+Movemos el proyecto de django a /var/www/html/ y le damos permisos de lectura, escritura y ejecución al proyecto
+
+# chmod -R 777 /var/www/html
+
+Instalamos el modulo uwsgi
+
+# apt-get install libapache2-mod-wsgi
+
+// Reiniciamos el servicio de apache
+# service apache2 restart
+
+Una vez apache se halla reiniciado tendremos el modulo instalado y activado en apache.
+A este punto solo nos queda configurar el host virtual.
+
+// En base al fichero de configuración por defecto creamos una copia
+# cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/prueba.conf
+
+Editamos prueba.conf
+
+<VirtualHost *:80>
+    # Por convención personal uso para los nombres de dominio la siguiente convención
+    # lenguaje.nombre_del_proyecto.rama_de_git
+    ServerName python.my_project.dev
+    ServerAdmin admin@email.com
+    # El document root debe hacer referencia a la carpeta donde esta nuestro proyecto
+    DocumentRoot /var/www/html/my_project/
+
+    # El WSGIScriptAlias obtiene 2 parámetros el primero hace referencia a la ruta y el segundo al archivo wsgi.py de nuestro proyecto
+    WSGIScriptAlias / /var/www/html/my_project/my_project/wsgi.py
+
+    # El WDGIDaemonProcess recibe los siguientes parámetros
+    # - ServerName
+    # - El ejecutable de Python relacionado al DocumentRoot
+    # - La cantidad de procesos, para lo cual es recomendable dejarlo en 2
+    # - Los threads, del mismo modo se recomienda dejarlo en 15
+    # - Y el nombre a mostrar
+    WSGIDaemonProcess python.<reponame>.dev python-path=/var/www/public/<reponame>:/var/www/public/<reponame>/env/lib/python2.7/site-packages processes=2 threads=15 display-name=%{GROUP}
+    # El WSGIProcessGroup hace referencia al ServerName
+    WSGIProcessGroup python.<reponame>.dev
+
+    <Directory /var/www/public/my_project/ />
+        <Files wsgi.py>
+            Require all granted
+        </Files>
+    </Directory>
+
+    Alias /robots.txt /var/www/public/<reponame>/static/robots.txt
+    Alias /favicon.ico /var/www/public/<reponame>/static/favicon.ico
+
+    # El directorio "static" será el encargado de servir los archivos css, js, etc...
+    Alias /static/ /var/www/html/my_project/static/
+
+    <Directory /var/www/public/<reponame>/static>
+        Require all granted
+    </Directory>
+
+    # El directorio "media" se encarga en este caso de servir las imágenes, videos y demás
+    Alias /media/ /var/www/public/<reponame>/media/
+
+    <Directory /var/www/public/<reponame>/media>
+        Require all granted
+    </Directory>
+
+    # LogLevel info ssl:warn
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    # Include conf-available/serve-cgi-bin.conf
+</VirtualHost>
+
+Falta...
 
 ######################################################
 ########## Instalar y configurar phpMyAdmin ##########
