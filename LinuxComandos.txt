@@ -3272,6 +3272,12 @@ iface eth0 inet dhcp
 
 Y reiniciamos las interfaces de red, con suerte obtendremos una dirección ip de la red.
 
+Podemos intentar un ifup para ver si el dhcp le asigna la dirección ip sin necesidad de reiniciar la maquina o las
+interfaces de red:
+
+# ifup eth0
+
+Luego # ip addr a ver si ya tiene ip, si no es así entonces reiniciaremos las conexiones de red del sistema con los comandos descritos arriba.
 
 ################################################################################
 ##### Restaurar o reiniciar las conexiones de red inalambrica del sistema #####
