@@ -918,7 +918,12 @@ el protocolo HTTP/1.1
 
 ##### Instalación #####
 
-# apt-get install apache2 // Instalar servidor apache, 127.0.0.1 o Localhost en el navegador para visualizar el index de apache.
+# apt-get install apache2 
+
+Nada más instalar el paquete, podremos probar a ver si funciona nuestro flamante servidor web.
+Abrimos cualquier navegador en cualquier equipo que forme parte de la misma red e insertamos en su barra de navegación la dirección
+IP del ordenador que tiene Apache, o en esa misma máquina, la dirección 127.0.0.1 o Localhost en el navegador también nos
+servira para visualizar el index de apache. Si lo muestra es que se instalo correctamente Apache HTTP Server.
 
 /var/www/ ó /var/www/html // Es la carpeta de donde podemos guardar nuestros proyectos, ficheros etc 
 puesto que es la carpeta por defecto de Apache para ese fin, varia según la version de Apache, probablemente
@@ -959,8 +964,17 @@ Sus archivos e configuracion están en etc/apache2
 └── sites-enabled
     └── 000-default.conf -> ../sites-available/000-default.conf
 
-// El archivo de configuración principal es:
+
 /etc/apache2/apache2.conf
+
+Este es el archivo de configuración principal del servidor. Desde aquí se pueden configurar la mayoría de las opciones con las que cuenta
+apache para el servicio. Lee y ordena el resto de los archivos de configuración cuando arranca el servidor.
+El propio archivo "apache2.conf" contiene instrucciones y explicación de cada archivo y directorio del servidor.
+
+ports.conf
+
+Este archivo especifica los puertos de escucha de los hosts virtuales. Se agrega al archivo de configuración "apache2.conf". Se agregan tantos "Listen numpuerto"
+como puertos queramos que escuche nuestro servidor.
 
 ##### Comandos para gestionar apache #####
 
