@@ -1021,6 +1021,26 @@ $ sudo service apache2 reload // Para recargar la configuración del servicio de
 
 $ sudo service apache2 force-reload // Forzar la recargar de configuración del servicio.
 
+##### log de accesos ######
+
+$ sudo tail -f /var/log/apache2/access.log // Para ver el log de acceso via Web al servidor Web Apache.
+
+Ejemplo de una petición, vista en el log:
+
+ip visitante || fecha y hora || Método de acceso || url visitada || codigo http || codigo de estado || ip + url visitada || navegador usando, SO usado, arquitectura usada en la petición
+
+192.168.200.201 - - [31/Aug/2017:14:59:44 -0400] "GET /files/2017/ HTTP/1.1" 200 1287 "http://192.168.200.201/files/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0"
+
+##### log de errores #####
+
+$ sudo tail -f /var/log/apache2/error.log // Para depurar posibles errores del servidor.
+
+##### Borrar apache #####
+
+# apt-get --purge remove apache2*
+
+# rm -fr /etc/apache2
+
 ##### Ejemplo de configuración para un sitio de pruebas #####
 
 Creamos un fichero prueba.conf en /etc/apache2/sites/availables con el siguiente contenido:
@@ -1056,26 +1076,6 @@ service apache2 reload
 Una vez echo esto deberíamos poder visualizar nuestro proyecto en:
 
 127.0.0.1/prueba
-
-##### log de accesos ######
-
-$ sudo tail -f /var/log/apache2/access.log // Para ver el log de acceso via Web al servidor Web Apache.
-
-Ejemplo de una petición, vista en el log:
-
-ip visitante || fecha y hora || Método de acceso || url visitada || codigo http || codigo de estado || ip + url visitada || navegador usando, SO usado, arquitectura usada en la petición
-
-192.168.200.201 - - [31/Aug/2017:14:59:44 -0400] "GET /files/2017/ HTTP/1.1" 200 1287 "http://192.168.200.201/files/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0"
-
-##### log de errores #####
-
-$ sudo tail -f /var/log/apache2/error.log // Para depurar posibles errores del servidor.
-
-##### Borrar apache #####
-
-# apt-get --purge remove apache2*
-
-# rm -fr /etc/apache2
 
 #################
 ##### Nginx #####
