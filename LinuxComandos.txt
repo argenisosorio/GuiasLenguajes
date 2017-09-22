@@ -1444,7 +1444,7 @@ dueño de la aplicación, así como la ruta local o dirección donde está aloja
         <post-buffering>4096</post-buffering>
         <max-requests>1000</max-requests>
         <chdir>/srv/prueba</chdir>
-        <pythonpath>/srv/prueba</pythonpath>
+        <pythonpath>/srv/prueba/prueba/</pythonpath>
         <module>wsgi</module>
         <plugins>python27</plugins>
 </uwsgi>
@@ -1886,7 +1886,11 @@ digital del servidor a veces se debe saltar chequeo de la firma para bajar las f
 
 Probado en Ubuntu 11 y 12 nada más, puede que funcione en anteriores o superiores.
 
-# apt-get install gnome-panel // Luego de reiniciar, saldrá en las opciones de escritorio antes de iniciar sesión.
+# apt-get install gnome-panel
+
+# apt-get install gnome-session-flashback
+
+Luego de reiniciar, saldrá el gnome-classic en las opciones de escritorio antes de iniciar sesión.
 
 ###############################################
 ##### Instalación de xfce en sistema base #####
@@ -3889,6 +3893,10 @@ ruby on rails (Opcional)
 Qt-Creator (Opcional)
 
 ##### Navegador Web Firefox #####
+
+# apt-get install firefox-esr-l10n-es-es // Poner firefox en español
+# apt-get install libreoffice-l10n-es // Poner el libreoffice en español
+# apt-get install libreoffice-l10n-ve // Poner el libreoffice en español de venezuela
 
 Adblock --> https://addons.mozilla.org/es/firefox/addon/adblock-plus/
 
