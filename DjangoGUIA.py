@@ -2998,6 +2998,10 @@ todos los posts cuyo autor es el User ola. Usaremos filter en vez de all.
 >>> User.objects.filter(id=1)
 [<User: admin>]
 
+# Filtrar cuando un objeto contenga la cadena descrita.
+>>> User.objects.filter(username__icontains='ad')
+[<User: admin>]
+
 ##### Ordenando objetos #####
 
 '''
@@ -3054,6 +3058,90 @@ class BitacoraView(ListView):
         #queryset = Bitacora.objects.filter(tipo='Actualización')
         queryset = Bitacora.objects.filter(tipo='Acceso')
         return queryset
+
+#################################
+##### search form in django #####
+#################################
+
+#urls.py
+# -*- coding: utf-8 -*-
+from django.conf.urls import url
+from app import views
+from app.views import *
+import app.views as views
+from .views import AppTemplate
+
+urlpatterns = [
+    url(r'^$', AppTemplate.as_view(), name='app'),
+    url(r'^buscar/$', buscar, name='buscar'),
+    url(r'^busqueda/$', busqueda, name='busqueda'),
+]
+
+-----
+
+#models.py
+# -*- coding: utf-8 -*-
+from django.db import models
+
+
+class Persona(models.Model):
+    nombre = models.CharField(max_length=50)
+    cedula = models.CharField(max_length=8)
+
+    def __unicode__(self):
+        return self.nombre
+
+-----
+
+#views.py
+# -*- coding: utf-8 -*-
+from django.views import generic
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render
+from django.views.generic import *
+from django.core.urlresolvers import *
+from .models import *
+
+
+class AppTemplate(TemplateView):
+    template_name = "app/index.html"
+
+ 
+def buscar(request):
+    return render(request, 'app/buscar.html')
+
+
+def busqueda(request):
+    if 'q' in request.GET and request.GET['q']:
+        q = request.GET['q']
+        personas = Persona.objects.filter(nombre__icontains=q)
+        return render(request, 'app/buscar.html',  {'personas': personas, 'query': q})
+    else:
+        return HttpResponse('Por favor introduce un termino de búsqueda.')
+
+-----
+
+#buscar.html
+{% extends "base/base.html" %}
+{% block titulo %}Buscar{% endblock %}
+{% block cuerpo %}
+<h3>Buscar persona por nombre</h3>
+<form action="/busqueda/" method="get">
+  <input type="text" name="q">
+  <input type="submit" value="Buscar">
+</form>
+{% if personas %}
+<p>Estas buscado: <strong>{{ query }}</strong></p>
+  <p>Personas encontradas: {{ personas|length }} personas.</p>
+  <ul>
+    {% for x in personas %}
+      <li>{{ x.nombre }} | {{ x.cedula }}</li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>Ningúna persona coincide con el criterio de búsqueda.</p>
+{% endif %}
+{% endblock %}
 
 #####################
 ##### form.as_p #####
