@@ -53,6 +53,11 @@ Ctrl + t // Intercambiar de posicion las letras que estan a cada lado del cursor
 
 Ctrl + l // Limpiar el shell
 
+Control + s : Parar la salida por pantalla. Si por ejemplo ejecutamos un comando que
+tiene una salida inmensa, podemos hacer que trabaje en silencio.
+
+Control + q: Permitir la salida por pantalla, inverso al comando anterior.
+
 $ clear // Limpiar el shell
 
 Alt + d // Borrar palabra
@@ -2267,6 +2272,12 @@ que está en /root/.pip/
 # touch /root/.pip/pip.conf
 
 # nano /root/.pip/pip.conf // Y hacemos lo mismo que arriba, copiamos el contenido, guardamos y listo.
+
+A veces no se crea el directorio .pip del usuario entonces lo creamos manualmente
+
+/home/user$ mkdir .pip
+
+root@debian# mkdir .pip // en /root
 
 #############################################
 ########## Conexion remota con ssh ##########
