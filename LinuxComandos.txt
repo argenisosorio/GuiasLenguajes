@@ -2231,6 +2231,8 @@ $ pip install Package --upgrade // Para actualizar un paquete a su última versi
 
 $ pip install --upgrade Package package==1.x.x // Actualizar un paquete a una versión específica.
 
+ $ pip freeze // Listar los paquetes instalado y sus versiones exactas.
+
 ##### Error: ImportError: No module named packaging.version #####
 
 Puede que alguna vez a pip le pique el trasero y no deje realizar acciones
@@ -4020,3 +4022,11 @@ pref("app.update.channel", "false");
 ---
 
 Guardamos, reiniciamos el firefox y listo, actualizaciones desactivadas.
+
+##### Reiniciar un servicio #####
+
+Funcional para GNU/Linux Debian 7 Wheezy
+
+user@debian7:~$ /etc/init.d/ssh 
+force-reload  reload        restart       start         status        stop          try-restart   
+user@debian7:~$ /etc/init.d/ssh restart
