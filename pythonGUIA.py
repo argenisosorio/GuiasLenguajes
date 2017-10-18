@@ -1330,3 +1330,11 @@ if re.match('^[(a-z0-9\_\-\.)]+@[(a-z0-9\_\-\.)]+\.[(a-z)]{2,15}$',correo.lower(
     print "Correo correcto"
 else:
     print "Correo incorrecto"
+
+##############################################################
+##### Importar un ficehero, script, dorectorio en python #####
+##############################################################
+
+import sys  
+sys.path.append(pathToFolderContainingScripts)  
+from scriptName import functionName #scriptName without .py extension 
