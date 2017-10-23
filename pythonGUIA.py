@@ -414,7 +414,7 @@ cuadrado2()
 # raw_input : Devuelve lo ingresado por teclado como si fuera un texto.
 
 #Este programa convierte millas, pies , pulgadas y kilometros a metros
-def main():       
+def main():
     print "Este programa convierte millas, pies, pulgadas y kilometros a metros"
     millas = input("Cuantas millas?: ")
     pies = input("Cuantos pies?: ")
