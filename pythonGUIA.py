@@ -708,28 +708,330 @@ no ordenado de pares clave-valor, siendo las claves únicas dentro de un mismo d
 (es decir que no pueden existir dos elementos con una misma clave).
 Los diccionarios son estructuras de datos muy extendidos en otros lenguajes de programación.
 
+# -*- coding: utf-8 -*-
 #Imprimiendo el contenido del diccionario
-diccionario = {'Clave1':[1,2,3],
-               'Clave2':True
+diccionario = {
+    'Clave1':[
+        1,2,3
+    ],
+    'Clave2':True
 }
 print diccionario
 
+----
+
+# -*- coding: utf-8 -*-
 #Imprimiendo el contenido del diccionario, accedemos a los valores a través de la clave
-diccionario = {'Clave1':[1,2,3],
-               'Clave2':True
+diccionario = {
+    'Clave1':[
+        1,2,3
+    ],
+    'Clave2':True
 }
 print diccionario['Clave1']
 print diccionario['Clave2']
 
+----
+
+# -*- coding: utf-8 -*-
 #Imprimiendo el contenido del diccionario, accedemos a los valores a través de la clave que puede
 #cualquier tipo de dato, una cadena, un entero, etc, pero no listas ni diccionarios
-diccionario = {'Clave1':[1,2,3],
-               'Clave2':True,
-               4:"numero"
+diccionario = {
+    'Clave1':[
+        1,2,3
+    ],
+    'Clave2':True,
+    4:"numero"
 }
 print diccionario['Clave1']
 print diccionario['Clave2']
 print diccionario[4]
+
+----
+
+# -*- coding: utf-8 -*-
+# Imprimir datos de un diccionario por posición
+data = {
+    "usuarios": [
+        {
+            "username":"admin",
+            "password":123456
+        },
+        {
+            "username":"admin1",
+            "password":12345678
+        },
+    ]
+}
+print data["usuarios"]
+print data["usuarios"][0]["username"]
+print data["usuarios"][0]["password"]
+print data["usuarios"][1]["username"]
+print data["usuarios"][1]["password"]
+
+----
+
+# -*- coding: utf-8 -*-
+# Imprimir datos de un diccionario por posición
+data = {
+  "Fruteria":[
+    {
+      "Fruta":[
+        {
+          "Nombre":"Manzana","Cantidad":10
+          },
+          {
+            "Nombre":"Pera","Cantidad":20
+          },
+          {
+            "Nombre":"Naranja","Cantidad":30
+          }
+      ]
+    },
+    {
+      "Verdura":[
+        {
+          "Nombre":"Lechuga","Cantidad":80
+        },
+        {
+          "Nombre":"Tomate","Cantidad":15
+        },
+        {
+          "Nombre":"Pepino","Cantidad":50
+        }
+      ]
+    }
+  ]
+}
+print data["Fruteria"][0]["Fruta"][0]["Cantidad"]
+print data["Fruteria"][0]["Fruta"][1]["Cantidad"]
+print data["Fruteria"][0]["Fruta"][2]["Cantidad"]
+print "---"
+print data["Fruteria"][0]["Fruta"][0]["Nombre"]
+print data["Fruteria"][0]["Fruta"][1]["Nombre"]
+print data["Fruteria"][0]["Fruta"][2]["Nombre"]
+print "---"
+print data["Fruteria"][1]["Verdura"][0]["Cantidad"]
+print data["Fruteria"][1]["Verdura"][1]["Cantidad"]
+print data["Fruteria"][1]["Verdura"][2]["Cantidad"]
+
+##########################
+##### Manejando json #####
+##########################
+
+JSON es una notación de objetos, utiliza una sintaxis que nos permite crear objetos de
+manera rapida y simple, estos objetos pueden ser utilizados de la manera que queramos y la notación se
+utiliza muy comúnmente para crear servicios REST, objetos, e incluso fue adoptada por algunas bases de
+datos como lo es MongoDB.
+
+Básicamente es un diccionario de python que guarda objetos.
+
+Para escribir JSON debemos tener en cuenta lo siguiente:
+La creación de los objetos JSON implica escribir datos, para ello:
+
+-Los objetos JSON estan rodeados por llaves “{}”
+-Los datos estan separados por comas.
+-Los datos se escriban en pares, siendo primero el nombre o atributo del mismo y luego el valor del dato.
+-Llaves cuadradas [] guardan arreglos, incluyendo otros objetos JSON
+
+El formato JSON tiene la siguiente notación:
+
+{key : value, key2 : value2, key3 : value3,...}
+
+Y también puede ser serializado y multidimensional, por ejemplo:
+
+[{key : value, key2 : value2, key3 : value3, key : { key : value, key2 : value2, key3 : value3} },{key : value, key2 : value2, key3 : value3,...}]
+
+Ejemplo de un objeto JSON que guarda un usuario y password:
+
+# -*- coding: utf-8 -*-
+var = {"usuario":"user","password":"123456"};
+print var
+
+----
+
+# -*- coding: utf-8 -*-
+# Imprimir datos de un diccionario
+import json
+data = {"Fruteria":[{"Fruta":[{"Nombre":"Manzana","Cantidad":10},{"Nombre":"Pera","Cantidad":20}]}]}
+print data
+print "-----"
+#Nos devuelve el string con el JSON
+data_string = json.dumps(data)
+print data_string
+
+---
+
+# -*- coding: utf-8 -*-
+# Decodificar JSON
+# Para decodificar un JSON a vamos a hacer uso de la función json_loads(String)
+import json
+data = {"Fruteria":[{"Fruta":[{"Nombre":"Manzana","Cantidad":10},{"Nombre":"Pera","Cantidad":20}]}]}
+data_string = json.dumps(data)
+print 'ENCODED:', data_string
+decoded = json.loads(data_string)
+print 'DECODED:', decoded
+
+---
+
+# -*- coding: utf-8 -*-
+# Decodificar JSON
+# Imprimir valores del json, por posíción
+import json
+data = {
+  "Fruteria":[
+    {
+      "Fruta":[
+        {
+          "Nombre":"Manzana","Cantidad":10
+          },
+          {
+            "Nombre":"Pera","Cantidad":20
+          },
+          {
+            "Nombre":"Naranja","Cantidad":30
+          }
+      ]
+    },
+    {
+      "Verdura":[
+        {
+          "Nombre":"Lechuga","Cantidad":80
+        },
+        {
+          "Nombre":"Tomate","Cantidad":15
+        },
+        {
+          "Nombre":"Pepino","Cantidad":50
+        }
+      ]
+    }
+  ]
+}
+#encoded
+data_string = json.dumps(data)
+#Decoded
+decoded = json.loads(data_string)
+print "Tenemos "+str(decoded["Fruteria"][0]["Fruta"][0]["Cantidad"])+" Manzanas"
+print "Tenemos "+str(decoded["Fruteria"][0]["Fruta"][1]["Cantidad"])+" Peras"
+print "Tenemos "+str(decoded["Fruteria"][0]["Fruta"][2]["Cantidad"])+" Naranjas"
+print "Tenemos "+str(decoded["Fruteria"][1]["Verdura"][0]["Cantidad"])+" Lechugas"
+print "Tenemos "+str(decoded["Fruteria"][1]["Verdura"][1]["Cantidad"])+" Tomates"
+print "Tenemos "+str(decoded["Fruteria"][1]["Verdura"][2]["Cantidad"])+" Pepino"
+
+---
+
+# -*- coding: utf-8 -*-
+# Decodificar JSON
+# Imprimir valores del json, por posíción
+import json
+data = {
+  "Fruteria":[
+    {
+      "Fruta":[
+        {
+          "Nombre":"Manzana","Cantidad":10
+          },
+          {
+            "Nombre":"Pera","Cantidad":20
+          },
+          {
+            "Nombre":"Naranja","Cantidad":30
+          }
+      ]
+    },
+    {
+      "Verdura":[
+        {
+          "Nombre":"Lechuga","Cantidad":80
+        },
+        {
+          "Nombre":"Tomate","Cantidad":15
+        },
+        {
+          "Nombre":"Pepino","Cantidad":50
+        }
+      ]
+    }
+  ]
+}
+# Mostrando la data completa
+print "*****Data total*****"
+print data
+
+# Mostrando la data del primer hijo
+print "*****Data Frutas*****"
+print data['Fruteria'][0]
+
+# Mostrando la data del segundo hijo
+print "*****Data Verduras*****"
+print data['Fruteria'][1]
+
+---
+
+# -*- coding: utf-8 -*-
+# Decodificar JSON
+# Imprimir valores del json, por posíción, accediendo al último nivel
+import json
+data = {
+  "Fruteria":[
+    {
+      "Fruta":[
+        {
+          "Nombre":"Manzana","Cantidad":10
+          },
+          {
+            "Nombre":"Pera","Cantidad":20
+          },
+          {
+            "Nombre":"Naranja","Cantidad":30
+          }
+      ]
+    },
+    {
+      "Verdura":[
+        {
+          "Nombre":"Lechuga","Cantidad":80
+        },
+        {
+          "Nombre":"Tomate","Cantidad":15
+        },
+        {
+          "Nombre":"Pepino","Cantidad":50
+        }
+      ]
+    }
+  ]
+}
+# Mostrando la data completa
+print "*****Data total*****"
+print data
+
+# Mostrando la data del primer hijo
+print "*****Data Frutas*****"
+print data['Fruteria'][0]
+
+# Mostrando la data del segundo hijo
+print "*****Data Verduras*****"
+print data['Fruteria'][1]
+
+# Mostrando la data de los elementos de Frutas
+print "*****Data de elementos de Frutas *****"
+print data['Fruteria'][0]["Fruta"][0]["Nombre"]
+print data['Fruteria'][0]["Fruta"][0]["Cantidad"]
+print data['Fruteria'][0]["Fruta"][1]["Nombre"]
+print data['Fruteria'][0]["Fruta"][1]["Cantidad"]
+print data['Fruteria'][0]["Fruta"][2]["Nombre"]
+print data['Fruteria'][0]["Fruta"][2]["Cantidad"]
+
+# Mostrando la data de los elementos de Verduras
+print "*****Data de elementos de Verduras *****"
+print data['Fruteria'][1]["Verdura"][0]["Nombre"]
+print data['Fruteria'][1]["Verdura"][0]["Cantidad"]
+print data['Fruteria'][1]["Verdura"][1]["Nombre"]
+print data['Fruteria'][1]["Verdura"][1]["Cantidad"]
+print data['Fruteria'][1]["Verdura"][2]["Nombre"]
+print data['Fruteria'][1]["Verdura"][2]["Cantidad"]
 
 ##################
 ##### Clases #####
@@ -1084,193 +1386,6 @@ $ python
 >>> print now
 2017-01-05 04:08:15.932157
 
-##########################
-##### Manejando json #####
-##########################
-
-# -*- coding: utf-8 -*-
-# Imprimir datos de un diccionario
-import json
-data = {"Fruteria":[{"Fruta":[{"Nombre":"Manzana","Cantidad":10},{"Nombre":"Pera","Cantidad":20}]}]}
-print data
-print "-----"
-#Nos devuelve el string con el JSON
-data_string = json.dumps(data)
-print data_string
-
----
-
-# -*- coding: utf-8 -*-
-# Decodificar JSON
-# Para decodificar un JSON a vamos a hacer uso de la función json_loads(String)
-import json
-data = {"Fruteria":[{"Fruta":[{"Nombre":"Manzana","Cantidad":10},{"Nombre":"Pera","Cantidad":20}]}]}
-data_string = json.dumps(data)
-print 'ENCODED:', data_string
-decoded = json.loads(data_string)
-print 'DECODED:', decoded
-
----
-
-# -*- coding: utf-8 -*-
-# Decodificar JSON
-# Imprimir valores del json, por posíción
-import json
-data = {
-  "Fruteria":[
-    {
-      "Fruta":[
-        {
-          "Nombre":"Manzana","Cantidad":10
-          },
-          {
-            "Nombre":"Pera","Cantidad":20
-          },
-          {
-            "Nombre":"Naranja","Cantidad":30
-          }
-      ]
-    },
-    {
-      "Verdura":[
-        {
-          "Nombre":"Lechuga","Cantidad":80
-        },
-        {
-          "Nombre":"Tomate","Cantidad":15
-        },
-        {
-          "Nombre":"Pepino","Cantidad":50
-        }
-      ]
-    }
-  ]
-}
-#encoded
-data_string = json.dumps(data)
-#Decoded
-decoded = json.loads(data_string)
-print "Tenemos "+str(decoded["Fruteria"][0]["Fruta"][0]["Cantidad"])+" Manzanas"
-print "Tenemos "+str(decoded["Fruteria"][0]["Fruta"][1]["Cantidad"])+" Peras"
-print "Tenemos "+str(decoded["Fruteria"][0]["Fruta"][2]["Cantidad"])+" Naranjas"
-print "Tenemos "+str(decoded["Fruteria"][1]["Verdura"][0]["Cantidad"])+" Lechugas"
-print "Tenemos "+str(decoded["Fruteria"][1]["Verdura"][1]["Cantidad"])+" Tomates"
-print "Tenemos "+str(decoded["Fruteria"][1]["Verdura"][2]["Cantidad"])+" Pepino"
-
----
-
-# -*- coding: utf-8 -*-
-# Decodificar JSON
-# Imprimir valores del json, por posíción
-import json
-data = {
-  "Fruteria":[
-    {
-      "Fruta":[
-        {
-          "Nombre":"Manzana","Cantidad":10
-          },
-          {
-            "Nombre":"Pera","Cantidad":20
-          },
-          {
-            "Nombre":"Naranja","Cantidad":30
-          }
-      ]
-    },
-    {
-      "Verdura":[
-        {
-          "Nombre":"Lechuga","Cantidad":80
-        },
-        {
-          "Nombre":"Tomate","Cantidad":15
-        },
-        {
-          "Nombre":"Pepino","Cantidad":50
-        }
-      ]
-    }
-  ]
-}
-# Mostrando la data completa
-print "*****Data total*****"
-print data
-
-# Mostrando la data del primer hijo
-print "*****Data Frutas*****"
-print data['Fruteria'][0]
-
-# Mostrando la data del segundo hijo
-print "*****Data Verduras*****"
-print data['Fruteria'][1]
-
----
-
-# -*- coding: utf-8 -*-
-# Decodificar JSON
-# Imprimir valores del json, por posíción, accediendo al último nivel
-import json
-data = {
-  "Fruteria":[
-    {
-      "Fruta":[
-        {
-          "Nombre":"Manzana","Cantidad":10
-          },
-          {
-            "Nombre":"Pera","Cantidad":20
-          },
-          {
-            "Nombre":"Naranja","Cantidad":30
-          }
-      ]
-    },
-    {
-      "Verdura":[
-        {
-          "Nombre":"Lechuga","Cantidad":80
-        },
-        {
-          "Nombre":"Tomate","Cantidad":15
-        },
-        {
-          "Nombre":"Pepino","Cantidad":50
-        }
-      ]
-    }
-  ]
-}
-# Mostrando la data completa
-print "*****Data total*****"
-print data
-
-# Mostrando la data del primer hijo
-print "*****Data Frutas*****"
-print data['Fruteria'][0]
-
-# Mostrando la data del segundo hijo
-print "*****Data Verduras*****"
-print data['Fruteria'][1]
-
-# Mostrando la data de los elementos de Frutas
-print "*****Data de elementos de Frutas *****"
-print data['Fruteria'][0]["Fruta"][0]["Nombre"]
-print data['Fruteria'][0]["Fruta"][0]["Cantidad"]
-print data['Fruteria'][0]["Fruta"][1]["Nombre"]
-print data['Fruteria'][0]["Fruta"][1]["Cantidad"]
-print data['Fruteria'][0]["Fruta"][2]["Nombre"]
-print data['Fruteria'][0]["Fruta"][2]["Cantidad"]
-
-# Mostrando la data de los elementos de Verduras
-print "*****Data de elementos de Verduras *****"
-print data['Fruteria'][1]["Verdura"][0]["Nombre"]
-print data['Fruteria'][1]["Verdura"][0]["Cantidad"]
-print data['Fruteria'][1]["Verdura"][1]["Nombre"]
-print data['Fruteria'][1]["Verdura"][1]["Cantidad"]
-print data['Fruteria'][1]["Verdura"][2]["Nombre"]
-print data['Fruteria'][1]["Verdura"][2]["Cantidad"]
-
 ##################
 ##### Base64 #####
 ##################
@@ -1294,6 +1409,20 @@ imgdata = base64.b64decode(image)
 filename = 'fff.png'  #Nombre con el que se va a crear la imágen 
 with open(filename, 'wb') as f:
     f.write(imgdata)
+
+----
+
+# -*- coding: utf-8 -*-
+# Decodificar y Codificar en un solo script usando base64 en python
+import base64
+with open("firefox-icon.png", "rb") as f:
+    data = f.read()
+    data1 = data.encode("base64")
+    imgdata = base64.b64decode(data1)
+    filename = 'fff.png'
+    with open(filename, 'wb') as f:
+        f.write(imgdata)
+
 
 #######################################################
 ##### Script para copiar un fichero a un servidor #####
