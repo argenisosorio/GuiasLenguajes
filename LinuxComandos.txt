@@ -1742,7 +1742,7 @@ x.gob.ve.key
 x.gob.ve.key.gob
 
 #################
-##### RSYNC #####
+##### rsync #####
 #################
 
 Es una aplicación que ofrece transmisión eficiente de datos, que opera también con datos comprimidos y cifrados.
@@ -1750,7 +1750,7 @@ Mediante una técnica de delta encoding, permite sincronizar archivos y director
 o entre dos ubicaciones en una misma máquina, minimizando el volumen de datos transferidos.
 Muy recomendable para hacer respaldos en discos externos.
 
-aptitude install rsync // Instalarlo desde los repositorios de debian
+# apt-get install rsync // Para instalarlo
 
 Parametros: -P para mostrar el progreso de la copia y -r cuando se van a copiar directorios
 
@@ -3790,15 +3790,15 @@ deb-src http://debian.cenditel/debian-security stretch/updates main
 
 ##### CENDITEL mirror - Debian GNU/Linux 8 (Jessie) Estable #####
 
-deb http://debian.cenditel/debian/ jessie main
-deb-src http://debian.cenditel/debian/ jessie main
+deb http://debian.cenditel/debian/ jessie main contrib non-free
+deb-src http://debian.cenditel/debian/ jessie main contrib non-free
 
 # jessie-updates, previously known as 'volatile'
-deb http://debian.cenditel/debian/ jessie-updates main
-deb-src http://debian.cenditel/debian/ jessie-updates main
+deb http://debian.cenditel/debian/ jessie-updates main contrib non-free
+deb-src http://debian.cenditel/debian/ jessie-updates main contrib non-free
 
-#deb http://repositorio.cenditel.gob.ve/debian/ jessie main
-#deb http://tibisay.cenditel.gob.ve/repositorio jessie main
+#deb http://repositorio.cenditel.gob.ve/debian/ jessie main contrib non-free
+#deb http://tibisay.cenditel.gob.ve/repositorio jessie main contrib non-free
 
 # Agregar la llave del repositorio al sistema, como root escribimos:
 # wget -q -O- http://repositorio.cenditel.gob.ve/debian/repositorio_cenditel.asc | apt-key add -

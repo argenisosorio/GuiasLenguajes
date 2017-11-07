@@ -845,8 +845,10 @@ Y también puede ser serializado y multidimensional, por ejemplo:
 Ejemplo de un objeto JSON que guarda un usuario y password:
 
 # -*- coding: utf-8 -*-
-var = {"usuario":"user","password":"123456"};
-print var
+# Imprimir datos de un diccionario
+data = {"usuarios":[{"username":"admin","password":123456}]}
+print data["usuarios"]
+print data
 
 ----
 
