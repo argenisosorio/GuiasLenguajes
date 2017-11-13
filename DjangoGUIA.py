@@ -3157,6 +3157,23 @@ como los otros atributos propios como label, requiered, etc.
   <input type="submit" value="Submit" />
 </form>
 
+##############################################
+##### Usando los labels en el formulario #####
+##############################################
+
+<form method="post">{% csrf_token %}
+    {{ form.username.label }}
+    <br />
+    {{ form.username }}
+    <br />
+    {{ form.password.label }}
+    <br />
+    {{ form.password }}
+    <br />
+    <button class="btn btn-info" type="reset">Limpiar</button>
+    <button class="btn btn-success" type="submit">Entrar</button>
+  </form>
+
 #############################################
 ##### Ejemplo de .gitignore para Django #####
 #############################################
