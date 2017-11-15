@@ -932,6 +932,7 @@ admin.site.register(Post)
 ##### Pasando un diccionario en el render #####
 ###############################################
 
+"""
 xdata = ["Apple", "Apricot", "Avocado", "Banana", "Boysenberries", "Blueberries", "Dates", "Grapefruit", "Kiwi", "Lemon"]
 ydata = [52, 48, 160, 94, 75, 71, 490, 82, 46, 17]
 chartdata = {'x': xdata, 'y': ydata}
@@ -948,6 +949,8 @@ data = {
         'jquery_on_ready': False,
     }
 }
+"""
+data = {'x': "xxxx", 'y': "yyyy"}
 return render_to_response('piechart.html', data)
 
 ##################################################
@@ -969,6 +972,30 @@ class Xxx(TemplateView):
   {{ data.x }}<br />
   {{ data.y }}
 </div>
+
+######################################################################
+##### Contando objetos con querysets y pasando datos al template #####
+######################################################################
+
+# views.py
+def datos(request):
+    x = Persona.objects.filter(voto__icontains='d').count()
+    y = Persona.objects.filter(voto__icontains='n').count()
+    z = Persona.objects.filter(voto__icontains='c').count()    
+    data = {
+      'x': x,
+      'y': y,
+      'z': z,
+    }
+    print "----------"
+    print data
+    return render_to_response('registro/datos.html', {'data':data})
+
+# template.html
+<h3>Datos</h3>
+{{ data.x }}
+{{ data.y }}
+{{ data.z }}
 
 ##############################################
 ##### Declarando variable en el template #####
@@ -1013,6 +1040,8 @@ Superuser created successfully.
 LOGIN_URL = "/login"
 
 # Usandolo en una función en views.py
+from django.template import RequestContext
+
 @login_required(login_url='/')
 def index(request):
     user = request.user
@@ -1143,6 +1172,8 @@ la variable lista_atletas:
 En este caso tenemos una vista que renderiza una bitacora de eventos
 y que solo se podrá acceder si es superusuario entonces queda así:
 '''
+
+from django.template import RequestContext
 
 class BitacoraView(ListView):
     """
@@ -3022,6 +3053,13 @@ Los QuerySets también te permiten ordenar la lista de objetos. Intentemos orden
 # Ordenar los objetos por cedula
 >>> Persona.objects.order_by('cedula')
 [<Persona: maria>, <Persona: karla>, <Persona: aosorio>]
+
+# Contar todos los objetos
+x = Persona.objects.count()
+print x
+
+# Contar todos los objetos que contengan admin en el username
+x = Persona.objects.filter(username__icontains='admin').count()
 
 ##### Limitando el número de objetos a consultar #####
 
