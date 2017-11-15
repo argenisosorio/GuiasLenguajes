@@ -409,3 +409,35 @@ class UsersList(generics.ListAPIView):
 # de OPTIONS y GET que nos permitirá filtrar a traves de un formulario y obtener urls como la siguiente:
 
 http://192.168.12.148:8000/users/?id=1
+
+###########################################
+##### Leyendo un query en el template #####
+###########################################
+
+# views.py
+class Index(TemplateView):
+    template_name = "index.html"
+
+    def get(self,request,*args, **kwargs):
+        data = User.objects.all().order_by('-date_joined')
+        return render(request,self.template_name, {'data':data})
+
+# index.html
+<table border="1px" width="100%" cellspacing="0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Username</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for x in data %}
+    <tr>
+      <td>{{ x.id }}</td>
+      <td>{{ x.username }}</td>
+      <td>{{ x.email }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
