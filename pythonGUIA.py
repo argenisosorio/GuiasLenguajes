@@ -471,6 +471,7 @@ prueba()
 ##### FOR #####
 ###############
 
+# -*- coding: utf-8 -*-
 def prueba(): 
     n1 = 0    
     n2 = 10
@@ -488,7 +489,6 @@ prueba()
 """
 Imprimir un numero x cantidad de veces
 """
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 def prueba():
     for i in range(5):

@@ -3205,3 +3205,25 @@ is_staff
 is_active
 date_joined
 username
+
+
+############################
+##### Reiniciar id_seq #####
+############################
+
+Con PhpPgAdmin
+
+// instalacion
+# aptitude install phppgadmin
+
+http://localhost/phppgadmin/ // Interfaz grafica en el navegador web
+
+El usuario y contraseña para conectarse debe ser un usuario de postgres.
+
+Entramos en la db, luego en public, luego en secuencias, luego en app_model_id_seq, modificar
+el campo que dice "reiniciar valor" que equivale al campo "last_value" de la tabla app_model_id_seq
+
+Por ahora me ha servido para reiniciar las secuencias de las tablas de django y esto permite
+por ejemplo, que al restaurar valores desde un csv, permite insertar nuevos registros en la tabla.
+
+Si hay 3976 registros se debe configurar que el último valor es 3977 para que guarde bien en la tabla.
