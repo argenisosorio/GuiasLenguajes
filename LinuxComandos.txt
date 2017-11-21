@@ -4029,10 +4029,18 @@ pref("app.update.channel", "false");
 
 Guardamos, reiniciamos el firefox y listo, actualizaciones desactivadas.
 
+#################################
 ##### Reiniciar un servicio #####
+#################################
 
 Funcional para GNU/Linux Debian 7 Wheezy
 
 user@debian7:~$ /etc/init.d/ssh 
 force-reload  reload        restart       start         status        stop          try-restart   
 user@debian7:~$ /etc/init.d/ssh restart
+
+##### Copiar un imagen .iso en unidad USB #####
+
+// Para hacerlo booteable, debe estar desmontado pero conectado en el puerto usb.
+
+$ cat xxxx.iso > /dev/sdxxx ; sync
