@@ -1463,9 +1463,10 @@ else:
     print "Correo incorrecto"
 
 ##############################################################
-##### Importar un ficehero, script, dorectorio en python #####
+##### Importar un ficehero, script, directorio en python #####
 ##############################################################
 
-import sys  
-sys.path.append(pathToFolderContainingScripts)  
-from scriptName import functionName #scriptName without .py extension 
+import sys
+sys.path.append(pathToFolderContainingScripts)
+from scriptName import functionName #scriptName without .py extension
+
