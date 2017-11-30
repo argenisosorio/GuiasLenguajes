@@ -480,11 +480,15 @@ def prueba():
         #print x+x
 prueba()
 
+----
+
 #---Secuencia a mano
 def prueba(): 
     for x in [1, 3, 9, 27]:
         print x #Imprimirá los los números 1, 3, 9 y 27
 prueba()
+
+----
 
 """
 Imprimir un numero x cantidad de veces
@@ -495,6 +499,19 @@ def prueba():
         print("1")
 prueba()
 
+----
+
+"""
+Imprimir un numero x cantidad de veces
+"""
+# -*- coding: utf-8 -*-
+def prueba(): 
+    n1 = 0
+    n2 = 9000
+    for x in range(n1, n2):
+        print x #Imprime números del 0 hasta el 900 usando el cilco repetitivo
+        #print x+x
+prueba()
 
 ##############
 ##### IF #####
