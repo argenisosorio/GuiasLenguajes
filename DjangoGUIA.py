@@ -2165,8 +2165,8 @@ redundancia entre las plantillas.
 Estos dos ejemplos incluyen el contenido de la plantilla nav.html. Los ejemplos son
 equivalentes e ilustran que cualquier modo de comillas está permitido:
  
-{% include 'nav.html' %} 
-{% include "nav.html" %} 
+{% include 'nav.html' %}
+{% include "nav.html" %}
 
 Por convención las plantillas que van a ser incluidas se guardan en un
 directorio "includes". En el ejemplo incluímos el contenido de la plantilla includes/nav.html:
