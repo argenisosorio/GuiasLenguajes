@@ -1487,3 +1487,11 @@ import sys
 sys.path.append(pathToFolderContainingScripts)
 from scriptName import functionName #scriptName without .py extension
 
+################################################################
+##### Enlace simbólico a las version de python por defecto #####
+################################################################
+
+/usr/bin/python
+
+Si queremos cambiar de version por defecto de python, entonces borramos /usr/bin/python creamos un enlace simbólico /usr/bin/python que apunte a python 3.x
+
