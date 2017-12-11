@@ -4053,3 +4053,40 @@ $ cat xxxx.iso > /dev/sdxxx ; sync
 
 # apt-get install apt-transport-https
 
+#############################################################
+##### Winetricks, Instalando librerias (DLLs) para Wine #####
+#############################################################
+
+Fuente: https://ubuntulife.wordpress.com/2008/10/16/winetricks-instalando-librerias-dlls-para-wine/
+
+Wine es la aplicacion que generalmente empleamos para ejecutar aplicaciones de Windows en Linux, pero muchas veces, la aplicacion falla porque no tenemos una determinada libreria de enlace dinamico (DLL) instalada.
+Winetricks es un script que nos va a ayudar un poco en esta faena, con este script podemos descargar e instalar en wine, las principales librerias que nos solicitan los programas windows.
+
+Para instalarlo:
+
+$ wget http://www.kegel.com/wine/winetricks
+
+Le damos permisos de ejecucion:
+
+$ chmod +x ./winetricks
+
+Y si quisieramos ya instalar una determinada libreria, podriamos hacerlo directamente. Por ejemplo:
+
+$ sh winetricks corefonts vcrun6
+
+Para instalar unas fuentes de texto, y el runtime de VisualC.
+
+Si lo ejecutamos sin parametros, se abre una ventana y nos permite seleccionar las librerias a instalar.
+
+#################
+##### xkill #####
+#################
+
+Probado en gnome-desktop
+
+xkill permite formar el cierre de programas rebeldes desde la interfáz gráfica, con solo escribir
+xkill en la consola el cursor del mouse se transforma en una calavera, acto seguido podemos cliquear
+derecho sobre alguna ventana para matar ese proceso.
+
+$ xkill
+
