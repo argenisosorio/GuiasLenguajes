@@ -1409,6 +1409,33 @@ $ python
 ##### Base64 #####
 ##################
 
+'''
+-- ¿Qué es la codificación Base64?
+
+El Base64 es la manera en que los datos binarios de 8 bits se codifican a un formato que pueda ser representado en 7 bits.
+Esto se hace utilizando sólo los caracteres A-Z, a-z, 0-9, +, y / con el fin de representar los datos.
+El término base 64 viene del estándar Multipurpose Internet Mail Extensions (MIME), que es ampliamente utilizado para HTTP y XML, y
+fue desarrollado originalmente para la codificación de adjuntos de los correos electrónicos y su correcta transmisión. 
+
+-- ¿Por qué utilizamos Base64?
+
+Base64 es muy importante para la representación de datos binarios, tanto que permite que los datos binarios puedan ser
+representados de manera que parezcan y actúen como texto sin formato. Esto hace que sea más seguro almacenarlos en bases
+de datos, enviarlos a través de correo electrónico o utilizarlos en formatos basados en texto como XML. Base64 se utiliza
+básicamente para representar datos en formato ASCII.
+
+-- La codificación Base64
+
+La codificación Base64 es el proceso de convertir los datos binarios, en un juego de caracteres limitado a 64 caracteres.
+Como hemos dicho en la primera sección, esos caracteres son A-Z, a-z, 0-9, +, y / (¿Los has contado?, ¿te has dado cuenta
+de que se suman 64?). Este conjunto de caracteres se considera el conjunto de caracteres más común, y se conoce como el Base64
+de MIME. Utiliza A-Z, a-z, 0-9, +, y / para los primeros 62 valores, y +, y / para los dos últimos valores.
+
+Los datos codificados en Base64 terminan siendo más grandes que los datos originales, de manera que, como hemos dicho antes, por cada 3
+bytes de datos binarios, hay al menos 4 bytes de datos codificados en Base64. Esto es debido al hecho de que estás apretando los datos en
+un conjunto más pequeño de caracteres. 
+'''
+
 # -*- coding: utf-8 -*-
 # Codificar con base64 una imágen
 with open("path/of/file.*", "rb") as f:
