@@ -1522,3 +1522,10 @@ from scriptName import functionName #scriptName without .py extension
 
 Si queremos cambiar de version por defecto de python, entonces borramos /usr/bin/python creamos un enlace simbólico /usr/bin/python que apunte a python 3.x
 
+####################################################################################
+##### Descarga de archivos desde una url http y almacenarlo en disco en Python #####
+####################################################################################
+
+# -*- coding: utf-8 -*-
+import urllib
+urllib.urlretrieve ("http://192.168.12.82/x.zip", "x.zip")

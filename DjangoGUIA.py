@@ -1468,6 +1468,7 @@ class Meta:
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import redirect
 from django.views.generic import TemplateView, CreateView, ListView, UpdateView, DeleteView
 from django.views import generic
 from django.core.urlresolvers import reverse_lazy
@@ -3265,3 +3266,108 @@ Por ahora me ha servido para reiniciar las secuencias de las tablas de django y 
 por ejemplo, que al restaurar valores desde un csv, permite insertar nuevos registros en la tabla.
 
 Si hay 3976 registros se debe configurar que el último valor es 3977 para que guarde bien en la tabla.
+
+################################
+#### Upload file in django #####
+################################
+
+# Activamos las siguientes variables en el settings, y le damos la ruta donde se va a almacenar el fichero adjunto
+
+# settings.py
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# urls.py
+url(r'^file$', views.file, name='file'),
+
+# views.py
+from django.shortcuts import render
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+
+
+def file(request):
+    if request.method == 'POST' and request.FILES['myfile']:
+        myfile = request.FILES['myfile']
+        fs = FileSystemStorage()
+        filename = fs.save(myfile.name, myfile)
+        uploaded_file_url = fs.url(filename)
+        return render(request, 'registro/file.html', {
+            'uploaded_file_url': uploaded_file_url
+        })
+    return render(request, 'registro/file.html')
+
+
+# file.html
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+  <input type="file" name="myfile">
+  <br />
+  <button type="submit">Upload</button>
+</form>
+{% if file %}
+  <p>File uploaded at: <a href="{{ file }}">{{ file }}</a></p>
+{% endif %}
+
+########################################
+##### File Upload With Model Forms #####
+########################################
+
+# Activamos las siguientes variables en el settings, y le damos la ruta donde se va a almacenar el fichero adjunto
+
+# settings.py
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# urls.py
+url(r'^file$', views.file, name='file'),
+
+# models.py
+# -*- coding: utf-8 -*-
+from django.db import models
+from django.core.urlresolvers import reverse
+
+
+class Document(models.Model):
+    description = models.CharField(max_length=255, blank=True)
+    document = models.FileField(upload_to='')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+# forms.py
+# -*- coding: utf-8 -*-
+from django import forms
+from registro.models import Document
+
+
+class DocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ('description', 'document', )
+
+# views.py
+# -*- coding: utf-8 -*-
+from django.http import HttpResponse, HttpResponseRedirect
+from registro.models import Document
+from registro.forms import DocumentForm
+from django.shortcuts import render
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from django.shortcuts import redirect
+
+
+def file(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('registro:consultar')
+    else:
+        form = DocumentForm()
+    return render(request, 'registro/file.html', {
+        'form': form
+    })
+
+# file.html
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Upload</button>
+</form>
