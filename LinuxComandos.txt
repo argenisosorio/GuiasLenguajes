@@ -672,13 +672,15 @@ $ du -hs /var/cache/apt/archives
 ########## Comprimir/Descomprimir archivos ##########
 #####################################################
 
-paquete.tar y paquete.tar.gz  // tar se refiere a un formato de archivos ampliamente usado en
+tar se refiere a un formato de archivos ampliamente usado en
 entornos UNIX identificados por el sufijo de archivo .tar.. Además hace referencia al programa
 para la manipulación de archivos que es estándar en estos entornos, pero no incluye la
 compresión de los mismos.
 
-tar -cvf paquete.tar directorio // Comprimir un directorio, le damos los parametros de compresion, asi como el nombre del paquete
+// Comprimir un directorio, le damos los parametros de compresion, así como el nombre del paquete
 y el directorio que vamos a comprimir.
+
+$ tar -cvf paquete.tar nombre_directorio 
 
 -c : indica a tar que cree un archivo
 -x : extraer un archivo
@@ -687,23 +689,44 @@ y el directorio que vamos a comprimir.
 -f : indica a tar que el siguiente argumento es el nombre del fichero.tar
 -z : comprimir a la vez que se empaqueta
 
-tar -cvf paquete.tar archivo.txt // Creara un paquete con el nombre que le dimos y contiene el archivo.txt 
+// Crear un paquete con el nombre que le dimos y contiene el archivo.txt 
 
-tar -xvf paquete.tar // Descomprimir un paquete
+$ tar -cvf paquete.tar archivo.txt
 
-Descomprimir paquetes.tar.bz2
-tar -xjvf example.tar.bz2
+// Descomprimir un paquete
 
-Ficheros: .tar.gz:
-Comprimir: $ tar -czvf paquete.tar.gz nombre_directorio
-Comprimir: $ tar -czvf paquete.tar.gz nombre_fichero.xxx
-Descomprimir: $ tar -xzvf paquete.tar.gz
+$ tar -xvf paquete.tar
 
-Ficheros: .gz:
-Comprimir: $ gzip -9 index.php
-Descomprimir: $ gzip -d index.php.gz
+##### Descomprimir paquetes.tar.bz2 #####
 
-Descomprimir ficheros: .tar.xz
+$ tar -xjvf example.tar.bz2
+
+##### Ficheros: .tar.gz #####
+
+// Comprimir un directorio
+
+$ tar -czvf paquete.tar.gz nombre_directorio
+
+// Comprimir un fichero
+
+$ tar -czvf paquete.tar.gz nombre_fichero.xxx
+
+// Descomprimir
+
+$ tar -xzvf paquete.tar.gz
+
+##### Ficheros: .gz: #####
+
+// Comprimir
+
+$ gzip -9 ficehro.txt
+
+// Descomprimir
+
+$ gzip -d fichero.gz
+
+##### Descomprimir .tar.xz #####
+
 $ tar Jxvf fichero.tar.xz
 
 -------------
