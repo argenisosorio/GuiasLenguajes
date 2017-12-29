@@ -1,35 +1,12 @@
-##### Guía de comandos en GNU/Linux by dM #####
+##### Guía de comandos en GNU/Linux Debian by dM #####
 
-##### Los Mandamientos de los nuevos y no tan nuevos usuarios de GNU/Linux #####
+Probados en: Debian GNU/Linux 7 (wheezy) y algunos en Debian GNU/Linux 8 (Jessie)
 
-- Usaras el administrador de Paquetes en lo posible. A veces no se puede evitar tener que instalar desde el código fuente, pero cuando usas el
-administrador de paquetes de tu distribución para instalar software, también lo puedes usar para actualizarlo y des instalarlo.
-Este es uno de los puntos fuertes de Linux.
+#########################################################
+##### Comandos para mostrar información del sistema #####
+#########################################################
 
-- Seras parte de una comunidad, ofrece por voluntad propia lo que has recibido gratuitamente. Ofrece ayuda y consejos cada vez que puedas.
-
-- Leerás la documentación, las personas que escribieron el software intentaron anticipar tus preguntas y proveen respuestas antes que preguntes.
-
-- Estarás abierto a las críticas constructivas para mejorar los procesos del software. A veces se presentan problemas complejos, pero hay mucha
-gente que quiere ayudarte, déjalos.
-
-- Buscaras, en la mayoría de los casos, tu pregunta o tu problema ya ha sido formulada, intenta buscar la respuesta, que ya esta publicada antes de
-pedirle a alguien que te suministre una nueva.
-
-- Exploraras, Linux abre un nuevo mundo de opciones y posibilidades, Prueba con todo lo que puedas.
-
-- Usaras la linea de Comando, especialmente cuando se trata de configuraciones, usa las herramientas del GUI para que tu sistema funcione, pero conoce
-las versiones de las lineas de comando también. En muchos casos, el shell es el único modo de usar muchas opciones mas avanzadas.
-
-- No trataras de recrear Windows. Linux no trata de ser un clon de Windows. Es diferente. Acepta y aprecia las diferencias.
-
-- No te rendirás, seguirás intentando hasta que consigas la solución a los problemas u obstáculos que se presenten.
-
-#############################################################################################
-##### Probados en: Debian GNU/Linux 7 (wheezy) y algunos en Debian GNU/Linux 8 (Jessie) #####
-#############################################################################################
-
-Crtl + h // Mostrar archivos ocultos de un directorio, en el entorno grafico
+Crtl + h // Mostrar archivos ocultos de un directorio, esto se hace desde el explorador de archivos nautilus de Gnome
 
 $ cat /etc/issue.net  // Para saber la versión de SO que tenemos.
 
@@ -38,6 +15,66 @@ $ cat /etc/issue  // Para saber la versión de SO que tenemos.
 $ cat /proc/cpuinfo // Para ver la información del cpu o procesador
 
 $ lscpu // Para ver la información del cpu o procesador pero menor a la anterior
+
+$ lsb_release -a // Comando que nos va a dar detalles de SO
+
+$ uname // Muestra información del sistema
+
+$ uname -a // Version de Kernel.
+
+$ uname -a // Version de Kernel, mas corta.
+
+$ uname -mrs // Saber mi version de Kernel especifica, recomendada
+
+$ cat /etc/*-release // Ver info del sistema (Probado en Debian GNU/Linux 7 wheezy)
+
+$ uptime // Indica cuánto tiempo ha estado funcionando el sistema, muestra:
+
+15:11:08 up 1 day,  5:07,  9 users,  load average: 0,65, 0,83, 0,88
+
+Los parámetros que muestra son:
+-El tiempo actual que el sistema ha estado ejecutando
+-El tiempo que lleva el sistema corriendo
+-Los usuarios que están actualmente registrados
+-Tiempo de carga del sistema durante los últimos 1, 5 y 15 minutos.
+
+$ ls -l /etc/init.d/ // Saber cuantos demonios(daemons) del sistema están en ejecución. En esta ruta se encuentran algunos de los scripts que se ejecutan con el arrenque del SO.
+
+$ date // Muestra la fecha
+
+# date --set 1998-11-02 // Asignar la fecha manualmente
+
+# date --set 21:08:00 // Asignar la hora manualmente
+
+$ cal // Muestra un calendario
+
+# fdisk -l // Ver informacion de los discos duros, particiones y dispositivos montados en el sistema.
+
+$ lsusb // Este comando muestra todos los puertos USB y los detalles acerca de los dispositivos conectados a ellos.
+
+$ lspci // Lista todos los componentes tipo pci (Peripheral Component Interconnec) como las tarjetas de red, de sonido o de televisión.
+
+$ free // Muestra el estado de la memoria RAM, total, usado, disponible, cached, buffers.
+
+$ free -m // Mostrar los datos en mb sin más.
+
+$ free -h // Para ver los resultados en mb o gb con letra al final.
+
+$ cat /proc/meminfo // Leer el fichero meminfo que contiene datos dinámicos de la memoria, similar a free.
+
+$ vmstat // Muestra el estado de la memoria virtual
+
+$ df // Muestra el espacio disponible del disco y demas dispositivos asi como el espacio usado
+
+$ df -h // Muestra el espacio disponible del disco y demas dispositivos asi como el espacio usado, pero en mg o gb según sea el caso.
+
+$ df -m // Muestra el espacio disponible del disco y demas dispositivos asi como el espacio usado, pero en mg.
+
+$ pstree // Muestra los procesos del sistema en forma de arbol
+
+############################################
+##### Tips para la consola de comandos #####
+############################################
 
 !! // Repetir el ultimo comando ejecutado en consola
 
@@ -53,139 +90,29 @@ Ctrl + t // Intercambiar de posicion las letras que estan a cada lado del cursor
 
 Ctrl + l // Limpiar el shell
 
+Ctrl + d // En el shell, cerrar sesion, salir del root, de maquinas virtuales o de sesiones de usuarios iniciadas
+
+Ctrl + flecha derecha o izquierda // Moverse en el prompt palabra a palabra, no letra por letra.
+
+Ctrl + w // Borrar la palabra que esta antes del cursor en el shell
+
 Control + s : Parar la salida por pantalla. Si por ejemplo ejecutamos un comando que
 tiene una salida inmensa, podemos hacer que trabaje en silencio.
 
 Control + q: Permitir la salida por pantalla, inverso al comando anterior.
 
-$ clear // Limpiar el shell
-
 Alt + d // Borrar palabra
 
-$ lsb_release -a //También tenemos un comando que nos va a dar muchos más detalles 
+###########################
+##### Comandos varios #####
+###########################
 
-$ uname // Muestra información del sistema
+$ man nombre_comando // Muestra el manual de una comando donde como: ls, grep, aptitude etc...
 
-$ uname -a // Version de Kernel.
-
-$ uname -a // Version de Kernel, mas corta.
-
-$ uname -mrs // Saber mi version de Kernel especifica, recomendada
-
-$ cat /etc/*-release // Ver info del sistema (Probado en Debian GNU/Linux 7 wheezy)
-
-$ echo "Texto al final del archivo" >> archivo.txt // Escribir una cadena de texto al final de un fichero.
-
-$ sed -i '1i xxxxx' archivo.txt // Insertar una cadena de texto "xxxxx" al principio de un fichero.
-
-$ sed -i '$a xxx' archivo.txt // Insertar una cadena al final del fichero, funciona como el método echo.
-
-$ apt-get moo // Huevo de pascua, muestra una vaca.
-
-$ uptime // Indica cuánto tiempo ha estado funcionando el sistema, muestra:
-
-15:11:08 up 1 day,  5:07,  9 users,  load average: 0,65, 0,83, 0,88
-
-Los parámetros que muestra son:
--El tiempo actual que el sistema ha estado ejecutando
--El tiempo que lleva el sistema corriendo
--Los usuarios que están actualmente registrados
--Tiempo de carga del sistema durante los últimos 1, 5 y 15 minutos.
-
-// Saber cuantos demonios(daemons) del sistema están en ejecución.
-// En esta ruta se encuentran algunos de los scripts que se ejecutan con el arrenque del SO.
-$ ls -l /etc/init.d/
-
-###################################
-##### Ip pública e Ip privada #####
-###################################
-
-##### Ip Pública #####
-
-Es la que tiene asignada cualquier equipo o dispositivo conectado de forma directa a Internet.
-
-Algunos ejemplos son: los servidores que alojan sitios web como Google, los router o modems que dan a acceso a Internet, otros
-elementos de hardware que forman parte de su infraestructura, etc.
-
-Las Ip públicas son siempre únicas. No se pueden repetir. Dos equipos con IP de ese tipo pueden conectarse directamente entre sí.
-Por ejemplo, tu router con un servidor web. O dos servidores web entre sí.
-
-##### Ip Privada #####
-
-Se utiliza para identificar equipos o dispositivos dentro de una red doméstica o privada.
-En general, en redes que no sean la propia Internet y utilicen su mismo protocolo (el mismo "idioma" de comunicación).
-
-Las Ip privadas están en cierto modo aisladas de las públicas. Se reservan para ellas determinados rangos de direcciones. Son estos:
-
-Estas Ip deben ser únicas dentro de una misma red. Cada equipo o dispositivo ha de tener la suya, distinta de la de los demás.
-De lo contrario habría problemas. Sería como si dos vecinos tuvieran el mismo nombre y la misma dirección física.
-El cartero nunca sabría a quién corresponde la carta que les envíen.
-
-Las Ip privadas sí pueden repetirse en redes distintas (como en la tuya y la de una empresa).
-Los equipos o dispositivos con esas IP pueden conectarse entre sí SÓLO dentro de la red a que pertenecen.
-No hay conflictos porque las redes están separadas. Igual que no los hay entre dos direcciones físicas iguales de ciudades distintas.
-
-#### Saber la ip pública #####
-
-Una forma de averigar esa ip pública es haciendo uso del comando curl. Si no tenéis instalado el paquete habrá que instalarlo,
-
-$ sudo apt-get install curl
-
-$ curl ifconfig.me // Nos mostrará nuestra ip pública.
-
-$ user@debian:/media$ umount nombre_device // Desmontar un dispositivo, pendrive, disco externo etc.
-
-$ who // Muestra usuarios conectados a nuestra máquina, tambien usado para ver las conexiones entrantes de un servidor
-
-Ejemplo:
-user tty7         2015-07-28 08:47 (:0)
-user pts/0        2015-07-30 14:03 (:0.0)
-user pts/1        2015-07-30 17:03 (:0.0)
-user pts/2        2015-07-31 14:15 (:0.0)
-user pts/3        2015-07-31 12:37 (:0.0)
-
-//En este caso son los usuarios conectados a mi máquina, eso quiere decir que tengo shells
-abiertos, por lo tanto todos son representados como usuarios, entre los diversos parametros
-se puede apreciar la fecha y la hora en que se abrio el shell, en un servidor seria
-el momento en que se conecto el usuario
-
-$ whoami // Muestra que usuario soy, nombre de usuario
-
-$ who am i // Nos dira cual usuario somos, si navegamos por los shells abiertos y ejecutamos el comando nos dira cual usuario es
-
-$ who -u // Ver usuarios conectados
-
-// Ejemplo:
-
-user tty7         2015-07-28 08:47  antig       4257 (:0)
-user pts/0        2015-07-30 14:03 03:22        8351 (:0.0)
-user pts/1        2015-07-30 17:03 03:19        8351 (:0.0)
-user pts/2        2015-07-31 14:15 00:08        8351 (:0.0)
-user pts/3        2015-07-31 12:37 02:53        8351 (:192.168.0.240)
-
-//Aqui observamos que hay una conexion externa a traves de ssh a nuestro servidor proveniente de la maquina
-(192.168.0.240) demarcada por el id process 8351 la cual podemos cancelar con $ kill -9 8351, pero no refusar esa conexion, el usuario seguirá conectado por ssh.
-
-$ pkill -9 -t pts/3 // Acabar con una conexión externa, se envió la señal -9 que indica matar (KILL) el proceso, la opción -t indica que se basará
-en un atributo de nombre de terminal y se indica después el nombre de la terminal en si pts/3. Este es el comando que sí funciona para 
-refusar o eliminar conexiones externas. A veces pide su.
-
-$ last // listar los ultimos usuarios conectados
-
-$ clear // Limpia la pantalla
-
-$ date // Muestra la fecha
-
-# date --set 1998-11-02 // Asignar la fecha manualmente
-
-# date --set 21:08:00 // Asignar la hora manualmente
-
-$ mkdir /tmp/`date +\%Y\%m\%d` // Crear una carpeta que lleve por nombre la fecha, ejemplo: 20170807
-
-$ man nombre_comando  // Muestra el manual de una comando donde como: ls, grep, aptitude etc...
-
-// Dentro de los manuales podemos presionar "h" para ver las opciones tenemos del manual, ejemplo "/delete"
+Dentro de los manuales podemos presionar "h" para ver las opciones tenemos del manual, ejemplo "/delete"
 para hacer una busqueda de la cadena "delete" dentro del manual.
+
+$ clear // Limpiar la consola.
 
 $ whatis nombre_programa // Si no desea ver la página de manual completa sino sólo una descripción corta para confirmar que es lo que está buscando, ingrese whatis programa.
 
@@ -193,9 +120,42 @@ Ejemplo:
 $ whatis scp
 scp (1)     - copia segura (programa de copia de ficheros remotos)
 
-$ cal // Muestra un calendario
+$ poweroff // Apagar la maquina, se debe ser root para ejecutarlo.
+
+$ reboot // Reiniciar la maquina.
+
+$ xrandr // Detectar las resoluciones de pantalla disponibles del sistema así como los hz correspondientes, la que
+tenga (*) es la que está siendo usada.
+
+$ ldd /xxx/python2.7 // Ver las dependencias de una librería o ejecutable, en este caso del ejecutable de python.
+
+$ ldd /bin/bash
+
+##############################################
+##### Comandos para gestionar directorios ####
+##############################################
 
 $ pwd // (print work directory) Muestra la ruta en la que te encuentras.
+
+$ mkdir nombre_carpeta // Crear una carpeta
+
+$ mkdir -p carpeta1/carpeta2 // Crear una carpeta con otra carpeta dentro, encadenar la creación.
+
+&& // El operador '&&' sirver para continuar con la ejecucion de comadnos en el shell, ejemplo:
+
+$ mkdir carpetaFFF && cd carpetaFFF // Creamos una carpetaFFF y luego entramos en la carpeta creada
+,&& nos permite poner varias instrucciones en una sola linea del shell, otro ejemplo:
+
+$ mkdir carpetaZZZ && cd carpetaZZZ && touch archivo.txt // Creamos una carpeta, entramos en ella y creamos un archivo
+en ese directorio en una sola instruccion.
+
+$ touch Nombre_Fichero // Crear fichero
+
+$ mkdir /tmp/`date +\%Y\%m\%d` // Crear una carpeta que lleve por nombre la fecha, ejemplo: 20170807
+
+###############################################
+##### Comandos para listar los directorios ####
+###############################################
 
 $ ls // Muestra lo que hay en la carpeta en la que te encuentras
 
@@ -207,22 +167,28 @@ $ ls -la // Muestra los archivos, los ocultos tambien, fecha, permisos, etc
 
 $ ls -1 // Muestra los archivos en forma de lista
 
+$ ls | more // Lista el contenido de un directorio en orden alfabético, usa space para paginar si la lista es grande.
+
 $ ls *.xxx // Listar todos los ficheros de un directorio que tengan las extension .xxx, donde xxx puede ser: txt, html, php, css, etc.
 ejemplo: ls *.txt
 
 $ ls -R // Listar los directorios y subdirectorios asi como ficehros de un directorio.
 
-// Muestra el contenido del directorio en una lista numerada.
-$ ls | cat -n
+$ ls | cat -n // Muestra el contenido del directorio en una lista numerada.
 
-// ver la lista de carpetas y sub carpetas, los directorios que existen, lo primero que muestra es el tamaño.
-$ du
+$ du // ver la lista de carpetas y sub carpetas, los directorios que existen, lo primero que muestra es el tamaño.
 
-// Los mismo que arriba pero se ven los tamaños en kg, mg, etc
-$ du -h
+$ du -h // Los mismo que arriba pero se ven los tamaños en kg, mg, etc
 
-// Ver el tamaño total de los directorios.
-$ du -sh
+$ du -sh // Ver el tamaño total de los directorios.
+
+$ du * // Muestra todos directorios y ficheros y el espacio que ocupan en el disco
+
+$ file * // Nos dira el tipo de archivo de todos los ficheros del directorio
+
+##################################################
+##### Comandos para moverse entre directorios ####
+##################################################
 
 $ cd // Cambiar de directorio, nos lleva al home del usuario.
 
@@ -236,19 +202,9 @@ $ cd .. // retroceder un directorio
 
 $ cd ../../ // Retroceder dos directorios (../) representa un directorio
 
-$ mkdir nombre_carpeta // Crear carpeta
-
-$ mkdir -p carpeta1/carpeta2 // Crear una carpeta con otra carpeta dentro, encadenar la creación.
-
-&& // El operador '&&' sirver para continuar con la ejecucion de comadnos en el shell, ejemplo:
-
-$ mkdir carpetaFFF && cd carpetaFFF // Creamos una carpetaFFF y luego entramos en la carpeta creada
-,&& nos permite poner varias instrucciones en una sola linea del shell, otro ejemplo:
-
-$ mkdir carpetaZZZ && cd carpetaZZZ && touch archivo.txt // Creamos una carpeta, entramos en ella y creamos un archivo
-en ese directorio en una sola instruccion.
-
-$ touch Nombre_Fichero // Crear fichero
+#######################################################
+##### Lectores/Editores de texto desde la consola #####
+#######################################################
 
 $ nano nombre_fichero // Modificar un fichero con el editor nano.
 
@@ -273,15 +229,26 @@ $ stat nombre_fichero // Muestra el estado e información de un fichero
 
 $ stat nombre_carpeta // Muestra información de un directorio
 
-Ctrl + D // En el shell, cerrar sesion, salir del root, de maquinas virtuales o de sesiones de usuarios iniciadas
+$ file xxx // donde xxx es el nombre de un fichero, nos dira el tipo de fichero que es.
+Ejemplo: file index.html
+index.html: HTML document, UTF-8 Unicode text
 
-Ctrl + flecha derecha o izquierda // Moverse en el prompt palabra a palabra, no letra por letra.
+$ diff /home/user/file.html /home/user/file2.html // Permite hacer una comparacion de dos archivos para apreciar sus diferencias
+se debe especificar la ruta de ambos archivos y separarlos con un espacio, si estan en el mismo directorio no hace
+falta especificar las rutas completas.
 
-Ctrl + w // Borrar la palabra que esta antes del cursor en el shell
+$ rename 's/\.txt/\.xls/' *.txt  //Cambiar extension a todos los ficheros de un directorio
+//En el ejemplo vamos a sustituir los .txt por .xls y le decimos que se lo haga a todos los .txt
+
+###############################################
+##### Comandos para monitorear el sistema #####
+###############################################
 
 $ top  // Listar los procesos de ejecución del sistema (y más cosas) en tiempo real, es una de las herramientas más importantes para un administrador.
 -Si presionamos "z" nos mostrara la salida con 2 colores, para distingir mejor la información.
 -"q" o "Ctrl+c" para salirse del monitor top.
+
+$ fg %1 // Si un programa es pausado con Ctrol + z, con este comando lo reanudamos.
 
 $ htop // Es otro monitor del sistema, parecido a top pero con un poco mas de herramientas, para instalarlo # apt-get install htop
 
@@ -289,7 +256,20 @@ $ nmon // Es otro monitor de sistema, para instalarlo # apt-get install nmon
 Si quieren ver la información relacionada con el CPU presionan la tecla "c", con la memoria "m", del kernel "k" y discos "d".
 Segun vayamos usando las letras nos va mostrando lo que escogimos, muy útil y bonito.
 
-// Cada proceso tiene un identificador (PID) proccess ID, entonces podemos matar ese proceso con:
+$ ping xxx // Donde xxx es el nombre de un host al cual enviaremos paquetes y comprobaremos si hay una conexion con ese host, util para saber si estamos conectados a internet por ejemplo:
+ping http://www.google.com.ve // Si hay conexion a internet enviara paquetes que seran recibidos, de lo contrario dara un error.
+
+$ ping -w n ip_num // Tiempo en segundos que se va a hacer ping donde n es un entero
+
+// Siendo root, Ver si hay aceleracion grafica en la maquina, muestra unos engranajes
+// de colores rodando, si es así, está correcta la instalacion del video.
+# glxgears
+
+##########################################
+##### Gestionar procesos del sistema #####
+##########################################
+
+Cada proceso tiene un identificador (PID) proccess ID, entonces podemos matar ese proceso con:
 
 $ kill xxxx // Matar un proceso donde xxxx es el identificador del proceso.
 
@@ -301,7 +281,7 @@ $ ps -e // Visualiza información sobre "todos" los procesos del sistema.
 
 $ ps -ef // Visualiza información sobre "todos" los procesos del sistema con mas detalles, así pues se puede detener un proceso con kill -9 PID_number.
 
-$ps -ef | grep evince // Filtrar la búsqueda, en este caso, buscando el proceso que alberga el visor pdf evince.
+$ ps -ef | grep evince // Filtrar la búsqueda, en este caso, buscando el proceso que alberga el visor pdf evince.
 
 $ ps -ef | grep ssh // Filtrar la búsqueda para ver las conexiones ssh activas, nuevamente se aclara que podemos matar esos procesos
 con kill -9 xxx pasandole el PID process.
@@ -316,43 +296,9 @@ $ ps -l // Muestra algunos detalles de los procesos del sistema.
 
 $ ps l //  Muestra mas detalles de los procesos del sistema.
 
-$ poweroff // Apagar la maquina, se debe ser root para ejecutarlo.
-
-$ reboot // Reiniciar la maquina.
-
-$ file xxx // donde xxx es el nombre de un fichero, nos dira el tipo de fichero que es.
-Ejemplo: file index.html
-index.html: HTML document, UTF-8 Unicode text
-
-$ file * // Nos dira el tipo de archivo de todos los ficheros del directorio
-
-$ diff /home/user/file.html /home/user/file2.html // Permite hacer una comparacion de dos archivos para apreciar sus diferencias
-se debe especificar la ruta de ambos archivos y separarlos con un espacio, si estan en el mismo directorio no hace
-falta especificar las rutas completas.
-
-$ df // Muestra el espacio disponible del disco y demas dispositivos asi como el espacio usado
-
-$ df -h // Muestra el espacio disponible del disco y demas dispositivos asi como el espacio usado, pero en mg o gb según sea el caso.
-
-$ df -m // Muestra el espacio disponible del disco y demas dispositivos asi como el espacio usado, pero en mg.
-
-# fdisk -l // Ver informacion de los discos duros, particiones y dispositivos montados en el sistema.
-
-$ lsusb // Este comando muestra todos los puertos USB y los detalles acerca de los dispositivos conectados a ellos.
-
-$ lspci // Lista todos los componentes tipo pci (Peripheral Component Interconnec) como las tarjetas de red, de sonido o de televisión.
-
-$ free // Muestra el estado de la memoria RAM, total, usado, disponible, cached, buffers.
-
-$ free -m // Mostrar los datos en mb sin más.
-
-$ free -h // Para ver los resultados en mb o gb con letra al final.
-
-$ cat /proc/meminfo // Leer el fichero meminfo que contiene datos dinámicos de la memoria, similar a free.
-
-$ vmstat // Muestra el estado de la memoria virtual
-
-$ pstree // Muestra los procesos del sistema en forma de arbol
+#########################################
+##### Usando los programas de gnome #####
+#########################################
 
 $ gnome-screenshot // Captura de pantalla del escritorio
 
@@ -360,71 +306,30 @@ $ gnome-shell --replace & disown // Recargar el entorno gráfico, evitando el re
 
 $ pdfimages fichero.pdf nombre_imagene // Extrae las imagenes de un .pdf
 
-$ du // Muestra una lista de los directorios y el espacio que ocupan en el disco
+##########################################
+##### Gestionar usuarios del sistema #####
+##########################################
 
-$ du * // Muestra todos directorios y ficheros y el espacio que ocupan en el disco
-
-$ ping xxx // Donde xxx es el nombre de un host al cual enviaremos paquetes y comprobaremos si hay una conexion con ese host, util para saber si estamos conectados a internet por ejemplo:
-ping http://www.google.com.ve // Si hay conexion a internet enviara paquetes que seran recibidos, de lo contrario dara un error.
-
-$ ping -w n ip_num // Tiempo en segundos que se va a hacer ping donde n es un entero
-
-// Siendo root, Ver si hay aceleracion grafica en la maquina, muestra unos engranajes
-// de colores rodando, si es así, está correcta la instalacion del video.
-# glxgears 
-
-$ xrandr // Detectar las resoluciones de pantalla disponibles del sistema así como los hz correspondientes, la que
-tenga (*) es la que está siendo usada.
+$ su nombre_de_usuario // Conectarse como otro usuario creado
 
 $ adduser nombre_de_usuario // Como root, Agregar un usuario nuevo al sistema, una nueva sesion, nos pedira agregar el 
 nombre de usuario y asignarle contraseña, la clave de root es la misma para todas las sesiones.
-
-$ su nombre_de_usuario // Conectarse como otro usuario creado
 
 $ userdel -r nombre_usuario // Como root, eliminar el usuario creado
 
 $ deluser --remove-home nombre_usuario // Otra forma de eliminar un usuario creado
 
-$ rename 's/\.txt/\.xls/' *.txt  //Cambiar extension a todos los ficheros de un directorio
-//En el ejemplo vamos a sustituir los .txt por .xls y le decimos que se lo haga a todos los .txt
+#################################################
+###### Comandos para escribir en un fichero #####
+#################################################
 
-$ ldd /xxx/python2.7 // Ver las dependencias de una librería o ejecutable, en este caso del ejecutable de python.
+$ echo "Texto al final del archivo" >> archivo.txt // Escribir una cadena de texto al final de un fichero.
 
-$ ldd /bin/bash
+$ sed -i '1i xxxxx' archivo.txt // Insertar una cadena de texto "xxxxx" al principio de un fichero.
 
-################
-##### Less #####
-################
+$ sed -i '$a xxx' archivo.txt // Insertar una cadena al final del fichero, funciona como el método echo.
 
-// less es un visualizador de archivos de texto que funciona en intérpretes de comando.
-// A diferencia de otros programas similares (como more), less permite una completa navegación
-// por el contenido del archivo, utilizando un mínino de recursos del sistema.
-
-***** Comandos basicos *****
-
-man less // Manual de less
-
-AvPag // Avanzar una página
-
-RePag // Retroceder una página
-
-space // Tecla espacio para avanzar, como page up
-
-:q // Salir
-
-:h // Ayuda
-
-:/palabra // (/) Buscamos una palabra dentro del documento
-// (n) para ir a la siguiente coincidencia.
-// (N) para ir a la coincidencia anterior
-
-:G // Ir al final del texto
-
-:g // Ir al inicio del texto
-
-:v //Invocar un editor de texto para el documento, por lo general usa vi pero puede usar nano automaticamente
-
-$ less +123 filename // Para ir a una línea específica de un fichero.
+$ apt-get moo // Huevo de pascua, muestra una vaca.
 
 ########################################################
 ##### Comandos para copiar, mover, eliminar, otros #####
@@ -489,6 +394,116 @@ root@debian:/home/user# Ctrl + d //Para salir del root, tambien exit, funciona e
 Ctrl + r // En la consola, para hacer una busqueda de comandos usados baasndose en la palabra que se introduzca
 
 Shift + Page up <--> Page down // Moverse a traves de los logs de la consola, simula el scroll up/down del mouse
+
+###################################
+##### Ip pública e Ip privada #####
+###################################
+
+##### Ip Pública #####
+
+Es la que tiene asignada cualquier equipo o dispositivo conectado de forma directa a Internet.
+
+Algunos ejemplos son: los servidores que alojan sitios web como Google, los router o modems que dan a acceso a Internet, otros
+elementos de hardware que forman parte de su infraestructura, etc.
+
+Las Ip públicas son siempre únicas. No se pueden repetir. Dos equipos con IP de ese tipo pueden conectarse directamente entre sí.
+Por ejemplo, tu router con un servidor web. O dos servidores web entre sí.
+
+##### Ip Privada #####
+
+Se utiliza para identificar equipos o dispositivos dentro de una red doméstica o privada.
+En general, en redes que no sean la propia Internet y utilicen su mismo protocolo (el mismo "idioma" de comunicación).
+
+Las Ip privadas están en cierto modo aisladas de las públicas. Se reservan para ellas determinados rangos de direcciones. Son estos:
+
+Estas Ip deben ser únicas dentro de una misma red. Cada equipo o dispositivo ha de tener la suya, distinta de la de los demás.
+De lo contrario habría problemas. Sería como si dos vecinos tuvieran el mismo nombre y la misma dirección física.
+El cartero nunca sabría a quién corresponde la carta que les envíen.
+
+Las Ip privadas sí pueden repetirse en redes distintas (como en la tuya y la de una empresa).
+Los equipos o dispositivos con esas IP pueden conectarse entre sí SÓLO dentro de la red a que pertenecen.
+No hay conflictos porque las redes están separadas. Igual que no los hay entre dos direcciones físicas iguales de ciudades distintas.
+
+#### Saber la ip pública #####
+
+Una forma de averigar esa ip pública es haciendo uso del comando curl. Si no tenéis instalado el paquete habrá que instalarlo,
+
+$ sudo apt-get install curl
+
+$ curl ifconfig.me // Nos mostrará nuestra ip pública.
+
+$ user@debian:/media$ umount nombre_device // Desmontar un dispositivo, pendrive, disco externo etc.
+
+$ who // Muestra usuarios conectados a nuestra máquina, tambien usado para ver las conexiones entrantes de un servidor
+
+Ejemplo:
+user tty7         2015-07-28 08:47 (:0)
+user pts/0        2015-07-30 14:03 (:0.0)
+user pts/1        2015-07-30 17:03 (:0.0)
+user pts/2        2015-07-31 14:15 (:0.0)
+user pts/3        2015-07-31 12:37 (:0.0)
+
+// En este caso son los usuarios conectados a mi máquina, eso quiere decir que tengo shells
+abiertos, por lo tanto todos son representados como usuarios, entre los diversos parametros
+se puede apreciar la fecha y la hora en que se abrio el shell, en un servidor seria
+el momento en que se conecto el usuario
+
+$ whoami // Muestra que usuario soy, nombre de usuario
+
+$ who am i // Nos dira cual usuario somos, si navegamos por los shells abiertos y ejecutamos el comando nos dira cual usuario es
+
+$ who -u // Ver usuarios conectados
+
+// Ejemplo:
+
+user tty7         2015-07-28 08:47  antig       4257 (:0)
+user pts/0        2015-07-30 14:03 03:22        8351 (:0.0)
+user pts/1        2015-07-30 17:03 03:19        8351 (:0.0)
+user pts/2        2015-07-31 14:15 00:08        8351 (:0.0)
+user pts/3        2015-07-31 12:37 02:53        8351 (:192.168.0.240)
+
+// Aqui observamos que hay una conexion externa a traves de ssh a nuestro servidor proveniente de la maquina
+(192.168.0.240) demarcada por el id process 8351 la cual podemos cancelar con $ kill -9 8351, pero no refusar esa conexion, el usuario seguirá conectado por ssh.
+
+$ pkill -9 -t pts/3 // Acabar con una conexión externa, se envió la señal -9 que indica matar (KILL) el proceso, la opción -t indica que se basará
+en un atributo de nombre de terminal y se indica después el nombre de la terminal en si pts/3. Este es el comando que sí funciona para 
+refusar o eliminar conexiones externas. A veces pide su.
+
+$ last // listar los ultimos usuarios conectados
+
+################
+##### Less #####
+################
+
+// less es un visualizador de archivos de texto que funciona en intérpretes de comando.
+// A diferencia de otros programas similares (como more), less permite una completa navegación
+// por el contenido del archivo, utilizando un mínino de recursos del sistema.
+
+***** Comandos basicos *****
+
+man less // Manual de less
+
+AvPag // Avanzar una página
+
+RePag // Retroceder una página
+
+space // Tecla espacio para avanzar, como page up
+
+:q // Salir
+
+:h // Ayuda
+
+:/palabra // (/) Buscamos una palabra dentro del documento
+// (n) para ir a la siguiente coincidencia.
+// (N) para ir a la coincidencia anterior
+
+:G // Ir al final del texto
+
+:g // Ir al inicio del texto
+
+:v //Invocar un editor de texto para el documento, por lo general usa vi pero puede usar nano automaticamente
+
+$ less +123 filename // Para ir a una línea específica de un fichero.
 
 ########################################################
 ########## Cambiar el pass del usuario y root ##########
