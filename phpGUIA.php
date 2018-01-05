@@ -58,7 +58,7 @@ http://127.0.0.1/testphp.php // Si aparece la pagina azul pastel de PHP se insta
 <body>
 <!-- Uso de lenguaje php usanto la etiqueta script -->
 <script language="php">
-	echo ("XXXXXXXXX");
+    echo ("XXXXXXXXX");
 </script>
 </body>
 </html>
@@ -266,30 +266,30 @@ echo $texto;
 $a=15;
 $b=10;
 if ($a>=$b) {
-	echo ("Verdadero $a es mayor que $b <p>");
+    echo ("Verdadero $a es mayor que $b <p>");
 }
 else {
-	echo ("Falso $a es menor que $b <p>");
+    echo ("Falso $a es menor que $b <p>");
 }
 
 #-----
 
 $dia=5;
 if ($dia == 1) {
-	echo "El día es Lunes";
+    echo "El día es Lunes";
 }
 else { if ($dia == 2) {
-	echo "El día es Martes";
+    echo "El día es Martes";
 }
 else {if ($dia == 3) {
-	echo "El día es Miércoles";
+    echo "El día es Miércoles";
 }
 else {if ($dia == 4) {
-	echo "El día es Jueves";
+    echo "El día es Jueves";
 }
 else {if ($dia == 5) {
-	echo "El día es Viernes";
-}	
+    echo "El día es Viernes";
+}    
 }
 }
 }
@@ -299,15 +299,15 @@ else {if ($dia == 5) {
 
 $day=1;
 if ($day == 1) {
-	echo "El día es Lunes";
+    echo "El día es Lunes";
 } elseif ($day == 2) {
-	echo "El día es Martes";
+    echo "El día es Martes";
 } elseif ($day == 3) {
-	echo "El día es Miércoles";
+    echo "El día es Miércoles";
 } elseif ($day == 4) {
-	echo "El día es Jueves";
+    echo "El día es Jueves";
 } elseif ($day == 5) {
-	echo "El día es Viernes";
+    echo "El día es Viernes";
 }
 
 #-----
@@ -317,19 +317,19 @@ $num2=4;
 $num3=6;
 echo "El numero mayor es: ";
 if($num > $num2) {
-	if($num > $num3) {
-		echo $num;
-	}
+    if($num > $num3) {
+        echo $num;
+    }
 }
 if($num2 > $num) {
-	if($num2 > $num3) {
-		echo $num2;
-	}
+    if($num2 > $num3) {
+        echo $num2;
+    }
 }
 if($num3 > $num2) {
-	if($num3 > $num) {
-	echo $num3;
-	}
+    if($num3 > $num) {
+    echo $num3;
+    }
 }
 
 ######################
@@ -383,29 +383,29 @@ echo CONSTANTE;
 
 $dia = 7 ;
 switch ($dia) {
-	case 1:
-		echo "El día es Lunes";
-		break;
-	case 2 :
-		echo "El día es Martes";
-		break;
-	case 3 :
-		echo "El día es Miércoles";
-		break;
-	case 4 :
-		echo "El día es Jueves";
-		break;
-	case 5:
-		echo "El día es Viernes";
-		break;
-	case 6 :
-		echo "El día es Sábado";
-		break;
-	case 7:
-		echo "El día es Domingo" ;
-		break;
-	default:
-	echo "El día de la semana es incorrecto";
+    case 1:
+        echo "El día es Lunes";
+        break;
+    case 2 :
+        echo "El día es Martes";
+        break;
+    case 3 :
+        echo "El día es Miércoles";
+        break;
+    case 4 :
+        echo "El día es Jueves";
+        break;
+    case 5:
+        echo "El día es Viernes";
+        break;
+    case 6 :
+        echo "El día es Sábado";
+        break;
+    case 7:
+        echo "El día es Domingo" ;
+        break;
+    default:
+    echo "El día de la semana es incorrecto";
 }
 
 ###############
@@ -414,19 +414,19 @@ switch ($dia) {
 
 #Imprimir los números del 1 al 19
 for ($x = 1; $x < 20; $x++) {
-	echo "$x<br>";
+    echo "$x<br>";
 }
 
 #-----
 
 #Imprimir los números del 1 al 9
 for ($x = 1; $x < 20; $x++) {
-	if ($x == 10) {
-		break;
-	}
-	else {
-		echo "$x<br>";
-	}
+    if ($x == 10) {
+        break;
+    }
+    else {
+        echo "$x<br>";
+    }
 }
 
 #################
@@ -436,8 +436,8 @@ for ($x = 1; $x < 20; $x++) {
 #Imprimir los números del 1 al 10
 $num=1;
 while ($num <= 10) {
-	echo $num . "<br />";
-	$num++;
+    echo $num . "<br />";
+    $num++;
 }
 
 #####################
@@ -445,10 +445,10 @@ while ($num <= 10) {
 #####################
 
 function miFuncion() {
-	$a = 6; // Declaración de variable
-	$b = 11; // Declaración de variable
-	$c = $a + $b; // Operación con las variables
-	echo $c; // Imprimir el resultado
+    $a = 6; // Declaración de variable
+    $b = 11; // Declaración de variable
+    $c = $a + $b; // Operación con las variables
+    echo $c; // Imprimir el resultado
 }
 miFuncion(); // Llamado de la función
 
@@ -457,10 +457,10 @@ miFuncion(); // Llamado de la función
 $a = 6; // Variable global
 $b = 12; // Variable global
 function miFuncion() {
-	global $a, $b; // Declaración de variables globales dentro de la función
-	$c = 1; // Variable local
-	$d = $a + $b + $c;
-	echo $d;
+    global $a, $b; // Declaración de variables globales dentro de la función
+    $c = 1; // Variable local
+    $d = $a + $b + $c;
+    echo $d;
 }
 miFuncion();
 
@@ -469,8 +469,8 @@ miFuncion();
 $a = 5; // Variable global
 $b = 10; // Variable global
 function miFuncion() {
-	$c = $GLOBALS["a"] + $GLOBALS["b"]; // Declarando variables globales dentro de la función
-	echo $c;
+    $c = $GLOBALS["a"] + $GLOBALS["b"]; // Declarando variables globales dentro de la función
+    echo $c;
 }
 miFuncion();
 
@@ -478,7 +478,7 @@ miFuncion();
 
 # Pasando valores por parámetros a una función
 function miFuncion($x) {
-	echo $x;
+    echo $x;
 }
 miFuncion(5);
 
@@ -486,8 +486,8 @@ miFuncion(5);
 
 # Pasando valores por parámetros a una función
 function miFuncion($a,$b) {
-	$c = $a + $b;
-	echo $c;
+    $c = $a + $b;
+    echo $c;
 }
 miFuncion(3,9);
 
@@ -500,7 +500,7 @@ phpinfo();
 ###################################################
 
 function capitales($Pais,$Capital = "Madrid",$habitantes = "muchos") {
-	return ("La capital de $Pais es $Capital y tiene $habitantes habitantes.<br>") ;
+    return ("La capital de $Pais es $Capital y tiene $habitantes habitantes.<br>") ;
 }
 echo capitales("España");
 echo capitales("Portugal","Lisboa");
@@ -552,7 +552,7 @@ echo "Día del año: " . date("z") . "<br>";
 $cadenal = "Prueba";
 $cadena2 = "Prueba";
 if (strcmp($cadenal,$cadena2) == 0) { 
-	echo "Las dos cadenas son iguales";
+    echo "Las dos cadenas son iguales";
 }
 
 #----
@@ -560,7 +560,7 @@ if (strcmp($cadenal,$cadena2) == 0) {
 $cadenal = "Prueba";
 $cadena2 = "prueba";
 if (strcasecmp($cadenal,$cadena2) == 0) { # strcasecmp no hace distinción entre mayúsculas y minúsculas
-	echo "Las dos cadenas son iguales";
+    echo "Las dos cadenas son iguales";
 }
 
 ##### Sustitución de cadenas #####
@@ -599,17 +599,17 @@ echo $arreglo[4]."<br />";
 # Recorrer e imprimir el contenido de un arreglo
 $arreglo = array(5,1,4,2,3) ;
 for ($x = 0; $x <= 4; $x++) {
-	echo $arreglo[$x];
+    echo $arreglo[$x];
 }
 
 #-----
 
 // Array como mapa de propiedades
 $mapa = array('version' => 5,
-			  'SO' => 'Linux',
-			  'idioma' => 'Español',
-			  'etiquetas_cortas' => true
-			  );
+              'SO' => 'Linux',
+              'idioma' => 'Español',
+              'etiquetas_cortas' => true
+              );
 print_r($mapa);
 
 #-----
@@ -645,8 +645,8 @@ Dashboard del PhpMyAdmin --> http://127.0.0.1/phpmyadmin/
     </head>
 <body>
 <form action="#" method="POST">
-	Username: <input type="text" name="username"><br />
-	<input type="submit" name="submit" value="Submit">
+    Username: <input type="text" name="username"><br />
+    <input type="submit" name="submit" value="Submit">
 </form>
 <?php
 $username = $_POST['username'];
@@ -696,20 +696,20 @@ echo $username;
     </head>
 <body>
 <form action="index.php" method="post">
-	Cifra 1: <input type="text" name="cifra1" required>
-	<p />
-	Cifra 2: <input type="text" name="cifra2" required>
-	<p />
-	<input type="submit" value="Registrar">
-	<input type="reset" value="Limpiar">
+    Cifra 1: <input type="text" name="cifra1" required>
+    <p />
+    Cifra 2: <input type="text" name="cifra2" required>
+    <p />
+    <input type="submit" value="Registrar">
+    <input type="reset" value="Limpiar">
 </form>
 <?php
 if (array_key_exists('cifra1',$_POST) and array_key_exists('cifra2',$_POST)
-	and $_POST['cifra1']!="" and $_POST['cifra2']!="") {
-		$cifra1=$_POST['cifra1'];
-		$cifra2=$_POST['cifra2'];
-		echo $cifra1."<p />";
-		echo $cifra2;
+    and $_POST['cifra1']!="" and $_POST['cifra2']!="") {
+        $cifra1=$_POST['cifra1'];
+        $cifra2=$_POST['cifra2'];
+        echo $cifra1."<p />";
+        echo $cifra2;
 }
 ?>
 </body>
@@ -728,22 +728,22 @@ if (array_key_exists('cifra1',$_POST) and array_key_exists('cifra2',$_POST)
     </head>
 <body>
 <form action="index.php" method="post">
-	Suma de dos cifras:
-	<p />
-	Cifra 1: <input type="text" name="cifra1" required>
-	<p />
-	Cifra 2: <input type="text" name="cifra2" required>
-	<p />
-	<input type="submit" value="Enviar">
-	<input type="reset" value="Limpiar">
+    Suma de dos cifras:
+    <p />
+    Cifra 1: <input type="text" name="cifra1" required>
+    <p />
+    Cifra 2: <input type="text" name="cifra2" required>
+    <p />
+    <input type="submit" value="Enviar">
+    <input type="reset" value="Limpiar">
 </form>
 <?php
 if (array_key_exists('cifra1',$_POST) and array_key_exists('cifra2',$_POST)
-	and $_POST['cifra1']!="" and $_POST['cifra2']!="") {
-		$cifra1=$_POST['cifra1'];
-		$cifra2=$_POST['cifra2'];
-		$resultado = $cifra1 + $cifra2;
-		echo "El resultado es: ".$resultado;
+    and $_POST['cifra1']!="" and $_POST['cifra2']!="") {
+        $cifra1=$_POST['cifra1'];
+        $cifra2=$_POST['cifra2'];
+        $resultado = $cifra1 + $cifra2;
+        echo "El resultado es: ".$resultado;
 }
 ?>
 </body>
@@ -762,25 +762,25 @@ if (array_key_exists('cifra1',$_POST) and array_key_exists('cifra2',$_POST)
     </head>
 <body>
 <form action="index.php" method="post">
-	Suma de dos cifras:
-	<p />
-	Cifra 1: <input type="text" name="cifra1" required>
-	<p />
-	Cifra 2: <input type="text" name="cifra2" required>
-	<p />
-	<input type="submit" value="Enviar">
-	<input type="reset" value="Limpiar">
+    Suma de dos cifras:
+    <p />
+    Cifra 1: <input type="text" name="cifra1" required>
+    <p />
+    Cifra 2: <input type="text" name="cifra2" required>
+    <p />
+    <input type="submit" value="Enviar">
+    <input type="reset" value="Limpiar">
 </form>
 <?php
 if (array_key_exists('cifra1',$_POST) and array_key_exists('cifra2',$_POST)
-	and $_POST['cifra1']!="" and $_POST['cifra2']!="") {
-		$cifra1=$_POST['cifra1'];
-		$cifra2=$_POST['cifra2'];
-		function miFuncion($cifra1,$cifra2) {
-			$resultado = $cifra1 + $cifra2;
-			echo $resultado;
-		}
-		miFuncion($cifra1,$cifra2);
+    and $_POST['cifra1']!="" and $_POST['cifra2']!="") {
+        $cifra1=$_POST['cifra1'];
+        $cifra2=$_POST['cifra2'];
+        function miFuncion($cifra1,$cifra2) {
+            $resultado = $cifra1 + $cifra2;
+            echo $resultado;
+        }
+        miFuncion($cifra1,$cifra2);
 }
 ?>
 </body>
@@ -799,41 +799,41 @@ if (array_key_exists('cifra1',$_POST) and array_key_exists('cifra2',$_POST)
     </head>
 <body>
 <form action="index.php" method="post">
-	Escribir dos cifras:
-	<p />
-	Cifra 1: <input type="text" name="cifra1" required>
-	<p />
-	Cifra 2: <input type="text" name="cifra2" required>
-	<p />
-	Escoja la operación:
-	<select name="var_select">
-	  <option value="suma">suma</option>
-	  <option value="multiplicacion">multiplicación</option>
-	</select>
-	<p />
-	<input type="submit" value="Enviar">
-	<input type="reset" value="Limpiar">
+    Escribir dos cifras:
+    <p />
+    Cifra 1: <input type="text" name="cifra1" required>
+    <p />
+    Cifra 2: <input type="text" name="cifra2" required>
+    <p />
+    Escoja la operación:
+    <select name="var_select">
+      <option value="suma">suma</option>
+      <option value="multiplicacion">multiplicación</option>
+    </select>
+    <p />
+    <input type="submit" value="Enviar">
+    <input type="reset" value="Limpiar">
 </form>
 <?php
 if (array_key_exists('cifra1',$_POST) and array_key_exists('cifra2',$_POST) and array_key_exists('var_select',$_POST)
-	and $_POST['cifra1']!="" and $_POST['cifra2']!="" and $_POST['var_select']!="") {
-		$cifra1=$_POST['cifra1'];
-		$cifra2=$_POST['cifra2'];
-		$var_select=$_POST['var_select'];
-		if ($var_select=="suma") {
-			function suma($cifra1,$cifra2) {
-				$resultado = $cifra1 + $cifra2;
-				echo "El resultado es: ".$resultado;
-			}
-			suma($cifra1,$cifra2);
-		}
-		else {
-			function multiplicacion($cifra1,$cifra2) {
-				$resultado = $cifra1 * $cifra2;
-				echo "El resultado es: ".$resultado;
-			}
-			multiplicacion($cifra1,$cifra2);
-		}
+    and $_POST['cifra1']!="" and $_POST['cifra2']!="" and $_POST['var_select']!="") {
+        $cifra1=$_POST['cifra1'];
+        $cifra2=$_POST['cifra2'];
+        $var_select=$_POST['var_select'];
+        if ($var_select=="suma") {
+            function suma($cifra1,$cifra2) {
+                $resultado = $cifra1 + $cifra2;
+                echo "El resultado es: ".$resultado;
+            }
+            suma($cifra1,$cifra2);
+        }
+        else {
+            function multiplicacion($cifra1,$cifra2) {
+                $resultado = $cifra1 * $cifra2;
+                echo "El resultado es: ".$resultado;
+            }
+            multiplicacion($cifra1,$cifra2);
+        }
 }
 ?>
 </body>
@@ -852,60 +852,60 @@ if (array_key_exists('cifra1',$_POST) and array_key_exists('cifra2',$_POST) and 
     </head>
 <body>
 <form action="index.php" method="post">
-	Escribir dos cifras:
-	<p />
-	Cifra 1: <input type="text" name="cifra1" required>
-	<p />
-	Cifra 2: <input type="text" name="cifra2" required>
-	<p />
-	Escoja la operación:
-	<select name="var_select">
-	  <option value="suma">suma</option>
-	  <option value="resta">resta</option>
-	  <option value="multiplicacion">multiplicación</option>
-	  <option value="division">division</option>
-	</select>
-	<p />
-	<input type="submit" value="Enviar">
-	<input type="reset" value="Limpiar">
+    Escribir dos cifras:
+    <p />
+    Cifra 1: <input type="text" name="cifra1" required>
+    <p />
+    Cifra 2: <input type="text" name="cifra2" required>
+    <p />
+    Escoja la operación:
+    <select name="var_select">
+      <option value="suma">suma</option>
+      <option value="resta">resta</option>
+      <option value="multiplicacion">multiplicación</option>
+      <option value="division">division</option>
+    </select>
+    <p />
+    <input type="submit" value="Enviar">
+    <input type="reset" value="Limpiar">
 </form>
 <?php
 if (array_key_exists('cifra1',$_POST) and array_key_exists('cifra2',$_POST) and array_key_exists('var_select',$_POST)
-	and $_POST['cifra1']!="" and $_POST['cifra2']!="" and $_POST['var_select']!="") {
-		$cifra1=$_POST['cifra1'];
-		$cifra2=$_POST['cifra2'];
-		$var_select=$_POST['var_select'];
-		if ($var_select=="suma") {
-			function suma($cifra1,$cifra2) {
-				$resultado = $cifra1 + $cifra2;
-				echo "El resultado es: ".$resultado;
-			}
-			suma($cifra1,$cifra2);
-		}
-		else { if ($var_select=="resta") {
-			function resta($cifra1,$cifra2) {
-				$resultado = $cifra1 - $cifra2;
-				echo "El resultado es: ".$resultado;
-			}
-			resta($cifra1,$cifra2);
-		}
-		else {if ($var_select=="multiplicacion") {
-			function multiplicacion($cifra1,$cifra2) {
-				$resultado = $cifra1 * $cifra2;
-				echo "El resultado es: ".$resultado;
-			}
-			multiplicacion($cifra1,$cifra2);
-		}
-		else {if ($var_select=="division") {
-			function division($cifra1,$cifra2) {
-				$resultado = $cifra1 / $cifra2;
-				echo "El resultado es: ".$resultado;
-			}
-			division($cifra1,$cifra2);
-		}
-		}
-		}
-		}
+    and $_POST['cifra1']!="" and $_POST['cifra2']!="" and $_POST['var_select']!="") {
+        $cifra1=$_POST['cifra1'];
+        $cifra2=$_POST['cifra2'];
+        $var_select=$_POST['var_select'];
+        if ($var_select=="suma") {
+            function suma($cifra1,$cifra2) {
+                $resultado = $cifra1 + $cifra2;
+                echo "El resultado es: ".$resultado;
+            }
+            suma($cifra1,$cifra2);
+        }
+        else { if ($var_select=="resta") {
+            function resta($cifra1,$cifra2) {
+                $resultado = $cifra1 - $cifra2;
+                echo "El resultado es: ".$resultado;
+            }
+            resta($cifra1,$cifra2);
+        }
+        else {if ($var_select=="multiplicacion") {
+            function multiplicacion($cifra1,$cifra2) {
+                $resultado = $cifra1 * $cifra2;
+                echo "El resultado es: ".$resultado;
+            }
+            multiplicacion($cifra1,$cifra2);
+        }
+        else {if ($var_select=="division") {
+            function division($cifra1,$cifra2) {
+                $resultado = $cifra1 / $cifra2;
+                echo "El resultado es: ".$resultado;
+            }
+            division($cifra1,$cifra2);
+        }
+        }
+        }
+        }
 }
 ?>
 </body>
