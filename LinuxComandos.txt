@@ -4128,3 +4128,24 @@ derecho sobre alguna ventana para matar ese proceso.
 
 $ xkill
 
+###############################
+##### Instalar Unetbootin #####
+###############################
+
+UNetbootin le permite crear unidades USB Live de Ubuntu y otras distribuciones de Linux sin necesidad de grabar un CD.
+
+Página para descarga: https://unetbootin.github.io/linux_download.html
+
+// Podemos descargamos directamente el .bin, este enlace es para arquitecturas de 64bits
+$ wget -c https://github.com/unetbootin/unetbootin/releases/download/657/unetbootin-linux64-657.bin
+
+Eso nos descargara el fichero unetbootin-linux64-657.bin
+
+// Instalamos lo siguiente, que son unas herramientas para manipular archivos MSDOS.
+# apt-get install mtools
+
+// Para correrlo
+# ./unetbootin-linux64-657.bin
+
+Listo, se nos debería ejecutar la ventana del programa.
+
