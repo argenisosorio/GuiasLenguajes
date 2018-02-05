@@ -4149,3 +4149,41 @@ Eso nos descargara el fichero unetbootin-linux64-657.bin
 
 Listo, se nos debería ejecutar la ventana del programa.
 
+##################################
+##### Instalar Google Chrome #####
+##################################
+
+// Primero hay que añadir un repositorio de google en el  /etc/apt/sources.list, es el siguiente:
+
+# Chrome de 64bits
+deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+
+// Ahora añadimos la llave pública del repositorio “Google Chrome stable” a apt.
+
+# gpg --keyserver keys.gnupg.net --recv-key A040830F7FAC5991
+
+# gpg --export --armor A040830F7FAC5991 | apt-key add -
+
+// Actualizamos la lista de paquetes de los repositorios.
+
+# apt-get update
+
+// Si sale el siguiente error:
+
+W: No existe ninguna clave pública disponible para los siguientes identificadores de clave:
+1397BC53640DB551
+
+// Ejecutamos los siguiente:
+
+# wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+
+// Actualizamos la lista de paquetes de los repositorios.
+
+# apt-get update
+
+// Ahora instalamos Google Chrome stable con:
+
+# apt-get install google-chrome-stable
+
+// Si toda va bien, debería estar disponible en la sección internet de nuestro GNU/Linux Debian 8 o 9
+
