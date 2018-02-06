@@ -3413,7 +3413,37 @@ if (window.location.protocol !== 'https:') {
 
 -------------------------------------
 
-<!-- -->
+<!-- Funcion para crear identidades a partir de datos aleatorios -->
+<!-- NOTA: Falta pulir -->
+<html>
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+  </head>
+  <script type="text/javascript">
+    var indice = 0;
+    nombre = ['Mario','Pedro','Juan'];
+    apellido = ['Castaneda','Picapiedra','Salvador Gaviota'];
+    edad = [43,31,24];
+    indice = Math.random()*(nombre.length);
+    indice = Math.floor(indice);
+    console.log(indice);
+    function rotar() {
+      if (indice == nombre.length) {indice = 0;}
+        document.getElementById("nombre").innerHTML = nombre[indice];
+        document.getElementById("edad").innerHTML = edad[indice];
+        document.getElementById("apellido").innerHTML = apellido[indice];
+        indice++;
+    }
+  </script>
+<body>
+  <div id="nombre"></div>
+  <div id="apellido"></div>
+  <div id="edad"></div>
+  <input type="button" onclick="rotar()" value="Generar identidad">
+</body>
+</html>
+
 
 -------------------------------------
 
