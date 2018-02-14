@@ -3447,6 +3447,32 @@ if (window.location.protocol !== 'https:') {
 
 -------------------------------------
 
+<!-- Generador de contraseñas, pide la cantidad de caractéres al usuario mediante un alert -->
+<html>
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+  </head>
+<body>
+<script type="text/javascript">
+function generar(longitud) {
+  var longitud=prompt("Escriba la cantidad de caracteres que va a tener la contraseña");
+  long=parseInt(longitud);
+  var caracteres = "abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789-";
+  var contrasena = "";
+  for (i=0; i<long; i++) contrasena += caracteres.charAt(Math.floor(Math.random()*caracteres.length));
+  document.getElementById("pass").innerHTML=contrasena;
+}
+</script>
+<p id="pass"></p>
+<form>
+  <input type="button" onclick="generar()" value="Generar contraseña">
+</form>
+</body>
+</html>
+
+-------------------------------------
+
 <!-- -->
 
 -------------------------------------
