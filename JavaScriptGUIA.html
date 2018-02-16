@@ -3473,6 +3473,80 @@ function generar(longitud) {
 
 -------------------------------------
 
+<!-- Generador de contraseñas, pide la cantidad de caractéres al usuario mediante un input -->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+  </head>
+<body>
+<script type="text/javascript">
+function generar(longitud) {
+  var longitud = document.getElementById("cantidad").value;
+  if (longitud == '') {
+    alert ('El campo Cantidad de caractéres no puede estar vacío');
+  }
+  else {
+    if (Number.isInteger(parseInt(longitud)) == true) {
+      var caracteres = ["abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789-", ""];
+      for (i=0; i<longitud; i++) caracteres[1] += caracteres[0].charAt(Math.floor(Math.random()*caracteres[0].length));
+      document.getElementById("pass").innerHTML=caracteres[1];
+    }
+    else {
+      alert ('El campo Cantidad de contener caractéres enteros');
+    }
+  }
+}
+</script>
+Cantidad de caractéres: <input type="text" name="cantidad" id="cantidad">
+<br />
+<p id="pass"></p>
+<form>
+  <input type="button" onclick="generar()" value="Generar contraseña">
+</form>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Generador de contraseñas, pide la cantidad de caractéres al usuario mediante un input, mejorado del anterior -->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Generador de contraseñas</title>
+  </head>
+  <style>
+    .alert{color:#F44336;}
+    .success{color:#4CAF50;}
+  </style>
+<body>
+  <main>
+    <script>
+    function generar(longitud) {
+      if (longitud == "") {
+        document.getElementById("alerta").innerHTML = "<span class='alert'>El campo no puede estar vacío</span>";
+      } else if (parseInt(longitud) != longitud) {
+        document.getElementById("alerta").innerHTML = "<span class='alert'>Este campo solo acepta números enteros</span>";
+      } else {
+        var caracteres = ["abcdefghijkmnpqrtuvwxyzABCDEFGHIJKLMNPQRTUVWXYZ2346789-", ""];
+        for (i=0; i<longitud; i++) caracteres[1] += caracteres[0].charAt(Math.floor(Math.random()*caracteres[0].length));
+        document.getElementById("alerta").innerHTML = "<span class='success'>Clave generada: </span>"+caracteres[1];
+      }
+    }
+    </script>
+    <label for="cantidad"> Cantidad de caractéres:</label><br>
+    <input type="number" name="cantidad" id="cantidad"><br>
+    <input type="button" value="Generar contraseña" onclick="generar(cantidad.value);"><br>
+    <p id="alerta"></p>
+    <p id="pass"></p>  
+  </main>
+</body>
+</html>
+
+-------------------------------------
+
 <!-- -->
 
 -------------------------------------
