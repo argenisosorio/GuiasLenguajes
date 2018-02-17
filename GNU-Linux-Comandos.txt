@@ -2259,7 +2259,9 @@ Geraldo==0.4.17
 
 // Luego podemos ejecutar un pip install sobre el fichero e instalará lo que contenga:
 
-pip install -r requirements.txt
+$ pip install -r requirements.txt
+
+$ pip install -r requirements.txt --timeout 120 // Con este parametro le daremos mayor tiempo de respuesta al servidor, para conexiones lentas.
 
 // Dentro de los .virtualenvs, dentro de nuestro entorno virtual en
 lib/python2.7/site-packages podemos ver que se instalaron los paquetes de requirements.txt
