@@ -248,6 +248,8 @@ $ top  // Listar los procesos de ejecución del sistema (y más cosas) en tiempo
 -Si presionamos "z" nos mostrara la salida con 2 colores, para distingir mejor la información.
 -"q" o "Ctrl+c" para salirse del monitor top.
 
+# sysctl -w vm.drop_caches=3 // Liberar memoria RAM
+
 $ fg %1 // Si un programa es pausado con Ctrol + z, con este comando lo reanudamos.
 
 $ htop // Es otro monitor del sistema, parecido a top pero con un poco mas de herramientas, para instalarlo # apt-get install htop
