@@ -623,6 +623,63 @@ echo "$color <br />";
 ?> <!-- Final del código php -->
 
 ############################
+##### Clases y Objetos #####
+############################
+
+--- Objetos --- 
+
+Inicialización de Objetos
+
+Para inicializar un objeto, use la sentencia new, lo que
+instancia el objeto a una variable.
+
+<?php
+class saludo {
+  function saludar() {
+    echo "Hola esto es un saludo.";
+  }
+  function saludar2() {
+    echo "Hola esto es otro saludo.";
+  }
+}
+$objeto = new saludo; // Creando el objeto
+$objeto->saludar(); // Llamando al método de la clase.
+$objeto->saludar2();
+?>
+
+--- Clases ---
+
+Una clase es una colección de variables y de funciones que acceden a esas variables.
+
+<?php
+class saludo {
+  function saludar($cadena) { // Método de la clase que recibe una cadena como parámetro.
+    echo $cadena; // Imprimiendo el valor recibido
+  }
+}
+$objeto = new saludo; // Creando el objeto
+$objeto->saludar("Esto es un saludo"); // Llamando al método de la clase y pasandole un valor como parámetro.
+?>
+
+----
+
+<?php
+/* Clase Calculadora con dos metodos para sumar y restar los valores recibidos por
+parametros */
+class Calculadora {
+  function sumar($a,$b) {
+    echo $c = $a + $b . "<br />";
+  }
+  function restar($a,$b) {
+    echo $c = $a - $b;
+  }
+}
+$object = new Calculadora;
+$object->sumar(10,6);
+$object->restar(10,6);
+?>
+
+############################
 ##### xampp en windows #####
 ############################
 
