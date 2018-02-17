@@ -138,7 +138,7 @@ float suma=0,num;
     for(i=0;i<n;i++) {
         cout<<"Introduzca un valor:  ";
         cin>>num;
-        suma=suma+num;  
+        suma=suma+num;
     }
     cout<<"El resultado de la suma es: "<<suma<<endl;
 return 0;
