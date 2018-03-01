@@ -1,5 +1,19 @@
 ### Guía Django by dM ###
 
+"""
+Django es un framework de desarrollo web de código abierto, escrito en Python, que respeta el
+patrón de diseño conocido como Modelo–vista–controlador. Fue desarrollado en origen para gestionar
+varias páginas orientadas a noticias de la World Company de Lawrence, Kansas, y fue liberada al
+público bajo una licencia BSD en julio de 2005; el framework fue nombrado en alusión al guitarrista
+de jazz gitano Django Reinhardt. En junio de 2008 fue anunciado que la recién formada Django Software
+Foundation se haría cargo de Django en el futuro.
+
+La meta fundamental de Django es facilitar la creación de sitios web complejos. Django pone énfasis en
+el re-uso, la conectividad y extensibilidad de componentes, el desarrollo rápido y el principio
+No te repitas (DRY, del inglés Don't Repeat Yourself). Python es usado en todas las partes del framework,
+incluso en configuraciones, archivos, y en los modelos de datos.
+"""
+
 # Cabecera para los scripts de Python, indica al compilador o editor que se trata de un fichero python
 # La segunda linea da codificación UTF-8 al programa
 #!/usr/bin/env python
