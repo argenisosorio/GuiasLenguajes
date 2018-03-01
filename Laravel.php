@@ -59,10 +59,27 @@ $ php -r "readfile('https://getcomposer.org/installer');" | php
 El comando anterior nos descarga el fichero "composer.phar"
 
 // Movemos composer a /usr/local/bin, lo cual nos permitirá que este disponible
-desde donde sea que lo necesitemos.
+// desde donde sea que lo necesitemos.
 
 # mv composer.phar /usr/local/bin/composer
+
+// Comprobamos la instalación con el siguiente comando:
+
+$ composer
 
 ##### Instalación de Laravel #####
 
 $ composer global require "laravel/installer"
+
+// Ahora debemos modificar el PATH para que pueda reconocer los comandos de Laravel y esto
+se hace modificando el archivo .profile, para hacerlo ejecutamos el siguiente comando en la consola:
+
+# sudo nano .profile
+
+// Al abrirse el editor nos dirigimos hasta el final y agregamos lo siguiente:
+
+PATH="$PATH:~/.composer/vendor/bin"
+
+// Guardamos y luego actualizamos composer.
+
+$ composer global update
