@@ -1,6 +1,6 @@
 ##### Guía del Framework Laravel by dM #####
 
-Importante: Esta guía fue probada usando la versión 7.0 de php, Composer 1.6.3, Laravel Installer 1.5.0, Laravel Framework 5.4.36
+Importante: Esta guía fue probada usando la versión 7.0 de php, Composer 1.6.3, Laravel Installer 1.5.0, Laravel Framework 5.4.36 en GNU/Linux Debian 9 Stretch.
 
 Laravel es un framework de código abierto para desarrollar aplicaciones y servicios web con
 PHP 5 y PHP 7. Su filosofía es desarrollar código PHP de forma elegante y simple, evitando
