@@ -36,7 +36,7 @@ que el desarrollo de Laravel dependa también del desarrollo de sus dependencias
 
 # aptitude install php-symfony-config php-symfony-dependency-injection php-symfony-expression-language php-symfony-yaml php-symfony-browser-kit php-libsodium php-symfony-http-kernel php-uuid
 
-// Instalar Mysql:
+// Instalar Mysql para usarlo en un futuro como motor de base de datos:
 
 # apt-get install mysql-server
 
@@ -135,13 +135,105 @@ $ php artisan serve
 
 // Si corre sin problemas podemos visitar: localhost:8000/ y visualizar Laravel en letras grandes.
 
-// Para cambiar el puerto donde se esta sirviendo el proyecto:
+#############################################################################
+##### En la siguiente sección instalaremos Laravel en su última versión #####
+#############################################################################
 
+Importante: Esta guía fue probada usando la versión 7.2 de php, Composer 1.6.3, Laravel Installer 2.0, Laravel Framework 5.6.11 en GNU/Linux Debian 9 Stretch.
+
+$ sudo apt-get install apt-transport-https lsb-release ca-certificates
+$ sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+$ echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+$ sudo apt-get update
+
+##### Instalación de paquetes necesarios #####
+
+$ sudo apt-get install php7.2-cli
+
+// Verificar la versión de php que se instaló.
+
+$ php -v
+
+// Instalar Apache:
+
+# apt-get install apache2
+
+// Instalar dependencias extras necesarias:
+
+# aptitude install php7.2-gd php7.2-mysql libapache2-mod-php7.2 php-zip php7.2-mbstring php7.2-xml php7.2-intl
+
+# aptitude install php-symfony-config php-symfony-dependency-injection php-symfony-expression-language php-symfony-yaml php-symfony-browser-kit php-libsodium php-symfony-http-kernel php-uuid
+
+// Instalar Mysql para usarlo en un futuro como motor de base de datos
+
+# apt-get install mysql-server
+
+// Descargamos composer:
+
+$ php -r "readfile('https://getcomposer.org/installer');" | php
+
+// El comando anterior nos descarga el fichero "composer.phar"
+
+// Movemos composer a /usr/local/bin, lo cual nos permitirá que este disponible
+// desde donde sea que lo necesitemos:
+
+# mv composer.phar /usr/local/bin/composer
+
+// Comprobamos la instalación con el siguiente comando:
+
+$ composer
+
+##### Instalación de Laravel #####
+
+$ composer global require "laravel/installer"
+
+// La salida de este comando:
+
+xxx
+
+// Nos dice el directorio donde va a ser instalado laravel
+// luego prosige con la instalación.
+
+// Luego de la instalación, comprobamos la ruta donde está laravel con:
+
+$ cd .config/composer/vendor/bin
+
+// Si navegamos bien hacia ese directorio, entonces seguimos, agregamos al final del .bashrc lo siguiente:
+
+PATH=$PATH:~/.config/composer/vendor/bin
+
+// Aplicamos los cambios con el siguiente comando:
+
+$ source .bashrc
+
+// El primer comando el una comprobación corta, el segundo es completa y larga, recomendado el primero.
+
+// Creamos un proyecto de laravel para probar:
+
+$ laravel new mysite
+
+// Luego de la generación del proyecto e instalación de dependendencias
+// Entramos en el dirctorio del proyecto y corremos el servidor de desarrollo:
+
+$ php artisan serve
+
+// Si corre sin problemas podemos visitar: localhost:8000/ y visualizar Laravel en letras grandes.
+
+// Otra forma de generar el proyecto es usando composer, y especificando versiones:
+
+$ composer create-project --prefer-dist laravel/laravel mysite
+
+#######################
+##### Tips/Extras #####
+#######################
+
+// Para cambiar el puerto donde se esta sirviendo el proyecto:
+	
 $ php artisan serve --port=9000
 
 // Para cambiar la ip y el puerto donde se esta sirviendo el proyecto:
 
-$ php artisan serve --host=503.246.895.41 --port=8000
+$ php artisan serve --host=192.168.0.100 --port=8000
 
 // Para comprobar la versión de Laravel instalada:
 

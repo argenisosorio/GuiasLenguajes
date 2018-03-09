@@ -1,14 +1,34 @@
 <!--  Guía PHP by dM -->
 
-######################################################################
-########## Instalar y configurar PHP en GNU/Linux Debian 9  ##########
-######################################################################
+##########################################################################
+########## Instalar y configurar PHP 7.2 en GNU/Linux Debian 9  ##########
+##########################################################################
+
+$ sudo apt-get install apt-transport-https lsb-release ca-certificates
+$ sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+$ echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+$ sudo apt-get update
+$ sudo apt-get install php7.2-cli
+
+// Verificar la versión de php que se instaló.
+
+$ php -v
+
+PHP 7.2.3-1+0~20180306120016.19+stretch~1.gbp81bf3b (cli) (built: Mar  6 2018 12:00:19) ( NTS )
+Copyright (c) 1997-2018 The PHP Group
+Zend Engine v3.2.0, Copyright (c) 1998-2018 Zend Technologies
+    with Zend OPcache v7.2.3-1+0~20180306120016.19+stretch~1.gbp81bf3b, Copyright (c) 1999-2018, by Zend Technologies
+
+
+##########################################################################
+########## Instalar y configurar PHP 7.0 en GNU/Linux Debian 9  ##########
+##########################################################################
 
 # apt-get install php7.0
 
 // Verificar la versión de php que se instaló.
 
-user@debian9:~$ php -v
+$ php -v
 
 PHP 7.0.27-0+deb9u1 (cli) (built: Jan  5 2018 13:51:52) ( NTS )
 Copyright (c) 1997-2017 The PHP Group
