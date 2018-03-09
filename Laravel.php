@@ -238,3 +238,8 @@ $ php artisan serve --host=192.168.0.100 --port=8000
 // Para comprobar la versión de Laravel instalada:
 
 $ php artisan --version
+
+// Cuando se clona un proyecto de un repositorio, lo mas común es que se omita la carpeta /vendor
+// que contiene los paquetes/librerías requeridas por el proyecto, entonces las instalamos con:
+
+$ composer install
