@@ -16,7 +16,7 @@ Zend Engine v3.0.0, Copyright (c) 1998-2017 Zend Technologies
     with Zend OPcache v7.0.27-0+deb9u1, Copyright (c) 1999-2017, by Zend Technologies
 
 // Para usar con mysql y apache
-# aptitude install php7.0-gd php7.0-mysql libapache2-mod-php7.0
+# aptitude install php7.0-gd php7.0-mysql libapache2-mod-php7.0 php7.0-mbstring
 
 ###############################################
 ########## Instalar y configurar PHP ##########

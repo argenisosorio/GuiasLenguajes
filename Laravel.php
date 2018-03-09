@@ -1,5 +1,6 @@
- ##### Guía del Framework Laravel by dM #####
+##### Guía del Framework Laravel by dM #####
 
+Importante: Esta guía fue probada usando la versión 7.0 de php, Composer 1.6.3, Laravel Installer 1.5.0, Laravel Framework 5.4.36
 
 Laravel es un framework de código abierto para desarrollar aplicaciones y servicios web con
 PHP 5 y PHP 7. Su filosofía es desarrollar código PHP de forma elegante y simple, evitando
@@ -31,7 +32,9 @@ que el desarrollo de Laravel dependa también del desarrollo de sus dependencias
 
 # apt-get install php7.0
 
-# aptitude install php7.0-gd php7.0-mysql libapache2-mod-php7.0 php-zip
+# aptitude install php7.0-gd php7.0-mysql libapache2-mod-php7.0 php-zip php7.0-mbstring php7.0-xml php7.0-intl php-symfony-intl php7.0-libsodium
+
+# aptitude install php-symfony-config php-symfony-dependency-injection php-symfony-expression-language php-symfony-yaml php-symfony-browser-kit php-libsodium php-symfony-http-kernel php-uuid
 
 // Instalar Mysql:
 
@@ -111,14 +114,6 @@ PATH=$PATH:~/.config/composer/vendor/bin
 
 $ source .bashrc
 
-// Actualizamos el composer:
-
-$ composer self-update
-
-ó
-
-$ composer global update
-
 // El primer comando el una comprobación corta, el segundo es completa y larga, recomendado el primero.
 
 // Creamos un proyecto de laravel para probar:
@@ -126,20 +121,28 @@ $ composer global update
 $ laravel new nombre_del_proyecto
 
 // En caso de que el comando anterior no funcione porque se va a quejar porque el php
-instalado no es superior al 7.3 entonces probar:
+instalado no es superior al 7.2 entonces probar:
 
-$ composer create-project --prefer-dist laravel/laravel mysite "5.5.*"
+$ composer create-project --prefer-dist laravel/laravel mysite "5.4.*"
 
 // Con el comando anterior lo que estamos declarando que que cree el proyecto "mysite"
-// y que se use la ultima actualización de la versión 5.5 de Laravel, que es compatible con
+// y que se use la ultima actualización de la versión 5.4 de Laravel, que es compatible con
 // el php7.0 que está instalado.
 
 // Entramos en el dirctorio del proyecto y corremos el servidor de desarrollo:
 
 $ php artisan serve
 
-// Si corre sin problemas podemos visitar: localhost:8000/
+// Si corre sin problemas podemos visitar: localhost:8000/ y visualizar Laravel en letras grandes.
 
 // Para cambiar el puerto donde se esta sirviendo el proyecto:
 
 $ php artisan serve --port=9000
+
+// Para cambiar la ip y el puerto donde se esta sirviendo el proyecto:
+
+$ php artisan serve --host=503.246.895.41 --port=8000
+
+// Para comprobar la versión de Laravel instalada:
+
+$ php artisan --version
