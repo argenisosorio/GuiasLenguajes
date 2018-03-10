@@ -2,23 +2,27 @@
 
 - C
 - QT
-- Git
 - Xen
 - C++
 - PHP
 - Ruby
+- SCSS
+- Nginx
+- Uwsgi
 - HTML
 - HAML
-- SCSS
 - Jquery
+- Apache
 - MySQL
 - Docker
 - Django
 - Python
-- Markdown
+- Laravel
 - JavaScript
 - AngularJS
+- Markdown
 - WordPress
+- Git/GitHub
 - Bash Script
 - PostgreSQL
 - Ruby on Rails
@@ -26,4 +30,4 @@
 - Mezzanine CMS basado en Django
 - Manual del Administrador de Debian 8
 - Empaquetamiento en GNU/Linux Debian
-- Comandos de Linux y muchos más para practicar y aprender.
+- Comandos de GNU/Linux y muchos más para practicar y aprender.
