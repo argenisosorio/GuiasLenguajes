@@ -1,0 +1,71 @@
+##### Guía de uwsgi by dM #####
+
+##### uwsgi #####
+
+UWSGI es una implementación de WSGI capaz de servir aplicaciones Python, pero que además apunta a proveer la pila de
+software completa para implementar servicios de hosting.
+
+Suele trabajar conjuntamente con un servidor web como Nginx.
+
+##### Instalación #####
+
+# apt-get install uwsgi uwsgi-core
+
+# pip install uwsgi // Para entornos virtuales, se recomienda instalar globalmente
+
+# apt-get install uwsgi-plugin-python // WSGI plugin for uWSGI (Python 2)          
+
+# apt-get install uwsgi-plugin-python3 // WSGI plugin for uWSGI (Python 3)
+
+##### Directorios #####
+
+Luego de la instalación se crearon los siguientes directorios:
+
+/usr/bin/uwsgi
+/usr/lib/uwsgi
+/etc/uwsgi
+/usr/share/uwsgi
+/usr/share/man/man1/uwsgi.1.gz
+
+##### Configuración #####
+
+Al igual que con nginx, es común que con uwsgi se crean archivos de configuración
+específicos por si hay pruebas o si se va a servir mas de un sitio, ademas
+de trabajar con enlaces simbólicosa esas configuraciones, entonces en /etc/uwsgi/
+se pueden tener dos directorios:
+
+/etc/uwsgi/apps-available // Directorio la las configuraciones de los sitios disponibles.
+
+/etc/uwsgi/apps-enabled // Directorio de los sitios habilitados, con enlaces simbólicos a las configuraciones
+en /etc/uwsgi/apps-available.
+
+En este ejemplo, el archivo de configuración es un .xml en las aplicaciones disponibles, con un enlace
+simbólico en las aplicaciones habilitadas.
+
+apps-available
+    README
+    www-prueba.com.xml
+apps-enabled
+    README
+    www-prueba.com.xml -> ../apps-available/www-prueba.com.xml
+
+##### Ejemplo de archivo de configuración .xml #####
+
+<uwsgi>
+    <threads>10</threads>
+    <workers>1</workers>
+    <master/>
+    <uid>name_project</uid>
+    <gid>nogroup</gid>
+    <log-x-forwarded-for/>
+    <post-buffering>4096</post-buffering>
+    <max-requests>1000</max-requests>
+    <chmod-socket>666</chmod-socket>        
+    <chdir>/var/www/path_project/</chdir>
+    <module>wsgi</module>
+    <plugins>python27</plugins>
+</uwsgi>
+
+##### Ver logs #####
+
+$ tailf /var/log/uwsgi/app/name_site_com.log

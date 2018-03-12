@@ -1,0 +1,168 @@
+##### Guía de Nginx by dM #####
+
+##### Nginx #####
+
+Nginx (pronunciado en inglés "engine X") es un servidor web/proxy inverso ligero de alto rendimiento y un proxy
+para protocolos de correo electrónico (IMAP/POP3).
+
+##### Ventajas de usar Nginx #####
+
+Se trata de un software multiplataforma, por lo tanto podremos instalarlo en la mayoría de nuestros servidores.
+
+Consume menos recursos que la mayoría de servicios que hacen su misma función.
+
+Nos proporciona un alto rendimiento soportando mayor carga y respondiendo mejor que sus competidores.
+
+Puede ser usado como proxy inverso cacheando el contenido de nuestros sitios web.
+
+Podemos integrarlo junto con Apache, de forma que Nginx procese contenido estático y Apache contenido dinámico.
+
+Puede usarse como balanceador de carga entre varios servidores, permitiéndonos así una mayor facilidad a la hora de escalar nuestros servidores.
+
+Es compatible con una gran variedad de CMS y aplicaciones actuales como pueden ser: Wordpress, Drupal, Prestashop, y muchas más.
+
+El proyecto Nginx tiene detrás a la empresa Nginx Inc. y también cuenta con el apoyo de una gran comunidad contribuyendo a mejorar y resolver dudas. También podemos recurrir a soporte profesional.
+
+##### Inconvenientes de usar Nginx #####
+
+No se integra con PHP de forma nativa. Es necesario usar FastCGI para poder integrarlo.
+
+##### Instalación #####
+
+No debe estar instalado Apache porque puede dar problemas, como por ejemplo
+que ambos servidores usan algunos puertos por defecto, lo que conlleva a colisiones.
+
+# apt-get install nginx
+
+Si visitamos 127.0.0.1 ó la ip de la máquina asignada por red veremos
+la plantilla por defecto de Nginx, que significa que está corriendo
+el servicio. Esta plantilla esta en /var/www/index.html
+
+$ sudo systemctl stop nginx // To stop your web server
+
+$ sudo systemctl start nginx // To start the web server when it is stopped, type.
+# service nginx start // En versiones anteriores de nginx.
+
+$ sudo systemctl restart nginx // To stop and then start the service again
+# service nginx reload // En versiones anteriores de nginx.
+
+$ sudo systemctl reload nginx // If you are simply making configuration changes, Nginx can often reload without dropping connections.
+
+##### Archivos de configuración de Nginx #####
+
+Los archivos de configuración de Nginx se encuentran en /etc/nginx/
+.
+├── conf.d
+├── fastcgi.conf
+├── fastcgi_params
+├── koi-utf
+├── koi-win
+├── mime.types
+├── naxsi_core.rules
+├── naxsi.rules
+├── naxsi-ui.conf.1.4.1
+├── nginx.conf
+├── proxy_params
+├── scgi_params
+├── sites-available
+│   ├── default
+├── sites-enabled
+│   ├── default -> ../sites-available/default
+├── uwsgi_params
+└── win-utf
+
+Donde el archivo de configuración principal es nginx.conf y los directorios principales de configuración son sites-available y sites-enabled.
+
+El archivo de configuración principal es donde configuraríamos las opciones del servidor web Nginx que afectan a todos los hosts
+virtuales que tengamos configurados (todas las página web alojadas).
+
+En el directorio sites-available crearíamos los archivos de configuración específicos de cada host virtual.
+
+En el directorio sites-enabled crearíamos enlaces simbólicos a los archivos de configuración que hayamos creado
+en sites-available, para que Nginx tenga en cuenta esa configuración (activarla).
+
+Se puede observar que por defecto tenemos creado el archivo de configuración "default" que está habilitado y por eso tiene un enlace
+simbólico en "sites-enabled".
+
+Para ver la configuración de nginx del sitio disponible:
+--> /etc/nginx/sites-enabled/nombre_del_sitio
+
+Si se quiere comprobar la sintaxis de los archivos de configuración luego de realizar algun cambio,
+o si es la primera vez que se configura, usaremos el siguiente comando:
+
+$ nginx -t
+
+Si todo está bien, la salida sería algo como esto:
+
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+Si hay algun error, en este ejemplo, unas "sssssss" al principio del fichero, entonces el error sería:
+
+nginx: [emerg] unknown directive "ssssssssssssss" in /etc/nginx/sites-enabled/www.name-site.com:3
+nginx: configuration file /etc/nginx/nginx.conf test failed
+
+##### Ver los logs #####
+
+Para ver los logs del sitio disponible:
+--> /var/log/nginx/nombre_del_sitio.xxx.log
+
+Para ver en tiempo real el log de accesos del server del sitio:
+/var/log/nginx# tailf nombre_del_sitio.ve.access.log
+
+Para ver en tiempo real el log de errores del server del sitio:
+/var/log/nginx# tailf nombre_del_sitio.ve.error.log
+
+##### A debugging log #####
+
+To enable a debugging log, nginx needs to be configured to support debugging during the build:
+
+./configure --with-debug .../tailf
+
+
+Then the debug level should be set with the error_log directive:
+
+#error_log /path/to/log error; // Normal error log.
+error_log /path/to/log debug;
+
+$ sudo systemctl restart nginx // Reiniciamos para que se aplique el cambio.
+
+Ahora si vemos el error log con $ tailf nombre_del_sitio.ve.error.log
+veremos una especie de monitor que nos mostrará otra o mas información
+que el error.log normal.
+
+##### Borrar nginx #####
+
+# apt-get purge nginx nginx-common
+
+# apt-get autoremove
+
+-----
+
+Ejemplo de configuración del fichero /etc/nginx/sites-available/default para servir proyectos de php:
+
+server {
+  listen   80;
+  #root /usr/share/nginx/html;
+  ### Aqui va la ruta donde tenemos el directorio del proyecto
+  root /var/www/html;
+  ## Orden de prioridad de los archivos index
+  index index.php index.html index.htm;
+  server_name example.com;
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
+  error_page 404 /404.html;
+  error_page 500 502 503 504 /50x.html;
+  location = /50x.html {
+    root /usr/share/nginx/www;
+  }
+  # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+  location ~ \.php$ {
+    try_files $uri =404;
+    fastcgi_pass unix:/var/run/php5-fpm.sock;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include fastcgi_params;
+  }
+}

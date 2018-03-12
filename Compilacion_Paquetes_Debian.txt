@@ -504,6 +504,34 @@ configure se ejecuta con $ ./configure porque al ser un script en el directorio 
 
 El ejecutar configure + make + make install es el método mas común de instalación de un programa cuando lo compilamos nosotros mismos, pero no es el único y algunos programas tienen sus propios métodos de configuracion/compilacion/instalacion.
 
+########################################
+##### Compilar e instalar paquetes #####
+########################################
+
+$ aptitude search build-essential // Este paquete es esencial para crear y manejar paquetes debian,
+por consiguiente para la creación, compilacion e instalación de programas en debian, ubuntu etc.
+Tambien se instala cuando se va a desarrollar con c y c++ puesto que la instalacion incluye
+los compiladores y las librerias necesarias para comenzar a trabajar en estos lenguajes.
+
+Descargámos el código fuente del programa que queremos compilar e instalar.
+Normalmente lo encontraremos en un archivo comprimido, con extensión tar.bz2. 
+Así que tendrás que descomprimirlo escribiendo en la consola:
+
+$ tar xvzf paquete.tar.gz (o ver sección de Comprimir/Descomprimir archivos arriba)
+
+//Ahora vamos al directorio donde hemos extraído el contenido del paquete:
+$ cd path_del_paquete
+
+// Confguramos el modo de compilación con:
+./configure
+
+Luego escribimos:
+make
+
+Y finalmente, instalamos con:
+make install
+
+// Si no hay errores ya deberíamos poder usar el programa instalado.
 
 #############################################
 ##### Crear un paquete .deb desde cero. #####

@@ -3385,3 +3385,269 @@ def file(request):
   {{ form.as_p }}
   <button type="submit">Upload</button>
 </form>
+
+#############################################################
+##### Levantar un proyecto de Django, con uwsgi y nginx #####
+#############################################################
+
+# Ver guías de uwsgi y nginx para entender mejor.
+
+En este ejemplo trabajaremos con un entorno virtual de python, y nuestro proyecto de Django se llama "prueba".
+
+El fichero wsgi.py que está junto al settings.py lo moveremos a la raíz del proyecto, esto para que uwsgi
+lo consiga con la configuración que haremos luego.
+
+Instalamos nginx.
+
+# apt-get install nginx
+
+Instalamos uwsgi globalmente y el plugin de uwsgi de python.
+
+# apt-get install uwsgi uwsgi-core
+
+# apt-get install uwsgi-plugin-python // Para python 2.7
+
+El crear y mover ficheros o directorios lo harémos siempre como root.
+Ahora vamos a configurar nginx y a mover la aplicación "prueba" al directorio de trabajo /srv
+
+En /etc/nginx/sites-available vamos a crear un fichero de configuración para nuestra aplicación "prueba"
+
+/etc/nginx/sites-available# touch prueba
+
+Ahora vamos a empezar a crear la configuración del sitio
+
+/etc/nginx/sites-available# vim prueba
+
+Nuestro fichero debería quedar mas o menos así:
+
+server {
+    #Puerto por el que va a escuchar el servidor
+    listen 80;
+
+    #Dirección ip de nuestra máquina
+    #Va a ser la url o dirección por donde se va a servir la aplicación
+    server_name 192.168.12.148;
+
+    #Codificación de caracteres de la configuración
+    charset utf-8;
+
+    # Cuerpo máximo del mensaje permitido en una petición
+    client_max_body_size 30M;
+
+    client_body_buffer_size 128k;
+
+    #Ruta en que está alojada la aplicación
+    #root /srv/prueba;
+
+    # Habilitamos los logs de acceso de nginx
+    access_log /var/log/nginx/prueba.access.log;
+
+    # Habilitamos los logs de error de nginx
+    error_log /var/log/nginx/prueba.error.log;
+
+    # Le decimos al servidor donde estan los estáticos de la aplicación
+    location /static/ {
+        root /srv/prueba/;
+    }
+
+    # Configuración adicional para trabajar con uwsgi
+    # Esto es necesario solo si el sistema va a correr por una ruta
+    #location ~ ^/(?<ruta>/.*)?$ {
+    #location ~ ^/{
+    location / {
+        uwsgi_pass unix:/var/run/uwsgi/app/prueba/socket;
+        include uwsgi_params;
+        uwsgi_param UWSGI_SCHEME $http_x_forwarded_protocol;
+        uwsgi_param SCRIPT_NAME /;
+        # Esto es necesario solo si el sistema va a correr por una ruta
+        #adicional al dominio, ejemplo: domain/ruta_adicional
+        #uwsgi_param PATH_INFO $ruta;
+        # Tiempo de espera en la conexión de nginx con uwsgi.
+        uwsgi_read_timeout 600;
+    }
+}
+
+Ahora creamos un enlace simbólico de sites-available a sites-enabled
+
+# ln -s /etc/nginx/sites-available/prueba /etc/nginx/sites-enabled/
+
+Al listar los directorios en sites-enabled nos quedará así:
+
+/etc/nginx/sites-enabled# ls -la
+total 8
+drwxr-xr-x 2 root root 4096 ago 25 08:31 .
+drwxr-xr-x 6 root root 4096 ago 25 07:59 ..
+lrwxrwxrwx 1 root root   34 ago 25 07:59 default -> /etc/nginx/sites-available/default
+lrwxrwxrwx 1 root root   25 ago 25 08:31 prueba -> ../sites-available/prueba
+
+Verificamos que esté bien la configuración del nginx con:
+
+# nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+Ahora harémos las configuraciones de uwsgi en /etc/uwsgi
+
+etc/uwsgi# ls
+apps-available  apps-enabled
+
+Al igual que en nginx crearemos un fichero de configuración, pero este va a ser un xml
+que se va a guardar en apps-available:
+
+Tenemos que tener mucho cuidado al momento de configurar este fichero, las rutas deben ser
+declaradas muy bien, especial énfasis en la ruta del entorno virtual, y el usuario del sistema y grupo
+dueño de la aplicación, así como la ruta local o dirección donde está alojada la aplicación.
+
+/etc/uwsgi/apps-available# vim prueba.xml
+
+<uwsgi>
+        <threads>100</threads>
+        <workers>2</workers>
+        <master/>
+        <chmod-socket>666</chmod-socket>
+        <home>/home/user/Entornos_virtuales/Django_1.8.8</home>
+        <socket>/var/run/uwsgi/app/prueba/socket</socket>
+        <pidfile>/var/run/uwsgi/app/prueba/pid</pidfile>
+        <uid>root</uid>
+        <gid>root</gid>
+        <log-x-forwarded-for/>
+        <post-buffering>4096</post-buffering>
+        <max-requests>1000</max-requests>
+        <chdir>/srv/prueba</chdir>
+        <pythonpath>/srv/prueba/prueba/</pythonpath>
+        <module>wsgi</module>
+        <plugins>python27</plugins>
+</uwsgi>
+
+// Guardamos como prueba prueba.xml y ahora creamos el enlace simbolico en app-enabled
+
+# ln -s /etc/uwsgi/apps-available/prueba.xml /etc/uwsgi/apps-enabled/
+
+// Reiniciar servicio de nginx
+# systemctl restart nginx
+
+// Reiniciar el servicio de uwsgi
+# systemctl restart uwsgi
+
+Cada vez que se haga un cambio en la configuración de nginx reiniciaremos el servicio, y si el cambio
+es de python, es decir en el proyecto de Django entonces reiniciaremos el servicio de uwsgi.
+
+// Para no detener e iniciar los servicios y a su vez tumbar las conexiones usaremos reload en vez de restart:
+
+# systemctl reload nginx
+
+Si todo está bien, podemos visitar la ip local desde el navegador, 192.168.12.148 configurada en
+nginx y por la cual va a estar servida la aplicación.
+
+Si la aplicación no se muestra nos ayudaremos con los logs a encontrar el error
+
+Para ver en tiempo real el log de accesos del servidor a nuestra aplicación:
+
+# tailf /var/log/nginx/prueba.access.log
+
+Para ver en tiempo real el log de errores del servidor en nuestra aplicación :
+
+# tailf /var/log/nginx/prueba.error.log
+
+Para ver en tiempo real el log de uwsgi:
+
+# tailf /var/log/uwsgi/app/prueba.log
+
+##############################################################
+##### Levantar un proyecto de Django, con uwsgi y Apache #####
+##############################################################
+
+# Ver guías de uwsgi y apache para entender mejor.
+
+Instalamos apache
+
+# apt-get install apache2
+
+Esto nos creará el directorio /var/www/html/
+
+Movemos el proyecto de django a /var/www/html/ y le damos permisos de lectura, escritura y ejecución al proyecto
+
+# chmod -R 777 /var/www/html
+
+Instalamos el modulo uwsgi
+
+# apt-get install libapache2-mod-wsgi
+
+// Reiniciamos el servicio de apache
+# service apache2 restart
+
+Una vez apache se halla reiniciado tendremos el modulo instalado y activado en apache.
+A este punto solo nos queda configurar el host virtual.
+
+// En base al fichero de configuración por defecto creamos una copia
+# cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/prueba.conf
+
+Editamos prueba.conf
+
+<VirtualHost *:80>
+    # Por convención personal uso para los nombres de dominio la siguiente convención
+    # lenguaje.nombre_del_proyecto.rama_de_git
+    ServerName python.my_project.dev
+    ServerAdmin admin@email.com
+    # El document root debe hacer referencia a la carpeta donde esta nuestro proyecto
+    DocumentRoot /var/www/html/my_project/
+
+    # El WSGIScriptAlias obtiene 2 parámetros el primero hace referencia a la ruta y el segundo al archivo wsgi.py de nuestro proyecto
+    WSGIScriptAlias / /var/www/html/my_project/my_project/wsgi.py
+
+    # El WDGIDaemonProcess recibe los siguientes parámetros
+    # - ServerName
+    # - El ejecutable de Python relacionado al DocumentRoot
+    # - La cantidad de procesos, para lo cual es recomendable dejarlo en 2
+    # - Los threads, del mismo modo se recomienda dejarlo en 15
+    # - Y el nombre a mostrar
+    WSGIDaemonProcess python.<reponame>.dev python-path=/var/www/public/<reponame>:/var/www/public/<reponame>/env/lib/python2.7/site-packages processes=2 threads=15 display-name=%{GROUP}
+    # El WSGIProcessGroup hace referencia al ServerName
+    WSGIProcessGroup python.<reponame>.dev
+
+    <Directory /var/www/public/my_project/ />
+        <Files wsgi.py>
+            Require all granted
+        </Files>
+    </Directory>
+
+    Alias /robots.txt /var/www/public/<reponame>/static/robots.txt
+    Alias /favicon.ico /var/www/public/<reponame>/static/favicon.ico
+
+    # El directorio "static" será el encargado de servir los archivos css, js, etc...
+    Alias /static/ /var/www/html/my_project/static/
+
+    <Directory /var/www/public/<reponame>/static>
+        Require all granted
+    </Directory>
+
+    # El directorio "media" se encarga en este caso de servir las imágenes, videos y demás
+    Alias /media/ /var/www/public/<reponame>/media/
+
+    <Directory /var/www/public/<reponame>/media>
+        Require all granted
+    </Directory>
+
+    # LogLevel info ssl:warn
+
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    # Include conf-available/serve-cgi-bin.conf
+</VirtualHost>
+
+Falta...
+
+#########################
+##### sqlitebrowser #####
+#########################
+
+Herramienta de alta calidad visual para crear, diseñar y editar archivos de bases de datos compatibles con SQLite.
+Es para usuarios y desarrolladores que desean crear bases de datos, buscar y editar datos.
+Utiliza una interfaz de tipo hoja de cálculo familiar y no necesita aprender comandos SQL complicados.
+
+Ideal para gestionar datos de las db de django.
+
+# aptitude install sqlitebrowser
+
+$ sqlitebrowser // Para ejecutarlo

@@ -468,3 +468,28 @@ case $var in
     echo "¡Opción inválida!"
     ;;
 esac
+
+-----
+
+#!/bin/bash
+<<COMMENT1
+Script para descargar un archivo del servidor remoto con wget
+en una ruta específicada, además pide el último octeto de la ip y
+descomprime el archvivo descargado.
+COMMENT1
+
+#Pedir el último octeto de la ip
+echo 'Último octeto de 192.168.0.?:'
+read oct
+
+# Navegar hasta la ruta donde se va a descargar el fichero.
+cd /home/user/tmp/
+
+# Descargar con wget el fichero.
+wget -c 192.168.0.$oct/share/x.zip
+
+# Descomprimir el archivo descarcago en la ruta especificada.
+unzip /home/aosorio/tmp/x.zip
+
+# Imprimir por pantalla que finalizó la descarga
+echo -e '\n¡Descarga finalizada, el fichero fue descomprimido!\n'

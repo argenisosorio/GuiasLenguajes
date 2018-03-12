@@ -1529,3 +1529,214 @@ Si queremos cambiar de version por defecto de python, entonces borramos /usr/bin
 # -*- coding: utf-8 -*-
 import urllib
 urllib.urlretrieve ("http://192.168.12.82/x.zip", "x.zip")
+
+################################################
+########## Ambiente virtual en Python ##########
+################################################
+
+Cuando se desarrollando software con Python, quizas se presente el problema de tener
+utilizar diferentes versiones de una mismo paquete en diferentes proyectos, ya sea el
+mismo Python o diferentes versiones de un Framework como Django por ejemplo, el
+problema a solucionar radica en como poder instalar las dos o mas versiones de la
+misma librería con el fin de poder desarrollar varios proyectos de forma simultánea.
+
+La solución consiste en crear virtualenvs o entornos virtuales. Un entorno virtual de
+Python es un espacio completamente independiente de otros entornos virtuales y de los
+paquetes instalados globalmente en el sistema. Esto significa que es posible instalar la versión
+2.7 de Python en un entorno virtual y la versión 3.0 en otro diferente o de forma
+global sin problema alguno.
+
+El porder tener diferentes entornos donde podemos instalar diferentes versiones de paquetes
+nos da la oportunidad de hacer un desarrollo simultaneo así como poder hacer pruebas si
+afectar a los paquetes del sistema global.
+
+##### Instalación: #####
+
+Para crear un ambiente virtual instalamos lo siguiente:
+
+# aptitude install python-setuptools python-dev
+
+# aptitude install python-virtualenv virtualenvwrapper
+
+$ mkvirtualenv nombre_ambiente_virtual //  Con un usuario (diferente a root) cree un ambiente virtual para su proyecto.
+
+$ workon nombre_ambiente_virtual // Para acceder al nombre del ambiente virtual creado
+
+ejemplo: 
+user@debian:/home$ workon proyecto // Accedemos al entorno virtual creado
+(proyecto)user@debian:/home$ // Ya estamos en el entorno virtual creado, denotado por el nombre del entorno al inicio del prompt
+
+$ deactivate nombre_ambiente_virtual // Para salir del entorno virtaul, o simplemente deactivate
+
+$ lsvirtualenv // Para listar los entornos virtuales creados o disponibles.
+
+$ rmvirtualenv nombre_virtualenv // Remover o borrar un entorno virtual.
+
+// Los entornos virtuales se crean en el directorio /home/user/.virtualenvs
+
+##### Tips #####
+
+En Debian GNU/Linux 8 (Jessie) a veces el comando mkvirtualenv no funciona por lo que hacemos lo siguiente:
+
+# apt-get install virtualenvwrapper
+
+$ vim .bashrc // Como usuario normal (NO ROOT), hay que agregar las variables con la ruta para virtualenv en el .bashrc, Agregar el siguiente contenido:
+
+# to virtualenvwrapper
+export WORKON_HOME=$HOME/django
+source /etc/bash_completion.d/virtualenvwrapper
+
+luego:
+
+$ source .bachrc
+
+##### Usando virtualenv #####
+
+Installation: 
+
+# aptitude install python-virtualenv
+
+-Crear un virtualenv:
+
+$ virtualenv mi_env
+
+-Activar el virtualenv:
+
+$ source mi_env/bin/activate
+
+-Instalar un paquete (p.ej. Django) en el virtualenv:
+
+(mi_env)$ pip install django
+
+-Trabajar en el proyecto.
+
+-Salir del virtualenv:
+
+(mi_env)$ deactivate
+
+##### Usando Python 3 en virtualenvwrapper #####
+
+# aptitude install python3.4 python3-pip python3.4-dev python3-setuptools
+
+# aptitude install python3-virtualenv virtualenvwrapper
+
+$ mkvirtualenv --python=/usr/bin/python3 my_env
+
+$ workon my_env
+
+(my_env)$
+
+##### Usando Python 3 en virtualenv #####
+
+$ virtualenv -p python3 my_env
+
+##### Borrar entorno virtual #####
+
+No hay comando para borrar un entorno virtual desde virtualenv, basta con cancelar o detener los procesos (servidores y servicios) usados por
+ese entorno y luego borrar el directorio.
+
+$ rm -rf myenv
+
+########################
+##### Paquetes pip #####
+########################
+
+// Para desarrollar software con rapidez y calidad, es imprescindible utilizar paquetes externos que ayuden
+con parte de la funcionalidad que se desea implementar. En el ambiente Python esto no es la excepción.
+
+// Para solventar ésta necesidad, la comunidad Python ha puesto convenientemente a disposición de los desarrolladores
+un repositorio de paquetes de fácil acceso llamado PyPi. Solo es necesario ejecutar un comando en la terminal
+para poder instalar el paquete Python que necesitemos. Incluso es posible instalar paquetes que no se encuentren
+en el mencionado repositorio.
+
+// Para descargar paquetes del repositorio PyPi se pueden utilizar varias herramientas, pero en este caso se
+va a usar pip. Es necesario instalar esta herramienta en el sistema en caso de no estar disponible, antes
+de poder instalar un paquete Python.
+
+// El comando pip equivale al apt-get de Debian pero para paquetes Python.
+
+# aptitude install python-pip python-dev python-setuptools python3-pip // Instalamos pip y otros necesarios, com python3 para pip, necesario en algunos proyectos.
+
+// Una vez instalado ya podremos instalar paquetes de Python a traves de pip ejemplo:
+
+$ pip install django // Nos instalara la ultima version de Django disponible en los paquetes pi
+
+$ pip install django==1.7 // Instalar una versión específica de algun paquete.
+
+// Tambien es posible crear ficheros que contengan rutinas para automatizar la instalacion
+de varios paquetes ejemplo:
+
+Creamos un requirements.txt y dentro escribimos como ejemplo:
+django==1.5.12
+pillow==2.4.0
+Geraldo==0.4.17
+
+// Luego podemos ejecutar un pip install sobre el fichero e instalará lo que contenga:
+
+$ pip install -r requirements.txt
+
+$ pip install -r requirements.txt --timeout 120 // Con este parametro le daremos mayor tiempo de respuesta al servidor, para conexiones lentas.
+
+// Dentro de los .virtualenvs, dentro de nuestro entorno virtual en
+lib/python2.7/site-packages podemos ver que se instalaron los paquetes de requirements.txt
+de no ser así hay que revisar el fichero o el nombre de los paquetes a instalar, etc.
+
+$ pip search nombre_paquete // Buscar un paquete.
+
+$ pip uninstall package // Desinstalar un paquete.
+
+$ pip show package // Para ver si un paquete está instalado, si es así, mostrará la version, y la ruta donde está instalado.
+
+$ pip install Package --upgrade // Para actualizar un paquete a su última versión.
+
+$ pip install --upgrade Package package==1.x.x // Actualizar un paquete a una versión específica.
+
+ $ pip freeze // Listar los paquetes instalado y sus versiones exactas.
+
+##### Error: ImportError: No module named packaging.version #####
+
+Puede que alguna vez a pip le pique el trasero y no deje realizar acciones
+de búsqueda, actualización etc.. entonces moveremos unos ficheros:
+
+$ cd /usr/local/lib/python2.7/dist-packages
+
+$ mv pkg_resources/ pkg_resources_bak/
+
+Funcionó cuando se instalo en el sistema base, si está en un entorno virtual la
+ruta será diferente.
+
+###########################################
+##### Usando un espejo de pip cercano #####
+###########################################
+
+Para usar los repositorios py.pi internos de Cenditel
+vamos al directorio /home/usuario/.pip/
+y creamos dentro el fichero pip.conf
+Agregamos el siguiente contenido al fichero creado y guardamos:
+
+[global]
+index-url = http://pypi.cenditel/simple/
+
+Luego actualizamos el pip y listo, si estamos usando un entorno virtual de python
+entonces ejecutaremos los comandos dentro del entorno virtual.
+
+$ pip install --upgrade pip
+$ pip install package_name --trusted-host pypi.cenditel
+$ pip install -r requirements.txt --trusted-host pypi.cenditel // Para instalar recursivamente un fichero de requerimientos.
+
+##### Nota #####
+
+Hay paquetes que requieren permisos de superusuario, entonces al usar sudo, o estar como
+superusuarios ya no hará efecto el pip.conf que está en /home/usuario/.pip/
+entonces, para que sirva con el root tambien crearemos el pip.conf pero en el home del root
+que está en /root/.pip/
+
+# touch /root/.pip/pip.conf
+
+# nano /root/.pip/pip.conf // Y hacemos lo mismo que arriba, copiamos el contenido, guardamos y listo.
+
+A veces no se crea el directorio .pip del usuario entonces lo creamos manualmente
+
+/home/user$ mkdir .pip
+
+root@debian# mkdir .pip // en /root

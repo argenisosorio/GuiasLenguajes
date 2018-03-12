@@ -1,0 +1,168 @@
+##### Guía de Apache by dM #####
+
+########## Apache HTTP Server ##########
+
+Servidor HTTP Apache es un servidor web HTTP de código abierto, para plataformas
+Unix (BSD, GNU/Linux, etc.), Microsoft Guindows, Macintosh y otras, que implementa
+el protocolo HTTP/1.1
+
+##### Instalación #####
+
+# apt-get install apache2
+
+Para comprobar la correcta instalación de apache abriremos el navegador web de la máquina
+y escribiremos localhost, 127.0.0.1 o la IP de la máquina si está conectado a una red local.
+Cualquiera de las tres opciones nos sirve, y tecleamos enter, si está bien instalado nos
+aparecerá una página que indica que apache está funcionando, a su vez, esa instalación creara
+la siguiente ruta en la máquina:
+
+/var/www/
+
+ó
+
+/var/www/html
+
+Dependiendo de la versión de Apache que se haya instalado será uno u otro.
+
+En este directorio es donde podemos guardar nuestros proyectos, ficheros, etc.
+Que queremos que sean servidos por Apache en la web.
+
+http://192.xxx.xx.xxx/ // La direccion ip sirve para acceder al directorio del servidor
+
+127.0.0.1:80 // Apache cuando está en ejecucion siempre está escuchando por el puerto 80
+por lo que si visitamos 127.0.0.1:80 accederemos al servicio
+
+Sus archivos e configuracion están en etc/apache2
+
+Estructura del directorio /etc/apache2:
+
+├── apache2.conf
+├── conf-available
+│   ├── charset.conf
+│   ├── localized-error-pages.conf
+│   ├── other-vhosts-access-log.conf
+│   ├── security.conf
+│   └── serve-cgi-bin.conf
+├── conf-enabled
+│   ├── charset.conf -> ../conf-available/charset.conf
+│   ├── localized-error-pages.conf -> ../conf-available/localized-error-pages.conf
+│   ├── other-vhosts-access-log.conf -> ../conf-available/other-vhosts-access-log.conf
+│   ├── security.conf -> ../conf-available/security.conf
+│   └── serve-cgi-bin.conf -> ../conf-available/serve-cgi-bin.conf
+├── envvars
+├── magic
+├── mods-available
+├── mods-enabled
+├── ports.conf
+├── sites-available
+│   ├── 000-default.conf
+│   └── default-ssl.conf
+└── sites-enabled
+    └── 000-default.conf -> ../sites-available/000-default.conf
+
+Breve repaso por algunos de sus ficheros:
+
+apache2.conf
+
+Este es el archivo de configuración principal del servidor. Desde aquí se pueden configurar
+la mayoría de las opciones con las que cuenta apache para el servicio. Lee y ordena el resto
+de los archivos de configuración cuando arranca el servidor. El propio archivo "apache2.conf"
+contiene instrucciones y explicación de cada archivo y directorio del servidor.
+
+ports.conf
+
+Este archivo especifica los puertos de escucha de los hosts virtuales. Se agrega al archivo de
+configuración "apache2.conf". Se agregan tantos "Listen numpuerto" como puertos queramos que
+escuche nuestro servidor.
+
+mods-enabled
+
+Contiene configuraciones de módulos opcionales del servidor (seguridad, speedy, ssl, multiproceso)
+y los módulos en sí mismos.
+
+conf-enabled
+
+Fragmentos de configuración global. Almacena archivos ".conf" que contienen parte de la configuración
+de apache. Contiene enlaces simbólicos a los ficheros de conf-available.
+
+sites-availables
+
+Es donde definiremos los host virtuales del servidor Apache, es donde configuramos
+los accesos, puertos, y otras cosas relativas nuestros proyectos, que queremos que sean servidos
+en la web por apache.
+
+sites-enabled
+
+En el hay enlaces simbólicos a los ficheros de configuracion que están en sites-availables.
+
+##### Comandos para gestionar apache #####
+
+$ chmod -R 777 /var/www/html // Cambiar los permisos de /var/www puesto que solo tiene permisos root, 
+-R para que los permisos se hagan de forma recursiva, esto se hace porque al pegar ficheros
+o carpetas estas no tiene los permisos de lectura/escritura necesarios.
+
+$ sudo service apache2 restart // Restart apache para guardar los cambios.
+
+$ sudo service apache2 stop // Detener el servicio de apache.
+
+$ sudo service apache2 status // Ver el estado del servicio
+
+$ sudo service apache2 reload // Para recargar la configuración del servicio de Apache.
+
+$ sudo service apache2 force-reload // Forzar la recargar de configuración del servicio.
+
+##### log de accesos ######
+
+$ sudo tail -f /var/log/apache2/access.log // Para ver el log de acceso via Web al servidor Web Apache.
+
+Ejemplo de una petición, vista en el log:
+
+ip visitante || fecha y hora || Método de acceso || url visitada || codigo http || codigo de estado || ip + url visitada || navegador usando, SO usado, arquitectura usada en la petición
+
+192.168.200.201 - - [31/Aug/2017:14:59:44 -0400] "GET /files/2017/ HTTP/1.1" 200 1287 "http://192.168.200.201/files/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0"
+
+##### log de errores #####
+
+$ sudo tail -f /var/log/apache2/error.log // Para depurar posibles errores del servidor.
+
+##### Borrar apache #####
+
+# apt-get --purge remove apache2*
+
+# rm -fr /etc/apache2
+
+##### Ejemplo de configuración para un sitio de pruebas #####
+
+Creamos un fichero prueba.conf en /etc/apache2/sites/availables con el siguiente contenido:
+
+# touch prueba.conf
+
+<VirtualHost *:80>
+  ServerAdmin admin@mail.com
+  ServerName myserver.com
+  DocumentRoot /var/www/html/prueba/
+  DirectoryIndex index.html
+</VirtualHost>
+
+---
+
+ServerAdmin // Es una opción obligatoria e indica una dirección de correo electrónico
+del responsable del sitio.
+
+ServerName // Aquí anotamos el FQDN vinculado al sitio, es decir, el nombre de dominio que luego configuraremos en el servidor BIND9
+
+DocumentRoot // Apunta al directorio donde tenemos nuestro proyecto.
+
+DirectoryIndex // Indica el archivo de inicio definido por defecto.
+
+Ahora crearemos un enlace simbólico de esta configuración a sites-enabled
+
+# ln -s /etc/apache2/sites-available/prueba.conf /etc/apache2/sites-enabled/
+
+Reiniciamos apache:
+
+service apache2 reload
+
+Una vez echo esto deberíamos poder visualizar nuestro proyecto en:
+
+127.0.0.1/prueba

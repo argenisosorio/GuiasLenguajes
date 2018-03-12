@@ -200,6 +200,105 @@ $ cd .. // retroceder un directorio
 
 $ cd ../../ // Retroceder dos directorios (../) representa un directorio
 
+#######################################
+##### Rutas relativas y absolutas #####
+#######################################
+
+- Una ruta o path es donde se localiza una carpeta o fichero dentro de nuestro sistema de ficheros.
+- Todos los comandos que se ejecuten sin especificar una ruta lo hará donde este situado.
+- Hay dos tipos de ruta que debemos diferenciar:
+
+***Ruta absoluta: Se indica toda la ruta del fichero incluyendo el directorio raíz. Por ejemplo:
+
+/home/user/folder/file.txt
+
+***Ruta relativa: Se indica la ruta a partir de donde este en ese momento situado. No se incluye el directorio raíz. Por ejemplo, si estamos en la
+ruta /home/user y queremos acceder al file.txt que esta dentro de folder, seria:
+
+folder/file.txt
+
+#############################################################################
+##### Comandos para buscar ficheros, directorios, paquetes, historiales #####
+#############################################################################
+
+$ history // Mostrar el historial de los comandos de la consola
+
+$ fc -l // Mostrar los ultimos comandos usados por el usuario
+
+$ history | grep xxx // Busqueda especifica de una comando usado, ejemplo: aptitude, alias, grep etc.
+
+.bash_history // En los archivos ocultos del home, en este fichero se almacena el historial de los comandos usados
+
+$ grep --color=always -n "mysql" /var/www/prueba/2/datos.php // --color para colorear la palabra a buscar, 
+-n para listar la la linea del caracter buscado y al final ra ruta del archivo a buscar
+
+$ grep cadena_texto ./* -rIn // Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
+
+$ grep --color=always -n "cadena_texto" ./* -Ir // Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
+
+$ grep --color -n "cadena_texto" -Ir // No hace falta poner =always
+
+$ egrep -r "Saludo" . // Otra forma de busqueda.
+
+| grep xxx // filtra la busqueda con el parametro que le demos ejemplo:
+
+$ aptitude search python | grep 2.7 // Busca las versiones de python que coincidan con el patron 2.7
+
+$ ps -e | grep ruby // Busca en los procesos del sistema las coincidencias con ruby
+
+$ whereis python // Para saber donde esta instalado un programa, saber el directorio
+$ whereis firefox
+$ whereis apache2
+
+$ find // Listar todos los archivos contenidos en el directorio actual y en los sub directorios, si estamos en /home/user nos listara todo, dependiendo de donde este pues listara el contenido.
+
+$ find -name name_dir // Buscar un directorio especifico en el sistema.
+
+# find / -name name_file_or_package // Buscar un fichero o directorio específico en el sistema.
+
+su:
+find / -type f -name NombreArchivo.html // Para mostrar el directorio del archivo que se quiera buscar, se debe saber el nombre del archivo.
+
+file:///home/user/nombre_fichero.xxx // Abrir un fichero del directorio desde el navegador.
+
+$ locate nombre_del_archivo // Hacer una busqueda de un archivo en los directorios, se puede especificar un nombre con su extensión
+//o solo especificar una palabra, la busqueda se hara en todos los archivos que contengan la palabra o nombre de archivo escrita.
+
+$ locate .jpg // Buscar en todos los directorios los ficheros con la extension especificada
+
+$ locate "*.jpg" // Buscar en todos los directorios los ficheros con la extension especificada.
+
+$ locate .pdf | grep software // Buscar en todos los .pdf del sistema que contengan la palabra "software" en el nombre. Sí hace distinción entre mayúsculas, minúsculas y acéntos.
+
+$ sudo locate -c hola // Muestra cuantos archivos contienen la palabra "hola" en el nombre.
+
+$ sudo locate -i hola // Busca todos los archivos que contienen la palabra "hola" en el nombre tanto en mayúsculas como en minúsculas.
+
+$ sudo locate nombre_archivo > /home/usuario/lista.txt // Para guardar el resultado de la búsqueda en un archivo de texto.
+
+$ sudo find / -name nombre_carpeta // (/) es para hacer la busqueda desde ahi en adelante, puede ser (/home/user)
+
+$ find /carpeta // Lista los archivos que componen el directorio introducido
+
+$ type nombre_comando // Busca la ruta donde se encuentra el comando, ejemplo: aptitude, python, etc.
+
+$ which nombre_programa // Buscar la ruta de un programa
+
+$ sudo find / -name "*nombre_fichero*" // Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion escrita.
+
+$ sudo find / -name "*.xxx*" // Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion escrita, en este caso,
+una extensión de fichero, donde / puede ser /home/user etc y .xxx la extension: .jpg, .png, .txt, .py, etc.
+
+$ sudo find /home/user ! -name "*xxx*" // Busca todos los archivos que NO contienen la palabra "xxx" en el nombre, se especifíca el directorio en el cual buscar.
+
+$ sudo find /home/user -iname "*xxx*" // Busca todos los archivos que contienen la palabra "xxx" en el nombre tanto en mayúsculas como en minúsculas.
+
+$ sudo find /home/user/ -iname "*xxx*" > /home/user/lista.txt // Si el resultado de la búsqueda anterior te ha proporcionado una gran cantidad de información, resulta
+más cómodo almacenar el resultado de la búsqueda en un fichero de texto para revisarlo posteriormente.
+
+# sudo find / -type f -name /home/user/fichero.c>>/home/user/x.txt // Crear un fichero (x.txt) que guardará la salida de la consola, en este caso
+es una búsqueda, buscamos el fichero.c en el directorio user y guardaremos la salida del shell en el fichero x.txt que se creará.
+
 #######################################################
 ##### Lectores/Editores de texto desde la consola #####
 #######################################################
@@ -237,6 +336,48 @@ falta especificar las rutas completas.
 
 $ rename 's/\.txt/\.xls/' *.txt  //Cambiar extension a todos los ficheros de un directorio
 //En el ejemplo vamos a sustituir los .txt por .xls y le decimos que se lo haga a todos los .txt
+
+################
+##### Less #####
+################
+
+// less es un visualizador de archivos de texto que funciona en intérpretes de comando.
+// A diferencia de otros programas similares (como more), less permite una completa navegación
+// por el contenido del archivo, utilizando un mínino de recursos del sistema.
+
+***** Comandos basicos *****
+
+man less // Manual de less
+
+AvPag // Avanzar una página
+
+RePag // Retroceder una página
+
+space // Tecla espacio para avanzar, como page up
+
+:q // Salir
+
+:h // Ayuda
+
+:/palabra // (/) Buscamos una palabra dentro del documento
+// (n) para ir a la siguiente coincidencia.
+// (N) para ir a la coincidencia anterior
+
+:G // Ir al final del texto
+
+:g // Ir al inicio del texto
+
+:v //Invocar un editor de texto para el documento, por lo general usa vi pero puede usar nano automaticamente
+
+$ less +123 filename // Para ir a una línea específica de un fichero.
+
+################################################
+##### Ver un fichero .csv desde la consola #####
+################################################
+
+Ordenará por columnas, etc...
+
+$ cat file.csv | sed -e 's/,,/, ,/g' | column -s, -t | less -#5 -N -S
 
 ###############################################
 ##### Comandos para monitorear el sistema #####
@@ -302,15 +443,138 @@ $ ps -l // Muestra algunos detalles de los procesos del sistema.
 
 $ ps l //  Muestra mas detalles de los procesos del sistema.
 
-#########################################
-##### Usando los programas de gnome #####
-#########################################
+########################################################################################
+##### Restaurar o reiniciar las conexiones de red del sistema - networking restart #####
+########################################################################################
 
-$ gnome-screenshot // Captura de pantalla del escritorio
+# /etc/init.d/networking restart
 
-$ gnome-shell --replace & disown // Recargar el entorno gráfico, evitando el reinicio del pc.
+# service networking restart
 
-$ pdfimages fichero.pdf nombre_imagene // Extrae las imagenes de un .pdf
+# invoke-rc.d networking restart
+
+#### Para maquinas virtuales #####
+
+Cuando se va a conectar por wireless, para que el dhcp le asigne una dirección ip
+modificamos el fichero:
+
+/etc/network/interfaces
+
+Y quedará así:
+
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+source /etc/network/interfaces.d/*
+
+# The loopback network interface
+#auto lo
+#iface lo inet loopback
+auto eth0
+iface eth0 inet dhcp
+
+---
+
+Guardamos y reiniciamos las interfaces de redes con los tres comandos de arriba, esto
+es para cuando una máquina virtual no agarra internet inalambrico, tambien debe estar
+habilitada el adaptador de conexión inalambrica en el panel de configuración de la maquina virtual.
+Dentro de la máquina virtual parecerá que esta conectado por cable.# The loopback network interface
+
+Cuando se instala el SO y no consigue ninguna red cableada, es posible que el router/DHCP no le haya
+asignado una dirección ip, entonces modificamos el mismo fichero para que quede así:
+
+auto lo
+iface lo inet loopback
+auto eth0
+iface eth0 inet dhcp
+
+Y reiniciamos las interfaces de red, con suerte obtendremos una dirección ip de la red.
+
+Podemos intentar un ifup para ver si el dhcp le asigna la dirección ip sin necesidad de reiniciar la maquina o las
+interfaces de red:
+
+# ifup eth0
+
+Luego # ip addr a ver si ya tiene ip, si no es así entonces reiniciaremos las conexiones de red del sistema con los comandos descritos arriba.
+
+################################################################################
+##### Restaurar o reiniciar las conexiones de red inalambrica del sistema #####
+################################################################################
+
+If you really want to reset the network adapter you usually need to unload and reload the kernel module that it uses.
+
+If you just want to reconfigure it you can usually do:
+
+# /etc/init.d/network-manager restart
+
+But if you just want a new dhcp lease (that's the technical name for obtain a new IP from the router), you just need to use:
+
+# dhclient -v eth1
+
+###############################
+##### Herramientas de red #####
+###############################
+
+$ ifconfig // Siendo root, permite desplegar numerosos parámetros de las interfaces de red residentes  en el núcleo,
+como la dirección ip (dinámica o estática), o la máscara de red entre otros.
+
+$ ip addr// Para ver el estatus de las conexiones de red, este comando le mostrará su dirección ip, el tipo de conexión que está utilizando, etc.
+
+$ nmap -sT -O localhost // Ver que puertos estan escuchando 
+
+##### Iproute2 #####
+
+Iproute2 es un paquete de herramientas muy potentes para administrar interfaces de red y conexiones en sistemas Linux.
+
+Este paquete reemplaza completamente las funcionalidades presentes en ifconfig, ya que este no viene instalado por defecto en GNU/Linux Debian 9 Stretch, ya que a ifconfig
+se le considera obsoleto.
+
+##### Instalar ifconfig y route en Debian 9 #####
+
+Lo primero que tenemos que hacer es abrir un terminal e instalar el paquete “net-tools”. Si en la instalación hemos elegido hacer “sudo” para ascender a superusuario para instalar paquetes, tecleamos:
+
+# apt-get  install net-tools
+
+##### Comparación de comandos de entre ifconfig e IP #####
+
+// Mostrar dispositivos de red y su configuración.
+$ ifconfig
+
+$ ip addr show
+
+ó
+
+$ ip link show
+
+// Activar una interfaz de red.
+$ ifconfig eth0 up
+
+$ ip link set eth0 up
+
+// Desactivar una interfaz de red.
+$ ifconfig eth0 down
+
+$ ip link set eth0 down
+
+// Establecer una dirección IP a una interfaz.
+$ ifconfig eth0 192.168.1.1
+
+$ ip address add 192.168.1.1 dev eth0
+
+// Eliminar una dirección IP de una interfaz.
+ifconfig no podrá hacer esto.
+
+$ ip address del 192.168.1.1 dev eth0
+
+// Añadir una interfaz virtual.
+$ ifconfig eth0:1 10.0.0.1/8
+
+$ ip addr add 10.0.0.1/8 dev eth0 label eth0:1
+
+// Para configurar una tarjeta de red física, por ejemplo, con ifconfig debemos teclear lo siguiente:
+$ ifconfig eth0 192.168.0.2 netmask 255.255.255.0
+
+$ ip addr add 192.168.0.2/24 dev eth0
 
 ##########################################
 ##### Gestionar usuarios del sistema #####
@@ -477,40 +741,6 @@ refusar o eliminar conexiones externas. A veces pide su.
 
 $ last // listar los ultimos usuarios conectados
 
-################
-##### Less #####
-################
-
-// less es un visualizador de archivos de texto que funciona en intérpretes de comando.
-// A diferencia de otros programas similares (como more), less permite una completa navegación
-// por el contenido del archivo, utilizando un mínino de recursos del sistema.
-
-***** Comandos basicos *****
-
-man less // Manual de less
-
-AvPag // Avanzar una página
-
-RePag // Retroceder una página
-
-space // Tecla espacio para avanzar, como page up
-
-:q // Salir
-
-:h // Ayuda
-
-:/palabra // (/) Buscamos una palabra dentro del documento
-// (n) para ir a la siguiente coincidencia.
-// (N) para ir a la coincidencia anterior
-
-:G // Ir al final del texto
-
-:g // Ir al inicio del texto
-
-:v //Invocar un editor de texto para el documento, por lo general usa vi pero puede usar nano automaticamente
-
-$ less +123 filename // Para ir a una línea específica de un fichero.
-
 ########################################################
 ########## Cambiar el pass del usuario y root ##########
 ########################################################
@@ -542,9 +772,9 @@ Introduzca la nueva contraseña de UNIX:******
 Vuelva a escribir la nueva contraseña de UNIX:***** 
 passwd: contraseña actualizada correctamente
 
-#########################################################
-########## Instalacion de programas y paquetes ##########
-#########################################################
+############################################################################
+########## Instalacion de programas y paquetes con apt y aptitude ##########
+############################################################################
 
 $ man aptitude // Ver el manual de aptitude.
 
@@ -959,664 +1189,6 @@ la resalta en colores como muchos otros editores graficos como gedit, sublime, n
 En /etc/vim en el fichero vimrc descomentamos la linea 
 "syntax on // Quitamos las (") para que quede activado directamente la coloracion de codigos
 
-########################################
-########## Apache HTTP Server ##########
-########################################
-
-Servidor HTTP Apache es un servidor web HTTP de código abierto, para plataformas
-Unix (BSD, GNU/Linux, etc.), Microsoft Guindows, Macintosh y otras, que implementa
-el protocolo HTTP/1.1
-
-##### Instalación #####
-
-# apt-get install apache2
-
-Para comprobar la correcta instalación de apache abriremos el navegador web de la máquina
-y escribiremos localhost, 127.0.0.1 o la IP de la máquina si está conectado a una red local.
-Cualquiera de las tres opciones nos sirve, y tecleamos enter, si está bien instalado nos
-aparecerá una página que indica que apache está funcionando, a su vez, esa instalación creara
-la siguiente ruta en la máquina:
-
-/var/www/
-
-ó
-
-/var/www/html
-
-Dependiendo de la versión de Apache que se haya instalado será uno u otro.
-
-En este directorio es donde podemos guardar nuestros proyectos, ficheros, etc.
-Que queremos que sean servidos por Apache en la web.
-
-http://192.xxx.xx.xxx/ // La direccion ip sirve para acceder al directorio del servidor
-
-127.0.0.1:80 // Apache cuando está en ejecucion siempre está escuchando por el puerto 80
-por lo que si visitamos 127.0.0.1:80 accederemos al servicio
-
-Sus archivos e configuracion están en etc/apache2
-
-Estructura del directorio /etc/apache2:
-
-├── apache2.conf
-├── conf-available
-│   ├── charset.conf
-│   ├── localized-error-pages.conf
-│   ├── other-vhosts-access-log.conf
-│   ├── security.conf
-│   └── serve-cgi-bin.conf
-├── conf-enabled
-│   ├── charset.conf -> ../conf-available/charset.conf
-│   ├── localized-error-pages.conf -> ../conf-available/localized-error-pages.conf
-│   ├── other-vhosts-access-log.conf -> ../conf-available/other-vhosts-access-log.conf
-│   ├── security.conf -> ../conf-available/security.conf
-│   └── serve-cgi-bin.conf -> ../conf-available/serve-cgi-bin.conf
-├── envvars
-├── magic
-├── mods-available
-├── mods-enabled
-├── ports.conf
-├── sites-available
-│   ├── 000-default.conf
-│   └── default-ssl.conf
-└── sites-enabled
-    └── 000-default.conf -> ../sites-available/000-default.conf
-
-Breve repaso por algunos de sus ficheros:
-
-apache2.conf
-
-Este es el archivo de configuración principal del servidor. Desde aquí se pueden configurar
-la mayoría de las opciones con las que cuenta apache para el servicio. Lee y ordena el resto
-de los archivos de configuración cuando arranca el servidor. El propio archivo "apache2.conf"
-contiene instrucciones y explicación de cada archivo y directorio del servidor.
-
-ports.conf
-
-Este archivo especifica los puertos de escucha de los hosts virtuales. Se agrega al archivo de
-configuración "apache2.conf". Se agregan tantos "Listen numpuerto" como puertos queramos que
-escuche nuestro servidor.
-
-mods-enabled
-
-Contiene configuraciones de módulos opcionales del servidor (seguridad, speedy, ssl, multiproceso)
-y los módulos en sí mismos.
-
-conf-enabled
-
-Fragmentos de configuración global. Almacena archivos ".conf" que contienen parte de la configuración
-de apache. Contiene enlaces simbólicos a los ficheros de conf-available.
-
-sites-availables
-
-Es donde definiremos los host virtuales del servidor Apache, es donde configuramos
-los accesos, puertos, y otras cosas relativas nuestros proyectos, que queremos que sean servidos
-en la web por apache.
-
-sites-enabled
-
-En el hay enlaces simbólicos a los ficheros de configuracion que están en sites-availables.
-
-##### Comandos para gestionar apache #####
-
-$ chmod -R 777 /var/www/html // Cambiar los permisos de /var/www puesto que solo tiene permisos root, 
--R para que los permisos se hagan de forma recursiva, esto se hace porque al pegar ficheros
-o carpetas estas no tiene los permisos de lectura/escritura necesarios.
-
-$ sudo service apache2 restart // Restart apache para guardar los cambios.
-
-$ sudo service apache2 stop // Detener el servicio de apache.
-
-$ sudo service apache2 status // Ver el estado del servicio
-
-$ sudo service apache2 reload // Para recargar la configuración del servicio de Apache.
-
-$ sudo service apache2 force-reload // Forzar la recargar de configuración del servicio.
-
-##### log de accesos ######
-
-$ sudo tail -f /var/log/apache2/access.log // Para ver el log de acceso via Web al servidor Web Apache.
-
-Ejemplo de una petición, vista en el log:
-
-ip visitante || fecha y hora || Método de acceso || url visitada || codigo http || codigo de estado || ip + url visitada || navegador usando, SO usado, arquitectura usada en la petición
-
-192.168.200.201 - - [31/Aug/2017:14:59:44 -0400] "GET /files/2017/ HTTP/1.1" 200 1287 "http://192.168.200.201/files/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0"
-
-##### log de errores #####
-
-$ sudo tail -f /var/log/apache2/error.log // Para depurar posibles errores del servidor.
-
-##### Borrar apache #####
-
-# apt-get --purge remove apache2*
-
-# rm -fr /etc/apache2
-
-##### Ejemplo de configuración para un sitio de pruebas #####
-
-Creamos un fichero prueba.conf en /etc/apache2/sites/availables con el siguiente contenido:
-
-# touch prueba.conf
-
-<VirtualHost *:80>
-  ServerAdmin admin@mail.com
-  ServerName myserver.com
-  DocumentRoot /var/www/html/prueba/
-  DirectoryIndex index.html
-</VirtualHost>
-
----
-
-ServerAdmin // Es una opción obligatoria e indica una dirección de correo electrónico
-del responsable del sitio.
-
-ServerName // Aquí anotamos el FQDN vinculado al sitio, es decir, el nombre de dominio que luego configuraremos en el servidor BIND9
-
-DocumentRoot // Apunta al directorio donde tenemos nuestro proyecto.
-
-DirectoryIndex // Indica el archivo de inicio definido por defecto.
-
-Ahora crearemos un enlace simbólico de esta configuración a sites-enabled
-
-# ln -s /etc/apache2/sites-available/prueba.conf /etc/apache2/sites-enabled/
-
-Reiniciamos apache:
-
-service apache2 reload
-
-Una vez echo esto deberíamos poder visualizar nuestro proyecto en:
-
-127.0.0.1/prueba
-
-#################
-##### Nginx #####
-#################
-
-Nginx (pronunciado en inglés "engine X") es un servidor web/proxy inverso ligero de alto rendimiento y un proxy
-para protocolos de correo electrónico (IMAP/POP3).
-
-##### Ventajas de usar Nginx #####
-
-Se trata de un software multiplataforma, por lo tanto podremos instalarlo en la mayoría de nuestros servidores.
-
-Consume menos recursos que la mayoría de servicios que hacen su misma función.
-
-Nos proporciona un alto rendimiento soportando mayor carga y respondiendo mejor que sus competidores.
-
-Puede ser usado como proxy inverso cacheando el contenido de nuestros sitios web.
-
-Podemos integrarlo junto con Apache, de forma que Nginx procese contenido estático y Apache contenido dinámico.
-
-Puede usarse como balanceador de carga entre varios servidores, permitiéndonos así una mayor facilidad a la hora de escalar nuestros servidores.
-
-Es compatible con una gran variedad de CMS y aplicaciones actuales como pueden ser: Wordpress, Drupal, Prestashop, y muchas más.
-
-El proyecto Nginx tiene detrás a la empresa Nginx Inc. y también cuenta con el apoyo de una gran comunidad contribuyendo a mejorar y resolver dudas. También podemos recurrir a soporte profesional.
-
-##### Inconvenientes de usar Nginx #####
-
-No se integra con PHP de forma nativa. Es necesario usar FastCGI para poder integrarlo.
-
-##### Instalación #####
-
-No debe estar instalado Apache porque puede dar problemas, como por ejemplo
-que ambos servidores usan algunos puertos por defecto, lo que conlleva a colisiones.
-
-# apt-get install nginx
-
-Si visitamos 127.0.0.1 ó la ip de la máquina asignada por red veremos
-la plantilla por defecto de Nginx, que significa que está corriendo
-el servicio. Esta plantilla esta en /var/www/index.html
-
-$ sudo systemctl stop nginx // To stop your web server
-
-$ sudo systemctl start nginx // To start the web server when it is stopped, type.
-# service nginx start // En versiones anteriores de nginx.
-
-$ sudo systemctl restart nginx // To stop and then start the service again
-# service nginx reload // En versiones anteriores de nginx.
-
-$ sudo systemctl reload nginx // If you are simply making configuration changes, Nginx can often reload without dropping connections.
-
-##### Archivos de configuración de Nginx #####
-
-Los archivos de configuración de Nginx se encuentran en /etc/nginx/
-.
-├── conf.d
-├── fastcgi.conf
-├── fastcgi_params
-├── koi-utf
-├── koi-win
-├── mime.types
-├── naxsi_core.rules
-├── naxsi.rules
-├── naxsi-ui.conf.1.4.1
-├── nginx.conf
-├── proxy_params
-├── scgi_params
-├── sites-available
-│   ├── default
-├── sites-enabled
-│   ├── default -> ../sites-available/default
-├── uwsgi_params
-└── win-utf
-
-Donde el archivo de configuración principal es nginx.conf y los directorios principales de configuración son sites-available y sites-enabled.
-
-El archivo de configuración principal es donde configuraríamos las opciones del servidor web Nginx que afectan a todos los hosts
-virtuales que tengamos configurados (todas las página web alojadas).
-
-En el directorio sites-available crearíamos los archivos de configuración específicos de cada host virtual.
-
-En el directorio sites-enabled crearíamos enlaces simbólicos a los archivos de configuración que hayamos creado
-en sites-available, para que Nginx tenga en cuenta esa configuración (activarla).
-
-Se puede observar que por defecto tenemos creado el archivo de configuración "default" que está habilitado y por eso tiene un enlace
-simbólico en "sites-enabled".
-
-Para ver la configuración de nginx del sitio disponible:
---> /etc/nginx/sites-enabled/nombre_del_sitio
-
-Si se quiere comprobar la sintaxis de los archivos de configuración luego de realizar algun cambio,
-o si es la primera vez que se configura, usaremos el siguiente comando:
-
-$ nginx -t
-
-Si todo está bien, la salida sería algo como esto:
-
-nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
-nginx: configuration file /etc/nginx/nginx.conf test is successful
-
-Si hay algun error, en este ejemplo, unas "sssssss" al principio del fichero, entonces el error sería:
-
-nginx: [emerg] unknown directive "ssssssssssssss" in /etc/nginx/sites-enabled/www.name-site.com:3
-nginx: configuration file /etc/nginx/nginx.conf test failed
-
-##### Ver los logs #####
-
-Para ver los logs del sitio disponible:
---> /var/log/nginx/nombre_del_sitio.xxx.log
-
-Para ver en tiempo real el log de accesos del server del sitio:
-/var/log/nginx# tailf nombre_del_sitio.ve.access.log
-
-Para ver en tiempo real el log de errores del server del sitio:
-/var/log/nginx# tailf nombre_del_sitio.ve.error.log
-
-##### A debugging log #####
-
-To enable a debugging log, nginx needs to be configured to support debugging during the build:
-
-./configure --with-debug .../tailf
-
-
-Then the debug level should be set with the error_log directive:
-
-#error_log /path/to/log error; // Normal error log.
-error_log /path/to/log debug;
-
-$ sudo systemctl restart nginx // Reiniciamos para que se aplique el cambio.
-
-Ahora si vemos el error log con $ tailf nombre_del_sitio.ve.error.log
-veremos una especie de monitor que nos mostrará otra o mas información
-que el error.log normal.
-
-##### Borrar nginx #####
-
-# apt-get purge nginx nginx-common
-
-# apt-get autoremove
-
------
-
-Ejemplo de configuración del fichero /etc/nginx/sites-available/default para servir proyectos de php:
-
-server {
-  listen   80;
-  #root /usr/share/nginx/html;
-  ### Aqui va la ruta donde tenemos el directorio del proyecto
-  root /var/www/html;
-  ## Orden de prioridad de los archivos index
-  index index.php index.html index.htm;
-  server_name example.com;
-  location / {
-    try_files $uri $uri/ /index.html;
-  }
-  error_page 404 /404.html;
-  error_page 500 502 503 504 /50x.html;
-  location = /50x.html {
-    root /usr/share/nginx/www;
-  }
-  # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-  location ~ \.php$ {
-    try_files $uri =404;
-    fastcgi_pass unix:/var/run/php5-fpm.sock;
-    fastcgi_index index.php;
-    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    include fastcgi_params;
-  }
-}
-
-#################
-##### uwsgi #####
-#################
-
-UWSGI es una implementación de WSGI capaz de servir aplicaciones Python, pero que además apunta a proveer la pila de
-software completa para implementar servicios de hosting.
-
-Suele trabajar conjuntamente con un servidor web como Nginx.
-
-##### Instalación #####
-
-# apt-get install uwsgi uwsgi-core
-
-# pip install uwsgi // Para entornos virtuales, se recomienda instalar globalmente
-
-# apt-get install uwsgi-plugin-python // WSGI plugin for uWSGI (Python 2)          
-
-# apt-get install uwsgi-plugin-python3 // WSGI plugin for uWSGI (Python 3)
-
-##### Directorios #####
-
-Luego de la instalación se crearon los siguientes directorios:
-
-/usr/bin/uwsgi
-/usr/lib/uwsgi
-/etc/uwsgi
-/usr/share/uwsgi
-/usr/share/man/man1/uwsgi.1.gz
-
-##### Configuración #####
-
-Al igual que con nginx, es común que con uwsgi se crean archivos de configuración
-específicos por si hay pruebas o si se va a servir mas de un sitio, ademas
-de trabajar con enlaces simbólicosa esas configuraciones, entonces en /etc/uwsgi/
-se pueden tener dos directorios:
-
-/etc/uwsgi/apps-available // Directorio la las configuraciones de los sitios disponibles.
-
-/etc/uwsgi/apps-enabled // Directorio de los sitios habilitados, con enlaces simbólicos a las configuraciones
-en /etc/uwsgi/apps-available.
-
-En este ejemplo, el archivo de configuración es un .xml en las aplicaciones disponibles, con un enlace
-simbólico en las aplicaciones habilitadas.
-
-apps-available
-    README
-    www-prueba.com.xml
-apps-enabled
-    README
-    www-prueba.com.xml -> ../apps-available/www-prueba.com.xml
-
-##### Ejemplo de archivo de configuración .xml #####
-
-<uwsgi>
-    <threads>10</threads>
-    <workers>1</workers>
-    <master/>
-    <uid>name_project</uid>
-    <gid>nogroup</gid>
-    <log-x-forwarded-for/>
-    <post-buffering>4096</post-buffering>
-    <max-requests>1000</max-requests>
-    <chmod-socket>666</chmod-socket>        
-    <chdir>/var/www/path_project/</chdir>
-    <module>wsgi</module>
-    <plugins>python27</plugins>
-</uwsgi>
-
-##### Ver logs #####
-
-$ tailf /var/log/uwsgi/app/name_site_com.log
-
-#############################################################
-##### Levantar un proyecto de Django, con uwsgi y nginx #####
-#############################################################
-
-En este ejemplo trabajaremos con un entorno virtual de python, y nuestro proyecto de Django se llama "prueba".
-
-El fichero wsgi.py que está junto al settings.py lo moveremos a la raíz del proyecto, esto para que uwsgi
-lo consiga con la configuración que haremos luego.
-
-Instalamos nginx.
-
-# apt-get install nginx
-
-Instalamos uwsgi globalmente y el plugin de uwsgi de python.
-
-# apt-get install uwsgi uwsgi-core
-
-# apt-get install uwsgi-plugin-python // Para python 2.7
-
-El crear y mover ficheros o directorios lo harémos siempre como root.
-Ahora vamos a configurar nginx y a mover la aplicación "prueba" al directorio de trabajo /srv
-
-En /etc/nginx/sites-available vamos a crear un fichero de configuración para nuestra aplicación "prueba"
-
-/etc/nginx/sites-available# touch prueba
-
-Ahora vamos a empezar a crear la configuración del sitio
-
-/etc/nginx/sites-available# vim prueba
-
-Nuestro fichero debería quedar mas o menos así:
-
-server {
-    #Puerto por el que va a escuchar el servidor
-    listen 80;
-
-    #Dirección ip de nuestra máquina
-    #Va a ser la url o dirección por donde se va a servir la aplicación
-    server_name 192.168.12.148;
-
-    #Codificación de caracteres de la configuración
-    charset utf-8;
-
-    # Cuerpo máximo del mensaje permitido en una petición
-    client_max_body_size 30M;
-
-    client_body_buffer_size 128k;
-
-    #Ruta en que está alojada la aplicación
-    #root /srv/prueba;
-
-    # Habilitamos los logs de acceso de nginx
-    access_log /var/log/nginx/prueba.access.log;
-
-    # Habilitamos los logs de error de nginx
-    error_log /var/log/nginx/prueba.error.log;
-
-    # Le decimos al servidor donde estan los estáticos de la aplicación
-    location /static/ {
-        root /srv/prueba/;
-    }
-
-    # Configuración adicional para trabajar con uwsgi
-    # Esto es necesario solo si el sistema va a correr por una ruta
-    #location ~ ^/(?<ruta>/.*)?$ {
-    #location ~ ^/{
-    location / {
-        uwsgi_pass unix:/var/run/uwsgi/app/prueba/socket;
-        include uwsgi_params;
-        uwsgi_param UWSGI_SCHEME $http_x_forwarded_protocol;
-        uwsgi_param SCRIPT_NAME /;
-        # Esto es necesario solo si el sistema va a correr por una ruta
-        #adicional al dominio, ejemplo: domain/ruta_adicional
-        #uwsgi_param PATH_INFO $ruta;
-        # Tiempo de espera en la conexión de nginx con uwsgi.
-        uwsgi_read_timeout 600;
-    }
-}
-
-Ahora creamos un enlace simbólico de sites-available a sites-enabled
-
-# ln -s /etc/nginx/sites-available/prueba /etc/nginx/sites-enabled/
-
-Al listar los directorios en sites-enabled nos quedará así:
-
-/etc/nginx/sites-enabled# ls -la
-total 8
-drwxr-xr-x 2 root root 4096 ago 25 08:31 .
-drwxr-xr-x 6 root root 4096 ago 25 07:59 ..
-lrwxrwxrwx 1 root root   34 ago 25 07:59 default -> /etc/nginx/sites-available/default
-lrwxrwxrwx 1 root root   25 ago 25 08:31 prueba -> ../sites-available/prueba
-
-Verificamos que esté bien la configuración del nginx con:
-
-# nginx -t
-nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
-nginx: configuration file /etc/nginx/nginx.conf test is successful
-
-Ahora harémos las configuraciones de uwsgi en /etc/uwsgi
-
-etc/uwsgi# ls
-apps-available	apps-enabled
-
-Al igual que en nginx crearemos un fichero de configuración, pero este va a ser un xml
-que se va a guardar en apps-available:
-
-Tenemos que tener mucho cuidado al momento de configurar este fichero, las rutas deben ser
-declaradas muy bien, especial énfasis en la ruta del entorno virtual, y el usuario del sistema y grupo
-dueño de la aplicación, así como la ruta local o dirección donde está alojada la aplicación.
-
-/etc/uwsgi/apps-available# vim prueba.xml
-
-<uwsgi>
-        <threads>100</threads>
-        <workers>2</workers>
-        <master/>
-        <chmod-socket>666</chmod-socket>
-        <home>/home/user/Entornos_virtuales/Django_1.8.8</home>
-        <socket>/var/run/uwsgi/app/prueba/socket</socket>
-        <pidfile>/var/run/uwsgi/app/prueba/pid</pidfile>
-        <uid>root</uid>
-        <gid>root</gid>
-        <log-x-forwarded-for/>
-        <post-buffering>4096</post-buffering>
-        <max-requests>1000</max-requests>
-        <chdir>/srv/prueba</chdir>
-        <pythonpath>/srv/prueba/prueba/</pythonpath>
-        <module>wsgi</module>
-        <plugins>python27</plugins>
-</uwsgi>
-
-// Guardamos como prueba prueba.xml y ahora creamos el enlace simbolico en app-enabled
-
-# ln -s /etc/uwsgi/apps-available/prueba.xml /etc/uwsgi/apps-enabled/
-
-// Reiniciar servicio de nginx
-# systemctl restart nginx
-
-// Reiniciar el servicio de uwsgi
-# systemctl restart uwsgi
-
-Cada vez que se haga un cambio en la configuración de nginx reiniciaremos el servicio, y si el cambio
-es de python, es decir en el proyecto de Django entonces reiniciaremos el servicio de uwsgi.
-
-// Para no detener e iniciar los servicios y a su vez tumbar las conexiones usaremos reload en vez de restart:
-
-# systemctl reload nginx
-
-Si todo está bien, podemos visitar la ip local desde el navegador, 192.168.12.148 configurada en
-nginx y por la cual va a estar servida la aplicación.
-
-Si la aplicación no se muestra nos ayudaremos con los logs a encontrar el error
-
-Para ver en tiempo real el log de accesos del servidor a nuestra aplicación:
-
-# tailf /var/log/nginx/prueba.access.log
-
-Para ver en tiempo real el log de errores del servidor en nuestra aplicación :
-
-# tailf /var/log/nginx/prueba.error.log
-
-Para ver en tiempo real el log de uwsgi:
-
-# tailf /var/log/uwsgi/app/prueba.log
-
-##############################################################
-##### Levantar un proyecto de Django, con uwsgi y Apache #####
-##############################################################
-
-Instalamos apache
-
-# apt-get install apache2
-
-Esto nos creará el directorio /var/www/html/
-
-Movemos el proyecto de django a /var/www/html/ y le damos permisos de lectura, escritura y ejecución al proyecto
-
-# chmod -R 777 /var/www/html
-
-Instalamos el modulo uwsgi
-
-# apt-get install libapache2-mod-wsgi
-
-// Reiniciamos el servicio de apache
-# service apache2 restart
-
-Una vez apache se halla reiniciado tendremos el modulo instalado y activado en apache.
-A este punto solo nos queda configurar el host virtual.
-
-// En base al fichero de configuración por defecto creamos una copia
-# cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/prueba.conf
-
-Editamos prueba.conf
-
-<VirtualHost *:80>
-    # Por convención personal uso para los nombres de dominio la siguiente convención
-    # lenguaje.nombre_del_proyecto.rama_de_git
-    ServerName python.my_project.dev
-    ServerAdmin admin@email.com
-    # El document root debe hacer referencia a la carpeta donde esta nuestro proyecto
-    DocumentRoot /var/www/html/my_project/
-
-    # El WSGIScriptAlias obtiene 2 parámetros el primero hace referencia a la ruta y el segundo al archivo wsgi.py de nuestro proyecto
-    WSGIScriptAlias / /var/www/html/my_project/my_project/wsgi.py
-
-    # El WDGIDaemonProcess recibe los siguientes parámetros
-    # - ServerName
-    # - El ejecutable de Python relacionado al DocumentRoot
-    # - La cantidad de procesos, para lo cual es recomendable dejarlo en 2
-    # - Los threads, del mismo modo se recomienda dejarlo en 15
-    # - Y el nombre a mostrar
-    WSGIDaemonProcess python.<reponame>.dev python-path=/var/www/public/<reponame>:/var/www/public/<reponame>/env/lib/python2.7/site-packages processes=2 threads=15 display-name=%{GROUP}
-    # El WSGIProcessGroup hace referencia al ServerName
-    WSGIProcessGroup python.<reponame>.dev
-
-    <Directory /var/www/public/my_project/ />
-        <Files wsgi.py>
-            Require all granted
-        </Files>
-    </Directory>
-
-    Alias /robots.txt /var/www/public/<reponame>/static/robots.txt
-    Alias /favicon.ico /var/www/public/<reponame>/static/favicon.ico
-
-    # El directorio "static" será el encargado de servir los archivos css, js, etc...
-    Alias /static/ /var/www/html/my_project/static/
-
-    <Directory /var/www/public/<reponame>/static>
-        Require all granted
-    </Directory>
-
-    # El directorio "media" se encarga en este caso de servir las imágenes, videos y demás
-    Alias /media/ /var/www/public/<reponame>/media/
-
-    <Directory /var/www/public/<reponame>/media>
-        Require all granted
-    </Directory>
-
-    # LogLevel info ssl:warn
-
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
-
-    # Include conf-available/serve-cgi-bin.conf
-</VirtualHost>
-
-Falta...
-
 ######################################################
 ########## Instalar y configurar phpMyAdmin ##########
 ######################################################
@@ -1943,6 +1515,16 @@ Probado en Ubuntu 11 y 12 nada más, puede que funcione en anteriores o superior
 
 Luego de reiniciar, saldrá el gnome-classic en las opciones de escritorio antes de iniciar sesión.
 
+#########################################
+##### Usando los programas de gnome #####
+#########################################
+
+$ gnome-screenshot // Captura de pantalla del escritorio
+
+$ gnome-shell --replace & disown // Recargar el entorno gráfico, evitando el reinicio del pc.
+
+$ pdfimages fichero.pdf nombre_imagene // Extrae las imagenes de un .pdf
+
 ###############################################
 ##### Instalación de xfce en sistema base #####
 ###############################################
@@ -1959,88 +1541,6 @@ Luego instalamos utilidades extras, si se quiere, se le conoce como "goodies".
 # aptitude install lightdm
 
 Luego de eso, cuando reiniciemos la máquina, podremos elegir acceder con xfce como entorno de escritorio.
-
-#############################################################################
-##### Comandos para buscar ficheros, directorios, paquetes, historiales #####
-#############################################################################
-
-$ history // Mostrar el historial de los comandos de la consola
-
-$ fc -l // Mostrar los ultimos comandos usados por el usuario
-
-$ history | grep xxx // Busqueda especifica de una comando usado, ejemplo: aptitude, alias, grep etc.
-
-.bash_history // En los archivos ocultos del home, en este fichero se almacena el historial de los comandos usados
-
-$ grep --color=always -n "mysql" /var/www/prueba/2/datos.php // --color para colorear la palabra a buscar, 
--n para listar la la linea del caracter buscado y al final ra ruta del archivo a buscar
-
-$ grep cadena_texto ./* -rIn // Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
-
-$ grep --color=always -n "cadena_texto" ./* -Ir // Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
-
-$ grep --color -n "cadena_texto" -Ir // No hace falta poner =always
-
-$ egrep -r "Saludo" . // Otra forma de busqueda.
-
-| grep xxx // filtra la busqueda con el parametro que le demos ejemplo:
-
-$ aptitude search python | grep 2.7 // Busca las versiones de python que coincidan con el patron 2.7
-
-$ ps -e | grep ruby // Busca en los procesos del sistema las coincidencias con ruby
-
-$ whereis python // Para saber donde esta instalado un programa, saber el directorio
-$ whereis firefox
-$ whereis apache2
-
-$ find // Listar todos los archivos contenidos en el directorio actual y en los sub directorios, si estamos en /home/user nos listara todo, dependiendo de donde este pues listara el contenido.
-
-$ find -name name_dir // Buscar un directorio especifico en el sistema.
-
-# find / -name name_file_or_package // Buscar un fichero o directorio específico en el sistema.
-
-su:
-find / -type f -name NombreArchivo.html // Para mostrar el directorio del archivo que se quiera buscar, se debe saber el nombre del archivo.
-
-file:///home/user/nombre_fichero.xxx // Abrir un fichero del directorio desde el navegador.
-
-$ locate nombre_del_archivo // Hacer una busqueda de un archivo en los directorios, se puede especificar un nombre con su extensión
-//o solo especificar una palabra, la busqueda se hara en todos los archivos que contengan la palabra o nombre de archivo escrita.
-
-$ locate .jpg // Buscar en todos los directorios los ficheros con la extension especificada
-
-$ locate "*.jpg" // Buscar en todos los directorios los ficheros con la extension especificada.
-
-$ locate .pdf | grep software // Buscar en todos los .pdf del sistema que contengan la palabra "software" en el nombre. Sí hace distinción entre mayúsculas, minúsculas y acéntos.
-
-$ sudo locate -c hola // Muestra cuantos archivos contienen la palabra "hola" en el nombre.
-
-$ sudo locate -i hola // Busca todos los archivos que contienen la palabra "hola" en el nombre tanto en mayúsculas como en minúsculas.
-
-$ sudo locate nombre_archivo > /home/usuario/lista.txt // Para guardar el resultado de la búsqueda en un archivo de texto.
-
-$ sudo find / -name nombre_carpeta // (/) es para hacer la busqueda desde ahi en adelante, puede ser (/home/user)
-
-$ find /carpeta // Lista los archivos que componen el directorio introducido
-
-$ type nombre_comando // Busca la ruta donde se encuentra el comando, ejemplo: aptitude, python, etc.
-
-$ which nombre_programa // Buscar la ruta de un programa
-
-$ sudo find / -name "*nombre_fichero*" // Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion escrita.
-
-$ sudo find / -name "*.xxx*" // Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion escrita, en este caso,
-una extensión de fichero, donde / puede ser /home/user etc y .xxx la extension: .jpg, .png, .txt, .py, etc.
-
-$ sudo find /home/user ! -name "*xxx*" // Busca todos los archivos que NO contienen la palabra "xxx" en el nombre, se especifíca el directorio en el cual buscar.
-
-$ sudo find /home/user -iname "*xxx*" // Busca todos los archivos que contienen la palabra "xxx" en el nombre tanto en mayúsculas como en minúsculas.
-
-$ sudo find /home/user/ -iname "*xxx*" > /home/user/lista.txt // Si el resultado de la búsqueda anterior te ha proporcionado una gran cantidad de información, resulta
-más cómodo almacenar el resultado de la búsqueda en un fichero de texto para revisarlo posteriormente.
-
-# sudo find / -type f -name /home/user/fichero.c>>/home/user/x.txt // Crear un fichero (x.txt) que guardará la salida de la consola, en este caso
-es una búsqueda, buscamos el fichero.c en el directorio user y guardaremos la salida del shell en el fichero x.txt que se creará.
 
 ########################################
 ##### wget para descargar ficheros #####
@@ -2124,212 +1624,6 @@ was generated correctly. I will perform an additional, final check,
 which you can interrupt safely with Ctrl-C if you do not want to wait.
 
 OK: Checksums match, image is good!  
-
-################################################
-########## Ambiente virtual en Python ##########
-################################################
-
-// Cuando se desarrollando software con Python, quizas se presente el problema de tener utilizar diferentes versiones de una mismo paquete en
-diferentes proyectos, ya sea el mismo Python o diferentes versiones de un Framework como Django por ejemplo, el problema a solucionar radica
-en como poder instalar las dos o mas versiones de la misma librería con el fin de poder desarrollar varios proyectos de forma simultánea.
-
-La solución consiste en crear virtualenvs o entornos virtuales. Un entorno virtual de Python es un espacio completamente independiente
-de otros entornos virtuales y de los paquetes instalados globalmente en el sistema. Esto significa que es posible instalar la versión
-2.7 de Python en un entorno virtual y la versión 3.0 en otro diferente o de forma global sin problema alguno.
-
-El porder tener diferentes entornos donde podemos instalar diferentes versiones de paquetes nos da la oportunidad de hacer un desarrollo simultaneo
-así como poder hacer pruebas si afectar a los paquetes del sistema global.
-
---- Instalación: ---
-
-Para crear un ambiente virtual instale las herramientas python-setuptools, python-dev, python-virtualenv, virtualenvwrapper
-
-# aptitude install python-setuptools python-dev
-
-# aptitude install python-virtualenv virtualenvwrapper
-
-$ mkvirtualenv nombre_ambiente_virtual //  Con un usuario (diferente a root) cree un ambiente virtual para su proyecto.
-
-$ workon nombre_ambiente_virtual // Para acceder al nombre del ambiente virtual creado
-
-ejemplo: 
-user@debian:/home$ workon proyecto // Accedemos al entorno virtual creado
-(proyecto)user@debian:/home$ // Ya estamos en el entorno virtual creado, denotado por el nombre del entorno al inicio del prompt
-
-$ deactivate nombre_ambiente_virtual // Para salir del entorno virtaul, o simplemente deactivate
-
-$ lsvirtualenv // Para listar los entornos virtuales creados o disponibles.
-
-$ rmvirtualenv nombre_virtualenv // Remover o borrar un entorno virtual.
-
-// Los entornos virtuales se crean en el directorio /home/user/.virtualenvs
-
-##### Tips #####
-
-En Debian GNU/Linux 8 (Jessie) a veces el comando mkvirtualenv no funciona por lo que hacemos lo siguiente:
-
-# apt-get install virtualenvwrapper
-
-$ vim .bashrc // Como usuario normal (NO ROOT), hay que agregar las variables con la ruta para virtualenv en el .bashrc, Agregar el siguiente contenido:
-
-# to virtualenvwrapper
-export WORKON_HOME=$HOME/django
-source /etc/bash_completion.d/virtualenvwrapper
-
-luego:
-
-$ source .bachrc
-
-##### Usando virtualenv #####
-
-Installation: 
-
-# aptitude install python-virtualenv
-
--Crear un virtualenv:
-
-$ virtualenv mi_env
-
--Activar el virtualenv:
-
-$ source mi_env/bin/activate
-
--Instalar un paquete (p.ej. Django) en el virtualenv:
-
-(mi_env)$ pip install django
-
--Trabajar en el proyecto.
-
--Salir del virtualenv:
-
-(mi_env)$ deactivate
-
-##### Usando Python 3 en virtualenvwrapper #####
-
-# aptitude install python3.4 python3-pip python3.4-dev python3-setuptools
-
-# aptitude install python3-virtualenv virtualenvwrapper
-
-$ mkvirtualenv --python=/usr/bin/python3 my_env
-
-$ workon my_env
-
-(my_env)$
-
-##### Usando Python 3 en virtualenv #####
-
-$ virtualenv -p python3 my_env
-
-##### Borrar entorno virtual #####
-
-No hay comando para borrar un entorno virtual desde virtualenv, basta con cancelar o detener los procesos (servidores y servicios) usados por
-ese entorno y luego borrar el directorio.
-
-$ rm -rf myenv
-
-########################
-##### Paquetes pip #####
-########################
-
-// Para desarrollar software con rapidez y calidad, es imprescindible utilizar paquetes externos que ayuden
-con parte de la funcionalidad que se desea implementar. En el ambiente Python esto no es la excepción.
-
-// Para solventar ésta necesidad, la comunidad Python ha puesto convenientemente a disposición de los desarrolladores
-un repositorio de paquetes de fácil acceso llamado PyPi. Solo es necesario ejecutar un comando en la terminal
-para poder instalar el paquete Python que necesitemos. Incluso es posible instalar paquetes que no se encuentren
-en el mencionado repositorio.
-
-// Para descargar paquetes del repositorio PyPi se pueden utilizar varias herramientas, pero en este caso se
-va a usar pip. Es necesario instalar esta herramienta en el sistema en caso de no estar disponible, antes
-de poder instalar un paquete Python.
-
-// El comando pip equivale al apt-get de Debian pero para paquetes Python.
-
-# aptitude install python-pip python-dev python-setuptools python3-pip // Instalamos pip y otros necesarios, com python3 para pip, necesario en algunos proyectos.
-
-// Una vez instalado ya podremos instalar paquetes de Python a traves de pip ejemplo:
-
-$ pip install django // Nos instalara la ultima version de Django disponible en los paquetes pi
-
-$ pip install django==1.7 // Instalar una versión específica de algun paquete.
-
-// Tambien es posible crear ficheros que contengan rutinas para automatizar la instalacion
-de varios paquetes ejemplo:
-
-Creamos un requirements.txt y dentro escribimos como ejemplo:
-django==1.5.12
-pillow==2.4.0
-Geraldo==0.4.17
-
-// Luego podemos ejecutar un pip install sobre el fichero e instalará lo que contenga:
-
-$ pip install -r requirements.txt
-
-$ pip install -r requirements.txt --timeout 120 // Con este parametro le daremos mayor tiempo de respuesta al servidor, para conexiones lentas.
-
-// Dentro de los .virtualenvs, dentro de nuestro entorno virtual en
-lib/python2.7/site-packages podemos ver que se instalaron los paquetes de requirements.txt
-de no ser así hay que revisar el fichero o el nombre de los paquetes a instalar, etc.
-
-$ pip search nombre_paquete // Buscar un paquete.
-
-$ pip uninstall package // Desinstalar un paquete.
-
-$ pip show package // Para ver si un paquete está instalado, si es así, mostrará la version, y la ruta donde está instalado.
-
-$ pip install Package --upgrade // Para actualizar un paquete a su última versión.
-
-$ pip install --upgrade Package package==1.x.x // Actualizar un paquete a una versión específica.
-
- $ pip freeze // Listar los paquetes instalado y sus versiones exactas.
-
-##### Error: ImportError: No module named packaging.version #####
-
-Puede que alguna vez a pip le pique el trasero y no deje realizar acciones
-de búsqueda, actualización etc.. entonces moveremos unos ficheros:
-
-$ cd /usr/local/lib/python2.7/dist-packages
-
-$ mv pkg_resources/ pkg_resources_bak/
-
-Funcionó cuando se instalo en el sistema base, si está en un entorno virtual la
-ruta será diferente.
-
-###########################################
-##### Usando un espejo de pip cercano #####
-###########################################
-
-Para usar los repositorios py.pi internos de Cenditel
-vamos al directorio /home/usuario/.pip/
-y creamos dentro el fichero pip.conf
-Agregamos el siguiente contenido al fichero creado y guardamos:
-
-[global]
-index-url = http://pypi.cenditel/simple/
-
-Luego actualizamos el pip y listo, si estamos usando un entorno virtual de python
-entonces ejecutaremos los comandos dentro del entorno virtual.
-
-$ pip install --upgrade pip
-$ pip install package_name --trusted-host pypi.cenditel
-$ pip install -r requirements.txt --trusted-host pypi.cenditel // Para instalar recursivamente un fichero de requerimientos.
-
-##### Nota #####
-
-Hay paquetes que requieren permisos de superusuario, entonces al usar sudo, o estar como
-superusuarios ya no hará efecto el pip.conf que está en /home/usuario/.pip/
-entonces, para que sirva con el root tambien crearemos el pip.conf pero en el home del root
-que está en /root/.pip/
-
-# touch /root/.pip/pip.conf
-
-# nano /root/.pip/pip.conf // Y hacemos lo mismo que arriba, copiamos el contenido, guardamos y listo.
-
-A veces no se crea el directorio .pip del usuario entonces lo creamos manualmente
-
-/home/user$ mkdir .pip
-
-root@debian# mkdir .pip // en /root
 
 #############################################
 ########## Conexion remota con ssh ##########
@@ -2664,6 +1958,10 @@ Luego quedaría intentar conectarse desde el host al servidor, si todo está bie
 ##### Copias de directorios o ficheros por scp #####
 ####################################################
 
+scp copies files between hosts on a network. It uses ssh for data transfer, and uses
+the same authentica‐tion and provides the same security as ssh(1). scp will ask for
+passwords or passphrases if they are needed for authentication.
+
 ##### COPIAR ARCHIVOS DE LOCAL A SERVIDOR #####
 
 Si queremos subir el archivo archivo.txt de nuestro ordenador a la carpeta /home/usuario del servidor, hacemos lo siguiente:
@@ -2788,35 +2086,6 @@ PING google.com (216.58.192.110) 56(84) bytes of data.
 --- google.com ping statistics ---
 3 packets transmitted, 2 received, 33% packet loss, time 2001ms
 rtt min/avg/max/mdev = 69.645665/70.00475/470.48645/0.010 ms
-
-########################################
-##### Compilar e instalar paquetes #####
-########################################
-
-$ aptitude search build-essential // Este paquete es esencial para crear y manejar paquetes debian,
-por consiguiente para la creación, compilacion e instalación de programas en debian, ubuntu etc.
-Tambien se instala cuando se va a desarrollar con c y c++ puesto que la instalacion incluye
-los compiladores y las librerias necesarias para comenzar a trabajar en estos lenguajes.
-
-Descargámos el código fuente del programa que queremos compilar e instalar.
-Normalmente lo encontraremos en un archivo comprimido, con extensión tar.bz2. 
-Así que tendrás que descomprimirlo escribiendo en la consola:
-
-$ tar xvzf paquete.tar.gz (o ver sección de Comprimir/Descomprimir archivos arriba)
-
-//Ahora vamos al directorio donde hemos extraído el contenido del paquete:
-$ cd path_del_paquete
-
-// Confguramos el modo de compilación con:
-./configure
-
-Luego escribimos:
-make
-
-Y finalmente, instalamos con:
-make install
-
-// Si no hay errores ya deberíamos poder usar el programa instalado.
 
 ########################################
 ##### Cambiar permisos de usuarios #####
@@ -3376,31 +2645,6 @@ Desmontar los directorios montados y borrar el directorio de que alverga la jaul
 
 # apt-get install ffmpeg flashplugin-nonfree libcurl3 freepats gstreamer0.10-ffmpeg gstreamer0.10-plugins-bad gstreamer0.10-plugins-ugly  libaccess-bridge-java libcdaudio1 libdc1394-22 libdvdnav4 libfftw3-3 libgif4 libid3tag0 libiptcdata0 libmms0  libmpeg2-4 libneon27-gnutls libofa0 libsidplay1 libsndfile1 libswscale0  openjdk-7-jre openjdk-7-jre-headless openjdk-7-jre-lib rhino ttf-arphic-uming ttf-baekmuk ttf-bengali-fonts ttf-devanagari-fonts ttf-gujarati-fonts ttf-indic-fonts ttf-kannada-fonts ttf-kochi-gothic ttf-liberation ttf-malayalam-fonts ttf-mscorefonts-installer ttf-oriya-fonts ttf-punjabi-fonts ttf-sazanami-mincho ttf-tamil-fonts ttf-telugu-fonts tzdata-java
 
-################################################
-##### Ver un fichero .csv desde la consola #####
-################################################
-
-Ordenará por columnas, etc...
-
-$ cat file.csv | sed -e 's/,,/, ,/g' | column -s, -t | less -#5 -N -S
-
-#######################################
-##### Rutas relativas y absolutas #####
-#######################################
-
-- Una ruta o path es donde se localiza una carpeta o fichero dentro de nuestro sistema de ficheros.
-- Todos los comandos que se ejecuten sin especificar una ruta lo hará donde este situado.
-- Hay dos tipos de ruta que debemos diferenciar:
-
-***Ruta absoluta: Se indica toda la ruta del fichero incluyendo el directorio raíz. Por ejemplo:
-
-/home/user/folder/file.txt
-
-***Ruta relativa: Se indica la ruta a partir de donde este en ese momento situado. No se incluye el directorio raíz. Por ejemplo, si estamos en la
-ruta /home/user y queremos acceder al file.txt que esta dentro de folder, seria:
-
-folder/file.txt
-
 ###############################
 ##### Variables de entorno ####
 ###############################
@@ -3484,74 +2728,6 @@ mediante el protocolo de actualización de DNS establecido en RFC 2136 (Inglés)
 El DHCP es una alternativa a otros protocolos de gestión de direcciones IP de red, como el BOOTP (Bootstrap Protocol). DHCP es un
 protocolo más avanzado, pero ambos son los usados normalmente.
 
-########################################################################################
-##### Restaurar o reiniciar las conexiones de red del sistema - networking restart #####
-########################################################################################
-
-# /etc/init.d/networking restart
-
-# service networking restart
-
-# invoke-rc.d networking restart
-
-#### Para maquinas virtuales #####
-
-Cuando se va a conectar por wireless, para que el dhcp le asigne una dirección ip
-modificamos el fichero:
-
-/etc/network/interfaces
-
-Y quedará así:
-
-# This file describes the network interfaces available on your system
-# and how to activate them. For more information, see interfaces(5).
-
-source /etc/network/interfaces.d/*
-
-# The loopback network interface
-#auto lo
-#iface lo inet loopback
-auto eth0
-iface eth0 inet dhcp
-
----
-
-Guardamos y reiniciamos las interfaces de redes con los tres comandos de arriba, esto
-es para cuando una máquina virtual no agarra internet inalambrico, tambien debe estar
-habilitada el adaptador de conexión inalambrica en el panel de configuración de la maquina virtual.
-Dentro de la máquina virtual parecerá que esta conectado por cable.# The loopback network interface
-
-Cuando se instala el SO y no consigue ninguna red cableada, es posible que el router/DHCP no le haya
-asignado una dirección ip, entonces modificamos el mismo fichero para que quede así:
-
-auto lo
-iface lo inet loopback
-auto eth0
-iface eth0 inet dhcp
-
-Y reiniciamos las interfaces de red, con suerte obtendremos una dirección ip de la red.
-
-Podemos intentar un ifup para ver si el dhcp le asigna la dirección ip sin necesidad de reiniciar la maquina o las
-interfaces de red:
-
-# ifup eth0
-
-Luego # ip addr a ver si ya tiene ip, si no es así entonces reiniciaremos las conexiones de red del sistema con los comandos descritos arriba.
-
-################################################################################
-##### Restaurar o reiniciar las conexiones de red inalambrica del sistema #####
-################################################################################
-
-If you really want to reset the network adapter you usually need to unload and reload the kernel module that it uses.
-
-If you just want to reconfigure it you can usually do:
-
-# /etc/init.d/network-manager restart
-
-But if you just want a new dhcp lease (that's the technical name for obtain a new IP from the router), you just need to use:
-
-# dhclient -v eth1
-
 ##################################
 ##### Configuración del grub #####
 ##################################
@@ -3626,71 +2802,6 @@ $ apg -n 4 -m 8 -x 12 -a 1
 
 // Mínimo 8 máximo 12, incluyendo caractéres especiales en menor medida
 $ apg -n 4 -m 8 -x 12 -a 0
-
-###############################
-##### Herramientas de red #####
-###############################
-
-$ ifconfig // Siendo root, permite desplegar numerosos parámetros de las interfaces de red residentes  en el núcleo,
-como la dirección ip (dinámica o estática), o la máscara de red entre otros.
-
-$ ip addr// Para ver el estatus de las conexiones de red, este comando le mostrará su dirección ip, el tipo de conexión que está utilizando, etc.
-
-$ nmap -sT -O localhost // Ver que puertos estan escuchando 
-
-##### Iproute2 #####
-
-Iproute2 es un paquete de herramientas muy potentes para administrar interfaces de red y conexiones en sistemas Linux.
-
-Este paquete reemplaza completamente las funcionalidades presentes en ifconfig, ya que este no viene instalado por defecto en GNU/Linux Debian 9 Stretch, ya que a ifconfig
-se le considera obsoleto.
-
-##### Instalar ifconfig y route en Debian 9 #####
-
-Lo primero que tenemos que hacer es abrir un terminal e instalar el paquete “net-tools”. Si en la instalación hemos elegido hacer “sudo” para ascender a superusuario para instalar paquetes, tecleamos:
-
-# apt-get  install net-tools
-
-##### Comparación de comandos de entre ifconfig e IP #####
-
-// Mostrar dispositivos de red y su configuración.
-$ ifconfig
-
-$ ip addr show
-
-ó
-
-$ ip link show
-
-// Activar una interfaz de red.
-$ ifconfig eth0 up
-
-$ ip link set eth0 up
-
-// Desactivar una interfaz de red.
-$ ifconfig eth0 down
-
-$ ip link set eth0 down
-
-// Establecer una dirección IP a una interfaz.
-$ ifconfig eth0 192.168.1.1
-
-$ ip address add 192.168.1.1 dev eth0
-
-// Eliminar una dirección IP de una interfaz.
-ifconfig no podrá hacer esto.
-
-$ ip address del 192.168.1.1 dev eth0
-
-// Añadir una interfaz virtual.
-$ ifconfig eth0:1 10.0.0.1/8
-
-$ ip addr add 10.0.0.1/8 dev eth0 label eth0:1
-
-// Para configurar una tarjeta de red física, por ejemplo, con ifconfig debemos teclear lo siguiente:
-$ ifconfig eth0 192.168.0.2 netmask 255.255.255.0
-
-$ ip addr add 192.168.0.2/24 dev eth0
 
 ########################################
 ##### Actualizar versión de Debian #####
@@ -4157,9 +3268,9 @@ Eso nos descargara el fichero unetbootin-linux64-657.bin
 
 Listo, se nos debería ejecutar la ventana del programa.
 
-##################################
-##### Instalar Google Chrome #####
-##################################
+########################################################
+##### Instalar Google Chrome en GNU/Linux Debian 8 #####
+########################################################
 
 // Primero hay que añadir un repositorio de google en el  /etc/apt/sources.list, es el siguiente:
 
@@ -4206,4 +3317,3 @@ Hay que bajarse un .oxt, investigarlo, luego en desde el LibreOffice
 Herramientas > Gestor de extensiones > Buscar el .oxt descargado
 
 En este caso lo he probado con spanish-dictionary.oxt que es la extensión para que funcione la correción de errores.
-
