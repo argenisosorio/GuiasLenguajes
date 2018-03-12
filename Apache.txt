@@ -166,3 +166,92 @@ service apache2 reload
 Una vez echo esto deberíamos poder visualizar nuestro proyecto en:
 
 127.0.0.1/prueba
+
+#################################
+##### El archivo .htaccess ######
+#################################
+
+¿Qué es el archivo .htaccess?
+
+El archivo .htaccess (hypertext access) es un archivo de configuración muy popular en servidores
+web basados en Apache que permite a los administradores aplicar distintas políticas de acceso a
+directorios o archivos con la idea de mejorar la seguridad de su página web y, por tanto, evitar
+acceso a terceros. Cuando visitamos una página web cualquiera y pulsamos sobre un enlace o queremos
+descargarnos un archivo, en el proceso de trámite de la petición, el servidor web consulta el
+archivo .htaccess con la idea de aplicar las directivas y restricciones definidas antes de cursar
+la petición y, lógicamente, cancelar peticiones que se encuentren prohibidas dentro de este
+archivo (cuyo ámbito de actuación es el directorio en el que se encuentra y todos los
+subdirectorios que se encuentran por debajo de éste).
+
+¿Y qué podremos controlar con este archivo? Gracias a este archivo podremos configurar
+nuestro servidor web para hacerlo algo más seguro pero, además, también podremos realizar
+redirecciones, crear mensajes de error personalizados, restringir el acceso a carpetas, evitar
+el listado de directorios de nuestro servidor o permitir el uso de nuestro dominio sin
+usar las famosas "www".
+
+##### Evitar el listado del contenido de un directorio #####
+
+Uno de los primeros indicadores que nos pueden alertar de una configuración insegura
+de un servidor web es poner en la barra de direcciones del navegador una url que apunte
+a un directorio del servidor (http://www.dominio.es/images) y que el navegador nos muestre
+un listado de las carpetas y archivos que ahí se alojan. Salvo que lo tengamos pensado así
+de manera expresa, deberíamos evitar que este tipo de cosas sucedan puesto que estamos
+abriendo el contenido completo de nuestra web a terceros y, precisamente, para controlar
+este tipo de situaciones podemos usar las directivas DirectoryIndex u -Indexes para definir
+índices que eviten listar el contenido de una carpeta.
+
+##### Proteger archivos y carpetas importantes #####
+
+Si bien es importante evitar el acceso a los directorios, también lo es proteger
+archivos considerados críticos, como por ejemplo los archivos de configuración.
+Si bien usar un gestor de contenidos web nos facilita mucho las cosas, éstos
+responden a esquemas fijos que se repiten en cada instalación y, por tanto, los
+archivos de configuración se encuentran en ubicaciones muy concretas y conocidas.
+
+Si pensamos un momento en WordPress, el archivo wp-config.php (que se encuentra en el raíz)
+almacena la dirección de nuestra base de datos, la base de datos que usamos así como el
+usuario y la contraseña, una información de gran valor para un atacante externo. Para evitar
+el acceso a este tipo de archivos "singulares"” podremos valernos de reglas como la
+siguiente para evitar que alguien acceda pueda acceder a nuestro archivo:
+
+<files wp-config.php>
+order allow,deny
+deny from all
+</files>
+
+Otro detalle a tener en cuenta es la protección de carpetas críticas a las que nadie, salvo un
+administrador, debería poder entrar. ¿Y de qué tipo de carpetas estamos hablando? Si
+retomamos el ejemplo de WordPress, nadie debería poder entrar en la carpeta de los
+plugins o en la carpeta uploads y así evitar que alguien recopile más información de
+la cuenta. ¿Y qué podemos hacer en estos casos? Una buena forma, y elegante, de evitar
+el acceso es forzar una redirección hacia nuestra página principal siguiendo esquemas como:
+
+Redirect 301 /wp-content/index.php http://www.tudominio.com/
+Redirect 301 /wp-content/themes/index.html http://www.tudominio.com/
+
+##### Evitar el hotlink #####
+
+Dependiendo del tipo de licencia que utilicemos a la hora de publicar nuestros contenidos
+o si, por ejemplo, queremos evitar que las fotos que colgamos acaben siendo utilizadas en
+otras páginas, quizás nos interese aplicar algún tipo de regla que evite que alguien pueda
+insertar una imagen que nosotros estamos hospedando (forzando así a que, al menos, se la
+tengan que descargar y subir a su servidor).
+
+##### Restringir el acceso por IP y luchar contra el spam ######
+
+Si nuestro blog es víctima de algún tipo de ataque y tenemos localizado el origen
+(una dirección IP o un rango de direcciones), podemos aplicar medidas estrictas de
+seguridad en el archivo .htaccess para restringir el acceso y bloquear cualquier
+tipo de petición que provenga de las direcciones IP que agreguemos a esta lista negra.
+
+Además, si somos algo habilidosos y no tenemos ninguna protección contra el spam (Askimet es
+una buena opción en WordPress), también podríamos definir reglas que eviten a ciertos usuarios
+(identificados por su dirección IP o por un rango de éstas) a comentar en nuestro blog
+(bloqueándoles el acceso a la opción de publicar comentarios).
+¿Cómo pasamos de la teoría a la práctica?
+
+Un buen archivo .htaccess combinado con unos permisos adecuados en nuestros archivos
+son una buena barrera de defensa contra ataques y accesos no autorizados, si bien la
+seguridad total no se puede garantizar, al menos se lo pondremos algo más difícil a
+aquéllos que no tienen muy buenas intenciones.
+

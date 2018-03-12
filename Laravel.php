@@ -283,6 +283,10 @@ $ php artisan serve
 ##### Tips/Extras #####
 #######################
 
+// Para comprobar la versión de Laravel instalada:
+
+$ php artisan --version
+
 // Para cambiar el puerto donde se esta sirviendo el proyecto:
 	
 $ php artisan serve --port=9000
@@ -290,10 +294,6 @@ $ php artisan serve --port=9000
 // Para cambiar la ip y el puerto donde se esta sirviendo el proyecto:
 
 $ php artisan serve --host=192.168.0.100 --port=8000
-
-// Para comprobar la versión de Laravel instalada:
-
-$ php artisan --version
 
 // Cuando se clona un proyecto de un repositorio, lo mas común es que se omita la carpeta /vendor
 // que contiene los paquetes/librerías requeridas por el proyecto, entonces las instalamos con:

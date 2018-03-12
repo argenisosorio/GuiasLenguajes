@@ -1193,17 +1193,17 @@ En /etc/vim en el fichero vimrc descomentamos la linea
 ########## Instalar y configurar phpMyAdmin ##########
 ######################################################
 
-aptitude install phpmyadmin // Instalar
+# aptitude install phpmyadmin // Instalar
 
 http://localhost/phpmyadmin // Acceder al servicio
 
 ***After the installation has completed, add phpmyadmin to the apache configuration.**
 
-# sudo nano /etc/apache2/apache2.conf //Agregar en este archivo la configuracion de abajo
+# sudo nano /etc/apache2/apache2.conf // Agregar en este archivo la configuracion de abajo
 
 ***Add the phpmyadmin config to the file.
 
-Include /etc/phpmyadmin/apache.conf //Esta linea se agrega al final de la configuracion del apache para que reconozca el phpMyAdmin
+Include /etc/phpmyadmin/apache.conf // Esta linea se agrega al final de la configuracion del apache para que reconozca el phpMyAdmin
 
 /etc/init.d/xxx restart // xxx mysql, apache etc... restart
 
