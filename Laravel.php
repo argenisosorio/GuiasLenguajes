@@ -74,6 +74,11 @@ $ composer
 
 ##### Instalación de Laravel #####
 
+Laravel utiliza Composer para manejar las dependencies. entonces,
+antes de usar Laravel, hay que tener instalado Composer en nuestra máquina.
+
+Primero descargamos el instalador de Laravel vía Composer
+
 $ composer global require "laravel/installer=~1.1"
 
 // La salida de este comando:
@@ -120,6 +125,8 @@ $ source .bashrc
 
 $ laravel new nombre_del_proyecto
 
+##### Otra forma de generar el proyecto, vía composer #####
+
 // En caso de que el comando anterior no funcione porque se va a quejar porque el php
 instalado no es superior al 7.2 entonces probar:
 
@@ -128,6 +135,10 @@ $ composer create-project --prefer-dist laravel/laravel mysite "5.4.*"
 // Con el comando anterior lo que estamos declarando que que cree el proyecto "mysite"
 // y que se use la ultima actualización de la versión 5.4 de Laravel, que es compatible con
 // el php7.0 que está instalado.
+
+// Ahora vamos a corre el servidor local de desarrllo usando el script Artisan.
+
+// Este comando inicia el servidor de desarrllo en http://localhost:8000:
 
 // Entramos en el dirctorio del proyecto y corremos el servidor de desarrollo:
 
@@ -187,13 +198,6 @@ $ composer
 
 $ composer global require "laravel/installer"
 
-// La salida de este comando:
-
-xxx
-
-// Nos dice el directorio donde va a ser instalado laravel
-// luego prosige con la instalación.
-
 // Luego de la instalación, comprobamos la ruta donde está laravel con:
 
 $ cd .config/composer/vendor/bin
@@ -217,11 +221,18 @@ $ laravel new mysite
 
 $ php artisan serve
 
+##### Otra forma de generar el proyecto, vía composer #####
+
 // Si corre sin problemas podemos visitar: localhost:8000/ y visualizar Laravel en letras grandes.
 
 // Otra forma de generar el proyecto es usando composer, y especificando versiones:
 
 $ composer create-project --prefer-dist laravel/laravel mysite
+
+// Luego de la generación del proyecto e instalación de dependendencias
+// Entramos en el dirctorio del proyecto y corremos el servidor de desarrollo:
+
+$ php artisan serve
 
 #######################
 ##### Tips/Extras #####
