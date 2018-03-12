@@ -3281,11 +3281,14 @@ por ejemplo, que al restaurar valores desde un csv, permite insertar nuevos regi
 
 Si hay 3976 registros se debe configurar que el último valor es 3977 para que guarde bien en la tabla.
 
-################################
-#### Upload file in django #####
-################################
+##############################################################
+##### Subir archivos usando un formulario en el tempalte #####
+##############################################################
 
-# Activamos las siguientes variables en el settings, y le damos la ruta donde se va a almacenar el fichero adjunto
+# En la rama upload del siguiente repo está el ejemplo funcional:
+# https://github.com/argenisosorio/registro_vistas_clases/
+
+# Activamos las siguientes variables en el settings, y le damos la ruta donde se va a almacenar el fichero adjunto.
 
 # settings.py
 MEDIA_URL = '/media/'
@@ -3301,14 +3304,20 @@ from django.core.files.storage import FileSystemStorage
 
 
 def file(request):
+    """
+    Función que permite guardar los archivos subidos en el servidor.
+    """
     if request.method == 'POST' and request.FILES['myfile']:
         myfile = request.FILES['myfile']
         fs = FileSystemStorage()
         filename = fs.save(myfile.name, myfile)
-        uploaded_file_url = fs.url(filename)
+        # Ruta donde está almacenado el archivo
+        file = fs.url(filename)
         return render(request, 'registro/file.html', {
-            'uploaded_file_url': uploaded_file_url
+            'file': file
         })
+    # Definimos en el settings la carpeta donde se van a guardar los documentos adjuntos.
+    # El archivo será guardado en la carpeta "media" en la raíz del proyecto.
     return render(request, 'registro/file.html')
 
 
@@ -3322,9 +3331,15 @@ def file(request):
   <p>File uploaded at: <a href="{{ file }}">{{ file }}</a></p>
 {% endif %}
 
-########################################
-##### File Upload With Model Forms #####
-########################################
+# Luego de renderizar el formulario y subir un archivo, vamos a la carpeta media
+# en la raíz del proyecto para verificar si se subio correctamente.
+
+#############################################
+##### Subir archivos usando Model Forms #####
+#############################################
+
+# En la rama upload_model del siguiente repo está el ejemplo funcional:
+# https://github.com/argenisosorio/registro_vistas_clases/
 
 # Activamos las siguientes variables en el settings, y le damos la ruta donde se va a almacenar el fichero adjunto
 
@@ -3334,6 +3349,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # urls.py
 url(r'^file$', views.file, name='file'),
+url(r'^list_files$', views.List_files.as_view(), name='list_files'),
 
 # models.py
 # -*- coding: utf-8 -*-
@@ -3369,6 +3385,9 @@ from django.shortcuts import redirect
 
 
 def file(request):
+    """
+    Función que permite guardar los documentos, se guardar en /media
+    """
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
@@ -3380,11 +3399,33 @@ def file(request):
         'form': form
     })
 
+
+class List_files(ListView):
+    """
+    Clase que permite listar los documentos registrados
+    """
+    model = Document
+    template_name = "registro/list_files.html"
+
 # file.html
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Upload</button>
 </form>
+
+# list_files.html
+{% extends "registro/base.html" %}
+{% block titulo %}List of Files{% endblock %}
+{% block cuerpo %}
+<h1>Lista de documetnos</h1>
+<ul>
+  {% for x in object_list %}
+  <li>
+    {{ x.description}} | {{ x.document}} | {{ x.uploaded_at}}
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
 
 #############################################################
 ##### Levantar un proyecto de Django, con uwsgi y nginx #####
