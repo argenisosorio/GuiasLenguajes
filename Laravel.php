@@ -1,5 +1,29 @@
 ##### Guía del Framework Laravel by dM #####
 
+####################################
+##### ¿Como funciona Laravel? ######
+####################################
+
+1) Un usuario ingresa a una página o sistema web creado con Laravel, a ese ingreso se
+le llama "solicitud" o "petición".
+
+2) Esa "solicitud" o "petición" llega a un archivo llamado rutas, las rutas es un archivo
+donde especificamos que rutas o direcciones url están disponible en un sistema/página web.
+
+Por ejemplo si yo tengo una página llamada misitio.com y puedo acceder a "misitio.com/registro"
+donde muestra un formulario para registrarse, "/registro" es una ruta.
+por tanto se debe definir en ese archivo donde están las rutas. si intento
+acceder a "misitio.com/prueba" y me da error, eso quiere decir que esa ruta no existe o no ha sido
+especificada en el archivo de rutas.
+
+Si una ruta declarada en las rutas es visitada, es posible que luego de pasar por las rutas ahora
+vaya a un controlador, esto solo si es necesario, el controlador es la parte donde el framework realiza
+operaciones con los datos, inserción, lista, actualización de la base de datos, calculos con los datos.
+
+##################################
+##### Instalación de Laravel #####
+##################################
+
 Importante: Esta guía fue probada usando la versión 7.0 de php, Composer 1.6.3, Laravel Installer 1.5.0, Laravel Framework 5.4.36 en GNU/Linux Debian 9 Stretch.
 
 Laravel es un framework de código abierto para desarrollar aplicaciones y servicios web con
