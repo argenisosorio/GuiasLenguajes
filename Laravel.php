@@ -4,6 +4,8 @@
 ##### ¿Como funciona Laravel? ######
 ####################################
 
+Laravel utiliza el paradigma del "Modelo-vista-controlador"
+
 1) Un usuario ingresa a una página o sistema web creado con Laravel, a ese ingreso se
 le llama "solicitud" o "petición".
 
@@ -16,15 +18,33 @@ por tanto se debe definir en ese archivo donde están las rutas. si intento
 acceder a "misitio.com/prueba" y me da error, eso quiere decir que esa ruta no existe o no ha sido
 especificada en el archivo de rutas.
 
-Si una ruta declarada en las rutas es visitada, es posible que luego de pasar por las rutas ahora
-vaya a un controlador, esto solo si es necesario, el controlador es la parte donde el framework realiza
-operaciones con los datos, inserción, lista, actualización de la base de datos, calculos con los datos.
+Si una ruta válida es visitada, el paso siguiente es ir a un controlador o una vista, el ir
+a un controlador solo se hará si es necesario, el controlador es la parte donde Laravel realiza
+operaciones con los datos, inserción, listar, actualización de la base de datos, calculos, ejecutar
+funciones con los datos, entre otros. En el controlador es donde está la lógica de un sistema/página web.
+
+El controlador puede acceder al modelo, el modelo son las tablas de la base de datos reflejadas
+en archivos php.
+
+Entonces un controlador puede solicitar al modelo que le traiga todos los usuarios registrados en
+el sistema para, el controlador los recibe de vuelta y ahora puede mandarlos a una vista para que
+sean mostrados en una página simple.
+
+La segunda opción es ir a una vista directamente, una vista
+es una pagina simple donde se muestran textos, imagenes, videos, etc, sin interactuar con otros
+elementos del sistema, sin consultas ni nada.
+
+Otro elemento del paradigma de Laravel son los Middlewares, que no es mas que un filtro.
+Imaginemos que tenemos un panel de administración del sistema, y no queremos que todos los usuarios
+puedan acceder a ese panel, si no solo usuarios con permisos adecuados, entonces ahí aparecen los 
+middlewares y sus funcionalidades. Las rutas y los controladores pueden acceder a los middlewares.
 
 ##################################
 ##### Instalación de Laravel #####
 ##################################
 
-Importante: Esta guía fue probada usando la versión 7.0 de php, Composer 1.6.3, Laravel Installer 1.5.0, Laravel Framework 5.4.36 en GNU/Linux Debian 9 Stretch.
+**Importante** Esta guía fue probada usando la versión 7.0 de php, Composer 1.6.3, Laravel Installer 1.5.0
+Laravel Framework 5.4.36 en GNU/Linux Debian 9 Stretch.
 
 Laravel es un framework de código abierto para desarrollar aplicaciones y servicios web con
 PHP 5 y PHP 7. Su filosofía es desarrollar código PHP de forma elegante y simple, evitando
@@ -174,7 +194,8 @@ $ php artisan serve
 ##### En la siguiente sección instalaremos Laravel en su última versión #####
 #############################################################################
 
-Importante: Esta guía fue probada usando la versión 7.2 de php, Composer 1.6.3, Laravel Installer 2.0, Laravel Framework 5.6.11 en GNU/Linux Debian 9 Stretch.
+**Importante** Esta guía fue probada usando la versión 7.2 de php, Composer 1.6.3
+Laravel Installer 2.0, Laravel Framework 5.6.11 en GNU/Linux Debian 9 Stretch.
 
 $ sudo apt-get install apt-transport-https lsb-release ca-certificates
 $ sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
