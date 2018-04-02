@@ -3098,6 +3098,25 @@ http://translatorforfirefox.blogspot.com/
 // Entrar en tty1 desde la máquina virtual, lo mismo para ttyn...
 RightCtrl + F1
 
+##### Instalar Guest Additions de Virtual Box en Debian #####
+
+Primero instalamos los siguientes paquetes:
+
+# apt-get install build-essential
+
+# apt-get install linux-headers-$(uname -r)
+
+En el menú de VirtualBox de la máquina “guest” con Debian pulsamos en Dispositivos / Insertar imagen
+de CD de las Guest Additions.
+
+Por lo general, Virtualbox trae integrada entre sus ficheros las Guest Additions en una imágen .iso, siguiendo
+el paso anterior esa imagen debería montarse automáticamente, ahora solo queda ejecutar el script de instalación:
+
+# bash /media/cdrom0/VboxLinuxAdditions.run
+
+Si no hay problemas con la instalación, reiniciamos la máquina virtual y ya se debería poder usar el modo pantalla
+completa, el modo fluido o la función de las carpetas compartidas.
+
 ############################
 ##### Debian Backports #####
 ############################
