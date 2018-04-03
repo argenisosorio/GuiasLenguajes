@@ -3692,3 +3692,42 @@ Ideal para gestionar datos de las db de django.
 # aptitude install sqlitebrowser
 
 $ sqlitebrowser // Para ejecutarlo
+
+########################################
+##### Línea de comandos de sqlite3 #####
+########################################
+
+# apt-get install sqlite3
+
+// Para abrir la línea de comandos:
+
+$ sqlite3
+
+// Acceder a una base de datos desde la consola de sqlite3
+
+$ sqlite3 db.sqlite3
+
+// Listar las tablas de la db a la cual se acceso.
+
+sqlite> .tables
+
+// Acceder al modo csv, para poder ejecutar operaciones con estos ficheros.
+
+sqlite> .mode csv
+
+// Importamos los datos de el fichero .csv a la tabla especifica.
+// Obviamente deben coincidir los campos en el .csv y en la tabla.
+
+sqlite> .import test.csv yourtable
+
+// Ver esquema de creación de la tabla.
+
+sqlite> .schema tablename
+
+// Listar todos los registros de una tabla.
+
+sqlite> SELECT * FROM tablename;
+
+// Para salir del prompt de sqlite3
+
+sqlite> .exit

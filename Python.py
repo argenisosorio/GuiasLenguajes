@@ -1490,6 +1490,32 @@ permite utilizar comandos de unix.
 import os
 os.system("mkdir new_folder")
 
+# Otro ejemplo
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Uso de comandos de unix desde python
+"""
+import os
+
+p = os.popen('ls -la')
+print(p.read())
+
+####################################
+##### Crear carpeta con python #####
+####################################
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Uso de comandos de unix desde python
+"""
+import os
+
+print os.getcwd() # Imprimir el directorio actual
+if not os.path.exists("x"):
+  os.makedirs("x")
 
 ###################################
 #### Validar email con python #####
