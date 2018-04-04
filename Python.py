@@ -639,7 +639,7 @@ no tienen por qué ser del mismo tipo.
 lista = [2,"tres",True,["uno",10]] #Cada elemento de la lista contiene un indice, desde el 0,1,2...
 print lista
 
-#********************
+----
 
 #Imprimiendo los elementos de la lista
 lista = ["Proyecto1","Proyecto2","Proyecto3",["David","Usain"]]
@@ -649,26 +649,26 @@ print lista[2]
 print lista[3][0]#Accedemos al elemento de la posición tres e imprimimos el subelemento de la posicion 0
 print lista[3][1]#Accedemos al elemento de la posición tres e imprimimos el subelemento de la posicion 1
 
-#********************
+----
 
 lista = ["Proyecto1","Proyecto2","Proyecto3",["David","Usain"]]
 lista [1] = 4 #cambiar el valor del elemento en la posicion 1 por un entero
 lista [1] = "casa" #cambiar el valor del elemento en la posicion 1 por una cadena
 print lista
 
-#********************
+----
 
 lista = ["casa","carro","perro","gato","ventana","puerta"] #Nueva lista
 lista2 = lista[0:3] #Imprmir elementos desde la lista desde el 0 hasta la posicion 3
 print lista2
 
-#********************
+----
 
 lista = ["casa","carro","perro","gato","ventana","puerta"]
 lista[0:1] = 5,6 #Sustituir valores en las posiciones
 print lista
 
-#********************
+----
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -676,6 +676,108 @@ lista = [1,"Dos",3]
 buscar = 1
 print buscar in lista #Se traduciría como: ¿Buscar esta en la lista?
 #Nos devolvería un True porque si está ese valor en la lista
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#Obtener el índice de un elemento de la lista
+lista = [1,"Dos",3]
+buscar = 1
+print lista.index(buscar) #Obtener el índice de un elemento de la lista
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#Buscando elementos en una lista
+lista = [1,"Dos",3]
+buscar = "Dos"
+if buscar in lista: #Buscar el eleménto en la lista
+    print lista.index(buscar) #Mostrar el índice del elemento
+else:
+    print "No esta el elemento" #Notificar si el elemento no existe
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#Agregando un nuevo elemento a la lista
+lista = [1,"Dos",3]
+print lista
+lista.append("Nuevo elemento") #Agregamos un nuevo elemento a la lista
+print lista
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#Contar el numero de elementos presentes en una lista
+lista = [1,"Dos",3,4,"Cinco",3]
+print lista.count(3) #Buscar y contar cuantas veces está un elemento en la lista.
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Insertando un nuevo elemento en la lista
+lista = [1,"Dos",3,4,"Cinco",3]
+print lista
+lista.insert(2,"Nuevo") #Insertamos un nuevo elemento en la lista, en este caso insertamos la cadena "Nuevo" en la posición 2, pero no sustituye, solo se inserta, el resto de valores se corren ascendentemente.
+print lista
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Juntar dos listas
+lista = [1,2,3]
+print lista
+lista2 = [5,6,7]
+lista.extend(lista2) #Método extend, juntar dos listas, podemos agregar una nueva lista al final de primera lista
+print lista
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Extraer y eliminar un elemento de la lista
+lista = [1,2,3]
+print lista
+lista.pop() #Elimina el último elemento de la lista si no especificamos un indice que borrar
+print lista
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Extraer y eliminar un elemento de la lista, indicando la posición
+lista = [1,2,3]
+print lista
+lista.pop(1) #Eliminamos el elemento que está en la posición 1 de la lista
+print lista
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#Método reverse, que invierte los elementos de la lista
+lista = [1,2,3]
+print lista
+lista.reverse()
+print lista
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Agregar elementos al final de una lista.
+"""
+alist = [123, 'xyz', 'zara', 'abc'];
+print alist
+alist.append( 2009 );
+print alist
 
 ###########################
 ##### VARIABLE GLOBAL #####
@@ -1238,78 +1340,6 @@ pepe.hablar('Hola, soy de herencia multiple') #Usando el método heredado de Hum
 pepe.programar('C++') #Usando el método programar heredado
 pepe.estudiarCaso('Juan') #Usando el estudiarCaso heredado
 
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#Obtener el índice de un elemento de la lista
-lista = [1,"Dos",3]
-buscar = 1
-print lista.index(buscar) #Obtener el índice de un elemento de la lista
-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#Buscando elementos en una lista
-lista = [1,"Dos",3]
-buscar = "Dos"
-if buscar in lista: #Buscar el eleménto en la lista
-    print lista.index(buscar) #Mostrar el índice del elemento
-else:
-    print "No esta el elemento" #Notificar si el elemento no existe
-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#Agregando un nuevo elemento a la lista
-lista = [1,"Dos",3]
-print lista
-lista.append("Nuevo elemento") #Agregamos un nuevo elemento a la lista
-print lista
-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#Contar el numero de elementos presentes en una lista
-lista = [1,"Dos",3,4,"Cinco",3]
-print lista.count(3) #Buscar y contar cuantas veces está un elemento en la lista.
-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# Insertando un nuevo elemento en la lista
-lista = [1,"Dos",3,4,"Cinco",3]
-print lista
-lista.insert(2,"Nuevo") #Insertamos un nuevo elemento en la lista, en este caso insertamos la cadena "Nuevo" en la posición 2, pero no sustituye, solo se inserta, el resto de valores se corren ascendentemente.
-print lista
-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# Juntar dos listas
-lista = [1,2,3]
-print lista
-lista2 = [5,6,7]
-lista.extend(lista2) #Método extend, juntar dos listas, podemos agregar una nueva lista al final de primera lista
-print lista
-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# Extraer y eliminar un elemento de la lista
-lista = [1,2,3]
-print lista
-lista.pop() #Elimina el último elemento de la lista si no especificamos un indice que borrar
-print lista
-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# Extraer y eliminar un elemento de la lista, indicando la posición
-lista = [1,2,3]
-print lista
-lista.pop(1) #Eliminamos el elemento que está en la posición 1 de la lista
-print lista
-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#Método reverse, que invierte los elementos de la lista
-lista = [1,2,3]
-print lista
-lista.reverse()
-print lista
-
 ###################
 ##### Métodos #####
 ###################
@@ -1766,3 +1796,145 @@ A veces no se crea el directorio .pip del usuario entonces lo creamos manualment
 /home/user$ mkdir .pip
 
 root@debian# mkdir .pip // en /root
+
+####################
+##### Archivos #####
+####################
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Abrir, escribir y cerrar un archivo.
+"""
+archivo = open("hello.txt", "w")
+archivo.write("Hola")
+archivo.close()
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Abrir, leer y cerrar un archivo.
+"""
+archivo = open("hello.txt", "r")
+archivo.read()
+archivo.close() 
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Usabndo readlines() para leer línea por línea
+e imprimirlas en pantalla.
+"""
+archivo = open("hello.txt", "r")
+for linea in archivo.readlines():
+    print linea
+archivo.close()
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Crear un archivo .csv a partir de los datos de una lista.
+"""
+import csv
+mylist = ['a','b','c']
+with open('data.csv', 'wb') as myfile:
+    wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+    wr.writerow(mylist)
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Crear un archivo .csv a partir de los datos de una lista.
+"""
+import csv
+mylist = ['a','b','c']
+with open('data.csv', 'wb') as myfile:
+    #wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+    wr = csv.writer(myfile) # Omitiendo las comillas al escribir el la data en el .csv
+    wr.writerow(mylist)
+    print wr
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Crear un archivo .csv a partir de los datos de un diccionario.
+"""
+import csv
+dic = {"John": "john@example.com", "Mary": "mary@example.com"}
+nombre_archivo = "data.csv" # Nombre que tendrá el archivo .csv
+csv = open(nombre_archivo, "w") 
+columnTitleRow = "name, email\n"
+csv.write(columnTitleRow)
+
+for key in dic.keys():
+    name = key
+    email = dic[key]
+    row = name + "," + email + "\n"
+    csv.write(row)
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Leer datos de un .csv y mostrando la data por pantalla.
+"""
+import csv
+with open('data.csv', 'r') as listado:
+    datos = csv.reader(listado, delimiter=',') # Separar la data por coma.
+    for row in datos:
+        if row[0].startswith('#'): # Permite comentar líneas en el archivo csv.
+            continue
+        nombre = row[0] # Columna 1 que corresponde a Nombre y Apellido.
+        email = row[1] # Columna 2 que corresponde al Email.
+        print nombre
+        print email
+listado.close()
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Leer datos de un .csv y almacenarlos en una lista.
+"""
+"""
+El .csv debe contener:
+1,Mar?a Morales,15940181,Curso TDA,15940181-ctda-.pdf,0
+2,Argenis Osorio,19592165,Curso TDA,19562165-ctda-.pdf,0
+3,Lionel Messi,15796551,Curso TDA,15796551-ctda-.pdf,0
+4,Carlos Ramirez,18456789,Curso TDA,18456789-ctda-.pdf,0
+5,Perla Becerra,17789321,Curso TDA,17789321-ctda-.pdf,0
+"""
+
+import csv
+with open('data.csv', 'r') as listado:
+    datos = csv.reader(listado, delimiter=',') # Separar la data por coma.
+    alist = [];
+    for row in datos:
+        if row[0].startswith('#'): # Permite comentar líneas en el archivo csv.
+            continue
+        id_id = row[0]
+        alist.append(id_id);
+        nombre = row[1]
+        alist.append(nombre);
+        cedula = row[2]
+        alist.append(cedula);
+        evento = row[3]
+        alist.append(evento);
+        nombre_archivo = row[4]
+        alist.append(nombre_archivo);
+        date = row[5]
+        alist.append(date);
+listado.close()
+print alist

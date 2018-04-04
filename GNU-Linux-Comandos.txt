@@ -497,6 +497,20 @@ interfaces de red:
 
 Luego # ip addr a ver si ya tiene ip, si no es así entonces reiniciaremos las conexiones de red del sistema con los comandos descritos arriba.
 
+Si lo demás no a servido, se puede editar el /etc/resolv.conf de la máquina virtual a ver si hagarra internet,
+a veces el dhcp le asigna ip pero no tiene conexión a internet, entonces:
+
+# sudo nano /etc/resolv.conf
+
+Agregamos las siguientes líneas:
+
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+
+Guardamos el archivo y hacemos ping a ver si ya envía paquetes a google:
+
+$ ping 8.8.8.8
+
 ################################################################################
 ##### Restaurar o reiniciar las conexiones de red inalambrica del sistema #####
 ################################################################################
