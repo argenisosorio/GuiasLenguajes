@@ -1292,6 +1292,9 @@ Ejemplo: "/var/www/example.com/media/"
 La ruta absoluta del directorio donde collectstatic va a colectar los estaticos, esto para entornos de producción.
 Establezca la configuración STATIC_ROOT en el directorio desde el que desea servir estos archivos, por ejemplo:
 
+STATIC_ROOT should be the absolute path to the directory static files should be
+collected to:
+
 STATIC_ROOT = "/var/www/example.com/static/"
 
 **MEDIA_ROOT
@@ -1329,6 +1332,24 @@ Deben estar en la carpeta static del proyecto
 ####################################
 ##### Recolectar los estáticos #####
 ####################################
+
+definir en el settings.py a:
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+$ python manage.py collectstatic
+
+si falla entonces se prueba comentando a:
+
+#STATICFILES_DIRS = (
+    #os.path.join(BASE_DIR, 'static'),
+#)
+
+luego:
+
+$ python manage.py collectstatic
+
+Si todo va bien se tienen que haber copiado los estáticos del admin de django a static.
 
 Cuando el:
 
@@ -1387,17 +1408,22 @@ Descarguemos nuestro código desde GitHub a PythonAnywhere mediante la creación
 
 $ git clone https://github.com/<tu-usuario-github>/my-first-blog.git
 
-Ahora toca configurar el fichero WSGI, Django funciona utilizando el "protocolo WSGI", un estándar para servir sitios web usando Python, que PythonAnywhere soporta. La forma de configurar PythonAnywhere para que reconozca nuestro blog Django es editar un fichero de configuración WSGI.
+Ahora toca configurar el fichero WSGI, Django funciona utilizando el "protocolo WSGI", un estándar para servir
+sitios web usando Python, que PythonAnywhere soporta. La forma de configurar PythonAnywhere para que reconozca
+nuestro proyecto Django es editar un fichero de configuración WSGI.
 
-Haz clic en el enlace "WSGI configuration file" (en la sección "Code" en la parte de arriba de la página; se llamará algo parecido a /var/www/<tu-usuario>_pythonanywhere_com_wsgi.py) y te redirigirá al editor, o tambien lo puedes editar desde la consola web, eso está en /var/www
+Haz clic en el enlace "WSGI configuration file" (en la sección "Code" en la parte de arriba de la página; se
+llamará algo parecido a /var/www/<tu-usuario>_pythonanywhere_com_wsgi.py) y te redirigirá al editor, o tambien
+lo puedes editar desde la consola web, eso está en /var/www
 
-Lo que me ha funcionado es crear un proyecto desde la interfaz web y luego desde la pestaña web modificar las rutas para que apunten al proyecto que clone.
+Lo que me ha funcionado es crear un proyecto desde la interfaz web y luego desde la pestaña web modificar las
+rutas para que apunten al proyecto que clone, los estáticos del admin ya deben estar collectados antes de clonar un proyecto.
 
 ##### Tips #####
 
 - El nombre de usuario que elijamos sera parte de nuestro subdominio en la web, es decir, si mi usuario es dm, el dominio de mi web/applicación sera:
---> dm.pythonanywhere.com es decir, cuando elijas tu nombre de usuario ten en cuenta que la URL de tu blog tendrá la forma nombredeusuario.pythonanywhere.com, así
-que o bien elije tu propio apodo o bien un nombre que describa sobre qué trata tu blog.
+--> dm.pythonanywhere.com es decir, cuando elijas tu nombre de usuario ten en cuenta que la URL de tu blog tendrá la forma
+nombredeusuario.pythonanywhere.com, así que o bien elije tu propio apodo o bien un nombre que describa sobre qué trata tu blog.
 
 - En /var/www está el fichero usuario_pythonanywhere_com_wsgi.py para editarlo, lo reemplazamos todo con lo siguiente:
 
@@ -1413,6 +1439,37 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "default.settings")
 
 application = get_wsgi_application()
+
+ó tambien esta que me ha funcionado:
+
+# This file contains the WSGI configuration required to serve up your
+# web application at http://dm.pythonanywhere.com/
+# It works by setting the variable 'application' to a WSGI handler of some
+# description.
+#
+# The below has been auto-generated for your Django project
+
+import os
+import sys
+
+# add your project directory to the sys.path
+project_home = u'/home/miusuario/nombre_del_proyecto'
+if project_home not in sys.path:
+    sys.path.insert(0, project_home)
+
+# set environment variable to tell django where your settings.py is
+os.environ['DJANGO_SETTINGS_MODULE'] = 'nombre_del_proyecto.settings'
+
+
+# serve django via WSGI in Django < 1.7
+# import django.core.handlers.wsgi
+# application = django.core.handlers.wsgi.WSGIHandler()
+# serve django via WSGI in Django >= 1.7
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+
+En la pestaña de web se configura todo, la ruta de los estáticos, la ruta del proyecto, la versión de python, la ruta del
+entorno virtual si se usa uno, por eso hay que configurar todo eso primero.
 
 ########################################
 ##### Graficando modelos de Django #####
