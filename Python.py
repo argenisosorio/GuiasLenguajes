@@ -1856,11 +1856,12 @@ Crear un archivo .csv a partir de los datos de una lista.
 """
 import csv
 mylist = ['a','b','c']
+mylist2 = ['1','2','3']
 with open('data.csv', 'wb') as myfile:
     #wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
     wr = csv.writer(myfile) # Omitiendo las comillas al escribir el la data en el .csv
     wr.writerow(mylist)
-    print wr
+    wr.writerow(mylist2)
 
 ----
 
@@ -1938,3 +1939,74 @@ with open('data.csv', 'r') as listado:
         alist.append(date);
 listado.close()
 print alist
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Leyendo datos de un .csv y escribiendolos en otro
+
+data.csv:
+Name,Profession
+Derek,Software Developer
+Steve,Software Developer
+Paul,Manager
+"""
+import csv
+# create list holders for our data.
+names = []
+jobs = [] 
+# open file
+with open('data.csv', 'rb') as f:
+    reader = csv.reader(f)
+ 
+    # read file row by row
+    rowNr = 0
+    for row in reader:
+        # Skip the header row.
+        if rowNr >= 1:
+            names.append(row[0])
+            jobs.append(row[1])
+ 
+        # Increase the row number
+        rowNr = rowNr + 1
+# Print data 
+#print names
+#print jobs
+with open('data_final.csv', 'wb') as myfile:
+    wr = csv.writer(myfile)
+    wr.writerow(names)
+    wr.writerow(jobs)
+
+----
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Leyendo datos de un .csv y escribiendolos en otro .csv
+"""
+
+"""
+data.csv
+Name,Profession
+Derek,Software Developer
+Steve,Software Developer
+Paul,Manager
+"""
+
+import csv
+with open('data.csv', 'r') as listado:
+    datos = csv.reader(listado, delimiter=',') # Separar la data por coma.
+    alist = [];
+    for row in datos:
+        if row[0].startswith('#'): # Permite comentar líneas en el archivo csv.
+            continue
+        nombre = row[0]
+        alist.append(nombre);
+        profesion = row[1]
+        alist.append(profesion);
+listado.close()
+with open('data_final.csv', 'wb') as myfile:
+    wr = csv.writer(myfile)
+    wr.writerow(alist)
