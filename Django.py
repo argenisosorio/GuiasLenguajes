@@ -3788,3 +3788,75 @@ sqlite> SELECT * FROM tablename;
 // Para salir del prompt de sqlite3
 
 sqlite> .exit
+
+###################################################
+##### Implementación de django simple captcha #####
+###################################################
+
+Paquete requerido django-simple-captcha==0.5.5
+
+// Instalamos el paquete
+
+$ pip install django-simple-captcha==0.5.5
+
+// Agregamos en el settings.py en la sección de aplicaciones el paquete captcha
+
+DJANGO_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'captcha',
+]
+
+// En los forms.py importamos a:
+
+from captcha.fields import CaptchaField
+
+// Agregamos el campo captcha a la clase del form que lo va a tener, como la clase del login por ejemplo
+
+captcha = CaptchaField()
+
+// En la urls generales agregamos la url del captcha.
+
+url(r'^captcha/', include('captcha.urls')),
+
+// En la plantilla html agregamos
+
+<div class="input-field {% if form.captcha.errors %}invalid{% endif %}">
+    <label>{{form.captcha.label}}</label>
+    <div class="col s7">
+        {{form.captcha}}
+    </div>
+    <a class="col s2" onclick="refresh_captcha(this);" style="cursor: pointer">
+        <i class="small material-icons">cached</i>
+    </a>
+    {% include 'base.forms.errors.html' with form_errors=form.captcha.errors col_title_error='col s2' col_msg_error='col s10' %}
+</div>
+
+ó
+
+<div class="form_captcha">
+    {{ form.captcha }}
+    <a href="" class="js-captcha-refresh">Refrescar</a>
+</div>
+
+// En los js
+
+/**
+ * @brief Función para recargar el captcha vía json
+ * @param element Recibe el botón
+ */
+function refresh_captcha(element) {
+    $form = $(element).parents('form');
+    var url = location.protocol + "//" + window.location.hostname + ":" + location.port + "/captcha/refresh/";
+
+    $.getJSON(url, {}, function(json) {
+        $form.find('input[name="captcha_0"]').val(json.key);
+        $form.find('img.captcha').attr('src', json.image_url);
+    });
+
+    return false;
+}
