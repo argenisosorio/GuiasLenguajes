@@ -3860,3 +3860,13 @@ function refresh_captcha(element) {
 
     return false;
 }
+
+##################################################################
+##### Resetear o cambiar el password de un usuario de django #####
+##################################################################
+
+$ python manage.py changepassword <user_name>
+
+Ejemplo:
+
+$ python manage.py changepassword admin
