@@ -253,9 +253,19 @@ usando un navegador web. Se observara una página "Welcome to Django"
 -Por defecto, el comando runserver arranca el servidor de desarrollo
 en el puerto 8000
 
-python manage.py runserver 8080 #Arranca el servido en el puerto 8080
+$ python manage.py runserver 8080 #Arranca el servido en el puerto 8080
 
-python manage.py runserver 0.0.0.0:8000 #Cambiando la direccion IP
+-Cambiando la direccion IP donde va a correr el servidor:
+
+$ python manage.py runserver 127.0.0.1:8000
+
+ó
+
+$ python manage.py runserver mi_ip_privada_en_la_red:8000
+
+-Con 0.0.0.0:8000 toma automáticamente la ip privada del equipo en la red local.
+
+$ python manage.py runserver 0.0.0.0:8000
 
 #############################################
 ##### Configuración de la base de datos #####
