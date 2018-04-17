@@ -1499,61 +1499,13 @@ with open("firefox-icon.png", "rb") as f:
     with open(filename, 'wb') as f:
         f.write(imgdata)
 
-
-#######################################################
-##### Script para copiar un fichero a un servidor #####
-#######################################################
-
-# -*- coding: utf-8 -*-
-import os
-#os.system("scp FILE USER@SERVER:PATH")
-os.system("scp ff.jpg user@192.168.x.x:/home/user/tmp")
-
-#################################################
-##### Script para usar comandos del sistema #####
-#################################################
-
-Básicamente es lo mismo que el comando anterior solo que
-permite utilizar comandos de unix.
-
-# -*- coding: utf-8 -*-
-import os
-os.system("mkdir new_folder")
-
-# Otro ejemplo
-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-"""
-Uso de comandos de unix desde python
-"""
-import os
-
-p = os.popen('ls -la')
-print(p.read())
-
-####################################
-##### Crear carpeta con python #####
-####################################
-
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-"""
-Uso de comandos de unix desde python
-"""
-import os
-
-print os.getcwd() # Imprimir el directorio actual
-if not os.path.exists("x"):
-  os.makedirs("x")
-
 ###################################
 #### Validar email con python #####
 ###################################
 
 # -*- coding: utf-8 -*-
 """
-Validar email con python
+Validar email con python.
 """
 import re
 correo='nombre@dominio.com'
@@ -2010,3 +1962,82 @@ listado.close()
 with open('data_final.csv', 'wb') as myfile:
     wr = csv.writer(myfile)
     wr.writerow(alist)
+
+###################################################
+##### Escribir comandos de Linux desde python #####
+###################################################
+
+# -*- coding: utf-8 -*-
+import os
+
+"""
+Script para copiar un fichero a un servidor.
+"""
+#os.system("scp FILE USER@SERVER:PATH")
+os.system("scp ff.jpg user@192.168.x.x:/home/user/tmp")
+
+-----
+
+# -*- coding: utf-8 -*-
+import os
+
+"""
+Crear una carpeta.
+"""
+os.system("mkdir new_folder")
+
+-----
+
+# -*- coding: utf-8 -*-
+import os
+
+"""
+Uso de comandos de unix desde python.
+"""
+p = os.popen('ls -la')
+print(p.read())
+
+-----
+
+# -*- coding: utf-8 -*-
+"""
+Imprimir el directorio actual.
+"""
+import os
+
+print os.getcwd()
+
+----
+
+# -*- coding: utf-8 -*-
+import os
+
+"""
+Crear carpeta con python.
+"""
+print os.getcwd() # Imprimir el directorio actual
+if not os.path.exists("x"):
+  os.makedirs("x")
+
+----
+
+# -*- coding: utf-8 -*-
+"""
+Cambiarse a un directorio.
+"""
+import os
+
+os.chdir("/home/user")
+
+----
+
+# -*- coding: utf-8 -*-
+"""
+Copiando y moviendo ficheros con python.
+"""
+import os
+a = os.getcwd() # Almaceno en "a" el directorio actual.
+os.system("mkdir fff") # Creo la carpeta fff.
+os.chdir(a+'/fff') # Navego hasta la carpeta fff del directorio actual.
+os.system("touch xxx.txt") # Creo el archivo xxx.txt dentro de la carpeta fff.
+os.system("cp xxx.txt ../") # Copio a xxx.txt un directorio atrás.
