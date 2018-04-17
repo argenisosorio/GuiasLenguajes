@@ -1518,7 +1518,7 @@ digital del servidor a veces se debe saltar chequeo de la firma para bajar las f
 
 # apt-get autoremove --purge 'gnome*'
 
-# apt-get autoremove 
+# apt-get autoremove
 
 ########################################################
 ##### Instalación de gnome classic en sistema base #####
@@ -2830,14 +2830,14 @@ En este ejemplo actualizaremos de la version 8 a la 9.
 
 ##### CENDITEL mirror - Debian GNU/Linux 9 (Stretch) #####
 
-deb http://debian.cenditel/debian stretch main
-deb-src http://debian.cenditel/debian stretch main
+deb http://debian.cenditel/debian stretch main contrib non-free
+deb-src http://debian.cenditel/debian stretch main contrib non-free
 
-deb http://debian.cenditel/debian stretch-updates main
-deb-src http://debian.cenditel/debian stretch-updates main
+deb http://debian.cenditel/debian stretch-updates main contrib non-free
+deb-src http://debian.cenditel/debian stretch-updates main contrib non-free
 
-deb http://debian.cenditel/debian-security stretch/updates main
-deb-src http://debian.cenditel/debian-security stretch/updates main
+deb http://debian.cenditel/debian-security stretch/updates main contrib non-free
+deb-src http://debian.cenditel/debian-security stretch/updates main contrib non-free
 
 2-) Actualizamos la lista de los repositorios:
 # apt-get update
