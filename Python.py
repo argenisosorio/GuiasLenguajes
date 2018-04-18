@@ -1562,7 +1562,7 @@ afectar a los paquetes del sistema global.
 
 Para crear un ambiente virtual instalamos lo siguiente:
 
-# aptitude install python-setuptools python-dev
+# aptitude install python-setuptools python-dev python-pip
 
 # aptitude install python-virtualenv virtualenvwrapper
 
@@ -1602,7 +1602,7 @@ $ source .bachrc
 
 Installation: 
 
-# aptitude install python-virtualenv
+# aptitude install python-virtualenv python-pip
 
 -Crear un virtualenv:
 

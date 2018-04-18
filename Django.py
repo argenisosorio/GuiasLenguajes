@@ -3596,6 +3596,8 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 
 Ahora harémos las configuraciones de uwsgi en /etc/uwsgi
 
+# cd etc/uwsgi
+
 etc/uwsgi# ls
 apps-available  apps-enabled
 
@@ -3606,6 +3608,8 @@ Tenemos que tener mucho cuidado al momento de configurar este fichero, las rutas
 declaradas muy bien, especial énfasis en la ruta del entorno virtual, y el usuario del sistema y grupo
 dueño de la aplicación, así como la ruta local o dirección donde está alojada la aplicación.
 
+# cd /etc/uwsgi/apps-available
+
 /etc/uwsgi/apps-available# vim prueba.xml
 
 <uwsgi>
@@ -3613,17 +3617,25 @@ dueño de la aplicación, así como la ruta local o dirección donde está aloja
         <workers>2</workers>
         <master/>
         <chmod-socket>666</chmod-socket>
+        <!-- Ruta del entorno virtual donde está instalado Django -->
+        <!-- Si el django está instalado en el sistema base no hace falta especificar alguna ruta, solo se comento o borra la directiva home -->
         <home>/home/user/Entornos_virtuales/Django_1.8.8</home>
+        <!-- prueba hace referencia a los archivos de configuración que creamos en apps-available, en este caso, prueba.xml -->
         <socket>/var/run/uwsgi/app/prueba/socket</socket>
         <pidfile>/var/run/uwsgi/app/prueba/pid</pidfile>
+        <!-- Identificador de usuario con el que se va a correr el proyecto -->
         <uid>root</uid>
+        <!-- Identificador del grupo que puede correr la aplicación -->
         <gid>root</gid>
         <log-x-forwarded-for/>
         <post-buffering>4096</post-buffering>
         <max-requests>1000</max-requests>
+        <!-- Ruta donde está alojado el código fuente de la aplicación -->
         <chdir>/srv/prueba</chdir>
+        <!-- Ruta donde está alojado el código fuente de la aplicación y el directorio donde esta el wsgi.py etc... -->
         <pythonpath>/srv/prueba/prueba/</pythonpath>
         <module>wsgi</module>
+        <!-- Si usamos python 3 en el proyecto configuramos "python3" -->
         <plugins>python27</plugins>
 </uwsgi>
 
@@ -3880,3 +3892,34 @@ $ python manage.py changepassword <user_name>
 Ejemplo:
 
 $ python manage.py changepassword admin
+
+###############################################
+##### Plantilla error 404.html y 500.html #####
+###############################################
+
+La siguiente prueba se realiza en entorno de producción, osea DEBUG = False
+
+No hace falta declarar ningun método page_not_found en views.py y no hay que
+declarar ningun handler404 = 'views.page_not_found' en las urls.
+
+1) Editar settings.py, configurando DEBUG = False
+
+2) Editar en el settings.py a TEMPLATE_DIRS = (os.path.join (BASE_DIR, 'myapp/templates/myapp'),)
+
+3) Finalmente, crear la plantilla 404.html y 500.html en el directorio myapp/templates/myapp.
+
+Ejemplos:
+
+# 404.html
+<div align="center">
+  <h1>Error 404 Not Found</h1>
+  <p>Recurso no encontrado. Se utiliza cuando el servidor web no encuentra la página o recurso solicitado.</p>
+</div>
+
+y
+
+# 500.html
+<div align="center">
+  <h1>Error 500 Internal Server Error</h1>
+   <p>Es un código comúnmente emitido por aplicaciones empotradas en servidores web, mismas que generan contenido dinámicamente, por ejemplo aplicaciones montadas en IIS o Tomcat, cuando se encuentran con situaciones de error ajenas a la naturaleza del servidor web.</p>
+</div>
