@@ -3383,3 +3383,32 @@ la reproducción.
 #################################################
 
 username "user" and the default password "live".
+
+####################################################
+##### Resetear password del root desde el grup #####
+####################################################
+
+Fuente: http://primeros-pasos-linux.blogspot.com/2013/03/guia-pasoa-apaso-recuperar-contrasena.html
+
+Cuando inicia la pc y estando en el grub, seleccionamos editar presionando la letra e
+
+Esto nos abre un fichero que podemos editar, ubicamos la parte que dice:
+
+linux /boot/vmlinuz-3.2.0-4-xxx-xxx root=UUID=04064ae3XXXXXXXX ro quiet
+
+y agregamos al final: init=/bin/bash y nos quedará así:
+
+linux /boot/vmlinuz-3.2.0-4-xxx-xxx root=UUID=04064ae3XXXXXXXX ro quiet init=/bin/bash
+
+Presionamos f10 para que continué con la carga del sistema, y nos aparece la terminal o consola, como root
+
+Escribiremos los siguiente, para montar el sistema de ficheros que necesitamos:
+
+# mount -o remount -rw /
+
+Luego ya procedemos a cambiar la contraseña de root, ejecutamos el comando:
+# passwd root
+
+Ponemos la nueva contraseña, y el sistema nos pide que la volvamos a escribir para confirmar
+que sea igual. (cuando ponemos la contraseña por seguridad en linux no aparece lo que
+tecleamos y al terminar de poner la contraseña damos enter.
