@@ -3852,6 +3852,17 @@ sqlite> SELECT * FROM tablename;
 
 sqlite> .exit
 
+###############################################################################
+##### Insertar data csv en una base de datos sqlite con un script de bash #####
+###############################################################################
+
+#!/bin/sh
+# Insertar data csv en una base de datos sqlite con un script de bash.
+sqlite3 db.sqlite3 <<EOF
+.mode csv
+.import data.csv table_name
+EOF
+
 ###################################################
 ##### Implementación de django simple captcha #####
 ###################################################
