@@ -2137,6 +2137,47 @@ class UserForm(UserCreationForm):
         user.save()
         return user
 
+# Otra forma
+
+class RegisterForm(UserCreationForm):
+    """
+    Clase del formulario que registra los usuarios
+    """
+
+    username = forms.CharField(max_length=30, label=("Usuario"), widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'style': 'min-width: 0; width: 25%; display: inline;',
+    }))
+
+    first_name = forms.CharField(label=("Nombres"), widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'style': 'min-width: 0; width: 25%; display: inline;',
+    }))
+
+    last_name = forms.CharField(label=("Apellidos"), widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'style': 'min-width: 0; width: 25%; display: inline;',
+    }))
+
+    email = forms.CharField(label=("Email"), widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'style': 'min-width: 0; width: 25%; display: inline;',
+    }))
+
+    password1 = forms.CharField(label=("Contraseña"), widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'style': 'min-width: 0; width: 25%; display: inline;',
+    }))
+
+    password2 = forms.CharField(label=("Contraseña (confirmación)"), widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'style': 'min-width: 0; width: 25%; display: inline;',
+    }))
+
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name',  'email', 'username', 'password1', 'password2')
+
 ##############################################
 ##### Pasando varios parametros a la url #####
 ##############################################
