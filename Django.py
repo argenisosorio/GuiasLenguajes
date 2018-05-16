@@ -3220,6 +3220,19 @@ class BitacoraView(ListView):
         queryset = Bitacora.objects.filter(tipo='Acceso')
         return queryset
 
+---
+
+def Consulta_datos(request, template_name='app/template.html'):
+    """
+    Función que permite aplicar 2 veces un filtro con los querysets
+    """
+    a = MyModel.objects.filter(campo1__icontains='varchar')
+    b = a.filter(campo2__icontains='varchar')
+    data = {}
+    data['object_list'] = b
+    print data
+    return render(request,template_name, data)
+
 #################################
 ##### search form in django #####
 #################################
