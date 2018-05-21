@@ -1418,6 +1418,10 @@ Descarguemos nuestro código desde GitHub a PythonAnywhere mediante la creación
 
 $ git clone https://github.com/<tu-usuario-github>/my-first-blog.git
 
+$ virtualenv my_env
+
+Instalamos los requerimientos en el entorno virtual.
+
 Ahora toca configurar el fichero WSGI, Django funciona utilizando el "protocolo WSGI", un estándar para servir
 sitios web usando Python, que PythonAnywhere soporta. La forma de configurar PythonAnywhere para que reconozca
 nuestro proyecto Django es editar un fichero de configuración WSGI.
@@ -3650,7 +3654,7 @@ nginx: configuration file /etc/nginx/nginx.conf test is successful
 
 Ahora harémos las configuraciones de uwsgi en /etc/uwsgi
 
-# cd etc/uwsgi
+# cd /etc/uwsgi
 
 etc/uwsgi# ls
 apps-available  apps-enabled
@@ -3969,7 +3973,7 @@ declarar ningun handler404 = 'views.page_not_found' en las urls.
 
 1) Editar settings.py, configurando DEBUG = False
 
-2) Editar en el settings.py a TEMPLATE_DIRS = (os.path.join (BASE_DIR, 'myapp/templates/myapp'),)
+2) Editar en el settings.py a 'DIRS': ['myapp/templates/myapp'],
 
 3) Finalmente, crear la plantilla 404.html y 500.html en el directorio myapp/templates/myapp.
 

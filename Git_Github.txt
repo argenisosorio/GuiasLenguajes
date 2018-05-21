@@ -141,6 +141,15 @@ $ git push origin nombre_rama // Estando en otra rama local, Subir los cambios a
 
 $ git push -f origin master // git push -f <remote> <branch> forzar el push para sobreescribir los ficheros en el repositorio remoto.
 
+$ git stash // Guardado rápido provisional de los cambios pendientes, lo cual nos va a permitir cambiarnos de rama sin que se nos queje de que hay cambios pendientes.
+
+$ git stash list // listar los estados guardados provicionalmente
+    stash@{0}: WIP on master: 049d078 added the index file
+    stash@{1}: WIP on master: c264051... Revert "added file_size"
+    stash@{2}: WIP on master: 21d80a5... added number to log
+
+$ git stash apply stash@{0} // Reactivando el primer cambio guardado ráídamente, falta probar bien.
+
 ##############################################
 ##### Configurando el fichero .gitignore #####
 ##############################################
