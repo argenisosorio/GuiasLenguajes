@@ -1771,7 +1771,7 @@ Abrir, leer y cerrar un archivo.
 """
 archivo = open("hello.txt", "r")
 archivo.read()
-archivo.close() 
+archivo.close()
 
 ----
 

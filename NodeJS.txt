@@ -1,1 +1,71 @@
-##### Guía de NodeJS Laravel by dM #####
+##### Guía de NodeJS y NPM by dM #####
+
+#########################
+##### Qué es NodeJS #####
+#########################
+
+Node.js es un entorno en tiempo de ejecución multiplataforma, de código abierto,
+para la capa del servidor (pero no limitándose a ello) basado en el lenguaje de
+programación ECMAScript, asíncrono, con I/O de datos en una arquitectura
+orientada a eventos y basado en el motor V8 de Google. Fue creado con el enfoque
+de ser útil en la creación de programas de red altamente escalables, como por
+ejemplo, servidores web.
+
+######################
+##### Qué es NPM #####
+######################
+
+NPM es el manejador de paquetes por defecto para Node.js, es como
+decir apt para GNU/Linux Debian o PIP para Python.
+
+###################################################
+##### Instalación de última versión de NodeJS #####
+###################################################
+
+// Para instalar la última versión compilaremos el paquete bajado desde > https://nodejs.org/es/
+
+#################################################################
+##### Instalación de NodeJS desde repos de GNU/Linux Debian #####
+#################################################################
+
+// Instalar nodejs desde el repositorio de GNU/Linux Debian
+
+# apt-get install nodejs nodejs-legacy
+
+// Verificar la versión instalada de nodejs
+
+$ nodejs -v
+
+// Instalar el gestor de paquetes npm
+
+# apt-get install npm
+
+###############################################################
+##### Instalar Node.js desde el PPA oficial de NodeSource #####
+###############################################################
+
+# apt-get install curl
+
+# apt-get install build-essential
+
+$ curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+
+# apt-get install -y nodejs
+
+Si quisiésemos instalar otra versión, el primer comando sería:
+
+4.x: curl -sL https://deb.nodesource.com/setup_4.x | sudo -E bash -
+5.x: curl -sL https://deb.nodesource.com/setup_5.x | sudo -E bash -
+6.x: curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+7.x: curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+8.x: curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+9.x: curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
+10.x: curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+
+#######################################
+##### Eliminar NodeJS del sistema #####
+#######################################
+
+# apt-get --purge remove node
+
+# apt-get --purge remove nodejs
