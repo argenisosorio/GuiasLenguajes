@@ -3629,7 +3629,73 @@ Cantidad de caractéres: <input type="text" name="cantidad" id="cantidad">
 
 -------------------------------------
 
-<!-- -->
+<!-- Auto capitalización de un campo de texto y un area de texto con js -->
+<html>
+  <head>
+  <title>XXX</title>
+  <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="styles.css" type="text/css"/>
+  <meta charset="UTF-8">
+  </head>
+<body>
+<script type="text/javascript">
+$(document).ready(function() {
+  $("input, textarea").keyup(function() {
+    var val = $(this).val()
+    $(this).val(val.toUpperCase());
+  });
+  $('input[type="text"]').on('keypress', function() { 
+    var $this = $(this), value = $this.val(); 
+    if (value.length === 1) { 
+      $this.val( value.charAt(0).toUpperCase() );
+    }  
+  });
+});
+</script>
+<form action="#" method="get">
+  Título: <input type="text" name="title">
+  <br />
+  Descripción:
+  <textarea name="area_texto" rows="10" cols="50">
+  </textarea>
+</form>
+</body>
+</html>
+
+-------------------------------------
+
+<!-- Auto texto en minúsculas en un campo de texto y un area de texto con js -->
+<html>
+  <head>
+  <title>XXX</title>
+  <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="styles.css" type="text/css"/>
+  <meta charset="UTF-8">
+  </head>
+<body>
+<script type="text/javascript">
+$(document).ready(function() {
+  $("input, textarea").keyup(function() {
+    var val = $(this).val()
+    $(this).val(val.toLowerCase());
+  });
+  $('input[type="text"]').on('keypress', function() { 
+    var $this = $(this), value = $this.val(); 
+    if (value.length === 1) { 
+      $this.val( value.charAt(0).toLowerCase() );
+    }  
+  });
+});
+</script>
+<form action="#" method="get">
+  Título: <input type="text" name="user" placeholder="Tu Usuario">
+  <br />
+  Descripción:
+  <textarea name="texto" rows="10" cols="50">
+  </textarea>
+</form>
+</body>
+</html>
 
 -------------------------------------
 
