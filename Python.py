@@ -277,13 +277,13 @@ print x
 ##### VARIABLES ######
 ######################
 
-a = 2 #Declaramos (a) y le asignamos un valor (INT) entero
+a = 2 # Declaramos (a) y le asignamos un valor (INT) entero
 
-a = 2L #La (L) al final significa que sera variable de tipo LONG, numeros muy grandes que ocupan mas memoria del sistema
+a = 2L # La (L) al final significa que sera variable de tipo LONG, numeros muy grandes que ocupan mas memoria del sistema
 
-a = "casa" ##Declaramos (a) y le asignamos una cadena de caracteres
+a = "casa" # Declaramos (a) y le asignamos una cadena de caracteres
 
-print a #Imprime el valor de (a)
+print a # Imprime el valor de (a)
 a #Imprime el valor de (a) directamente, si esta cargada 
 
 #################
@@ -1434,6 +1434,20 @@ $ python
 >>> now = datetime.datetime.now()
 >>> print now
 2017-01-05 04:08:15.932157
+
+##############################################################
+##### Cambiar la forma en que se muestra la fecha y hora #####
+##############################################################
+
+# -*- coding: utf-8 -*-
+from datetime import datetime
+"""
+Cambiando la forma en que se muestra la fecha y hora de python
+"""
+fecha_hora = datetime.now()
+fecha_hora_otro_formato = fecha_hora.strftime("%d-%m-%Y %H:%M")
+print str(datetime.now())
+print str(fecha_hora_otro_formato)
 
 ##################
 ##### Base64 #####
