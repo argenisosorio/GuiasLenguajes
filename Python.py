@@ -1529,7 +1529,7 @@ else:
     print "Correo incorrecto"
 
 ##############################################################
-##### Importar un ficehero, script, directorio en python #####
+##### Importar un fichero, script, directorio en python #####
 ##############################################################
 
 import sys
