@@ -3321,6 +3321,113 @@ def busqueda(request):
 {% endif %}
 {% endblock %}
 
+##################################################
+##### search form in django con doble filtro #####
+##################################################
+
+# urls.py
+# -*- coding: utf-8 -*-
+from django.conf.urls import patterns, url
+from registro import views
+from registro.views import *
+import registro.views as views
+from django.contrib.auth.decorators import login_required
+
+
+urlpatterns = patterns('',
+    url(r'^buscar/$', login_required(views.Buscar_reporte.as_view()), name='buscar'),
+    url(r'^busqueda/$', busqueda, name='busqueda'),
+)
+
+# views.py
+class Buscar_reporte(TemplateView):
+    """
+    Plantilla que tiene el formulario para buscar.
+    """
+    template_name = "registro/buscar.html"
+
+
+def busqueda(request):
+    """
+    Función que recibe los parámetros enviados desde el formulario de
+    búsqueda y filtra los con querysets.
+    """
+    if 'ano' in request.GET and request.GET['ano'] and 'mes' in request.GET and request.GET['mes']:
+        ano = request.GET['ano']
+        mes = request.GET['mes']
+        reportes_ano = Reporte.objects.filter(ano__icontains=ano)
+        reportes = reportes_ano.filter(mes__icontains=mes)
+        return render(request, 'registro/busqueda.html',  {'reportes': reportes, 'query': ano,'query2': mes})
+    else:
+        return HttpResponse('Por favor introduce un termino de búsqueda.')
+
+# buscar.html
+{% extends "base/base.html" %}
+{% block titulo %}Buscar{% endblock %}
+{% block cuerpo %}
+<br />
+<h1>Buscar</h1>
+<br />
+<form action="{% url 'registro:busqueda' %}" method="get">
+  <label>Por Año</label>
+  <br />
+  <select class="form form-control" name="ano">
+    <option value="-">-</option>
+    <option value="2018">2018</option>
+    <option value="2019">2019</option>
+  </select>
+  <br />
+  <label>Por Mes</label>
+  <br />
+  <select class="form form-control" name="mes">
+    <option value="-">-</option>
+    <option value="Enero">Enero</option>
+    <option value="Febrero">Febrero</option>
+  </select>
+  <button class="btn btn-success" type="submit">Buscar</button>
+</form>
+{% endblock %}
+
+# busqueda.html
+{% extends "base/base.html" %}
+{% block titulo %}Resultados de la búsqueda{% endblock %}
+{% block cuerpo %}
+<br />
+<h1>Resultados de la búsqueda</h1>
+<br />
+{% if reportes %}
+  <p>Estas buscado objetos del Año <strong>{{ query }}</strong> en el Mes de <strong>{{ query2}}</strong></p>
+  <p>Objetos encontrados: <strong>{{ reportes|length }}</strong>
+  <br />
+  <br />
+  <table border="1px" id="example" class="display" cellspacing="0px" style="width:100%;">
+    <thead>
+      <tr>
+        <th>N</th>
+        <th>xxx</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>N</th>
+        <th>xxx</th>
+      </tr>
+    </tfoot>
+    <tbody>
+    {% for x in reportes %}
+    <tr>
+      <td></td>
+      <td>{{ x.nombre_proyecto }}</td>
+      <td>{{ x.xxx }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>Ningún objeto coincide con el criterio de búsqueda.</p>
+{% endif %}
+{% endblock %}
+
 #####################
 ##### form.as_p #####
 #####################
