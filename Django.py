@@ -2987,6 +2987,16 @@ direccion = forms.ChoiceField(label="direccion", widget=Select(attrs={
 from datetime import datetime
 
 print datetime.now()
+                       
+# Cambiando el formato a humano
+                       
+from datetime import datetime
+
+#print datetime.now()
+myDate = datetime.now()
+formatedDate = myDate.strftime("%d-%m-%Y %H:%M")
+b = str(formatedDate)
+print b
 
 ##################################################
 ##### Imprimiendo las acciones de un usuario #####
