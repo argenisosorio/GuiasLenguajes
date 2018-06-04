@@ -4109,3 +4109,53 @@ y
   <h1>Error 500 Internal Server Error</h1>
    <p>Es un código comúnmente emitido por aplicaciones empotradas en servidores web, mismas que generan contenido dinámicamente, por ejemplo aplicaciones montadas en IIS o Tomcat, cuando se encuentran con situaciones de error ajenas a la naturaleza del servidor web.</p>
 </div>
+
+#################################
+##### Ejemplo de DetailView #####
+#################################
+
+##### Usando Funciones #####
+
+# urls.py
+url(r'^detalle/(?P<pk>\d+)$', login_required(views.PostDetail), name='post_detail'),
+
+# views.py
+def PostDetail(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+    return render (request, 'app/post_detail.html', {'post': post})
+
+# post_detail.html
+{% for post in object_list %}
+<div>
+    Posted: {{ post.date }}, autor: {{ post.autor }}
+    <h2>{{ post.title }}</h2>
+    {{ post.body }}
+    <a href="{% url 'post_edit' post.id %}"><button id="boton">Edit</button></a>
+    <a href="{% url 'post_delete' post.id %}"><button id="boton">Delete</button></a>
+    <a href="{% url 'post_detail' post.id %}"><button id="boton">Detail</button></a>
+</div>
+{% endfor %}
+
+##### Usando clases genéricas #####
+
+# urls.py
+url(r'^post_detail/(?P<pk>\d+)$', login_required(views.Post_detail.as_view()), name='post_detail'),
+
+# views.py
+from django.views.generic import DetailView
+
+class Detallar_reporte(DetailView):
+    model = Post
+    template_name = "app/post_detail.html"
+
+# post_detail.html
+{% for post in object_list %}
+<div>
+    Posted: {{ post.date }}, autor: {{ post.autor }}
+    <h2>{{ post.title }}</h2>
+    {{ post.body }}
+    <a href="{% url 'post_edit' post.id %}"><button id="boton">Edit</button></a>
+    <a href="{% url 'post_delete' post.id %}"><button id="boton">Delete</button></a>
+    <a href="{% url 'post_detail' post.id %}"><button id="boton">Detail</button></a>
+</div>
+{% endfor %}
