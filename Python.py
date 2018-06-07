@@ -1638,9 +1638,9 @@ $ source mi_env/bin/activate
 
 ##### Usando Python 3 en virtualenvwrapper #####
 
-# aptitude install python3.4 python3-pip python3.4-dev python3-setuptools
+# apt-get install python3.4 python3-pip python3.4-dev python3-setuptools
 
-# aptitude install python3-virtualenv virtualenvwrapper
+# apt-get install python3-virtualenv virtualenvwrapper
 
 $ mkvirtualenv --python=/usr/bin/python3 my_env
 

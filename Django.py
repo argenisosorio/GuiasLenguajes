@@ -3217,6 +3217,10 @@ x = Persona.objects.filter(username__icontains='admin').count()
 >>> Persona.objects.all()[2]
 <Persona: karla>
 
+# Mostrar objetos en un rango
+>>> Persona.objects.all()[5:10]
+<Persona: karla>
+
 ##### Ejemplo de queryset para filtrar objetos #####
 
 class BitacoraView(ListView):

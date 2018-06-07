@@ -799,6 +799,8 @@ $ man apt-get
 
 # apt-get install Nombre_Paquete // Instalar paquetes
 
+# apt-get install --only-upgrade packagename // Actualizar un paquete unicamente.
+
 # apt-get install -t jessie-backports Nombre_Paquete // Instalar paquetes disponibles desde otro repositorio, en este caso, los de jessie-backports.
 
 # aptitude install Nombre_Paquete // Instalar paquetes, otra forma
@@ -1664,6 +1666,8 @@ $ ssh user@192.168.0.240 // Asi se accede a un ordenador o servidor remoto, debe
 del server, nos pedira la clave de session, una vez adentro tenemos acceso a los archivos y podemos pedir el root para tener acceso total.
 ssh es muy usado por administradores de redes y de sistemas para acceder a las maquinas y los servidores y hacer cambios asi 
 como monitorear los procesos que esten ejecutando, especialmente en maquinas virtuales si varios proyectos corren en un mismo servidor.
+
+$ ssh -l user 192.168.0.240 // otra forma usando el parámetro -l.
 
 $ ssh 192.168.200.xxx // Si el servidor tiene el mismo usuario que el host, no hace falta especificarlo, solamente con la ip del servidor
 basta, pues toma el nombre del usuario del host para hacer la conexión.
