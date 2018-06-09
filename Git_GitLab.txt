@@ -1,0 +1,46 @@
+######################################
+##### Como crear una GitLab Page #####
+######################################
+
+GitLab te permite tener una página html en un entorno de producción,
+basado en algún repositorio que tengas en tu cuenta de usuario, este
+servicio solo permite el despliegue de páginas html y ficheros estáticos
+como hojas de estilo, javascript, jquery entre otros, lo cual significa
+que es ideal para mostrar diseños de sitios web.
+
+##### Habilitar una Gitlab Page #####
+
+1) Entramos en algún repositorio nuestro que tenga un index.html para
+mostrar como página principal.
+
+2) Vamos a agregar un nuevo archivo al repositorio, lo podemos hacer
+desde la consola de comandos o desde la interfáz, nuevo fichero que vamos
+a agregar a nuestro repositorio se debe llamar .gitlab-ci.yml y su contenido
+sera:
+
+pages:
+  stage: deploy
+  script:
+  - mkdir .public
+  - cp -r * .public
+  - mv .public public
+  artifacts:
+    paths:
+    - public
+  only:
+  - master
+
+Hacemos un commit para guardar el nuevo archivo, subimos los cambios
+en el repositorio.
+
+3) Hay que esperar entre 2 a 5 min para que se cree la nueva página de nuestro repositorio,
+luego desde la interfaz del navegador vamos a nuestro repositorio, en el panel de la
+izquierda vamos a Configuración y luego a Paginas, si ya se creo nos saldra lo siguiente
+en un panel:
+
+Congratulations! Your pages are served under:
+
+https://myuser.gitlab.io/name_my_repo
+
+4) Ya podemos acceder a la página de GitLab de nuestro repositorio, si entramos y da error
+404 es que todavía esta procesando, intentemos 1 min después y así hasta que esté en línea.
