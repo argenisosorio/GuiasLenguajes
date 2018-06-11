@@ -2918,8 +2918,9 @@ from django.views.generic import RedirectView
 urlpatterns = patterns('',
     url(r'^some-page/$', RedirectView.as_view(url='/')),
 
+####################################################################
 ##### Usando el select field para leer de datos de otro modelo #####
-
+####################################################################
 
 #models.py
 # -*- coding: utf-8 -*-
@@ -2974,11 +2975,47 @@ class Borrar(DeleteView):
     model = Persona
     success_url = reverse_lazy('registro:consultar')
 
+################################################################
 ##### Ejemplo de instanciar otro modelo en un select field #####
-direccion = forms.ChoiceField(label="direccion", widget=Select(attrs={
-    'class':'form-control input-md',
-    'style': 'min-width: 0; width: 100%; display: inline;',
-}), choices = Direccion.objects.all().values_list('id','nombre_direccion'))
+################################################################
+
+class ProyectoForm(forms.ModelForm):
+    """
+    Formulario con los campos de un Proyecto.
+    """
+    nombre_proyecto = forms.CharField(label='Nombre del Proyecto', widget=TextInput(attrs={
+        'class':'form-control input-md',
+        'style': 'min-width: 0; width: 100%; display: inline;',
+        'required': 'True',
+    }), required = True)
+
+    class Meta:
+
+        model = Proyecto
+        fields = '__all__'
+
+class ReporteForm(forms.ModelForm):
+    """
+    Formulario con los campos de un Reporte de actividades de un proyecto.
+    """
+
+    def __init__(self, *args, **kwargs):
+        """
+        Método que carga la data de los proyectos registrados
+        del modelo Proyecto en el campo nombre_proyecto del
+        modelo Reporte.
+        """
+        super(ReporteForm, self).__init__(*args, **kwargs)
+        lista_proyectos = Proyecto.objects.all().values_list('id','nombre_proyecto')
+        self.fields['nombre_proyecto'] = forms.ChoiceField(choices=lista_proyectos)
+
+    nombre_proyecto = forms.ChoiceField(label="Nombre del Proyecto", widget=Select(attrs={
+        'class':'form-control input-md',
+        'style': 'min-width: 0; width: 100%; display: inline;',
+    }))
+
+**Nota: nombre_proyecto es un campo select pero en el init ya se le pasan
+los choices, por tanto no hace falta pasarselo de nuevo.
 
 ###################################################
 ##### Imprimiento la fecha y hora del sistema #####
@@ -3504,7 +3541,6 @@ is_staff
 is_active
 date_joined
 username
-
 
 ############################
 ##### Reiniciar id_seq #####
@@ -4163,3 +4199,24 @@ class Detallar_reporte(DetailView):
     <a href="{% url 'post_detail' post.id %}"><button id="boton">Detail</button></a>
 </div>
 {% endfor %}
+
+######################################################
+##### Método __init__ de un formulario de django #####
+######################################################
+
+from django import forms
+
+from .models import MyModel
+
+class MyModelForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(MyModelForm, self).__init__(*args, **kwargs)
+        # Making name required
+        self.fields['name'].required = True
+        self.fields['age'].required = True
+        self.fields['bio'].required = True
+        self.fields['profession'].required = True
+
+    class Meta:
+        model = MyModel
