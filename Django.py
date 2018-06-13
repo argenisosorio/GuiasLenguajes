@@ -1201,7 +1201,8 @@ from django.template import RequestContext
 
 class BitacoraView(ListView):
     """
-    Clase que muestra la lista de entradas de la bitácora
+    Clase que muestra la lista de entradas de la bitácora, solo muestra la lista
+    si el usuario es staff.
     """
     model = Bitacora
     template_name = "bitacora.html"
@@ -1214,7 +1215,8 @@ class BitacoraView(ListView):
                           % {'class_name': self.__class__.__name__})
         context = self.get_context_data(object_list=self.object_list)
         #print "***** Entró por get"
-        if request.user.is_superuser:
+        #if request.user.is_superuser:
+        if request.user.is_staff:
             #print "--------------------"
             #print request.user
             return self.render_to_response(context)
@@ -2979,6 +2981,34 @@ class Borrar(DeleteView):
 ##### Ejemplo de instanciar otro modelo en un select field #####
 ################################################################
 
+# models.py
+class Proyecto(models.Model):
+    """
+    Modelo que contiene los campos de un Proyecto.
+    """
+    nombre_proyecto = models.CharField(max_length=400, blank=True,null=True)
+
+    def __unicode__(self):
+        return self.nombre_proyecto
+
+    def get_absolute_url(self):
+        return reverse('registro:editar_reporte', kwargs={'pk': self.pk})
+
+
+class Reporte(models.Model):
+    """
+    Modelo de un Reporte de actividades de un proyecto.
+    """
+    autor = models.CharField(max_length=400, blank=True,null=True)
+    nombre_proyecto = models.CharField(max_length=400, blank=True,null=True)
+
+    def __unicode__(self):
+        return self.autor
+
+    def get_absolute_url(self):
+        return reverse('registro:editar_reporte', kwargs={'pk': self.pk})
+
+# forms.py
 class ProyectoForm(forms.ModelForm):
     """
     Formulario con los campos de un Proyecto.
@@ -3006,16 +3036,23 @@ class ReporteForm(forms.ModelForm):
         modelo Reporte.
         """
         super(ReporteForm, self).__init__(*args, **kwargs)
-        lista_proyectos = Proyecto.objects.all().values_list('id','nombre_proyecto')
-        self.fields['nombre_proyecto'] = forms.ChoiceField(choices=lista_proyectos)
+        lista_proyectos = Proyecto.objects.all().values_list('nombre_proyecto','nombre_proyecto')
+        self.fields['nombre_proyecto'] = forms.ChoiceField(label="Nombre del Proyecto", widget=Select(attrs={
+            'class':'form-control input-md',
+            'style': 'min-width: 0; width: 100%; display: inline;',
+        }), choices=lista_proyectos)
 
-    nombre_proyecto = forms.ChoiceField(label="Nombre del Proyecto", widget=Select(attrs={
+    autor = forms.CharField(label='Autor', widget=TextInput(attrs={
         'class':'form-control input-md',
         'style': 'min-width: 0; width: 100%; display: inline;',
-    }))
+        'required': 'True',
+    }), required = True)
 
-**Nota: nombre_proyecto es un campo select pero en el init ya se le pasan
-los choices, por tanto no hace falta pasarselo de nuevo.
+    nombre_caravisible = forms.CharField(label='Nombre completo del/la Cara Visible', widget=TextInput(attrs={
+        'class':'form-control input-md',
+        'style': 'min-width: 0; width: 100%; display: inline;',
+        'required': 'True',
+    }), required = True)
 
 ###################################################
 ##### Imprimiento la fecha y hora del sistema #####
@@ -4220,3 +4257,97 @@ class MyModelForm(forms.ModelForm):
 
     class Meta:
         model = MyModel
+
+##############################################
+##### Método get en una clase CreateView #####
+##############################################
+
+class BaseCreateView(SuccessMessageMixin,CreateView):
+    model = Mymodel
+    form_class = MymodelForm
+    success_url = reverse_lazy('app:list_object')
+    success_message = "Objet created"
+
+    def get(self, request, *args, **kwargs):
+        self.object = None
+        return super(BaseCreateView, self).get(request, *args, **kwargs)
+
+###########################################################################
+##### Formulario para el cambio de contraseña del usuario autenticado #####
+###########################################################################
+
+# urls.py
+# -*- coding: utf-8 -*-
+from django.conf.urls import patterns, url
+from usuarios import views
+from .views import *
+from django.contrib.auth.decorators import login_required
+
+
+urlpatterns = patterns('',
+    url(r'^$', LoginView.as_view(), name = "login"),
+    url(r'logout/$', views.Logout.as_view(), name='logout'),
+    url(r'^cambiar-contrasena/$', login_required(views.change_password), name='change_password'),
+)
+
+
+# views.py
+from django.shortcuts import render, redirect, render_to_response
+from django.contrib.auth.forms import (
+    AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm,
+)
+
+def change_password(request):
+    """
+    Función que gestiona el cambio de contraseña
+    de un usuario autenticado en el sistema.
+    """
+    form = PasswordChangeForm(user=request.user)
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            #messages = ['Cambio de contraseña exitoso']
+            #return render_to_response("registro/index.html",{'messages': messages}, context_instance=RequestContext(request))
+            return redirect('usuarios:login')
+        else:
+            print "No se realizó el cambio de contraseña"
+    return render(request, 'usuarios/change_password.html', {'form': form})
+
+
+# change_password.html
+<form action="" method="post"> {% csrf_token %}
+<table class="table_change_password" cellpadding="0px" cellspacing="0px">
+  <tbody>
+    <tr>
+      <td>
+        <label>Contraseña actual</label>
+        {{ form.old_password }}
+        {% if form.old_password.errors %}
+          <p>{{ form.old_password.errors}}</p>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Contraseña nueva</label>
+        {{ form.new_password1 }}
+        {% if form.new_password1.errors %}
+          <p>{{ form.new_password1.errors }}</p>
+        {% endif %}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label>Contraseña nueva (confirmación)</label>
+        {{ form.new_password2 }}
+        {% if form.new_password2.errors %}
+          <p>{{ form.new_password2.errors }}</p>
+        {% endif %}
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<button class="btn btn-success" type="submit">Cambiar contraseña</button>
+</form>
