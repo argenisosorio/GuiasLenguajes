@@ -4,11 +4,16 @@
 ##### Usando wordpress con servidor nginx #####
 ###############################################
 
-// Instalamos MySQL server y lo configuramos
+Nota:
+Usaremos $ para describir los comandos que se usaran con usuario regular.
+Usaremos # para describir los comandos que se usaran con superusuario.
+
+// Instalamos MySQL server y lo configuramos la clave
+// del usuario de mysql que nos la pedirá desde la consola.
 # apt-get install mysql-server
 
 // Instalamos php
-# apt-get install php5 php5-mysql php5-gd php-fpm
+# apt-get install php5 php5-mysql php5-gd php5-fpm
 
 // Instalamos Nginx server
 # apt-get install nginx
@@ -18,6 +23,9 @@ $ wget http://wordpress.org/latest.tar.gz
 
 // Extraemos el contenido del fichero, nos debe quedar una carpeta llamada wordpress.
 # tar -xzvf latest.tar.gz
+
+// Acceder a la consola de mysql, nos pedirá la contraseña solamente.
+# mysql -p
 
 // Dentro de la consola de MySQL creamos el usuario y la contraseña del sistema de wordpress:
 mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY '123456';
@@ -67,7 +75,7 @@ server {
 // Probamos la configuración de nginx que acabamos de hacer, si dice:OK segimos.
 # nginx -t
 
-// Reiniciamos nginx:
+// Reiniciamos el servicio de nginx.
 # service nginx restart
 
 Visitamos la url http://127.0.0.1/wordpress/
@@ -94,6 +102,9 @@ $ wget http://wordpress.org/latest.tar.gz
 // Extraemos el contenido del fichero, nos debe quedar una carpeta llamada wordpress.
 # tar -xzvf latest.tar.gz
 
+// Acceder a la consola de mysql, nos pedirá la contraseña solamente.
+# mysql -p
+
 // Dentro de la consola de MySQL creamos el usuario y la contraseña del sistema de wordpress:
 mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY '123456';
 
@@ -111,6 +122,9 @@ mysql> FLUSH PRIVILEGES;
 
 // Editamos el fichero y agregamos la db_name, user y password que creamos en el paso anterior y guardamos.
 # vim /var/www/html/wordpress/wp-config.php
+
+// Reiniciamos el servicio de apache para que todo ande calidad.
+# service apache2 restart
 
 Visitamos la url http://127.0.0.1/wordpress/
 
