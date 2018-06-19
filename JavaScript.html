@@ -3699,6 +3699,25 @@ $(document).ready(function() {
 
 -------------------------------------
 
-<!-- -->
+<!-- Convertir un texto del dom en enlace(link) si es que este lo es -->
+<html>
+<head>
+<script type="text/javascript">
+window.onload = function() {
+  var text=document.getElementById("url").value;
+  var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+  var text1=text.replace(exp, "<a href='$1'>$1</a>");
+  var exp2 =/(^|[^\/])(www\.[\S]+(\b|$))/gim;
+  document.getElementById("converted_url").innerHTML=text1.replace(exp2, '$1<a target="_blank"href="http://$2">$2</a>');
+}
+</script>
+</head>
+<body>
+  <textarea id="url">
+    https://as.com/tikitakas/2018/06/18/portada/1529301727_153343.html dasdasdsa https://as.com/tikitakas/2018/06/18/portada/1529301727_153343.html
+  </textarea>
+  <p id="converted_url"></p>
+</body>
+</html>
 
 -------------------------------------
