@@ -1,0 +1,87 @@
+##### Guía de Instalación y Configuración de Chamilo #####
+
+Nota:
+Usaremos $ para describir los comandos que se usaran con usuario regular.
+Usaremos # para describir los comandos que se usaran con superusuario.
+
+##### Instalar, configurar y crear una base de datos con MySQL #####
+
+// Actualizamos los repositorios
+# apt-get update
+
+// Instalar MySQL server
+# apt-get install mysql-server
+
+// Por la consola nos pedira una contraseña para el usuario root de mysql.
+
+// Acceder a la consola de mysql, nos pedirá la contraseña solamente.
+# mysql -p
+
+// Crear una base de datos.
+mysql> create database chamilo;
+
+// Crear un usuario y su contraseña.
+mysql> create user 'admin'@'localhost' identified by '123456';
+
+// Darle permisos al usuario creado sobre una db existente.
+mysql> grant all on chamilo.* to 'admin';
+
+// Listas las bases de datos disponibles.
+mysql> show databases;
+
+#####################################
+##### Instalación usando Apache #####
+#####################################
+
+// Instalamos apache.
+
+# apt-get install apache2
+
+##### Instalación de PHP y los módulos de PHP+MySQL+Apache #####
+
+// Instalamos php, en este caso el 5
+# apt-get install php5 php5-gd php5-mysql libapache2-mod-php5 php5-intl php5-curl php5-json
+
+// Copiamos la carpeta de chamilo en /var/www/html
+
+// Editamos el fichero php.ini, la ubicaión del es /etc/php5/apache2/php.ini
+// Modificamos el valor de las variables
+
+max_execution_time = 300 ;Maximum execution time of each script, in seconds
+max_input_time = 600 ;Maximum amount of time each script may spend parsing request data
+memory_limit = 256M ;Maximum amount of memory a script may consume (128MB)
+post_max_size = 100M
+upload_max_filesize = 100M;
+short_open_tag = Off
+safe_mode = Off
+magic_quotes_gpc = Off
+magic_quotes_runtime = Off
+session.cookie_httponly = on
+date.timezone = "America/Caracas"
+
+// Guardamos el fichero php.ini y reiniciamos apache
+
+# systemctl restart apache2
+
+// Ahora accedemos a 127.0.0.1/chamilo desde el navegador para ver la plataforma.
+// Ya desde el navegador nos pedira algunos datos y tendremos que pulsar algunos botones:
+// Nos pide el idioma de instalación, luego checkea los requerimientos, ahroa pulsamos "Nueva instalación"
+// Aceptamos la licencia, ahora escribimos el nombre de la base de datos, el usuario y la contraseña
+// que configuramos con anterioridad, ahora rellenamos los Parámetros de configuración, como:
+// usuario administrador de la plataforma, la contraseña, nombres y apellidos así como email
+// Una vez hecho todo eso ya podremos acceder a la pantalla del login de la plataforma en
+// http://127.0.0.1/chamilo/index.php
+
+####################################
+##### Instalación usando Nginx #####
+####################################
+
+// Instalamos nginx.
+
+# apt-get install nginx
+
+##### Instalación de PHP y los módulos de PHP+MySQL+Nginx #####
+
+# apt-get install php5 php5-gd php5-mysql php5-intl php5-curl php5-json php5-fpm
+
+faltan pruebas...
