@@ -63,6 +63,28 @@ date.timezone = "America/Caracas"
 
 # systemctl restart apache2
 
+// La versión que se uso para la elaboración de este manual es la Chamilo 1.10.x
+// por tanto se deben hacer unas configuraciones extras de Apache para
+// que todo funcione bien.
+// Vamos a activar el modulo rewrite de Apache con el siguiente comando:
+
+# a2enmod rewrite
+
+# systemctl restart apache2
+
+// Ahora modificamos el fichero /etc/apache2/apache2.conf buscamos el
+// siguiente bloque y cambiamos el valor de AllowOverride de None por All.
+
+<Directory /var/www/>
+  Options Indexes FollowSymLinks
+  AllowOverride All
+  Require all granted
+</Directory>
+
+// Guardamos el fichero y luego reiniciamos apache con:
+
+# systemctl restart apache2
+
 // Ahora accedemos a 127.0.0.1/chamilo desde el navegador para ver la plataforma.
 // Ya desde el navegador nos pedira algunos datos y tendremos que pulsar algunos botones:
 // Nos pide el idioma de instalación, luego checkea los requerimientos, ahroa pulsamos "Nueva instalación"
@@ -70,7 +92,7 @@ date.timezone = "America/Caracas"
 // que configuramos con anterioridad, ahora rellenamos los Parámetros de configuración, como:
 // usuario administrador de la plataforma, la contraseña, nombres y apellidos así como email
 // Una vez hecho todo eso ya podremos acceder a la pantalla del login de la plataforma en
-// http://127.0.0.1/chamilo/index.php
+// http://127.0.0.1/chamilo/index.php y autenticarnos con el usuario creaado en la instalación.
 
 ####################################
 ##### Instalación usando Nginx #####
