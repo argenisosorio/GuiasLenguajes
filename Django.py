@@ -2222,6 +2222,19 @@ Un filtro con argumentos se ve de este modo:
 Esto muestra las primeras 30 palabras de la variable bio. Los argumentos de los
 filtros están siempre entre comillas dobles.
 
+{{ value|linebreaks }}
+
+Replaces line breaks in plain text with appropriate HTML; a single newline becomes
+an HTML line break (<br>) and a new line followed by a blank line becomes a paragraph break (</p>).
+
+{{ value|linebreaksbr }}
+
+Converts all newlines in a piece of plain text to HTML line breaks (<br>).
+
+{{ value|linenumbers }}
+
+Displays text with line numbers.
+
 ##### Herencia de plantillas #####
 
 Para trabajar correctamente en Django se usará el sistema de plantillas para crear páginas HTML
