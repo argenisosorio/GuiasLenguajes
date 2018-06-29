@@ -2212,28 +2212,27 @@ Los filtros pueden ser encadenados, esto quiere decir que, la salida de uno de l
 filtros puede ser aplicada al próximo. Aquí un ejemplo que toma el primer elemento
 de una lista y la convierte a mayusculas:
 
-{{ mi_lista|first|upper }} 
+{{ mi_lista|first|upper }}
+
+Mostrar el texto en mayúscula.
+
+{{ mi_lista | upper }}
 
 Algunos filtros toman argumentos.
 Un filtro con argumentos se ve de este modo:
  
-{{ bio|truncatewords:"30" }}
+{{ bio|truncatewords:"30" }} # Esto muestra las primeras 30
+# palabras de la variable bio. Los argumentos de los
+# filtros están siempre entre comillas dobles.
 
-Esto muestra las primeras 30 palabras de la variable bio. Los argumentos de los
-filtros están siempre entre comillas dobles.
+{{ value|linebreaks }} # Replaces line breaks in plain text with appropriate HTML; a single newline becomes
+# an HTML line break (<br>) and a new line followed by a blank line becomes a paragraph break (</p>).
 
-{{ value|linebreaks }}
+{{ value|linebreaksbr }} # Converts all newlines in a piece of plain text to HTML line breaks (<br>).
 
-Replaces line breaks in plain text with appropriate HTML; a single newline becomes
-an HTML line break (<br>) and a new line followed by a blank line becomes a paragraph break (</p>).
+{{ value|linenumbers }} # Displays text with line numbers.
 
-{{ value|linebreaksbr }}
-
-Converts all newlines in a piece of plain text to HTML line breaks (<br>).
-
-{{ value|linenumbers }}
-
-Displays text with line numbers.
+{{ my_test | wordcount }} # Contar la cantidad de palabras.
 
 ##### Herencia de plantillas #####
 
