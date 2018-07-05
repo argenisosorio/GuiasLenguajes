@@ -1188,6 +1188,23 @@ la variable lista_atletas:
   <h1>No soy Admin </h1>
 {% endif %}
 
+# Mostrando contenido segun el tipo de usuario de django
+{% if request.user.is_authenticated %}
+  {% if user.is_superuser and user.is_staff and user.is_active %}
+    {{ user.username }} (Administrador) <span class="caret"></span>
+  {% else %}
+    {% if user.is_staff and user.is_active %}
+      {{ user.username }} (Director) <span class="caret"></span>
+    {% else %}
+      {% if user.is_active %}
+        {{ user.username }} (Cara Visible) <span class="caret"></span>
+      {% else %}
+        xxx
+      {% endif %}
+    {% endif %}
+  {% endif %}
+{% endif %}
+
 ##############################################################
 ##### Permisos de contenido según el usuario en la vista #####
 ##############################################################
