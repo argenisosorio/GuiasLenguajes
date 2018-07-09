@@ -1513,6 +1513,17 @@ with open("firefox-icon.png", "rb") as f:
     with open(filename, 'wb') as f:
         f.write(imgdata)
 
+----
+
+# -*- coding: utf-8 -*-
+# Codificar con base64 una imágen y guardar la cadena codificada en un fichero.
+with open("my_image.png", "rb") as f:
+    data = f.read()
+    print data.encode("base64")
+    archivo = open("my_file.txt", "w")
+    archivo.write(data.encode("base64"))
+    archivo.close()
+
 ###################################
 #### Validar email con python #####
 ###################################

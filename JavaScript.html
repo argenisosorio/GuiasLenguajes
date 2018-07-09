@@ -3260,6 +3260,43 @@ de nuevo.
 
 -------------------------------------
 
+<!-- Convertir una imagen en base64 usando un input file para subir la imagen -->
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+  <title>File to base64 conversion</title>
+</head>
+<body>
+<input type="file">
+<div id="base64" class="hidden"></div>
+<script>
+ (function(d){
+  'use strict';
+  var base = d.querySelector('#base64')
+  var inp = document.querySelector('input[type=file]');
+  inp.addEventListener('change',
+  function() {
+    var file = inp.files[0];
+    var reader  = new FileReader();
+    reader.addEventListener('load',
+    function () {
+      base.appendChild( d.createTextNode(reader.result));
+      base.classList.remove('hidden');
+    }, false);
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }, false);
+ }
+(document));
+</script>
+</body>
+</html>
+
+-------------------------------------
+
 <!-- Script para informar de la seguridad de una clave, con Javascript -->
 <html>
   <head>
