@@ -1897,7 +1897,24 @@ body, html {
 </body>
 </html>
 
-<!-- Validacion de campos con html5 -->
+----------
+
+<!-- Validación de número de caracteres mínimo de un campo password con pattern de html5 -->
+<!DOCTYPE html>
+<html>
+<body>
+<p>A form with a password field that must contain 6 or more characters:</p>
+<form action="/action_page.php">
+  Password: <input type="password" name="pw" pattern=".{6,}" title="Six or more characters">
+  <input type="submit">
+</form>
+<p><strong>Note:</strong> The pattern attribute of the input tag is not supported in Internet Explorer 9 and earlier versions.</p>
+</body>
+</html>
+
+----------
+
+<!-- Validación de campos con html5 -->
 <html>
 <head>
     <title>Validacion de campos con html5</title>
@@ -1913,6 +1930,67 @@ body, html {
     </form>
 </body>
 </html>
+
+---------
+
+<!-- Validación de número de un campo password con pattern de html5 -->
+<!DOCTYPE html>
+<html>
+<body>
+<p>Un formulario con un campo de contraseña que debe contener 8 o más caracteres que son de al menos un número, y una letra mayúscula y minúscula:</p>
+<form action="/action_page.php">
+Password: <input type="password" name="pw" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+<input type="submit">
+</form>
+<p><strong>Note:</strong> The pattern attribute of the input tag is not supported in Internet Explorer 9 and earlier versions.</p>
+</body>
+</html>
+
+----------
+
+<!-- Validación de un campo email con pattern de html5 -->
+<!DOCTYPE html>
+<html>
+<body>
+<p>A form with an email field that that must be in the following order: characters@characters.domain (characters followed by an @ sign, followed by more characters, and then a ".". After the "." sign, you can only write 2 to 3 letters from a to z:</p>
+<form action="/action_page.php">
+  E-mail: <input type="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$">
+  <input type="submit"></form>
+<p><strong>Note:</strong> The pattern attribute of the input tag is not supported in Internet Explorer 9 and earlier versions.</p>
+</body>
+</html>
+
+----------
+
+<!-- Validación de un campo search con pattern de html5, caracteres excluídos en el formulario -->
+<!DOCTYPE html>
+<html>
+<body>
+<p>A form with a search field that CANNOT contain the following characters: ' or "</p>
+<form action="/action_page.php">
+  Search: <input type="search" name="search" pattern="[^'\x22]+" title="Invalid input">
+  <input type="submit">
+</form>
+<p><strong>Note:</strong> The pattern attribute of the input tag is not supported in Internet Explorer 9 and earlier versions.</p>
+</body>
+</html>
+
+----------
+
+<!-- Validación de un campo tipo url con pattern de html5 -->
+<!DOCTYPE html>
+<html>
+<body>
+<p>A form with a URL field that must start with http:// or https:// followed by at least one character:</p>
+<form action="/action_page.php">
+  Homepage: <input type="url" name="website" pattern="https?://.+" title="Include http://">
+  <input type="submit">
+</form>
+<p><strong>Note:</strong> The pattern attribute of the input tag is not supported in Internet Explorer 9 and earlier versions.</p>
+</body>
+</html>
+
+----------
 
 <!-- Mensaje de alerta con css -->
 <!DOCtype html>
