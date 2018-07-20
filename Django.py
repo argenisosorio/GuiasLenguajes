@@ -4088,7 +4088,16 @@ sqlite> .schema tablename
 
 sqlite> SELECT * FROM tablename;
 
-// Para salir del prompt de sqlite3
+// Agregar una nueva columna a una tabla existente en una base de datos.
+
+sqlite> ALTER TABLE appname_modelname ADD COLUMN name_column DEFAULT 'value';
+
+// Acceder a la consola de sqlite3 desde dentro de un proyecto de django con una
+// db ya existente.
+
+$ python manage.py dbshell
+
+// Para salir del prompt de sqlite3.
 
 sqlite> .exit
 

@@ -1497,6 +1497,14 @@ En donde imagen es la ruta completa a la imagen ISO que deseas grabar y disposit
 
 dd if=/home/user/Descargas/debian-testing-i386-businesscard.iso of=/dev/media/sdb
 
+###############################################
+##### Copiar un imagen .iso en unidad USB #####
+###############################################
+
+// Para hacerlo booteable, debe estar desmontado pero conectado en el puerto usb.
+
+$ cat xxxx.iso > /dev/sdxxx ; sync
+
 -----
 
 $ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con el certificado
@@ -2811,16 +2819,16 @@ Abrir URL: U
 
 apg (Automatic Password Generator)
 
-// Instalación
+// Instalación:
+
 # apt-get install apg
 
-Apg es capaz de generar un listado de contraseñas.
+// Apg es capaz de generar un listado de contraseñas.
 
-Usa un algoritmo para generar contraseñas pronunciables e inpronunciables
-también permite generar contraseñas aleatorias definidas a partir de conjuntos
-de símbolos definidos por el usuario (dígitos, letras mayúsculas y minúsculas, y símbolos especiales.)
-
-Por defecto, apg genera 6 contraseñas con caracteres alfanuméricos que además son pronunciables (en inglés)
+// Usa un algoritmo para generar contraseñas pronunciables e impronunciables
+// también permite generar contraseñas aleatorias definidas a partir de conjuntos
+// de símbolos definidos por el usuario (dígitos, letras mayúsculas y minúsculas, y símbolos especiales.)
+// Por defecto, apg genera 6 contraseñas con caracteres alfanuméricos que además son pronunciables (en inglés)
 
 $ apg
 
@@ -2833,12 +2841,12 @@ beoddIcox2 (be-odd-Ic-ox-TWO)
 Oamyalirl6 (Oam-yal-irl-SIX)
 IgPiham1 (Ig-Pi-ham-ONE)
 
-Ahora generemos 4 contraseñas con una longitud mínima de 8 caracteres, máxima de 12
-y que además sean impronunciables, usan el segundo algoritmos:
+// Ahora generemos 4 contraseñas con una longitud mínima de 8 caracteres, máxima de 12
+// y que además sean impronunciables, usan el segundo algoritmo:
 
--n x = Número de contraseñas a generar.
--m x = Mínimo de caractéres que deberá tener la contraseña.
--x x = Máximo de caractéres que deberá tener la contraseña.
+// -n x = Número de contraseñas a generar.
+// -m x = Mínimo de caractéres que deberá tener la contraseña.
+// -x x = Máximo de caractéres que deberá tener la contraseña.
 
 $ apg -n 4 -m 8 -x 8 -a 1
 
@@ -3262,12 +3270,6 @@ user@debian7:~$ /etc/init.d/ssh
 force-reload  reload        restart       start         status        stop          try-restart   
 user@debian7:~$ /etc/init.d/ssh restart
 
-##### Copiar un imagen .iso en unidad USB #####
-
-// Para hacerlo booteable, debe estar desmontado pero conectado en el puerto usb.
-
-$ cat xxxx.iso > /dev/sdxxx ; sync
-
 ######################################################################
 ##### Instalar esto para porder descargar repositorios con https #####
 ######################################################################
@@ -3412,9 +3414,9 @@ la reproducción.
 
 username "user" and the default password "live".
 
-####################################################
-##### Resetear password del root desde el grup #####
-####################################################
+############################################################
+##### Resetear password del usuario root desde el grub #####
+############################################################
 
 Fuente: http://primeros-pasos-linux.blogspot.com/2013/03/guia-pasoa-apaso-recuperar-contrasena.html
 
@@ -3424,19 +3426,22 @@ Esto nos abre un fichero que podemos editar, ubicamos la parte que dice:
 
 linux /boot/vmlinuz-3.2.0-4-xxx-xxx root=UUID=04064ae3XXXXXXXX ro quiet
 
-y agregamos al final: init=/bin/bash y nos quedará así:
+y agregamos al final de esa línea lo siguiente: init=/bin/bash y nos quedará así:
 
 linux /boot/vmlinuz-3.2.0-4-xxx-xxx root=UUID=04064ae3XXXXXXXX ro quiet init=/bin/bash
 
-Presionamos f10 para que continué con la carga del sistema, y nos aparece la terminal o consola, como root
+Presionamos f10 para que se guarden los cambios y continúe con la carga del sistema, luegos nos
+aparece la terminal o consola, como root.
 
-Escribiremos los siguiente, para montar el sistema de ficheros que necesitamos:
+Escribiremos el siguiente comando para montar el sistema de ficheros:
 
 # mount -o remount -rw /
 
 Luego ya procedemos a cambiar la contraseña de root, ejecutamos el comando:
 # passwd root
 
-Ponemos la nueva contraseña, y el sistema nos pide que la volvamos a escribir para confirmar
-que sea igual. (cuando ponemos la contraseña por seguridad en linux no aparece lo que
-tecleamos y al terminar de poner la contraseña damos enter.
+El sistema nos pide la nueva contraseña, luego nos pide que la volvamos a
+escribir la nueva contraseña y validara que sea iguales. (cuando ponemos
+la contraseña por seguridad en linux no aparece lo que tecleamos y al
+terminar de poner la contraseña pulsamos enter y ¡listo! Contraseña del
+usuario root cambiada.
