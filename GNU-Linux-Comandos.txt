@@ -3445,3 +3445,86 @@ escribir la nueva contraseña y validara que sea iguales. (cuando ponemos
 la contraseña por seguridad en linux no aparece lo que tecleamos y al
 terminar de poner la contraseña pulsamos enter y ¡listo! Contraseña del
 usuario root cambiada.
+
+##############################################
+##### Encriptar directorios con Ecryptfs #####
+##############################################
+
+// Fuente: https://ubuntulife.wordpress.com/2008/08/07/crea-un-directorio-privado-encriptado-con-ecryptfs/
+
+// y https://blog.desdelinux.net/cifra-directorios-en-gnulinux-con-ecryptfs/
+
+// ECryptfs es una herramienta que nos permite encriptar la informacion contenida en un directorio.
+
+// Instalamos ecryptfs:
+
+# apt-get install ecryptfs-utils
+
+// Creamos el directorio a encriptar
+
+$ mkdir private
+
+// Asignamos permisos para que solo nuestro usuario pueda acceder
+
+$ chmod 700 private
+
+// Montamos el nuevo filesystem eCryptfs en la nueva carpeta creada:
+
+# mount -t ecryptfs private private
+
+// Nos hara una serie de preguntas como la palabra secreta a
+// utilizar. Por defecto usa la encriptación AES, con una longitud
+// de 16 bytes de longitud.
+// En resumen, las preguntas que nos hace son:
+// La passphrase o la clave para la encriptación.
+// El algoritmo de cifrado que de manera predeterminada es AES.
+// Magnitud de la clave, que es de 16 bytes de manera predeterminada
+// Plaintext passthrough para poder llegar a ficheros que no están cifrados.
+// filename encryption o encriptar los nombres de los ficheros, esta opción
+// me ha dado algunos problemas, me falta seguir probandola bien para poder
+// recomendarla, por ahora no la usaremos.
+
+# mount -t ecryptfs private private
+Select key type to use for newly created files:
+ 1) tspi
+ 2) passphrase
+Selection: 2
+Passphrase:
+Select cipher:
+ 1) aes: blocksize = 16; min keysize = 16; max keysize = 32
+ 2) blowfish: blocksize = 8; min keysize = 16; max keysize = 56
+ 3) des3_ede: blocksize = 8; min keysize = 24; max keysize = 24
+ 4) twofish: blocksize = 16; min keysize = 16; max keysize = 32
+ 5) cast6: blocksize = 16; min keysize = 16; max keysize = 32
+ 6) cast5: blocksize = 8; min keysize = 5; max keysize = 16
+Selection [aes]: 1
+Select key bytes:
+ 1) 16
+ 2) 32
+ 3) 24
+Selection [16]: 1
+Enable plaintext passthrough (y/n) [n]: n
+Enable filename encryption (y/n) [n]: n
+Attempting to mount with the following options:
+  ecryptfs_unlink_sigs
+  ecryptfs_key_bytes=16
+  ecryptfs_cipher=aes
+  ecryptfs_sig=5e2dd35dd40f619a
+Mounted eCryptfs
+
+// Ahora ya podemos crear archivos, moverlos, trabajar dentro del directorio private
+// Cuando terminemos de trabajar con el directorio private, desmontamos el sistema de ficheros
+
+# umount private
+
+// Si ahora accedemos a la carpeta, veremos los nombres de los ficheros y directorios, pero
+// si intentamos abrirlos veremos que estan encriptados y no podemos ver la informacion.
+// Podemos usar un editor hexadecimal para ver su contenido, pero no sera legible.
+
+// Si queremos volver a acceder a los archivos, tendremos que montar de nuevo el filesystem
+
+# mount -t ecryptfs private private
+
+// Nos pedira la frase de paso para poder desencriptar, tambien que respondamos a las otras preguntas
+// que respondimos cuando hicimos la primera encriptación, pero podemos dar enter a todas(usar los valores
+// por defecto), si todo esta bien nos debe mostrar el mensaje: Mounted eCryptfs.
