@@ -182,9 +182,13 @@ $ du -h // Los mismo que arriba pero se ven los tamaños en kg, mg, etc
 
 $ du -sh // Ver el tamaño total de los directorios.
 
-$ du * // Muestra todos directorios y ficheros y el espacio que ocupan en el disco
+$ du * // Muestra todos directorios y ficheros y el espacio que ocupan en el disco.
 
-$ file * // Nos dira el tipo de archivo de todos los ficheros del directorio
+$ du -h * // Leer todos los elementos y ver los tamaños en kg, mg, etc.
+
+$ du -h file_name.xxx // Ver los tamaños en kg, mg, etc, de un fichero específico.
+
+$ file * // Nos dira el tipo de archivo de todos los ficheros del directorio.
 
 ##################################################
 ##### Comandos para moverse entre directorios ####
@@ -3451,7 +3455,6 @@ usuario root cambiada.
 ##############################################
 
 // Fuente: https://ubuntulife.wordpress.com/2008/08/07/crea-un-directorio-privado-encriptado-con-ecryptfs/
-
 // y https://blog.desdelinux.net/cifra-directorios-en-gnulinux-con-ecryptfs/
 
 // ECryptfs es una herramienta que nos permite encriptar la informacion contenida en un directorio.
@@ -3528,3 +3531,62 @@ Mounted eCryptfs
 // Nos pedira la frase de paso para poder desencriptar, tambien que respondamos a las otras preguntas
 // que respondimos cuando hicimos la primera encriptación, pero podemos dar enter a todas(usar los valores
 // por defecto), si todo esta bien nos debe mostrar el mensaje: Mounted eCryptfs.
+
+###################################################
+##### Reducir tamaño de ficheros mp3 con Lame #####
+###################################################
+
+// Lame es una biblioteca de codificación MP3
+
+// Fuentes: http://www.kacharreando.com/ubuntu/reducir-mp3/
+// y http://www.comograbar.com/conceptos-basicos/diferencia-entre-mono-y-stereo/
+
+// Un poco de teoría primero
+
+// Mono
+// Una señal monofónica es una señal grabada con un solo micrófono.
+// Al escuchar la grabación con dos altavoces o auriculares, la señal
+// se duplica y oímos lo mismo por la izquierda que por la derecha.
+// Al grabar una voz con un solo micrófono, lo haremos en una
+// pista mono de nuestro programa de grabación.
+
+// Stereo
+// En cambio, una señal estereofónica es una señal grabada con un "par stereo"
+// (pareja de dos micrófonos iguales). Al escuchar la grabación, por la izquierda
+// oímos la grabación de un micrófono y por la derecha la del otro. Al grabar
+// un ambiente la diferencia entre mono y stereo se nota muchísimo. Una grabación
+// en stereo es mucho más realista ya que los humanos lo escuchamos todo por
+// dos oídos. Cuando grabamos una batería acústica, utilizamos un par stereo (aereos)
+// para captar los platos y un poco de ambiente.
+
+// Debes saber que…
+// Un archivo en stereo “pesa” aproximadamente el doble que el mismo archivo en
+// mono, siempre que sea la misma señal de audio. Cuando digo que un archivo "pesa"
+// me refiero al espacio que dicho archivo ocupa en el disco duro de tu ordenador.
+
+// El archivo mono solo contiene una pista mientras que el archivo en stereo
+// contiene dos, una para la señal izquierda y otra para la
+// derecha, y se tienen que guardar el doble de datos.
+
+// Instalamos lame:
+
+# apt-get install lame
+
+// Entre los parámetros que podemos usar están:
+// -b 90 es el BitRate, si deseamos otro distinto lo modificamos.
+// -q 0 puede ser sustituida por -h (-q 2), hay que tener en cuenta que
+// cuanto menor sea la calidad, mayor es la velocidad de conversión, el rango va del 0 al 9.
+// -a mono channel
+// -s stereo channel
+
+// Con el siguiente comando las canciones se comprimen pero resultan en canal mono:
+
+$ lame -a -h -b 90 -q 0 archivo_a_reducir.mp3 archivo_resultante.mp3
+
+// Con el siguiente comando las canciones se comprimen pero resultan en canal stereo:
+
+$ lame -s -h -b 90 -q 0 archivo_a_reducir.mp3 archivo_resultante.mp3
+
+// y listo, la compresión es cerda del 50% en relación al peso anterior y no se nota
+// en la calidad del audio, mejor dicho, es casi imperceptible un cambio o
+// baja en al calidad del audio.
