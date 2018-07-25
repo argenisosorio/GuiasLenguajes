@@ -1491,15 +1491,21 @@ Utiliza una interfaz de tipo hoja de cálculo familiar y no necesita aprender co
 
 $ sqlitebrowser // Para ejecutarlo
 
-#########################################################
-##### Quemar o grabar una imagen iso en un pendrive #####
-#########################################################
+##########################################################
+##### Quemar o grabar una imagen .iso en un pendrive #####
+##########################################################
 
 # dd if=[imagen] of=[dispositivo]
 
-En donde imagen es la ruta completa a la imagen ISO que deseas grabar y dispositivo la ruta completa hacia el pendrive, no la ruta con el nombre del pendrive, por ejemplo:
+// En donde imagen es la ruta completa a la imagen ISO que deseas grabar y dispositivo
+// la ruta de sistema hacia la unidad usb, no la ruta con el nombre del usb, estas
+// rutas las vemos con:
 
-dd if=/home/user/Descargas/debian-testing-i386-businesscard.iso of=/dev/media/sdb
+$ df -h
+
+Por ejemplo:
+
+# dd if=/home/user/Descargas/debian-testing-i386-businesscard.iso of=/dev/media/sdb
 
 ###############################################
 ##### Copiar un imagen .iso en unidad USB #####
@@ -1508,11 +1514,6 @@ dd if=/home/user/Descargas/debian-testing-i386-businesscard.iso of=/dev/media/sd
 // Para hacerlo booteable, debe estar desmontado pero conectado en el puerto usb.
 
 $ cat xxxx.iso > /dev/sdxxx ; sync
-
------
-
-$ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con el certificado
-digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando.
 
 ################################################
 ##### Instalación de gnome en sistema base #####
@@ -2860,40 +2861,50 @@ $ apg -n 4 -m 8 -x 12 -a 1
 // Mínimo 8 máximo 12, incluyendo caractéres especiales en menor medida
 $ apg -n 4 -m 8 -x 12 -a 0
 
-########################################
-##### Actualizar versión de Debian #####
-########################################
+###############################################################
+##### Actualizar la versión de GNU/Linux Debian instalada #####
+###############################################################
 
-En este ejemplo actualizaremos de la version 8 a la 9.
+// En este ejemplo actualizaremos la versión GNU/Linux Debian 8 a la 9.
 
-1-) Actualizamos el source.list a que apunte a repos de 9 Stretch.
+// Actualizamos el fichero source.list con los repositorios de GNU/Linux Debian 9 Stretch.
+// Como usuario root editamos y comentamos todo su contenido, los comentarios en
+// ese fichero comienzan con #.
 
-##### CENDITEL mirror - Debian GNU/Linux 9 (Stretch) #####
+# nano /etc/apt/sources.list
 
-deb http://debian.cenditel/debian stretch main contrib non-free
-deb-src http://debian.cenditel/debian stretch main contrib non-free
+// Una vez que todo esté comentado, agregamos lo siguiente:
 
-deb http://debian.cenditel/debian stretch-updates main contrib non-free
-deb-src http://debian.cenditel/debian stretch-updates main contrib non-free
+##### Debian GNU/Linux 9 Stretch #####
 
-deb http://debian.cenditel/debian-security stretch/updates main contrib non-free
-deb-src http://debian.cenditel/debian-security stretch/updates main contrib non-free
+deb http://deb.debian.org/debian stretch main
+deb-src http://deb.debian.org/debian stretch main
 
-2-) Actualizamos la lista de los repositorios:
+deb http://security.debian.org/debian-security/ stretch/updates main
+deb-src http://security.debian.org/debian-security/ stretch/updates main
+
+deb http://deb.debian.org/debian stretch-updates main
+deb-src http://deb.debian.org/debian stretch-updates main
+
+// Actualizamos la lista de los repositorios con:
+
 # apt-get update
 
-3-) Actualizamos los paquetes del sistema, para que instale las versiones de 9 Stretch
+// Actualizamos los paquetes del sistema, para que instale las versiones de GNU/Linux Debian 9 Stretch:
+
 # apt-get upgrade
 
-4-) Finalmente actualizamos todo de manera inteligente:
+// Finalmente actualizamos todo de manera inteligente y segura:
+
 # apt-get dist-upgrade
 
-5-) Reiniciamos el sistema, con eso ya deberíamos estar en GNU/Linux Debian 9 Stretch.
+// Ahora Reiniciamos el sistema, con eso ya deberíamos estar en GNU/Linux Debian 9 Stretch:
+
 # reboot
 
-Hay que estar pendiente de la consola, porque seguro va a pedir revisión
-manual de algunos paquetes, donde te dirá siquieres conservar la versión
-y configuración actual, como ssh, vim, postgresql, otros...
+// Hay que estar pendiente de la consola, porque seguro va a pedir revisión
+// manual de algunos paquetes, donde te dirá si quieres conservar la versión
+// y configuración actual, como ssh, vim, postgresql, otros...
 
 #################################
 ##### sources.list example  #####
@@ -2922,9 +2933,19 @@ deb <respository server/mirror> <repository name> <sub branches of the repo>
 
 ##### Debian GNU/Linux 9 (Stretch) Updates #####
 
-deb http://security.debian.org/ stretch/updates main contrib non-free
-deb-src http://security.debian.org/ stretch/updates main contrib non-free
-deb http://ftp.us.debian.org/debian/ stretch main contrib non-free
+deb http://deb.debian.org/debian stretch main
+deb-src http://deb.debian.org/debian stretch main
+
+deb http://security.debian.org/debian-security/ stretch/updates main
+deb-src http://security.debian.org/debian-security/ stretch/updates main
+
+deb http://deb.debian.org/debian stretch-updates main
+deb-src http://deb.debian.org/debian stretch-updates main
+
+##### Non free #####
+
+#deb http://deb.debian.org/debian stretch main contrib non-free
+#deb-src http://deb.debian.org/debian stretch main contrib non-free
 
 #----------------------------------
 
@@ -3422,33 +3443,33 @@ username "user" and the default password "live".
 ##### Resetear password del usuario root desde el grub #####
 ############################################################
 
-Fuente: http://primeros-pasos-linux.blogspot.com/2013/03/guia-pasoa-apaso-recuperar-contrasena.html
+// Fuente: http://primeros-pasos-linux.blogspot.com/2013/03/guia-pasoa-apaso-recuperar-contrasena.html
 
-Cuando inicia la pc y estando en el grub, seleccionamos editar presionando la letra e
-
-Esto nos abre un fichero que podemos editar, ubicamos la parte que dice:
+// Cuando inicia la pc y estando en el grub, seleccionamos editar presionando la letra e
+// Esto nos abre un fichero que podemos editar, ubicamos la parte que dice:
 
 linux /boot/vmlinuz-3.2.0-4-xxx-xxx root=UUID=04064ae3XXXXXXXX ro quiet
 
-y agregamos al final de esa línea lo siguiente: init=/bin/bash y nos quedará así:
+// y agregamos al final de esa línea lo siguiente: init=/bin/bash y nos quedará así:
 
 linux /boot/vmlinuz-3.2.0-4-xxx-xxx root=UUID=04064ae3XXXXXXXX ro quiet init=/bin/bash
 
-Presionamos f10 para que se guarden los cambios y continúe con la carga del sistema, luegos nos
-aparece la terminal o consola, como root.
+// Presionamos f10 para que se guarden los cambios y continúe con la carga del sistema, luegos nos
+// aparece la terminal o consola, como root.
 
-Escribiremos el siguiente comando para montar el sistema de ficheros:
+// Escribiremos el siguiente comando para montar el sistema de ficheros:
 
 # mount -o remount -rw /
 
-Luego ya procedemos a cambiar la contraseña de root, ejecutamos el comando:
+// Luego ya procedemos a cambiar la contraseña de root, ejecutamos el comando:
+
 # passwd root
 
-El sistema nos pide la nueva contraseña, luego nos pide que la volvamos a
-escribir la nueva contraseña y validara que sea iguales. (cuando ponemos
-la contraseña por seguridad en linux no aparece lo que tecleamos y al
-terminar de poner la contraseña pulsamos enter y ¡listo! Contraseña del
-usuario root cambiada.
+// El sistema nos pide la nueva contraseña, luego nos pide que la volvamos a
+// escribir la nueva contraseña y validara que sea iguales. (cuando ponemos
+// la contraseña por seguridad en linux no aparece lo que tecleamos y al
+// terminar de poner la contraseña pulsamos enter y ¡listo! Contraseña del
+// usuario root cambiada.
 
 ##############################################
 ##### Encriptar directorios con Ecryptfs #####
