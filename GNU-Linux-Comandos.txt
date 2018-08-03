@@ -2206,6 +2206,48 @@ $ chown usuario *
 
 # chown -R username:group directory
 
+###################
+##### Cifrado #####
+###################
+
+// Cifrado, en la criptografía.
+
+// El cifrado es un procedimiento que utiliza un algoritmo de cifrado
+// con cierta clave (clave de cifrado) para transformar un mensaje, sin
+// atender a su estructura lingüística o significado, de tal forma que
+// sea incomprensible o, al menos, difícil de comprender a toda persona
+// que no tenga la clave secreta (clave de descifrado) del algoritmo.
+// Las claves de cifrado y de descifrado pueden ser iguales
+// (criptografía simétrica), distintas (criptografía asimétrica) o
+// de ambos tipos (criptografía híbrida).
+
+// ¿Cómo funciona el cifrado?
+
+// Los métodos de cifrado actuales se basan en fórmulas matemáticas
+// complejas. Se utilizan estos dos tipos de sistemas:
+
+// El cifrado simétrico y asimétrico.
+
+// En el cifrado simétrico, ciframos el archivo con una clave X
+// Para descifrarlo y obtener el archivo original, utilizamos la misma clave X.
+
+// El cifrado asimétrico es más complicado. Aquí no tenemos una sola
+// clave común. En su lugar cada persona tiene dos claves, una
+// pública y una privada. Para enviarle un archivo a un amigo lo
+// cifras con su clave pública. De esta forma, sólo lo puede
+// descifrar él con su clave privada. Es más seguro que el cifrado
+// simétrico, ya que la clave de descifrado (la privada) nunca se
+// comparte, siempre la tiene el receptor.
+
+// Ejemplo: Sabiendo lo anterior, si queremos que tres compañeros de
+// trabajo nos manden un archivo cifrado debemos de mandarle nuestra
+// clave pública (que está vinculada a la privada) y nos podrán mandar
+// de forma confidencial ese archivo que solo nosotros podremos
+// descifrar con la clave privada.
+
+// Fuente: https://es.wikipedia.org/wiki/Cifrado_(criptograf%C3%ADa)
+// Fuente: https://www.genbeta.com/desarrollo/tipos-de-criptografia-simetrica-asimetrica-e-hibrida
+
 #################################################################################
 ##### Cifrado de ficheros gpg, cifrado simétrico, asimétrico, firma digital #####
 #################################################################################
