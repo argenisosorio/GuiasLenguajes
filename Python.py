@@ -407,6 +407,8 @@ def cuadrado2(): #Creamos una nueva función
 
 cuadrado2()
 
+-----
+
 #---EJEMPLO de Función y Cálculo
 
 # input : Devuelve el valor ingresado por teclado tal como se lo digita (en particular sirve para ingresar valores numéricos)
@@ -430,6 +432,8 @@ def main():
     print km, "kilometros son:",metros4,"metros"
 main()
 
+-----
+
 #Llevar horas a minutos y segundos
 def funcion ():
     print "Llevar horas a minutos y segundos"
@@ -439,6 +443,17 @@ def funcion ():
     print horas, "horas " "son", minutos, "minutos"
     print horas, "horas " "son", segundos, "Segundos"
 funcion()
+
+-----
+
+# -*- coding: utf-8 -*-
+"""
+Función random para generar un número
+aleatorio dentro de un rango.
+"""
+import random
+for x in range(1):
+    print random.randint(1,4)
 
 #########################
 ##### CONCATENACIÓN #####
