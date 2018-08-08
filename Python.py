@@ -2086,6 +2086,16 @@ os.system("cp xxx.txt ../") # Copio a xxx.txt un directorio atrás.
 ##### Cifrado de datos en python #####
 ######################################
 
+##### Pycrypto #####
+
+Kit de herramientas de criptografía Python (pycrypto)
+
+Esta es una colección de funciones de hash seguras (como SHA256 y RIPEMD160)
+y varios algoritmos de cifrado (AES, DES, RSA, ElGamal, etc.). El paquete está
+estructurado para facilitar la incorporación de nuevos módulos.
+
+-----
+
 # -*- coding: utf-8 -*-
 """
 Cifrar datos usando DES del paquete Crypto
@@ -2112,3 +2122,24 @@ d_text=cipher.decrypt(c_text)
 print "Texto descifrado: " +d_text
 
 -----
+
+# -*- coding: utf-8 -*-
+"""
+Ejemplo usando el modulo SHA256 para generar un hash a partir de datos.
+"""
+from Crypto.Hash import SHA256
+hash = SHA256.new()
+hash.update('my message')
+hash.digest()
+print hash.digest()
+
+-----
+
+# -*- coding: utf-8 -*-
+"""
+Ejemplo usando el modulo MD5 para generar un hash a partir de datos.
+"""
+from Crypto.Hash import MD5
+m=MD5.new()
+m.update('Hola mundo')
+print m.digest()
