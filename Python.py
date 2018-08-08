@@ -2143,3 +2143,29 @@ from Crypto.Hash import MD5
 m=MD5.new()
 m.update('Hola mundo')
 print m.digest()
+
+-----
+
+# -*- coding: utf-8 -*-
+"""
+Ejemplo usando el algoritmo de encriación AES cifrar y descifrar un texto.
+"""
+from Crypto.Cipher import AES
+obj = AES.new('This is a key123', AES.MODE_CBC, 'This is an IV456')
+message="The answer is no"
+print message
+ciphertext=obj.encrypt(message)
+print ciphertext
+obj2 = AES.new('This is a key123', AES.MODE_CBC, 'This is an IV456')
+deciphertext=obj2.decrypt(ciphertext)
+print deciphertext
+
+-----
+
+# -*- coding: utf-8 -*-
+"""
+Usando el módulo random de Crypto.
+"""
+from Crypto.Random import random
+x=random.choice(['dogs', 'cats', 'bears'])
+print x
