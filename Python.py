@@ -2081,3 +2081,34 @@ os.system("mkdir fff") # Creo la carpeta fff.
 os.chdir(a+'/fff') # Navego hasta la carpeta fff del directorio actual.
 os.system("touch xxx.txt") # Creo el archivo xxx.txt dentro de la carpeta fff.
 os.system("cp xxx.txt ../") # Copio a xxx.txt un directorio atrás.
+
+######################################
+##### Cifrado de datos en python #####
+######################################
+
+# -*- coding: utf-8 -*-
+"""
+Cifrar datos usando DES del paquete Crypto
+"""
+# Importar el módulo DES
+from Crypto.Cipher import DES
+
+# Como usamos DES, el número de caracteres a cifrar es 8.
+text="abcdefgh"
+
+# Creamos un cifrador, el parámetro '12345678' es la clave de cifrado.
+cipher=DES.new('12345678')
+
+# Para cifrar usamos la función encrypt.
+c_text=cipher.encrypt(text)
+
+# Imprimimos el texto cifrado.
+print "Texto cifrado: " +c_text
+
+# Para descifrar usamos la función decrypt.
+d_text=cipher.decrypt(c_text)
+
+# Imprimimos el texto descifrado.
+print "Texto descifrado: " +d_text
+
+-----
