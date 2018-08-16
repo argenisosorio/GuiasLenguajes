@@ -1771,6 +1771,7 @@ entonces ejecutaremos los comandos dentro del entorno virtual.
 $ pip install --upgrade pip
 $ pip install package_name --trusted-host pypi.cenditel
 $ pip install -r requirements.txt --trusted-host pypi.cenditel // Para instalar recursivamente un fichero de requerimientos.
+$ pip install package_name --trusted-host pypi.python.org // Usando el espejo oficial de python.
 
 ##### Nota #####
 
