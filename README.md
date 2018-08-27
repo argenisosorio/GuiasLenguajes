@@ -6,6 +6,7 @@
 - C++
 - PHP
 - Ruby
+- Ionic
 - SCSS
 - Nginx
 - Uwsgi
