@@ -108,6 +108,286 @@ $ ionic start MyIonicProject tutorial
 
 // Si no especifica una plantilla al inicio, se le pedirá que elija una.
 
+##### Estructura de un proyecto Ionic #####
+
+// Analicemos la anatomía de una app de ionic. Dentro de la carpeta
+// que se creó, tenemos una estructura de proyecto típica de Cordova
+// donde podemos instalar complementos nativos y crear archivos de
+// proyecto específicos de la plataforma.
+
+// ./src/index.html
+
+// src/index.html es el principal punto de entrada para la aplicación, aunque su
+// propósito es configurar scripts, CSS includes y bootstrap, o comenzar a ejecutar
+// nuestra aplicación. No pasaremos mucho de nuestro tiempo en este archivo.
+
+// Para que su aplicación funcione, Ionic busca la etiqueta <ion-app> en su HTML.
+// En este ejemplo tenemos:
+
+// <ion-app></ion-app>
+
+// y los siguientes scripts cerca de la parte inferior:
+
+<!-- Ionic's root component and where the app will load -->
+<ion-app></ion-app>
+
+<!-- The polyfills js is generated during the build process -->
+<script src="build/polyfills.js"></script>
+
+<!-- The vendor js is generated during the build process
+     It contains all of the dependencies in node_modules -->
+<script src="build/vendor.js"></script>
+
+<!-- The main bundle js is generated during the build process -->
+<script src="build/main.js"></script>
+
+// Todos estos scripts son generados por el sistema de compilación, por
+// lo que no debe preocuparse por ellos.
+
+// ./src/
+
+// Dentro del directorio src encontramos nuestro código. Aquí es donde
+// tendrá lugar la mayor parte del trabajo para una aplicación Ionic.
+// Cuando ejecutamos servicios de ionic, nuestro código dentro de src/
+// se transporta a la versión de JavaScript correcta que el navegador entiende
+// (actualmente ES5). Eso significa que podemos trabajar a un nivel superior
+// utilizando TypeScript, pero compilar hasta la forma más antigua de JavaScript
+// que el navegador necesita.
+
+// src/app/app.module.ts es el punto de entrada para nuestra aplicación.
+
+// Cerca de la parte superior del archivo, deberíamos ver esto:
+
+@NgModule({
+  declarations: [MyApp, HelloIonicPage, ItemDetailsPage, ListPage],
+  imports: [BrowserModule, IonicModule.forRoot(MyApp)],
+  bootstrap: [IonicApp],
+  entryComponents: [MyApp, HelloIonicPage, ItemDetailsPage, ListPage],
+  providers: []
+})
+export class AppModule {}
+
+// Cada aplicación tiene un módulo raíz que básicamente controla el
+// resto de la aplicación. Esto es muy similar a ng-app de Ionic 1 y AngularJS.
+// Aquí también es donde iniciamos nuestra aplicación usando ionicBootstrap.
+
+// En este módulo, estamos configurando el componente raíz para MyApp
+// en src/app/app.component.ts. Este es el primer componente que se carga en nuestra
+// aplicación, y generalmente es un shell vacío para que se carguen otros componentes.
+// En app.component.ts, estamos configurando nuestra plantilla para src/app/app.html
+// así que echemos un vistazo allí.
+
+// ./src/app/app.html
+
+// Aquí está la plantilla principal para la aplicación en src/app/app.html:
+
+<ion-menu [content]="content">
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Pages</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        {{p.title}}
+      </button>
+    </ion-list>
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+
+// En esta plantilla, configuramos un ion-menu para que funcione como un menú lateral
+// y luego un componente ion-nav para actuar como el área de contenido principal.
+// La propiedad [content] del ion-menu está vinculada al contenido variable local
+// de nuestro ion-nav, por lo que sabe dónde debe animarse.
+
+// A continuación, veamos cómo crear más páginas y realizar navegación básica.
+
+##### Agregando páginas #####
+
+// Ahora que tenemos una comprensión básica del diseño de una
+// aplicación Ionic, analicemos el proceso de creación y navegación
+por las páginas de nuestra aplicación.
+
+// Echando un vistazo a src/app/app.html, vemos esta línea cerca de la parte inferior:
+
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+
+// Preste atención al enlace de propiedad [root]. Esto establece lo que es
+// esencialmente la primera página, o "root" para el componente ion-nav.
+// Cuando se carga el ion-nav, el componente al que hace referencia la variable
+// rootPage será la página raíz.
+
+// En src/app/app.component.ts, el componente MyApp especifica HelloIonicPage
+// como la página raíz asignándola a la variable rootPage:
+
+...
+import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
+...
+
+export class MyApp {
+  ...
+
+  // make HelloIonicPage the root (or first) page
+  rootPage: any = HelloIonicPage;
+  pages: Array<{ title: string, component: any }>;
+
+    constructor(private platform: Platform, private menu: MenuController, ...) {
+      ...
+    }
+  ...
+}
+
+// Vemos que rootPage está configurado en Hello IonicPage, por lo que
+// HelloIonicPage será la primera página cargada en el controlador de
+// navegación.
+
+// Echemos un vistazo a MyIonicProject/src/pages/hello-ionic/hello-ionic.html
+// que es la página que se muestra en el navegador cuando accedemos a la aplicación.
+
+##### Creando una página #####
+
+// A continuación, veamos la página HelloIonic que estamos importando.
+// Dentro de la carpeta src/pages/hello-ionic/, vaya y abra hello-ionic.ts.
+
+// Puede haber notado que cada página tiene su propia carpeta que lleva el nombre
+// de la página. Dentro de cada carpeta, también vemos un .html y un archivo
+// .scss con el mismo nombre. Por ejemplo, dentro de hello-ionic/ encontraremos
+// hello-ionic.ts, hello-ionic.html y hello-ionic.scss. Aunque no se requiere
+// el uso de este patrón, puede ser útil mantener las cosas organizadas.
+
+// A continuación, vemos la clase HelloIonicPage. Esto crea una Página
+// un componente de angular con todas las directivas de ionic ya provistas,
+// que se cargarán utilizando el sistema de navegación de Ionic. Tenga en
+// cuenta que debido a que las páginas deben cargarse dinámicamente, no es
+// necesario que tengan un selector. Sin embargo, el selector es útil para
+// anular los estilos predeterminados en una página específica
+// (ver hello-ionic.scss):
+
+// Todas las páginas tienen una clase y una plantilla asociada que también
+// se está compilando. Echemos un vistazo a src/pages/hello-ionic/hello-ionic.html
+// que es el archivo de plantilla para esta página:
+
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Hello Ionic</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <h3>Welcome to your first Ionic app!</h3>
+
+  <p>
+    This starter project is our way of helping you get a functional app running in record time.
+  </p>
+  <p>
+    Follow along on the tutorial section of the Ionic docs!
+  </p>
+  <p>
+    <button ion-button color="primary" menuToggle>Toggle Menu</button>
+  </p>
+
+</ion-content>
+
+// La <ion-navbar> es una plantilla para la barra de navegación en esta página.
+// A medida que navegamos hacia esta página, el botón y el título de la barra de
+// navegación cambian como parte de la transición de la página.
+
+// El resto de la plantilla es un código estándar de ionic que configura nuestra
+// área de contenido e imprime nuestro mensaje de bienvenida.
+
+##### Crear páginas adicionales #####
+
+// Para crear una página adicional, no necesitamos hacer mucho más que
+// asegurarnos de configurar correctamente el título y cualquier otra cosa que
+//deseemos que muestre la barra de navegación.
+
+// Vamos a ver los contenidos de src/pages/list/list.ts. En el interior, verá que
+// se define una nueva página:
+
+import {Component} from "@angular/core";
+import {NavController, NavParams} from 'ionic-angular';
+import {ItemDetailsPage} from '../item-details/item-details';
+
+
+@Component({
+  selector: 'page-list',
+  templateUrl: 'list.html'
+})
+export class ListPage {
+  selectedItem: any;
+  icons: string[];
+  items: Array<{ title: string, note: string, icon: string }>;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
+      'american-football', 'boat', 'bluetooth', 'build'];
+
+    this.items = [];
+    for (let i = 1; i < 11; i++) {
+      this.items.push({
+        title: 'Item ' + i,
+        note: 'This is item #' + i,
+        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
+      });
+    }
+  }
+
+  itemTapped(event, item) {
+    this.navCtrl.push(ItemDetailsPage, {
+      item: item
+    });
+  }
+}
+
+// Esta página creará una página de lista básica que
+// contiene una cantidad de artículos.
+
+// En general, esta página es muy similar a la página HelloIonic que
+// vimos anteriormente.
+
+##### Navegando hacia las páginas #####
+
+// En MyIonicProject/src/pages/list/list.ts, dentro de nuestra clase ListPage
+// hay una función que se parecía a esto:
+
+itemTapped(event, item) {
+    this.navCtrl.push(ItemDetailsPage, {
+      item: item
+    });
+}
+
+// Aquí nos referimos a una clase llamada ItemDetailsPage, que es otra
+// página incluida en el proyecto de inicio del tutorial. Podemos
+// usarlo aquí debido a la declaración de importación en la parte superior
+// de src/pages/list/list.ts:
+
+// Revisemos nuestra aplicación en el navegador. Cuando tocamos un elemento,
+// navegará a la página de detalles del artículo usando el código de arriba.
+// Como beneficio adicional, Ionic agrega automáticamente un botón Atrás
+// a la vista presionada.
+
+##### Cómo funciona #####
+
+// La navegación en Ionic funciona como una pila simple, donde colocamos nuevas
+// páginas en la parte superior de la pila, lo que nos lleva hacia adelante en
+// la aplicación y muestra un botón de retroceso. Para ir hacia atrás, abrimos
+// la página superior. Como configuramos this.navCtrl en el constructor, podemos
+// llamar a this.navCtrl.push () y pasarle la página a la que queremos acceder.
+// También podemos pasarle un objeto que contiene datos que nos gustaría pasar
+// a la página a la que se está navegando. Usamos push para navegar a una
+// página nueva es simple, pero el sistema de navegación de Ionic es muy flexible.
+
 -----
 
 // Fuente: http://www.phonegapspain.com/que-es-y-como-empezar-con-ionic-framework/

@@ -268,7 +268,7 @@ find / -type f -name NombreArchivo.html // Para mostrar el directorio del archiv
 file:///home/user/nombre_fichero.xxx // Abrir un fichero del directorio desde el navegador.
 
 $ locate nombre_del_archivo // Hacer una busqueda de un archivo en los directorios, se puede especificar un nombre con su extensión
-//o solo especificar una palabra, la busqueda se hara en todos los archivos que contengan la palabra o nombre de archivo escrita.
+// o solo especificar una palabra, la busqueda se hara en todos los archivos que contengan la palabra o nombre de archivo escrita.
 
 $ locate .jpg // Buscar en todos los directorios los ficheros con la extension especificada
 
@@ -291,6 +291,8 @@ $ type nombre_comando // Busca la ruta donde se encuentra el comando, ejemplo: a
 $ which nombre_programa // Buscar la ruta de un programa
 
 $ sudo find / -name "*nombre_fichero*" // Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion escrita.
+
+$ sudo find -name "*nombre_fichero*" // Buscar en el directorio actual los ficheros cuyo nombre contengan la expresion escrita.
 
 $ sudo find / -name "*.xxx*" // Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion escrita, en este caso,
 una extensión de fichero, donde / puede ser /home/user etc y .xxx la extension: .jpg, .png, .txt, .py, etc.
@@ -1457,6 +1459,49 @@ $ cclive -F https://www.youtube.com/watch?v=Lfj667lLLnE // Comprobar los formato
 $ cclive -f fmt22_720p https://www.youtube.com/watch?v=LtzFg4JiL5E // Se elige el formato y se pasa en el comando, luego comenzará la descarga.
 
 $ cclive -f best http://www.youtube.com/xxxxxx // Download the best available format of the media.
+
+####################################################
+##### youtube-dl - Descargar videos de youtube #####
+####################################################
+
+// Instalamos youtube-dl desde el repositorio de Debian.
+
+# apt-get install youtube-dl
+
+// Para enumerar todos los formatos de video disponibles, use la opción
+// "-list-formats" con el comando youtube-dl.
+
+$ youtube-dl --list-formats my_youtube_url
+
+// Ejemplo de la salida del comando:
+
+[youtube] vKtwZmhX0lw: Downloading webpage
+[youtube] vKtwZmhX0lw: Downloading video info webpage
+[youtube] vKtwZmhX0lw: Extracting video information
+[youtube] vKtwZmhX0lw: Downloading DASH manifest
+[youtube] vKtwZmhX0lw: Downloading DASH manifest
+[info] Available formats for vKtwZmhX0lw:
+format code  extension  resolution note
+171          webm       audio only DASH audio  113k , vorbis@128k (44100Hz), 1.86MiB
+140          m4a        audio only DASH audio  128k , m4a_dash container, aac  @128k (44100Hz), 2.14MiB
+141          m4a        audio only DASH audio  255k , m4a_dash container, aac  @256k (44100Hz), 4.30MiB
+278          webm       180x144    DASH video   63k , webm container, vp9, 1fps, video only, 946.76KiB
+160          mp4        180x144    DASH video  112k , avc1.4d400c, 15fps, video only, 1.86MiB
+242          webm       300x240    DASH video  170k , vp9, 1fps, video only, 2.50MiB
+133          mp4        300x240    DASH video  247k , avc1.4d400d, 25fps, video only, 4.11MiB
+243          webm       400x320    DASH video  288k , vp9, 1fps, video only, 4.07MiB
+13           3gp        unknown    small
+17           3gp        176x144    small ,  mp4a.40.2, mp4v.20.3
+36           3gp        320x240    small ,  mp4a.40.2, mp4v.20.3
+5            flv        400x240    small
+43           webm       640x360    medium ,  vorbis, vp8.0
+18           mp4        640x360    medium ,  mp4a.40.2, avc1.42001E (best)
+
+// Para descargar un formato de archivo preferido, use la opción '-f'
+// (código de formato de video). Por ejemplo, me gustaría descargar el formato mp4
+// así que uso el código de formato como '18' como se muestra a continuación.
+
+$ youtube-dl -f 18 my_youtube_url
 
 ###########################################
 ##### Formatear pendrives desde linux #####
