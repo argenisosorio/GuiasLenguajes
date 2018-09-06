@@ -1,0 +1,66 @@
+#####################################################################
+##### Reparar sectores y recuperar un disco duro (HDD) en Linux #####
+#####################################################################
+
+##### Con badblocks #####
+
+// Fuente: https://blog.desdelinux.net/reparar-sectores-recuperar-hdd-linux/
+
+// Si algún disco duro tiene sectores defectuosos podemos repararlos con la
+// herramienta badblocks, lo primero será saber cuál es el disco duro que
+// deseamos reparar (/dev/sdb … /dev/sdc … etc), para ello pongamos lo siguiente
+// en una terminal:
+
+# fdisk -l
+
+// Esto nos mostrará a /dev/sda, su tamaño en GB's y sus particiones, igual a /dev/sdb
+// si existe, y así sdc y demás en dependencia de la cantidad de dispositivos
+// de almacenamiento que tengan en su ordenador.
+
+// Supongamos que el disco duro en cuestión es uno externo y es /dev/sdb, entonces
+// el comando para empezar a detectar y reparar los sectores dañados sería:
+
+// Nota: El disco duro NO puede estar montado, bajo ninguna circunstancia puede
+// estar montada una partición del disco duro en el cual van a trabajar!!
+
+$ badblocks -s -v -n -f /dev/sdb
+
+// -s : indica que se mostrará el proceso con por cientos
+// -v : modo verbose, lo cual significa que nos mostrará el número de errores
+// -n : indica que se intentará usar un modo no destructivo, o sea, que se intentarán
+// recuperar esos sectores pero también la información que estaba en ellos
+// -f : fuerza la lectura y escritura en dispositivos que estén montados. Normalmente si
+// el HDD estuviera montado badblocks no revisaría los sectores que se estén usando, pero
+// como ya les advertí y aconsejé que NO pueden tener el disco duro montado, usaremos el
+// parámetro -f para forzar la recuperación de todos los sectores posibles.
+
+// Demorará bastante, y repito, bastante. Fácilmente podría durar horas o días en
+// dependencia del tamaño del disco duro, de qué tan dañado esté, de la velocidad
+// de su ordenador, etc. Por lo que les recomiendo dejar el ordenador ahí tranquilo,
+// sin moverlo durante el tiempo necesario, eso y muuuucha paciencia.
+
+##### Con fsck #####
+
+// Fuente: https://lignux.com/reparar-sectores-danados-del-disco-duro-con-ubuntu/
+// y http://francisconi.org/linux/comandos/fsck
+
+// Utilidad para detectar, verificar y corregir los errores del sistema de archivos.
+// Es recomendable utilizarlo solo con sistemas desmontados.
+
+// Más que reparar, lo que haremos es aislar esos sectores dañados para que
+// el SO no escriba ni lea en ellos.
+
+// Si el disco que queremos reparar es el que contiene el sistema operativo
+// tendremos que hacerlo en modo live porque el disco no puede estar montado
+// en caso contrario no hace falta. Abrimos una terminal e insertamos el
+// siguiente comando y al final añadiremos la partición que vamos a reparar
+// por ejemplo si es la partición 3 sería /dev/sda3
+
+# fsck -c -y -v /dev/sda
+
+// -a. Confirmar automáticamente. No recomendado.
+// -c. Comprobar bloques en el disco.
+// -f . Forzar el chequeo aunque todo parezca ok.
+// -v . (verbose) despliega más información.
+// -r . Modo interactivo. Espera nuestra respuesta.
+// -y. Asume yes de respuesta.
