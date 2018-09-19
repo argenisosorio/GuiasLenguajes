@@ -4389,3 +4389,14 @@ def change_password(request):
 <br />
 <button class="btn btn-success" type="submit">Cambiar contraseña</button>
 </form>
+
+####################################################################
+##### Validando la existencía de objetos pasados a un template #####
+####################################################################
+
+{% if object_list %}
+  Muestro mi lista de objetos
+  {% else %}
+    No hay objetos registrados
+  {% endif %}
+{% endblock %}
