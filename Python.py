@@ -488,7 +488,7 @@ prueba()
 
 # -*- coding: utf-8 -*-
 def prueba(): 
-    n1 = 0    
+    n1 = 0
     n2 = 10
     for x in range(n1, n2):
         print x #Imprime números del 0 hasta el 1 usando el cilco repetitivo
