@@ -63,3 +63,49 @@ $ python holamundo.py
 
 // Visitamos la siguiente URL http://localhost:8888/ en el navegador web
 // y se nos mostrará el mensaje de hola mundo
+
+##### Probando saludos en otras urls #####
+
+# IOLoop maneja los eventos relacionados con los sockets, por ejemplo, si tienen
+# datos disponibles para leer, si pueden escribirse y si se ha producido un error.
+import tornado.ioloop
+
+# Envía la aplicación al servidor web
+import tornado.web
+
+# Clase que enviará el saludo
+class HolaMundoHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.write("¡Hola mundo!")
+
+
+# Clase que enviará el saludo
+class HolaMundoHandler2(tornado.web.RequestHandler):
+    def get(self):
+        mensaje = """
+        <html>
+          <head></head>
+          <body>
+            <p>¡Hola mundo 2!</p>
+          </body>
+        </html>
+        """
+        self.write(mensaje)
+
+# Constructor de la aplicación
+def enviar_saludo_app():
+    return tornado.web.Application([
+        (r"/", HolaMundoHandler),
+        (r"/2", HolaMundoHandler2),
+    ])
+
+if __name__ == "__main__":
+
+    # Aplicación que se servirá
+    app = enviar_saludo_app()
+
+    # Puerto en el que será mostrada
+    app.listen(8888)
+
+    # Corre el servidor
+    tornado.ioloop.IOLoop.current().start()
