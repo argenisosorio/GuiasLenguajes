@@ -3899,7 +3899,7 @@ dueño de la aplicación, así como la ruta local o dirección donde está aloja
         <master/>
         <chmod-socket>666</chmod-socket>
         <!-- Ruta del entorno virtual donde está instalado Django -->
-        <!-- Si el django está instalado en el sistema base no hace falta especificar alguna ruta, solo se comento o borra la directiva home -->
+        <!-- Si el django está instalado en el sistema base no hace falta especificar alguna ruta, solo se comenta o borra la directiva home -->
         <home>/home/user/Entornos_virtuales/Django_1.8.8</home>
         <!-- prueba hace referencia a los archivos de configuración que creamos en apps-available, en este caso, prueba.xml -->
         <socket>/var/run/uwsgi/app/prueba/socket</socket>

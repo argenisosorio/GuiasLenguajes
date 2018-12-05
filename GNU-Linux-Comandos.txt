@@ -1321,70 +1321,50 @@ Por ejemplo, vamos a bloquear a instagram, entonces quedaría así:
 
 Guardamos y listo, podemos agregar tantas webs como queramos.
 
-###################################
-##### Generar certificado ssl #####
-###################################
+################################################
+##### Generar certificado ssl auto-firmado #####
+################################################
 
-Hay que configurar el sitio a proteger en /etc/hosts
+// Para establecer una conexión segura y de confianza es necesario
+// generar certificados que respalden la identidad del servidor.
+// Estos certificados son generalmente emitidos por entidades
+// certificadoras (Certificate Authority) independientes y de
+// confianza reconocida. Sin embargo, para una utilización más
+// casera y económica, es posible crear un certificado "auto-firmado".
 
-# aptitude install openssl
+// Hay que configurar el sitio a proteger en /etc/hosts, esto es opcional
+// muy específico e independiente del manual que continúa.
 
-$ mkdir -p /etc/nginx/ssl_keys/ // Opcional, solo si se trabaja con Nginx web server.
+##### Instalar dependencias #####
 
-1-) Generar la clave RSA:
+# aptitude install openssl ca-certificates
+
+##### Generar la clave RSA #####
 
 $ openssl genrsa -des3 -out x.gob.ve.key 1024
 
--genrsa: Genera la clave rsa. En criptografía, RSA (Rivest, Shamir y Adleman) es un sistema criptográfico de clave pública
+// ó 2048
 
--des3: Triple-DES Cipher. En criptografía el Triple DES se llama al algoritmo que hace triple cifrado del DES. También es conocido
-como TDES o 3DES, fue desarrollado por IBM en 1998. Data Encryption Standard (DES) es un algoritmo de cifrado, es decir,
-un método para cifrar información. El algoritmo fue controvertido al principio, con algunos elementos de diseño
-clasificados, una longitud de clave relativamente corta, Hoy en día, DES se considera inseguro para muchas aplicaciones.
-Esto se debe principalmente a que el tamaño de clave de 56 bits es corto; las claves de DES se han roto en menos de 24 horas. 
-
--out: Archivo de salida
-
--1024: Podemos especificar el tamaño de la clave ( 1024, 2048)
-
-2-) Generar CSR (Petición de Firma de Certificado
+##### Generar CSR (Petición de Firma de Certificado) #####
 
 $ openssl req -new -key x.gob.ve.key -out x.gob.ve.csr
 
--Realiza una petición para la firma con clave privada especificado. Al realizarlo nos pide datos:
+// Esto realiza una petición para la firma con la clave privada especificada
+// al realizarlo nos pide algunos datos que tendrá el certificado
+// algunos los podemos omitir.
 
-Req: Genera Certificate Signing Request (CSR) 
--new: Nuevo CRS
--key: Clave rsa creada anteriormente
-Country Name (2 letter code) []:
-State or Province Name (full name) []:
-Locality Name (eg, city) []:
-Organization Name (eg, company) []:
-Organizational Unit Name (eg, section) []:
-Common Name (eg, your name or your server's hostname) []: 
-**El "Common Name" debe corresponder con la URL que queremos Securizar. Si la URL a poner por
-SSL es x.gob.ve, este campo debe contener exactamente eso.
-Email Address []:
-Please enter the following 'extra' attributes
-to be sent with your certificate request
-A challenge password []:
-An optional company name []:
+// El "Common Name" que nos pide debe corresponder con la URL que queremos
+// Securizar. Si la URL a poner por https es x.gob.ve, este campo debe
+// contener exactamente eso.
 
-3-) Eliminar Clave Privada DES3
-
-$ cp x.gob.ve.key x.gob.ve.key.gob
-
-$ openssl rsa -in x.gob.ve.key.gob -out x.gob.ve.key
-
-4-) Generar Certificado Autofirmado.
+##### Generar Certificado Autofirmado #####
 
 $ openssl x509 -req -days 365 -in x.gob.ve.csr -signkey x.gob.ve.key -out x.gob.ve.crt
 
-Al final nos Deben quedar 4 ficheros: .cert, .crs, .key, .gob
+Al final nos Deben quedar 3 ficheros: .cert, .crs, .key
 x.gob.ve.crt // Este es el certificado final.
 x.gob.ve.csr
 x.gob.ve.key
-x.gob.ve.key.gob
 
 #################
 ##### rsync #####

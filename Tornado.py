@@ -26,6 +26,8 @@ llamará en este caso: holamundo con una extensión .py dado que será escrito c
 
 // Ahora se abre el archivo y dentro de escribirá lo siguiente:
 
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # IOLoop maneja los eventos relacionados con los sockets, por ejemplo, si tienen
 # datos disponibles para leer, si pueden escribirse y si se ha producido un error.
 import tornado.ioloop
@@ -66,6 +68,8 @@ $ python holamundo.py
 
 ##### Probando saludos en otras urls #####
 
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # IOLoop maneja los eventos relacionados con los sockets, por ejemplo, si tienen
 # datos disponibles para leer, si pueden escribirse y si se ha producido un error.
 import tornado.ioloop
