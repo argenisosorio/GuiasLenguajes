@@ -5656,16 +5656,92 @@ $("document").ready(function () {
 
 -------------------------------------
 
-<!-- Desactivar el puntero en unta etiqueta span -->
+<!-- Desactivar el puntero en una etiqueta span -->
 $("span").css("pointer-events", "none");
 
 -------------------------------------
 
-<!-- -->
+<!-- Select depend jquery example -->
+<html>
+  <head>
+    <title>XXX</title>
+    <script src="jquery/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="styles.css" type="text/css"/>
+    <meta charset="UTF-8">
+  </head>
+  <script type="text/javascript">
+  $("document").ready(function () {
+    var $city = $(".city").on('change', function() {
+      $city.not(this).get(0).selectedIndex = this.selectedIndex;
+    });
+  });
+  </script>
+<body>
+  <!-- Select 1 -->
+  <select id="city" name="city" class="city">
+  <option value="0">Select City</option>
+  <option value="1">Manchester</option>
+  <option value="2">Leicester</option>
+  <option value="3">Londra</option>
+  </select>
+  <!-- Select 2 -->
+  <select id="street" name="street" class="city">
+  <option value="0">Select Street</option>
+  <option value="1">Street 1</option>
+  <option value="2">Street 2</option>
+  <option value="3">Street 3</option>
+  </select>
+</body>
+</html>
 
 -------------------------------------
 
-<!-- -->
+<!-- Select depend jquery example 2 funcitional for value -->
+<html>
+  <head>
+    <title>XXX</title>
+    <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="styles.css" type="text/css"/>
+    <meta charset="UTF-8">
+  </head>
+  <script type="text/javascript">
+$("document").ready(function (){
+  $('#municipio').prop('disabled', true);
+  $('#estado').change(function() {
+    $('#municipio option').hide();
+    $('#municipio option[value="' + $(this).val() + '"]').show();
+    if ($('#municipio option[value="' + $(this).val() + '"]').length) {
+        $('#municipio option[value="' + $(this).val() + '"]').first().prop('selected', true);
+        $('#municipio').prop('disabled', false);
+    }
+  });
+});
+  </script>
+<body>
+  <!-- Select 1 -->
+  <select id="estado" name="estado">
+    <option value="0">Selecione Estado</option>
+    <option value="1">Mérida</option>
+    <option value="2">Distrito Capital</option>
+    <option value="3">Falcón</option>
+  </select>
+  <br />
+  <br />
+  <!-- Select 2 -->
+  <select id="municipio" name="municipio">
+    <option value="0">Selecione Municipio</option>
+    <option value="1">Libertador</option>
+    <option value="1">Jacínto Plaza</option>
+    <option value="1">Sucre</option>
+    <option value="2">Caracas</option>
+    <option value="2">Baruta</option>
+    <option value="2">Libertador</option>
+    <option value="3">Falcón</option>
+    <option value="3">Choroní</option>
+    <option value="3">Buchuaco</option>
+  </select>
+</body>
+</html>
 
 -------------------------------------
 

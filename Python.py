@@ -2170,3 +2170,11 @@ Usando el módulo random de Crypto.
 from Crypto.Random import random
 x=random.choice(['dogs', 'cats', 'bears'])
 print x
+
+###################################################################
+##### Saltar InsecureRequestWarning: Unverified HTTPS request #####
+###################################################################
+
+import urllib3
+...
+urllib3.disable_warnings()
