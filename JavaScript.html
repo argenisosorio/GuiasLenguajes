@@ -5075,3 +5075,77 @@ window.onload = function() {
 </script>
 </body>
 </html>
+
+-----
+
+<!-- combobox select depend javascript example -->
+<html>
+  <head>
+    <title>XXX</title>
+    <script src="jquery/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="styles.css" type="text/css"/>
+    <meta charset="UTF-8">
+  </head>
+  <script type="text/javascript">
+$("document").ready(function(){
+  (function(){
+    // Se busca el select que cambiará las opciones del select asociado
+    var select_padre = document.getElementById("select_padre");
+    // 2) Se definen las variables donde se guardarán las opciones que mostrará el select asociado
+    // Nota 1: El prefijo opcional
+    // Nota 2: Los nombres no deben llevar espacios 
+    var opt_merida = new Array ("-","Libertador", "Jacínto Plaza", "Sucre");
+    var opt_dis_capital = new Array ("-", "Caracas", "Baruta", "Libertador");
+    var opt_falcon = new Array ("-", "Falcón", "Buchuaco", "Choroní");
+    // 3) Crear una funcion que permita ejecutar el cambio dinámico
+    select_padre.addEventListener('change',function(){
+      var estado;
+      //Se toma el vamor del "estado seleccionado"
+      estado = document.formulario1.estado[document.formulario1.estado.selectedIndex].value;
+      // Se chequea si el "estado" esta definido
+      if(estado!=0){
+        // Selecionamos los estados correctos
+        mis_opts=eval("opt_" + estado);
+        // Se calcula el número de estados
+        num_opts=mis_opts.length;
+        // Marco el número de opt en el select
+        document.formulario1.opt.length = num_opts;
+        // Para cada opt del array, la pongo en el select
+        for(i=0; i<num_opts; i++) {
+          document.formulario1.opt.options[i].value=mis_opts[i];
+          document.formulario1.opt.options[i].text=mis_opts[i];
+        }
+      }
+      else {
+        // Si no habia ninguna opt seleccionada, elimino los estados del select
+        document.formulario1.opt.length = 1;
+        // Ponemos un guion en la única opt que he dejado
+        document.formulario1.opt.options[0].value="-";
+        document.formulario1.opt.options[0].text="-";
+      }
+      // Hacer un reset de las opts
+      document.formulario1.opt.options[0].selected = true;
+    });
+  })();
+});
+</script>
+<body>  
+<form name="formulario1" action="#">
+  <!-- Select 1 Padre -->
+  <b>Estado</b>
+  <select class="seleccion" name="estado" id="select_padre">
+    <option value="0">-
+    <option value="merida">Mérida
+    <option value="dis_capital">Distrito Capital
+    <option value="falcon">Falcón
+  </select>
+  <br />
+  <br />
+  <!-- Select 2 Hijo -->
+  <b>Municipio</b>
+  <select class="seleccion" name="opt">
+    <option value="-">-
+  </select>
+</form>
+</body>
+</html>
