@@ -4239,7 +4239,7 @@ def PostDetail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render (request, 'app/post_detail.html', {'post': post})
 
-# post_detail.html
+# post_list.html
 {% for post in object_list %}
 <div>
     Posted: {{ post.date }}, autor: {{ post.autor }}
@@ -4250,6 +4250,13 @@ def PostDetail(request, pk):
     <a href="{% url 'post_detail' post.id %}"><button id="boton">Detail</button></a>
 </div>
 {% endfor %}
+
+# post_detail.html
+<div>
+    Posted: {{ post.date }}, autor: {{ post.autor }}
+    <h2>{{ post.title }}</h2>
+    {{ post.body }}
+</div>
 
 ##### Usando clases genéricas #####
 
@@ -4263,7 +4270,7 @@ class Detallar_reporte(DetailView):
     model = Post
     template_name = "app/post_detail.html"
 
-# post_detail.html
+# post_list.html
 {% for post in object_list %}
 <div>
     Posted: {{ post.date }}, autor: {{ post.autor }}
@@ -4274,6 +4281,13 @@ class Detallar_reporte(DetailView):
     <a href="{% url 'post_detail' post.id %}"><button id="boton">Detail</button></a>
 </div>
 {% endfor %}
+
+# post_detail.html
+<div>
+    Posted: {{ post.date }}, autor: {{ post.autor }}
+    <h2>{{ post.title }}</h2>
+    {{ post.body }}
+</div>
 
 ######################################################
 ##### Método __init__ de un formulario de django #####
