@@ -3837,3 +3837,21 @@ $ lame -s -h -b 90 -q 0 archivo_a_reducir.mp3 archivo_resultante.mp3
 // y listo, la compresión es cerda del 50% en relación al peso anterior y no se nota
 // en la calidad del audio, mejor dicho, es casi imperceptible un cambio o
 // baja en al calidad del audio.
+
+#################################
+##### Instalar steam client #####
+#################################
+
+// Agregar en /etc/apt/sources.list
+
+deb http://http.debian.net/debian/ jessie main contrib non-free
+
+// Habilitar el soporte multi-arch y actualizar la lista de paquetes disponibles:
+
+# dpkg --add-architecture i386
+
+$ aptitude update
+
+// Instalar el paquete steam
+
+# aptitude install steam
