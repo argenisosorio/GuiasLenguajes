@@ -4416,7 +4416,7 @@ def change_password(request):
 {% endblock %}
 
 ###############################################################
-##### Realizando calculos con los valores en el models.py #####
+##### Realizando cálculos con los valores en el models.py #####
 ###############################################################
 
 # -*- coding: utf-8 -*-
@@ -4460,3 +4460,14 @@ class Proyecto(models.Model):
 
     def get_absolute_url(self):
         return reverse('registro:editar', kwargs={'pk': self.pk})
+
+
+################################################################
+##### Escribir un campo select directamente en el template #####
+################################################################
+
+<select name="myselect" class="i-can-add-my-own-attrs-now" id="id_myselect">
+  {% for id, name in form.myselect.field.choices %}
+    <option value="{{ id }}">{{ name }}</option>
+  {% endfor %}
+</select>
