@@ -997,6 +997,35 @@ class Xxx(TemplateView):
   {{ data.y }}
 </div>
 
+###########################################################
+##### Pasando un diccionario o queryset en CreateView #####
+###########################################################
+
+class Registrar(CreateView):
+    model = Persona
+    form_class = PersonaForm
+    success_url = reverse_lazy('registro:consultar')
+
+    def get_context_data(self, **kwargs):
+        """
+        Insert the single object into the context dict.
+        """
+        consulta_estados = Estado.objects.all()
+        consulta_municipios = Municipio.objects.all()
+        consulta_parroquias = Parroquia.objects.all()
+        context = {
+            'estados' : consulta_estados,
+            'municipios' : consulta_municipios,
+            'parroquias' : consulta_parroquias
+        }
+        if self.object:
+            context['object'] = self.object
+            context_object_name = self.get_context_object_name(self.object)
+            if context_object_name:
+                context[context_object_name] = self.object
+        context.update(kwargs)
+        return super(Registrar, self).get_context_data(**context)
+
 ######################################################################
 ##### Contando objetos con querysets y pasando datos al template #####
 ######################################################################
