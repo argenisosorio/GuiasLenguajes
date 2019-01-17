@@ -5745,4 +5745,21 @@ $("document").ready(function (){
 
 -------------------------------------
 
-<!-- -->
+<!-- Capturar y sumar los datos enviados por un formulario en JS -->
+<script type="text/javascript">
+$("document").ready(function (){
+  $(".activar").click(function(){
+    $(".myform").submit(function(e){
+      var campo1 = $("#id_porc_act_1").val();
+      var campo2 = $("#id_porc_act_2").val();
+      var suma = parseInt(campo1) + parseInt(campo2);
+      if (suma <= 100){
+      }
+      else {
+        alert("El porcentaje asignado a las actividades excede el 100%");
+        e.preventDefault();
+      }
+    });
+  });
+});
+</script>

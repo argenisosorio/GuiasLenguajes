@@ -903,13 +903,13 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
         <script type="text/javascript">
             idioma=prompt("Por favor escriba su idioma");
             var a="castellano", b="ingles", c="frances", d="alemán";            
-            
+
             if (idioma === a) {
                 alert("Castellano!")
                 alert("Que bueno! "+idioma);
             }
             else
-            {                
+            {
                 if (idioma === b) {
                     alert("Ingles!");
                     alert("Que bueno! "+idioma);
@@ -936,8 +936,8 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
                 }
             }
         </script>
-    </head>    
-<body>    
+    </head>
+<body>
 </body>
 </html>
 
@@ -5147,5 +5147,41 @@ $("document").ready(function(){
     <option value="-">-
   </select>
 </form>
+</body>
+</html>
+
+------------------------------------------
+
+<!-- Capturar y sumar los datos enviados por un formulario en JS -->
+<html>
+  <head>
+    <title></title>
+    <meta charset="utf-8">
+  </head>
+  <script>
+    function suma() {
+      var campo1 = parseInt(document.form.campo1.value);
+      var campo2 = parseInt(document.form.campo2.value);
+      var campo3 = parseInt(document.form.campo3.value);
+      var suma = campo1 + campo2 + campo3;
+      alert(suma);
+    }
+    window.onload = function() {
+      document.form.guardar.onclick = suma;
+    }
+  </script>
+<body>
+  <div align="center">
+    <form name="form" action="#" method="get">
+      Campo 1: <input name="campo1" type="text"/>
+      <br />
+      Campo 2: <input name="campo2" type="text"/>
+      <br />
+      Campo 3: <input name="campo3" type="text"/>
+      <br />
+      <br />
+      <input name="guardar" type="button" value="Enviar" />
+    </form>
+  </div>
 </body>
 </html>

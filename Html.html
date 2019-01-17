@@ -3367,3 +3367,34 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget 
   </label>
 </body>
 </html>
+
+----------------
+
+<!-- Usando z-index para poner elementos encima de otros con css -->
+<html>
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+  </head>
+<style type="text/css">
+.azul {
+  width:200px;
+  height:200px;
+  background:blue;
+  z-index:1;
+}
+.rojo {
+  width:200px;
+  height:200px;
+  background:red;
+  z-index:2;
+  left:100px;
+  top:100px;
+  position:absolute;
+}
+</style>
+<body>
+  <div class="azul"></div>
+  <div class="rojo"></div>
+</body>
+</html>
