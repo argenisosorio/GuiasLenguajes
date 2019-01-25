@@ -147,7 +147,7 @@ $ mkdir carpetaFFF && cd carpetaFFF // Creamos una carpetaFFF y luego entramos e
 $ mkdir carpetaZZZ && cd carpetaZZZ && touch archivo.txt // Creamos una carpeta, entramos en ella y creamos un archivo
 en ese directorio en una sola instruccion.
 
-$ touch Nombre_Fichero // Crear fichero
+$ touch nombre_fichero.xxx // Crear fichero con la extensión que se requiera.
 
 $ mkdir /tmp/`date +\%Y\%m\%d` // Crear una carpeta que lleve por nombre la fecha, ejemplo: 20170807
 
@@ -170,7 +170,7 @@ $ ls | more // Lista el contenido de un directorio en orden alfabético, usa spa
 $ ls *.xxx // Listar todos los ficheros de un directorio que tengan las extension .xxx, donde xxx puede ser: txt, html, php, css, etc.
 ejemplo: ls *.txt
 
-$ ls -R // Listar los directorios y subdirectorios asi como ficehros de un directorio.
+$ ls -R // Listar los directorios y subdirectorios asi como ficheros de un directorio.
 
 $ ls | cat -n // Muestra el contenido del directorio en una lista numerada.
 
@@ -540,7 +540,7 @@ But if you just want a new dhcp lease (that's the technical name for obtain a ne
 ##### Herramientas de red #####
 ###############################
 
-$ ifconfig // Siendo root, permite desplegar numerosos parámetros de las interfaces de red residentes  en el núcleo,
+# ifconfig // Permite desplegar numerosos parámetros de las interfaces de red residentes  en el núcleo,
 como la dirección ip (dinámica o estática), o la máscara de red entre otros.
 
 $ ip addr// Para ver el estatus de las conexiones de red, este comando le mostrará su dirección ip, el tipo de conexión que está utilizando, etc.
@@ -563,7 +563,7 @@ Lo primero que tenemos que hacer es abrir un terminal e instalar el paquete “n
 ##### Comparación de comandos de entre ifconfig e IP #####
 
 // Mostrar dispositivos de red y su configuración.
-$ ifconfig
+# ifconfig
 
 $ ip addr show
 
@@ -794,7 +794,7 @@ Luego lo mismo de arriba:
 // Nos pedira que introduzcamos la nueva contraseña y la confirmacion para cambiar la clave de root
 
 Introduzca la nueva contraseña de UNIX:****** 
-Vuelva a escribir la nueva contraseña de UNIX:***** 
+Vuelva a escribir la nueva contraseña de UNIX:*****
 passwd: contraseña actualizada correctamente
 
 ############################################################################
@@ -803,7 +803,7 @@ passwd: contraseña actualizada correctamente
 
 $ man aptitude // Ver el manual de aptitude.
 
-$ man apt-get
+$ man apt-get // Ver el manual de apt-get.
 
 # apt-get install Nombre_Paquete // Instalar paquetes
 
@@ -819,9 +819,9 @@ el repositorio local se devolverá un código de error.
 
 $ aptitude install -s Nombre_Paquete // Hace una simulacion de la instalacion, podemos ver que procesos haría la instalación
 
-# apt-get install -y package // El -y Supone una respuesta afirmativa a todas las preguntas, de esta forma apt-get se ejecuta sin necesidad de intervención posterior para tomar decisiones, usar con cuidado.
-
 # apt-get install -s Nombre_Paquete // Simulacion de instalacion con  apt-get install
+
+# apt-get install -y package // El -y Supone una respuesta afirmativa a todas las preguntas, de esta forma apt-get se ejecuta sin necesidad de intervención posterior para tomar decisiones, usar con cuidado.
 
 $ apt-get source Nombre_paquete // Descargar las fuentes del paquete, para compilar e instalar. 
 
@@ -3135,6 +3135,10 @@ deb-src http://deb.debian.org/debian stretch-updates main
 #################################
 ##### sources.list example  #####
 #################################
+
+En distribuciones GNU/Linux derivadas de Debian el fichero sources.list es el archivo hallado
+donde se enlistan las "fuentes" o "repositorios" disponibles de los paquetes de software candidatos
+a ser: actualizados, instalados, removidos, buscados, sujetos a comparación de versiones, etc.
 
 **The format is
 deb <respository server/mirror> <repository name> <sub branches of the repo>
