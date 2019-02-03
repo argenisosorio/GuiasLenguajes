@@ -3885,3 +3885,34 @@ $ aptitude update
 $ hostname
 
 // A veces es mejor cerrar sesión y volver a entrar a ver si se hizo el cambio.
+
+##### Ajustar el brillo del monitor desde la línea de comandos ####
+
+// Primero, necesitamos verificar el estado actual de la visualización del sistema. Para hacerlo, ejecuta:
+
+$ xrandr -q
+
+// Salida
+
+Screen 0: minimum 320 x 200, current 1366 x 768, maximum 8192 x 8192
+LVDS-1 connected primary 1366x768+0+0 (normal left inverted right x axis y axis) 344mm x 194mm
+1366x768 60.00*+ 40.00
+1280x720 60.00 59.99 59.86 59.74
+1024x768 60.04 60.00
+960x720 60.00
+928x696 60.05
+896x672 60.01
+.
+.
+.
+
+// El valor de brillo debe estar entre 0.0 y 1.0, donde 0.0 se refiere al valor
+// más bajo (negro completo) y 1.0 se refiere al valor más brillante. Por ejemplo
+// para configurar el valor de brillo de la pantalla como 0.7, ejecuta:
+
+$ xrandr --output LVDS-1 --brightness 0.7
+
+// No uses nada por encima de 1.0. Puede convertir la pantalla en blanco
+// completo y es posible que no veas claramente nada.
+
+// Fuente: https://maslinux.es/como-ajustar-el-brillo-del-monitor-desde-la-linea-de-comandos-en-gnu-linux/
