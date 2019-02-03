@@ -3859,3 +3859,29 @@ $ aptitude update
 // Instalar el paquete steam
 
 # aptitude install steam
+
+#########################################################################
+##### Cambiar el nombre de la máquina o el host en GNU/Linux Debian #####
+#########################################################################
+
+// Editar /etc/hostname 
+
+# vim /etc/hostname
+
+// Editar /etc/hosts y cambiar el nombre de la máquina:
+
+# vim /etc/hosts
+
+// Ahora corremos:
+
+# /etc/init.d/hostname.sh start
+
+ó
+
+# invoke-rc.d hostname.sh start
+
+// Para ver si se hizo el cambio:
+
+$ hostname
+
+// A veces es mejor cerrar sesión y volver a entrar a ver si se hizo el cambio.
