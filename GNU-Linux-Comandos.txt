@@ -1969,7 +1969,8 @@ $ gnome-session // Puede que falle a veces, si es que el cliente ya tiene una in
 ##### El error ssh remote host identification has changed #####
 ###############################################################
 
-Cuando el sistema base guarda una llave de acceso a un host, pero el host cambió, entonces la llave no funciona y arroja el típico error:
+// Cuando el sistema base guarda una llave de acceso a un host, pero el host cambió, entonces
+// la llave no funciona y arroja el típico error:
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
@@ -1982,13 +1983,25 @@ The fingerprint for the ECDSA key sent by the remote host is
 ...
 ...
 
-Entonces borramos ese host roto, llave perdida, etc.
+// Entonces borramos ese host roto, llave perdida, etc.
 
 $ ssh-keygen -R <host>
 
-Ejemplo:
+// Ejemplo:
 
 $ ssh-keygen -R 192.168.3.10
+
+####################################################################
+##### Error: Read from socket failed: Connection reset by peer #####
+####################################################################
+
+# rm /etc/ssh/ssh_host_*
+
+# ssh-keygen -A
+
+# apt-get --reinstall install openssh-server openssh-client
+
+$ ssh-keygen -R 192.168.12.xxx
 
 ##########################################################
 ##### Generar llaves para ssh para saltar contraseña #####
