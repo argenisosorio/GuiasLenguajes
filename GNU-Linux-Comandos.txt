@@ -3442,6 +3442,16 @@ $ curl -O https://www.virtualbox.org/download/oracle_vbox_2016.asc
 
 # apt-get install virtualbox-5.2
 
+###### Instalación en GNU/Linux Debian 9 Stretch desde los repositorios backports de Debian #####
+
+// Agregamos la siguiente línea en el /etc/apt/sources.list
+
+deb-src http://debian.cenditel/debian/ stretch-backports main contrib non-free
+
+# apt-get update
+
+# apt-get install virtualbox
+
 ##### Usar tty en la máquina virtual #####
 
 // Entrar en tty1 desde la máquina virtual, lo mismo para ttyn...
@@ -3450,31 +3460,35 @@ RightCtrl + F1
 
 ##### Instalar Guest Additions de Virtual Box en Debian #####
 
-Primero instalamos los siguientes paquetes:
+// Primero instalamos los siguientes paquetes:
 
 # apt-get install build-essential
 
 # apt-get install linux-headers-$(uname -r)
 
-En el menú de VirtualBox de la máquina “guest” con Debian pulsamos en Dispositivos / Insertar imagen
-de CD de las Guest Additions.
+// En el menú de VirtualBox de la máquina “guest” con Debian pulsamos
+// en Dispositivos / Insertar imagen de CD de las Guest Additions.
 
-Por lo general, Virtualbox trae integrada entre sus ficheros las Guest Additions en una imágen .iso, siguiendo
-el paso anterior esa imagen debería montarse automáticamente, ahora solo queda ejecutar el script de instalación:
+// Por lo general, Virtualbox trae integrada entre sus ficheros
+// las Guest Additions en una imágen .iso, siguiendo el paso anterior
+// esa imagen debería montarse automáticamente, ahora solo queda
+// ejecutar el script de instalación:
 
 # bash /media/cdrom0/VboxLinuxAdditions.run
 
-Si no hay problemas con la instalación, reiniciamos la máquina virtual y ya se debería poder usar el modo pantalla
-completa, el modo fluido o la función de las carpetas compartidas.
+// Si no hay problemas con la instalación, reiniciamos la máquina virtual
+// y ya se debería poder usar el modo pantalla completa, el modo fluido o
+// la función de las carpetas compartidas.
 
 ############################
-##### Debian Backports #####
+##### Debian backports #####
 ############################
 
-Proporciona paquetes para nuevas versiones de determinadas aplicaciones que se van incluyendo a lo largo
-del periodo de vida de la versión. Sin embargo desde el sitio oficial (http://backports.debian.org/Instructions/)
-recomiendan utilizar este repositorio con precaución ya que en ocasiones pueden existir incompatibilidades
-de dependencias entre estos paquetes y los estables. 
+// Proporciona paquetes para nuevas versiones de determinadas aplicaciones que se van
+// incluyendo a lo largo del periodo de vida de la versión. Sin embargo desde el sitio
+// oficial (http://backports.debian.org/Instructions/) recomiendan utilizar este repositorio
+// con precaución ya que en ocasiones pueden existir incompatibilidades de dependencias
+// entre estos paquetes y los estables.
 
 #################
 ##### bind9 #####
