@@ -3424,7 +3424,28 @@ http://translatorforfirefox.blogspot.com/
 ##### Virtualbox #####
 ######################
 
+###### Instalación de Virtualbox en GNU/Linux Debian 9 Stretch #####
+
+// Agregamos la siguiente línea en el /etc/apt/sources.list
+
+deb http://download.virtualbox.org/virtualbox/debian stretch contrib
+
+// Añade la Public Key de VirtualBox 5.2
+
+# apt-get install curl
+
+$ curl -O https://www.virtualbox.org/download/oracle_vbox_2016.asc
+
+# apt-key add oracle_vbox_2016.asc
+
+# apt-get update
+
+# apt-get install virtualbox-5.2
+
+##### Usar tty en la máquina virtual #####
+
 // Entrar en tty1 desde la máquina virtual, lo mismo para ttyn...
+
 RightCtrl + F1
 
 ##### Instalar Guest Additions de Virtual Box en Debian #####
