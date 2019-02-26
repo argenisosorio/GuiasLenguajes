@@ -4500,3 +4500,2134 @@ class Proyecto(models.Model):
     <option value="{{ id }}">{{ name }}</option>
   {% endfor %}
 </select>
+
+#########################################
+##### Campo checkbox en formularios #####
+#########################################
+
+# En forms.py
+from django.forms import (
+    ModelForm, TextInput, EmailInput, CharField, EmailField, PasswordInput, Select, CheckboxInput
+)
+
+is_active = forms.BooleanField(label='¿Estará activo?',widget=CheckboxInput(attrs={
+    #'class':'form-control input-md',
+    #'style': 'min-width: 0; width: 25%; display: inline;',
+}), required = True)
+
+is_staff = forms.BooleanField(label='¿Es staff?',widget=CheckboxInput(attrs={
+    #'class':'form-control input-md',
+    #'style': 'min-width: 0; width: 25%; display: inline;',
+}), required = True)
+
+################################################################
+##### Clases genéricas de Django 1.8 de https://ccbv.co.uk #####
+################################################################
+
+##### TemplateView #####
+
+from django.views.generic import TemplateView
+
+class TemplateView
+
+def _allowed_methods(self):
+    return [m.upper() for m in self.http_method_names if hasattr(self, m)]
+
+
+def as_view(cls, **initkwargs):
+    """
+    Main entry point for a request-response process.
+    """
+    for key in initkwargs:
+        if key in cls.http_method_names:
+            raise TypeError("You tried to pass in the %s method name as a "
+                            "keyword argument to %s(). Don't do that."
+                            % (key, cls.__name__))
+        if not hasattr(cls, key):
+            raise TypeError("%s() received an invalid keyword %r. as_view "
+                            "only accepts arguments that are already "
+                            "attributes of the class." % (cls.__name__, key))
+    def view(request, *args, **kwargs):
+        self = cls(**initkwargs)
+        if hasattr(self, 'get') and not hasattr(self, 'head'):
+            self.head = self.get
+        self.request = request
+        self.args = args
+        self.kwargs = kwargs
+        return self.dispatch(request, *args, **kwargs)
+    # take name and docstring from class
+    update_wrapper(view, cls, updated=())
+    # and possible attributes set by decorators
+    # like csrf_exempt from dispatch
+    update_wrapper(view, cls.dispatch, assigned=())
+    return view
+
+
+def dispatch(self, request, *args, **kwargs):
+    # Try to dispatch to the right method; if a method doesn't exist,
+    # defer to the error handler. Also defer to the error handler if the
+    # request method isn't on the approved list.
+    if request.method.lower() in self.http_method_names:
+        handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
+    else:
+        handler = self.http_method_not_allowed
+    return handler(request, *args, **kwargs)
+
+
+def get(self, request, *args, **kwargs):
+    context = self.get_context_data(**kwargs)
+    return self.render_to_response(context)
+
+
+def get_context_data(self, **kwargs):
+    if 'view' not in kwargs:
+        kwargs['view'] = self
+    return kwargs
+
+
+def get_template_names(self):
+    """
+    Returns a list of template names to be used for the request. Must return
+    a list. May not be called if render_to_response is overridden.
+    """
+    if self.template_name is None:
+        raise ImproperlyConfigured(
+            "TemplateResponseMixin requires either a definition of "
+            "'template_name' or an implementation of 'get_template_names()'")
+    else:
+        return [self.template_name]
+
+
+def http_method_not_allowed(self, request, *args, **kwargs):
+    logger.warning('Method Not Allowed (%s): %s', request.method, request.path,
+        extra={
+            'status_code': 405,
+            'request': request
+        }
+    )
+    return http.HttpResponseNotAllowed(self._allowed_methods())
+
+
+
+def __init__(self, **kwargs):
+    """
+    Constructor. Called in the URLconf; can contain helpful extra
+    keyword arguments, and other things.
+    """
+    # Go through keyword arguments, and either save their values to our
+    # instance, or raise an error.
+    for key, value in six.iteritems(kwargs):
+        setattr(self, key, value)
+
+
+def options(self, request, *args, **kwargs):
+    """
+    Handles responding to requests for the OPTIONS HTTP verb.
+    """
+    response = http.HttpResponse()
+    response['Allow'] = ', '.join(self._allowed_methods())
+    response['Content-Length'] = '0'
+    return response
+
+
+def render_to_response(self, context, **response_kwargs):
+    """
+    Returns a response, using the `response_class` for this
+    view, with a template rendered with the given context.
+    If any keyword arguments are provided, they will be
+    passed to the constructor of the response class.
+    """
+    response_kwargs.setdefault('content_type', self.content_type)
+    return self.response_class(
+        request=self.request,
+        template=self.get_template_names(),
+        context=context,
+        using=self.template_engine,
+        **response_kwargs
+    )
+
+##### View #####
+
+from django.views.generic import View
+
+class View
+
+
+def _allowed_methods(self):
+    return [m.upper() for m in self.http_method_names if hasattr(self, m)]
+
+
+def as_view(cls, **initkwargs):
+    """
+    Main entry point for a request-response process.
+    """
+    for key in initkwargs:
+        if key in cls.http_method_names:
+            raise TypeError("You tried to pass in the %s method name as a "
+                            "keyword argument to %s(). Don't do that."
+                            % (key, cls.__name__))
+        if not hasattr(cls, key):
+            raise TypeError("%s() received an invalid keyword %r. as_view "
+                            "only accepts arguments that are already "
+                            "attributes of the class." % (cls.__name__, key))
+    def view(request, *args, **kwargs):
+        self = cls(**initkwargs)
+        if hasattr(self, 'get') and not hasattr(self, 'head'):
+            self.head = self.get
+        self.request = request
+        self.args = args
+        self.kwargs = kwargs
+        return self.dispatch(request, *args, **kwargs)
+    # take name and docstring from class
+    update_wrapper(view, cls, updated=())
+    # and possible attributes set by decorators
+    # like csrf_exempt from dispatch
+    update_wrapper(view, cls.dispatch, assigned=())
+    return view
+
+
+def dispatch(self, request, *args, **kwargs):
+    # Try to dispatch to the right method; if a method doesn't exist,
+    # defer to the error handler. Also defer to the error handler if the
+    # request method isn't on the approved list.
+    if request.method.lower() in self.http_method_names:
+        handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
+    else:
+        handler = self.http_method_not_allowed
+    return handler(request, *args, **kwargs)
+
+
+def http_method_not_allowed(self, request, *args, **kwargs):
+    logger.warning('Method Not Allowed (%s): %s', request.method, request.path,
+        extra={
+            'status_code': 405,
+            'request': request
+        }
+    )
+    return http.HttpResponseNotAllowed(self._allowed_methods())
+
+
+def __init__(self, **kwargs):
+    """
+    Constructor. Called in the URLconf; can contain helpful extra
+    keyword arguments, and other things.
+    """
+    # Go through keyword arguments, and either save their values to our
+    # instance, or raise an error.
+    for key, value in six.iteritems(kwargs):
+        setattr(self, key, value)
+
+
+def options(self, request, *args, **kwargs):
+    """
+    Handles responding to requests for the OPTIONS HTTP verb.
+    """
+    response = http.HttpResponse()
+    response['Allow'] = ', '.join(self._allowed_methods())
+    response['Content-Length'] = '0'
+    return response
+
+##### DetailView #####
+
+from django.views.generic import DetailView
+
+class DetailView
+
+
+def _allowed_methods(self):
+    return [m.upper() for m in self.http_method_names if hasattr(self, m)]
+
+
+def as_view(cls, **initkwargs):
+    """
+    Main entry point for a request-response process.
+    """
+    for key in initkwargs:
+        if key in cls.http_method_names:
+            raise TypeError("You tried to pass in the %s method name as a "
+                            "keyword argument to %s(). Don't do that."
+                            % (key, cls.__name__))
+        if not hasattr(cls, key):
+            raise TypeError("%s() received an invalid keyword %r. as_view "
+                            "only accepts arguments that are already "
+                            "attributes of the class." % (cls.__name__, key))
+    def view(request, *args, **kwargs):
+        self = cls(**initkwargs)
+        if hasattr(self, 'get') and not hasattr(self, 'head'):
+            self.head = self.get
+        self.request = request
+        self.args = args
+        self.kwargs = kwargs
+        return self.dispatch(request, *args, **kwargs)
+    # take name and docstring from class
+    update_wrapper(view, cls, updated=())
+    # and possible attributes set by decorators
+    # like csrf_exempt from dispatch
+    update_wrapper(view, cls.dispatch, assigned=())
+    return view
+
+
+def dispatch(self, request, *args, **kwargs):
+    # Try to dispatch to the right method; if a method doesn't exist,
+    # defer to the error handler. Also defer to the error handler if the
+    # request method isn't on the approved list.
+    if request.method.lower() in self.http_method_names:
+        handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
+    else:
+        handler = self.http_method_not_allowed
+    return handler(request, *args, **kwargs)
+
+
+def get(self, request, *args, **kwargs):
+    self.object = self.get_object()
+    context = self.get_context_data(object=self.object)
+    return self.render_to_response(context)
+
+SingleObjectMixin
+
+def get_context_data(self, **kwargs):
+    """
+    Insert the single object into the context dict.
+    """
+    context = {}
+    if self.object:
+        context['object'] = self.object
+        context_object_name = self.get_context_object_name(self.object)
+        if context_object_name:
+            context[context_object_name] = self.object
+    context.update(kwargs)
+    return super(SingleObjectMixin, self).get_context_data(**context)
+
+ContextMixin
+
+def get_context_data(self, **kwargs):
+    if 'view' not in kwargs:
+        kwargs['view'] = self
+    return kwargs
+
+
+def get_context_object_name(self, obj):
+    """
+    Get the name to use for the object.
+    """
+    if self.context_object_name:
+        return self.context_object_name
+    elif isinstance(obj, models.Model):
+        return obj._meta.model_name
+    else:
+        return None
+
+
+def get_object(self, queryset=None):
+    """
+    Returns the object the view is displaying.
+    By default this requires `self.queryset` and a `pk` or `slug` argument
+    in the URLconf, but subclasses can override this to return any object.
+    """
+    # Use a custom queryset if provided; this is required for subclasses
+    # like DateDetailView
+    if queryset is None:
+        queryset = self.get_queryset()
+    # Next, try looking up by primary key.
+    pk = self.kwargs.get(self.pk_url_kwarg, None)
+    slug = self.kwargs.get(self.slug_url_kwarg, None)
+    if pk is not None:
+        queryset = queryset.filter(pk=pk)
+    # Next, try looking up by slug.
+    if slug is not None and (pk is None or self.query_pk_and_slug):
+        slug_field = self.get_slug_field()
+        queryset = queryset.filter(**{slug_field: slug})
+    # If none of those are defined, it's an error.
+    if pk is None and slug is None:
+        raise AttributeError("Generic detail view %s must be called with "
+                             "either an object pk or a slug."
+                             % self.__class__.__name__)
+    try:
+        # Get the single item from the filtered queryset
+        obj = queryset.get()
+    except queryset.model.DoesNotExist:
+        raise Http404(_("No %(verbose_name)s found matching the query") %
+                      {'verbose_name': queryset.model._meta.verbose_name})
+    return obj
+
+
+def get_queryset(self):
+    """
+    Return the `QuerySet` that will be used to look up the object.
+    Note that this method is called by the default implementation of
+    `get_object` and may not be called if `get_object` is overridden.
+    """
+    if self.queryset is None:
+        if self.model:
+            return self.model._default_manager.all()
+        else:
+            raise ImproperlyConfigured(
+                "%(cls)s is missing a QuerySet. Define "
+                "%(cls)s.model, %(cls)s.queryset, or override "
+                "%(cls)s.get_queryset()." % {
+                    'cls': self.__class__.__name__
+                }
+            )
+    return self.queryset.all()
+
+
+def get_slug_field(self):
+    """
+    Get the name of a slug field to be used to look up by slug.
+    """
+    return self.slug_field
+
+SingleObjectTemplateResponseMixin
+
+def get_template_names(self):
+    """
+    Return a list of template names to be used for the request. May not be
+    called if render_to_response is overridden. Returns the following list:
+    * the value of ``template_name`` on the view (if provided)
+    * the contents of the ``template_name_field`` field on the
+      object instance that the view is operating upon (if available)
+    * ``<app_label>/<model_name><template_name_suffix>.html``
+    """
+    try:
+        names = super(SingleObjectTemplateResponseMixin, self).get_template_names()
+    except ImproperlyConfigured:
+        # If template_name isn't specified, it's not a problem --
+        # we just start with an empty list.
+        names = []
+        # If self.template_name_field is set, grab the value of the field
+        # of that name from the object; this is the most specific template
+        # name, if given.
+        if self.object and self.template_name_field:
+            name = getattr(self.object, self.template_name_field, None)
+            if name:
+                names.insert(0, name)
+        # The least-specific option is the default <app>/<model>_detail.html;
+        # only use this if the object in question is a model.
+        if isinstance(self.object, models.Model):
+            names.append("%s/%s%s.html" % (
+                self.object._meta.app_label,
+                self.object._meta.model_name,
+                self.template_name_suffix
+            ))
+        elif hasattr(self, 'model') and self.model is not None and issubclass(self.model, models.Model):
+            names.append("%s/%s%s.html" % (
+                self.model._meta.app_label,
+                self.model._meta.model_name,
+                self.template_name_suffix
+            ))
+        # If we still haven't managed to find any template names, we should
+        # re-raise the ImproperlyConfigured to alert the user.
+        if not names:
+            raise
+    return names
+
+TemplateResponseMixin
+
+def get_template_names(self):
+    """
+    Returns a list of template names to be used for the request. Must return
+    a list. May not be called if render_to_response is overridden.
+    """
+    if self.template_name is None:
+        raise ImproperlyConfigured(
+            "TemplateResponseMixin requires either a definition of "
+            "'template_name' or an implementation of 'get_template_names()'")
+    else:
+        return [self.template_name]
+
+
+def http_method_not_allowed(self, request, *args, **kwargs):
+    logger.warning('Method Not Allowed (%s): %s', request.method, request.path,
+        extra={
+            'status_code': 405,
+            'request': request
+        }
+    )
+    return http.HttpResponseNotAllowed(self._allowed_methods())
+
+
+def __init__(self, **kwargs):
+    """
+    Constructor. Called in the URLconf; can contain helpful extra
+    keyword arguments, and other things.
+    """
+    # Go through keyword arguments, and either save their values to our
+    # instance, or raise an error.
+    for key, value in six.iteritems(kwargs):
+        setattr(self, key, value)
+
+
+def options(self, request, *args, **kwargs):
+    """
+    Handles responding to requests for the OPTIONS HTTP verb.
+    """
+    response = http.HttpResponse()
+    response['Allow'] = ', '.join(self._allowed_methods())
+    response['Content-Length'] = '0'
+    return response
+
+
+def render_to_response(self, context, **response_kwargs):
+    """
+    Returns a response, using the `response_class` for this
+    view, with a template rendered with the given context.
+    If any keyword arguments are provided, they will be
+    passed to the constructor of the response class.
+    """
+    response_kwargs.setdefault('content_type', self.content_type)
+    return self.response_class(
+        request=self.request,
+        template=self.get_template_names(),
+        context=context,
+        using=self.template_engine,
+        **response_kwargs
+    )
+
+##### CreateView #####
+
+from django.views.generic import CreateView
+
+class CreateView
+
+
+def _allowed_methods(self):
+    return [m.upper() for m in self.http_method_names if hasattr(self, m)]
+
+
+def as_view(cls, **initkwargs):
+    """
+    Main entry point for a request-response process.
+    """
+    for key in initkwargs:
+        if key in cls.http_method_names:
+            raise TypeError("You tried to pass in the %s method name as a "
+                            "keyword argument to %s(). Don't do that."
+                            % (key, cls.__name__))
+        if not hasattr(cls, key):
+            raise TypeError("%s() received an invalid keyword %r. as_view "
+                            "only accepts arguments that are already "
+                            "attributes of the class." % (cls.__name__, key))
+    def view(request, *args, **kwargs):
+        self = cls(**initkwargs)
+        if hasattr(self, 'get') and not hasattr(self, 'head'):
+            self.head = self.get
+        self.request = request
+        self.args = args
+        self.kwargs = kwargs
+        return self.dispatch(request, *args, **kwargs)
+    # take name and docstring from class
+    update_wrapper(view, cls, updated=())
+    # and possible attributes set by decorators
+    # like csrf_exempt from dispatch
+    update_wrapper(view, cls.dispatch, assigned=())
+    return view
+
+
+def dispatch(self, request, *args, **kwargs):
+    # Try to dispatch to the right method; if a method doesn't exist,
+    # defer to the error handler. Also defer to the error handler if the
+    # request method isn't on the approved list.
+    if request.method.lower() in self.http_method_names:
+        handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
+    else:
+        handler = self.http_method_not_allowed
+    return handler(request, *args, **kwargs)
+
+
+def form_invalid(self, form):
+    """
+    If the form is invalid, re-render the context data with the
+    data-filled form and errors.
+    """
+    return self.render_to_response(self.get_context_data(form=form))
+
+ModelFormMixin
+
+def form_valid(self, form):
+    """
+    If the form is valid, save the associated model.
+    """
+    self.object = form.save()
+    return super(ModelFormMixin, self).form_valid(form)
+
+FormMixin
+
+def form_valid(self, form):
+    """
+    If the form is valid, redirect to the supplied URL.
+    """
+    return HttpResponseRedirect(self.get_success_url())
+
+
+def get(self, request, *args, **kwargs):
+    self.object = None
+    return super(BaseCreateView, self).get(request, *args, **kwargs)
+
+
+def get(self, request, *args, **kwargs):
+    """
+    Handles GET requests and instantiates a blank version of the form.
+    """
+    form = self.get_form()
+    return self.render_to_response(self.get_context_data(form=form))
+
+
+def get_context_data(self, **kwargs):
+    """
+    Insert the single object into the context dict.
+    """
+    context = {}
+    if self.object:
+        context['object'] = self.object
+        context_object_name = self.get_context_object_name(self.object)
+        if context_object_name:
+            context[context_object_name] = self.object
+    context.update(kwargs)
+    return super(SingleObjectMixin, self).get_context_data(**context)
+
+
+def get_context_data(self, **kwargs):
+    if 'view' not in kwargs:
+        kwargs['view'] = self
+    return kwargs
+
+
+def get_context_object_name(self, obj):
+    """
+    Get the name to use for the object.
+    """
+    if self.context_object_name:
+        return self.context_object_name
+    elif isinstance(obj, models.Model):
+        return obj._meta.model_name
+    else:
+        return None
+
+
+def get_form(self, form_class=None):
+    """
+    Returns an instance of the form to be used in this view.
+    """
+    if form_class is None:
+        form_class = self.get_form_class()
+    return form_class(**self.get_form_kwargs())
+
+
+def get_form_class(self):
+    """
+    Returns the form class to use in this view.
+    """
+    if self.fields is not None and self.form_class:
+        raise ImproperlyConfigured(
+            "Specifying both 'fields' and 'form_class' is not permitted."
+        )
+    if self.form_class:
+        return self.form_class
+    else:
+        if self.model is not None:
+            # If a model has been explicitly provided, use it
+            model = self.model
+        elif hasattr(self, 'object') and self.object is not None:
+            # If this view is operating on a single object, use
+            # the class of that object
+            model = self.object.__class__
+        else:
+            # Try to get a queryset and extract the model class
+            # from that
+            model = self.get_queryset().model
+        if self.fields is None:
+            raise ImproperlyConfigured(
+                "Using ModelFormMixin (base class of %s) without "
+                "the 'fields' attribute is prohibited." % self.__class__.__name__
+            )
+        return model_forms.modelform_factory(model, fields=self.fields)
+
+
+def get_form_class(self):
+    """
+    Returns the form class to use in this view
+    """
+    return self.form_class
+
+
+def get_form_kwargs(self):
+    """
+    Returns the keyword arguments for instantiating the form.
+    """
+    kwargs = super(ModelFormMixin, self).get_form_kwargs()
+    if hasattr(self, 'object'):
+        kwargs.update({'instance': self.object})
+    return kwargs
+
+
+def get_form_kwargs(self):
+    """
+    Returns the keyword arguments for instantiating the form.
+    """
+    kwargs = {
+        'initial': self.get_initial(),
+        'prefix': self.get_prefix(),
+    }
+    if self.request.method in ('POST', 'PUT'):
+        kwargs.update({
+            'data': self.request.POST,
+            'files': self.request.FILES,
+        })
+    return kwargs
+
+
+def get_initial(self):
+    """
+    Returns the initial data to use for forms on this view.
+    """
+    return self.initial.copy()
+
+
+def get_object(self, queryset=None):
+    """
+    Returns the object the view is displaying.
+    By default this requires `self.queryset` and a `pk` or `slug` argument
+    in the URLconf, but subclasses can override this to return any object.
+    """
+    # Use a custom queryset if provided; this is required for subclasses
+    # like DateDetailView
+    if queryset is None:
+        queryset = self.get_queryset()
+    # Next, try looking up by primary key.
+    pk = self.kwargs.get(self.pk_url_kwarg, None)
+    slug = self.kwargs.get(self.slug_url_kwarg, None)
+    if pk is not None:
+        queryset = queryset.filter(pk=pk)
+    # Next, try looking up by slug.
+    if slug is not None and (pk is None or self.query_pk_and_slug):
+        slug_field = self.get_slug_field()
+        queryset = queryset.filter(**{slug_field: slug})
+    # If none of those are defined, it's an error.
+    if pk is None and slug is None:
+        raise AttributeError("Generic detail view %s must be called with "
+                             "either an object pk or a slug."
+                             % self.__class__.__name__)
+    try:
+        # Get the single item from the filtered queryset
+        obj = queryset.get()
+    except queryset.model.DoesNotExist:
+        raise Http404(_("No %(verbose_name)s found matching the query") %
+                      {'verbose_name': queryset.model._meta.verbose_name})
+    return obj
+
+
+def get_prefix(self):
+    """
+    Returns the prefix to use for forms on this view
+    """
+    return self.prefix
+
+
+def get_queryset(self):
+    """
+    Return the `QuerySet` that will be used to look up the object.
+    Note that this method is called by the default implementation of
+    `get_object` and may not be called if `get_object` is overridden.
+    """
+    if self.queryset is None:
+        if self.model:
+            return self.model._default_manager.all()
+        else:
+            raise ImproperlyConfigured(
+                "%(cls)s is missing a QuerySet. Define "
+                "%(cls)s.model, %(cls)s.queryset, or override "
+                "%(cls)s.get_queryset()." % {
+                    'cls': self.__class__.__name__
+                }
+            )
+    return self.queryset.all()
+
+
+def get_slug_field(self):
+    """
+    Get the name of a slug field to be used to look up by slug.
+    """
+    return self.slug_field
+
+
+def get_success_url(self):
+    """
+    Returns the supplied URL.
+    """
+    if self.success_url:
+        # force_text can be removed with deprecation warning
+        self.success_url = force_text(self.success_url)
+        if PERCENT_PLACEHOLDER_REGEX.search(self.success_url):
+            warnings.warn(
+                "%()s placeholder style in success_url is deprecated. "
+                "Please replace them by the {} Python format syntax.",
+                RemovedInDjango110Warning, stacklevel=2
+            )
+            url = self.success_url % self.object.__dict__
+        else:
+            url = self.success_url.format(**self.object.__dict__)
+    else:
+        try:
+            url = self.object.get_absolute_url()
+        except AttributeError:
+            raise ImproperlyConfigured(
+                "No URL to redirect to.  Either provide a url or define"
+                " a get_absolute_url method on the Model.")
+    return url
+
+
+def get_success_url(self):
+    """
+    Returns the supplied success URL.
+    """
+    if self.success_url:
+        # Forcing possible reverse_lazy evaluation
+        url = force_text(self.success_url)
+    else:
+        raise ImproperlyConfigured(
+            "No URL to redirect to. Provide a success_url.")
+    return url
+
+
+def get_template_names(self):
+    """
+    Return a list of template names to be used for the request. May not be
+    called if render_to_response is overridden. Returns the following list:
+    * the value of ``template_name`` on the view (if provided)
+    * the contents of the ``template_name_field`` field on the
+      object instance that the view is operating upon (if available)
+    * ``<app_label>/<model_name><template_name_suffix>.html``
+    """
+    try:
+        names = super(SingleObjectTemplateResponseMixin, self).get_template_names()
+    except ImproperlyConfigured:
+        # If template_name isn't specified, it's not a problem --
+        # we just start with an empty list.
+        names = []
+        # If self.template_name_field is set, grab the value of the field
+        # of that name from the object; this is the most specific template
+        # name, if given.
+        if self.object and self.template_name_field:
+            name = getattr(self.object, self.template_name_field, None)
+            if name:
+                names.insert(0, name)
+        # The least-specific option is the default <app>/<model>_detail.html;
+        # only use this if the object in question is a model.
+        if isinstance(self.object, models.Model):
+            names.append("%s/%s%s.html" % (
+                self.object._meta.app_label,
+                self.object._meta.model_name,
+                self.template_name_suffix
+            ))
+        elif hasattr(self, 'model') and self.model is not None and issubclass(self.model, models.Model):
+            names.append("%s/%s%s.html" % (
+                self.model._meta.app_label,
+                self.model._meta.model_name,
+                self.template_name_suffix
+            ))
+        # If we still haven't managed to find any template names, we should
+        # re-raise the ImproperlyConfigured to alert the user.
+        if not names:
+            raise
+    return names
+
+
+def get_template_names(self):
+    """
+    Returns a list of template names to be used for the request. Must return
+    a list. May not be called if render_to_response is overridden.
+    """
+    if self.template_name is None:
+        raise ImproperlyConfigured(
+            "TemplateResponseMixin requires either a definition of "
+            "'template_name' or an implementation of 'get_template_names()'")
+    else:
+        return [self.template_name]
+
+
+def http_method_not_allowed(self, request, *args, **kwargs):
+    logger.warning('Method Not Allowed (%s): %s', request.method, request.path,
+        extra={
+            'status_code': 405,
+            'request': request
+        }
+    )
+    return http.HttpResponseNotAllowed(self._allowed_methods())
+
+
+def __init__(self, **kwargs):
+    """
+    Constructor. Called in the URLconf; can contain helpful extra
+    keyword arguments, and other things.
+    """
+    # Go through keyword arguments, and either save their values to our
+    # instance, or raise an error.
+    for key, value in six.iteritems(kwargs):
+        setattr(self, key, value)
+
+
+def options(self, request, *args, **kwargs):
+    """
+    Handles responding to requests for the OPTIONS HTTP verb.
+    """
+    response = http.HttpResponse()
+    response['Allow'] = ', '.join(self._allowed_methods())
+    response['Content-Length'] = '0'
+    return response
+
+
+def post(self, request, *args, **kwargs):
+    self.object = None
+    return super(BaseCreateView, self).post(request, *args, **kwargs)
+
+
+def post(self, request, *args, **kwargs):
+    """
+    Handles POST requests, instantiating a form instance with the passed
+    POST variables and then checked for validity.
+    """
+    form = self.get_form()
+    if form.is_valid():
+        return self.form_valid(form)
+    else:
+        return self.form_invalid(form)
+
+
+def put(self, *args, **kwargs):
+    return self.post(*args, **kwargs)
+
+
+def render_to_response(self, context, **response_kwargs):
+    """
+    Returns a response, using the `response_class` for this
+    view, with a template rendered with the given context.
+    If any keyword arguments are provided, they will be
+    passed to the constructor of the response class.
+    """
+    response_kwargs.setdefault('content_type', self.content_type)
+    return self.response_class(
+        request=self.request,
+        template=self.get_template_names(),
+        context=context,
+        using=self.template_engine,
+        **response_kwargs
+    )
+
+##### DeleteView #####
+
+from django.views.generic import DeleteView
+
+class DeleteView
+
+
+def _allowed_methods(self):
+    return [m.upper() for m in self.http_method_names if hasattr(self, m)]
+
+
+def as_view(cls, **initkwargs):
+    """
+    Main entry point for a request-response process.
+    """
+    for key in initkwargs:
+        if key in cls.http_method_names:
+            raise TypeError("You tried to pass in the %s method name as a "
+                            "keyword argument to %s(). Don't do that."
+                            % (key, cls.__name__))
+        if not hasattr(cls, key):
+            raise TypeError("%s() received an invalid keyword %r. as_view "
+                            "only accepts arguments that are already "
+                            "attributes of the class." % (cls.__name__, key))
+    def view(request, *args, **kwargs):
+        self = cls(**initkwargs)
+        if hasattr(self, 'get') and not hasattr(self, 'head'):
+            self.head = self.get
+        self.request = request
+        self.args = args
+        self.kwargs = kwargs
+        return self.dispatch(request, *args, **kwargs)
+    # take name and docstring from class
+    update_wrapper(view, cls, updated=())
+    # and possible attributes set by decorators
+    # like csrf_exempt from dispatch
+    update_wrapper(view, cls.dispatch, assigned=())
+    return view
+
+
+def delete(self, request, *args, **kwargs):
+    """
+    Calls the delete() method on the fetched object and then
+    redirects to the success URL.
+    """
+    self.object = self.get_object()
+    success_url = self.get_success_url()
+    self.object.delete()
+    return HttpResponseRedirect(success_url)
+
+
+def dispatch(self, request, *args, **kwargs):
+    # Try to dispatch to the right method; if a method doesn't exist,
+    # defer to the error handler. Also defer to the error handler if the
+    # request method isn't on the approved list.
+    if request.method.lower() in self.http_method_names:
+        handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
+    else:
+        handler = self.http_method_not_allowed
+    return handler(request, *args, **kwargs)
+
+
+def get(self, request, *args, **kwargs):
+    self.object = self.get_object()
+    context = self.get_context_data(object=self.object)
+    return self.render_to_response(context)
+
+
+def get_context_data(self, **kwargs):
+    """
+    Insert the single object into the context dict.
+    """
+    context = {}
+    if self.object:
+        context['object'] = self.object
+        context_object_name = self.get_context_object_name(self.object)
+        if context_object_name:
+            context[context_object_name] = self.object
+    context.update(kwargs)
+    return super(SingleObjectMixin, self).get_context_data(**context)
+
+
+def get_context_data(self, **kwargs):
+    if 'view' not in kwargs:
+        kwargs['view'] = self
+    return kwargs
+
+
+def get_context_object_name(self, obj):
+    """
+    Get the name to use for the object.
+    """
+    if self.context_object_name:
+        return self.context_object_name
+    elif isinstance(obj, models.Model):
+        return obj._meta.model_name
+    else:
+        return None
+
+
+def get_object(self, queryset=None):
+    """
+    Returns the object the view is displaying.
+    By default this requires `self.queryset` and a `pk` or `slug` argument
+    in the URLconf, but subclasses can override this to return any object.
+    """
+    # Use a custom queryset if provided; this is required for subclasses
+    # like DateDetailView
+    if queryset is None:
+        queryset = self.get_queryset()
+    # Next, try looking up by primary key.
+    pk = self.kwargs.get(self.pk_url_kwarg, None)
+    slug = self.kwargs.get(self.slug_url_kwarg, None)
+    if pk is not None:
+        queryset = queryset.filter(pk=pk)
+    # Next, try looking up by slug.
+    if slug is not None and (pk is None or self.query_pk_and_slug):
+        slug_field = self.get_slug_field()
+        queryset = queryset.filter(**{slug_field: slug})
+    # If none of those are defined, it's an error.
+    if pk is None and slug is None:
+        raise AttributeError("Generic detail view %s must be called with "
+                             "either an object pk or a slug."
+                             % self.__class__.__name__)
+    try:
+        # Get the single item from the filtered queryset
+        obj = queryset.get()
+    except queryset.model.DoesNotExist:
+        raise Http404(_("No %(verbose_name)s found matching the query") %
+                      {'verbose_name': queryset.model._meta.verbose_name})
+    return obj
+
+
+def get_queryset(self):
+    """
+    Return the `QuerySet` that will be used to look up the object.
+    Note that this method is called by the default implementation of
+    `get_object` and may not be called if `get_object` is overridden.
+    """
+    if self.queryset is None:
+        if self.model:
+            return self.model._default_manager.all()
+        else:
+            raise ImproperlyConfigured(
+                "%(cls)s is missing a QuerySet. Define "
+                "%(cls)s.model, %(cls)s.queryset, or override "
+                "%(cls)s.get_queryset()." % {
+                    'cls': self.__class__.__name__
+                }
+            )
+    return self.queryset.all()
+
+
+def get_slug_field(self):
+    """
+    Get the name of a slug field to be used to look up by slug.
+    """
+    return self.slug_field
+
+
+def get_success_url(self):
+    if self.success_url:
+        # force_text can be removed with deprecation warning
+        self.success_url = force_text(self.success_url)
+        if PERCENT_PLACEHOLDER_REGEX.search(self.success_url):
+            warnings.warn(
+                "%()s placeholder style in success_url is deprecated. "
+                "Please replace them by the {} Python format syntax.",
+                RemovedInDjango110Warning, stacklevel=2
+            )
+            return self.success_url % self.object.__dict__
+        else:
+            return self.success_url.format(**self.object.__dict__)
+    else:
+        raise ImproperlyConfigured(
+            "No URL to redirect to. Provide a success_url.")
+
+
+def get_template_names(self):
+    """
+    Return a list of template names to be used for the request. May not be
+    called if render_to_response is overridden. Returns the following list:
+    * the value of ``template_name`` on the view (if provided)
+    * the contents of the ``template_name_field`` field on the
+      object instance that the view is operating upon (if available)
+    * ``<app_label>/<model_name><template_name_suffix>.html``
+    """
+    try:
+        names = super(SingleObjectTemplateResponseMixin, self).get_template_names()
+    except ImproperlyConfigured:
+        # If template_name isn't specified, it's not a problem --
+        # we just start with an empty list.
+        names = []
+        # If self.template_name_field is set, grab the value of the field
+        # of that name from the object; this is the most specific template
+        # name, if given.
+        if self.object and self.template_name_field:
+            name = getattr(self.object, self.template_name_field, None)
+            if name:
+                names.insert(0, name)
+        # The least-specific option is the default <app>/<model>_detail.html;
+        # only use this if the object in question is a model.
+        if isinstance(self.object, models.Model):
+            names.append("%s/%s%s.html" % (
+                self.object._meta.app_label,
+                self.object._meta.model_name,
+                self.template_name_suffix
+            ))
+        elif hasattr(self, 'model') and self.model is not None and issubclass(self.model, models.Model):
+            names.append("%s/%s%s.html" % (
+                self.model._meta.app_label,
+                self.model._meta.model_name,
+                self.template_name_suffix
+            ))
+        # If we still haven't managed to find any template names, we should
+        # re-raise the ImproperlyConfigured to alert the user.
+        if not names:
+            raise
+    return names
+
+
+def get_template_names(self):
+    """
+    Returns a list of template names to be used for the request. Must return
+    a list. May not be called if render_to_response is overridden.
+    """
+    if self.template_name is None:
+        raise ImproperlyConfigured(
+            "TemplateResponseMixin requires either a definition of "
+            "'template_name' or an implementation of 'get_template_names()'")
+    else:
+        return [self.template_name]
+
+
+def http_method_not_allowed(self, request, *args, **kwargs):
+    logger.warning('Method Not Allowed (%s): %s', request.method, request.path,
+        extra={
+            'status_code': 405,
+            'request': request
+        }
+    )
+    return http.HttpResponseNotAllowed(self._allowed_methods())
+
+
+def __init__(self, **kwargs):
+    """
+    Constructor. Called in the URLconf; can contain helpful extra
+    keyword arguments, and other things.
+    """
+    # Go through keyword arguments, and either save their values to our
+    # instance, or raise an error.
+    for key, value in six.iteritems(kwargs):
+        setattr(self, key, value)
+
+
+def options(self, request, *args, **kwargs):
+    """
+    Handles responding to requests for the OPTIONS HTTP verb.
+    """
+    response = http.HttpResponse()
+    response['Allow'] = ', '.join(self._allowed_methods())
+    response['Content-Length'] = '0'
+    return response
+
+
+def post(self, request, *args, **kwargs):
+    return self.delete(request, *args, **kwargs)
+
+
+def render_to_response(self, context, **response_kwargs):
+    """
+    Returns a response, using the `response_class` for this
+    view, with a template rendered with the given context.
+    If any keyword arguments are provided, they will be
+    passed to the constructor of the response class.
+    """
+    response_kwargs.setdefault('content_type', self.content_type)
+    return self.response_class(
+        request=self.request,
+        template=self.get_template_names(),
+        context=context,
+        using=self.template_engine,
+        **response_kwargs
+    )
+
+##### FormView #####
+
+from django.views.generic import FormView
+
+class FormView
+
+
+def _allowed_methods(self):
+    return [m.upper() for m in self.http_method_names if hasattr(self, m)]
+
+
+def as_view(cls, **initkwargs):
+    """
+    Main entry point for a request-response process.
+    """
+    for key in initkwargs:
+        if key in cls.http_method_names:
+            raise TypeError("You tried to pass in the %s method name as a "
+                            "keyword argument to %s(). Don't do that."
+                            % (key, cls.__name__))
+        if not hasattr(cls, key):
+            raise TypeError("%s() received an invalid keyword %r. as_view "
+                            "only accepts arguments that are already "
+                            "attributes of the class." % (cls.__name__, key))
+    def view(request, *args, **kwargs):
+        self = cls(**initkwargs)
+        if hasattr(self, 'get') and not hasattr(self, 'head'):
+            self.head = self.get
+        self.request = request
+        self.args = args
+        self.kwargs = kwargs
+        return self.dispatch(request, *args, **kwargs)
+    # take name and docstring from class
+    update_wrapper(view, cls, updated=())
+    # and possible attributes set by decorators
+    # like csrf_exempt from dispatch
+    update_wrapper(view, cls.dispatch, assigned=())
+    return view
+
+
+def dispatch(self, request, *args, **kwargs):
+    # Try to dispatch to the right method; if a method doesn't exist,
+    # defer to the error handler. Also defer to the error handler if the
+    # request method isn't on the approved list.
+    if request.method.lower() in self.http_method_names:
+        handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
+    else:
+        handler = self.http_method_not_allowed
+    return handler(request, *args, **kwargs)
+
+
+def form_invalid(self, form):
+    """
+    If the form is invalid, re-render the context data with the
+    data-filled form and errors.
+    """
+    return self.render_to_response(self.get_context_data(form=form))
+
+
+def form_valid(self, form):
+    """
+    If the form is valid, redirect to the supplied URL.
+    """
+    return HttpResponseRedirect(self.get_success_url())
+
+
+def get(self, request, *args, **kwargs):
+    """
+    Handles GET requests and instantiates a blank version of the form.
+    """
+    form = self.get_form()
+    return self.render_to_response(self.get_context_data(form=form))
+
+
+def get_context_data(self, **kwargs):
+    if 'view' not in kwargs:
+        kwargs['view'] = self
+    return kwargs
+
+
+def get_form(self, form_class=None):
+    """
+    Returns an instance of the form to be used in this view.
+    """
+    if form_class is None:
+        form_class = self.get_form_class()
+    return form_class(**self.get_form_kwargs())
+
+
+def get_form_class(self):
+    """
+    Returns the form class to use in this view
+    """
+    return self.form_class
+
+
+def get_form_kwargs(self):
+    """
+    Returns the keyword arguments for instantiating the form.
+    """
+    kwargs = {
+        'initial': self.get_initial(),
+        'prefix': self.get_prefix(),
+    }
+    if self.request.method in ('POST', 'PUT'):
+        kwargs.update({
+            'data': self.request.POST,
+            'files': self.request.FILES,
+        })
+    return kwargs
+
+
+def get_initial(self):
+    """
+    Returns the initial data to use for forms on this view.
+    """
+    return self.initial.copy()
+
+
+def get_prefix(self):
+    """
+    Returns the prefix to use for forms on this view
+    """
+    return self.prefix
+
+
+def get_success_url(self):
+    """
+    Returns the supplied success URL.
+    """
+    if self.success_url:
+        # Forcing possible reverse_lazy evaluation
+        url = force_text(self.success_url)
+    else:
+        raise ImproperlyConfigured(
+            "No URL to redirect to. Provide a success_url.")
+    return url
+
+
+def get_template_names(self):
+    """
+    Returns a list of template names to be used for the request. Must return
+    a list. May not be called if render_to_response is overridden.
+    """
+    if self.template_name is None:
+        raise ImproperlyConfigured(
+            "TemplateResponseMixin requires either a definition of "
+            "'template_name' or an implementation of 'get_template_names()'")
+    else:
+        return [self.template_name]
+
+
+def http_method_not_allowed(self, request, *args, **kwargs):
+    logger.warning('Method Not Allowed (%s): %s', request.method, request.path,
+        extra={
+            'status_code': 405,
+            'request': request
+        }
+    )
+    return http.HttpResponseNotAllowed(self._allowed_methods())
+
+
+def __init__(self, **kwargs):
+    """
+    Constructor. Called in the URLconf; can contain helpful extra
+    keyword arguments, and other things.
+    """
+    # Go through keyword arguments, and either save their values to our
+    # instance, or raise an error.
+    for key, value in six.iteritems(kwargs):
+        setattr(self, key, value)
+
+
+def options(self, request, *args, **kwargs):
+    """
+    Handles responding to requests for the OPTIONS HTTP verb.
+    """
+    response = http.HttpResponse()
+    response['Allow'] = ', '.join(self._allowed_methods())
+    response['Content-Length'] = '0'
+    return response
+
+
+def post(self, request, *args, **kwargs):
+    """
+    Handles POST requests, instantiating a form instance with the passed
+    POST variables and then checked for validity.
+    """
+    form = self.get_form()
+    if form.is_valid():
+        return self.form_valid(form)
+    else:
+        return self.form_invalid(form)
+
+
+def put(self, *args, **kwargs):
+    return self.post(*args, **kwargs)
+
+
+def render_to_response(self, context, **response_kwargs):
+    """
+    Returns a response, using the `response_class` for this
+    view, with a template rendered with the given context.
+    If any keyword arguments are provided, they will be
+    passed to the constructor of the response class.
+    """
+    response_kwargs.setdefault('content_type', self.content_type)
+    return self.response_class(
+        request=self.request,
+        template=self.get_template_names(),
+        context=context,
+        using=self.template_engine,
+        **response_kwargs
+    )
+
+##### UpdateView #####
+
+from django.views.generic import UpdateView
+
+class UpdateView
+
+
+def _allowed_methods(self):
+    return [m.upper() for m in self.http_method_names if hasattr(self, m)]
+
+
+def as_view(cls, **initkwargs):
+    """
+    Main entry point for a request-response process.
+    """
+    for key in initkwargs:
+        if key in cls.http_method_names:
+            raise TypeError("You tried to pass in the %s method name as a "
+                            "keyword argument to %s(). Don't do that."
+                            % (key, cls.__name__))
+        if not hasattr(cls, key):
+            raise TypeError("%s() received an invalid keyword %r. as_view "
+                            "only accepts arguments that are already "
+                            "attributes of the class." % (cls.__name__, key))
+    def view(request, *args, **kwargs):
+        self = cls(**initkwargs)
+        if hasattr(self, 'get') and not hasattr(self, 'head'):
+            self.head = self.get
+        self.request = request
+        self.args = args
+        self.kwargs = kwargs
+        return self.dispatch(request, *args, **kwargs)
+    # take name and docstring from class
+    update_wrapper(view, cls, updated=())
+    # and possible attributes set by decorators
+    # like csrf_exempt from dispatch
+    update_wrapper(view, cls.dispatch, assigned=())
+    return view
+
+
+def dispatch(self, request, *args, **kwargs):
+    # Try to dispatch to the right method; if a method doesn't exist,
+    # defer to the error handler. Also defer to the error handler if the
+    # request method isn't on the approved list.
+    if request.method.lower() in self.http_method_names:
+        handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
+    else:
+        handler = self.http_method_not_allowed
+    return handler(request, *args, **kwargs)
+
+
+def form_invalid(self, form):
+    """
+    If the form is invalid, re-render the context data with the
+    data-filled form and errors.
+    """
+    return self.render_to_response(self.get_context_data(form=form))
+
+
+def form_valid(self, form):
+    """
+    If the form is valid, save the associated model.
+    """
+    self.object = form.save()
+    return super(ModelFormMixin, self).form_valid(form)
+
+
+def form_valid(self, form):
+    """
+    If the form is valid, redirect to the supplied URL.
+    """
+    return HttpResponseRedirect(self.get_success_url())
+
+
+def get(self, request, *args, **kwargs):
+    self.object = self.get_object()
+    return super(BaseUpdateView, self).get(request, *args, **kwargs)
+
+
+def get(self, request, *args, **kwargs):
+    """
+    Handles GET requests and instantiates a blank version of the form.
+    """
+    form = self.get_form()
+    return self.render_to_response(self.get_context_data(form=form))
+
+
+def get_context_data(self, **kwargs):
+    """
+    Insert the single object into the context dict.
+    """
+    context = {}
+    if self.object:
+        context['object'] = self.object
+        context_object_name = self.get_context_object_name(self.object)
+        if context_object_name:
+            context[context_object_name] = self.object
+    context.update(kwargs)
+    return super(SingleObjectMixin, self).get_context_data(**context)
+
+
+def get_context_data(self, **kwargs):
+    if 'view' not in kwargs:
+        kwargs['view'] = self
+    return kwargs
+
+
+def get_context_object_name(self, obj):
+    """
+    Get the name to use for the object.
+    """
+    if self.context_object_name:
+        return self.context_object_name
+    elif isinstance(obj, models.Model):
+        return obj._meta.model_name
+    else:
+        return None
+
+
+def get_form(self, form_class=None):
+    """
+    Returns an instance of the form to be used in this view.
+    """
+    if form_class is None:
+        form_class = self.get_form_class()
+    return form_class(**self.get_form_kwargs())
+
+
+def get_form_class(self):
+    """
+    Returns the form class to use in this view.
+    """
+    if self.fields is not None and self.form_class:
+        raise ImproperlyConfigured(
+            "Specifying both 'fields' and 'form_class' is not permitted."
+        )
+    if self.form_class:
+        return self.form_class
+    else:
+        if self.model is not None:
+            # If a model has been explicitly provided, use it
+            model = self.model
+        elif hasattr(self, 'object') and self.object is not None:
+            # If this view is operating on a single object, use
+            # the class of that object
+            model = self.object.__class__
+        else:
+            # Try to get a queryset and extract the model class
+            # from that
+            model = self.get_queryset().model
+        if self.fields is None:
+            raise ImproperlyConfigured(
+                "Using ModelFormMixin (base class of %s) without "
+                "the 'fields' attribute is prohibited." % self.__class__.__name__
+            )
+        return model_forms.modelform_factory(model, fields=self.fields)
+
+
+def get_form_class(self):
+    """
+    Returns the form class to use in this view
+    """
+    return self.form_class
+
+
+def get_form_kwargs(self):
+    """
+    Returns the keyword arguments for instantiating the form.
+    """
+    kwargs = super(ModelFormMixin, self).get_form_kwargs()
+    if hasattr(self, 'object'):
+        kwargs.update({'instance': self.object})
+    return kwargs
+
+
+def get_form_kwargs(self):
+    """
+    Returns the keyword arguments for instantiating the form.
+    """
+    kwargs = {
+        'initial': self.get_initial(),
+        'prefix': self.get_prefix(),
+    }
+    if self.request.method in ('POST', 'PUT'):
+        kwargs.update({
+            'data': self.request.POST,
+            'files': self.request.FILES,
+        })
+    return kwargs
+
+
+def get_initial(self):
+    """
+    Returns the initial data to use for forms on this view.
+    """
+    return self.initial.copy()
+
+
+def get_object(self, queryset=None):
+    """
+    Returns the object the view is displaying.
+    By default this requires `self.queryset` and a `pk` or `slug` argument
+    in the URLconf, but subclasses can override this to return any object.
+    """
+    # Use a custom queryset if provided; this is required for subclasses
+    # like DateDetailView
+    if queryset is None:
+        queryset = self.get_queryset()
+    # Next, try looking up by primary key.
+    pk = self.kwargs.get(self.pk_url_kwarg, None)
+    slug = self.kwargs.get(self.slug_url_kwarg, None)
+    if pk is not None:
+        queryset = queryset.filter(pk=pk)
+    # Next, try looking up by slug.
+    if slug is not None and (pk is None or self.query_pk_and_slug):
+        slug_field = self.get_slug_field()
+        queryset = queryset.filter(**{slug_field: slug})
+    # If none of those are defined, it's an error.
+    if pk is None and slug is None:
+        raise AttributeError("Generic detail view %s must be called with "
+                             "either an object pk or a slug."
+                             % self.__class__.__name__)
+    try:
+        # Get the single item from the filtered queryset
+        obj = queryset.get()
+    except queryset.model.DoesNotExist:
+        raise Http404(_("No %(verbose_name)s found matching the query") %
+                      {'verbose_name': queryset.model._meta.verbose_name})
+    return obj
+
+
+def get_prefix(self):
+    """
+    Returns the prefix to use for forms on this view
+    """
+    return self.prefix
+
+
+def get_queryset(self):
+    """
+    Return the `QuerySet` that will be used to look up the object.
+    Note that this method is called by the default implementation of
+    `get_object` and may not be called if `get_object` is overridden.
+    """
+    if self.queryset is None:
+        if self.model:
+            return self.model._default_manager.all()
+        else:
+            raise ImproperlyConfigured(
+                "%(cls)s is missing a QuerySet. Define "
+                "%(cls)s.model, %(cls)s.queryset, or override "
+                "%(cls)s.get_queryset()." % {
+                    'cls': self.__class__.__name__
+                }
+            )
+    return self.queryset.all()
+
+
+def get_slug_field(self):
+    """
+    Get the name of a slug field to be used to look up by slug.
+    """
+    return self.slug_field
+
+
+def get_success_url(self):
+    """
+    Returns the supplied URL.
+    """
+    if self.success_url:
+        # force_text can be removed with deprecation warning
+        self.success_url = force_text(self.success_url)
+        if PERCENT_PLACEHOLDER_REGEX.search(self.success_url):
+            warnings.warn(
+                "%()s placeholder style in success_url is deprecated. "
+                "Please replace them by the {} Python format syntax.",
+                RemovedInDjango110Warning, stacklevel=2
+            )
+            url = self.success_url % self.object.__dict__
+        else:
+            url = self.success_url.format(**self.object.__dict__)
+    else:
+        try:
+            url = self.object.get_absolute_url()
+        except AttributeError:
+            raise ImproperlyConfigured(
+                "No URL to redirect to.  Either provide a url or define"
+                " a get_absolute_url method on the Model.")
+    return url
+
+
+def get_success_url(self):
+    """
+    Returns the supplied success URL.
+    """
+    if self.success_url:
+        # Forcing possible reverse_lazy evaluation
+        url = force_text(self.success_url)
+    else:
+        raise ImproperlyConfigured(
+            "No URL to redirect to. Provide a success_url.")
+    return url
+
+
+def get_template_names(self):
+    """
+    Return a list of template names to be used for the request. May not be
+    called if render_to_response is overridden. Returns the following list:
+    * the value of ``template_name`` on the view (if provided)
+    * the contents of the ``template_name_field`` field on the
+      object instance that the view is operating upon (if available)
+    * ``<app_label>/<model_name><template_name_suffix>.html``
+    """
+    try:
+        names = super(SingleObjectTemplateResponseMixin, self).get_template_names()
+    except ImproperlyConfigured:
+        # If template_name isn't specified, it's not a problem --
+        # we just start with an empty list.
+        names = []
+        # If self.template_name_field is set, grab the value of the field
+        # of that name from the object; this is the most specific template
+        # name, if given.
+        if self.object and self.template_name_field:
+            name = getattr(self.object, self.template_name_field, None)
+            if name:
+                names.insert(0, name)
+        # The least-specific option is the default <app>/<model>_detail.html;
+        # only use this if the object in question is a model.
+        if isinstance(self.object, models.Model):
+            names.append("%s/%s%s.html" % (
+                self.object._meta.app_label,
+                self.object._meta.model_name,
+                self.template_name_suffix
+            ))
+        elif hasattr(self, 'model') and self.model is not None and issubclass(self.model, models.Model):
+            names.append("%s/%s%s.html" % (
+                self.model._meta.app_label,
+                self.model._meta.model_name,
+                self.template_name_suffix
+            ))
+        # If we still haven't managed to find any template names, we should
+        # re-raise the ImproperlyConfigured to alert the user.
+        if not names:
+            raise
+    return names
+
+
+def get_template_names(self):
+    """
+    Returns a list of template names to be used for the request. Must return
+    a list. May not be called if render_to_response is overridden.
+    """
+    if self.template_name is None:
+        raise ImproperlyConfigured(
+            "TemplateResponseMixin requires either a definition of "
+            "'template_name' or an implementation of 'get_template_names()'")
+    else:
+        return [self.template_name]
+
+
+def http_method_not_allowed(self, request, *args, **kwargs):
+    logger.warning('Method Not Allowed (%s): %s', request.method, request.path,
+        extra={
+            'status_code': 405,
+            'request': request
+        }
+    )
+    return http.HttpResponseNotAllowed(self._allowed_methods())
+
+
+def __init__(self, **kwargs):
+    """
+    Constructor. Called in the URLconf; can contain helpful extra
+    keyword arguments, and other things.
+    """
+    # Go through keyword arguments, and either save their values to our
+    # instance, or raise an error.
+    for key, value in six.iteritems(kwargs):
+        setattr(self, key, value)
+
+
+def options(self, request, *args, **kwargs):
+    """
+    Handles responding to requests for the OPTIONS HTTP verb.
+    """
+    response = http.HttpResponse()
+    response['Allow'] = ', '.join(self._allowed_methods())
+    response['Content-Length'] = '0'
+    return response
+
+
+def post(self, request, *args, **kwargs):
+    self.object = self.get_object()
+    return super(BaseUpdateView, self).post(request, *args, **kwargs)
+
+
+def post(self, request, *args, **kwargs):
+    """
+    Handles POST requests, instantiating a form instance with the passed
+    POST variables and then checked for validity.
+    """
+    form = self.get_form()
+    if form.is_valid():
+        return self.form_valid(form)
+    else:
+        return self.form_invalid(form)
+
+
+def put(self, *args, **kwargs):
+    return self.post(*args, **kwargs)
+
+
+def render_to_response(self, context, **response_kwargs):
+    """
+    Returns a response, using the `response_class` for this
+    view, with a template rendered with the given context.
+    If any keyword arguments are provided, they will be
+    passed to the constructor of the response class.
+    """
+    response_kwargs.setdefault('content_type', self.content_type)
+    return self.response_class(
+        request=self.request,
+        template=self.get_template_names(),
+        context=context,
+        using=self.template_engine,
+        **response_kwargs
+    )
+
+##### ListView #####
+
+from django.views.generic import ListView
+
+class ListView
+
+
+def _allowed_methods(self):
+    return [m.upper() for m in self.http_method_names if hasattr(self, m)]
+
+
+def as_view(cls, **initkwargs):
+    """
+    Main entry point for a request-response process.
+    """
+    for key in initkwargs:
+        if key in cls.http_method_names:
+            raise TypeError("You tried to pass in the %s method name as a "
+                            "keyword argument to %s(). Don't do that."
+                            % (key, cls.__name__))
+        if not hasattr(cls, key):
+            raise TypeError("%s() received an invalid keyword %r. as_view "
+                            "only accepts arguments that are already "
+                            "attributes of the class." % (cls.__name__, key))
+    def view(request, *args, **kwargs):
+        self = cls(**initkwargs)
+        if hasattr(self, 'get') and not hasattr(self, 'head'):
+            self.head = self.get
+        self.request = request
+        self.args = args
+        self.kwargs = kwargs
+        return self.dispatch(request, *args, **kwargs)
+    # take name and docstring from class
+    update_wrapper(view, cls, updated=())
+    # and possible attributes set by decorators
+    # like csrf_exempt from dispatch
+    update_wrapper(view, cls.dispatch, assigned=())
+    return view
+
+
+def dispatch(self, request, *args, **kwargs):
+    # Try to dispatch to the right method; if a method doesn't exist,
+    # defer to the error handler. Also defer to the error handler if the
+    # request method isn't on the approved list.
+    if request.method.lower() in self.http_method_names:
+        handler = getattr(self, request.method.lower(), self.http_method_not_allowed)
+    else:
+        handler = self.http_method_not_allowed
+    return handler(request, *args, **kwargs)
+
+
+def get(self, request, *args, **kwargs):
+    self.object_list = self.get_queryset()
+    allow_empty = self.get_allow_empty()
+    if not allow_empty:
+        # When pagination is enabled and object_list is a queryset,
+        # it's better to do a cheap query than to load the unpaginated
+        # queryset in memory.
+        if (self.get_paginate_by(self.object_list) is not None
+                and hasattr(self.object_list, 'exists')):
+            is_empty = not self.object_list.exists()
+        else:
+            is_empty = len(self.object_list) == 0
+        if is_empty:
+            raise Http404(_("Empty list and '%(class_name)s.allow_empty' is False.")
+                    % {'class_name': self.__class__.__name__})
+    context = self.get_context_data()
+    return self.render_to_response(context)
+
+
+def get_allow_empty(self):
+    """
+    Returns ``True`` if the view should display empty lists, and ``False``
+    if a 404 should be raised instead.
+    """
+    return self.allow_empty
+
+
+def get_context_data(self, **kwargs):
+    """
+    Get the context for this view.
+    """
+    queryset = kwargs.pop('object_list', self.object_list)
+    page_size = self.get_paginate_by(queryset)
+    context_object_name = self.get_context_object_name(queryset)
+    if page_size:
+        paginator, page, queryset, is_paginated = self.paginate_queryset(queryset, page_size)
+        context = {
+            'paginator': paginator,
+            'page_obj': page,
+            'is_paginated': is_paginated,
+            'object_list': queryset
+        }
+    else:
+        context = {
+            'paginator': None,
+            'page_obj': None,
+            'is_paginated': False,
+            'object_list': queryset
+        }
+    if context_object_name is not None:
+        context[context_object_name] = queryset
+    context.update(kwargs)
+    return super(MultipleObjectMixin, self).get_context_data(**context)
+
+
+def get_context_data(self, **kwargs):
+    if 'view' not in kwargs:
+        kwargs['view'] = self
+    return kwargs
+
+
+def get_context_object_name(self, object_list):
+    """
+    Get the name of the item to be used in the context.
+    """
+    if self.context_object_name:
+        return self.context_object_name
+    elif hasattr(object_list, 'model'):
+        return '%s_list' % object_list.model._meta.model_name
+    else:
+        return None
+
+
+def get_ordering(self):
+    """
+    Return the field or fields to use for ordering the queryset.
+    """
+    return self.ordering
+
+
+def get_paginate_by(self, queryset):
+    """
+    Get the number of items to paginate by, or ``None`` for no pagination.
+    """
+    return self.paginate_by
+
+
+def get_paginate_orphans(self):
+    """
+    Returns the maximum number of orphans extend the last page by when
+    paginating.
+    """
+    return self.paginate_orphans
+
+
+def get_paginator(self, queryset, per_page, orphans=0,
+                  allow_empty_first_page=True, **kwargs):
+    """
+    Return an instance of the paginator for this view.
+    """
+    return self.paginator_class(
+        queryset, per_page, orphans=orphans,
+        allow_empty_first_page=allow_empty_first_page, **kwargs)
+
+
+def get_queryset(self):
+    """
+    Return the list of items for this view.
+    The return value must be an iterable and may be an instance of
+    `QuerySet` in which case `QuerySet` specific behavior will be enabled.
+    """
+    if self.queryset is not None:
+        queryset = self.queryset
+        if isinstance(queryset, QuerySet):
+            queryset = queryset.all()
+    elif self.model is not None:
+        queryset = self.model._default_manager.all()
+    else:
+        raise ImproperlyConfigured(
+            "%(cls)s is missing a QuerySet. Define "
+            "%(cls)s.model, %(cls)s.queryset, or override "
+            "%(cls)s.get_queryset()." % {
+                'cls': self.__class__.__name__
+            }
+        )
+    ordering = self.get_ordering()
+    if ordering:
+        if isinstance(ordering, six.string_types):
+            ordering = (ordering,)
+        queryset = queryset.order_by(*ordering)
+    return queryset
+
+
+def get_template_names(self):
+    """
+    Return a list of template names to be used for the request. Must return
+    a list. May not be called if render_to_response is overridden.
+    """
+    try:
+        names = super(MultipleObjectTemplateResponseMixin, self).get_template_names()
+    except ImproperlyConfigured:
+        # If template_name isn't specified, it's not a problem --
+        # we just start with an empty list.
+        names = []
+    # If the list is a queryset, we'll invent a template name based on the
+    # app and model name. This name gets put at the end of the template
+    # name list so that user-supplied names override the automatically-
+    # generated ones.
+    if hasattr(self.object_list, 'model'):
+        opts = self.object_list.model._meta
+        names.append("%s/%s%s.html" % (opts.app_label, opts.model_name, self.template_name_suffix))
+    return names
+
+
+def get_template_names(self):
+    """
+    Returns a list of template names to be used for the request. Must return
+    a list. May not be called if render_to_response is overridden.
+    """
+    if self.template_name is None:
+        raise ImproperlyConfigured(
+            "TemplateResponseMixin requires either a definition of "
+            "'template_name' or an implementation of 'get_template_names()'")
+    else:
+        return [self.template_name]
+
+
+def http_method_not_allowed(self, request, *args, **kwargs):
+    logger.warning('Method Not Allowed (%s): %s', request.method, request.path,
+        extra={
+            'status_code': 405,
+            'request': request
+        }
+    )
+    return http.HttpResponseNotAllowed(self._allowed_methods())
+
+
+def __init__(self, **kwargs):
+    """
+    Constructor. Called in the URLconf; can contain helpful extra
+    keyword arguments, and other things.
+    """
+    # Go through keyword arguments, and either save their values to our
+    # instance, or raise an error.
+    for key, value in six.iteritems(kwargs):
+        setattr(self, key, value)
+
+
+def options(self, request, *args, **kwargs):
+    """
+    Handles responding to requests for the OPTIONS HTTP verb.
+    """
+    response = http.HttpResponse()
+    response['Allow'] = ', '.join(self._allowed_methods())
+    response['Content-Length'] = '0'
+    return response
+
+
+def paginate_queryset(self, queryset, page_size):
+    """
+    Paginate the queryset, if needed.
+    """
+    paginator = self.get_paginator(
+        queryset, page_size, orphans=self.get_paginate_orphans(),
+        allow_empty_first_page=self.get_allow_empty())
+    page_kwarg = self.page_kwarg
+    page = self.kwargs.get(page_kwarg) or self.request.GET.get(page_kwarg) or 1
+    try:
+        page_number = int(page)
+    except ValueError:
+        if page == 'last':
+            page_number = paginator.num_pages
+        else:
+            raise Http404(_("Page is not 'last', nor can it be converted to an int."))
+    try:
+        page = paginator.page(page_number)
+        return (paginator, page, page.object_list, page.has_other_pages())
+    except InvalidPage as e:
+        raise Http404(_('Invalid page (%(page_number)s): %(message)s') % {
+            'page_number': page_number,
+            'message': str(e)
+        })
+
+
+def render_to_response(self, context, **response_kwargs):
+    """
+    Returns a response, using the `response_class` for this
+    view, with a template rendered with the given context.
+    If any keyword arguments are provided, they will be
+    passed to the constructor of the response class.
+    """
+    response_kwargs.setdefault('content_type', self.content_type)
+    return self.response_class(
+        request=self.request,
+        template=self.get_template_names(),
+        context=context,
+        using=self.template_engine,
+        **response_kwargs
+    )
