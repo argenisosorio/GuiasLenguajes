@@ -420,11 +420,29 @@ $ ping -w n ip_num // Tiempo en segundos que se va a hacer ping donde n es un en
 // de colores rodando, si es así, está correcta la instalacion del video.
 # glxgears
 
+// Este comando sirve para revisar el log o bitácora de los eventos ocurridos
+// en el sistema, cuelca todos los mensajes que han ocurrido desde el arranque del sistema.
+
+# journalctl
+
+// Si un servicio parece que no está funcionando como debiera, el primer paso para resolver el
+// problema es comprobar si el servicio está ejecutándose realmente mediante systemctl status.
+// Si no es así y los mensajes que se muestran no son suficientes para diagnosticar el problema
+// se pueden comprobar los registros que ha recogido journald relacionados con es servicio. Por
+// ejemplo, suponiendo que el servidor SSH no funciona:
+
+# systemctl status ssh.service
+
+// -f , que hace que journalctl siga mostrando los nuevos mensajes a medida
+que se van emitiendo (semejante a lo que ocurre con tail -f file).
+
+# journalctl -f
+
 ##########################################
 ##### Gestionar procesos del sistema #####
 ##########################################
 
-Cada proceso tiene un identificador (PID) proccess ID, entonces podemos matar ese proceso con:
+// Cada proceso tiene un identificador (PID) proccess ID, entonces podemos matar ese proceso con:
 
 $ kill xxxx // Matar un proceso donde xxxx es el identificador del proceso.
 

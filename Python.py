@@ -1638,7 +1638,9 @@ luego:
 
 $ source .bachrc
 
+#############################
 ##### Usando virtualenv #####
+#############################
 
 Installation: 
 
