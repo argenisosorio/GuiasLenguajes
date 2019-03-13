@@ -5185,3 +5185,114 @@ $("document").ready(function(){
   </div>
 </body>
 </html>
+
+------------------------------------------
+
+<!-- Autocheckear los checkboxes anteriores a un checkbox marcado -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Auto Check the checkboxes</title>
+</head>
+<body>
+  <main>
+    <form>
+      <legend>
+        Checkboxes
+        <input type="checkbox" name="checkbox" id="checkbox1" class="checkbox">
+        <input type="checkbox" name="checkbox" id="checkbox2" class="checkbox">
+        <input type="checkbox" name="checkbox" id="checkbox3" class="checkbox">
+        <input type="checkbox" name="checkbox" id="checkbox4" class="checkbox">
+        <input type="checkbox" name="checkbox" id="checkbox5" class="checkbox">
+        <input type="checkbox" name="checkbox" id="checkbox6" class="checkbox">
+        <input type="checkbox" name="checkbox" id="checkbox7" class="checkbox">
+        <input type="checkbox" name="checkbox" id="checkbox8" class="checkbox">
+      </legend>
+    </form>
+  </main>
+  <script>
+    (function(){
+      var checkbox = document.querySelectorAll('.checkbox');
+      for (var i = checkbox.length - 1; i >= 0; i--) {
+        checkbox[i].addEventListener('change', function(){
+          if (this.checked) {
+            for (var j = 0; j <= checkbox.length - 1; j++) {
+              if (checkbox[j].id === this.id) {
+                break;
+              } else {
+                checkbox[j].checked = true;
+              }
+            }
+          } else {
+            for (var j = 0; j <= checkbox.length - 1; j++) {
+              if (checkbox[j].id === this.id) {
+                break;
+              } else {
+                checkbox[j].checked = false;
+              }
+            }
+          }
+        }, true);
+      }
+    })();
+  </script>
+</body>
+</html>
+
+------------------------------------------
+
+<!-- Autocheckear los checkboxes anteriores a un checkbox marcado e inhabilitando los marcados -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Auto Check the checkboxes</title>
+  <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+  <main>
+    <form>
+      <legend>
+        Checkboxes
+        <input type="checkbox" name="checkbox" id="checkbox1" class="checkbox">
+        <input type="checkbox" name="checkbox" id="checkbox2" class="checkbox">
+        <input type="checkbox" name="checkbox" id="checkbox3" class="checkbox">
+        <input type="checkbox" name="checkbox" id="checkbox4" class="checkbox">
+        <input type="checkbox" name="checkbox" id="checkbox5" class="checkbox">
+        <input type="checkbox" name="checkbox" id="checkbox6" class="checkbox">
+        <input type="checkbox" name="checkbox" id="checkbox7" class="checkbox">
+        <input type="checkbox" name="checkbox" id="checkbox8" class="checkbox">
+      </legend>
+    </form>
+  </main>
+  <script>
+    (function(){
+      var checkbox = document.querySelectorAll('.checkbox');
+      for (var i = checkbox.length - 1; i >= 0; i--) {
+        checkbox[i].addEventListener('change', function(){
+          if (this.checked) {
+            for (var j = 0; j <= checkbox.length - 1; j++) {
+              if (checkbox[j].id === this.id) {
+                break;
+              } else {
+                checkbox[j].checked = true;
+                checkbox[j].disabled = true;
+              }
+            }
+          } else {
+            for (var j = 0; j <= checkbox.length - 1; j++) {
+              if (checkbox[j].id === this.id) {
+                break;
+              } else {
+                checkbox[j].checked = false;
+                checkbox[j].disabled = false;
+              }
+            }
+          }
+        }, true);
+      }
+    })();
+  </script>
+</body>
+</html>
