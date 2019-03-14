@@ -3119,6 +3119,10 @@ class ReporteForm(forms.ModelForm):
 from datetime import datetime
 
 print datetime.now()
+
+# Esto imprime: (year, month, day, hours, minutes, seconds, microseconds)
+
+---
                        
 # Cambiando el formato a humano
                        

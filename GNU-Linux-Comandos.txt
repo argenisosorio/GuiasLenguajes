@@ -3464,7 +3464,7 @@ $ curl -O https://www.virtualbox.org/download/oracle_vbox_2016.asc
 
 // Agregamos la siguiente línea en el /etc/apt/sources.list
 
-deb-src http://debian.cenditel/debian/ stretch-backports main contrib non-free
+deb http://debian.cenditel/debian/ stretch-backports main contrib non-free
 
 # apt-get update
 
@@ -3700,6 +3700,12 @@ W: No existe ninguna clave pública disponible para los siguientes identificador
 # apt-get install google-chrome-stable
 
 // Si toda va bien, debería estar disponible en la sección internet de nuestro GNU/Linux Debian 8 o 9
+
+###################################################
+##### Instalar Chromium en GNU/Linux Debian 8 #####
+###################################################
+
+# apt-get install chromium chromium-l10n
 
 ###############################################
 ##### Instalar extensiones en LIbreOffice #####
