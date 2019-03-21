@@ -6635,3 +6635,26 @@ def render_to_response(self, context, **response_kwargs):
         using=self.template_engine,
         **response_kwargs
     )
+
+##########################################################################
+##### Validando que un campo sea de tipo entero en models y en forms #####
+##########################################################################
+
+# Validando desde los modelos
+
+# models.py
+porc_avan_act_1 = models.IntegerField()
+
+
+# Validando desde los foms
+
+# models.py
+porc_act_1 = models.CharField(max_length=100, blank=True,null=True)
+
+# forms.py
+# Ponderación asignada (%) de la planificación.
+porc_act_1 = forms.IntegerField(label='Ponderación asignada (%)', widget=TextInput(attrs={
+    'class':'form-control input-md',
+    'style': 'min-width: 0; width: 100%; display: inline;',
+    'value': '0',
+}), required = False)
