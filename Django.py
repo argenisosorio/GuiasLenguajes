@@ -3578,6 +3578,160 @@ def busqueda(request):
 {% endif %}
 {% endblock %}
 
+###############################################################
+##### Filtro de búsqueda con dependencia de otros modelos #####
+###############################################################
+
+#urls.py
+url(r'^buscar/$', login_required(views.Buscar_pago.as_view()), name='buscar'),
+url(r'^busqueda/$', login_required(views.busqueda), name='busqueda'),
+
+#view.py
+class Buscar_actividad(TemplateView):
+    """
+    Plantilla que tiene el formulario para buscar actividades.
+    """
+    template_name = "actividades/buscar.html"
+
+    def get(self, request, *args, **kwargs):
+        data = Modulo.objects.all()
+        data1 = Estatus.objects.all()
+        return render(request,self.template_name, {'data':data,'data1':data1})
+
+
+def busqueda(request):
+    """
+    Función que recibe los parámetros enviados desde el formulario de
+    búsqueda de actividades y las filtra con querysets.
+    """
+    if 'modulo' in request.GET and request.GET['modulo'] and 'estatus' in request.GET and request.GET['estatus']:
+        modulo = request.GET['modulo']
+        estatus = request.GET['estatus']
+        query_modulo = Actividad.objects.filter(modulo=modulo)
+        query_estatus = query_modulo.filter(estatus=estatus)
+        return render(request, 'actividades/busqueda.html',{'query_estatus':query_estatus,'modulo':modulo})
+    else:
+        return HttpResponse('Por favor introduce un termino de búsqueda.')
+
+#buscar.html
+{% extends "base/base.html" %}
+{% block titulo %}Buscar actividades detalladas{% endblock %}
+{% block cuerpo %}
+<br />
+<h1>Buscar actividades detalladas</h1>
+<br />
+<form action="{% url 'actividades:busqueda' %}" method="get">
+  <label>Por módulo</label>
+  <br />
+  <select name="modulo" class="form form-control" id="id_modulo">
+    {% for x in data %}
+      <option value="{{ x.nombre_modulo }}">{{ x.nombre_modulo }}</option>
+    {% endfor %}
+  </select>
+  <label>Por estatus</label>
+  <br />
+  <select name="estatus" class="form form-control" id="id_estatus">
+    {% for x in data1 %}
+      <option value="{{ x.nombre_estatus }}">{{ x.nombre_estatus }}</option>
+    {% endfor %}
+  </select>
+  <button class="btn btn-success" type="submit">Buscar</button>
+</form>
+{% endblock %}
+
+#busqueda.html
+{% extends "base/base.html" %}
+{% block titulo %}Resultados de la búsqueda{% endblock %}
+{% block cuerpo %}
+<br />
+<h1>Resultados de la búsqueda</h1>
+<br />
+{% if query_estatus %}
+  <p>Estas buscado actividades detalladas del módulo <strong>{{ modulo }}</strong></p>
+  <p>Actividades detalladas encontradas: <strong>{{ query_estatus|length }}</strong>
+  <br />
+  <br />
+  <table border="1px" id="example" class="display">
+    <thead>
+      <tr>
+        <th>N</th>
+        <th>Módulo</th>
+        <th>Actividad</th>
+        <th>Rol y responsable</th>
+        <th>Fecha de entrega</th>
+        <th>Estatus</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tfoot>
+      <tr>
+        <th>N</th>
+        <th>Módulo</th>
+        <th>Actividad</th>
+        <th>Rol y responsable</th>
+        <th>Fecha de entrega</th>
+        <th>Estatus</th>
+        <th>Acciones</th>
+      </tr>
+    </tfoot>
+    <tbody>
+    {% for x in query_estatus %}
+    <tr>
+      <td></td>
+      <td>{{ x.modulo }}</td>
+      <td>{{ x.actividad }}</td>
+      <td>{{ x.rol_resp }}</td>
+      <td>{{ x.fecha_entrega }}</td>
+      {% if x.estatus == "En espera" %}
+        <td class="td_espera">En espera</td>
+      {% elif x.estatus == "Retrasado" %}
+        <td class="td_retrasado">Retrasado</td>
+      {% elif x.estatus == "Entregado" %}
+        <td class="td_entregado">Entregado</td>
+      {%  elif x.estatus == "No entregado" %}
+        <td class="td_no_entregado">No entregado</td>
+      {% else %}
+        <td class="td_no">...</td>
+      {% endif %}
+      {% if request.user.is_authenticated %}
+        {% if request.user.is_superuser and request.user.is_staff and request.user.is_active %}
+          <td>
+            <a href="{% url 'actividades:editar_actividad' x.id %}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
+            &nbsp; | &nbsp;
+            <a href="{% url 'actividades:detallar_actividad' x.id %}" title="Detallar"><i class="glyphicon glyphicon-eye-open"></i></a>
+            &nbsp; | &nbsp;
+            <a href="{% url 'actividades:borrar_actividad' x.id %}" title="Borrar"><i class="glyphicon glyphicon-trash"></i></a>
+          </td>
+        {% else %}
+          {% if request.user.is_staff and request.user.is_active %}
+            <td>
+              <a href="{% url 'actividades:editar_actividad' x.id %}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
+              &nbsp; | &nbsp;
+              <a href="{% url 'actividades:detallar_actividad' x.id %}" title="Detallar"><i class="glyphicon glyphicon-eye-open"></i></a>
+              &nbsp; | &nbsp;
+              <a href="{% url 'actividades:borrar_actividad' x.id %}" title="Borrar"><i class="glyphicon glyphicon-trash"></i></a>
+            </td>
+          {% else %}
+            {% if request.user.is_active %}
+              <td>
+                <a href="{% url 'actividades:detallar_actividad' x.id %}" title="Detallar"><i class="glyphicon glyphicon-eye-open"></i></a>
+              </td>
+            {% else %}
+              xxx
+            {% endif %}
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>Ningúna actividad coincide con el criterio de búsqueda.</p>
+  <br />
+  <a href="{% url 'actividades:buscar' %}"><button type="button" class="btn btn-primary">Buscar de nuevo</button></a>
+{% endif %}
+{% endblock %}
+
 #####################
 ##### form.as_p #####
 #####################
