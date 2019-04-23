@@ -3508,3 +3508,24 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget 
     <p>dasddsa</p>
   </div>
 </div>
+
+---------------
+
+<!-- tabindex -->
+
+tabindex indica si su elemento puede ser enfocado, y si participa
+en la navegación secuencial del teclado (usualmente con la tecla
+Tab, de ahí el nombre). Acepta un entero como valor, con diferentes
+resultados que dependen de dicho valor:
+
+Un valor negativo (usualmente tabindex="-1") significa que el elemento
+debe ser enfocado, pero no debe de ser accesible a través de la navegación
+secuencial del teclado. Es útil para crear widgets accesibles con JavaScript.
+
+Usando el tab navegara según el orden de tab index.
+
+<b>Nombres</b>
+<input class="form-control input-md" id="id_nombres" name="nombres" required="True" tabindex="1" type="text" />
+<br>
+<b>Correo electrónico</b>
+<input class="form-control input-md" id="id_correo_electronico" name="correo_electronico" required="True" tabindex="2" type="text" />
