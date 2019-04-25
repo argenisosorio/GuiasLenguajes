@@ -7,36 +7,43 @@ Comentarios de
 multiple Linea
 */
 
-**********Instalacion del compilador**********
+// Nota:
+// Usaremos $ para describir los comandos que se usaran con usuario regular.
+// Usaremos # para describir los comandos que se usaran con superusuario. 
 
-//Es Necesario instalar el compilador para probar codigos de los programas
+// ##### Instalacion del compilador #####
 
-$ aptitude install build-essential
+// Es Necesario instalar el compilador para probar codigos de los programas
 
-$ sudo apt-get install build-essential 
+#  apt-get install build-essential
 
+// ##### Programas en C #####
 
-**********PROGRAMAS EN C**********
+// Los programas en C se guardan con la extension NombrePrograma.c
 
-Los programas en C se guardan con la extension NombrePrograma.c
+// Debe estar ubicado en el directorio del programa
 
--Debe estar ubicado en el directorio del programa
+// Para compilar el programa, -o para convertirlo en objeto.
+$ gcc programa.c -o programa 
 
-gcc programa.c -o programa //Para Compilar el programa, -o para convertirlo en objeto
-./programa //Para correr el programa
+// Para correr el programa
+$ ./programa
 
-*****PROGRAMAS EN C++*****
+// ##### Programas en C++ #####
 
-Los programas en C++ se guardan con la extension NombrePrograma.cpp
+// Los programas en C++ se guardan con la extension NombrePrograma.cpp
 
--Debe estar ubicado en el directorio del programa
+// Debe estar ubicado en el directorio del programa
 
-g++ programa.cpp -o programa //Para Compilar el programa
-./programa //Para correr el programa
+// Para compilar el programa
+$ g++ programa.cpp -o programa
 
+// Para correr el programa
+$ ./programa 
 
-**********Imprimir por pantalla**********
+// ##### Ejercicios #####
 
+// Imprimir por pantalla
 #include<iostream>
 using namespace std;
 int main (){    
@@ -106,7 +113,8 @@ return 0;
 
 --------------------
 
-#include<iostream> //Comparar dos numeros enteros
+// Comparar dos numeros enteros
+#include<iostream>
 using namespace std;
 int a,b;
 int main (){	
@@ -167,28 +175,27 @@ return 0;
 
 --------------------
 
-//CALCULAR EL PROMEDIO DE NOTAS
+// Calcular el promedio de notas de n alumnos.
 #include<iostream>
 using namespace std;
-int main() {   
-   int num,i=0,nota=0;   
-   cout<<"CALCULAR EL PROMEDIO DE NOTAS"<<endl;
-   cout<<"Introduzca el numero de Estudiantes: ";
-   cin>>num;
-   float notas[num],suma=0,promedio=0;
-   while (i<num) {
-   cout<<"Nota "<<i<<": ";
-   cin>>notas[i];
-   i++;
-   } 
-   for(int j=0;j<num;j++){
-   suma=suma+notas[j];
-   }
-   promedio= suma / num;
-   cout<<"El promedio de notas es: "<<promedio<<endl;   
+int main() {
+  int num,i=0,nota=0;
+  cout<<"Calcular el promedio de notas de n alumnos."<<endl;
+  cout<<"Introduzca el número de estudiantes: ";
+  cin>>num;
+  float notas[num],suma=0,promedio=0;
+  while (i<num) {
+  cout<<"Nota "<<i<<": ";
+  cin>>notas[i];
+  i++;
+  } 
+  for(int j=0;j<num;j++){
+  suma=suma+notas[j];
+  }
+  promedio= suma / num;
+  cout<<"El promedio de notas es: "<<promedio<<endl;
 return 0;
 }
-
 
 **********DO WHILE**********
 
@@ -237,17 +244,14 @@ int main () {
 //Funcion para sumar dos numeros pasando con parametros
 #include<iostream>
 using namespace std;
-int suma; //Variable Global, puede ser usada por las funciones
-
-int funcionSuma(int a, int b)
-    {
-    suma=a+b;
-    cout<<suma<<endl;
-    }
-
+int suma; // Variable Global, puede ser usada por las funciones
+int funcionSuma(int a, int b) {
+  suma=a+b;
+  cout<<suma<<endl;
+  }
 int main() {
-    funcionSuma(5,4);    
-return 0;
+  funcionSuma(5,4);
+  return 0;
 }
 
 --------------------
@@ -267,27 +271,27 @@ return 0;
 
 --------------------
 
-//Funcion para sumar dos numeros
+// Funcion para sumar dos numeros
 #include<iostream>
 using namespace std;
 int suma;
 int a,b;
 int funcionSuma(){
-    suma=a+b;
-    cout<<"La suma es: "<<suma<<endl;
+  suma=a+b;
+  cout<<"La suma es: "<<suma<<endl;
 }
 int main() {
-    cout<<"Introduzca un numero A: "; 
-    cin>>a;
-    cout<<"Introduzca un numero B: "; 
-    cin>>b;
-    funcionSuma();    
+  cout<<"Introduzca un numero A: ";
+  cin>>a;
+  cout<<"Introduzca un numero B: ";
+  cin>>b;
+  funcionSuma();
 return 0;
 }
 
 --------------------
 
-//Funcion para sumar dos numeros, todo dentro de la función
+// Funcion para sumar dos numeros, todo dentro de la función
 #include<iostream>
 using namespace std;
 int suma;
@@ -498,7 +502,7 @@ declaradas sin problemas.
 #include "libreria.h"
 using namespace std;
 int main() {
-    funcionSuma(15,20);
-    cout<<suma<<endl;
-    return 0;
+  funcionSuma(15,20);
+  cout<<suma<<endl;
+  return 0;
 }
