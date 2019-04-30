@@ -1741,7 +1741,7 @@ $ pip install Package --upgrade // Para actualizar un paquete a su última versi
 
 $ pip install --upgrade Package package==1.x.x // Actualizar un paquete a una versión específica.
 
- $ pip freeze // Listar los paquetes instalado y sus versiones exactas.
+$ pip freeze // Listar los paquetes instalado y sus versiones exactas.
 
 ##### Error: ImportError: No module named packaging.version #####
 
@@ -2180,3 +2180,146 @@ print x
 import urllib3
 ...
 urllib3.disable_warnings()
+
+#################################
+##### Expresiones regulares #####
+#################################
+
+Cuando manejamos texto en Python, una de las operaciones más comunes es la
+búsqueda de una subcadena; ya sea para obtener su posición en el texto o
+simplemente para comprobar si está presente. Si la cadena que buscamos es
+fija, los métodos como find(), index() o similares nos ayudarán. Pero si
+buscamos una subcadena con cierta forma, este proceso se vuelve más complejo.
+
+Al buscar direcciones de correo electrónico, números de teléfono, validar campos
+de entrada, o una letra mayúscula seguida de dos minúsculas y de 5 dígitos entre
+1 y 3; es necesario recurrir a las Expresiones Regulares, también
+conocidas como Patrones.
+
+--- Patrones ---
+
+Las expresiones regulares son un potente lenguaje de descripción de texto.
+Y no existe un lenguaje moderno que no permita usarlas. Las reglas con las que se
+forman son bastante simples. Pero aprender a combinarlas correctamente requiere
+de práctica.
+
+Utilizándolas podemos buscar una subcadena al principio o al final del texto.
+Incluso si queremos que se repita cierta cantidad de veces, si queremos que algo
+NO aparezca, o si debe aparecer una subcadena entre varias posibilidades. Permite
+además, capturar aquellos trozos del texto que coincidan con la expresión para
+guardarlos en una variable o reemplazarlos por una cadena predeterminada; o incluso
+una cadena formada por los mismos trozos capturados. Estos son algunos aspectos
+básicos de las expresiones regulares:
+
+--- Metacaracteres ---
+
+Se conoce como metacaracteres a aquellos que, dependiendo del contexto, tienen un
+significado especial para las expresiones regulares. Por lo tanto, los debemos
+escapar colocándoles una contrabarra() delante para buscarlos explícitamente.
+A continuación listaré los más importantes:
+
+-Anclas: Indican que lo que queremos encontrar se encuentra al principio o al
+final de la cadena. Combinándolas, podemos buscar algo que represente a la cadena entera:
+
+patron: coincide con cualquier cadena que comience con patron.
+
+patron$: coincide con cualquier cadena que termine con patron.
+
+patron$: coincide con la cadena exacta patron.
+
+-Clases de caracteres: Se utilizan cuando se quiere buscar un caracter dentro
+de varias posibles opciones. Una clase se delimita entre corchetes y lista
+posibles opciones para el caracter que representa:
+
+[abc]: coincide con a, b, o c
+
+[387ab]: coincide con 3, 8, a o b
+
+niñ[oa]s: coincide con niños o niñas.
+
+Para evitar errores, en caso de que queramos crear una clase de caracteres
+que contenga un corchete, debemos escribir una barra \
+delante, para que el motor de expresiones regulares lo considere un
+caracter normal: la clase [ab\[] coincide con a, b y [.
+
+--- Rangos ---
+
+Si queremos encontrar un número, podemos usar una clase como [0123456789]
+o podemos utilizar un rango. Un rango es una clase de caracteres abreviada
+que se crea escribiendo el primer caracter del rango, un guión y el último
+caracter del rango. Múltiples rangos pueden definirse en la misma
+clase de caracteres.
+
+[a-c]: equivale a [abc]
+
+[0-9]: equivale a [0123456789]
+
+[a-d5-8]: equivale a [abcd5678]
+
+Es importante notar que si se quiere buscar un guión debe colocarse al
+principio o al final de la clase. Es decir, inmediatamente después
+del corchete izquierdo o inmediatamente antes del corchete derecho; o
+en su defecto, escaparse. Si no se hace de esta forma, el motor de
+expresiones regulares intentará crear un rango y la expresión no
+funcionará como debe (o dará un error). Si queremos, por ejemplo
+crear una clase que coincida con los caracteres a, 4 y -, debemos
+escribirla así:
+
+[a4-]
+
+[-a4]
+
+[a\-4]
+
+--- Rango negado ---
+
+Así como podemos listar los caracteres posibles en cierta posición de la cadena,
+también podemos listar caracteres que no deben aparecer. Para lograrlo, debemos
+negar la clase, colocando un circunflejo inmediatamente después del
+corchete izquierdo:
+
+[^abc]: coincide con cualquier caracter distinto a a, b y c
+
+--- Clases predefinidas ---
+
+Existen algunas clases que se usan frecuentemente y por eso existen formas
+abreviadas para ellas. En Python, así como en otros lenguajes, se soportan las
+clases predefinidas de Perl y de POSIX. Algunos ejemplos son:
+
+\d (POSIX [[:digit:]]): equivale a [0-9]
+
+\s (POSIX [[:space:]]): caracteres de espacio en blanco (espacio, tabulador, nueva línea, etc)
+
+\w (POSIX [[:word:]]): letras minúsculas, mayúsculas, números y guión bajo (_)
+
+Además existe una clase de caracteres que coincide con cualquier otro caracter.
+Ya sea letra, número, o un caracter especial. Esta clase es el punto:
+
+"." : coincide con cualquier caracter.
+
+--- Cuantificadores ---
+
+Son caracteres que multiplican el patrón que les precede. Mientras que con las
+clases de caracteres podemos buscar un dígito, o una letra; con los
+cuantificadores podemos buscar cero o más letras, al menos 7 dígitos, o entre
+tres y cinco letras mayúsculas. Los cuantificadores son:
+
+**?**: coincide con cero o una ocurrencia del patrón. Dicho de otra forma, hace que el patrón sea opcional
+
+**+**: coincide con una o más ocurrencias del patrón
+
+*****: coincide con cero o más ocurrencias del patrón.
+
+**{x}**: coincide con exactamente x ocurrencias del patrón
+
+**{x, y}**: coincide con al menos x y no más de y ocurrencias. Si se omite x, el mínimo es cero, y si se omite y, no hay máximo. Esto permite especificar a los otros como casos particulares: ? es {0,1}, + es {1,} y * es {,} o {0,}.
+
+Ejemplos:
+
+.* : cualquier cadena, de cualquier largo (incluyendo una cadena vacía)
+
+[a-z]{3,6}: entre 3 y 6 letras minúsculas
+
+\d{4,}: al menos 4 dígitos
+
+.*hola!?: una cadena cualquiera, seguida de hola, y terminando (o no) con un !

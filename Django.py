@@ -2058,6 +2058,19 @@ def clean_email(self):
 </div>
 {% endblock %}
 
+#####################################
+##### Validación en los modelos #####
+#####################################
+
+from django.core.validators import RegexValidator
+
+class Pago(models.Model):
+    """
+    Modelo que contiene los campos de una pago.
+    """
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
+    telefono = models.CharField(validators=[phone_regex], max_length=20, blank=True,null=True) # validators should be a list
+
 ##################################################
 ##### forms.py para el modelo User de django #####
 ##################################################
