@@ -2323,3 +2323,33 @@ Ejemplos:
 \d{4,}: al menos 4 dígitos
 
 .*hola!?: una cadena cualquiera, seguida de hola, y terminando (o no) con un !
+
+--- Otros metacaracteres --
+
+Existen otros metacaracteres en el lenguaje de las expresiones regulares:
+
+**?**: Además de servir como cuantificador, puede modificar el comportamiento de otro.
+
+De forma predeterminada, un cuantificador coincide con la mayor cadena posible.
+Cuando se le coloca un ?, se indica que se debe coincidir con la menor
+cadena posible. Esto es: dada la cadena bbbbb, b+ coincide con la cadena entera
+mientras que b+? coincide solamente con b. Es decir, la menor cadena que cumple el patrón.
+
+**()**: agrupan patrones. Sirven para que aquel pedazo de la cadena que coincida con
+el patrón sea capturado; o para delimitar el alcance de un cuantificador. Ejemplo: ab+
+coincide con ab, abb, abbbbb, …, mientras que (ab)+ coincide con ab, abab, abab…
+
+**|** : permite definir opciones para el patrón: perro|gato coincide con perro y con gato.
+
+--- Módulo re ---
+
+Para utilizar Expresiones Regulares, Python provee el módulo re. Importando este módulo
+podemos crear objetos de tipo patrón y generar objetos tipo matcher, que son los que
+contienen la información de la coincidencia del patrón en la cadena.
+Creando un patrón
+
+Para crear un objeto patrón, debemos importar el módulo re y utilizamos la función compile:
+
+import re
+
+patron = re.compile('a[3-5]+') # coincide con una letra, seguida de al menos 1 dígito entre 3 y 5
