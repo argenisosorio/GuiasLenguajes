@@ -2386,25 +2386,122 @@ expresiones regulares de Python y que usos les podemos dar.
 
 ---
 
+# -*- coding: utf-8 -*-
 import re
 
 regex_format1 = re.compile(r'ab+c')
 regex_format2 = r'ab+c'
 text1 = 'abc'
 
-if regex.search(text1):
-    print('La cadena está dentro del conjunto de la expresión regular')
+print "\nLlamando la primera función"
+if regex_format1.search(text1):
+    print "La cadena está dentro del conjunto de la expresión regular"
 else:
-    print('La cadena no está dentro del conjunto de la expresión regular')
-
+    print "La cadena no está dentro del conjunto de la expresión regular"
 # output La cadena está dentro del conjunto de la expresión regular.
 
+print "\nLlamando la segunda función"
 text2 = 'test'
 if re.search(regex_format2, text2):
-    print('La cadena está dentro del conjunto de la expresión regular')
+    print "La cadena está dentro del conjunto de la expresión regular"
 else:
-    print('La cadena no está dentro del conjunto de la expresión regular')
-
+    print "La cadena no está dentro del conjunto de la expresión regular"
 # output La cadena no está dentro del conjunto de la expresión regular.
 
 ---
+
+La función search() comprueba si una parte de un texto está dentro del
+conjunto de la expresión regular. Si es así devuelve un objeto llamado
+Match Object. Sino coincide devuelve None.
+
+---
+
+# -*- coding: utf-8 -*-
+"""
+Devuelve la parte de la cadena que coincide con la expresión regular.
+"""
+import re
+regex = re.compile(r'[a-z]+')
+text = '0122 test test1'
+a = re.search(regex, text)
+print(a.group(0)) # group(0) devuelve la parte de la cadena que coincide con la expresión regular.
+# output: test
+
+--- match() vs search() ---
+
+Existe cierta confusión con ambas funciones. Las 2 sirven para lo mismo, comprobar que
+una cadena coincide con una expresión regular. Pero hay una diferencia fundamental entra ambas.
+match() comprueba que la cadena completa coincida con la expresión regular. search() comprueba
+si una parte de la cadena coincide con la expresión regular.
+
+---
+
+# -*- coding: utf-8 -*-
+import re
+
+# Expresión regular que comprueba que la cadena es un número.
+regex = re.compile(r'[0-9]+')
+
+text1 = '01234'
+if regex.search(text1):
+    print('Entra porque text1 coincide con la expresión regular.')
+
+if regex.match(text1):
+    print('Entra porque text1 coincide con la expresión regular.')
+
+text2 = 'test 01234'
+if regex.search(text2):
+    print('Entra porque parte de text2 coincide con la expresión regular.')
+
+if regex.match(text2):
+    pass  # No entrará
+else:
+    print('No entra porque text2 no coincide con la expresión regular.')
+
+--- Substituir con expresiones regulares ---
+
+Sin duda esta es la función más útil de las expresiones regulares. La de sustituir
+la parte de la cadena de texto que coincide con la expresión regular. Para ello utilizamos
+la función sub() del paquete re de Python.
+
+---
+
+# -*- coding: utf-8 -*-
+import re
+"""
+Sustituir los espacios en blanco por -
+"""
+regex = re.compile(r'\s+') # Expresión regular que busca todos los caracteres espacios.
+text = "      test1 test2     test3\ntest4   \ntest5   "
+#Reemplazar todo los espacios por el caracter -.
+result = regex.sub('-', text)
+print result
+# output: -test1-test2-test3-test4-test5-
+
+---
+
+# -*- coding: utf-8 -*-
+import re
+regex = re.compile('a[3-5]+') # coincide con una letra, seguida de al menos 1 dígito entre 3 y 5
+text = 'a3'
+text2 = 'a2'
+
+if regex.search(text):
+    print "Sí"
+else:
+    print "No"
+
+if regex.search(text2):
+    print "Sí"
+else:
+    print "No"
+
+---
+
+# -*- coding: utf-8 -*-
+import re
+regex = re.compile('a[3-5]+') # coincide con una letra, seguida de al menos 1 dígito entre 3 y 5
+text = 'a1 a2 a3 a4 a5'
+a = regex.findall(text)
+print a
+# output: ['a3', 'a4', 'a5']
