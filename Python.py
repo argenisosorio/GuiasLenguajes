@@ -2185,6 +2185,14 @@ urllib3.disable_warnings()
 ##### Expresiones regulares #####
 #################################
 
+Las expresiones regulares, son patrones que definen un conjunto de cadenas que puede
+ser finito o infinito. Por ejemplo, el conjunto de cadenas que formaría la expresión
+regular (bar|ar|mar)co, es barco, arco y marco. Es un conjunto finito. En cambio la
+expresión regular ab+c crea un conjunto infinito formado
+por: abc, abbc, abbbc, abbbbbc, .... Así infinitamente.
+
+Otro concepto...
+
 Cuando manejamos texto en Python, una de las operaciones más comunes es la
 búsqueda de una subcadena; ya sea para obtener su posición en el texto o
 simplemente para comprobar si está presente. Si la cadena que buscamos es
@@ -2344,12 +2352,59 @@ coincide con ab, abb, abbbbb, …, mientras que (ab)+ coincide con ab, abab, aba
 --- Módulo re ---
 
 Para utilizar Expresiones Regulares, Python provee el módulo re. Importando este módulo
-podemos crear objetos de tipo patrón y generar objetos tipo matcher, que son los que
-contienen la información de la coincidencia del patrón en la cadena.
-Creando un patrón
+podemos declarar la expresión regular. Python nos ofrece 2 formas distintas de hacerlo:
 
-Para crear un objeto patrón, debemos importar el módulo re y utilizamos la función compile:
+---
+
+import re
+# 1º forma
+regex = r'(bar|ar|mar)co'
+# 2º forma
+regex = re.compile(r'(bar|ar|mar)co')
+
+---
+
+La 1º forma es más eficaz y ocupa menos espacio en memoria, porque solo es una simple
+cadena con el prefijo r, pero cada vez que se utiliza, esta crea las estructuras
+internas necesarias para su ejecución y una vez finalizada su tarea, destruye esas
+mismas estructuras.
+
+La 2º forma en cambio crea las estructuras desde el principio
+y no las destruye hasta que la propia variable que contiene la expresión regular
+es destruida. Ocupa más espacio en memoria y necesita del paquete re de Python.
+¿Cuál elegir? Pues depende del uso. Si solo vas utilizar una o 2 veces la misma
+expresión regular, la 1º forma es la mejor, porque ocupa menos espacio en memoria.
+Si la expresión regular se va a utilizar de manera repetida y en múltiples sitios.
+
+La 2º forma es la mejor, porque crea las estructuras al principio y no las borra
+cuando se utiliza la expresión regular.
+
+--- Empezando con lo básico ---
+
+Una vez visto lo básico, vamos a ver como utilizar las funciones para
+expresiones regulares de Python y que usos les podemos dar.
+
+---
 
 import re
 
-patron = re.compile('a[3-5]+') # coincide con una letra, seguida de al menos 1 dígito entre 3 y 5
+regex_format1 = re.compile(r'ab+c')
+regex_format2 = r'ab+c'
+text1 = 'abc'
+
+if regex.search(text1):
+    print('La cadena está dentro del conjunto de la expresión regular')
+else:
+    print('La cadena no está dentro del conjunto de la expresión regular')
+
+# output La cadena está dentro del conjunto de la expresión regular.
+
+text2 = 'test'
+if re.search(regex_format2, text2):
+    print('La cadena está dentro del conjunto de la expresión regular')
+else:
+    print('La cadena no está dentro del conjunto de la expresión regular')
+
+# output La cadena no está dentro del conjunto de la expresión regular.
+
+---
