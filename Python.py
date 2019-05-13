@@ -2204,6 +2204,39 @@ de entrada, o una letra mayúscula seguida de dos minúsculas y de 5 dígitos en
 1 y 3; es necesario recurrir a las Expresiones Regulares, también
 conocidas como Patrones.
 
+--- Componentes de las Expresiones Regulares ---
+
+Las expresiones regulares son un mini lenguaje en sí mismo, por lo que para
+poder utilizarlas eficientemente primero debemos entender los componentes de
+su sintaxis; ellos son:
+
+-Literales: Cualquier caracter se encuentra a sí mismo, a menos que se trate
+de un metacaracter con significado especial. Una serie de caracteres encuentra
+esa misma serie en el texto de entrada, por lo tanto la plantilla "raul"
+encontrará todas las apariciones de "raul" en el texto que procesamos.
+
+-Secuencias de escape: La sintaxis de las expresiones regulares nos permite
+utilizar las secuencias de escape que ya conocemos de otros lenguajes de
+programación para esos casos especiales como ser finales de línea, tabs, barras
+diagonales, etc. Las principales secuencias de escape que podemos encontrar, son:
+
+Secuencia de escape  -  Significado
+\n  Nueva línea (new line). El cursor pasa a la primera posición de la línea siguiente
+\t  Tabulador. El cursor pasa a la siguiente posición de tabulación
+\\  Barra diagonal inversa
+\v  Tabulación vertical
+\ooo    Carácter ASCII en notación octal
+\xhh    Carácter ASCII en notación hexadecimal
+\xhhhh  Carácter Unicode en notación hexadecimal
+
+-Clases de caracteres: Se pueden especificar clases de caracteres encerrando
+una lista de caracteres entre corchetes [], la que que encontrará uno cualquiera
+de los caracteres de la lista. Si el primer símbolo después del "[" es "^", la
+clase encuentra cualquier caracter que no está en la lista.
+
+-Metacaracteres: Los metacaracteres son caracteres especiales que son la esencia
+de las expresiones regulares.
+
 --- Patrones ---
 
 Las expresiones regulares son un potente lenguaje de descripción de texto.
@@ -2218,6 +2251,100 @@ además, capturar aquellos trozos del texto que coincidan con la expresión para
 guardarlos en una variable o reemplazarlos por una cadena predeterminada; o incluso
 una cadena formada por los mismos trozos capturados. Estos son algunos aspectos
 básicos de las expresiones regulares:
+
+Metacaracteres - delimitadores
+
+Esta clase de metacaracteres nos permite delimitar dónde queremos
+buscar los patrones de búsqueda.
+
+Ellos son:
+
+Metacaracter  -  Descripción
+^   inicio de línea.
+$   fin de línea.
+\A  inicio de texto.
+\Z  fin de texto.
+.   cualquier caracter en la línea.
+\b  encuentra límite de palabra.
+\B  encuentra distinto a límite de palabra.
+
+--- Metacaracteres  -  clases predefinidas ---
+
+Estas son clases predefinidas que nos facilitan la utilización de
+las expresiones regulares. Ellos son:
+
+Metacaracter  -  Descripción
+\w  un caracter alfanumérico (incluye "_").
+\W  un caracter no alfanumérico.
+\d  un caracter numérico.
+\D  un caracter no numérico.
+\s  cualquier espacio (lo mismo que [ \t\n\r\f]).
+\S  un no espacio.
+
+--- Metacaracteres - iteradores ---
+
+Cualquier elemento de una expresion regular puede ser seguido
+por otro tipo de metacaracteres, los iteradores. Usando estos
+metacaracteres se puede especificar el número de ocurrencias
+del caracter previo, de un metacaracter o de una subexpresión.
+
+Ellos son:
+
+Metacaracter  -  Descripción
+*   cero o más, similar a {0,}.
++   una o más, similar a {1,}.
+?   cero o una, similar a {0,1}.
+{n}     exactamente n veces.
+{n,}    por lo menos n veces.
+{n,m}   por lo menos n pero no más de m veces.
+*?  cero o más, similar a {0,}?.
++?  una o más, similar a {1,}?.
+??  cero o una, similar a {0,1}?.
+{n}?    exactamente n veces.
+{n,}?   por lo menos n veces.
+{n,m}?  por lo menos n pero no más de m veces.
+
+En estos metacaracteres, los dígitos entre llaves de la forma {n,m}, especifican
+el mínimo número de ocurrencias en n y el máximo en m.
+
+--- Metacaracteres - alternativas ---
+
+Se puede especificar una serie de alternativas para una
+plantilla usando "|" para separarlas, entonces do|re|mi
+encontrará cualquier "do", "re", o "mi" en el texto de
+entrada. Las alternativas son evaluadas de izquierda a
+derecha, por lo tanto la primera alternativa que coincide
+plenamente con la expresión analizada es la que se selecciona.
+
+Por ejemplo: si se buscan foo|foot en "barefoot'', sólo la parte " foo
+" da resultado positivo, porque es la primera alternativa probada, y
+porque tiene éxito en la búsqueda de la cadena analizada.
+
+Ejemplo:
+
+foo(bar|foo) --> encuentra las cadenas 'foobar' o 'foofoo'.
+
+--- Metacaracteres - subexpresiones ---
+
+La construcción ( ... ) también puede ser empleada para definir
+subexpresiones de expresiones regulares.
+
+Ejemplos:
+
+(foobar){10} --> encuentra cadenas que contienen 8, 9 o 10 instancias de 'foobar'
+
+foob([0-9]|a+)r --> encuentra 'foob0r', 'foob1r' , 'foobar', 'foobaar', 'foobaar' etc.
+Metacaracteres - memorias (backreferences)
+
+Los metacaracteres \1 a \9 son interpretados como memorias. \ encuentra la subexpresión previamente encontrada #.
+
+Ejemplos:
+
+(.)\1+ --> encuentra 'aaaa' y 'cc'.
+
+(.+)\1+ --> también encuentra 'abab' y '123123'
+
+(['"]?)(\d+)\1 --> encuentra '"13" (entre comillas dobles), o '4' (entre comillas simples) o 77 (sin comillas) etc.
 
 --- Metacaracteres ---
 
@@ -2287,23 +2414,6 @@ negar la clase, colocando un circunflejo inmediatamente después del
 corchete izquierdo:
 
 [^abc]: coincide con cualquier caracter distinto a a, b y c
-
---- Clases predefinidas ---
-
-Existen algunas clases que se usan frecuentemente y por eso existen formas
-abreviadas para ellas. En Python, así como en otros lenguajes, se soportan las
-clases predefinidas de Perl y de POSIX. Algunos ejemplos son:
-
-\d (POSIX [[:digit:]]): equivale a [0-9]
-
-\s (POSIX [[:space:]]): caracteres de espacio en blanco (espacio, tabulador, nueva línea, etc)
-
-\w (POSIX [[:word:]]): letras minúsculas, mayúsculas, números y guión bajo (_)
-
-Además existe una clase de caracteres que coincide con cualquier otro caracter.
-Ya sea letra, número, o un caracter especial. Esta clase es el punto:
-
-"." : coincide con cualquier caracter.
 
 --- Cuantificadores ---
 
@@ -2438,6 +2548,41 @@ si una parte de la cadena coincide con la expresión regular.
 
 # -*- coding: utf-8 -*-
 import re
+cadena1 = 'casa'
+cadena2 = 'casas'
+cadena3 = 'pasa'
+
+if re.match(cadena1, cadena2):
+    print "cadena1 y cadena2 son coincidentes"
+else:
+    print "cadena1 y cadena2 no son coincidentes"
+ 
+if re.match(cadena1, cadena3):
+    print "cadena1 y cadena3 son coincidentes"
+else:
+    print "cadena1 y cadena3 no son coincidentes"
+
+---
+
+La función findall() devuelve una lista con las subcadenas que cumplen
+el patrón en una cadena.
+
+---
+
+# -*- coding: utf-8 -*-
+"""
+Usando un rango de números para buscar en el texto.
+"""
+import re
+regex = re.compile('[1-3]+') # Rango de números del 1 al 3.
+text = '5 4 1 3 2'
+a = regex.findall(text)
+print a
+
+---
+
+# -*- coding: utf-8 -*-
+import re
 
 # Expresión regular que comprueba que la cadena es un número.
 regex = re.compile(r'[0-9]+')
@@ -2505,3 +2650,158 @@ text = 'a1 a2 a3 a4 a5'
 a = regex.findall(text)
 print a
 # output: ['a3', 'a4', 'a5']
+
+---
+
+# -*- coding: utf-8 -*-
+import re
+text = """Podrá nublarse el sol eternamente; 
+Podrá secarse en un instante el mar; 
+Podrá romperse el eje de la tierra 
+como un débil cristal. 
+¡todo sucederá! Podrá la muerte 
+cubrirme con su fúnebre crespón; 
+Pero jamás en mí podrá apagarse 
+la llama de tu amor."""
+regex = re.compile(r'\W+') # patron para dividir donde no encuentre un caracter alfanumerico.
+a = regex.split(text)
+print a
+
+---
+
+# -*- coding: utf-8 -*-
+"""
+Validando una URL
+"""
+import re
+text = "https://www.youtube.com/"
+regex = re.compile(r"^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$")
+if regex.search(text):
+    print "Es una url"
+else:
+    print "No es una url"
+
+---
+
+# -*- coding: utf-8 -*-
+"""
+Validando una direccion IP.
+"""
+import re
+text = "192.168.12.255"
+regex = re.compile('^(?:(?:25[0-5]|2[0-4][0-9]|''[01]?[0-9][0-9]?)\.){3}''(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$')
+if regex.search(text):
+    print "Es una ip"
+else:
+    print "No es una ip"
+
+---
+
+# -*- coding: utf-8 -*-
+"""
+Validando una fecha.
+"""
+import re
+text = "30/01/1982"
+regex = re.compile(r'^(0?[1-9]|[12][0-9]|3[01])/(0?[1-9]|1[012])/((19|20)\d\d)$')
+if regex.search(text):
+    print "Es una fecha"
+else:
+    print "No es una fecha"
+
+---
+
+La barra vertical “|” expresa distintas alternativas que podrán darse para que se cumpla la expresión.
+
+---
+
+# -*- coding: utf-8 -*-
+"""
+Validando coincidencias, por ejemplo
+extenciones de ficheros.
+"""
+import re
+extensiones = ['jpg','png','gif','mp3','doc']
+for tipoarchivo in extensiones:
+    if re.match('jpg|png|gif|bmp', tipoarchivo):
+        print "La extension ",tipoarchivo," corresponde con una imagen"
+    else:
+        print "La extension ",tipoarchivo," no corresponde con una imagen"
+
+---
+
+# -*- coding: utf-8 -*-
+"""
+Imprimiendo los terminos que coincidan con la expresión regular.
+"""
+import re
+palabras = ['careta', 'carpeta', 'colita', 'cateta', 'cocreta', 'caleta', 'caseta']
+for termino in palabras:
+    if re.match('ca(..|...)ta', termino):
+        print termino # careta , carpeta, cateta, caleta, caseta 
+
+maspalabras = ['masa', 'mata', 'mar', 'mana','cama', 'marea']
+for termino in maspalabras:
+    if re.match('ma(s|m|n)a', termino):
+        print termino  # masa, mana
+
+---
+
+# -*- coding: utf-8 -*-
+import re
+codigos = ['se1','se9','ma2','se:','se.','se2','hu2','se3','sea','sec']
+
+for elemento in codigos:
+    if re.match('se[0-5]', elemento):  # el 3er carácter puede ser nº de 0-5
+        print elemento
+
+for elemento in codigos:
+    if re.match('se[0-5a-z]', elemento):  # nº de 0 a 5 y letra de a a z
+        print elemento
+
+for elemento in codigos:
+    if re.match('se[.:]', elemento):  # el tercer carácter puede ser . ó :
+        print  elemento
+
+for elemento in codigos:
+    if re.match('se[^0-2]', elemento):  # debe comenzar por nº de 0 a 2 
+        print elemento
+
+---
+
+# -*- coding: utf-8 -*-
+"""
+\d  Cualquier carácter que sea dígito
+\D  Cualquier carácter que no sea dígito
+\w  Cualquier carácter alfanumérico
+\W  Cualquier carácter no alfanumérico
+\s  Espacio en blanco
+\S  Cualquier carácter que no sea espacio
+"""
+import re
+codigos = ['se1','se9','ma2','se:','se.','se2','hu2','se3','sea','sec']
+
+for elemento in codigos:
+    if re.match('se\d', elemento):  # el 3er carácter debe ser número
+        print elemento
+
+---
+
+# -*- coding: utf-8 -*-
+"""
++  El carácter de la izquierda aparecerá una o varias veces
+*  El carácter de la izquierda aparecerá cero o más veces
+?  El carácter de la izquierda aparecerá cero o una vez
+{}  Indica el número de veces que debe aparecer el carácter de la izquierda:
+{3} 3 veces; {1,4} de 1 a 4; {,3} de 0 a 3; {2,} dos o más veces
+"""
+import re
+codigos = ['aaa111', 'aab11', 'aaa1111', 'aaz1', 'aaa'] 
+
+for elemento in codigos:
+    if re.match('aa[a-z]1{2,}', elemento):
+        print elemento # aaa111 , aab11, aaa1111
+
+for elemento in codigos:
+    if re.match('a+1+', elemento):
+        print elemento # aaa111 , aaa1111 

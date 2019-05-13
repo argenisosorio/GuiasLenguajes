@@ -1462,13 +1462,29 @@ $ cclive -f best http://www.youtube.com/xxxxxx // Download the best available fo
 ##### youtube-dl - Descargar videos de youtube #####
 ####################################################
 
-// Instalamos youtube-dl desde el repositorio de Debian.
+// Instalación de youtube-dl desde el repositorio de Debian.
 
 # apt-get install youtube-dl
 
 # apt-get install python-pip
 
 $ pip install --upgrade youtube-dl
+
+// Instalación desde la página oficial.
+
+$ sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+
+$ sudo chmod a+rx /usr/local/bin/youtube-dl
+
+$ sudo pip install --upgrade youtube_dl
+
+// ó usando wget
+
+$ sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
+
+$ sudo chmod a+rx /usr/local/bin/youtube-dl
+
+$ sudo pip install --upgrade youtube_dl
 
 // Para enumerar todos los formatos de video disponibles, use la opción
 // "-list-formats" con el comando youtube-dl.
