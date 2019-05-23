@@ -43,8 +43,12 @@ middlewares y sus funcionalidades. Las rutas y los controladores pueden acceder 
 ##### Instalación de Laravel #####
 ##################################
 
-**Importante** Esta guía fue probada usando la versión 7.0 de php, Composer 1.6.3, Laravel Installer 1.5.0
-Laravel Framework 5.4.36 en GNU/Linux Debian 9 Stretch.
+**Importante** Esta guía fue probada en GNU/Linux Debian 9 Stretch
+usando las siguientes versiones:
+-PHP 7.0
+-Composer 1.6.3
+-Laravel Installer 1.5.0
+-Laravel Framework 5.4.36
 
 Laravel es un framework de código abierto para desarrollar aplicaciones y servicios web con
 PHP 5 y PHP 7. Su filosofía es desarrollar código PHP de forma elegante y simple, evitando
@@ -68,11 +72,11 @@ que el desarrollo de Laravel dependa también del desarrollo de sus dependencias
 
 ##### Instalación de paquetes necesarios #####
 
-// Instalar Apache:
+Instalar Apache:
 
 # apt-get install apache2 
 
-// Instalar PHP y extras para apache:
+Instalar PHP y extras para apache:
 
 # apt-get install php7.0
 
@@ -80,7 +84,7 @@ que el desarrollo de Laravel dependa también del desarrollo de sus dependencias
 
 # aptitude install php-symfony-config php-symfony-dependency-injection php-symfony-expression-language php-symfony-yaml php-symfony-browser-kit php-libsodium php-symfony-http-kernel php-uuid
 
-// Instalar Mysql para usarlo en un futuro como motor de base de datos:
+Instalar Mysql para usarlo en un futuro como motor de base de datos:
 
 # apt-get install mysql-server
 
@@ -101,18 +105,18 @@ vez, éstas librerías también dependen de otras (tú no tienes porqué conocer
 lo que hace Composer en este caso es averiguar que librerías deben instalarse; es decir, resuelve
 todas las dependencias indirectas y descarga automáticamente la versión correcta de cada paquete.
 
-// Descargamos composer:
+Descargamos composer:
 
 $ php -r "readfile('https://getcomposer.org/installer');" | php
 
-// El comando anterior nos descarga el fichero "composer.phar"
+El comando anterior nos descarga el fichero "composer.phar"
 
-// Movemos composer a /usr/local/bin, lo cual nos permitirá que este disponible
-// desde donde sea que lo necesitemos:
+Movemos composer a /usr/local/bin, lo cual nos permitirá que este disponible
+desde donde sea que lo necesitemos:
 
 # mv composer.phar /usr/local/bin/composer
 
-// Comprobamos la instalación con el siguiente comando:
+Comprobamos la instalación con el siguiente comando:
 
 $ composer
 
@@ -125,7 +129,7 @@ Primero descargamos el instalador de Laravel vía Composer
 
 $ composer global require "laravel/installer=~1.1"
 
-// La salida de este comando:
+La salida de este comando:
 
 Changed current directory to /home/user/.config/composer
 ./composer.json has been created
@@ -148,47 +152,47 @@ symfony/console suggests installing symfony/lock ()
 Writing lock file
 Generating autoload files
 
-// Nos dice el directorio donde va a ser instalado laravel
-// luego prosige con la instalación.
+Nos dice el directorio donde va a ser instalado laravel
+luego prosige con la instalación.
 
-// Luego de la instalación, comprobamos la ruta donde está laravel con:
+Luego de la instalación, comprobamos la ruta donde está laravel con:
 
 $ cd .config/composer/vendor/bin
 
-// Si navegamos bien hacia ese directorio, entonces seguimos, agregamos al final del .bashrc lo siguiente:
+Si navegamos bien hacia ese directorio, entonces seguimos, agregamos al final del .bashrc lo siguiente:
 
 PATH=$PATH:~/.config/composer/vendor/bin
 
-// Aplicamos los cambios con el siguiente comando:
+Aplicamos los cambios con el siguiente comando:
 
 $ source .bashrc
 
-// El primer comando el una comprobación corta, el segundo es completa y larga, recomendado el primero.
+El primer comando el una comprobación corta, el segundo es completa y larga, recomendado el primero.
 
-// Creamos un proyecto de laravel para probar:
+Creamos un proyecto de laravel para probar:
 
 $ laravel new nombre_del_proyecto
 
 ##### Otra forma de generar el proyecto, vía composer #####
 
-// En caso de que el comando anterior no funcione porque se va a quejar porque el php
+En caso de que el comando anterior no funcione porque se va a quejar porque el php
 instalado no es superior al 7.2 entonces probar:
 
 $ composer create-project --prefer-dist laravel/laravel mysite "5.4.*"
 
-// Con el comando anterior lo que estamos declarando que que cree el proyecto "mysite"
-// y que se use la ultima actualización de la versión 5.4 de Laravel, que es compatible con
-// el php7.0 que está instalado.
+Con el comando anterior lo que estamos declarando que que cree el proyecto "mysite"
+y que se use la ultima actualización de la versión 5.4 de Laravel, que es compatible con
+el php7.0 que está instalado.
 
-// Ahora vamos a corre el servidor local de desarrllo usando el script Artisan.
+Ahora vamos a correr el servidor local de desarrllo usando el script Artisan.
 
-// Este comando inicia el servidor de desarrllo en http://localhost:8000:
+Este comando inicia el servidor de desarrllo en http://localhost:8000:
 
-// Entramos en el dirctorio del proyecto y corremos el servidor de desarrollo:
+Entramos en el dirctorio del proyecto y corremos el servidor de desarrollo:
 
 $ php artisan serve
 
-// Si corre sin problemas podemos visitar: localhost:8000/ y visualizar Laravel en letras grandes.
+Si corre sin problemas podemos visitar: localhost:8000/ y visualizar Laravel en letras grandes.
 
 #############################################################################
 ##### En la siguiente sección instalaremos Laravel en su última versión #####
@@ -204,38 +208,44 @@ $ sudo apt-get update
 
 ##### Instalación de paquetes necesarios #####
 
+Buscamos la versión de php disponible en el repositorio.
+
+$ apt-get search php
+
+Instalamos la versión disponible del paquete
+
 $ sudo apt-get install php7.2-cli
 
-// Verificar la versión de php que se instaló.
+Verificar la versión de php que se instaló.
 
 $ php -v
 
-// Instalar Apache:
+Instalar Apache:
 
 # apt-get install apache2
 
-// Instalar dependencias extras necesarias:
+Instalar dependencias extras necesarias:
 
 # aptitude install php7.2-gd php7.2-mysql libapache2-mod-php7.2 php-zip php7.2-mbstring php7.2-xml php7.2-intl
 
 # aptitude install php-symfony-config php-symfony-dependency-injection php-symfony-expression-language php-symfony-yaml php-symfony-browser-kit php-libsodium php-symfony-http-kernel php-uuid
 
-// Instalar Mysql para usarlo en un futuro como motor de base de datos
+Instalar Mysql para usarlo en un futuro como motor de base de datos
 
 # apt-get install mysql-server
 
-// Descargamos composer:
+Descargamos composer:
 
 $ php -r "readfile('https://getcomposer.org/installer');" | php
 
-// El comando anterior nos descarga el fichero "composer.phar"
+El comando anterior nos descarga el fichero "composer.phar"
 
-// Movemos composer a /usr/local/bin, lo cual nos permitirá que este disponible
-// desde donde sea que lo necesitemos:
+Movemos composer a /usr/local/bin, lo cual nos permitirá que este disponible
+desde donde sea que lo necesitemos:
 
 # mv composer.phar /usr/local/bin/composer
 
-// Comprobamos la instalación con el siguiente comando:
+Comprobamos la instalación con el siguiente comando:
 
 $ composer
 
@@ -243,39 +253,39 @@ $ composer
 
 $ composer global require "laravel/installer"
 
-// Luego de la instalación, comprobamos la ruta donde está laravel con:
+Luego de la instalación, comprobamos la ruta donde está laravel con:
 
 $ cd .config/composer/vendor/bin
 
-// Si navegamos bien hacia ese directorio, entonces seguimos, agregamos al final del .bashrc lo siguiente:
+Si navegamos bien hacia ese directorio, entonces seguimos, agregamos al final del .bashrc lo siguiente:
 
 PATH=$PATH:~/.config/composer/vendor/bin
 
-// Aplicamos los cambios con el siguiente comando:
+Aplicamos los cambios con el siguiente comando:
 
 $ source .bashrc
 
-// El primer comando el una comprobación corta, el segundo es completa y larga, recomendado el primero.
+El primer comando es para una comprobación corta, el segundo es completa y larga, recomendado el primero.
 
-// Creamos un proyecto de laravel para probar:
+Creamos un proyecto de laravel para probar:
 
 $ laravel new mysite
 
-// Luego de la generación del proyecto e instalación de dependendencias
-// Entramos en el dirctorio del proyecto y corremos el servidor de desarrollo:
+Luego de la generación del proyecto e instalación de dependendencias
+Entramos en el dirctorio del proyecto y corremos el servidor de desarrollo:
 
 $ php artisan serve
 
+Si corre sin problemas podemos visitar: localhost:8000/ y visualizar Laravel en letras grandes.
+
 ##### Otra forma de generar el proyecto, vía composer #####
 
-// Si corre sin problemas podemos visitar: localhost:8000/ y visualizar Laravel en letras grandes.
-
-// Otra forma de generar el proyecto es usando composer, y especificando versiones:
+Otra forma de generar el proyecto es usando composer, y especificando versiones:
 
 $ composer create-project --prefer-dist laravel/laravel mysite
 
-// Luego de la generación del proyecto e instalación de dependendencias
-// Entramos en el dirctorio del proyecto y corremos el servidor de desarrollo:
+Luego de la generación del proyecto e instalación de dependendencias
+Entramos en el dirctorio del proyecto y corremos el servidor de desarrollo:
 
 $ php artisan serve
 
@@ -283,19 +293,19 @@ $ php artisan serve
 ##### Tips/Extras #####
 #######################
 
-// Para comprobar la versión de Laravel instalada:
+Para comprobar la versión de Laravel instalada:
 
 $ php artisan --version
 
-// Para cambiar el puerto donde se esta sirviendo el proyecto:
+Para cambiar el puerto donde se esta sirviendo el proyecto:
 	
 $ php artisan serve --port=9000
 
-// Para cambiar la ip y el puerto donde se esta sirviendo el proyecto:
+Para cambiar la ip y el puerto donde se esta sirviendo el proyecto:
 
 $ php artisan serve --host=192.168.0.100 --port=8000
 
-// Cuando se clona un proyecto de un repositorio, lo mas común es que se omita la carpeta /vendor
-// que contiene los paquetes/librerías requeridas por el proyecto, entonces las instalamos con:
+Cuando se clona un proyecto de un repositorio, lo mas común es que se omita la carpeta /vendor
+que contiene los paquetes/librerías requeridas por el proyecto, entonces las instalamos con:
 
 $ composer install
