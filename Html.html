@@ -3529,3 +3529,60 @@ Usando el tab navegara según el orden de tab index.
 <br>
 <b>Correo electrónico</b>
 <input class="form-control input-md" id="id_correo_electronico" name="correo_electronico" required="True" tabindex="2" type="text" />
+
+---------------
+
+Forzar al navegador a que descargue recursos estáticos cuando los tiene cacheados.
+
+1. Introducción
+
+Los recursos estáticos, tales como hojas de estilo, librerías javascript o imágenes
+son componentes habituales en las aplicaciones web. El navegador cuando accede a
+una página, se descarga estos componentes para poder presentar el contenido de
+la misma. Los navegadores cuentan con una caché para este tipo de recursos estáticos
+que le permite no tener que descargárselos cada vez que se accede a una página que
+requiere el uso de este componente. De esta manera se consigue reducir el tráfico
+entre cliente y servidor reduciendo asimismo el tiempo de carga de la página.
+
+No obstante, esta magnífica solución puede convertirse a veces en un problema.
+Supongamos que nuestra aplicación ya está en producción y, en la siguiente
+versión que desplegamos cambiamos una hoja de estilos (cambiamos su contenido
+no su nombre). ¿Qué sucederá cuando un usuario que ya ha accedido a una de
+nuestras páginas vuelva a acceder tras los cambios en hoja de estilos? Pues
+muy probablemente, que el navegador no descargará el contenido de la .css ya
+que la tendrá cacheada de otras veces y, por tanto, la página no
+se verá correctamente.
+
+La solución.
+
+Pues la solución es muy sencilla, consiste en "engañar" al navegador haciéndole
+creer que la css es otra, o lo que es lo mismo, cambiando la URL de la que se
+debe descargar la hoja de estilos en el .html que hace uso de la misma. No se
+trata de cambiar el recurso de ubicación o de cambiarlo de nombre, simplemente
+añadimos un parámetro en la URL y listo.
+
+
+<link rel="stylesheet" type="text/css" href="http://www.misitio.com/css/estilos.css?version=1.1"></link>
+
+ó
+
+<link rel="stylesheet" type="text/css" href="http://www.misitio.com/css/estilos.css?201202241835"></link>
+
+Como se puede apreciar en los ejemplos anteriores hemos añadido un parámetro
+a la URL donde está el recurso, pero el recurso sigue siendo el mismo, estilos.css
+De esta forma, el navegador no tendrá constancia de esta nueva URL por lo que
+descargará el recurso.
+
+Los parámetros de los ejemplos anteriores son pura convención. El primero es
+version=1.1 lo que nos ayudará a mantener un control sobre la versión de
+la css que estamos exponiendo. El segundo es 201202241835 que no es más que
+la fecha en formato yyyyMMddHHmm en la que se hicieron los últimos cambios
+en el recurso. Por supuesto vale cualquier otro parámetro aunque es recomendable
+seguir siempre la misma convención.
+
+En el momento en que volvamos a hacer cambios en el recurso bastará con cambiar
+este parámetro al importar el recurso desde la página (ej: version=1.2 ó 201205160937)
+y nos aseguraremos al 100% que el navegador del cliente descargará el recurso
+la primera vez que acceda a la página una vez subidos los cambios a producción.
+
+Fuente: https://www.adictosaltrabajo.com/2012/02/27/evitar-cache-navegador-recursos/
