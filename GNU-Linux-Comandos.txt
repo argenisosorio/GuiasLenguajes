@@ -70,6 +70,8 @@ $ df -m // Muestra el espacio disponible del disco y demas dispositivos asi como
 
 $ pstree // Muestra los procesos del sistema en forma de arbol
 
+$ fc-list // Enumerar todas las fuentes instaladas que están disponibles en su tistema linux.
+
 ############################################
 ##### Tips para la consola de comandos #####
 ############################################
@@ -4045,7 +4047,7 @@ $ xrandr --output LVDS-1 --brightness 0.7
 
 2) Entrar en Qt 4 Settings
 
-$ qt4-qtconfig
+$ qtconfig-qt4
 
 3) Selecione GTK+ en Qt Conifiguration > GUI Style y guardar los cambios.
 
@@ -4061,8 +4063,38 @@ $ wget -c http://kdl1.cache.wps.com/ksodl/download/linux/a21//wps-office_10.1.0.
 
 $ wget -c http://kdl.cc.ksosoft.com/wps-community/download/fonts/wps-office-fonts_1.0_all.deb -O fonts.deb
 
-$ dpkg -i *.deb
+# dpkg -i *.deb
 
 6) Abrir WPS Office desde el menú o con el comando:
 
 $ wps
+
+##### Instalar las fuentes faltantes #####
+
+1) Descargar el .zip desde https://github.com/IamDH4/ttf-wps-fonts, este fichero
+contiene las fuentes que necesita WPS Office para que no se queje con el mensaje
+que sale, luego de descargarlo lo descomprimimos
+
+2) Borramos todos los archivos descomprimidos exeptuando los .ttf y TTF y los guardamos
+en una carpeta que llamaremos wps_office.
+
+3) Copiamos la carpeta creada que contiene las fuentes a la ruta /usr/share/fonts/truetype/
+
+$ sudo cp -r wps_office /usr/share/fonts/truetype/
+
+4) Recargamos las fuentes del sistema
+
+# fc-cache -f -v
+
+Listo ya podemos abrir WPS Office y no debería quejarse por fuentes faltantes.
+
+##### Poner en español el WPS Office #####
+
+1) Descargar el fichero wps-full-fix-es_1.0-2019_all.deb desde aquí: https://drive.google.com/file/d/1WjvO0tGffN0nI7uAxoq9VR-DmHdqmjlE/view?usp=sharing
+
+2) Instalar el fichero descargado
+
+$ sudo dpkg -i wps-full-fix-es_1.0-2019_all.deb
+
+3) Abrir WP Office y cambiar el idioma en el ícono con la letra A que está debajo de la X y
+el de minimizar, al lado de "?".
