@@ -4098,3 +4098,20 @@ $ sudo dpkg -i wps-full-fix-es_1.0-2019_all.deb
 
 3) Abrir WP Office y cambiar el idioma en el ícono con la letra A que está debajo de la X y
 el de minimizar, al lado de "?".
+
+###### Instalar eldiccionario en español #####
+
+1) Desde http://wps-community.org/download/dicts descargamos es_ES.zip
+
+2) Descomprimimos el fichero y eso nos deja la carpeta es_ES
+
+3) Copiamos la carpeta es_ES a la ruta /opt/kingsoft/wps-office/office6/dicts/spellcheck
+
+# cp -r es_ES /opt/kingsoft/wps-office/office6/dicts/spellcheck/
+
+4) Ahora ya podemos abrir WPS Office. Nos dirigimos a la pestaña Revisar, clicamos
+el botón de Revisión Ortográfica y cuando aparezca el submenú clicamos encima de Establecer idioma.
+A continuación aparecerá la ventana donde tenemos que seleccionar el idioma del corrector
+ortográfico. En nuestro caso seleccionamos Español y presionamos encima del botón Establecer
+predeterminado. La verdad es que lo estuve probando y esa verga funciona ahí más o menos,
+se recomienda tener cuidado con la escritura.
