@@ -293,7 +293,7 @@ $ php artisan serve
 ##### Tips/Extras #####
 #######################
 
-Para comprobar la versión de Laravel instalada:
+Para comprobar la versión de Laravel instalada entramos en el directorio de un proyecto creado:
 
 $ php artisan --version
 
@@ -309,3 +309,24 @@ Cuando se clona un proyecto de un repositorio, lo mas común es que se omita la 
 que contiene los paquetes/librerías requeridas por el proyecto, entonces las instalamos con:
 
 $ composer install
+
+###############################################
+##### Estructura del proyecto con Laravel #####
+###############################################
+
+Vamos a comentar los principales directorios de la estructura de Laravel
+para ello me he ayudado de la documentación de la estructura en español
+de Laravel, donde puedes encontrar información más detallada:
+
+app: contiene los modelos, y el código base de nuestra aplicación, incluirá
+los directorios Console, Http y Providers.
+
+resources/views: contiene las vistas, donde usaremos el motor de plantillas Blade.
+
+app/Http/Controllers: aquí será donde se definirán los controladores.
+
+app/Http/routes.php: para la definición de las rutas.
+
+app/config/app.php: contiene configuración general de la aplicación.
+
+public: carpeta pública desde dónde se inicia el proceso de ejecución de una aplicación Laravel.

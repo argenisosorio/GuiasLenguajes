@@ -4034,3 +4034,35 @@ $ xrandr --output LVDS-1 --brightness 0.7
 # apt-get dist-upgrade
 
 # reboot
+
+###########################################
+##### Instalar WPS Office en Debian 9 #####
+###########################################
+
+1) Instalar Qt 4 Settings
+
+# apt install qt4-qtconfig
+
+2) Entrar en Qt 4 Settings
+
+$ qt4-qtconfig
+
+3) Selecione GTK+ en Qt Conifiguration > GUI Style y guardar los cambios.
+
+4) Descargar e instalar la dependencia libpng12
+
+$ wget -c http://ftp.us.debian.org/debian/pool/main/libp/libpng/libpng12-0_1.2.50-2+deb8u3_amd64.deb
+
+# dpkg -i libpng12-0_1.2.50-2+deb8u3_amd64.deb
+
+5) Descargar e instalar de WPS Office
+
+$ wget -c http://kdl1.cache.wps.com/ksodl/download/linux/a21//wps-office_10.1.0.5707~a21_amd64.deb -O wps-office.deb
+
+$ wget -c http://kdl.cc.ksosoft.com/wps-community/download/fonts/wps-office-fonts_1.0_all.deb -O fonts.deb
+
+$ dpkg -i *.deb
+
+6) Abrir WPS Office desde el menú o con el comando:
+
+$ wps
