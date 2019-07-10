@@ -1456,7 +1456,7 @@ limitaciones, como solo poder crear o desplegar un proyecto por cuenta).
 Al ingresar vamos a dar click en Dashboard para acceder a nuestro panel principal en donde tendremos 5 pestañas especiales de las cuales
 en esta vez solo usaremos 4: Consoles, Files, Web y Databases. En la pestaña de consola podremos elegir abrir una consola bash que nos 
 situará en el directorio de nuestro usuario: /home/dm/ desde la consola podemos clonar repositorios y para nuestro caso podemos clonar el proyecto
-que queremos desplegar. También podemos entornos virtuales por si necesitamos paquetes python adicionales, por defecto nuestra sesion en bash ya
+que queremos desplegar. También podemos crear entornos virtuales por si necesitamos paquetes python adicionales, por defecto nuestra sesion en bash ya
 tiene instalado django 1.10 y python 2.7.x.
 
 Cuando te hayas registrado en PythonAnywhere serás redirigida a tu panel de control o página "Consoles". Elije la opción para iniciar una consola "Bash", que
@@ -2026,6 +2026,15 @@ def clean_email(self):
         raise forms.ValidationError("Este email ya está registrado.")
     return email
 
+def clean_cedula(self):
+    """
+    Método que valida si la cedula ya existe.
+    """
+    cedula = self.cleaned_data['cedula']
+    if Beneficiario.objects.filter(cedula=cedula).exists():
+        raise forms.ValidationError("Esta cedula ya está registrada.")
+    return cedula
+
 ##### Para que muestre el mensaje de error en el template usaremos un if #####
 
 {% extends "base/base.html" %}
@@ -2474,7 +2483,8 @@ Generar un fichero json con a partir de un modelo específico de la aplicación:
 $ python manage.py dumpdata app_name.model_name > data.json
 
 Esta generación por lo general es usada para crear un json con data inicial
-que puede ser cargada en la db si necesidad de hacer un volvado de datos.
+que puede ser cargada en la db si necesidad de hacer un volcado de datos.
+
 De esta manera podemos tener usuarios, permisos u otro tipo de data que seran cargados
 automáticamente a partir de un comando:
 
@@ -4671,6 +4681,31 @@ class Proyecto(models.Model):
     <option value="{{ id }}">{{ name }}</option>
   {% endfor %}
 </select>
+
+ejemplo:
+
+#views.py
+class Buscar_tarea(TemplateView):
+    """
+    Plantilla que tiene el formulario para buscar tareas.
+    """
+    template_name = "tareas/buscar_tarea.html"
+
+    def get(self, request, *args, **kwargs):
+        query_productos = Producto.objects.all()
+        return render(request,self.template_name, {'query_productos':query_productos})
+
+#template.html
+<form action="{% url 'tareas:busqueda_tarea' %}" method="get">
+  <label>Por producto</label>
+  <br />
+  <select name="producto" class="form form-control" id="id_producto">
+    {% for x in query_productos %}
+      <option value="{{ x.nombre_producto }}">{{ x.nombre_producto }}</option>
+    {% endfor %}
+  </select>
+  <button class="btn btn-success" type="submit">Buscar</button>
+</form>
 
 #########################################
 ##### Campo checkbox en formularios #####
