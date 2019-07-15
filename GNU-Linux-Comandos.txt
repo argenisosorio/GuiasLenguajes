@@ -184,6 +184,8 @@ $ du -h // Los mismo que arriba pero se ven los tamaños en kg, mg, etc
 
 $ du -sh // Ver el tamaño total de los directorios.
 
+$ du -sh name_dir // Ver el tamaño de un directorio específico.
+
 $ du * // Muestra todos directorios y ficheros y el espacio que ocupan en el disco.
 
 $ du -h * // Leer todos los elementos y ver los tamaños en kg, mg, etc.
@@ -4115,3 +4117,15 @@ A continuación aparecerá la ventana donde tenemos que seleccionar el idioma de
 ortográfico. En nuestro caso seleccionamos Español y presionamos encima del botón Establecer
 predeterminado. La verdad es que lo estuve probando y esa verga funciona ahí más o menos,
 se recomienda tener cuidado con la escritura.
+
+######################################
+###### Instalar megasync desktop #####
+######################################
+
+Descargar el .deb desde https://mega.nz/sync, en este caso descargué megasync-Debian_9.0_amd64.deb
+
+# apt-get install libc-ares2 libcrypto++6 libmediainfo0v5 libtinyxml2-4 libzen0v5 apt-transport-https
+
+# dpkg -i megasync-Debian_9.0_amd64.deb
+
+Listo!!!
