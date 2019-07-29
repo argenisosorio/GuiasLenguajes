@@ -52,12 +52,6 @@ $ lsusb // Este comando muestra todos los puertos USB y los detalles acerca de l
 
 $ lspci // Lista todos los componentes tipo pci (Peripheral Component Interconnec) como las tarjetas de red, de sonido o de televisión.
 
-$ free // Muestra el estado de la memoria RAM, total, usado, disponible, cached, buffers.
-
-$ free -m // Mostrar los datos en mb sin más.
-
-$ free -h // Para ver los resultados en mb o gb con letra al final.
-
 $ cat /proc/meminfo // Leer el fichero meminfo que contiene datos dinámicos de la memoria, similar a free.
 
 $ vmstat // Muestra el estado de la memoria virtual
@@ -71,6 +65,16 @@ $ df -m // Muestra el espacio disponible del disco y demas dispositivos asi como
 $ pstree // Muestra los procesos del sistema en forma de arbol
 
 $ fc-list // Enumerar todas las fuentes instaladas que están disponibles en su tistema linux.
+
+##### Memoria ram #####
+
+$ free // Muestra el estado de la memoria RAM, total, usado, disponible, cached, buffers.
+
+$ free -m // Mostrar los datos en mb sin más.
+
+$ free -h // Para ver los resultados en mb o gb con letra al final.
+
+# dmidecode --type memory // detalles, fabricante, tipo, el máximo que soporta nuestro equipo, etc.
 
 ############################################
 ##### Tips para la consola de comandos #####
@@ -2860,6 +2864,10 @@ es borrado o movido a una ubicación diferente el enlace dejará de funcionar y 
 
 Un enlace simbólico permite enlazar directorios y, usando NFS, también permite enlazar archivos fuera del equipo.
 
+Ejemplo práctico:
+
+# ln -s /etc/nginx/sites-available/prueba /etc/nginx/sites-enabled/
+
 ########################
 ##### jaula chroot #####
 ########################
@@ -3357,53 +3365,6 @@ O simplemente agregando el repositorio en el source.list, por ejemplo:
 #deb http://archive.debian.org/debian/ squeeze main contrib
 #deb http://archive.debian.org/debian/ wheezy main contrib
 deb http://archive.debian.org/debian/ jessie main contrib
-
-########################################################
-##### Recommended installation packages for Debian #####
-########################################################
-
-Actualizar el source.list 
-
-# apt-get update
-
-Si da problemas con el fichero dir/dir/lock por ejemplo, lo borramos
-
-# rm -f dir/dir/lock
-
-No se pudo bloquear /var/lib/dpkg/lock - open (11: Recurso no disponible temporalmente)
-
-Solución...
-
-$ sudo fuser -vki  /var/lib/dpkg/lock
-
-luego seguimos con...
-
-##### Programas para el Sistema #####
-
-terminator (Configurar, luego)
-vim (Configurarlo)
-
-.bashrc (Configurarlo, alias, etc...)
-alias ll='ls -l --color'
-alias buscar='grep --color -n -Ir'
-
-sudo (Configurar y Probar)
-aptitude (Probar)
-ssh (Configurar y Probar)
-git (Configurarlo, Probarlo)
-vlc player
-apache (Probar)
-postgresql (Probar)
-Virtual Box (Opcional)
-Paquete para dar formatos a unidades usb
-rsync
-meld
-audacity
-
-tree // Muestra un árbol de directorios con sangría, en color.
-
-screenfetch // Busca y muestra información sobre el sistema operativo que estemos utilizando, datos
-como el tipo de distribución, kernel, entorno de escritorio, windows manager, CPU, themes, RAM, etc… 
 
 #####  Para compilacion y construcción de paquetes #####
 
@@ -4129,3 +4090,51 @@ Descargar el .deb desde https://mega.nz/sync, en este caso descargué megasync-D
 # dpkg -i megasync-Debian_9.0_amd64.deb
 
 Listo!!!
+
+########################################################
+##### Recommended installation packages for Debian #####
+########################################################
+
+Actualizar el source.list 
+
+# apt-get update
+
+Si da problemas con el fichero dir/dir/lock por ejemplo, lo borramos
+
+# rm -f dir/dir/lock
+
+No se pudo bloquear /var/lib/dpkg/lock - open (11: Recurso no disponible temporalmente)
+
+Solución...
+
+$ sudo fuser -vki  /var/lib/dpkg/lock
+
+##################################################
+##### Programas recomendados para el Sistema #####
+##################################################
+
+terminator (Configurar, luego)
+vim (Configurarlo)
+
+.bashrc (Configurarlo, alias, etc...)
+alias ll='ls -l --color'
+alias buscar='grep --color -n -Ir'
+
+sudo (Configurar y Probar)
+aptitude (Probar)
+ssh (Configurar y Probar)
+git (Configurarlo, Probarlo)
+vlc player
+apache (Probar)
+postgresql (Probar)
+Virtual Box (Opcional)
+Paquete para dar formatos a unidades usb
+rsync
+meld
+audacity
+
+alacarte // Herramienta sencilla para la edición de menús de GNOME
+
+tree // Muestra un árbol de directorios con sangría, en color.
+screenfetch // Busca y muestra información sobre el sistema operativo que estemos utilizando, datos
+como el tipo de distribución, kernel, entorno de escritorio, windows manager, CPU, themes, RAM, etc… 

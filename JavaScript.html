@@ -5296,3 +5296,147 @@ $("document").ready(function(){
   </script>
 </body>
 </html>
+
+------------------------------------------
+
+<!-- Exportar en csv una serie de datos ordenados en arreglos -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="jquery/jquery-1.12.4.min.js" type="text/javascript"></script>
+</head>
+<body>
+<script type="text/javascript">
+// Example data given in question text
+var data = [
+  ['name1', 'city1', 'some other info'],
+  ['name2', 'city2', 'more info']
+];
+
+// Building the CSV from the Data two-dimensional array
+// Each column is separated by ";" and new line "\n" for next row
+var csvContent = '';
+data.forEach(function(infoArray, index) {
+  dataString = infoArray.join(',');
+  csvContent += index < data.length ? dataString + '\n' : dataString;
+});
+
+// The download function takes a CSV string, the filename and mimeType as parameters
+// Scroll/look down at the bottom of this snippet to see how download is called
+var download = function(content, fileName, mimeType) {
+  var a = document.createElement('a');
+  mimeType = mimeType || 'application/octet-stream';
+
+  if (navigator.msSaveBlob) { // IE10
+    navigator.msSaveBlob(new Blob([content], {
+      type: mimeType
+    }), fileName);
+  } else if (URL && 'download' in a) { //html5 A[download]
+    a.href = URL.createObjectURL(new Blob([content], {
+      type: mimeType
+    }));
+    a.setAttribute('download', fileName);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  } else {
+    location.href = 'data:application/octet-stream,' + encodeURIComponent(content); // only this mime type is supported
+  }
+}
+download(csvContent, 'dowload.csv', 'text/csv;encoding:utf-8');
+</script>
+</body>
+</html>
+
+------------------------------------------
+
+<!-- Exportar tabla html a un csv -->
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+function downloadCSV(csv, filename) {
+  var csvFile;
+  var downloadLink;
+
+  // CSV file
+  csvFile = new Blob([csv], {type: "text/csv"});
+
+  // Download link
+  downloadLink = document.createElement("a");
+
+  // File name
+  downloadLink.download = filename;
+
+  // Create a link to the file
+  downloadLink.href = window.URL.createObjectURL(csvFile);
+
+  // Hide download link
+  downloadLink.style.display = "none";
+
+  // Add the link to DOM
+  document.body.appendChild(downloadLink);
+
+  // Click download link
+  downloadLink.click();
+}
+
+function exportTableToCSV(filename) {
+  var csv = [];
+  var rows = document.querySelectorAll("table tr");  
+  for (var i = 0; i < rows.length; i++) {
+    var row = [], cols = rows[i].querySelectorAll("td, th");
+    for (var j = 0; j < cols.length; j++) 
+      row.push(cols[j].innerText);    
+    csv.push(row.join(","));    
+  }
+  // Download CSV file
+  downloadCSV(csv.join("\n"), filename);
+}
+</script>
+</head>
+<body>
+<table border="1px" cellpadding="0px" cellspacing="0px">
+  <thead>
+    <th>Nombre</th>
+    <th>Apellido</th>
+    <th>Edad</th>
+    <th>Correo</th>
+    <th>Pais</th>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Alejandro</td>
+      <td>Ramirez</td>
+      <td>25</td>
+      <td>a@a.com</td>
+      <td>Venezuela</td>
+    </tr>
+    <tr>
+      <td>Jose</td>
+      <td>Perez</td>
+      <td>23</td>
+      <td>b@b.com</td>
+      <td>Venezuela</td>
+    </tr>
+    <tr>
+      <td>Maria</td>
+      <td>Mendez</td>
+      <td>26</td>
+      <td>c@c.com</td>
+      <td>Venezuela</td>
+    </tr>
+    <tr>
+      <td>Alexandra</td>
+      <td>Herrera</td>
+      <td>35</td>
+      <td>d@<data></data>.com</td>
+      <td>Venezuela</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+ <br>
+ <a href="javascript:exportTableToCSV('file.csv')"><button type="button" class="btn btn-success">Exportar en CSV</button></a>
+</html>

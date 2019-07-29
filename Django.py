@@ -6860,3 +6860,13 @@ porc_act_1 = forms.IntegerField(label='Ponderación asignada (%)', widget=TextIn
     'style': 'min-width: 0; width: 100%; display: inline;',
     'value': '0',
 }), required = False)
+
+#############################################################
+##### Obtener la url relativa en la cual se está parado #####
+#############################################################
+
+# view.html
+a = self.request.path
+
+# template.html
+{{ request.path }}
