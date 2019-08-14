@@ -2805,3 +2805,9 @@ for elemento in codigos:
 for elemento in codigos:
     if re.match('a+1+', elemento):
         print elemento # aaa111 , aaa1111 
+
+##########################
+##### Function str() #####
+##########################
+
+The str() function converts the specified value into a string.

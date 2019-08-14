@@ -6870,3 +6870,19 @@ a = self.request.path
 
 # template.html
 {{ request.path }}
+
+##########################
+##### Function str() #####
+##########################
+
+The str() function converts the specified value into a string.
+
+##############################################
+##### Botón para ir atrás en el tempalte #####
+##############################################
+
+#template.html
+<a href="{{ request.META.HTTP_REFERER }}">Back</a>
+
+# con javascript
+<a href="javascript:window.history.go(-1);">Back</a>
