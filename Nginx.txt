@@ -93,7 +93,7 @@ Para ver la configuración de nginx del sitio disponible:
 Si se quiere comprobar la sintaxis de los archivos de configuración luego de realizar algun cambio,
 o si es la primera vez que se configura, usaremos el siguiente comando:
 
-$ nginx -t
+# nginx -t
 
 Si todo está bien, la salida sería algo como esto:
 
@@ -121,7 +121,6 @@ Para ver en tiempo real el log de errores del server del sitio:
 To enable a debugging log, nginx needs to be configured to support debugging during the build:
 
 ./configure --with-debug .../tailf
-
 
 Then the debug level should be set with the error_log directive:
 

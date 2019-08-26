@@ -4141,7 +4141,8 @@ dueño de la aplicación, así como la ruta local o dirección donde está aloja
 # systemctl restart uwsgi
 
 Cada vez que se haga un cambio en la configuración de nginx reiniciaremos el servicio, y si el cambio
-es de python, es decir en el proyecto de Django entonces reiniciaremos el servicio de uwsgi.
+es de python, es decir en el proyecto de Django entonces reiniciaremos el servicio de uwsgi o si hubo
+una modificación en la configuración de uwsgi también reiniciamos el servicio.
 
 // Para no detener e iniciar los servicios y a su vez tumbar las conexiones usaremos reload en vez de restart:
 
