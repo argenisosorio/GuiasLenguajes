@@ -202,15 +202,18 @@ Si corre sin problemas podemos visitar: localhost:8000/ y visualizar Laravel en 
 Laravel Installer 2.0, Laravel Framework 5.6.11 en GNU/Linux Debian 9 Stretch.
 
 $ sudo apt-get install apt-transport-https lsb-release ca-certificates
+
 $ sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+
 $ echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+
 $ sudo apt-get update
 
 ##### Instalación de paquetes necesarios #####
 
 Buscamos la versión de php disponible en el repositorio.
 
-$ apt-get search php
+$ aptitude search search php
 
 Instalamos la versión disponible del paquete
 
