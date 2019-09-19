@@ -949,6 +949,21 @@ print data["Fruteria"][1]["Verdura"][0]["Cantidad"]
 print data["Fruteria"][1]["Verdura"][1]["Cantidad"]
 print data["Fruteria"][1]["Verdura"][2]["Cantidad"]
 
+----
+
+# -*- coding: utf-8 -*-
+"""
+Insertando datos en un diccionario
+"""
+persona = {}
+print persona
+print "----"
+persona['Nombre'] = 'José'
+print persona
+persona['Apellido'] = 'Carlos'
+print "----"
+print persona
+
 ##########################
 ##### Manejando json #####
 ##########################

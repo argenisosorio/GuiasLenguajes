@@ -3846,7 +3846,8 @@ Si hay 3976 registros se debe configurar que el último valor es 3977 para que g
 # En la rama upload del siguiente repo está el ejemplo funcional:
 # https://github.com/argenisosorio/registro_vistas_clases/
 
-# Activamos las siguientes variables en el settings, y le damos la ruta donde se va a almacenar el fichero adjunto.
+# Activamos las siguientes variables en el settings, y le damos la
+# ruta donde se va a almacenar el fichero adjunto.
 
 # settings.py
 MEDIA_URL = '/media/'
