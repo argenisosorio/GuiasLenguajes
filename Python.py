@@ -953,7 +953,7 @@ print data["Fruteria"][1]["Verdura"][2]["Cantidad"]
 
 # -*- coding: utf-8 -*-
 """
-Insertando datos en un diccionario
+Insertando datos en un diccionario.
 """
 persona = {}
 print persona
@@ -962,6 +962,24 @@ persona['Nombre'] = 'José'
 print persona
 persona['Apellido'] = 'Carlos'
 print "----"
+print persona
+
+----
+
+# -*- coding: utf-8 -*-
+"""
+Insertando datos en un diccionario y borrando elementos mediante la clave.
+"""
+persona = {}
+print persona
+print "----"
+persona['Nombre'] = 'José'
+print persona
+persona['Apellido'] = 'Carlos'
+print "----"
+print persona
+print "----"
+del persona['Apellido']
 print persona
 
 ##########################
