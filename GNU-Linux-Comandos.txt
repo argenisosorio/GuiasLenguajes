@@ -4165,3 +4165,26 @@ audio de la máquina.
 $ parecord --channels=1 -d alsa_output.pci-0000_00_1b.0.analog-stereo.monitor grabacion.wav
 
 Con Ctrl + c detenemos la grabación.
+
+###########################################################
+##### Particionado recomendado de discos en GNU/Linux #####
+###########################################################
+
+Imaginemos que tenemos un disco SATA de 500GB.
+
+Partición primaria:
+
+/boot = 1 GB
+
+Particiones extendidas:
+
+swap = El doble de la memoria RAM
+
+/home = 465GB para los usuarios del SO
+
+/ = 50 GB
+
+El particionamiento no es una ciencia exacta, y mucho menos con las miles de
+combinaciones que hay, pero os aseguramos que separar el punto de montaje /home
+del resto nos ahorrará muchos problemas, sobre todo en actualizaciones, donde
+no perderemos ni un solo dato.
