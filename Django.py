@@ -3329,6 +3329,11 @@ todos los posts cuyo autor es el User ola. Usaremos filter en vez de all.
 >>> User.objects.filter(username__icontains='ad')
 [<User: admin>]
 
+# Filtrar la lista de objetos por un solo campo de la tabla, en este caso
+# obtenemos todos los valores del campo username de la tabla User.
+>>> User.objects.all().values('username')
+[{'username': u'admin'}, {'username': u'aosorio'}]
+
 ##### Ordenando objetos #####
 
 '''

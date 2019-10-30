@@ -4170,19 +4170,37 @@ Con Ctrl + c detenemos la grabación.
 ##### Particionado recomendado de discos en GNU/Linux #####
 ###########################################################
 
+* swap: Las particiones swap sirven para soportar la memoria virtual. En otras palabras
+los datos se escriben en una partición swap cuando no hay suficiente memoria RAM
+para almacenar la información que su sistema está procesando.
+
+* /boot: La partición montada en /boot/ contiene el kernel del sistema operativo (el cual
+permite a su sistema arrancar el SO) junto con archivos utilizados durante el proceso
+de arranque.
+
+* /: Aquí es donde se localiza "/" (el directorio raíz). En esta configuración, todos
+los archivos (excepto aquellos almacenados en /boot) están en la partición raíz.
+
+La partición / (o raíz) es la cima de la estructura del directorio. El directorio /root (algunas veces
+pronunciado "slash-root") es el directorio principal de la cuenta del usuario-administrador del sistema.
+
+* /home: Para almacenar datos de forma independiente de los datos del sistema, cree una partición
+dedicada dentro de un grupo de volumen para el directorio /home. Así podrá actualizar
+o reinstalar el SO sin borrar archivos de datos de los usuarios.
+
 Imaginemos que tenemos un disco SATA de 500GB.
 
-Partición primaria:
+-- Partición primaria:
 
-/boot = 1 GB
+/boot = 500mb
 
-Particiones extendidas:
+-- Particiones extendidas:
 
 swap = El doble de la memoria RAM
 
-/home = 465GB para los usuarios del SO
+/ = 30 GB
 
-/ = 50 GB
+/home = 465GB o lo que sobre para los usuarios del SO
 
 El particionamiento no es una ciencia exacta, y mucho menos con las miles de
 combinaciones que hay, pero os aseguramos que separar el punto de montaje /home
