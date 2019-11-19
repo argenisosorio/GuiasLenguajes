@@ -6893,3 +6893,143 @@ The str() function converts the specified value into a string.
 
 # con javascript
 <a href="javascript:window.history.go(-1);">Back</a>
+
+#################################################################
+##### Configurar reestablecimiento de contraseña por correo #####
+#################################################################
+
+# setting.py
+
+# Configuración de variables para envío de correo electrónico de recuperación de contraseña
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com' # mail service smtp
+EMAIL_HOST_USER = 'email@gmail.com'
+EMAIL_HOST_PASSWORD = 'myemailpassword'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# módulo de usuarios, urls
+
+urlpatterns=patterns('',
+    url(r'^login/$',LoginView.as_view(),name="login"),
+    url(r'logout/$',views.Logout.as_view(),name='logout'),
+    url(r'^register$',views.RegisterUser.as_view(),name='register'),
+    url(r'^list_users/$',login_required(views.ListUsers.as_view()),name='list_users'),
+    url(r'^cambiar-contrasena/$',login_required(views.change_password),name='change_password'),
+    url(r'^edit_user/(?P<pk>\d+)$',login_required(views.EditUser.as_view()),name='edit_user'),
+    url(r'^delete_user/(?P<pk>\d+)$',login_required(views.DeleteUser.as_view()),name='delete_user'),
+    url(r'^user_change_password/(?P<pk>\d+)$',login_required(views.user_change_password),name='user_change_password'),
+    # Urls para el restablecimiento de contraseña por correo.
+    url(r'^resetpassword/$', 'django.contrib.auth.views.password_reset',
+        {'post_reset_redirect':'passwordsent/','template_name':'usuarios/password_reset_form.html',
+        'email_template_name':'usuarios/password_reset_email.html'},name='password_reset'),
+    url(r'^resetpassword/passwordsent/$','django.contrib.auth.views.password_reset_done',
+        {'template_name':'usuarios/password_reset_done.html'},name='password_reset_done'),
+    url(r'^reset/(?P<uidb64>[0-9A-Za-z]+)/(?P<token>.+)/$',
+        'django.contrib.auth.views.password_reset_confirm',
+        {'post_reset_redirect':reverse_lazy('usuarios:password_reset_complete'),'template_name':'usuarios/password_reset_confirm.html'},
+        name='password_reset_confirm'),
+    url(r'^reset/done/$','django.contrib.auth.views.password_reset_complete',
+        {'template_name':'usuarios/password_reset_complete.html'},
+        name='password_reset_complete'),
+)
+
+password_reset_complete.html
+
+{% extends "base/base.html" %}
+{% load i18n %}
+{% block titulo %}Contraseña restablecida{% endblock %}
+{% block cuerpo %}
+{% load staticfiles %}
+<p>{% trans "Your password has been set.  You may go ahead and log in now." %}</p>
+<p><a href="{% url 'usuarios:login' %}">{% trans 'Log in' %}</a></p>
+{% endblock %}
+
+-----
+
+password_reset_confirm.html
+
+{% extends "base/base.html" %}
+{% load i18n %}
+{% block titulo %}Cambio de contraseña{% endblock %}
+{% block cuerpo %}
+{% load staticfiles %}
+{% if validlink %}
+<br />
+<p>{% trans "Please enter your new password twice so we can verify you typed it in correctly." %}</p>
+<br />
+<div align="center">
+  <form method="post" align="center">{% csrf_token %}
+    <table class="table_change_password" cellpadding="0px" cellspacing="0px">
+      <tbody>
+        <tr>
+          <td>
+            {{ form.new_password1.errors }}
+            <p class="aligned wide"><label for="id_new_password1">{% trans 'New password:' %}</label>{{ form.new_password1 }}</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{ form.new_password2.errors }}
+            <p class="aligned wide"><label for="id_new_password2">{% trans 'Confirm password:' %}</label>{{ form.new_password2 }}</p>
+          </td>
+        </tr>
+      </tbody>
+      <br />
+    </table>
+  <p><input type="submit" value="{% trans 'Change my password' %}" /></p>
+  </form>
+</div>
+{% else %}
+<p>{% trans "The password reset link was invalid, possibly because it has already been used.  Please request a new password reset." %}</p>
+{% endif %}
+{% endblock %}
+
+-----
+
+password_reset_done.html
+
+{% extends "base/base.html" %}
+{% load i18n %}
+{% block titulo %}Restablecimiento de contraseña enviado{% endblock %}
+{% block cuerpo %}
+<p>{% trans "We've emailed you instructions for setting your password, if an account exists with the email you entered. You should receive them shortly." %}</p>
+<p>{% trans "If you don't receive an email, please make sure you've entered the address you registered with, and check your spam folder." %}</p>
+{% endblock %}
+
+-----
+
+password_reset_email.html
+
+{% load i18n %}{% autoescape off %}
+{% blocktrans %}You're receiving this email because you requested a password reset for your user account at {{ site_name }}.{% endblocktrans %}
+{% trans "Please go to the following page and choose a new password:" %}
+{% block reset_link %}
+{{ protocol }}://{{ domain }}{% url 'usuarios:password_reset_confirm' uidb64=uid token=token %}
+{% endblock %}
+{% trans "Your username, in case you've forgotten:" %} {{ user.get_username }}
+{% trans "Thanks for using our site!" %}
+{% blocktrans %}The {{ site_name }} team{% endblocktrans %}
+{% endautoescape %}
+
+-----
+
+password_reset_form.html
+
+{% extends "base/base.html" %}
+{% load i18n %}
+{% block titulo %}Restablecer contraseña{% endblock %}
+{% block cuerpo %}
+<div align="center">
+    <br />
+        <h1 class="color-white"><a href=""><i class="fa fa-mail-reply fa-lg ollapsed"></i></a> Recuperación de contraseña</h1>
+    <br />
+    <p><h4 class="color-blue"> Introduzca la dirección de correo electrónico suministrada al registrarse</h4></p>
+    <br>
+    <form action="" method="post">{% csrf_token %}
+    {{ form.email.errors }}
+        <p><label for="id_email">{% trans 'Email address:' %}</label> {{ form.email }} <input type="submit" value="Recuperar contraseña" /></p>
+    </form>
+</div>
+{% endblock %}
