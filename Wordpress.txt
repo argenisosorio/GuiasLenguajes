@@ -203,6 +203,46 @@ Duplicate Theme // Choose an existing theme, duplicate it or create a child whil
 
 Download Plugins and Themes from Dashboard // Download installed plugins and themes ZIP files directly from your admin dashboard without using FTP.
 
+#########################################
+##### Inlcluir bootstrap en un tema #####
+#########################################
+
+Agregar al final de functions.php
+
+add_action ('wp_enqueue_scripts',function () {
+  wp_enqueue_style ('bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
+});
+
+Esto hará que en nuestra plantilla se llame a bootstrap con:
+
+<link rel='stylesheet' id='bootstrap-css'  href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css?ver=5.2.4' type='text/css' media='all' />
+
+##### La otra forma #####
+
+1) Descargar el bootstrap.min.css y el bootstrap.min.js de la página de bootstrap
+
+2) pegarlos en la carpeta:
+
+wp-content/themes/twentyseventeen/assets/css
+
+y
+
+wp-content/themes/twentyseventeen/assets/js
+
+3) Ir a /wp-content/themes/mi_tema/functions.php y pegar al final el siguiente código:
+
+// Incluir Bootstrap CSS
+function bootstrap_css() {
+  wp_enqueue_style('bootstrap_css',get_stylesheet_directory_uri().'/assets/css/bootstrap.min.css',array(),'4.3.8');
+}
+add_action('wp_enqueue_scripts','bootstrap_css');
+
+// Incluir Bootstrap JS
+function bootstrap_js() {
+  wp_enqueue_script('bootstrap_js',get_stylesheet_directory_uri().'/assets/js/bootstrap.min.js',array('jquery'),'4.3.8',true); 
+}
+add_action('wp_enqueue_scripts','bootstrap_js');
+
 #######################################
 ##### Tips sobre gestión de temas #####
 #######################################
