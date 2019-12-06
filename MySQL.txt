@@ -5,39 +5,50 @@
 # apt-get install mysql-server
 
 // Por la consola nos pedira una contraseña para el usuario root de mysql.
-
 // Acceder a la consola de mysql, nos pedirá la contraseña solamente.
+
 # mysql -p
 
 // Para ver la lista de comandos de consola mysql disponibles.
+
 mysql> \h
 
 // Crear una base de datos.
+
 mysql> create database db_name;
 
 // Crear un usuario y su contraseña.
+
 mysql> create user 'testuser'@'localhost' identified by '123456';
 
 // Darle permisos al usuario creado sobre una db existente.
+
 mysql> grant all on db_name.* to 'testuser';
 
 // Listas las bases de datos disponibles.
+
 mysql> show databases;
 
 // Borrar una base de datos específica.
+
 mysql> DROP DATABASE db_name;
 
 // Si la base de datos no existe va a dar error, podemos usar el parámeteo IF EXISTS para que no de error.
+
 mysql> DROP DATABASE IF EXISTS db_name;
 
 // Ver la lista de usuarios de mysql
+
 mysql> select * from mysql.user;
 
 // Ver la lista de usuarios de mysql, solo los campos importantes
+
 mysql> select host, user from mysql.user;
 
 // Ver la lista de campos de un usaurio de mysql;
+
 mysql> desc mysql.user;
 
 // Refrescar el esquema de las tablas de MySQL, usado cuando se hace alguna modificación del esquema, se hace al final.
+
 mysql> FLUSH PRIVILEGES;

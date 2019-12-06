@@ -327,3 +327,13 @@ los Roles definen las responsabilidades de los usuarios dentro del blog.
 -Subscriptor - Quien solamente puede editar su perfil.
 
 Al momento de instalar WordPress, una cuenta e Administrador con todas las Capacidades es creada automáticamente.
+
+#########################################
+##### Incluir una imagen en un tema #####
+#########################################
+
+Se debe guardar la imagen en: wp-content/themes/my_theme/assets/images/my_image.png
+
+y luego ya se puede llamar en alguna de las plantillas, como index.php por ejemplo, con:
+
+<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/my_image.png' );?>" class="xxx">
