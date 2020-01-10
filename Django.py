@@ -7033,3 +7033,62 @@ password_reset_form.html
     </form>
 </div>
 {% endblock %}
+
+##################################################################################
+##### Recuperación de contraseña por correo en Django con correo de CENDITEL #####
+##################################################################################
+
+Para utilizar la opción de recuperar contraseña por correo se debe instalar el paquete exim4
+
+# apt-get install exim4
+
+Despues de instalado usar el comando:
+
+# dpkg-reconfigure exim4-config
+
+Allí nos aparecera un formulario para llenar la configuración en un principio marcamos
+la tercera opcion "el correo se envía mediante un «smarthost»; sin correo local"
+y presionamos aceptar hasta que nos pida Dirección IP para el smarthost saliente
+ahi pondremos: smtp.cenditel.gob.ve::465
+
+En las siguientes opciones les diremos que no hasta salir del formulario
+luego para aplicar la configuracion usamos los comandos:
+
+# update-exim4.conf
+
+# service exim4 restart
+
+Despues se hacen las configuraciones del servidor de correos, editamos
+/etc/exim4/passwd.client y agregue la siguiente línea:
+
+<smtp::port>:<nombre de usuario>: <contraseña de usuario>
+
+(por ejemplo, smtp.cenditel.gob.ve::465: mymail@example.com: abdc1243)
+
+Esto enviara un correo usando esas credenciales
+
+Cree un archivo /etc/exim4/exim4.conf.localmacros y agréguele:
+
+MAIN_TLS_ENABLE = 1
+REMOTE_SMTP_SMARTHOST_HOSTS_REQUIRE_TLS = *
+TLS_ON_CONNECT_PORTS = 465
+REQUIRE_PROTOCOL = smtps
+
+Agregue lo siguiente en /etc/exim4/exim4.conf.template despues de
+.ifdef REMOTE_SMTP_SMARTHOST_HOSTS_REQUIRE_TLS ... .endif:
+
+.ifdef REQUIRE_PROTOCOL
+protocol = REQUIRE_PROTOCOL
+.endif
+
+y agregue lo siguiente despues de .ifdef MAIN_TLS_ENABLE:
+
+.ifdef TLS_ON_CONNECT_PORTS
+tls_on_connect_ports = TLS_ON_CONNECT_PORTS
+.endif
+
+Luego para guardar la configuracion utilizamos el comando:
+
+# run update-exim4.conf
+
+# service exim4 restart
