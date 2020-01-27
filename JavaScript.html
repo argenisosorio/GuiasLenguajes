@@ -5440,3 +5440,64 @@ function exportTableToCSV(filename) {
  <br>
  <a href="javascript:exportTableToCSV('file.csv')"><button type="button" class="btn btn-success">Exportar en CSV</button></a>
 </html>
+
+#######################
+##### Excepciones #####
+#######################
+
+JavaScript dispone de un mecanismo de tratamiento de excepciones muy similar al de
+otros lenguajes de programación como Java. Para ello, define las palabras reservadas
+try, catch y finally.
+
+La palabra reservada try se utiliza para encerrar el bloque de código JavaScript en el
+que se van a controlar las excepciones. Normalmente, el bloque definido por try va seguido
+de otro bloque de código definido por catch.
+
+Cuando se produce una excepción en el bloque try, se ejecutan las instrucciones contenidas dentro
+del bloque catch asociado. Después del bloque catch, es posible definir un bloque con la palabra
+reservada finally. Todo el código contenido en el bloque finally se ejecuta independientemente
+de la excepción ocurrida en el bloque try.
+
+Un bloque try debe ir seguido obligatoriamente de un bloque catch o de un bloque finally. También es
+posible que vaya seguido de los dos bloques.
+
+A continuación se muestra un ejemplo de excepción y uso de los bloques try y catch:
+
+<script type="text/javascript">
+try {
+  var resultado = 5/a;
+} catch(excepcion) {
+  alert(excepcion);
+}
+</script>
+
+El bloque catch permite indicar el nombre del parámetro que se crea automáticamente al producirse
+una excepción. Este identificador de la variable sólo está definido dentro del bloque catch y se puede
+utilizar para obtener más información sobre la excepción producida.
+
+En este caso, al intentar dividir el número 5 por la variable a que no está definida, se produce una
+excepción que muestra el mensaje "ReferenceError: a is not defined" dentro del bloque catch:
+
+El funcionamiento del bloque finally no es tan sencillo como el bloque catch. Si se ejecuta cualquier
+parte del código que se encuentra dentro del bloque try, siempre se ejecuta el bloque finally, independientemente
+del resultado de la ejecución del bloque try.
+
+Si dentro del bloque try se ejecuta una instrucción de tipo return, continue o break, también se ejecuta el
+bloque finally antes de ejecutar cualquiera de esas instrucciones. Si se produce una excepción en el bloque
+try y están definidos los bloques catch y finally, en primer lugar se ejecuta el bloque catch y a
+continuación el bloque finally.
+
+JavaScript también permite lanzar excepciones manualmente mediante la palabra reservada throw:
+
+<script type="text/javascript">
+try {
+  if(typeof a == "undefined" || isNaN(a)) {
+    throw new Error('La variable "a" no es un número');
+  }
+  var resultado = 5/a;
+} catch(excepcion) {
+  alert(excepcion);
+} finally {
+  alert("Se ejecuta");
+}
+</script>
