@@ -116,3 +116,16 @@ chamilo/app/config/configuration.php
 # apt-get install php5 php5-gd php5-mysql php5-intl php5-curl php5-json php5-fpm
 
 faltan pruebas...
+
+##############################
+##### Limpiando el caché #####
+##############################
+
+Si va a cambiar las plantillas, debe saber una cosa y recordarla: después de escribir
+sus cambios y antes de probarlos, deberá eliminar el contenido del directorio app/cache/twig
+
+De lo contrario, el caché se mantendrá y no verá ninguno (o verá solo algunos) de sus cambios,
+lo que podría hacerle creer que no surtieron efecto.
+
+Esta limpieza también se ejecuta cuando se usa la opción "Limpieza de archivo/caché" en la pantalla
+de administración principal de su portal Chamilo (bloque "Sistema").
