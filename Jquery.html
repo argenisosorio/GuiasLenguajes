@@ -4652,6 +4652,37 @@ $("div").html("<b>Hello, again</b>" );
 
 -------------------------------------
 
+<!-- toggleClass() Para cambiar los estilos de elementos en el html -->
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery/jquery-1.12.4.min.js" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+    $(".texto").toggleClass("main");
+  });
+});
+</script>
+<style>
+.main {
+  font-size: 120%;
+  color: red;
+}
+</style>
+</head>
+<body>
+<button>Toggle class "main" for p elements</button>
+<div class="texto">
+  <p>This is a paragraph.</p>
+  <p>This is another paragraph.</p>
+  <p><b>Note:</b> Click the button more than once to see the toggle effect.</p>
+</div>
+</body>
+</html>
+
+-------------------------------------
+
 <!-- Obtener todos los valores de una fila de una tabla -->
 <!DOCTYPE html>
 <html>
