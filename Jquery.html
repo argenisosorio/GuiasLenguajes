@@ -3558,12 +3558,12 @@ El JSON = mi.json
 <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
 <script>
 $(document).ready(function(){
-    $(document).ajaxSuccess(function(){
-        alert("AJAX request successfully completed");
-    });
-    $("button").click(function(){
-        $("div").load("a.txt");//Crear el fichero para cargar el contenido
-    });
+  $(document).ajaxSuccess(function(){
+    alert("AJAX request successfully completed");
+  });
+  $("button").click(function(){
+    $("div").load("a.txt");//Crear el fichero para cargar el contenido
+  });
 });
 </script>
 </head>
@@ -3575,16 +3575,17 @@ $(document).ready(function(){
 
 -------------------------------------
 
-<!-- Cargar un texto en un elemetno <div> ussando un solicitud AJAX -->
+<!-- Cargar un texto en un elemetno <div> ussando un solicitud ajax -->
 <!DOCTYPE html>
 <html>
 <head>
 <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
 <script>
 $(document).ready(function(){
-    $("button").click(function(){
-        $("#div1").load("a.txt"); // Crear el a.txt y cargarle datos
-    });
+  $("button").click(function(){
+    //$("#div1").load("a.txt"); // Crear el a.txt y cargarle datos
+    $("#div1").load("https://codepen.io/eclairereese/pen/BzQBzR.html"); // Crear el a.txt y cargarle datos
+  });
 });
 </script>
 </head>
