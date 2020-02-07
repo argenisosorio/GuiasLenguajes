@@ -7092,3 +7092,11 @@ Luego para guardar la configuracion utilizamos el comando:
 # run update-exim4.conf
 
 # service exim4 restart
+
+########################################################################
+##### Limitar la cantidad de caracteres a mostrar con una consulta #####
+########################################################################
+
+Mostrar hasta 60 caracteres
+
+<td>{{ x.descripcion |slice:":60" }}...</td>
