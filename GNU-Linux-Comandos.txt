@@ -3955,15 +3955,29 @@ $ aptitude update
 ##### Cambiar el nombre de la máquina o el host en GNU/Linux Debian #####
 #########################################################################
 
-// Editar /etc/hostname 
+El hostname es el nombre que configuramos para la máquina en el momento
+de la instalación del sistema operativo, después de la instalación del sistema
+este nombre puede ser alterado.
+
+El nombre del sistema, o hostname, está guardado en el archivo /etc/hostname.
+Este archivo debe contar sólo con el nombre del sistema y no con el nombre
+completo del dominio: 
+
+Para ver el nombre del host, En este caso el nombre es debian.:
+
+$ hostname
+
+mi_user@debian:~$
+
+Para cambiar el hostname editamos el archivo /etc/hostname 
 
 # vim /etc/hostname
 
-// Editar /etc/hosts y cambiar el nombre de la máquina:
+Tambien editamos a /etc/hosts y cambiamos el nombre de la máquina:
 
 # vim /etc/hosts
 
-// Ahora corremos:
+Ahora corremos para reiniciar el servicio de hostname
 
 # /etc/init.d/hostname.sh start
 
@@ -3971,7 +3985,7 @@ $ aptitude update
 
 # invoke-rc.d hostname.sh start
 
-// Para ver si se hizo el cambio:
+Para ver si se hizo el cambio correctamente escribimos:
 
 $ hostname
 
