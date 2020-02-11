@@ -1360,34 +1360,34 @@ $('document').ready(function() {
 <!DOCTYPE HTML>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Algunos efectos que trae con sigo jQuery UI</title>
-    <script src="https://googledrive.com/host/0BygD_wcLS3rmSENDOURWVEZSZW8/jquery.js"></script>
-    <script type="text/javascript" src="https://googledrive.com/host/0BygD_wcLS3rmSENDOURWVEZSZW8/jqueryui.js"></script>
-    <style type="text/css">
-        .divefectos{
-            width:200px;
-            height:200px;
-            text-align:left;
-            border:1px solid black;
-            position:relative;
-            background:#CCC;
-            margin-left: 20px;
-        }
-    </style>
-    <script type="text/javascript">
-        $('document').ready(function () {
-            $("#boton1").click(function (){ $("#efecto1").effect( 'blind' , "slow" ); });
-            $("#boton2").click(function (){ $("#efecto2").effect( 'bounce' , "slow" ); });
-            $("#boton3").click(function (){ $("#efecto3").effect( 'shake' , "slow" ); });
-            $("#boton4").click(function (){ $("#efecto4").effect( 'clip' , "slow" ); });
-            $("#boton5").click(function (){ $("#efecto5").effect( 'drop' , "slow" ); });
-            $("#boton6").click(function (){ $("#efecto6").effect( 'explode' , "slow" ); });
-            $("#boton7").click(function (){ $("#efecto7").effect( 'puff' , "slow" ); });
-            $("#boton8").click(function (){ $("#efecto8").effect( 'fade' , "slow" ); });
-            $("#boton9").click(function (){ $("#efecto9").effect( 'fold' , "slow" ); });
-        });
-    </script>
+  <meta charset="UTF-8">
+  <title>Algunos efectos que trae con sigo jQuery UI</title>
+  <script src="https://googledrive.com/host/0BygD_wcLS3rmSENDOURWVEZSZW8/jquery.js"></script>
+  <script type="text/javascript" src="https://googledrive.com/host/0BygD_wcLS3rmSENDOURWVEZSZW8/jqueryui.js"></script>
+  <style type="text/css">
+    .divefectos{
+      width:200px;
+      height:200px;
+      text-align:left;
+      border:1px solid black;
+      position:relative;
+      background:#CCC;
+      margin-left: 20px;
+    }
+  </style>
+  <script type="text/javascript">
+    $('document').ready(function () {
+      $("#boton1").click(function (){ $("#efecto1").effect( 'blind' , "slow" ); });
+      $("#boton2").click(function (){ $("#efecto2").effect( 'bounce' , "slow" ); });
+      $("#boton3").click(function (){ $("#efecto3").effect( 'shake' , "slow" ); });
+      $("#boton4").click(function (){ $("#efecto4").effect( 'clip' , "slow" ); });
+      $("#boton5").click(function (){ $("#efecto5").effect( 'drop' , "slow" ); });
+      $("#boton6").click(function (){ $("#efecto6").effect( 'explode' , "slow" ); });
+      $("#boton7").click(function (){ $("#efecto7").effect( 'puff' , "slow" ); });
+      $("#boton8").click(function (){ $("#efecto8").effect( 'fade' , "slow" ); });
+      $("#boton9").click(function (){ $("#efecto9").effect( 'fold' , "slow" ); });
+    });
+  </script>
 </head>
 <body>
 <div id="efecto1" class="divefectos">Desaparece hacia arriba</div>
@@ -1395,7 +1395,7 @@ $('document').ready(function() {
 <p>------------</p>
 <div id="efecto2" class="divefectos">Rebote vertical</div>
 <input type="button" value="Efecto bounce" id="boton2">
-<p>------------</p>        
+<p>------------</p>
 <div id="efecto3" class="divefectos">Rebote horizontal</div>
 <input type="button" value="Efecto shake" id="boton3">
 <p>------------</p>
@@ -6136,5 +6136,112 @@ input:checked + .slider:before {
   <span class="slider round"></span>
 </label>
 
+</body>
+</html>
+
+-----------
+<!-- Usando Jquery para filtar elementos de una tabla -->
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery/jquery-1.12.4.min.js" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myTable tr").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+<h2>Filterable Table</h2>
+<p>Type something in the input field to search the table for first names, last names or emails:</p>
+<input id="myInput" type="text" placeholder="Search..">
+<br><br>
+<table>
+  <thead>
+  <tr>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Email</th>
+  </tr>
+  </thead>
+  <tbody id="myTable">
+  <tr>
+    <td>John</td>
+    <td>Doe</td>
+    <td>john@example.com</td>
+  </tr>
+  <tr>
+    <td>Mary</td>
+    <td>Moe</td>
+    <td>mary@mail.com</td>
+  </tr>
+  <tr>
+    <td>July</td>
+    <td>Dooley</td>
+    <td>july@greatstuff.com</td>
+  </tr>
+  <tr>
+    <td>Anja</td>
+    <td>Ravendale</td>
+    <td>a_r@test.com</td>
+  </tr>
+  </tbody>
+</table>
+  <p>Note that we start the search in tbody, to prevent filtering the table headers.</p>
+</body>
+</html>
+
+----------
+
+<!-- Usando Jquery para filtar cualquiér elemento dentro de un div -->
+<!DOCTYPE html>
+<html>
+<head>
+<script src="jquery/jquery-1.12.4.min.js" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+  $("#myInput").on("keyup", function() {
+    var value = $(this).val().toLowerCase();
+    $("#myDIV *").filter(function() {
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
+</script>
+</head>
+<body>
+<h2>Filter Anything</h2>
+<p>Type something in the input field to search for a specific text inside the div element with id="myDIV":</p>
+<input id="myInput" type="text" placeholder="Search..">
+<div id="myDIV">
+  <p>I am a paragraph.</p>
+  <div>I am a div element inside div.</div>
+  <br />
+  <button>I am a button</button>
+  <br />
+  <br />
+  <button>Another button</button>
+  <p>Another paragraph.</p>
+</div>
 </body>
 </html>
