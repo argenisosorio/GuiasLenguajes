@@ -350,3 +350,11 @@ $ composer install
 $ npm install
 $ php artisan migrate
 $ php artisan db:seed
+
+#######################################
+##### Limpiar la cache en Laravel #####
+#######################################
+
+Ejecute el siguiente comando para borrar la memoria caché de la aplicación Laravel.
+
+$ php artisan cache:clear
