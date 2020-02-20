@@ -7100,3 +7100,26 @@ Luego para guardar la configuracion utilizamos el comando:
 Mostrar hasta 60 caracteres
 
 <td>{{ x.descripcion |slice:":60" }}...</td>
+
+#####################################################
+##### Instalación de Django 3 usando virtualenv #####
+#####################################################
+
+Esta sección fue probada en GNU/Linux Debian 10 Stretch
+por lo que tiene disponible Django 3
+
+1) Instalar virtualenv
+
+# aptitude install python-virtualenv python-pip
+
+2) Crear un virtualenv usando python3
+
+$ virtualenv -p python3 my_env
+
+3) Activar el entorno virtual
+
+$ source mi_env/bin/activate
+
+4) Instalar Django en el virtualenv:
+
+(mi_env)$ pip install Django==3.0.3
