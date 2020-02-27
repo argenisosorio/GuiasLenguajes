@@ -347,8 +347,11 @@ public: carpeta pública desde dónde se inicia el proceso de ejecución de una 
 ############################################################
 
 $ composer install
+
 $ npm install
+
 $ php artisan migrate
+
 $ php artisan db:seed
 
 #######################################
