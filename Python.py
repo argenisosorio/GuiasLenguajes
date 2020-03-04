@@ -868,6 +868,15 @@ print diccionario['Clave2']
 ----
 
 # -*- coding: utf-8 -*-
+#Imprimiendo el contenido del diccionario, accedemos a los valores a través de la clave
+diccionario = {'nombre' : 'Carlos', 'edad' : 22, 'cursos': ['Python','Django','JavaScript']}
+print diccionario['nombre']
+print diccionario['edad']
+print diccionario['cursos']
+
+----
+
+# -*- coding: utf-8 -*-
 #Imprimiendo el contenido del diccionario, accedemos a los valores a través de la clave que puede
 #cualquier tipo de dato, una cadena, un entero, etc, pero no listas ni diccionarios
 diccionario = {
@@ -902,6 +911,15 @@ print data["usuarios"][0]["username"]
 print data["usuarios"][0]["password"]
 print data["usuarios"][1]["username"]
 print data["usuarios"][1]["password"]
+
+----
+
+# -*- coding: utf-8 -*-
+#Imprimiendo el contenido del diccionario, accedemos a los valores a través de la clave y de los índices:
+diccionario = {'nombre' : 'Carlos', 'edad' : 22, 'cursos': ['Python','Django','JavaScript']}
+print diccionario['cursos'][0]
+print diccionario['cursos'][1]
+print diccionario['cursos'][2]
 
 ----
 
@@ -952,6 +970,14 @@ print data["Fruteria"][1]["Verdura"][2]["Cantidad"]
 ----
 
 # -*- coding: utf-8 -*-
+# Recorrer el Diccionario, haciendo uso de la estructura for
+diccionario = {'nombre' : 'Carlos', 'edad' : 22, 'cursos': ['Python','Django','JavaScript']}
+for key in diccionario:
+  print key, ":", diccionario[key]
+
+----
+
+# -*- coding: utf-8 -*-
 """
 Insertando datos en un diccionario.
 """
@@ -981,6 +1007,136 @@ print persona
 print "----"
 del persona['Apellido']
 print persona
+
+##### Métodos de los Diccionarios #####
+
+# -*- coding: utf-8 -*-
+# dict() Recibe como parámetro una representación de un diccionario y si es factible, devuelve un diccionario de datos.
+dic =  dict(nombre='nestor', apellido='Plasencia', edad=22)
+print dic
+
+----
+
+# -*- coding: utf-8 -*-
+"""
+zip() Recibe como parámetro dos elementos iterables, ya sea una cadena, una lista o una tupla.
+Ambos parámetros deben tener el mismo número de elementos. Se devolverá un diccionario
+relacionando el elemento i-esimo de cada uno de los iterables.
+"""
+dic = dict(zip('abcd',[1,2,3,4]))
+print dic
+
+----
+
+# -*- coding: utf-8 -*-
+"""
+items() Devuelve una lista de tuplas, cada tupla se compone de dos elementos: el primero
+será la clave y el segundo, su valor.
+"""
+dic =  {'a' : 1, 'b' : 2, 'c' : 3 , 'd' : 4}
+items = dic.items()
+print items
+
+----
+
+# -*- coding: utf-8 -*-
+# keys() Retorna una lista de elementos, los cuales serán las claves de nuestro diccionario.
+dic =  {'a' : 1, 'b' : 2, 'c' : 3 , 'd' : 4}
+keys = dic.keys()
+print keys
+
+----
+
+# -*- coding: utf-8 -*-
+# values() Retorna una lista de elementos, que serán los valores de nuestro diccionario.
+dic =  {'a' : 1, 'b' : 2, 'c' : 3 , 'd' : 4}
+values = dic.values()
+print values
+
+----
+
+# -*- coding: utf-8 -*-
+# clear() Elimina todos los ítems del diccionario dejándolo vacío.
+dic =  {'a' : 1, 'b' : 2, 'c' : 3 , 'd' : 4}
+print dic
+dic.clear()
+print dic
+
+----
+
+# -*- coding: utf-8 -*-
+# copy() Retorna una copia del diccionario original.
+dic = {'a' : 1, 'b' : 2, 'c' : 3 , 'd' : 4}
+dic1 = dic.copy()
+print dic1
+
+----
+
+# -*- coding: utf-8 -*-
+"""
+fromkeys() Recibe como parámetros un iterable y un valor, devolviendo un diccionario
+que contiene como claves los elementos del iterable con el mismo valor ingresado.
+Si el valor no es ingresado, devolverá none para todas las claves.
+"""
+dic = dict.fromkeys(['a','b','c','d'],1)
+print dic
+
+----
+
+# -*- coding: utf-8 -*-
+"""
+get() Recibe como parámetro una clave, devuelve el valor de la clave.
+Si no lo encuentra, devuelve un objeto none.
+"""
+dic = {'a' : 1, 'b' : 2, 'c' : 3 , 'd' : 4}
+valor = dic.get('b')
+print valor
+valor = dic.get('h')
+print valor
+
+----
+
+# -*- coding: utf-8 -*-
+"""
+pop() Recibe como parámetro una clave, devuelve su valor y elimina esta clave y valor.
+Si no lo encuentra, devuelve error.
+"""
+dic = {'a':1,'b':2,'c':3}
+print dic
+valor = dic.pop('b')
+print valor
+print dic
+
+----
+
+# -*- coding: utf-8 -*-
+"""
+setdefault() Funciona de dos formas. En la primera como get
+"""
+dic = {'a' : 1, 'b' : 2, 'c' : 3 , 'd' : 4}
+valor = dic.setdefault('a')
+print valor
+"""
+Y en la segunda forma, nos sirve para agregar un nuevo elemento a nuestro diccionario.
+"""
+dic2 = {'a' : 1, 'b' : 2, 'c' : 3 , 'd' : 4}
+print dic2
+valor = dic2.setdefault('e',5)
+print dic2
+
+----
+
+# -*- coding: utf-8 -*-
+"""
+update() Recibe como parámetro otro diccionario. Si se tienen claves iguales,
+actualiza el valor de la clave repetida; si no hay claves iguales, este par clave-valor
+es agregado al diccionario.
+"""
+dic1 = {'a' : 1, 'b' : 2, 'c' : 3 , 'd' : 4}
+print dic1
+dic2 = {'c' : 6, 'b' : 5, 'e' : 9 , 'f' : 10}
+dic1.update(dic2)
+print dic1
 
 ##########################
 ##### Manejando json #####
