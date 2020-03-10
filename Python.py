@@ -1008,6 +1008,29 @@ print "----"
 del persona['Apellido']
 print persona
 
+-----
+
+# -*- coding: utf-8 -*-
+"""
+Actualizar el valor de uno de los elementos del diccionario,
+accedemos y actualizamos mediante la clave.
+"""
+inventario = {"manzanas":10,"bananas":15,"naranjas":20}
+print inventario
+inventario["naranjas"]=25
+print inventario
+
+-----
+
+# -*- coding: utf-8 -*-
+"""
+Removiendo un valor usando el metodo remove de las listas
+"""
+dic = {"hola":"mundo", 3:"tres","nombre":["luis","arturo","carlos"]}
+print dic
+dic["nombre"].remove("carlos")
+print dic
+
 ##### Métodos de los Diccionarios #####
 
 # -*- coding: utf-8 -*-
