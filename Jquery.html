@@ -107,9 +107,9 @@ Para levantar un elemento por su id. Primero que nada cuando
 usamos como en el ejemplo anterior:
 
 <script>
-    $(document).ready(function(){
-       //Código a ejecutar cuando se carga la página 
-    });
+  $(document).ready(function(){
+    //Código a ejecutar cuando se carga la página
+  });
 </script>
 
 Lo que estamos haciendo es levantar un objeto document que es el
@@ -122,7 +122,7 @@ En el caso de que queramos levantar un elemento por su id deberíamos
 usar el caracter # seguido por el nombre del id de la siguiente forma:
 
 <script>
-    $("#id_del_elemento")
+  $("#id_del_elemento")
 </script>
 
 -------------------------------------
@@ -283,24 +283,22 @@ Por ejemplo, partiendo del siguiente HTML:
 <!-- Hola Mundo en Jquery
 imprimir en el documento -->
 <html>
-    <head>
-        <title>jQuery Hello World</title>
-        <script src="jquery-1.9.1.js" type="text/javascript"></script>
-        <meta charset="UTF-8">
-    </head>
-    <script type="text/javascript"> 
-        $(document).ready(function() {
-            $("#texto").html("Hola mundo con JQuery"); //Este texto se escribira en el documento en donde esta la etiqueta con el id especificado
-        });
-    </script>
-    <script>
-        $(document).ready(function() {
-            $("p").html("Esto es un párrafo"); // El texto se escribirá en todas las etiquetas (<p>)
-        });
-    </script>
+  <head>
+    <title>jQuery Hello World</title>
+    <script src="jquery-1.9.1.js" type="text/javascript"></script>
+    <meta charset="UTF-8">
+  </head>
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#texto").html("Hola mundo con JQuery"); //Este texto se escribira en el documento en donde esta la etiqueta con el id especificado
+});
+$(document).ready(function() {
+  $("p").html("Esto es un párrafo"); // El texto se escribirá en todas las etiquetas (<p>)
+});
+</script>
 <body>     
-<div id="texto"> <!-- Etiqueta con identificador donde se escribira el texto-->
-</div>
+  <div id="texto"> <!-- Etiqueta con identificador donde se escribira el texto-->
+  </div>
 <p></p> <!-- Aqui se imprime otro texto enviado en el script -->
 </body>
 </html>
@@ -351,25 +349,26 @@ imprimir en el documento -->
 </html>
 
 -------------------------------------
+
 <!-- Funciones -->
 <html>
-    <head>    
-      <title>Prueba</title> 
-      <meta charset="UTF-8">        
-      <script src="jquery-1.9.1.js" type="text/javascript"></script>
-      <script>
-            $(document).ready(function() {
-              $("#boton1").click(function() {
-                  //alert("¡Alerta 1 Activada!");
-                  $("#x").html("Alerta 1 activada");
-              });
-              $("#boton2").click(function() {
-                  //alert("¡Alerta 2 Activada!");
-                  $("#x").html("Alerta 2 activada");
-              });
-            });
-        </script>
-    </head>
+  <head>
+    <title>Prueba</title>
+    <meta charset="UTF-8">
+    <script src="jquery-1.9.1.js" type="text/javascript"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $("#boton1").click(function() {
+        //alert("¡Alerta 1 Activada!");
+        $("#x").html("Alerta 1 activada");
+      });
+      $("#boton2").click(function() {
+        //alert("¡Alerta 2 Activada!");
+        $("#x").html("Alerta 2 activada");
+      });
+    });
+      </script>
+  </head>
 <body>
   <button id="boton1">Activar 1</button> <p />
   <button id="boton2">Activar 2</button>

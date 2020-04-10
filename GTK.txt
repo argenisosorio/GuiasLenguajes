@@ -39,6 +39,132 @@ y el texto de la versión 2 de GTK.
 
 -Cairo. Biblioteca de renderizado avanzado de controles de aplicación.
 
+----- Aplicaciones que usan GTK -----
+
+-GNOME está basado en GTK, lo que significa que los programas de GNOME usan GTK.
+-Xfce está basado en GTK.
+-LXDE está basado en GTK, significa "Lightweight X11 Desktop Environment".
+-ROX Desktop un escritorio ligero, con características de la GUI de RISC OS.
+-GPE Palmtop Environment.
+-Maemo (Nokia's Internet-tablet framework).
+-Access Linux Platform (sucesor de la plataforma Palm OS PDA).
+-One Laptop Per Child usa GTK y PyGTK.
+
+Los entornos de escritorio no son necesarios para ejecutar los programas GTK.
+Si las bibliotecas que requiere el programa están instaladas, un programa GTK
+puede ser ejecutado por encima de otros entornos basadas en X11 como KDE o
+cualquier otro entorno, lo que incluye Mac OS X, si X11.app está instalado.
+GTK también puede ejecutarse en Microsoft Windows, es utilizado por algunas
+aplicaciones populares multiplataforma como Pidgin y GIMP. wxWidgets, un toolkit
+gráfico multiplataforma usa GTK en sistemas tipo Unix. Algunos de los ports más
+inusuales incluyen directfb y ncurses.
+
+----- Implementaciones disponibles -----
+
+Existe una gran variedad de lenguajes de programación con los cuales se puede
+usar GTK,  aunque no en todos está disponible en su última versión. Entre los
+más usados están los siguientes:
+
+-C++ (gtkmm)
+-C# (Gtk Sharp)
+-Java (java-gnome)
+-Python (PyGTK)
+-Javascript
+-Julia
+-Vala
+-Perl
+
+----- Creando una ventana con GTK y Python -----
+
+Probado con Python2.7 en GNU/Linux Debian 8 Jessie.
+
+Creamos un archivo "script.py" de python con el siguiente código dentro:
+
+---
+
+import gi
+
+gi.require_version('Gtk', '3.0')
+
+from gi.repository import Gtk
+
+window = Gtk.Window()
+
+window.show_all()
+
+Gtk.main()
+
+---
+
+Guardamos y ejecutamos con:
+
+$ python script.py
+
+Esto nos mostrara una ventana de escritorio con el mensaje Hello World!
+
+----- Hola mundo! con GTK y Python -----
+
+Probado con Python2.7 en GNU/Linux Debian 8 Jessie.
+
+Creamos un archivo "script.py" de python con el siguiente código dentro:
+
+---
+
+# -*- coding: utf-8 -*-
+import gi
+
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
+
+# Configurar la ventana Gtk
+win = Gtk.Window()
+
+# Dígale a Gtk qué hacer cuando la ventana está cerrada (en este caso, salga del bucle principal)
+win.connect("delete-event", Gtk.main_quit)
+
+# ¡Crea una etiqueta que diga Hola Mundo!
+label = Gtk.Label(label="Hello World!")
+
+# Agregar la etiqueta a la ventana
+win.add(label)
+
+# Dile a Gtk que muestre todos los widgets dentro de la ventana
+win.show_all()
+
+# Inicie el bucle principal de Gtk, que vuelve cuando se llama a Gtk.main_quit
+Gtk.main()
+
+---
+
+Guardamos y ejecutamos con:
+
+$ python script.py
+
+Esto nos mostrara una ventana de escritorio con el mensaje Hello World!
+
+En estos ejemplos anteriores importamos a "gi" es decir a PyGObject es un
+paquete de Python que proporciona enlaces para bibliotecas basadas en
+GObject como GTK, GStreamer, WebKitGTK, GLib, GIO y muchas más.
+
+----- Instalando PyGObject en Debian para usarlo con Python 3 -----
+
+# apt install python3-gi python3-gi-cairo gir1.2-gtk-3.0
+
+$ python3 hello.py
+
+----- Instalando PyGObject de PyPI con pip -----
+
+# apt install libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev
+gir1.2-gtk-3.
+
+$ pip3 install pycairo
+
+$ pip3 install PyGObject
+
+$ python3 hello.py
+
 ---- Fuentes -----
 
-https://es.wikipedia.org/wiki/GTK
+-https://es.wikipedia.org/wiki/GTK
+-https://pygobject.readthedocs.io/en/latest/index.html
+-https://pygobject.readthedocs.io/en/latest/getting_started.html
