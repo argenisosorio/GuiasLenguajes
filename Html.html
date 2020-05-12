@@ -3801,3 +3801,54 @@ Dando color a borde de una sección
 border-left: 1px solid red;
 border-right: 1px solid red;
 border-bottom: 1px solid red;
+
+################################
+##### Minificar CSS o HTML #####
+################################
+
+Normalmente, al codificar en CSS se lucha con dos factores clave:
+
+-Legibilidad: Correcta indentación que facilite la legibilidad de las propiedades
+y valores por separado, favoreciendo la velocidad de modificación e introducción
+de cambios.
+
+-Tamaño: Cuanto más texto tenga un archivo CSS (espacios incluídos), más grande
+será el tamaño final del archivo, por lo que más tiempo tardará en descargarse.
+
+##### Minificación #####
+
+En archivos CSS muy grandes esto suele influir de forma considerable, por lo que
+lo ideal es utilizar los llamados Minify (Minificadores) para reducir el tamaño
+del archivo CSS condensando toda la información, eliminando espacios, retornos
+de carro, etc... (y por consiguiente, haciéndolo menos legible). Esto es un paso
+totalmente opcional, que se realiza sólo para reducir el tamaño de los archivos
+CSS, por lo que no es algo que sea totalmente imprescindible, pero se considera
+una buena práctica.
+
+Existen incluso algunas herramientas que se encargan de analizar el código y
+suprimir propiedades repetidas o inútiles. Veamos un ejemplo de un mismo archivo
+CSS con su contenido sin minificar y minificado:
+
+Ejemplo de código CSS legible (index.css): 114 bytes
+
+#main {
+  background-color: black;
+  color: white;
+  padding: 16px;
+  margin:4px;
+  border:2px solid blue;
+}
+
+Ejemplo de código CSS minificado (index.min.css): 86 bytes
+
+#main{background-color:#000;color:#fff;padding:16px;margin:4px;border:2px solid #00f}
+
+Como se puede ver, el tamaño y la legibilidad del archivo CSS se reduce
+considerablemente, así que lo que se suele hacer es mantener un archivo legible
+(el primero) para realizar modificaciones y trabajar con él, y luego, de forma
+opcional, un archivo con la información condensada (el segundo) que será el que
+se utilice finalmente en nuestro proyecto cuando esté terminado.
+
+-----
+
+Fuente: https://lenguajecss.com/p/css/introduccion/minificar-css
