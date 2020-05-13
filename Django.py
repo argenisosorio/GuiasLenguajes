@@ -7123,3 +7123,46 @@ $ source mi_env/bin/activate
 4) Instalar Django en el virtualenv:
 
 (mi_env)$ pip install Django==3.0.3
+
+############################################
+##### Eliminar registro con javascript #####
+############################################
+
+{% extends "registro/base.html" %}
+{% block titulo %}Lista{% endblock %}
+{% block cuerpo %}
+<h1>Lista de personas</h1>
+<br />
+<a href="{% url 'registro:registrar' %}">
+  <button class="btn btn-success">NUEVA</button>
+</a>
+<br />
+<br />
+<table border="1px" id="example" class="display" cellspacing="0px" style="width:100%;">
+  <thead>
+    <tr>
+      <th class="text-center">ID</th>
+      <th class="text-center">Nombre</th>
+      <th class="text-center">Cédula</th>
+      <th class="text-center">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for persona in object_list %}
+  <tr>
+    <td class="text-center">{{ persona.id }}</td>
+    <td class="text-center">{{ persona.nombre }}</td>
+    <td class="text-center">{{ persona.cedula }}</td>
+    <td class="text-center">
+      <a href="{% url 'registro:editar' persona.id %}">
+        <button class="btn btn-info">EDITAR</button>
+      </a>
+      <form action="{% url 'registro:borrar' persona.id %}" method="post">{% csrf_token %}
+        <button class="btn btn-danger" onclick="return confirm('¿Está seguro que desea borrar el registro?');">BORRAR</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
