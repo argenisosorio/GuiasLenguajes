@@ -7166,3 +7166,67 @@ $ source mi_env/bin/activate
   </tbody>
 </table>
 {% endblock %}
+
+####################################################
+##### Eliminar registro con modal de bootstrap #####
+####################################################
+
+{% extends "registro/base.html" %}
+{% block titulo %}Lista{% endblock %}
+{% block cuerpo %}
+<h1>Lista de personas</h1>
+<br />
+<a href="{% url 'registro:registrar' %}">
+  <button class="btn btn-success">NUEVA</button>
+</a>
+<br />
+<br />
+<table border="1px" id="example" class="display" cellspacing="0px" style="width:100%;">
+  <thead>
+    <tr>
+      <th class="text-center">ID</th>
+      <th class="text-center">Nombre</th>
+      <th class="text-center">Cédula</th>
+      <th class="text-center">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for persona in object_list %}
+  <tr>
+    <td class="text-center">{{ persona.id }}</td>
+    <td class="text-center">{{ persona.nombre }}</td>
+    <td class="text-center">{{ persona.cedula }}</td>
+    <td class="text-center">
+      <a href="{% url 'registro:editar' persona.id %}">
+        <button class="btn btn-info">EDITAR</button>
+      </a>
+      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#myModal{{ persona.id }}">BORRAR</button>
+      <div class="modal fade" id="myModal{{ persona.id }}" role="dialog">
+        <div class="modal-dialog modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Borrar registro</h4>
+            </div>
+            <div class="modal-body">
+              <form action="{% url 'registro:borrar' persona.id %}" method="post">{% csrf_token %}
+                ¿Está seguro que desea borrar a "{{ persona.nombre }}"?
+                <br><br>
+                <button type="button" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
+                <button class="btn btn-danger" type="submit">BORRAR</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<script type="text/javascript">
+$(document).ready(function() {
+  $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+{% endblock %}
