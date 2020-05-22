@@ -7230,3 +7230,141 @@ $(document).ready(function() {
 });
 </script>
 {% endblock %}
+
+#######################################################
+##### Registro de usuarios con modal de bootstrap #####
+#######################################################
+
+#list_users.html
+
+{% extends "base/base.html" %}
+{% block titulo %}Lista de usuarios del sistema{% endblock %}
+{% block cuerpo %}
+<br />
+<h1><a href="{{ request.META.HTTP_REFERER }}" class="regresar"><i class="fa fa-mail-reply fa-lg ollapsed"></i></a> Lista de usuarios del sistema</h1>
+<br />
+<button class="btn btn-success" data-toggle="modal" data-target="#modal-registrar">REGISTRAR</button>
+{% include 'usuarios/modals.html' %}
+<br />
+<br />
+<table border="1px" id="example" class="display" cellspacing="0px" style="width:100%;">
+  <thead>
+    <tr>
+      <th class="text-center">N</th>
+      <th class="text-center">Nombre de usuario</th>
+      <th class="text-center">Primer nombre</th>
+      <th class="text-center">Primer apellido</th>
+      <th class="text-center">Correo electrónico</th>
+      <th class="text-center">Fecha de registro</th>
+      <th class="text-center">Último acceso</th>
+      <th class="text-center">Tipo</th>
+      <th class="text-center">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for user in object_list %}
+  <tr>
+    <td class="text-center"></td>
+    <td>{{ user.username }}</td>
+    <td>{{ user.first_name }}</td>
+    <td>{{ user.last_name }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.date_joined }}</td>
+    <td>{{ user.last_login }}</td>
+    {% if user.is_superuser == True and user.is_staff == True and user.is_active == True %}
+      <td class="td_si">Analista</td>
+    {% else %}
+      {% if user.is_superuser == False and user.is_staff == True and user.is_active == True %}
+        <td class="td_si">Director</td>
+      {% else %}
+        {% if user.is_superuser == False and user.is_staff == False and user.is_active == True %}
+          <td class="td_si">Cara visible</td>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+    <td class="text-center td_botonera_tabla">
+      <div class="row">
+        <div class="col-sm-12">
+          <a href="{% url 'usuarios:edit_user' user.pk %}" title="Editar"><i class="glyphicon glyphicon-pencil"></i></a>
+          <a href="{{ user.id }}" title="Borrar" data-toggle="modal" data-target="#myModal{{user.id}}"><i class="glyphicon glyphicon-trash"></i></a>
+          <div class="modal fade" id="myModal{{user.id}}" role="dialog">
+            <div class="modal-dialog modal-md">
+              <div class="modal-content">
+                <div class="modal-body">
+                  <form action="{% url 'usuarios:delete_user' user.id %}" method="post">{% csrf_token %}
+                    <br>
+                    <i class="fa fa-times-circle fa-lg"></i>
+                    <br><br>
+                    <h4>¿Estás seguro que quieres eliminar el usuario: <b>{{ user.username }}</b>?</h4>
+                    <br>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
+                    <button class="btn btn-danger" type="submit">BORRAR</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+
+#modals.html
+
+<!-- Modal con el formulario de registro de usuarios-->
+<div class="modal fade" id="modal-registrar" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h1 class="modal-title">Registrar usuario</h1>
+      </div>
+      <div class="modal-body">
+        <form action="{% url 'usuarios:register' %}" method="post">{% csrf_token %}
+          <div class="row">
+            <div class="col-sm-6">
+              <label>Nombre de usuario</label>
+              <br />
+              <input class="form-control input-md" id="id_username" name="username" style="min-width: 0; width: 100%; display: inline;" tabindex="1" type="text" />
+              <br />
+              <label>Primer nombre</label>
+              <br />
+              <input class="form-control input-md" id="id_first_name" name="first_name" style="min-width: 0; width: 100%; display: inline;" tabindex="3" type="text" />
+              <br />
+              <label>Contraseña</label>
+              <br />
+              <input class="form-control input-md" id="id_password1" name="password1" style="min-width: 0; width: 100%; display: inline;" tabindex="5" type="password" />
+              <br />
+              <label>Confirmar contraseña</label>
+              <br />
+              <input class="form-control input-md" id="id_password2" name="password2" style="min-width: 0; width: 100%; display: inline;" tabindex="6" type="password" />
+            </div>
+            <div class="col-sm-6">
+              <label>Correo electrónico</label>
+              <br />
+              <input class="form-control input-md" id="id_email" name="email" style="min-width: 0; width: 100%; display: inline;" tabindex="2" type="text" />
+              <br />
+              <label>Primer apellido</label>
+              <br />
+              <input class="form-control input-md" id="id_last_name" name="last_name" style="min-width: 0; width: 100%; display: inline;" tabindex="4" type="text" />
+              <br />
+              <label>Rol</label>
+              <br />
+              <select class="form-control input-md" id="id_rol" name="rol" style="min-width: 0; width: 100%; display: inline;">
+                <option value="is_active">Cara visible</option>
+                <option value="is_staff">Director</option>
+                <option value="is_superuser">Analista</option>
+              </select>
+            </div>
+          </div>
+          <button type="button" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
+          <button class="btn btn-success" type="submit">REGISTRAR</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

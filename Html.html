@@ -256,15 +256,15 @@ ejemplo secciones de la página -->
 <h2>Enlaces Locales</h2>
 <h3><a name="indice">Indice</a></h3>
 <ul>
-    <li><a href="#uno">Seción 1</a>  
-    <li><a href="#dos">Seción 2</a>  
-    <li><a href="#tres">Seción 3</a>  
-    <li><a href="#cuatro">Seción 4</a>    
+  <li><a href="#uno">Seción 1</a>
+  <li><a href="#dos">Seción 2</a>
+  <li><a href="#tres">Seción 3</a>
+  <li><a href="#cuatro">Seción 4</a>
 </ul>
 <hr>
 <h3><a name="uno">Sección 1</a></h3>
 
-11111111111111111111111111 <br>    
+11111111111111111111111111 <br>
 
 <hr>
 
@@ -731,20 +731,20 @@ placeholder="Tu Nombre" //Texto de ejemplo dentro del campo del formulario, a ma
 
 <!-- HTML agrega nuevos tipos de formularios y validacion de campos sin el uso de JavaScript -->
 <div id="formulario1">
-    <h4>LOGIN</h4>
-    <form action="#" method="GET"> 
-        Nombre: <input type="text" name="nombre"><br />
-        Contraseña: <input type="password" name="contrasena"><br /> <p></p>          
-        Búsqueda: <input type="search"> <br />
-        Números: <input type="number"> <br />
-        Rango: <input type="range"> <br />
-        Color: <input type="color"> <br />
-        NMobNum: <input type="tel"> <br />
-        URL: <input type="url"> <br />
-        E-Mail: <input type="email"> <br /> 
-        <input type="submit" value="Enviar">
-        <input type="reset" value="Borrar">
-    </form>
+  <h4>LOGIN</h4>
+  <form action="#" method="GET">
+    Nombre: <input type="text" name="nombre"><br />
+    Contraseña: <input type="password" name="contrasena"><br /><p></p
+    Búsqueda: <input type="search"> <br />
+    Números: <input type="number"> <br />
+    Rango: <input type="range"> <br />
+    Color: <input type="color"> <br />
+    NMobNum: <input type="tel"> <br />
+    URL: <input type="url"> <br />
+    E-Mail: <input type="email"> <br />
+    <input type="submit" value="Enviar">
+    <input type="reset" value="Borrar">
+  </form>
 </div>
 
 ----
@@ -1929,13 +1929,13 @@ body, html {
     <meta charset="UTF-8">  
 </head>
 <body>
-    <form>
-        <Nombre: <input name="txtNombre" type="text" id="txtNombre" required oninvalid="setCustomValidity('El campo nombre es obligatorio')" oninput="setCustomValidity('')"/> <br />       
-        Password: <input type="password" name="txtPwd" id="txtPwd" required pattern=".{6,}" oninvalid="setCustomValidity('El password es obligatorio y debe tener como mínimo 6 caracteres')" oninput="setCustomValidity('')" /> <br />
-        Edad: <input name="txtEdad" type="number" id="txtEdad" min="18" max="60" oninvalid="etCustomValidity('La edad debe ser entre 18 y 60 años.')" oninput="setCustomValidity('')" /> <br /-->
-        Email: <input name="txtEmail" id="txtEmail" type="email" oninvalid="setCustomValidity('Debe ingresar un email válido')" oninput="setCustomValidity('')" /> <br />
-        <input type="submit" value="Enviar"  id="btnSubmit" name="btnSubmit"/>
-    </form>
+  <form>
+    <Nombre: <input name="txtNombre" type="text" id="txtNombre" required oninvalid="setCustomValidity('El campo nombre es obligatorio')" oninput="setCustomValidity('')"/> <br />
+    Password: <input type="password" name="txtPwd" id="txtPwd" required pattern=".{6,}" oninvalid="setCustomValidity('El password es obligatorio y debe tener como mínimo 6 caracteres')" oninput="setCustomValidity('')" /> <br />
+    Edad: <input name="txtEdad" type="number" id="txtEdad" min="18" max="60" oninvalid="etCustomValidity('La edad debe ser entre 18 y 60 años.')" oninput="setCustomValidity('')" /> <br /-->
+    Email: <input name="txtEmail" id="txtEmail" type="email" oninvalid="setCustomValidity('Debe ingresar un email válido')" oninput="setCustomValidity('')" /> <br />
+    <input type="submit" value="Enviar"  id="btnSubmit" name="btnSubmit"/>
+  </form>
 </body>
 </html>
 
@@ -3275,9 +3275,61 @@ a:link {
 
 ----------------
 
-<!-- Estilos del formulario de materialize -->
+<!-- Estilos inputs como los de material desing pero sin efectos más simple que el anterior -->
+<!doctype html>
+<html lang="en">
+  <head>
+  <title>XXX</title>
+  <meta charset="UTF-8">
+  <script src="jquery-1.12.4.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="styles.css" type="text/css"/>
+  </head>
+<body>
 <style type="text/css">
-input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="time"], input[type="date"], input[type="datetime-local"], input[type="tel"], input[type="number"], input[type="search"] {
+.form-control {
+  border: 0 !important;
+  border-bottom: 1px solid #000000 !important;
+}
+</style>
+<div id="formulario1">
+  <h1>Login</h1>
+  <form action="#" method="GET"> 
+    Nombre:
+    <br />
+    <input type="text" name="nombre" required="true" class="form-control">
+    <br />
+    <br />
+    E-Mail:
+    <br />
+    <input type="email" class="form-control">
+    <br />
+    <br />
+    Contraseña:
+    <br />
+    <input type="password" name="contrasena" class="form-control">
+    <br />
+    <br />
+    <input type="submit" value="Enviar">
+    <input type="reset" value="Borrar">
+  </form>
+</div>
+</body>
+</html>
+
+----------------
+
+<!-- Estilos inputs como los de material desing pero sin efectos -->
+<!doctype html>
+<html lang="en">
+  <head>
+  <title>XXX</title>
+  <meta charset="UTF-8">
+  <script src="jquery-1.12.4.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="styles.css" type="text/css"/>
+  </head>
+<body>
+<style type="text/css">
+input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="time"], input[type="date"], input[type="datetime-local"], input[type="tel"], input[type="number"], input[type="search"], textarea.materialize-textarea {
   background-color: transparent;
   border: none;
   border-bottom-width: medium;
@@ -3287,7 +3339,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   border-radius: 0;
   outline: none;
   height: 3rem;
-  width: 100%;
+  /*width: 100%;*/
   font-size: 1rem;
   margin: 0 0 15px 0;
   padding: 0;
@@ -3298,8 +3350,32 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   transition: all .3s;
 }
 </style>
+<div id="formulario1">
+  <h1>Login</h1>
+  <form action="#" method="GET">
+    Nombre:
+    <br />
+    <input type="text" name="nombre" required="true">
+    <br />
+    <br />
+    E-Mail:
+    <br />
+    <input type="email">
+    <br />
+    <br />
+    Contraseña:
+    <br />
+    <input type="password" name="contrasena">
+    <br />
+    <br />
+    <input type="submit" value="Enviar">
+    <input type="reset" value="Borrar">
+  </form>
+</div>
+</body>
+</html>
 
-----------------
+---------------
 
 <!-- Lorem ipsum -->
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sed diam eget risus varius blandit sit amet non magna. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Cras mattis consectetur purus sit amet fermentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Aenean lacinia bibendum nulla sed consectetur.
@@ -3659,7 +3735,7 @@ Fuente: https://www.adictosaltrabajo.com/2012/02/27/evitar-cache-navegador-recur
 </div>
 <div id="Paris" class="tabcontent">
   <h3>Paris</h3>
-  <p>Paris is the capital of France.</p> 
+  <p>Paris is the capital of France.</p>
 </div>
 <div id="Tokyo" class="tabcontent">
   <h3>Tokyo</h3>
@@ -3679,109 +3755,7 @@ function openCity(evt, cityName) {
   document.getElementById(cityName).style.display = "block";
   evt.currentTarget.className += " active";
 }
-</script>   
-</body>
-</html>
-
----------------
-
-<!-- Estilos inputs como los de material desing pero sin efectos -->
-<!doctype html>
-<html lang="en">
-  <head>
-  <title>XXX</title>
-  <meta charset="UTF-8">
-  <script src="jquery-1.12.4.js" type="text/javascript"></script>
-  <link rel="stylesheet" href="styles.css" type="text/css"/>
-  </head>
-<body>
-<style type="text/css">
-input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="time"], input[type="date"], input[type="datetime-local"], input[type="tel"], input[type="number"], input[type="search"], textarea.materialize-textarea {
-  background-color: transparent;
-  border: none;
-  border-bottom-width: medium;
-  border-bottom-style: none;
-  border-bottom-color: currentcolor;
-  border-bottom: 1px solid #9e9e9e;
-  border-radius: 0;
-  outline: none;
-  height: 3rem;
-  /*width: 100%;*/
-  font-size: 1rem;
-  margin: 0 0 15px 0;
-  padding: 0;
-  box-shadow: none;
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  transition: all .3s;
-}
-</style>
-<div id="formulario1">
-  <h1>Login</h1>
-  <form action="#" method="GET"> 
-    Nombre:
-    <br />
-    <input type="text" name="nombre" required="true">
-    <br />
-    <br />
-    E-Mail:
-    <br />
-    <input type="email"> 
-    <br /> 
-    <br />
-    Contraseña:
-    <br />
-    <input type="password" name="contrasena">
-    <br />
-    <br />
-    <input type="submit" value="Enviar">
-    <input type="reset" value="Borrar">
-  </form>
-</div>
-</body>
-</html>
-
----------------
-
-<!-- Estilos inputs como los de material desing pero sin efectos más simple que el anterior -->
-<!doctype html>
-<html lang="en">
-  <head>
-  <title>XXX</title>
-  <meta charset="UTF-8">
-  <script src="jquery-1.12.4.js" type="text/javascript"></script>
-  <link rel="stylesheet" href="styles.css" type="text/css"/>
-  </head>
-<body>
-<style type="text/css">
-.form-control {
-  border: 0 !important;
-  border-bottom: 1px solid #000000 !important;
-}
-</style>
-<div id="formulario1">
-  <h1>Login</h1>
-  <form action="#" method="GET"> 
-    Nombre:
-    <br />
-    <input type="text" name="nombre" required="true" class="form-control">
-    <br />
-    <br />
-    E-Mail:
-    <br />
-    <input type="email" class="form-control">
-    <br /> 
-    <br />
-    Contraseña:
-    <br />
-    <input type="password" name="contrasena" class="form-control">
-    <br />
-    <br />
-    <input type="submit" value="Enviar">
-    <input type="reset" value="Borrar">
-  </form>
-</div>
+</script>
 </body>
 </html>
 

@@ -1,0 +1,51 @@
+##### Guía de Vue.js by dM #####
+
+----- Introducción -----
+
+¿Qué es Vue.js?
+
+Vue (pronunciado /vjuː/ en inglés, como view) es un framework progresivo para
+construir interfaces de usuario. A diferencia de otros frameworks monolíticos,
+Vue está diseñado desde el inicio para ser adoptado incrementalmente.
+La biblioteca principal se enfoca solo en la capa de la vista, y es muy simple
+de utilizar e integrar con otros proyectos o bibliotecas existentes. Por otro
+lado, Vue también es perfectamente capaz de soportar aplicaciones sofisticadas
+de una sola página (en inglés single-page-application o SPA) cuando se utiliza
+en combinación con herramientas modernas y librerías compatibles.
+
+Si eres un desarrollador de frontend con experiencia y quieres saber como Vue
+se compara con otras bibliotecas/frameworks, revisa esta comparación.
+
+----- Empezando -----
+
+La guia oficial asume un conocimiento intermedio de HTML, CSS y JavaScript. Si
+eres totalmente nuevo en el desarrollo de frontend, puede no ser la mejor idea
+empezar a utilizar un framework - ¡aprende los conceptos básicos y luego regresa
+aquí! La experiencia previa con otros frameworks ayuda, pero no es obligatoria.
+
+La manera más sencilla de probar Vue.js es usando el ejemplo “hola mundo” en
+JSFiddle. Siéntete libre de abrilo en otra pestaña y revisarlo a medida que
+avanzamos con ejemlos básicos. Si no, puedes crear un archivo .html e incluir
+Vue con:
+
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+La página de instalación provee más opciones para instalar Vue. Nota que no
+recomendamos a los principiantes comenzar con vue-cli, especialmente si no estás
+familiarizado con las herramientas de trabajo basadas en Node.js.
+
+----- Renderizado declarativo -----
+
+En el corazón de Vue.js se encuentra un sistema que nos permite renderizar
+declarativamente datos en el DOM utilizando una sintaxis de plantillas directa:
+
+<div id="app">
+  {{ message }}
+</div>
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue!'
+  }
+})
