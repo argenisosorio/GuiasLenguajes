@@ -12,6 +12,7 @@
 - Uwsgi
 - HTML
 - HAML
+- Vue.Js
 - Jquery
 - Apache
 - MySQL
