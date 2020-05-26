@@ -2,14 +2,14 @@
 
 <html>
   <head>
-      <title>XXX</title>
-      <!--script src="jquery-1.9.1.js" type="text/javascript"></script-->
-      <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
-      <meta charset="UTF-8">
+    <title>XXX</title>
+    <!--script src="jquery-1.9.1.js" type="text/javascript"></script-->
+    <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
+    <meta charset="UTF-8">
   </head>
   <script type="text/javascript"> 
-    $("document").ready(function () {
-    });
+  $("document").ready(function () {
+  });
   </script>
 <body>
 </body>
@@ -54,9 +54,9 @@ vez que la página este disponible.
 El bloque $(document).ready()
 
 <script>
-  $(document).ready(function() {
-      console.log('el documento está preparado');
-  });
+$(document).ready(function() {
+  console.log('el documento está preparado');
+});
 </script>
 
 
@@ -64,9 +64,9 @@ Es buena practica especificar una función JavaScript anónima junto con
 los paréntesis de la función ready(), ejemplo:
 
 <script>
-    $(document).ready(function(){
-        alert("¡Hola esto es una alerta!");
-    });
+$(document).ready(function(){
+  alert("¡Hola esto es una alerta!");
+});
 </script>
 
 En el caso de los eventos, ejemplo:
@@ -3405,128 +3405,6 @@ $( "<ol></ol>" )
 
 -------------------------------------
 
-<!--
-Ajax con JSON y jQuery
-Uno de los argumentos del método jQuery.ajax() es dataType y aquí podemos especificar que vamos a utilizar datos JSON en la respuesta. Si no especificamos nada en dataType, jQuery intetará detectar de forma automática el formato de los datos recibidos. Si se especifica el tipo de contenido, será más fácil para jQuery tratar los datos correctamente. Utilizando jQuery.ajax() tendría un aspecto similar a:
--->
-<!DOCTYPE html>
-<html> 
-  <head> 
-     <title>Evaluar una variable que contiene notación JSON</title>
-     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-     <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
- </head> 
- <body> 
-  <h3>Evaluar una variable que contiene notación JSON.</h3>
-  <input type="button" id="boton1" value="Recuperar datos del JSON" /><br /><br />
-  <span id="texto"></span>
-   <script type="text/javascript">
-    $(document).ready(function () {
-      $.ajax({
-          // En data puedes utilizar un objeto JSON, un array o un query string
-          //data: {"parametro1" : "valor1", "parametro2" : "valor2"},
-          //Cambiar a type: POST si necesario
-          type: "GET",
-          // Formato de datos que se espera en la respuesta
-          dataType: "json",
-          // URL a la que se enviará la solicitud Ajax
-          url: "mi.json",
-      })
-       .done(function( data, textStatus, jqXHR ) {
-           if ( console && console.log ) {
-               alert( "La solicitud se ha completado correctamente." );
-           }
-       })
-       .fail(function( jqXHR, textStatus, errorThrown ) {
-           if ( console && console.log ) {
-               alert( "La solicitud a fallado: " +  textStatus);
-           }
-      });
-    });
-   </script>
-  </body>
-</html>
-
-El JSON = mi.json
-
-{
-  "name": {
-    "Proyectos": [
-      {
-        "nombre": "Proyecto 1",
-        "solicitud": "2313123",
-        "responsables": [
-          "Alexis Parra",
-          "Pedro Pérez"
-        ],
-        "detalles": "<a href='#'>Ver</a>"
-      },
-      {
-        "nombre": "Proyecto 2",
-        "solicitud": "232012",
-        "responsables": [
-          "Marcos Chávez",
-          "Carmen Yolanda"
-        ],
-        "detalles": "<a href='#'>Ver</a>"
-      },
-      {
-        "nombre": "Proyecto 3",
-        "solicitud": "212309",
-        "responsables": [
-          "Manuel Carreño",
-          "José Albarran"
-        ],
-        "detalles": "<a href='#'>Ver</a>"
-      },
-      {
-        "nombre": "Proyecto 4",
-        "solicitud": "234012",
-        "responsables": [
-          "Karla Mora",
-          "Francisco Beltrán"
-        ],
-        "detalles": "<a href='#'>Ver</a>"
-      }
-    ]
-  }
-}
-
--------------------------------------
-
-<!-- Obtener datos del JSON utilizando una petición AJAX, se escriben los datos en el dom -->
-<!DOCTYPE html>
-<html>
-<head>
-<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
-<script>
-$(document).ready(function(){
-    $("button").click(function(){
-        $.getJSON("mi.json", function(result){
-            $.each(result, function(i, field){
-                $("div").append(field + " ");
-            });
-        });
-    });
-});
-</script>
-</head>
-<body>
-<button>Get JSON data</button>
-<div></div>
-</body>
-</html>
-
-El JSON = mi.json
-
-{ 
-  "firstName": "John",
-  "lastName": "Connor",
-  "age": 25
-}
-
--------------------------------------
-
 <!-- Cargar un página o elemento dentro de un iframe -->
 <html>
   <head>
@@ -3550,154 +3428,6 @@ El JSON = mi.json
 
 -------------------------------------
 
-<!-- Mostrar una alerta cuando una petición AJAX se complete con éxito: -->
-<!DOCTYPE html>
-<html>
-<head>
-<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
-<script>
-$(document).ready(function(){
-  $(document).ajaxSuccess(function(){
-    alert("AJAX request successfully completed");
-  });
-  $("button").click(function(){
-    $("div").load("a.txt");//Crear el fichero para cargar el contenido
-  });
-});
-</script>
-</head>
-<body>
-<div><h2>Let AJAX change this text</h2></div>
-<button>Change Content</button>
-</body>
-</html>
-
--------------------------------------
-
-<!-- Cargar un texto en un elemetno <div> ussando un solicitud ajax -->
-<!DOCTYPE html>
-<html>
-<head>
-<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
-<script>
-$(document).ready(function(){
-  $("button").click(function(){
-    //$("#div1").load("a.txt"); // Crear el a.txt y cargarle datos
-    $("#div1").load("https://codepen.io/eclairereese/pen/BzQBzR.html"); // Crear el a.txt y cargarle datos
-  });
-});
-</script>
-</head>
-<body>
-<div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
-<button>Get External Content</button>
-</body>
-</html>
-
--------------------------------------
-
-<!-- Obtener y correr un JavaScript usando una solicitud AJAX-->
-<!DOCTYPE html>
-<html>
-<head>
-<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
-<script>
-$(document).ready(function(){
-    $("button").click(function(){
-        $.getScript("prueba.js"); // Crear el script para probarlo
-    });
-});
-</script>
-</head>
-<body>
-<button>Use Ajax to get and then run a JavaScript</button>
-</body>
-</html>
-
-El JSON = prueba.js
-
-$(document).ready(function(){
-  alert("prueba.js cargado con éxito!");
-});
-
--------------------------------------
-
-<!-- Mostrar una imagen de carga mientras la solicitud AJAX está pasando: -->
-<!DOCTYPE html>
-<html>
-<head>
-<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
-<script>
-$(document).ready(function(){
-    $(document).ajaxStart(function(){
-        $("#wait").css("display", "block");
-    });
-    $(document).ajaxComplete(function(){
-        $("#wait").css("display", "none");
-    });
-    $("button").click(function(){
-        $("#txt").load("a.txt"); // Crear el a.txt y cargarle data
-    });
-});
-</script>
-</head>
-<body>
-<div id="txt"><h2>Let AJAX change this text</h2></div>
-<button>Change Content</button>
-<div id="wait" style="display:none;width:69px;height:89px;border:1px solid black;position:absolute;top:50%;left:50%;padding:2px;"><img src='demo_wait.gif' width="64" height="64" /><br>Loading..</div><!-- Añadir un loading.gif -->
-</body>
-</html>
-
--------------------------------------
-
-<!-- Mostrar una alerta cuando falla una petición AJAX -->
-<!DOCTYPE html>
-<html>
-<head>
-<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
-<script>
-$(document).ready(function(){
-    $(document).ajaxError(function(){
-      alert("An error occured!");
-    });
-    $("button").click(function(){
-      $("div").load("wrongfile.txt"); // Si no consigue el fichero muestra la alerta de error
-    });
-});
-</script>
-</head>
-<body>
-<div><h2>Let AJAX change this text</h2></div>
-<button>Change Content</button>
-</body>
-</html>
-
--------------------------------------
-
-<!-- Cambiar el contenido de un elemento <div> cuando un petición AJAX está a punto de ser enviada -->
-<!DOCTYPE html>
-<html>
-<head>
-<script src="jquery-1.12.4.min.js" type="text/javascript"></script>
-<script>
-$(document).ready(function(){
-    $(document).ajaxSend(function(e, xhr, opt){
-      $("div").append("<p>Requesting " + opt.url + "</p>");
-    });
-    $("button").click(function(){
-      $("div").load("a.txt");
-    });
-});
-</script>
-</head>
-<body>
-<div><h2>Let AJAX change this text</h2></div>
-<button>Change Content</button>
-</body>
-</html>
-
--------------------------------------
-
 <!-- Mostrar una alerta cada 3 segundos (3000 milisegundos): -->
 </html<!DOCTYPE html>
 <html>
@@ -3711,100 +3441,6 @@ function myFunction() {
 }
 </script>
 </body>
-
--------------------------------------
-
-<!-- Cargar la data de un json y escribirlo en un div content con una click function -->
-<html>
-  <head>
-    <title>The jQuery Example</title>
-    <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
-    <script type = "text/javascript" language = "javascript">
-      $(document).ready(function() {
-        $("#driver").click(function(event){
-          $.getJSON('mi.json', function(data) { //Crear el json y guardarlo
-            $('#content').html('<p> Name: ' + data.firstName + '</p>');
-            $('#content').append('<p>Apellido : ' + data.lastName + '</p>');
-            $('#content').append('<p>Edad: ' + data.age + '</p>');
-          });
-        });
-      });
-    </script>
-  </head>
-<body>  
-<p>Click para cargar la data del JSON:</p>
-<div id="content" style="border: ridge;">
-  Content
-</div>
-<br />
-<input type = "button" id = "driver" value = "Cargar data" />
-</body>
-</html>
-
-El JSON = mi.json
-
-{ 
-  "firstName": "John",
-  "lastName": "Connor",
-  "age": 21
-}
-
--------------------------------------
-
-<!-- Cargar la data de un json y escribirlo en un div content, mostrando los contenidos dentro de los arrays-->
-<html>
-  <head>
-    <title>The jQuery Example</title>
-    <script src="jquery-1.12.4.min.js" type="text/javascript"></script>
-    <script type = "text/javascript" language = "javascript">
-      $(document).ready(function() {
-        window.onload = function () {
-          $.getJSON('mi.json', function(data) {
-            $('#content').html('<p>Ente Superior: ' + data.name + '</p>');
-            $('#content').append('<p>Ente: ' + data.children[0].name + '</p>');
-            $('#content').append('<p>Proyecto: ' + data.children[0].children[0].name + '</p>');
-          });
-        }
-      });
-    </script>
-  </head>
-<body>
-  <div id="content">
-    Content
-  </div>
-</body>
-</html>
-
-El JSON = mi.json
-
-{
-  "name": "Vicepresidencia",
-  "children":
-  [
-    {
-      "name": "Ente X",
-      "children":
-      [
-        {"name": "Proyecto 1", "size": 2000},
-        {"name": "Proyecto 2", "size": 2000},
-        {"name": "Proyecto 3", "size": 2000},
-        {"name": "Proyecto 4", "size": 2000},
-        {"name": "Proyecto 5", "size": 2000}
-      ]
-    },
-    {
-      "name": "Ente y",
-      "children":
-      [
-        {"name": "Proyecto 1", "size": 2000},
-        {"name": "Proyecto 2", "size": 2000},
-        {"name": "Proyecto 3", "size": 2000},
-        {"name": "Proyecto 4", "size": 2000},
-        {"name": "Proyecto 5", "size": 2000}
-      ]
-    }
-  ]
-}
 
 -------------------------------------
 

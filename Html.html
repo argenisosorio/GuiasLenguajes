@@ -3827,7 +3827,9 @@ se utilice finalmente en nuestro proyecto cuando esté terminado.
 
 Fuente: https://lenguajecss.com/p/css/introduccion/minificar-css
 
+#########################################
 ##### Control de acceso HTTP (CORS) #####
+#########################################
 
 El Intercambio de Recursos de Origen Cruzado (CORS) es un mecanismo que utiliza
 cabeceras HTTP adicionales para permitir que un user agent obtenga permiso para
@@ -3853,3 +3855,80 @@ transferencia segura de datos en dominios cruzados entre navegadores y
 servidores Web. Los exploradores modernos utilizan CORS en un  contenedor API
 (como XMLHttpRequest o Fetch) para ayudar a mitigar los riesgos de solicitudes
 HTTP de origen cruzado.
+
+----- ¿Qué peticiones utiliza CORS? -----
+
+Este estándar de intercambio de origen cruzado es utilizado para habilitar
+solicitudes HTTP de sitios cruzados para:
+
+-Invocaciones de las APIs XMLHttpRequest o  Fetch en una manera de sitio
+cruzado, como se discutió arriba.
+
+-Fuentes Web (para usos de fuente en dominios cruzados @font-face dentro de CSS)
+para que los servidores puedan mostrar fuentes.
+
+-TrueType que sólo puedan ser cargadas por sitios cruzados y usadas por sitios
+web que lo tengan permitido.
+
+-Texturas WebGL.
+
+-Imágenes dibujadas en patrones usando drawImage.
+
+-Hojas de estilo (para acceso CSSOM).
+
+-Scripts (para excepciones inmutadas).
+
+----- Resumen -----
+
+El estándar de Intercambio de Recursos de Origen Cruzado trabaja añadiendo
+nuevas cabeceras HTTP que permiten a los servidores describir el conjunto de
+orígenes que tienen permiso para leer la información usando un explorador web.
+Adicionalmente, para métodos de solicitud HTTP que causan efectos secundarios en
+datos del usuario (y en particular, para otros métodos HTTP distintos a GET, o
+para la utilización de POST con algunos tipos MIME), la especificación sugiere
+que los exploradores "verifiquen" la solicitud, solicitando métodos soportados
+desde el servidor con un método de solicitud HTTP OPTIONS, y luego, con la
+"aprobación" del servidor, enviar la verdadera solicitud con el método de
+solicitud HTTP verdadero. Los servidores pueden también notificar a los clientes
+cuando sus "credenciales" (incluyendo Cookies y datos de autenticación HTTP)
+deben ser enviados con solicitudes.
+
+----- Ejemplos de escenarios de control de accesos -----
+
+Aquí, presentamos tres escenarios que ilustran cómo funciona el Intercambio de
+Recursos de Origen Cruzado. Todos estos ejemplos utilizan el objeto
+XMLHttpRequest, que puede ser utilizado para hacer invocaciones de sitios
+cruzados en cualquier explorador soportado.
+
+Una solicitud de sitio cruzado es aquella que cumple las siguientes condiciones:
+
+Los únicos métodos aceptados son:
+
+GET
+HEAD
+POST.
+
+Aparte de las cabeceras establecidas automáticamente por el agente usuario
+(ej. Connection, User-Agent,etc.), las únicas cabeceras que están permitidas
+para establecer manualmente son:
+
+Accept
+Accept-Language
+Content-Language
+Content-Type
+
+Los únicos valores permitidos de la cabecera Content-Type son:
+
+application/x-www-form-urlencoded
+multipart/form-data
+text/plain
+
+Nota: Estos son los mismos tipos de solicitud de sitios cruzados que un
+contenido web ya puede emitir, y ninguna respuesta de datos es liberada a menos
+que el servidor envíe la cabecera apropiada. Por lo tanto, los sitios que
+prevengan solicitudes falsas de sitios cruzados no tienen nada nuevo que temer
+sobre el control de acceso HTTP.
+
+----- Fuentes -----
+
+-https://developer.mozilla.org/es/docs/Web/HTTP/Access_control_CORS
