@@ -7368,3 +7368,30 @@ $(document).ready(function() {
     </div>
   </div>
 </div>
+
+#######################################################
+##### Llenar un array de js con objetos de django #####
+#######################################################
+
+<script type="text/javascript">
+var personas = new Array();
+{% for persona in object_list %}
+  personas.push('{{ persona.id }}');
+{% endfor %}
+alert(personas);
+</script>
+
+#######################################
+##### Servir objetos como un json #####
+#######################################
+
+url(r'^datos$', views.datos, name='datos'),
+
+import json
+
+
+def datos(request):
+    personas = Persona.objects.all()
+    lista = [{'pk': x.pk,'nombre': x.nombre} for x in personas]
+    datos = json.dumps(lista)
+    return HttpResponse(json.dumps(datos), content_type="application/json")
