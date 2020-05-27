@@ -7395,3 +7395,10 @@ def datos(request):
     lista = [{'pk': x.pk,'nombre': x.nombre} for x in personas]
     datos = json.dumps(lista)
     return HttpResponse(json.dumps(datos), content_type="application/json")
+
+
+def datos2(request):
+    data = requests.get('http://127.0.0.1:8000/datos').json()
+    print "+++++++++++"
+    print data
+    return HttpResponse(json.dumps(data), content_type="application/json")
