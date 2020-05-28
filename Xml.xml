@@ -1,0 +1,124 @@
+##### Guía de xml by dM #####
+
+----- Extensible Markup Language -----
+
+XML, siglas en inglés de eXtensible Markup Language, traducido como "Lenguaje de
+Marcado Extensible" o "Lenguaje de Marcas Extensible", es un metalenguaje que
+permite definir lenguajes de marcas desarrollado por el World Wide Web
+Consortium (W3C) utilizado para almacenar datos en forma legible. Proviene del
+lenguaje SGML y permite definir la gramática de lenguajes específicos (de la
+misma manera que HTML es a su vez un lenguaje definido por SGML) para
+estructurar documentos grandes. A diferencia de otros lenguajes, XML da soporte
+a bases de datos, siendo útil cuando varias aplicaciones deben comunicarse entre
+sí o integrar información.1
+
+XML no ha nacido únicamente para su aplicación en Internet, sino que se propone
+como un estándar para el intercambio de información estructurada entre
+diferentes plataformas. Se puede usar en bases de datos, editores de texto,
+hojas de cálculo y casi cualquier cosa imaginable.
+
+XML es una tecnología sencilla que tiene a su alrededor otras que la
+complementan y la hacen mucho más grande, con unas posibilidades mucho mayores.
+Tiene un papel muy importante en la actualidad ya que permite la compatibilidad
+entre sistemas para compartir la información de una manera segura,
+fiable y fácil.
+
+----- Ventajas del XML -----
+
+-Es extensible: Después de diseñado y puesto en producción, es posible extender
+XML con la adición de nuevas etiquetas, de modo que se pueda continuar
+utilizando sin complicación alguna.
+
+-El analizador es un componente estándar, no es necesario crear un analizador
+específico para cada versión de lenguaje XML. Esto posibilita el empleo de
+cualquiera de los analizadores disponibles. De esta manera se evitan bugs y se
+acelera el desarrollo de aplicaciones.
+
+-Si un tercero decide usar un documento creado en XML, es sencillo entender su
+estructura y procesarla. Mejora la compatibilidad entre aplicaciones. Podemos
+comunicar aplicaciones de distintas plataformas, sin que importe el origen de
+os datos, es decir, podríamos tener una aplicación en Linux con una base de
+datos Postgres y comunicarla con otra aplicación en Windows y Base de Datos
+MS-SQL Server.
+
+-Transformamos datos en información, pues se les añade un significado concreto
+y los asociamos a un contexto, con lo cual tenemos flexibilidad para estructurar
+documentos.
+
+----- Estructura de un documento XML -----
+
+La tecnología XML busca dar solución al problema de expresar información
+estructurada de la manera más abstracta y reutilizable posible. Que la
+información sea estructurada quiere decir que se compone de partes bien
+definidas, y que esas partes se componen a su vez de otras partes. Entonces se
+tiene un árbol de trozos de información. Ejemplos son un tema musical, que se
+compone de compases, que están formados a su vez por notas. Estas partes se
+llaman elementos, y se las señala mediante etiquetas.
+
+Una etiqueta consiste en una marca hecha en el documento, que señala una porción
+de este como un elemento. Un pedazo de información con un sentido claro y
+definido. Las etiquetas tienen la forma <nombre>, donde nombre es el nombre del
+elemento que se está señalando.
+
+A continuación se muestra un ejemplo para entender la estructura de un
+documento XML:
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE Edit_Mensaje SYSTEM "Edit_Mensaje.dtd">
+
+<Edit_Mensaje>
+   <Mensaje>
+      <Remitente>
+         <Nombre>Nombre del remitente</Nombre>
+         <Mail> Correo del remitente </Mail>
+      </Remitente>
+      <Destinatario>
+         <Nombre>Nombre del destinatario</Nombre>
+         <Mail>Correo del destinatario</Mail>
+      </Destinatario>
+      <Texto>
+         <Asunto>
+          Este es mi documento con una estructura muy sencilla 
+          no contiene atributos ni entidades...
+         </Asunto>
+         <Parrafo>
+          Este es mi documento con una estructura muy sencilla 
+          no contiene atributos ni entidades...
+         </Parrafo>
+      </Texto>
+   </Mensaje>
+</Edit_Mensaje>
+
+----- Diferencias entre XML y HTML -----
+
+Para dejar en claro qué distingue uno del otro, aquí enumeramos las principales
+diferencias entre XML y HTML:
+
+-El XML es un lenguaje de marcado basado en texto que tiene una estructura de
+auto-descripción y puede definir efectivamente otro lenguaje de marcado. Por
+otro lado, el HTML es un lenguaje de mrcado predefinido y tiene una
+capacidad limitada.
+
+-El XML proporciona la estructura lógica del documento, mientras que la
+estructura del HTML está predefinida, utilizando tags heads e body.
+
+-Cuando se trata de lenguaje, el HTML es insensible a mayúsculas y minúsculas.
+En cambio, el XML distingue entre mayúsculas y minúsculas.
+
+-El HTML fue diseñado con un énfasis en las características de presentación de
+los datos. En contraste, el XML es específico de datos.
+
+-El XML no permite ningún error en el código. En contraste, en el HTML,
+pequeños errores pueden ser descuidados.
+
+-Los espacios en blanco en el XML se utilizan para un fin específico, pues
+considera todos los caracteres el HTML, en cambio puede ignorar espacios en
+blanco; las tags de XML están necesariamente cerradas, mientras que en HTML una
+etiqueta abierta también puede funcionar bastante bien.
+
+-En XML la sintaxis es de gran importancia. El HTML, por otro lado, no se preocupa mucho por este aspecto. 
+
+##### Fuentes #####
+
+-https://es.wikipedia.org/wiki/Extensible_Markup_Language
+-https://rockcontent.com/es/blog/que-es-xml/
