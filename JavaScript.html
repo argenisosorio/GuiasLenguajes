@@ -347,6 +347,50 @@ for (var i = 0, limit = 100; i < limit; i++) {
     // en la consola será "Actualmente en 99"
 }
 
+----------
+
+for (var propiedad in objeto){
+  // código a repetir por el bucle.
+  // dentro de este código la variable "propiedad" contiene la propiedad actual
+  // actual en cada uno de los pasos de la iteración.
+}
+
+Ejemplos:
+
+<script type = "text/javascript" language = "javascript">
+var diasMes = {
+  enero: 31,
+  febrero: 28,
+  marzo: 31,
+  abril: 30,
+  mayo: 31
+}
+for (var mes in diasMes){
+  console.log(mes);
+}
+alert(diasMes["mayo"]);
+</script>
+
+-----
+
+<script type = "text/javascript" language = "javascript">
+usuarios = {
+  "Miguel Angel Alvarez" : {
+  },
+  "DesarrolloWeb.com" : {
+  },
+  "EscuelaIT" : {
+  },
+}
+for (var usuario in usuarios){
+  console.log(usuario);
+}
+</script>
+
+##### Fuente #####
+
+-https://desarrolloweb.com/articulos/recorridos-propiedades-objetos-javascript-forin.html
+
 ##### Bucles utilizando while #####
 
 Un bucle utilizando while es similar a una declaración condicional if, excepto que el cuerpo va a continuar ejecutándose hasta que la condición a evaluar sea falsa.
