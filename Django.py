@@ -7402,3 +7402,49 @@ def datos2(request):
     print "+++++++++++"
     print data
     return HttpResponse(json.dumps(data), content_type="application/json")
+
+##### Otra forma #####
+
+def datos(request):
+    result=Persona.objects.values('nombre','cedula').all();
+    result=list(result)  #after getting data from model convert result to list
+    return HttpResponse(json.dumps(result), content_type = "application/json")
+
+##### Otra forma #####
+
+from django.core import *
+
+def datos(request):
+    personas = Persona.objects.all()    
+    a = serializers.serialize('json',personas)
+    print a
+    return HttpResponse(json.dumps(datos), content_type="application/json")
+
+##### Otra forma #####
+
+from django.core import *
+from django.core import serializers
+
+
+def datos(request):
+    obj = Persona.objects.all()
+    data = serializers.serialize('json',obj)
+    struct = json.loads(data)
+    data = json.dumps(struct)
+    return HttpResponse(data, content_type="application/json")
+
+##### Otra forma #####
+
+def datos(request):
+    result=Persona.objects.values('nombre','cedula').all();
+    result=list(result)  #after getting data from model convert result to list
+    #print result
+    for item in result:
+        #print "-----"
+        #print item
+        items = {}
+        items['obj1'] = item
+        items['obj2'] = item
+    print "----"
+    print items
+    return HttpResponse(json.dumps(items), content_type = "application/json")
