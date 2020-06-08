@@ -7418,7 +7418,7 @@ def datos(request):
     personas = Persona.objects.all()    
     a = serializers.serialize('json',personas)
     print a
-    return HttpResponse(json.dumps(datos), content_type="application/json")
+    return HttpResponse(json.dumps(a), content_type="application/json")
 
 ##### Otra forma #####
 

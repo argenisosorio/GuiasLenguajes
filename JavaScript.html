@@ -341,10 +341,10 @@ El cuerpo es el código a ejecutar en cada repetición del bucle.
 Un típico bucle utilizando for
 
 for (var i = 0, limit = 100; i < limit; i++) {
-    // Este bloque de código será ejecutado 100 veces
-    console.log('Currently at ' + i);
-    // Nota: el último registro que se mostrará
-    // en la consola será "Actualmente en 99"
+  // Este bloque de código será ejecutado 100 veces
+  console.log('Currently at ' + i);
+  // Nota: el último registro que se mostrará
+  // en la consola será "Actualmente en 99"
 }
 
 ----------
@@ -734,17 +734,17 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 <!-- Activar una funcion mostrando una alerta -->
 <html>
 <head>
-    <meta charset="utf-8"/>
-    <script type="text/javascript">
-        function miFuncion() {
-            alert("Activaste la funcion miFuncion()");
-        }
-    </script>
+  <meta charset="utf-8"/>
+  <script type="text/javascript">
+  function miFuncion() {
+    alert("Activaste la funcion miFuncion()");
+  }
+  </script>
 </head>
 <body>
-    <form>
-        <input type="button" onclick="miFuncion()" value="Activar Función">
-    </form>
+  <form>
+    <input type="button" onclick="miFuncion()" value="Activar Función">
+  </form>
 <p>Presiona el botón y saldra una alerta contenida dentro de una función.</p>
 </body>
 </html>
@@ -753,22 +753,22 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 
 <!-- Llamada de dos funciones diferentes -->
 <html>
-    <head>
-        <meta charset="utf-8"/>
-        <script type="text/javascript">
-            function miFuncion1() {
-                alert("Activaste la funcion 1");
-            }
-            function miFuncion2() {
-                alert("Activaste la funcion 2");
-            }
-        </script>
-    </head>
+  <head>
+    <meta charset="utf-8"/>
+    <script type="text/javascript">
+    function miFuncion1() {
+      alert("Activaste la funcion 1");
+    }
+    function miFuncion2() {
+      alert("Activaste la funcion 2");
+    }
+    </script>
+  </head>
 <body>
-    <form>
-        <input type="button" onclick="miFuncion1()" value="Activar Función 1">
-        <input type="button" onclick="miFuncion2()" value="Activar Función 2">
-    </form>
+  <form>
+    <input type="button" onclick="miFuncion1()" value="Activar Función 1">
+    <input type="button" onclick="miFuncion2()" value="Activar Función 2">
+  </form>
 </body>
 </html>
 
@@ -777,23 +777,23 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 <!-- Activar 2 o mas funciones con un boton -->
 <html>
 <head>
-    <meta charset="utf-8"/>
-    <script type="text/javascript">
-        function Funcion1() {
-            alert("Activaste la funcion 1");
-        }
-        function Funcion2() {
-            alert("Activaste la funcion Funcion 2");
-        }
-        function Funcion3() {
-            alert("Activaste la funcion Funcion 3");
-        }
-    </script>
+  <meta charset="utf-8"/>
+  <script type="text/javascript">
+  function Funcion1() {
+    alert("Activaste la funcion 1");
+  }
+  function Funcion2() {
+    alert("Activaste la funcion Funcion 2");
+  }
+  function Funcion3() {
+    alert("Activaste la funcion Funcion 3");
+  }
+  </script>
 </head>
 <body>
-    <form>
-        <input type="button" onclick="Funcion1(),Funcion2(),Funcion3()" value="Activar Función">
-    </form>
+  <form>
+    <input type="button" onclick="Funcion1(),Funcion2(),Funcion3()" value="Activar Función">
+  </form>
 <p>Presiona el botón y saldra una alerta contenida dentro de una función.</p>
 </body>
 </html>
@@ -1338,10 +1338,10 @@ ocument.write(arreglo[1][1]);
         }    
     </script>
 <body>
-    <form name="form1" method="post" action="">
-        e-mail: <input type="text" name="email">
-        <input type="button" name="Button" value="Validar" onclick="checkMail(this.form.email.value)">
-    </form>    
+<form name="form1" method="post" action="">
+  e-mail: <input type="text" name="email">
+  <input type="button" name="Button" value="Validar" onclick="checkMail(this.form.email.value)">
+</form>
 </body>
 </html>
 

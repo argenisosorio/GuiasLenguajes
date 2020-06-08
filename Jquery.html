@@ -1444,6 +1444,36 @@ fast – Rápido
 
 -------------------------------------
 
+<!-- Efecto fade para mostrar u ocultar elementos -->
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Algunos efectos que trae con sigo jQuery UI</title>
+<script src="jquery/jquery-1.12.4.min.js" type="text/javascript"></script>
+<script src="jquery/jquery-ui-1.10.4.js" type="text/javascript"></script>
+<script type="text/javascript">
+$('document').ready(function(){
+  $("#show").click(function(){
+    $("#texto").effect('fade',"slow");
+  });
+});
+</script>
+</head>
+<body>
+<input type="button" value="Mostrar/Ocultar" id="show">
+<div id="texto">
+  <p>dasd sd ad asd asd ad asd d</p>
+  <p>dasd sd ad asd asd ad asd d</p>
+  <p>dasd sd ad asd asd ad asd d</p>
+  <p>dasd sd ad asd asd ad asd d</p>
+  <p>dasd sd ad asd asd ad asd d</p>
+</div>
+</body>
+</html>
+
+-------------------------------------
+
 <!-- Efectos aplicados a un formulario -->
 <!DOCTYPE HTML>
 <html>
@@ -5656,5 +5686,30 @@ $(document).ready(function(){
   <button>Another button</button>
   <p>Another paragraph.</p>
 </div>
+</body>
+</html>
+
+----------
+
+<!-- Funcion .prepend, Insert content, specified by the parameter, to the beginning
+of each element in the set of matched elements. -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>prepend demo</title>
+  <style>
+  p {
+    background: yellow;
+  }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+<body>
+<p>there, friend!</p>
+<p>amigo!</p>
+<script>
+$( "p" ).prepend( "<b>Hello </b>" );
+</script>
 </body>
 </html>
