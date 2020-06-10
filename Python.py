@@ -1939,13 +1939,15 @@ $ pip install -r requirements.txt
 
 $ pip install -r requirements.txt --timeout 120 // Con este parametro le daremos mayor tiempo de respuesta al servidor, para conexiones lentas.
 
+$ pip install --default-timeout=120 name_package
+
 // Dentro de los .virtualenvs, dentro de nuestro entorno virtual en
 lib/python2.7/site-packages podemos ver que se instalaron los paquetes de requirements.txt
 de no ser así hay que revisar el fichero o el nombre de los paquetes a instalar, etc.
 
 $ pip search nombre_paquete // Buscar un paquete.
 
-$ pip uninstall package // Desinstalar un paquete.
+$ pip uninstall package // Desinstalar o remover un paquete.
 
 $ pip show package // Para ver si un paquete está instalado, si es así, mostrará la version, y la ruta donde está instalado.
 

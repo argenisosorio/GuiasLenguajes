@@ -665,16 +665,16 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 
 <!-- Declaracion de variables, asignacion y reasignacion de valor -->
 <html>
-    <meta charset="utf-8"/>
+<meta charset="utf-8"/>
 <body>
-    <script type="text/javascript">    
-        var nombre; //declaramos la variable    
-        nombre="David"; //asignamos el valor Morris a la variable    
-        document.write(nombre); //imprimimos la variable
-        document.write("<br />");
-        nombre="Rafael"; //asignamos otro valor a la variable    
-        document.write(nombre); //imprimimos la variable
-    </script>
+  <script type="text/javascript">
+    var nombre; // declaramos la variable
+    nombre="David"; // asignamos el valor Morris a la variable
+    document.write(nombre); // imprimimos la variable
+    document.write("<br />");
+    nombre="Rafael"; //asignamos otro valor a la variable
+    document.write(nombre); //imprimimos la variable
+  </script>
 </body>
 </html>
 
@@ -683,16 +683,15 @@ myFn(myOtherFn);   // muestra en la consola 'hello world'
 <!-- Escribir html en un documento a traves de js -->
 <html>
 <body>
-    <script type="text/javascript">    
-        document.write("<h1>Encabezado</h1>");
-        document.write("<p>Parrafo 1</p>");
-        document.write("<p>Parrafo 2</p>");    
-        document.write("<h3>Encabezado</h3>");
-    </script>
-
-    <script type="text/javascript">
-        document.write("hola mundo");
-    </script>
+<script type="text/javascript">
+document.write("<h1>Encabezado</h1>");
+document.write("<p>Parrafo 1</p>");
+document.write("<p>Parrafo 2</p>");
+document.write("<h3>Encabezado</h3>");
+</script>
+<script type="text/javascript">
+document.write("hola mundo");
+</script>
 </body>
 </html>
 
@@ -1371,34 +1370,34 @@ ocument.write(arreglo[1][1]);
 
 <!-- Capturar y escribir los datos enviados por un formulario en JS -->
 <html>
-    <head>
-        <title></title>
-        <meta charset="utf-8">
-    </head>
-    <script type="text/javascript">
-        function escribe() {
-            escribir = document.getElementById("caja")
-            miusuario = "<p>" + document.rellenar.usuario.value + "</p>"
-            mipass = "<p>" + document.rellenar.pass.value + "</p>"
-            micoment = "<p>" + document.rellenar.coment.value + "</p>"
-            escribir.innerHTML = miusuario + mipass + micoment
-        }
-        window.onload = function() {
-            document.rellenar.guardar.onclick = escribe
-        }
-    </script>
+  <head>
+    <title></title>
+    <meta charset="utf-8">
+  </head>
+  <script type="text/javascript">
+  function escribe() {
+    escribir = document.getElementById("caja")
+    miusuario = "<p>" + document.rellenar.usuario.value + "</p>"
+    mipass = "<p>" + document.rellenar.pass.value + "</p>"
+    micoment = "<p>" + document.rellenar.coment.value + "</p>"
+    escribir.innerHTML = miusuario + mipass + micoment
+  }
+  window.onload = function() {
+    document.rellenar.guardar.onclick = escribe
+  }
+  </script>
 <body>
-    <form name="rellenar" action="#" method="get">
-        <h2>Acceder</h2>
-        <p>USUARIO : <input name="usuario" type="text"/> </p> 
-        <p>PASSWORD: <input name="pass" type="password" /></p>
-        <p>Comentario</p>
-        <p><textarea name="coment"></textarea></p>
-        <p><input name="guardar" type="button" value="Enviar" />
-    </form>
-    <br />
-    <div id="caja">
-    </div>
+  <form name="rellenar" action="#" method="get">
+    <h2>Acceder</h2>
+    <p>USUARIO : <input name="usuario" type="text"/> </p>
+    <p>PASSWORD: <input name="pass" type="password" /></p>
+    <p>Comentario</p>
+    <p><textarea name="coment"></textarea></p>
+    <p><input name="guardar" type="button" value="Enviar" />
+  </form>
+  <br />
+  <div id="caja">
+  </div>
 </body>
 </html>
 

@@ -441,3 +441,7 @@ class Index(TemplateView):
   {% endfor %}
   </tbody>
 </table>
+
+----- Así se ve el json de la lista de usuarios -----
+
+[{"id":2,"username":"aosorio","email":"aosorio@mail.gob.ve"},{"id":1,"username":"admin","email":"admin@mail.com"}]

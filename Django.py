@@ -7381,6 +7381,17 @@ var personas = new Array();
 alert(personas);
 </script>
 
+-----
+
+var id = new Array();
+var nombre = new Array();
+var cedula = new Array();
+{% for persona in object_list %}
+  id.push('{{ persona.id }}');
+  nombre.push('{{ persona.nombre }}');
+  cedula.push('{{ persona.cedula }}');
+{% endfor %}
+
 #######################################
 ##### Servir objetos como un json #####
 #######################################
@@ -7448,3 +7459,21 @@ def datos(request):
     print "----"
     print items
     return HttpResponse(json.dumps(items), content_type = "application/json")
+
+##### Otra forma #####
+
+from django.http import JsonResponse
+
+
+class  PersonaList(View):
+    def get(self, request):
+        personas =  list(Persona.objects.all().values())
+        data =  dict()
+        data['personas'] = personas
+        return JsonResponse(data)
+
+#############################
+##### get_object_or_404 #####
+#############################
+
+from django.shortcuts import get_object_or_404
