@@ -7477,3 +7477,20 @@ class  PersonaList(View):
 #############################
 
 from django.shortcuts import get_object_or_404
+
+
+##############################################
+##### for in form para renderizar campos #####
+##############################################
+
+"""
+{% for field in form %}
+  <div class="form-group{% if field.errors %} has-error{% endif %}">
+    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+    {{field}}
+    {% for error in field.errors %}
+      <p class="help-block">{{ error }}</p>
+    {% endfor %}
+  </div>
+{% endfor %}
+"""

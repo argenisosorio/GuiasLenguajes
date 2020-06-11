@@ -5708,8 +5708,20 @@ of each element in the set of matched elements. -->
 <body>
 <p>there, friend!</p>
 <p>amigo!</p>
-<script>
+<script type="text/javascript">
 $( "p" ).prepend( "<b>Hello </b>" );
 </script>
 </body>
 </html>
+
+----------
+
+<!-- Función que permite abrir un modal de bootstrap con un button click -->
+
+<button class="btn btn-success" id="code" type="button">Abrir modal</button>
+
+<script type="text/javascript">
+$('#code').click(function() {
+  $('.modal').modal('show');
+});
+</script>
