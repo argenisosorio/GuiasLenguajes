@@ -1,12 +1,18 @@
-##### Guía de Apache by dM #####
+====================
+Guía de Apache by dM
+====================
 
-########## Apache HTTP Server ##########
+==================
+Apache HTTP Server
+==================
 
 Servidor HTTP Apache es un servidor web HTTP de código abierto, para plataformas
 Unix (BSD, GNU/Linux, etc.), Microsoft Guindows, Macintosh y otras, que implementa
 el protocolo HTTP/1.1
 
-##### Instalación #####
+===========
+Instalación
+===========
 
 # apt-get install apache2
 
@@ -95,7 +101,9 @@ sites-enabled
 
 En el hay enlaces simbólicos a los ficheros de configuracion que están en sites-availables.
 
-##### Comandos para gestionar apache #####
+==============================
+Comandos para gestionar apache
+==============================
 
 $ chmod -R 777 /var/www/html // Cambiar los permisos de /var/www puesto que solo tiene permisos root, 
 -R para que los permisos se hagan de forma recursiva, esto se hace porque al pegar ficheros
@@ -111,7 +119,9 @@ $ sudo service apache2 reload // Para recargar la configuración del servicio de
 
 $ sudo service apache2 force-reload // Forzar la recargar de configuración del servicio.
 
-##### log de accesos ######
+==============
+log de accesos
+==============
 
 $ sudo tail -f /var/log/apache2/access.log // Para ver el log de acceso via Web al servidor Web Apache.
 
@@ -121,17 +131,23 @@ ip visitante || fecha y hora || Método de acceso || url visitada || codigo http
 
 192.168.200.201 - - [31/Aug/2017:14:59:44 -0400] "GET /files/2017/ HTTP/1.1" 200 1287 "http://192.168.200.201/files/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0"
 
-##### log de errores #####
+==============
+Log de errores
+==============
 
 $ sudo tail -f /var/log/apache2/error.log // Para depurar posibles errores del servidor.
 
-##### Borrar apache #####
+=============
+Borrar apache
+=============
 
 # apt-get --purge remove apache2*
 
 # rm -fr /etc/apache2
 
-##### Ejemplo de configuración para un sitio de pruebas #####
+=================================================
+Ejemplo de configuración para un sitio de pruebas
+=================================================
 
 Creamos un fichero prueba.conf en /etc/apache2/sites/availables con el siguiente contenido:
 
@@ -167,9 +183,9 @@ Una vez echo esto deberíamos poder visualizar nuestro proyecto en:
 
 127.0.0.1/prueba
 
-#################################
-##### El archivo .htaccess ######
-#################################
+====================
+El archivo .htaccess
+====================
 
 ¿Qué es el archivo .htaccess?
 
@@ -189,7 +205,9 @@ redirecciones, crear mensajes de error personalizados, restringir el acceso a ca
 el listado de directorios de nuestro servidor o permitir el uso de nuestro dominio sin
 usar las famosas "www".
 
-##### Evitar el listado del contenido de un directorio #####
+================================================
+Evitar el listado del contenido de un directorio
+================================================
 
 Uno de los primeros indicadores que nos pueden alertar de una configuración insegura
 de un servidor web es poner en la barra de direcciones del navegador una url que apunte
@@ -200,7 +218,9 @@ abriendo el contenido completo de nuestra web a terceros y, precisamente, para c
 este tipo de situaciones podemos usar las directivas DirectoryIndex u -Indexes para definir
 índices que eviten listar el contenido de una carpeta.
 
-##### Proteger archivos y carpetas importantes #####
+========================================
+Proteger archivos y carpetas importantes
+========================================
 
 Si bien es importante evitar el acceso a los directorios, también lo es proteger
 archivos considerados críticos, como por ejemplo los archivos de configuración.
@@ -229,7 +249,9 @@ el acceso es forzar una redirección hacia nuestra página principal siguiendo e
 Redirect 301 /wp-content/index.php http://www.tudominio.com/
 Redirect 301 /wp-content/themes/index.html http://www.tudominio.com/
 
-##### Evitar el hotlink #####
+=================
+Evitar el hotlink
+=================
 
 Dependiendo del tipo de licencia que utilicemos a la hora de publicar nuestros contenidos
 o si, por ejemplo, queremos evitar que las fotos que colgamos acaben siendo utilizadas en
@@ -237,7 +259,9 @@ otras páginas, quizás nos interese aplicar algún tipo de regla que evite que 
 insertar una imagen que nosotros estamos hospedando (forzando así a que, al menos, se la
 tengan que descargar y subir a su servidor).
 
-##### Restringir el acceso por IP y luchar contra el spam ######
+===================================================
+Restringir el acceso por IP y luchar contra el spam
+===================================================
 
 Si nuestro blog es víctima de algún tipo de ataque y tenemos localizado el origen
 (una dirección IP o un rango de direcciones), podemos aplicar medidas estrictas de

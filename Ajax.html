@@ -1,4 +1,6 @@
-<!-- Guía de Ajax by dM -->
+==================
+Guía de Ajax by dM
+==================
 
 Es el sueño de un desarrollador, permite:
 
@@ -56,9 +58,12 @@ asíncrona mediante AJAX. En este caso, la interacción del usuario tampoco se v
 interrumpida por recargas de página o largas esperas por la respuesta del
 servidor.
 
------ Ventajas y desventajas de AJAX -----
+==============================
+Ventajas y desventajas de AJAX
+==============================
 
---- Ventajas ---
+Ventajas
+========
 
 -Utiliza tecnologías ya existentes.
 
@@ -73,7 +78,8 @@ del servidor.
 
 -La página se asemeja a una aplicación de escritorio.
 
---- Desventajas ---
+Desventajas
+===========
 
 -Se pierde el concepto de volver a la página anterior.
 
@@ -93,14 +99,17 @@ en AJAX.
 -Dependiendo de la carga del servidor podemos experimentar tiempos tardíos de
 respuesta que desconciertan al visitante.
 
------ Nota -----
+Nota
+====
 
 Algunos ejemplos de esta guía se deben ejecutar desde un servidor http y los
 recursos llamados deben estar en el mismo servidor de lo contrario el navegador
 los bloqueara por seguridad, lo siguiente habla sobre (CORS) que tiene que ver
 con el tema de este intercambio de recursos que pueden llegar a bloquearse.
 
------ Control de acceso HTTP (CORS) -----
+=============================
+Control de acceso HTTP (CORS)
+=============================
 
 El Intercambio de Recursos de Origen Cruzado (CORS) es un mecanismo que utiliza
 cabeceras HTTP adicionales para permitir que un user agent obtenga permiso para
@@ -127,7 +136,8 @@ servidores Web. Los exploradores modernos utilizan CORS en un  contenedor API
 (como XMLHttpRequest o Fetch) para ayudar a mitigar los riesgos de solicitudes
 HTTP de origen cruzado.
 
------ ¿Qué peticiones utiliza CORS? -----
+¿Qué peticiones utiliza CORS?
+=============================
 
 Este estándar de intercambio de origen cruzado es utilizado para habilitar
 solicitudes HTTP de sitios cruzados para:
@@ -149,7 +159,9 @@ web que lo tengan permitido.
 
 -Scripts (para excepciones inmutadas).
 
------ Resumen -----
+=======
+Resumen
+=======
 
 El estándar de Intercambio de Recursos de Origen Cruzado trabaja añadiendo
 nuevas cabeceras HTTP que permiten a los servidores describir el conjunto de
@@ -164,7 +176,9 @@ solicitud HTTP verdadero. Los servidores pueden también notificar a los cliente
 cuando sus "credenciales" (incluyendo Cookies y datos de autenticación HTTP)
 deben ser enviados con solicitudes.
 
------ XMLHttpRequest -----
+==============
+XMLHttpRequest
+==============
 
 XMLHttpRequest es un objeto JavaScript que fue diseñado por Microsoft y adoptado
 por Mozilla, Apple y Google. Actualmente es un estándar de la W3C. Proporciona
@@ -181,7 +195,9 @@ Para crear una instancia de XMLHttpRequest, debes hacer lo siguiente:
 
 var req = new XMLHttpRequest();
 
------ Usando XMLHttpRequest -----
+=====================
+Usando XMLHttpRequest
+=====================
 
 En esta guía le echaremos un vistazo a cómo usar XMLHttpRequest para enviar
 solicitudes HTTP con el objetivo de intercambiar datos entre el sitio web y el
@@ -213,7 +229,9 @@ En la consola js nos mostrara el saludo contenido en el archivo
 
 hola mundo!
 
------ Solicitudes Síncronas y Asíncronas -----
+==================================
+Solicitudes Síncronas y Asíncronas
+==================================
 
 XMLHttpRequest soporta tanto comunicaciones síncronas como asíncronas.
 
@@ -256,7 +274,9 @@ vea http://xhr.spec.whatwg.org/
 
 Por lo cual no se pudo verificar
 
------ Solicitudes síncronas no-HTTP -----
+=============================
+Solicitudes síncronas no-HTTP
+=============================
 
 A pesar de su nombre, XMLHttpRequest se puede usar para hacer solicitudes que no
 sean de HTTP.  Este ejemplo muestra como usarlo para extraer un archivo del
@@ -280,7 +300,9 @@ La clave aqui es notar que el estado del resultado se compara con 0 en lugar
 de 200.  Esto es porque los esquemas file y ftp no usan los codigos de
 resultado de HTTP.
 
------ Solicitudes asíncronas -----
+======================
+Solicitudes asíncronas
+======================
 
 Si usas XMLHttpRequest desde una extensión, deberias usarla asíncronamente.
 
@@ -320,7 +342,9 @@ error, se muestra un mensaje de error.
 La linea 11 de hecho inicia la solicitud.  La función onreadystatechange es
 llamada siempre que el estado de una solicitud cambia.
 
------ Ejemplos de ajax -----
+================
+Ejemplos de ajax
+================
 
 Crear un XMLHttpRequest sencilla, y recuperar datos de un archivo txt.
 
@@ -472,7 +496,9 @@ Creamos el archivo catalogo.xml
   </CD>
 </CATALOG>
 
-##### Ajax con json y jQuery #####
+======================
+Ajax con json y jQuery
+======================
 
 Método jQuery.ajax()s
 
@@ -788,7 +814,9 @@ mi.json
   ]
 }
 
-##### Fuentes #####
+=======
+Fuentes
+=======
 
 -https://uniwebsidad.com/libros/ajax/capitulo-1
 -http://www.tutorialesprogramacionya.com/ajaxya/temarios/descripcion.php?punto=2&cod=34&inicio=0

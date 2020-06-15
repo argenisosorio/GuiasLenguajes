@@ -1,44 +1,60 @@
-#############################################
-##### Programación shell-script (bash) ######
-#############################################
+=================================
+Guía de shell-script (bash) by dM
+=================================
 
-##### ¿Qué es un "Script"? #####
+================================
+Programación shell-script (bash)
+================================
 
-Es un archivo que contiene código escrito en determinado lenguaje de programación que el sistema usa para determinada tarea.
-No es necesario que tenga una entrada externa ni interfaz gráfica, pero sí que provoque una salida de datos procesados
-(por más de que el usuario no los vea).
+====================
+¿Qué es un script?
+====================
 
-El lenguaje usado por Bash está definido por su propio intérprete y combina la sintaxis de otros Shells, como el Korn Shell (ksh) o el C Shell (csh).
-Muchos de los comandos que usualmente se usan en la consola también pueden usarse en los scripts, salvo aquellos que pertenecen estrictamente a una
-distribución en particular.
+Es un archivo que contiene código escrito en determinado lenguaje de
+programación que el sistema usa para determinada tarea. No es necesario que
+tenga una entrada externa ni interfaz gráfica, pero sí que provoque una salida
+de datos procesados (por más de que el usuario no los vea).
 
-##### Estructura de un Script #####
+El lenguaje usado por Bash está definido por su propio intérprete y combina la
+sintaxis de otros Shells, como el Korn Shell (ksh) o el C Shell (csh). Muchos de
+los comandos que usualmente se usan en la consola también pueden usarse en los
+scripts, salvo aquellos que pertenecen estrictamente a una distribución en
+particular.
 
-Para empezar debemos contar con un editor de texto, los archivos que guardamos con extensión .sh podrán ser ejecutados (o interpretados) por la consola
-siempre y cuando la primera línea sea la siguiente:
+=======================
+Estructura de un script
+=======================
+
+Para empezar debemos contar con un editor de texto, los archivos que guardamos
+con extensión .sh podrán ser ejecutados (o interpretados) por la consola siempre
+y cuando la primera línea sea la siguiente:
 
 #!/bin/bash
 
-Esto le dice al sistema que deberá usar la consola para ejecutar el archivo. Además, el carácter
+Esto le dice al sistema que deberá usar la consola para ejecutar el archivo.
+Además, el carácter
 
 # Permite escribir comentarios.
 
-echo // muestra un mensaje en pantalla, en este caso el típico "Hola Mundo". Si lo guardamos y ejecutamos con la consola veremos el resultado.
+echo // muestra un mensaje en pantalla, en este caso el típico "Hola Mundo". Si
+lo guardamos y ejecutamos con la consola veremos el resultado.
 
-Bash (y otros shells) permiten programar scripts
---Bash (Bourne again shell) es un programa informático cuya función consiste en interpretar órdenes.
+Bash (y otros shells) permiten programar scripts --Bash (Bourne again shell) es
+un programa informático cuya función consiste en interpretar órdenes.
+
 Está basado en la shell de Unix.
 
-Script o programa shell: Fichero de texto conteniendo comandos externos e internos
-que se ejecutan línea por línea, el programa puede contener, además de comandos
-variables, constructores lógicos (if...then, AND, OR, etc.) y lazos (while, for, etc.)
-funciones comentarios
+Script o programa shell: Fichero de texto conteniendo comandos externos e
+internos que se ejecutan línea por línea, el programa puede contener, además de
+comandos variables, constructores lógicos (if...then, AND, OR, etc.) y lazos
+(while, for, etc.) funciones comentarios.
 
-##################################
-##### Ejecución de un script #####
-##################################
+======================
+Ejecución de un script
+======================
 
-Los scripts deben empezar por el simbolo #! seguido del programa a usar para interpretar el script:
+Los scripts deben empezar por el simbolo #! seguido del programa a usar para
+interpretar el script:
 
 #!/bin/bash // Script de bash
 #!/bin/sh // Script de shell
@@ -65,9 +81,9 @@ bash prueba.sh // Ejecutar un programa con bash.
 
 sh prueba // Ejecutar un programa con bash, script guardado sin extension.
 
-#######################
-##### Comentarios #####
-#######################
+===========
+Comentarios
+===========
 
 #!/bin/bash
 #Comentario de varias lineas
@@ -85,7 +101,9 @@ COMMENT1
 Solo para comentar cadenas, no variables ni expresiones ni condicionales.
 '
 
-##### Operadores de compacion #####
+=======================
+Operadores de compacion
+=======================
 
 -eq equal to
 -ne not equal to
@@ -94,7 +112,9 @@ Solo para comentar cadenas, no variables ni expresiones ni condicionales.
 -gt greater than
 -ge greater than or equal to
 
-##### Operaciones con archivos #####
+========================
+Operaciones con archivos
+========================
 
 -s  file exists and is not empty
 -f  file exists and is not a directory
@@ -103,16 +123,18 @@ Solo para comentar cadenas, no variables ni expresiones ni condicionales.
 -w  file is writable
 -r  file is readable
 
-##### Salto de línea #####
+==============
+Salto de línea
+==============
 
 #!/bin/bash
 #Salto de línea
 echo -e "linea 1 \n"
 echo "Linea 2"
 
-#####################
-##### Funciones #####
-#####################
+=========
+Funciones
+=========
 
 #Llamado de una Funcion
 #!/bin/bash
@@ -138,9 +160,9 @@ echo $HOLA
 hola
 echo $HOLA
 
-##################################
-##### Pedir datos al usuario #####
-##################################
+======================
+Pedir datos al usuario
+======================
 
 #!/bin/bash
 #Capturar dato del teclado y asignarlo a una variable usando la funcion read.
@@ -185,9 +207,9 @@ echo 'Introduzca el minuto con doble dígito:'
 read minuto
 sudo date --set $hora:$minuto:00
 
-###################################
-##### Operaciones aritmeticas #####
-###################################
+=======================
+Operaciones aritmeticas
+=======================
 
 #!/bin/sh
 #Operaciones aritmeticas
@@ -211,9 +233,9 @@ num2=5
 division=$((num1/num2))
 echo $division
 
-#######################
-##### If and Else #####
-#######################
+===========
+If and Else
+===========
 
 #!/bin/bash
 #Pedir un dato y compararlo con el condicional
@@ -240,9 +262,9 @@ else
   echo "cuenta es menor que 100"
 fi
 
-############################
-##### == and && and or #####
-############################
+================
+== and && and or
+================
 
 #!/bin/bash
 #Comparación de cadenas con if y else
@@ -300,9 +322,9 @@ elif [ "$AGE" -ge 40 ] && [ "$AGE" -lt 50 ]; then
   echo "You are in your 40s"
 fi
 
-#################
-##### Cases #####
-#################
+=====
+Cases
+=====
 
 #!/bin/sh
 #Pide un número y revisa si existe el caso
@@ -378,9 +400,9 @@ case $var in
     ;;
 esac
 
-##########################
-##### Otros ejemplos #####
-##########################
+==============
+Otros ejemplos
+==============
 
 #A Simple Bash Example
 #!/bin/bash  

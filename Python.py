@@ -1888,7 +1888,9 @@ $ workon my_env
 
 (my_env)$
 
+#########################################
 ##### Usando Python 3 en virtualenv #####
+#########################################
 
 $ virtualenv -p python3 my_env
 
