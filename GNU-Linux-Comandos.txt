@@ -1,485 +1,935 @@
-##### Guía de comandos en GNU/Linux Debian by dM #####
+==========================================
+Guía de comandos en GNU/Linux Debian by dM
+==========================================
 
-Probados en: Debian GNU/Linux 7 (wheezy) y algunos en Debian GNU/Linux 8 (Jessie)
+Probados en: Debian GNU/Linux 7 (wheezy) y algunos en Debian
+GNU/Linux 8 (Jessie)
 
-#########################################################
-##### Comandos para mostrar información del sistema #####
-#########################################################
+=============================================
+Comandos para mostrar información del sistema
+=============================================
 
-Crtl + h // Mostrar archivos ocultos de un directorio, esto se hace desde el explorador de archivos nautilus de Gnome
+Mostrar archivos ocultos de un directorio, esto se hace desde el explorador de
+archivos nautilus de Gnome.
 
-$ cat /etc/issue.net  // Para saber la versión de SO que tenemos.
+Crtl + h
 
-$ cat /etc/issue  // Para saber la versión de SO que tenemos.
+Para saber la versión de SO que tenemos.
 
-$ cat /proc/cpuinfo // Para ver la información del cpu o procesador
+$ cat /etc/issue.net
 
-$ lscpu // Para ver la información del cpu o procesador pero menor a la anterior
+Para saber la versión de SO que tenemos.
 
-$ lsb_release -a // Comando que nos va a dar detalles de SO
+$ cat /etc/issue
 
-$ uname // Muestra información del sistema
+Para ver la información del cpu o procesador.
 
-$ uname -a // Muestra la versión del SO instalado, Version de Kernel y arquitectura de procesador.
+$ cat /proc/cpuinfo
 
-$ uname -mrs // Saber mi version de Kernel especifica, recomendada
+Para ver la información del cpu o procesador pero menor a la anterior.
 
-$ cat /etc/*-release // Ver info del sistema (Probado en Debian GNU/Linux 7 wheezy)
+$ lscpu
 
-$ uptime // Indica cuánto tiempo ha estado funcionando el sistema, muestra:
+Comando que nos va a dar detalles de SO.
+
+$ lsb_release -a
+
+Muestra información del sistema.
+
+$ uname
+
+Muestra la versión del SO instalado, Version de Kernel y arquitectura de
+procesador.
+
+$ uname -a
+
+Saber mi version de Kernel especifica, recomendada.
+
+$ uname -mrs
+
+Ver info del sistema.
+
+$ cat /etc/*-release
+
+Indica cuánto tiempo ha estado funcionando el sistema, muestra:
+
+$ uptime
 
 15:11:08 up 1 day,  5:07,  9 users,  load average: 0,65, 0,83, 0,88
 
 Los parámetros que muestra son:
--El tiempo actual que el sistema ha estado ejecutando
--El tiempo que lleva el sistema corriendo
--Los usuarios que están actualmente registrados
+
+-El tiempo actual que el sistema ha estado ejecutando.
+-El tiempo que lleva el sistema corriendo.
+-Los usuarios que están actualmente registrados.
 -Tiempo de carga del sistema durante los últimos 1, 5 y 15 minutos.
 
-$ ls -l /etc/init.d/ // Saber cuantos demonios(daemons) del sistema están en ejecución. En esta ruta se encuentran algunos de los scripts que se ejecutan con el arrenque del SO.
+Saber cuantos demonios(daemons) del sistema están en ejecución. En esta ruta se
+encuentran algunos de los scripts que se ejecutan con el arrenque del SO.
 
-$ date // Muestra la fecha
+$ ls -l /etc/init.d/
 
-# date --set 1998-11-02 // Asignar la fecha manualmente
+Muestra la fecha.
 
-# date --set 21:08:00 // Asignar la hora manualmente
+$ date
 
-$ cal // Muestra un calendario
+Asignar la fecha manualmente.
 
-# fdisk -l // Ver informacion de los discos duros, particiones y dispositivos montados en el sistema.
+# date --set 1998-11-02
 
-$ lsusb // Este comando muestra todos los puertos USB y los detalles acerca de los dispositivos conectados a ellos.
+Asignar la hora manualmente.
 
-$ lspci // Lista todos los componentes tipo pci (Peripheral Component Interconnec) como las tarjetas de red, de sonido o de televisión.
+# date --set 21:08:00
 
-$ cat /proc/meminfo // Leer el fichero meminfo que contiene datos dinámicos de la memoria, similar a free.
+Muestra un calendario.
 
-$ vmstat // Muestra el estado de la memoria virtual
+$ cal
 
-$ df // Muestra el espacio disponible del disco y demas dispositivos asi como el espacio usado
+Ver informacion de los discos duros, particiones y dispositivos montados en el
+sistema.
 
-$ df -h // Muestra el espacio disponible del disco y demas dispositivos asi como el espacio usado, pero en mg o gb según sea el caso.
+# fdisk -l
 
-$ df -m // Muestra el espacio disponible del disco y demas dispositivos asi como el espacio usado, pero en mg.
+Este comando muestra todos los puertos USB y los detalles acerca de los
+dispositivos conectados a ellos.
 
-$ pstree // Muestra los procesos del sistema en forma de arbol
+$ lsusb
 
-$ fc-list // Enumerar todas las fuentes instaladas que están disponibles en su tistema linux.
+Lista todos los componentes tipo pci (Peripheral Component Interconnec) como
+las tarjetas de red, de sonido o de televisión.
+
+$ lspci
+
+Leer el fichero meminfo que contiene datos dinámicos de la memoria, similar
+a free.
+
+$ cat /proc/meminfo
+
+Muestra el estado de la memoria virtual.
+
+$ vmstat
+
+Muestra el espacio disponible del disco y demas dispositivos asi como el espacio
+usado.
+
+$ df
+
+Muestra el espacio disponible del disco y demas dispositivos asi como el espacio
+usado, pero en mg o gb según sea el caso.
+
+$ df -h
+
+Muestra el espacio disponible del disco y demas dispositivos asi como el espacio
+usado, pero en mg.
+
+$ df -m
+
+Muestra los procesos del sistema en forma de arbol.
+
+$ pstree
+
+Enumerar todas las fuentes instaladas que están disponibles en su tistema linux.
+
+$ fc-list
 
 ##### Memoria ram #####
 
-$ free // Muestra el estado de la memoria RAM, total, usado, disponible, cached, buffers.
+Muestra el estado de la memoria RAM, total, usado, disponible, cached, buffers.
 
-$ free -m // Mostrar los datos en mb sin más.
+$ free
 
-$ free -h // Para ver los resultados en mb o gb con letra al final.
+Mostrar los datos en mb sin más.
 
-# dmidecode --type memory // detalles, fabricante, tipo, el máximo que soporta nuestro equipo, etc.
+$ free -m
 
-############################################
-##### Tips para la consola de comandos #####
-############################################
+Para ver los resultados en mb o gb con letra al final.
 
-!! // Repetir el ultimo comando ejecutado en consola
+$ free -h
 
-~ // Para sacarlo usar AvPag en la consola
+Detalles, fabricante, tipo, el máximo que soporta nuestro equipo, etc.
 
-comando && comando && comando... // Ejecucion multiple de comandos
+# dmidecode --type memory
 
-Ctrl + u // Cortar el contenido de la linea de comandos desde la posicion del cursor hasta el principio
+================================
+Tips para la consola de comandos
+================================
 
-Ctrl + k // Cortar el contenido de la linea de comandos desde la posicion del cursor hasta el final
+Repetir el ultimo comando ejecutado en consola.
 
-Ctrl + t // Intercambiar de posicion las letras que estan a cada lado del cursor
+!!
 
-Ctrl + l // Limpiar el shell
+Para sacarlo usar AvPag en la consola.
 
-Ctrl + d // En el shell, cerrar sesion, salir del root, de maquinas virtuales o de sesiones de usuarios iniciadas
+~
 
-Ctrl + flecha derecha o izquierda // Moverse en el prompt palabra a palabra, no letra por letra.
+Ejecucion multiple de comandos
 
-Ctrl + w // Borrar la palabra que esta antes del cursor en el shell
+$ comando && comando && comando
 
-Control + s : Parar la salida por pantalla. Si por ejemplo ejecutamos un comando que
-tiene una salida inmensa, podemos hacer que trabaje en silencio.
+Cortar el contenido de la linea de comandos desde la posicion del cursor hasta
+el principio.
 
-Control + q: Permitir la salida por pantalla, inverso al comando anterior.
+Ctrl + u
 
-Alt + d // Borrar palabra
+Cortar el contenido de la linea de comandos desde la posicion del cursor hasta
+el final.
 
-###########################
-##### Comandos varios #####
-###########################
+Ctrl + k
 
-$ man nombre_comando // Muestra el manual de una comando donde como: ls, grep, aptitude etc...
+Intercambiar de posicion las letras que estan a cada lado del cursor.
 
-Dentro de los manuales podemos presionar "h" para ver las opciones tenemos del manual, ejemplo "/delete"
-para hacer una busqueda de la cadena "delete" dentro del manual.
+Ctrl + t
 
-$ clear // Limpiar la consola.
+Limpiar el shell.
 
-$ whatis nombre_programa // Si no desea ver la página de manual completa sino sólo una descripción corta para confirmar que es lo que está buscando, ingrese whatis programa.
+Ctrl + l
+
+En el shell, cerrar sesion, salir del root, de maquinas virtuales o de sesiones
+de usuarios iniciadas.
+
+Ctrl + d
+
+Moverse en el prompt palabra a palabra, no letra por letra.
+
+Ctrl + flecha derecha o izquierda
+
+Borrar la palabra que esta antes del cursor en el shell.
+
+Ctrl + w
+
+Parar la salida por pantalla. Si por ejemplo ejecutamos un comando que tiene una
+salida inmensa, podemos hacer que trabaje en silencio.
+
+Control + s
+
+Permitir la salida por pantalla, inverso al comando anterior.
+
+Control + q
+
+Borrar palabra
+
+Alt + d
+
+===============
+Comandos varios
+===============
+
+Muestra el manual de una comando donde como: ls, grep, aptitude etc...
+
+$ man nombre_comando
+
+Dentro de los manuales podemos presionar "h" para ver las opciones tenemos del
+manual, ejemplo "/delete" para hacer una busqueda de la cadena "delete" dentro
+del manual.
+
+Limpiar la consola.
+
+$ clear
+
+Si no desea ver la página de manual completa sino sólo una descripción corta
+para confirmar que es lo que está buscando, ingrese whatis programa.
+
+$ whatis nombre_programa
 
 Ejemplo:
+
 $ whatis scp
+
 scp (1)     - copia segura (programa de copia de ficheros remotos)
 
-$ poweroff // Apagar la maquina, se debe ser root para ejecutarlo.
+Apagar la maquina, se debe ser root para ejecutarlo.
 
-$ reboot // Reiniciar la maquina.
+$ poweroff
 
-$ xrandr // Detectar las resoluciones de pantalla disponibles del sistema así como los hz correspondientes, la que
-tenga (*) es la que está siendo usada.
+ Reiniciar la maquina.
 
-$ ldd /xxx/python2.7 // Ver las dependencias de una librería o ejecutable, en este caso del ejecutable de python.
+$ reboot
+
+Detectar las resoluciones de pantalla disponibles del sistema así como los hz
+correspondientes, la que tenga (*) es la que está siendo usada.
+
+$ xrandr
+
+Ver las dependencias de una librería o ejecutable, en este caso del ejecutable
+de python.
+
+$ ldd /xxx/python2.7
 
 $ ldd /bin/bash
 
-##############################################
-##### Comandos para gestionar directorios ####
-##############################################
+===================================
+Comandos para gestionar directorios
+===================================
 
-$ pwd // (print work directory) Muestra la ruta en la que te encuentras.
+(print work directory) Muestra la ruta en la que te encuentras.
 
-$ mkdir nombre_carpeta // Crear una carpeta
+$ pwd
 
-$ mkdir -p carpeta1/carpeta2 // Crear una carpeta con otra carpeta dentro, encadenar la creación.
+Crear una carpeta.
 
-&& // El operador '&&' sirver para continuar con la ejecucion de comadnos en el shell, ejemplo:
+$ mkdir nombre_carpeta
 
-$ mkdir carpetaFFF && cd carpetaFFF // Creamos una carpetaFFF y luego entramos en la carpeta creada
-,&& nos permite poner varias instrucciones en una sola linea del shell, otro ejemplo:
+Crear una carpeta con otra carpeta dentro, encadenar la creación.
 
-$ mkdir carpetaZZZ && cd carpetaZZZ && touch archivo.txt // Creamos una carpeta, entramos en ella y creamos un archivo
-en ese directorio en una sola instruccion.
+$ mkdir -p carpeta1/carpeta2
 
-$ touch nombre_fichero.xxx // Crear fichero con la extensión que se requiera.
+El operador '&&' sirver para continuar con la ejecucion de comadnos en el shell,
+ejemplo:
 
-$ mkdir /tmp/`date +\%Y\%m\%d` // Crear una carpeta que lleve por nombre la fecha, ejemplo: 20170807
+Creamos una carpetaFFF y luego entramos en la carpeta creada
 
-###############################################
-##### Comandos para listar los directorios ####
-###############################################
+$ mkdir carpetaFFF && cd carpetaFFF
 
-$ ls // Muestra lo que hay en la carpeta en la que te encuentras
+&& nos permite poner varias instrucciones en una sola linea del shell, otro
+ejemplo:
 
-$ ls -l // Muestra los archivos, fecha, permisos, etc
+Creamos una carpeta, entramos en ella y creamos un archivo en ese directorio en
+una sola instruccion.
 
-$ ls -lh // Muestra los archivos, fecha, permisos, y el peso pero en kb,mg o gb según sea el caso.
+$ mkdir carpetaZZZ && cd carpetaZZZ && touch archivo.txt
 
-$ ls -la // Muestra los archivos, los ocultos tambien, fecha, permisos, etc
+Crear fichero con la extensión que se requiera.
 
-$ ls -1 // Muestra los archivos en forma de lista
+$ touch nombre_fichero.xxx
 
-$ ls | more // Lista el contenido de un directorio en orden alfabético, usa space para paginar si la lista es grande.
+Crear una carpeta que lleve por nombre la fecha, ejemplo: 20170807
 
-$ ls *.xxx // Listar todos los ficheros de un directorio que tengan las extension .xxx, donde xxx puede ser: txt, html, php, css, etc.
+$ mkdir /tmp/`date +\%Y\%m\%d`
+
+====================================
+Comandos para listar los directorios
+====================================
+
+Muestra lo que hay en la carpeta en la que te encuentras.
+
+$ ls
+
+Muestra los archivos, fecha, permisos, etc.
+
+$ ls -l
+
+Muestra los archivos, fecha, permisos, y el peso pero en kb,mg o gb según sea el
+caso.
+
+$ ls -lh
+
+Muestra los archivos, los ocultos tambien, fecha, permisos, etc.
+
+$ ls -la
+
+Muestra los archivos en forma de lista.
+
+$ ls -1
+
+Lista el contenido de un directorio en orden alfabético, usa space para paginar
+si la lista es grande.
+
+$ ls | more
+
+Listar todos los ficheros de un directorio que tengan las extension .xxx, donde
+xxx puede ser: txt, html, php, css.
+
+$ ls *.xxxetc.
+
 ejemplo: ls *.txt
 
-$ ls -R // Listar los directorios y subdirectorios asi como ficheros de un directorio.
+Listar los directorios y subdirectorios asi como ficheros de un directorio.
 
-$ ls | cat -n // Muestra el contenido del directorio en una lista numerada.
+$ ls -R
 
-$ ls name_dir | wc // Contar el número de ficheros o elementos contenidos en un directorio.
+Muestra el contenido del directorio en una lista numerada.
 
-$ du // ver la lista de carpetas y sub carpetas, los directorios que existen, lo primero que muestra es el tamaño.
+$ ls | cat -n
 
-$ du -h // Los mismo que arriba pero se ven los tamaños pesos en kb, mg, etc
+Contar el número de ficheros o elementos contenidos en un directorio.
 
-$ du -sh // Ver el tamaño total de los directorios.
+$ ls name_dir | wc
 
-$ du -sh name_dir // Ver el tamaño de un directorio específico.
+Ver la lista de carpetas y sub carpetas, los directorios que existen, lo primero
+que muestra es el tamaño.
 
-$ du * // Muestra todos directorios y ficheros y el espacio que ocupan en el disco.
+$ du
 
-$ du -h * // Leer todos los elementos y ver los tamaños en kg, mg, etc.
+Los mismo que arriba pero se ven los tamaños pesos en kb, mg, etc.
 
-$ du -h file_name.xxx // Ver los tamaños en kg, mg, etc, de un fichero específico.
+$ du -h
 
-$ file * // Nos dira el tipo de archivo de todos los ficheros del directorio.
+Ver el tamaño total de los directorios.
 
-##################################################
-##### Comandos para moverse entre directorios ####
-##################################################
+$ du -sh
 
-$ cd // Cambiar de directorio, nos lleva al home del usuario.
+Ver el tamaño de un directorio específico.
 
-$ cd 'nombre carpeta' // Acceder a un directorio que tiene espacios en el nombre.
+$ du -sh name_dir
+
+Muestra todos directorios y ficheros y el espacio que ocupan en el disco.
+
+$ du *
+
+Leer todos los elementos y ver los tamaños en kg, mg, etc.
+
+$ du -h *
+
+Ver los tamaños en kg, mg, etc, de un fichero específico.
+
+$ du -h file_name.xxx
+
+Calcular el tamaño ocupado por un directorio.
+
+# du -h -s /var/log
+
+9,6M	/var/log
+
+Nos dira el tipo de archivo de todos los ficheros del directorio.
+
+$ file *
+
+=======================================
+Comandos para moverse entre directorios
+=======================================
+
+Cambiar de directorio, nos lleva al home del usuario.
+
+$ cd
+
+Acceder a un directorio que tiene espacios en el nombre.
+
+$ cd 'nombre carpeta'
 
 -- Si una carpeta se llama (a b c d e), para aceder a ella usamos:
 
-$ cd a\ b\ c\ d\ e/ // Al final siempre lleva el / normal, los otros usan el invertido.
+Al final siempre lleva el / normal, los otros usan el invertido.
 
-$ cd .. // retroceder un directorio
+$ cd a\ b\ c\ d\ e/
 
-$ cd ../../ // Retroceder dos directorios (../) representa un directorio
+Retroceder un directorio.
 
-#######################################
-##### Rutas relativas y absolutas #####
-#######################################
+$ cd ..
 
-- Una ruta o path es donde se localiza una carpeta o fichero dentro de nuestro sistema de ficheros.
-- Todos los comandos que se ejecuten sin especificar una ruta lo hará donde este situado.
+Retroceder dos directorios (../) representa un directorio.
+
+$ cd ../../
+
+===========================
+Rutas relativas y absolutas
+===========================
+
+- Una ruta o path es donde se localiza una carpeta o fichero dentro de nuestro
+sistema de ficheros.
+
+- Todos los comandos que se ejecuten sin especificar una ruta lo hará donde este
+situado.
+
 - Hay dos tipos de ruta que debemos diferenciar:
 
-***Ruta absoluta: Se indica toda la ruta del fichero incluyendo el directorio raíz. Por ejemplo:
+=============
+Ruta absoluta
+=============
+
+Se indica toda la ruta del fichero incluyendo el directorio raíz. Por ejemplo:
 
 /home/user/folder/file.txt
 
-***Ruta relativa: Se indica la ruta a partir de donde este en ese momento situado. No se incluye el directorio raíz. Por ejemplo, si estamos en la
-ruta /home/user y queremos acceder al file.txt que esta dentro de folder, seria:
+=============
+Ruta relativa
+=============
+
+Se indica la ruta a partir de donde este en ese momento situado. No se incluye
+el directorio raíz. Por ejemplo, si estamos en la ruta /home/user y queremos
+acceder al file.txt que esta dentro de folder, seria:
 
 folder/file.txt
 
-#############################################################################
-##### Comandos para buscar ficheros, directorios, paquetes, historiales #####
-#############################################################################
+=================================================================
+Comandos para buscar ficheros, directorios, paquetes, historiales
+=================================================================
 
-$ history // Mostrar el historial de los comandos de la consola
+Mostrar el historial de los comandos de la consola.
 
-$ fc -l // Mostrar los ultimos comandos usados por el usuario
+$ history
 
-$ history | grep xxx // Busqueda especifica de una comando usado, ejemplo: aptitude, alias, grep etc.
+Mostrar los ultimos comandos usados por el usuario
 
-.bash_history // En los archivos ocultos del home, en este fichero se almacena el historial de los comandos usados
+$ fc -l
 
-$ grep --color=always -n "mysql" /var/www/prueba/2/datos.php // --color para colorear la palabra a buscar, 
--n para listar la la linea del caracter buscado y al final ra ruta del archivo a buscar
+Busqueda especifica de una comando usado, ejemplo: aptitude, alias, grep etc.
 
-$ grep cadena_texto ./* -rIn // Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
+$ history | grep xxx
 
-$ grep --color=always -n "cadena_texto" ./* -Ir // Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
+ En los archivos ocultos del home, en este fichero se almacena el historial de
+ los comandos usados.
 
-$ grep --color -n "cadena_texto" -Ir // No hace falta poner =always
+.bash_history
 
-$ egrep -r "Saludo" . // Otra forma de busqueda.
+--color para colorear la palabra a buscar, -n para listar la la linea del
+caracter buscado y al final la ruta del archivo a buscar.
 
-| grep xxx // filtra la busqueda con el parametro que le demos ejemplo:
+$ grep --color=always -n "mysql" /var/www/prueba/2/datos.php
 
-$ aptitude search python | grep 2.7 // Busca las versiones de python que coincidan con el patron 2.7
+Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
 
-$ ps -e | grep ruby // Busca en los procesos del sistema las coincidencias con ruby
+$ grep cadena_texto ./* -rIn
 
-$ whereis python // Para saber donde esta instalado un programa, saber el directorio
+Busca la cadena de manera recursiva en la carpeta en que se encuentre situado.
+
+$ grep --color=always -n "cadena_texto" ./* -Ir
+
+No hace falta poner =always.
+
+$ grep --color -n "cadena_texto" -Ir
+
+Otra forma de busqueda.
+
+$ egrep -r "Saludo" .
+
+Filtra la busqueda con el parametro que le demos ejemplo:
+
+| grep xxx
+
+Busca las versiones de python que coincidan con el patron 2.7.
+
+$ aptitude search python | grep 2.7
+
+Busca en los procesos del sistema las coincidencias con ruby
+
+$ ps -e | grep ruby
+
+Para saber donde esta instalado un programa, saber el directorio
+
+$ whereis python
+
 $ whereis firefox
+
 $ whereis apache2
 
-$ find // Listar todos los archivos contenidos en el directorio actual y en los sub directorios, si estamos en /home/user nos listara todo, dependiendo de donde este pues listara el contenido.
+Listar todos los archivos contenidos en el directorio actual y en los sub
+directorios, si estamos en /home/user nos listara todo, dependiendo de donde
+este pues listara el contenido.
 
-$ find -name name_dir // Buscar un directorio especifico en el sistema.
+$ find
 
-# find / -name name_file_or_package // Buscar un fichero o directorio específico en el sistema.
+Buscar un directorio especifico en el sistema.
 
-su:
-find / -type f -name NombreArchivo.html // Para mostrar el directorio del archivo que se quiera buscar, se debe saber el nombre del archivo.
+$ find -name name_dir
 
-file:///home/user/nombre_fichero.xxx // Abrir un fichero del directorio desde el navegador.
+Buscar un fichero o directorio específico en el sistema.
 
-$ locate nombre_del_archivo // Hacer una busqueda de un archivo en los directorios, se puede especificar un nombre con su extensión
-// o solo especificar una palabra, la busqueda se hara en todos los archivos que contengan la palabra o nombre de archivo escrita.
+# find / -name name_file_or_package
 
-$ locate .jpg // Buscar en todos los directorios los ficheros con la extension especificada
+Para mostrar el directorio del archivo que se quiera buscar, se debe saber el
+nombre del archivo.
 
-$ locate "*.jpg" // Buscar en todos los directorios los ficheros con la extension especificada.
+# find / -type f -name NombreArchivo.html
 
-$ locate .pdf | grep software // Buscar en todos los .pdf del sistema que contengan la palabra "software" en el nombre. Sí hace distinción entre mayúsculas, minúsculas y acéntos.
+Abrir un fichero del directorio desde el navegador.
 
-$ sudo locate -c hola // Muestra cuantos archivos contienen la palabra "hola" en el nombre.
+file:///home/user/nombre_fichero.xxx
 
-$ sudo locate -i hola // Busca todos los archivos que contienen la palabra "hola" en el nombre tanto en mayúsculas como en minúsculas.
+Hacer una busqueda de un archivo en los directorios, se puede especificar un
+nombre con su extensión o solo especificar una palabra, la busqueda se hara en
+todos los archivos que contengan la palabra o nombre de archivo escrita.
 
-$ sudo locate nombre_archivo > /home/usuario/lista.txt // Para guardar el resultado de la búsqueda en un archivo de texto.
+$ locate nombre_del_archivo
 
-$ sudo find / -name nombre_carpeta // (/) es para hacer la busqueda desde ahi en adelante, puede ser (/home/user)
+Buscar en todos los directorios los ficheros con la extension especificada.
 
-$ find /carpeta // Lista los archivos que componen el directorio introducido
+$ locate .jpg
 
-$ type nombre_comando // Busca la ruta donde se encuentra el comando, ejemplo: aptitude, python, etc.
+Buscar en todos los directorios los ficheros con la extension especificada.
 
-$ which nombre_programa // Buscar la ruta de un programa
+$ locate "*.jpg"
 
-$ sudo find / -name "*nombre_fichero*" // Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion escrita.
+Buscar en todos los .pdf del sistema que contengan la palabra "software" en el
+nombre. Sí hace distinción entre mayúsculas, minúsculas y acéntos.
 
-$ sudo find -name "*nombre_fichero*" // Buscar en el directorio actual los ficheros cuyo nombre contengan la expresion escrita.
+$ locate .pdf | grep software
 
-$ sudo find / -name "*.xxx*" // Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion escrita, en este caso,
-una extensión de fichero, donde / puede ser /home/user etc y .xxx la extension: .jpg, .png, .txt, .py, etc.
+Muestra cuantos archivos contienen la palabra "hola" en el nombre.
 
-$ sudo find /home/user ! -name "*xxx*" // Busca todos los archivos que NO contienen la palabra "xxx" en el nombre, se especifíca el directorio en el cual buscar.
+$ sudo locate -c hola
 
-$ sudo find /home/user -iname "*xxx*" // Busca todos los archivos que contienen la palabra "xxx" en el nombre tanto en mayúsculas como en minúsculas.
+Busca todos los archivos que contienen la palabra "hola" en el nombre tanto en
+mayúsculas como en minúsculas.
 
-$ sudo find /home/user/ -iname "*xxx*" > /home/user/lista.txt // Si el resultado de la búsqueda anterior te ha proporcionado una gran cantidad de información, resulta
-más cómodo almacenar el resultado de la búsqueda en un fichero de texto para revisarlo posteriormente.
+$ sudo locate -i hola
 
-# sudo find / -type f -name /home/user/fichero.c>>/home/user/x.txt // Crear un fichero (x.txt) que guardará la salida de la consola, en este caso
-es una búsqueda, buscamos el fichero.c en el directorio user y guardaremos la salida del shell en el fichero x.txt que se creará.
+Para guardar el resultado de la búsqueda en un archivo de texto.
 
-#######################################################
-##### Lectores/Editores de texto desde la consola #####
-#######################################################
+$ sudo locate nombre_archivo > /home/usuario/lista.txt
 
-$ nano nombre_fichero // Modificar un fichero con el editor nano.
+(/) es para hacer la busqueda desde ahi en adelante, puede ser (/home/user)
 
-$ man nano // Leer el manual del editor de textos nano, muy útil, práctico y fácil de usar
+$ sudo find / -name nombre_carpeta
 
-$ cat nombre_fichero.xxx // Mostrar contenido de un fichero, concatenate files and print on the standard output.
+Lista los archivos que componen el directorio introducido.
 
-$ cat -b nombre_fichero.xxx // Mostrar contenido de un fichero y numerar las líneas.
+$ find /carpeta
 
-$ less nombre_fichero.xxx // Mostrar el contenido de un archivo, lector de ficheros, mayor movilidad que cat, con / permite buscar dentro
-del fichero, como vim, q para salir.
+Busca la ruta donde se encuentra el comando, ejemplo: aptitude, python, etc.
 
-$ tail nombre_fichero.xxx // El comando tail sirve para mostrar en pantalla las últimas líneas de un archivo.
+$ type nombre_comando
 
-$ tail -n X nombre_fichero.xxx // -n donde X es el número de lineas que queremos ver del fichero.
+Buscar la ruta de un programa.
 
-$ tail -c X nombre_fichero.xxx // -n donde X es el número caracteres desde el final, que queremos ver del fichero.
+$ which nombre_programa
 
-$ tail fichero_1.xxx fichero_2.xxx // Se pueden especificar 1 o más ficheros a la vez, los mostrara en el orden declarado.
+Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion
+escrita.
 
-$ stat nombre_fichero // Muestra el estado e información de un fichero
+$ sudo find / -name "*nombre_fichero*"
 
-$ stat nombre_carpeta // Muestra información de un directorio
+Buscar en el directorio actual los ficheros cuyo nombre contengan la expresion
+escrita.
 
-$ file xxx // donde xxx es el nombre de un fichero, nos dira el tipo de fichero que es.
+$ sudo find -name "*nombre_fichero*"
+
+Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion
+escrita, en este caso, una extensión de fichero, donde / puede ser /home/user
+etc y .xxx la extension: .jpg, .png, .txt, .py, etc.
+
+$ sudo find / -name "*.xxx*"
+
+Busca todos los archivos que NO contienen la palabra "xxx" en el nombre, se
+especifíca el directorio en el cual buscar.
+
+$ sudo find /home/user ! -name "*xxx*"
+
+Busca todos los archivos que contienen la palabra "xxx" en el nombre tanto en
+mayúsculas como en minúsculas.
+
+$ sudo find /home/user -iname "*xxx*"
+
+Si el resultado de la búsqueda anterior te ha proporcionado una gran cantidad de
+información, resulta más cómodo almacenar el resultado de la búsqueda en un
+fichero de texto para revisarlo posteriormente.
+
+$ sudo find /home/user/ -iname "*xxx*" > /home/user/lista.txt
+
+Crear un fichero (x.txt) que guardará la salida de la consola, en este caso es
+una búsqueda, buscamos el fichero.c en el directorio user y guardaremos la
+salida del shell en el fichero x.txt que se creará.
+
+# sudo find / -type f -name /home/user/fichero.c>>/home/user/x.txt
+
+===========================================
+Lectores/Editores de texto desde la consola
+===========================================
+
+Modificar un fichero con el editor nano.
+
+$ nano nombre_fichero
+
+Leer el manual del editor de textos nano, muy útil, práctico y fácil de usar.
+
+$ man nano
+
+Mostrar contenido de un fichero, concatenate files and print on the standard
+output.
+
+$ cat nombre_fichero.xxx
+
+Mostrar contenido de un fichero y numerar las líneas.
+
+$ cat -b nombre_fichero.xxx
+
+Mostrar el contenido de un archivo, lector de ficheros, mayor movilidad que cat,
+con / permite buscar dentro del fichero, como vim, q para salir.
+
+$ less nombre_fichero.xxx
+
+El comando tail sirve para mostrar en pantalla las últimas líneas de un archivo.
+
+$ tail nombre_fichero.xxx
+
+-n donde X es el número de lineas que queremos ver del fichero.
+
+$ tail -n X nombre_fichero.xxx
+
+-n donde X es el número caracteres desde el final, que queremos ver del fichero.
+
+$ tail -c X nombre_fichero.xxx
+
+Se pueden especificar 1 o más ficheros a la vez, los mostrara en el orden
+declarado.
+
+$ tail fichero_1.xxx fichero_2.xxx
+
+Muestra el estado e información de un fichero
+
+$ stat nombre_fichero
+
+Muestra información de un directorio
+
+$ stat nombre_carpeta
+
+Donde xxx es el nombre de un fichero, nos dira el tipo de fichero que es.
+
+$ file xxx
+
 Ejemplo: file index.html
+
 index.html: HTML document, UTF-8 Unicode text
 
-$ diff /home/user/file.html /home/user/file2.html // Permite hacer una comparacion de dos archivos para apreciar sus diferencias
-se debe especificar la ruta de ambos archivos y separarlos con un espacio, si estan en el mismo directorio no hace
-falta especificar las rutas completas.
+Permite hacer una comparacion de dos archivos para apreciar sus diferencias se
+debe especificar la ruta de ambos archivos y separarlos con un espacio, si estan
+en el mismo directorio no hace falta especificar las rutas completas.
 
-$ rename 's/\.txt/\.xls/' *.txt  //Cambiar extension a todos los ficheros de un directorio
-//En el ejemplo vamos a sustituir los .txt por .xls y le decimos que se lo haga a todos los .txt
+$ diff /home/user/file.html /home/user/file2.html
 
-################
-##### Less #####
-################
+Cambiar extension a todos los ficheros de un directorio
 
-// less es un visualizador de archivos de texto que funciona en intérpretes de comando.
-// A diferencia de otros programas similares (como more), less permite una completa navegación
-// por el contenido del archivo, utilizando un mínino de recursos del sistema.
+En el ejemplo vamos a sustituir los .txt por .xls y le decimos que se lo haga a
+todos los .txt
 
-***** Comandos basicos *****
+$ rename 's/\.txt/\.xls/' *.txt
 
-man less // Manual de less
+====
+Less
+====
 
-AvPag // Avanzar una página
+less es un visualizador de archivos de texto que funciona en intérpretes de
+comando.
 
-RePag // Retroceder una página
+A diferencia de otros programas similares (como more), less permite una completa
+navegación por el contenido del archivo, utilizando un mínino de recursos del
+sistema.
 
-space // Tecla espacio para avanzar, como page up
+Manual de less.
 
-:q // Salir
+$ man less
 
-:h // Ayuda
+Avanzar una página
 
-:/palabra // (/) Buscamos una palabra dentro del documento
-// (n) para ir a la siguiente coincidencia.
-// (N) para ir a la coincidencia anterior
+AvPag
 
-:G // Ir al final del texto
+Retroceder una página
 
-:g // Ir al inicio del texto
+RePag
 
-:v //Invocar un editor de texto para el documento, por lo general usa vi pero puede usar nano automaticamente
+Tecla espacio para avanzar, como page up
 
-$ less +123 filename // Para ir a una línea específica de un fichero.
+space
 
-################################################
-##### Ver un fichero .csv desde la consola #####
-################################################
+Salir
+
+:q
+
+Ayuda
+
+:h
+
+(/) Buscamos una palabra dentro del documento
+
+:/palabra
+
+Para ir a la siguiente coincidencia.
+
+(n)
+
+Para ir a la coincidencia anterior
+
+(N)
+
+Ir al final del texto.
+
+:G
+
+Ir al inicio del texto.
+
+:g
+
+Invocar un editor de texto para el documento, por lo general usa vi pero puede
+usar nano automaticamente.
+
+:v
+
+Para ir a una línea específica de un fichero.
+
+$ less +123 filename
+
+====================================
+Ver un fichero .csv desde la consola
+====================================
 
 Ordenará por columnas, etc...
 
 $ cat file.csv | sed -e 's/,,/, ,/g' | column -s, -t | less -#5 -N -S
 
-###############################################
-##### Comandos para monitorear el sistema #####
-###############################################
+===================================
+Comandos para monitorear el sistema
+===================================
 
-$ top  // Listar los procesos de ejecución del sistema (y más cosas) en tiempo real, es una de las herramientas más importantes para un administrador.
--Si presionamos "z" nos mostrara la salida con 2 colores, para distingir mejor la información.
--"q" o "Ctrl+c" para salirse del monitor top.
+Listar los procesos de ejecución del sistema (y más cosas) en tiempo real, es
+una de las herramientas más importantes para un administrador.
 
-# sysctl -w vm.drop_caches=3 // Liberar memoria ram.
+$ top
 
-# gnome-shell --replace & disown // Refrescar el escritorio gnome sin reiniciar.
+Si presionamos "z" nos mostrara la salida con 2 colores, para distingir mejor la
+información.
 
-Alt + F2 y escrba r y presione enter, esto para gnome3 // Refrescar el escritorio gnome sin reiniciar.
+"q" o "Ctrl+c" para salirse del monitor top.
 
-$ xfce4-panel -r && xfwm4 --replace // Para refrescar el desktop en xfce.
+Liberar memoria ram.
 
-$ fg %1 // Si un programa es pausado con Ctrol + z, con este comando lo reanudamos.
+# sysctl -w vm.drop_caches=3
 
-$ htop // Es otro monitor del sistema, parecido a top pero con un poco mas de herramientas, para instalarlo # apt-get install htop
+Recargar el entorno gráfico, evitando el reinicio del pc.
 
-$ nmon // Es otro monitor de sistema, para instalarlo # apt-get install nmon
-Si quieren ver la información relacionada con el CPU presionan la tecla "c", con la memoria "m", del kernel "k" y discos "d".
-Segun vayamos usando las letras nos va mostrando lo que escogimos, muy útil y bonito.
+# gnome-shell --replace & disown
 
-$ ping xxx // Donde xxx es el nombre de un host al cual enviaremos paquetes y comprobaremos si hay una conexion con ese host, util para saber si estamos conectados a internet por ejemplo:
-ping http://www.google.com.ve // Si hay conexion a internet enviara paquetes que seran recibidos, de lo contrario dara un error.
+Refrescar el escritorio gnome sin reiniciar.
 
-$ ping -w n ip_num // Tiempo en segundos que se va a hacer ping donde n es un entero
+Alt + F2 y escrba r y presione enter, esto para gnome3
 
-// Siendo root, Ver si hay aceleracion grafica en la maquina, muestra unos engranajes
-// de colores rodando, si es así, está correcta la instalacion del video.
+Para refrescar el desktop en xfce.
+
+$ xfce4-panel -r && xfwm4 --replace
+
+Si un programa es pausado con Ctrl + z, con este comando lo reanudamos.
+
+$ fg %1
+
+Es otro monitor del sistema, parecido a top pero con un poco mas de herramientas
+, para instalarlo # apt-get install htop.
+
+$ htop
+
+Es otro monitor de sistema, para instalarlo # apt-get install nmon
+
+Si quieren ver la información relacionada con el CPU presionan la tecla "c", con
+la memoria "m", del kernel "k" y discos "d".
+
+Segun vayamos usando las letras nos va mostrando lo que escogimos, muy útil y
+bonito.
+
+$ nmon
+
+Donde xxx es el nombre de un host al cual enviaremos paquetes y comprobaremos si
+hay una conexion con ese host, util para saber si estamos conectados a internet.
+
+$ ping xxx
+
+Ejemplo:
+
+Si hay conexion a internet enviara paquetes que seran recibidos, de lo contrario
+dara un error.
+
+$ ping http://www.google.com
+
+Tiempo en segundos que se va a hacer ping donde n es un entero.
+
+$ ping -w n ip_num
+
+Ver si hay aceleracion grafica en la maquina, muestra unos engranajes de colores
+rodando, si es así, está correcta la instalacion del video.
+
 # glxgears
 
-// Este comando sirve para revisar el log o bitácora de los eventos ocurridos
-// en el sistema, cuelca todos los mensajes que han ocurrido desde el arranque del sistema.
+Este comando sirve para revisar el log o bitácora de los eventos ocurridos en el
+sistema, cuelca todos los mensajes que han ocurrido desde el arranque del
+sistema.
 
 # journalctl
 
-// Si un servicio parece que no está funcionando como debiera, el primer paso para resolver el
-// problema es comprobar si el servicio está ejecutándose realmente mediante systemctl status.
-// Si no es así y los mensajes que se muestran no son suficientes para diagnosticar el problema
-// se pueden comprobar los registros que ha recogido journald relacionados con es servicio. Por
-// ejemplo, suponiendo que el servidor SSH no funciona:
+Si un servicio parece que no está funcionando como debiera, el primer paso para
+resolver el problema es comprobar si el servicio está ejecutándose realmente
+mediante systemctl status. Si no es así y los mensajes que se muestran no son
+suficientes para diagnosticar el problema se pueden comprobar los registros que
+ha recogido journald relacionados con es servicio. Por ejemplo, suponiendo que
+el servidor SSH no funciona:
 
 # systemctl status ssh.service
 
-// -f , que hace que journalctl siga mostrando los nuevos mensajes a medida
-que se van emitiendo (semejante a lo que ocurre con tail -f file).
+-f , que hace que journalctl siga mostrando los nuevos mensajes a medida que se
+van emitiendo (semejante a lo que ocurre con tail -f file).
 
 # journalctl -f
 
-##########################################
-##### Gestionar procesos del sistema #####
-##########################################
+===========================
+Eliminar vs vaciar ficheros
+===========================
 
-// Cada proceso tiene un identificador (PID) proccess ID, entonces podemos matar ese proceso con:
+Para eliminar ficheros con el fin de liberar espacio emplearemos habitualmente
+el comando rm. Sin embargo, es muy habitual que no nos podamos permitir eliminar
+un fichero por estar siendo utilizado en ese momento por una aplicación, lo cual
+es de lo más habitual con ficheros de log en sistemas en producción que no
+pueden parar. Eliminarlos directamente puede tener consecuencias nefastas, como
+el bloqueo de la propia aplicación que los está utilizando, o más leves pero
+también indeseables, como que se interrumpa el volcado de datos a estos ficheros
+y dejen de ser útiles.
 
-$ kill xxxx // Matar un proceso donde xxxx es el identificador del proceso.
+Para no alterar el funcionamiento de una aplicación y conseguir nuestro objetivo
+de liberar espacio vaciaremos los ficheros en lugar de eliminarlos:
 
-$ kill -9 xxxx // Matar un proceso donde xxxx es el identificador del proceso.
+# >/var/log/syslog
 
-$ ps // Muestra los procesos actuales del sistema y acepta varios parametros como:
+=======
+Fuentes
+=======
 
-$ ps -e // Visualiza información sobre "todos" los procesos del sistema.
+-https://www.daniloaz.com/es/los-comandos-linux-mas-utiles-para-mantener-sistemas-de-ficheros/
 
-$ ps -ef // Visualiza información sobre "todos" los procesos del sistema con mas detalles, así pues se puede detener un proceso con kill -9 PID_number.
+==============================
+Gestionar procesos del sistema
+==============================
 
-$ ps -ef | grep evince // Filtrar la búsqueda, en este caso, buscando el proceso que alberga el visor pdf evince.
+Cada proceso tiene un identificador (PID) proccess ID, entonces podemos matar
+ese proceso con:
 
-$ ps -ef | grep ssh // Filtrar la búsqueda para ver las conexiones ssh activas, nuevamente se aclara que podemos matar esos procesos
-con kill -9 xxx pasandole el PID process.
+ Matar un proceso donde xxxx es el identificador del proceso.
 
-$ ps -p xxxx -o etime // Saber el tiempo que lleva ejecutandose un proceso.
+$ kill xxxx
 
-$ ps aux // Muestra los procesos del sistema de sistema, similar a ps -ef.
+Matar un proceso donde xxxx es el identificador del proceso.
 
-$ ps aux | grep firefox // Mostrar información de proceso/s específico/s.
+$ kill -9 xxxx
 
-$ ps -l // Muestra algunos detalles de los procesos del sistema.
+Muestra los procesos actuales del sistema y acepta varios parametros como:
 
-$ ps l //  Muestra mas detalles de los procesos del sistema.
+$ ps
 
-####################################
-##### Driver de wifi en laptop #####
-####################################
+Visualiza información sobre "todos" los procesos del sistema.
+
+$ ps -e
+
+Visualiza información sobre "todos" los procesos del sistema con mas detalles,
+así pues se puede detener un proceso con kill -9 PID_number.
+
+$ ps -ef
+
+Filtrar la búsqueda, en este caso, buscando el proceso que alberga el visor pdf
+evince.
+
+$ ps -ef | grep evince
+
+Filtrar la búsqueda para ver las conexiones ssh activas, nuevamente se aclara
+que podemos matar esos procesos con kill -9 xxx pasandole el PID process.
+
+$ ps -ef | grep ssh
+
+Saber el tiempo que lleva ejecutandose un proceso.
+
+$ ps -p xxxx -o etime
+
+Muestra los procesos del sistema de sistema, similar a ps -ef.
+
+$ ps aux
+
+Mostrar información de proceso/s específico/s.
+
+$ ps aux | grep firefox
+
+Muestra algunos detalles de los procesos del sistema.
+
+$ ps -l
+
+Muestra mas detalles de los procesos del sistema.
+
+$ ps l
+
+========================
+Driver de wifi en laptop
+========================
 
 # apt install firmware-iwlwifi
 
@@ -487,9 +937,9 @@ $ ps l //  Muestra mas detalles de los procesos del sistema.
 
 # apt-get install firmware-linux firmware-linux-free firmware-linux-nonfree firmware-misc-nonfree
 
-########################################################################################
-##### Restaurar o reiniciar las conexiones de red del sistema - networking restart #####
-########################################################################################
+============================================================================
+Restaurar o reiniciar las conexiones de red del sistema - networking restart
+============================================================================
 
 # /etc/init.d/networking restart
 
@@ -497,10 +947,12 @@ $ ps l //  Muestra mas detalles de los procesos del sistema.
 
 # invoke-rc.d networking restart
 
-#### Para maquinas virtuales #####
+=======================
+Para maquinas virtuales
+=======================
 
-Cuando se va a conectar por wireless, para que el dhcp le asigne una dirección ip
-modificamos el fichero:
+Cuando se va a conectar por wireless, para que el dhcp le asigne una dirección
+ip modificamos el fichero:
 
 /etc/network/interfaces
 
@@ -519,30 +971,35 @@ iface eth0 inet dhcp
 
 ---
 
-Guardamos y reiniciamos las interfaces de redes con los tres comandos de arriba, esto
-es para cuando una máquina virtual no agarra internet inalambrico, tambien debe estar
-habilitada el adaptador de conexión inalambrica en el panel de configuración de la maquina virtual.
-Dentro de la máquina virtual parecerá que esta conectado por cable.# The loopback network interface
+Guardamos y reiniciamos las interfaces de redes con los tres comandos de arriba,
+esto es para cuando una máquina virtual no agarra internet inalambrico, tambien
+debe estar habilitada el adaptador de conexión inalambrica en el panel de
+configuración de la maquina virtual. Dentro de la máquina virtual parecerá que
+esta conectado por cable.# The loopback network interface
 
-Cuando se instala el SO y no consigue ninguna red cableada, es posible que el router/DHCP no le haya
-asignado una dirección ip, entonces modificamos el mismo fichero para que quede así:
+Cuando se instala el SO y no consigue ninguna red cableada, es posible que el
+router/DHCP no le haya asignado una dirección ip, entonces modificamos el mismo
+fichero para que quede así:
 
 auto lo
 iface lo inet loopback
 auto eth0
 iface eth0 inet dhcp
 
-Y reiniciamos las interfaces de red, con suerte obtendremos una dirección ip de la red.
+Y reiniciamos las interfaces de red, con suerte obtendremos una dirección ip de
+la red.
 
-Podemos intentar un ifup para ver si el dhcp le asigna la dirección ip sin necesidad de reiniciar la maquina o las
-interfaces de red:
+Podemos intentar un ifup para ver si el dhcp le asigna la dirección ip sin
+necesidad de reiniciar la maquina o las interfaces de red:
 
 # ifup eth0
 
-Luego # ip addr a ver si ya tiene ip, si no es así entonces reiniciaremos las conexiones de red del sistema con los comandos descritos arriba.
+Luego # ip addr a ver si ya tiene ip, si no es así entonces reiniciaremos las
+conexiones de red del sistema con los comandos descritos arriba.
 
-Si lo demás no a servido, se puede editar el /etc/resolv.conf de la máquina virtual a ver si hagarra internet,
-a veces el dhcp le asigna ip pero no tiene conexión a internet, entonces:
+Si lo demás no a servido, se puede editar el /etc/resolv.conf de la máquina
+virtual a ver si hagarra internet, a veces el dhcp le asigna ip pero no tiene
+conexión a internet, entonces:
 
 # sudo nano /etc/resolv.conf
 
@@ -553,52 +1010,73 @@ nameserver 8.8.4.4
 
 Guardamos el archivo y hacemos ping a ver si ya envía paquetes a google:
 
-Lo que vamos a hacer es enviar paquetes a los servidores de Google para comprobar si nos responde
-su ip pública es 8.8.8.8
+Lo que vamos a hacer es enviar paquetes a los servidores de Google para
+comprobar si nos responde su ip pública es 8.8.8.8
 
 $ ping 8.8.8.8
 
-################################################################################
-##### Restaurar o reiniciar las conexiones de red inalambrica del sistema #####
-################################################################################
+===================================================================
+Restaurar o reiniciar las conexiones de red inalambrica del sistema
+===================================================================
 
-If you really want to reset the network adapter you usually need to unload and reload the kernel module that it uses.
+If you really want to reset the network adapter you usually need to unload and
+reload the kernel module that it uses.
 
 If you just want to reconfigure it you can usually do:
 
 # /etc/init.d/network-manager restart
 
-But if you just want a new dhcp lease (that's the technical name for obtain a new IP from the router), you just need to use:
+But if you just want a new dhcp lease (that's the technical name for obtain a
+new IP from the router), you just need to use:
 
 # dhclient -v eth1
 
-###############################
-##### Herramientas de red #####
-###############################
+===================
+Herramientas de red
+===================
 
-# ifconfig // Permite desplegar numerosos parámetros de las interfaces de red residentes  en el núcleo,
-como la dirección ip (dinámica o estática), o la máscara de red entre otros.
+Permite desplegar numerosos parámetros de las interfaces de red residentes  en
+el núcleo, como la dirección ip (dinámica o estática), o la máscara de red entre
+otros.
 
-$ ip addr// Para ver el estatus de las conexiones de red, este comando le mostrará su dirección ip, el tipo de conexión que está utilizando, etc.
+# ifconfig
 
-$ nmap -sT -O localhost // Ver que puertos estan escuchando 
+Para ver el estatus de las conexiones de red, este comando le mostrará su
+dirección ip, el tipo de conexión que está utilizando, etc.
 
-##### Iproute2 #####
+$ ip addr
 
-Iproute2 es un paquete de herramientas muy potentes para administrar interfaces de red y conexiones en sistemas Linux.
+Ver que puertos estan escuchando.
 
-Este paquete reemplaza completamente las funcionalidades presentes en ifconfig, ya que este no viene instalado por defecto en GNU/Linux Debian 9 Stretch, ya que a ifconfig
-se le considera obsoleto.
+$ nmap -sT -O localhost
 
-##### Instalar ifconfig y route en Debian 9 #####
+========
+Iproute2
+========
 
-Lo primero que tenemos que hacer es abrir un terminal e instalar el paquete “net-tools”. Si en la instalación hemos elegido hacer “sudo” para ascender a superusuario para instalar paquetes, tecleamos:
+Iproute2 es un paquete de herramientas muy potentes para administrar interfaces
+de red y conexiones en sistemas Linux.
+
+Este paquete reemplaza completamente las funcionalidades presentes en ifconfig,
+ya que este no viene instalado por defecto en GNU/Linux Debian 9 Stretch, ya que
+a ifconfig se le considera obsoleto.
+
+=====================================
+Instalar ifconfig y route en Debian 9
+=====================================
+
+Lo primero que tenemos que hacer es abrir un terminal e instalar el paquete
+“net-tools”. Si en la instalación hemos elegido hacer “sudo” para ascender a
+superusuario para instalar paquetes, tecleamos:
 
 # apt-get  install net-tools
 
-##### Comparación de comandos de entre ifconfig e IP #####
+==============================================
+Comparación de comandos de entre ifconfig e IP
+==============================================
 
-// Mostrar dispositivos de red y su configuración.
+Mostrar dispositivos de red y su configuración.
+
 # ifconfig
 
 $ ip addr show
@@ -607,165 +1085,265 @@ $ ip addr show
 
 $ ip link show
 
-// Activar una interfaz de red.
+Activar una interfaz de red.
+
 $ ifconfig eth0 up
 
 $ ip link set eth0 up
 
-// Desactivar una interfaz de red.
+Desactivar una interfaz de red.
+
 $ ifconfig eth0 down
 
 $ ip link set eth0 down
 
-// Establecer una dirección IP a una interfaz.
+Establecer una dirección IP a una interfaz.
+
 $ ifconfig eth0 192.168.1.1
 
 $ ip address add 192.168.1.1 dev eth0
 
-// Eliminar una dirección IP de una interfaz.
+Eliminar una dirección IP de una interfaz.
+
 ifconfig no podrá hacer esto.
 
 $ ip address del 192.168.1.1 dev eth0
 
-// Añadir una interfaz virtual.
+Añadir una interfaz virtual.
+
 $ ifconfig eth0:1 10.0.0.1/8
 
 $ ip addr add 10.0.0.1/8 dev eth0 label eth0:1
 
-// Para configurar una tarjeta de red física, por ejemplo, con ifconfig debemos teclear lo siguiente:
+Para configurar una tarjeta de red física, por ejemplo, con ifconfig debemos
+teclear lo siguiente:
+
 $ ifconfig eth0 192.168.0.2 netmask 255.255.255.0
 
 $ ip addr add 192.168.0.2/24 dev eth0
 
-##########################################
-##### Gestionar usuarios del sistema #####
-##########################################
+==============================
+Gestionar usuarios del sistema
+==============================
 
-$ su nombre_de_usuario // Conectarse como otro usuario creado
+Conectarse como otro usuario creado
 
-$ adduser nombre_de_usuario // Como root, Agregar un usuario nuevo al sistema, una nueva sesion, nos pedira agregar el 
-nombre de usuario y asignarle contraseña, la clave de root es la misma para todas las sesiones.
+$ su nombre_de_usuario
 
-$ userdel -r nombre_usuario // Como root, eliminar el usuario creado
+Como root, Agregar un usuario nuevo al sistema, una nueva sesion, nos pedira
+agregar el nombre de usuario y asignarle contraseña, la clave de root es la
+misma para todas las sesiones.
 
-$ deluser --remove-home nombre_usuario // Otra forma de eliminar un usuario creado
+$ adduser nombre_de_usuario
 
-#################################################
-###### Comandos para escribir en un fichero #####
-#################################################
+Como root, eliminar el usuario creado
 
-$ echo "Texto al final del archivo" >> archivo.txt // Escribir una cadena de texto al final de un fichero.
+$ userdel -r nombre_usuario
 
-$ sed -i '1i xxxxx' archivo.txt // Insertar una cadena de texto "xxxxx" al principio de un fichero.
+Otra forma de eliminar un usuario creado
 
-$ sed -i '$a xxx' archivo.txt // Insertar una cadena al final del fichero, funciona como el método echo.
+$ deluser --remove-home nombre_usuario
 
-$ apt-get moo // Huevo de pascua, muestra una vaca.
+====================================
+Comandos para escribir en un fichero
+====================================
 
-########################################################
-##### Comandos para copiar, mover, eliminar, otros #####
-########################################################
+Escribir una cadena de texto al final de un fichero.
 
-$ cp // Copiar un fichero o carpeta
+$ echo "Texto al final del archivo" >> archivo.txt
 
-$ cp -r // Copiar un fichero o carpeta
+Insertar una cadena de texto "xxxxx" al principio de un fichero.
 
-$ cp Nombre_de_archivo.txt /Carpeta/destino/a/copiar // Copiar un fichero en un directorio
-se debe estar situado en la carpeta del archivo a copiar
+$ sed -i '1i xxxxx' archivo.txt
 
-$ cp Nombre_carpeta -r /Carpeta/destino/a/copiar // Copiar un directorio en otro, 
-se debe estar situado en la carpeta de la carpeta a copiar.
+Insertar una cadena al final del fichero, funciona como el método echo.
 
-- Saber la ruta de un directorio //  Desde el explorador de archivar (nautilus) desde cualquier directorio
-sin importar el nivel donde estemos, tecleamos Ctrl + l esto nos dirá la ruta completa hasta el directorio.
+$ sed -i '$a xxx' archivo.txt
 
-$ cp -r /home/usuario/carpeta1/ /home/usuario/carpeta2/ //Se pueden copiar archivos o carpetas especificando las
-rutas completas, en este caso la primera ruta es el directorio o archivo a copiar y la segunda es la ruta donde
-se va a pegar lo copiado, ambas rutas separadas por un espacio en blanco.
+Huevo de pascua, muestra una vaca.
 
-$ cp -r carpeta/ carpeta2/ // Ambas carpetas estan en el mismo directorio donde estamos situados, por lo tanto
-no hay que especificar las rutas completas de las carpetas involucradas
+$ apt-get moo
 
-$ cp nombre_fichero.xxx nombre_fichero2.xxx // Hacer una copia de un fichero y cambiarle el nombre.
+============================================
+Comandos para copiar, mover, eliminar, otros
+============================================
 
-$ cp -r carpeta1 carpeta2 // Hacer una copia de un directorio y cambiarle el nombre.
+Copiar un fichero o carpeta
 
-$ mv // Mover un fichero o carpeta y/o cambiar su nombre
+$ cp
 
-$ mv /home/carpeta/archivo1.txt /home/carpeta2/ // Mover una carpeta o archivo especificando el directorio
-de salida y el de llegada, si estan en el mismo directorio no hace falta poner las rutas completas.
+Copiar un fichero o carpeta
 
-$ mv archivo1.txt archivo2.txt // Renombrar un archivo o carpeta 
+$ cp -r
 
-$ rmdir // Borrar una carpeta
+Copiar un fichero en un directorio se debe estar situado en la carpeta del
+archivo a copiar
 
-$ rm nombre_fichero // Borrar un fichero
+$ cp Nombre_de_archivo.txt /Carpeta/destino/a/copiar
 
-$ rm fichero1 fichero2 fichero3 // Borrar varios ficheros
+/ Copiar un directorio en otro, se debe estar situado en la carpeta de la
+carpeta a copiar.
 
-$ rm -r /directorio // Para borrar una carpeta, se le da la ruta del directorio a borrar
+$ cp Nombre_carpeta -r /Carpeta/destino/a/copiar
 
-$ rm * // Borrar todos el contenido de una carpeta, se debe estar dentro del directorio
+Saber la ruta de un directorio: Desde el explorador de archivar (nautilus) desde
+cualquier directorio sin importar el nivel donde estemos, tecleamos Ctrl + l
+esto nos dirá la ruta completa hasta el directorio.
 
-rm -r * // Borrar todo el contenido de una carpeta, incluyendo las carpetas de ese directorio
-se debe estar dentro del directorio
+Se pueden copiar archivos o carpetas especificando las rutas completas, en este
+caso la primera ruta es el directorio o archivo a copiar y la segunda es la ruta
+donde se va a pegar lo copiado, ambas rutas separadas por un espacio en blanco.
 
-$ sudo rm -rf /xxx/xxxx // rm: Comando "remove", eliminar. -rf: r de "recursivo" donde se borra todo y f de "force";
-nunca solicita confirmación. /xxx/xxx indica la ruta de los ficehros o carpetas a borrar.
+$ cp -r /home/usuario/carpeta1/ /home/usuario/carpeta2/
 
-$ rm -r !("try") // Borrar todos los elementos de un directorio exeptuando lo que está entre "", donde try es un directorio pero
-también puede ser un fichero, "x.txt" por ejemplo.
+Ambas carpetas estan en el mismo directorio donde estamos situados, por lo tanto
+no hay que especificar las rutas completas de las carpetas involucradas.
 
-$ sudo -i // Pedir contraseña root, algunas versiones basadas en Debian
+$ cp -r carpeta/ carpeta2/
 
-$ su // Pedir contraseña del root
+Hacer una copia de un fichero y cambiarle el nombre.
 
-root@debian:/home/user# Ctrl + d //Para salir del root, tambien exit, funciona en algunas consolas como python, ruby, entre otras.
+$ cp nombre_fichero.xxx nombre_fichero2.xxx
 
-Ctrl + r // En la consola, para hacer una busqueda de comandos usados baasndose en la palabra que se introduzca
+Hacer una copia de un directorio y cambiarle el nombre.
 
-Shift + Page up <--> Page down // Moverse a traves de los logs de la consola, simula el scroll up/down del mouse
+$ cp -r carpeta1 carpeta2
 
-###################################
-##### Ip pública e Ip privada #####
-###################################
+Mover un fichero o carpeta y/o cambiar su nombre.
 
-##### Ip Pública #####
+$ mv
 
-Es la que tiene asignada cualquier equipo o dispositivo conectado de forma directa a Internet.
+Mover una carpeta o archivo especificando el directorio de salida y el de
+llegada, si estan en el mismo directorio no hace falta poner las rutas
+completas.
 
-Algunos ejemplos son: los servidores que alojan sitios web como Google, los router o modems que dan a acceso a Internet, otros
-elementos de hardware que forman parte de su infraestructura, etc.
+$ mv /home/carpeta/archivo1.txt /home/carpeta2/
 
-Las Ip públicas son siempre únicas. No se pueden repetir. Dos equipos con IP de ese tipo pueden conectarse directamente entre sí.
-Por ejemplo, tu router con un servidor web. O dos servidores web entre sí.
+Renombrar un archivo o carpeta.
 
-##### Ip Privada #####
+$ mv archivo1.txt archivo2.txt
 
-Se utiliza para identificar equipos o dispositivos dentro de una red doméstica o privada.
-En general, en redes que no sean la propia Internet y utilicen su mismo protocolo (el mismo "idioma" de comunicación).
+Borrar una carpeta.
 
-Las Ip privadas están en cierto modo aisladas de las públicas. Se reservan para ellas determinados rangos de direcciones. Son estos:
+$ rmdir
 
-Estas Ip deben ser únicas dentro de una misma red. Cada equipo o dispositivo ha de tener la suya, distinta de la de los demás.
-De lo contrario habría problemas. Sería como si dos vecinos tuvieran el mismo nombre y la misma dirección física.
+Borrar un fichero.
+
+$ rm nombre_fichero
+
+Borrar varios ficheros.
+
+$ rm fichero1 fichero2 fichero3
+
+Para borrar una carpeta, se le da la ruta del directorio a borrar.
+
+$ rm -r /directorio
+
+Borrar todos el contenido de una carpeta, se debe estar dentro del directorio.
+
+$ rm *
+
+ Borrar todo el contenido de una carpeta, incluyendo las carpetas de ese
+ directorio se debe estar dentro del directorio
+
+$ rm -r *
+
+rm: Comando "remove", eliminar. -rf: r de "recursivo" donde se borra todo y f de
+"force"; nunca solicita confirmación. /xxx/xxx indica la ruta de los ficehros o
+carpetas a borrar.
+
+$ sudo rm -rf /xxx/xxxx
+
+Borrar todos los elementos de un directorio exeptuando lo que está entre "",
+donde try es un directorio pero también puede ser un fichero, "x.txt" por
+ejemplo.
+
+Pedir contraseña root, algunas versiones basadas en Debian.
+
+$ rm -r !("try")
+
+$ sudo -i
+
+Pedir contraseña del root.
+
+$ su
+
+Para salir del root, tambien exit, funciona en algunas consolas como python,
+ruby, entre otras.
+
+root@debian:/home/user# Ctrl + d
+
+En la consola, para hacer una busqueda de comandos usados baasndose en la
+palabra que se introduzca.
+
+Ctrl + r
+
+Moverse a traves de los logs de la consola, simula el scroll up/down del mouse.
+
+Shift + Page up <--> Page down
+
+=======================
+Ip pública e Ip privada
+=======================
+
+==========
+Ip Pública
+==========
+
+Es la que tiene asignada cualquier equipo o dispositivo conectado de forma
+directa a Internet.
+
+Algunos ejemplos son: los servidores que alojan sitios web como Google, los
+router o modems que dan a acceso a Internet, otros elementos de hardware que
+forman parte de su infraestructura, etc.
+
+Las Ip públicas son siempre únicas. No se pueden repetir. Dos equipos con IP de
+ese tipo pueden conectarse directamente entre sí. Por ejemplo, tu router con un
+servidor web. O dos servidores web entre sí.
+
+==========
+Ip Privada
+==========
+
+Se utiliza para identificar equipos o dispositivos dentro de una red doméstica o
+privada. En general, en redes que no sean la propia Internet y utilicen su mismo
+protocolo (el mismo "idioma" de comunicación).
+
+Las Ip privadas están en cierto modo aisladas de las públicas. Se reservan para
+ellas determinados rangos de direcciones. Son estos:
+
+Estas Ip deben ser únicas dentro de una misma red. Cada equipo o dispositivo ha
+de tener la suya, distinta de la de los demás. De lo contrario habría problemas.
+Sería como si dos vecinos tuvieran el mismo nombre y la misma dirección física.
 El cartero nunca sabría a quién corresponde la carta que les envíen.
 
-Las Ip privadas sí pueden repetirse en redes distintas (como en la tuya y la de una empresa).
-Los equipos o dispositivos con esas IP pueden conectarse entre sí SÓLO dentro de la red a que pertenecen.
-No hay conflictos porque las redes están separadas. Igual que no los hay entre dos direcciones físicas iguales de ciudades distintas.
+Las Ip privadas sí pueden repetirse en redes distintas (como en la tuya y la de
+una empresa). Los equipos o dispositivos con esas IP pueden conectarse entre sí
+SÓLO dentro de la red a que pertenecen. No hay conflictos porque las redes están
+separadas. Igual que no los hay entre dos direcciones físicas iguales de
+ciudades distintas.
 
-#### Saber la ip pública #####
+===================
+Saber la ip pública
+===================
 
-Una forma de averigar esa ip pública es haciendo uso del comando curl. Si no tenéis instalado el paquete habrá que instalarlo,
+Una forma de averigar esa ip pública es haciendo uso del comando curl. Si no
+tenéis instalado el paquete habrá que instalarlo.
 
 $ sudo apt-get install curl
 
-$ curl ifconfig.me // Nos mostrará nuestra ip pública.
+Nos mostrará nuestra ip pública.
 
-$ user@debian:/media$ umount nombre_device // Desmontar un dispositivo, pendrive, disco externo etc.
+$ curl ifconfig.me
 
-$ who // Muestra usuarios conectados a nuestra máquina, tambien usado para ver las conexiones entrantes de un servidor
+Desmontar un dispositivo, pendrive, disco externo etc.
+
+$ user@debian:/media$ umount nombre_device
+
+Muestra usuarios conectados a nuestra máquina, tambien usado para ver las
+conexiones entrantes de un servidor
+
+$ who
 
 Ejemplo:
 user tty7         2015-07-28 08:47 (:0)
@@ -774,18 +1352,25 @@ user pts/1        2015-07-30 17:03 (:0.0)
 user pts/2        2015-07-31 14:15 (:0.0)
 user pts/3        2015-07-31 12:37 (:0.0)
 
-// En este caso son los usuarios conectados a mi máquina, eso quiere decir que tengo shells
-abiertos, por lo tanto todos son representados como usuarios, entre los diversos parametros
-se puede apreciar la fecha y la hora en que se abrio el shell, en un servidor seria
-el momento en que se conecto el usuario
+En este caso son los usuarios conectados a mi máquina, eso quiere decir que
+tengo shells abiertos, por lo tanto todos son representados como usuarios, entre
+los diversos parametros se puede apreciar la fecha y la hora en que se abrio el
+shell, en un servidor seria el momento en que se conecto el usuario
+ 
+Muestra que usuario soy, nombre de usuario.
 
-$ whoami // Muestra que usuario soy, nombre de usuario
+$ whoami
 
-$ who am i // Nos dira cual usuario somos, si navegamos por los shells abiertos y ejecutamos el comando nos dira cual usuario es
+Nos dira cual usuario somos, si navegamos por los shells abiertos y ejecutamos
+el comando nos dira cual usuario es
 
-$ who -u // Ver usuarios conectados
+$ who am i
 
-// Ejemplo:
+Ver usuarios conectados
+
+$ who -u
+
+Ejemplo:
 
 user tty7         2015-07-28 08:47  antig       4257 (:0)
 user pts/0        2015-07-30 14:03 03:22        8351 (:0.0)
@@ -793,29 +1378,42 @@ user pts/1        2015-07-30 17:03 03:19        8351 (:0.0)
 user pts/2        2015-07-31 14:15 00:08        8351 (:0.0)
 user pts/3        2015-07-31 12:37 02:53        8351 (:192.168.0.240)
 
-// Aqui observamos que hay una conexion externa a traves de ssh a nuestro servidor proveniente de la maquina
-(192.168.0.240) demarcada por el id process 8351 la cual podemos cancelar con $ kill -9 8351, pero no refusar esa conexion, el usuario seguirá conectado por ssh.
+Aqui observamos que hay una conexion externa a traves de ssh a nuestro servidor
+proveniente de la maquina (192.168.0.240) demarcada por el id process 8351 la
+cual podemos cancelar con $ kill -9 8351, pero no refusar esa conexion, el
+usuario seguirá conectado por ssh.
 
-$ pkill -9 -t pts/3 // Acabar con una conexión externa, se envió la señal -9 que indica matar (KILL) el proceso, la opción -t indica que se basará en un atributo de nombre de terminal y se indica después el nombre de la terminal en si pts/3. Este es el comando que sí funciona para  refusar o eliminar conexiones externas. A veces pide su.
+Acabar con una conexión externa, se envió la señal -9 que indica matar (KILL) el
+proceso, la opción -t indica que se basará en un atributo de nombre de terminal
+y se indica después el nombre de la terminal en si pts/3. Este es el comando que
+sí funciona para  refusar o eliminar conexiones externas. A veces pide su.
 
-$ last // listar los ultimos usuarios conectados
+$ pkill -9 -t pts/3
 
-########################################################
-########## Cambiar el pass del usuario y root ##########
-########################################################
+Listar los ultimos usuarios conectados
 
-##### Usuario normal #####
+$ last
+
+==================================
+Cambiar el pass del usuario y root
+==================================
+
+========================
+Usuario normal o regular
+========================
 
 $ passwd
 
-// Nos mostrara lo siguiente:
+Nos mostrara lo siguiente:
 
 Cambiando la contraseña de user.
 (actual) contraseña de UNIX:******
 Introduzca la nueva contraseña de UNIX:*****
 Vuelva a escribir la nueva contraseña de UNIX:*****
 
-##### Usuario root #####
+============
+Usuario root
+============
 
 Primero nos logeamos como root:
 
@@ -825,96 +1423,127 @@ Luego lo mismo de arriba:
 
 # passwd
 
-// Nos pedira que introduzcamos la nueva contraseña y la confirmacion para cambiar la clave de root
+Nos pedira que introduzcamos la nueva contraseña y la confirmacion para cambiar
+la clave de root
 
 Introduzca la nueva contraseña de UNIX:****** 
 Vuelva a escribir la nueva contraseña de UNIX:*****
 passwd: contraseña actualizada correctamente
 
-############################################################################
-########## Instalacion de programas y paquetes con apt y aptitude ##########
-############################################################################
+======================================================
+Instalacion de programas y paquetes con apt y aptitude
+======================================================
 
-$ man aptitude // Ver el manual de aptitude.
+ Ver el manual de aptitude.
 
-$ man apt-get // Ver el manual de apt-get.
+$ man aptitude
 
-# apt-get install Nombre_Paquete // Instalar paquetes
+Ver el manual de apt-get.
 
-# apt-get install --only-upgrade packagename // Actualizar un paquete unicamente.
+$ man apt-get
 
-# apt-get install -t jessie-backports Nombre_Paquete // Instalar paquetes disponibles desde otro repositorio, en este caso, los de jessie-backports.
+Instalar paquetes.
 
-# aptitude install Nombre_Paquete // Instalar paquetes, otra forma
+# apt-get install Nombre_Paquete
 
-# apt-get build-dep Nombre_Paquete // Intentará satisfacer las dependencias de compilación de un paquete fuente, el comando build-dep
-busca en los repositorios locales en el sistema e instala las dependencias de construcción para el paquete. Si el paquete no existe en
-el repositorio local se devolverá un código de error.
+Actualizar un paquete unicamente.
 
-$ aptitude install -s Nombre_Paquete // Hace una simulacion de la instalacion, podemos ver que procesos haría la instalación
+# apt-get install --only-upgrade packagename
 
-# apt-get install -s Nombre_Paquete // Simulacion de instalacion con  apt-get install
+Instalar paquetes disponibles desde otro repositorio, en este caso, los de
+jessie-backports.
 
-# apt-get install -y package // El -y Supone una respuesta afirmativa a todas las preguntas, de esta forma apt-get se ejecuta sin necesidad de intervención posterior para tomar decisiones, usar con cuidado.
+# apt-get install -t jessie-backports Nombre_Paquete
 
-$ apt-get source Nombre_paquete // Descargar las fuentes del paquete, para compilar e instalar. 
+Instalar paquetes, otra forma usando el programa aptitude
 
-$ sudo aptitude search Nombre_Paquete // Realizar una busqueda en los repositorios del paquete que se quiere encontrar
+# aptitude install Nombre_Paquete
 
-$ aptitude show Nombre_Paguete // Para ver la informacion del paquete, version, estado, tamaño, conflictos, dependencias, etc.
+Intentará satisfacer las dependencias de compilación de un paquete fuente, el
+comando build-dep busca en los repositorios locales en el sistema e instala las
+dependencias de construcción para el paquete. Si el paquete no existe en el
+repositorio local se devolverá un código de error.
 
-$ apt-cache show nombre_paquete // Ver informacion del paquete, version, dependencias, descripcion, tamaño, entre otros.
+# apt-get build-dep Nombre_Paquete
 
-$ apt-cache search nombre_paquete // Buscar un paquete en los repositorios.
+Hace una simulacion de la instalacion, podemos ver que procesos haría la
+instalación.
 
-$ aptitude versions nombre_paquete // Muestra las versiones de los paquetes listados en la línea de órdenes.
+$ aptitude install -s Nombre_Paquete
 
-# aptitude remove Nombre_paquete // Elimina o Desinstala el paquete.
+ Simulacion de instalacion con  apt-get install.
 
-# aptitude purge Nombre_Paquete // Elimina el paquete y sus archivos de configuracion.
+# apt-get install -s Nombre_Paquete
 
-$ aptitude download nombre_paquete // Descarga el fichero .deb del paquete dado al directorio actual.
+El -y Supone una respuesta afirmativa a todas las preguntas, de esta forma
+apt-get se ejecuta sin necesidad de intervención posterior para tomar
+decisiones, usar con cuidado.
 
-$ apt-get download nombre_paquete // Descarga el fichero .deb del paquete dado al directorio actual.
+# apt-get install -y package
 
-# aptitude reinstall nombre_paquete // Reinstalar un paquete
+Descargar las fuentes del paquete, para compilar e instalar.
 
-$ aptitude update // Actualizar la lista de paquetes disponibles.
+$ apt-get source Nombre_paquete
 
-$ dpkg -l | grep nombre_paquete // Saber si un paquete está instalado y su version.
+Realizar una busqueda en los repositorios del paquete que se quiere encontrar
 
-# apt-get autoremove // Borra los paquetes huérfanos, o las dependencias que quedan instaladas después de haber instalado una aplicación y luego eliminarla, por lo que ya no son necesarias.
+$ sudo aptitude search Nombre_Paquete
 
-##### Comparación de las ordenes en apt-get y aptitude #####
+Para ver la informacion del paquete, version, estado, tamaño, conflictos,
+dependencias, etc.
 
-### Acción ###
-Instalar cualquiercosa
-Buscar cualquiercosa
-Eliminar cualquiercosa
-Lista recursiva de dependencias de cualquiercosa
-Mostrar el estado de cualquiercosa
-apt-cache policy cualquiercosa
-Descargar código fuente de cualquiercosa y crear un paquete .deb
+$ aptitude show Nombre_Paguete
 
-### apt-get ###
-apt-get install cualquiercosa
-apt-cache search cualquiercosa
-apt-get remove cualquiercosa
-apt-cache rdepends cualquiercosa
-apt-get source --compile cualquiercosa
+ Ver informacion del paquete, version, dependencias, descripcion, tamaño, entre
+ otros.
 
-### aptitude ###
-aptitude install cualquiercosa
-aptitude search cualquiercosa
-aptitude remove cualquiercosa
-aptitude search ~Dcualquiercosa
-aptitude versions cualquiercosa
+$ apt-cache show nombre_paquete
 
-####################################################
-##### Saber la version instalada de un paquete #####
-####################################################
+ Buscar un paquete en los repositorios.
 
-xxx --version // Saber la version de algun paquete que tengamos instalado.
+$ apt-cache search nombre_paquete
+
+Muestra las versiones de los paquetes listados en la línea de órdenes.
+
+$ aptitude versions nombre_paquete
+
+Elimina o Desinstala el paquete.
+
+# aptitude remove Nombre_paquete
+
+Elimina el paquete y sus archivos de configuracion.
+
+# aptitude purge Nombre_Paquete
+
+Descarga el fichero .deb del paquete dado al directorio actual.
+
+$ aptitude download nombre_paquete
+
+Descarga el fichero .deb del paquete dado al directorio actual.
+
+$ apt-get download nombre_paquete
+
+Reinstalar un paquete
+
+# aptitude reinstall nombre_paquete
+
+Actualizar la lista de paquetes disponibles.
+
+$ aptitude update
+
+Saber si un paquete está instalado y su version.
+
+$ dpkg -l | grep nombre_paquete
+
+Borra los paquetes huérfanos, o las dependencias que quedan instaladas después
+de haber instalado una aplicación y luego eliminarla, por lo que ya no son
+necesarias.
+
+# apt-get autoremove
+
+Saber la version de algun paquete que tengamos instalado.
+
+$ xxx --version
 
 Ejemplo:
 bash --version
@@ -922,75 +1551,86 @@ gcc --version
 python --version
 ruby --version
 
-#####################################
-##### Liberando espacio con apt #####
-#####################################
+=========================
+Liberando espacio con apt
+=========================
 
-APT (Advanced Packaging Tool) Herramienta Avanzada de Empaquetado es un sistema gestor de paquetes creado por el proyecto Debian.
-Esta herramienta se encarga de facilitarle al usuario las tareas de instalación y eliminación de programas en los
-sistemas GNU/Linux (distribuciones derivadas de Debian).
+APT (Advanced Packaging Tool) Herramienta Avanzada de Empaquetado es un sistema
+gestor de paquetes creado por el proyecto Debian. Esta herramienta se encarga de
+facilitarle al usuario las tareas de instalación y eliminación de programas en
+los sistemas GNU/Linux (distribuciones derivadas de Debian).
 
-Esta herramienta se compone de dos programas principalmente: apt-get y apt-cache, para estos programas podemos encontrar programas
-frontend, me refiero a programas con una interfaz gráfica que facilita el uso de apt como es Aptitude, Synaptic, Adept, Ubuntu Software Center, etc.
+Esta herramienta se compone de dos programas principalmente: apt-get y
+apt-cache, para estos programas podemos encontrar programas frontend, me refiero
+a programas con una interfaz gráfica que facilita el uso de apt como es
+Aptitude, Synaptic, Adept, Ubuntu Software Center, etc.
 
-Apt instala paquetes .deb para los sistemas debian y distribuciones derivadas, instalar un programa con esta herramienta es tan sencillo como escribir:
+Apt instala paquetes .deb para los sistemas debian y distribuciones derivadas,
+instalar un programa con esta herramienta es tan sencillo como escribir:
 
 $ apt-get install <nombre_del_programa>
 
-Donde <nombre_del_programa> lo sustituimos por el nombre del programa que deseamos instalar.
+Donde <nombre_del_programa> lo sustituimos por el nombre del programa que
+deseamos instalar.
 
-Si queremos por ejemplo instalar GIMP, un programa para la manipulación de imágenes, se haría de la siguiente manera:
+Si queremos por ejemplo instalar GIMP, un programa para la manipulación de
+imágenes, se haría de la siguiente manera:
 
 $ apt-get install gimp
 
-##### Comprobando el espacio utilizado #####
+================================
+Comprobando el espacio utilizado
+================================
 
-Los archivos .deb que apt-get descarga de los repositorios, son almacenados en nuestra máquina antes de comenzar el proceso
-de instalación, y a veces hace falta hacer limpieza de estos archivos (ojo, al realizar los siguientes 3 pasos para liberar
-espacio, liberaremos espacio sin desinstalar programas, solo borraremos los instaladores, caché de .deb almacenados localmente);
-Los archivos son almacenados en la siguiente ruta cuando van a ser instalados /var/cache/apt/archives podemos ver cuánto espacio
-están utilizando estos archivos en nuestro disco con:
+Los archivos .deb que apt-get descarga de los repositorios, son almacenados en
+nuestra máquina antes de comenzar el proceso de instalación, y a veces hace
+falta hacer limpieza de estos archivos (ojo, al realizar los siguientes 3 pasos
+para liberar espacio, liberaremos espacio sin desinstalar programas, solo
+borraremos los instaladores, caché de .deb almacenados localmente); Los archivos
+son almacenados en la siguiente ruta cuando van a ser instalados
+/var/cache/apt/archives podemos ver cuánto espacio están utilizando estos
+archivos en nuestro disco con:
 
 $ du -hs /var/cache/apt/archives
 
 du es un comando que nos permite ver el Disk Usage (espacio utilizado en disco).
 3 Pasos para liberar espacio
 
-$ sudo apt-get autoclean
-$ sudo apt-get clean
-$ sudo apt-get autoremove
-
-##### Explicación de los 3 comandos anteriores #####
-
-1- Para liberar el espacio primero haremos un autoclean, esta opción borra todo el caché de los paquetes .deb de paquetes de versiones anteriores y de los programas que ya han sido instalados en nuestro sistema:
+1- Para liberar el espacio primero haremos un autoclean, esta opción borra todo
+el caché de los paquetes .deb de paquetes de versiones anteriores y de los
+programas que ya han sido instalados en nuestro sistema:
 
 $ sudo apt-get autoclean
 
-2- El siguiente comando con la opción clean borra todos los paquetes .deb, si queremos instalar de nuevo un programa el archivo .deb necesitará ser descargado nuevamente de los repos:
+2- El siguiente comando con la opción clean borra todos los paquetes .deb, si
+queremos instalar de nuevo un programa el archivo .deb necesitará ser descargado
+nuevamente de los repos:
 
 $ sudo apt-get clean
 
-3- Por último el siguiente comando con la opción autoremove borra todos los paquetes dependencias de otros programas:
+3- Por último el siguiente comando con la opción autoremove borra todos los
+paquetes dependencias de otros programas:
 
 $ sudo apt-get autoremove
 
 Comprobando el espacio libre nuevamente
 
-Ahora que hemos liberado el espacio, podemos comprobar nuevamente el tamaño de la carpeta que apt usa para almacenar todos los archivos como caché:
+Ahora que hemos liberado el espacio, podemos comprobar nuevamente el tamaño de
+la carpeta que apt usa para almacenar todos los archivos como caché:
 
 $ du -hs /var/cache/apt/archives
 
-#####################################################
-########## Comprimir/Descomprimir archivos ##########
-#####################################################
+===============================
+Comprimir/Descomprimir archivos
+===============================
 
-tar se refiere a un formato de archivos ampliamente usado en
-entornos UNIX identificados por el sufijo de archivo .tar.. Además hace referencia al programa
-para la manipulación de archivos que es estándar en estos entornos, pero no incluye la
-compresión de los mismos.
+tar se refiere a un formato de archivos ampliamente usado en entornos UNIX
+identificados por el sufijo de archivo .tar.. Además hace referencia al programa
+para la manipulación de archivos que es estándar en estos entornos, pero no
+incluye la compresión de los mismos.
 
-// Comprimir un directorio, le damos los parametros de compresion, así como el nombre del paquete
-y el directorio que vamos a comprimir.
+Comprimir un directorio, le damos los parametros de compresion, así como el
+nombre del paquete y el directorio que vamos a comprimir.
 
 $ tar -cvf paquete.tar nombre_directorio 
 
@@ -1001,52 +1641,63 @@ $ tar -cvf paquete.tar nombre_directorio
 -f : indica a tar que el siguiente argumento es el nombre del fichero.tar
 -z : comprimir a la vez que se empaqueta
 
-// Crear un paquete con el nombre que le dimos y contiene el archivo.txt 
+Crear un paquete con el nombre que le dimos y contiene el archivo.txt
 
 $ tar -cvf paquete.tar archivo.txt
 
-// Descomprimir un paquete
+Descomprimir un paquete
 
 $ tar -xvf paquete.tar
 
-##### Descomprimir paquetes.tar.bz2 #####
+=============================
+Descomprimir paquetes.tar.bz2
+=============================
 
 $ tar -xjvf example.tar.bz2
 
-##### Ficheros: .tar.gz #####
+=================
+Ficheros .tar.gz
+=================
 
-// Comprimir un directorio
+Comprimir un directorio
 
 $ tar -czvf paquete.tar.gz nombre_directorio
 
-// Comprimir un fichero
+Comprimir un fichero
 
 $ tar -czvf paquete.tar.gz nombre_fichero.xxx
 
-// Descomprimir
+Descomprimir
 
 $ tar -xzvf paquete.tar.gz
 
-##### Ficheros: .gz: #####
+============
+Ficheros .gz
+============
 
-// Comprimir
+Comprimir
 
 $ gzip -9 ficehro.txt
 
-// Descomprimir
+Descomprimir
 
 $ gzip -d fichero.gz
 
-##### Descomprimir .tar.xz #####
+====================
+Descomprimir .tar.xz
+====================
 
 $ tar Jxvf fichero.tar.xz
 
 -------------
 
-Cuando nos iniciamos en Linux y buscamos un programa lo normal es que encontremos un .deb o .rpm y en muchos casos nos encontramos programas con
-la extensión .tar.gz y .tar.bz2, estos archivos están comprimidos y por lo general contienen aparte del programa unas instrucciones para instalarlo.
+Cuando nos iniciamos en Linux y buscamos un programa lo normal es que
+encontremos un .deb o .rpm y en muchos casos nos encontramos programas con la
+extensión .tar.gz y .tar.bz2, estos archivos están comprimidos y por lo general
+contienen aparte del programa unas instrucciones para instalarlo.
 
-La instalación para estos dos tipos de paquetes es exactamente igual, primero entramos a la carpeta donde tengamos el archivo.
+La instalación para estos dos tipos de paquetes es exactamente igual, primero
+entramos a la carpeta donde tengamos el archivo.
 
 $ cd directorio
 
@@ -1054,36 +1705,42 @@ $ tar -zxvf nombredelarchivo.tar.gz
 
 $ tar -jxvf nombredelarchivo.tar.bz2
 
--Configuramos, con esta accion se configurara el paquete
-para la posterior compilacion, si hacen falta paquetes "dependencias" para la compilacion
-por lo general mostrara que paquetes faltan y fallará la configuracion.
+Configuramos, con esta accion se configurara el paquete para la posterior
+compilacion, si hacen falta paquetes "dependencias" para la compilacion por lo
+general mostrara que paquetes faltan y fallará la configuracion.
 
 $ ./configure
 
--Hacemos make (compilamos)
+Hacemos make (compilamos)
 
 $ make
 
--Ahora make install
+Ahora make install
 
 $ make install
 
-################################
-##### Descomprimir con RAR #####
-################################
+====================
+Descomprimir con RAR
+====================
 
-// Necesitamos instalar unrar
+Necesitamos instalar unrar.
 
 $ aptitude search unrar
 
-Si no lo encuentra debemos bajar el source de http://www.unrarlib.org/
-Nos bajara unrarsrc-3.7.8.tar.gz // Descomprimimos, nos dejara la carpeta (unrar)
-luego: 
-$ cd unrar
-$ make -f makefile.unix
-$ install -v -m755 unrar /usr/bin // Como root
+Si no lo encuentra debemos bajar el source de http://www.unrarlib.org/ Nos
+bajara unrarsrc-3.7.8.tar.gz
 
-// Ya deberíamos poder descomprimir .rar
+Descomprimimos, nos dejara la carpeta (unrar)
+
+$ cd unrar
+
+luego:
+
+$ make -f makefile.unix
+
+# install -v -m755 unrar /usr/bin
+
+Ya deberíamos poder descomprimir .rar
 
 Uso: unrar [OPTION...] ARCHIVE [FILE...] [DESTINATION]
 -x, --extract              Extract files from archive (default)
@@ -1096,145 +1753,266 @@ Uso: unrar [OPTION...] ARCHIVE [FILE...] [DESTINATION]
 --usage                Give a short usage message
 -V, --version              Print program version
 
-ejemplo:
-$ unrar x archivo.rar // Para descomprimir un fichero .rar
-$ unrar x archivo.rar /home/user/carpeta // Para descomprimir un fichero .rar dando la ruta
+Ejemplo:
 
-###########################################
-##### Comprimir/ Descomprimir con ZIP #####
-###########################################
+Para descomprimir un fichero .rar.
 
-$ sudo aptitude install zip // Instalar el paquete de zip
+$ unrar x archivo.rar
+
+Para descomprimir un fichero .rar dando la ruta.
+
+$ unrar x archivo.rar /home/user/carpeta
+
+===============================
+Comprimir/ Descomprimir con ZIP
+===============================
+
+Instalar el paquete de zip.
+
+$ sudo aptitude install zip
+
+Comprimir un fichero.
 
 $ zip archivo.zip nombre_fichero.xxx
 
-$ unzip archivo.zip // Descomprimir el fichero
+Descomprimir el fichero.
 
-$ zip -r carpeta.zip nombre_carpeta // Comprimir directorios y su contenido
+$ unzip archivo.zip
 
-#####################
-##### Programas #####
-#####################
+Comprimir directorios y su contenido.
 
-#########################################
-########## Terminal Terminator ##########
-#########################################
+$ zip -r carpeta.zip nombre_carpeta
 
-//Gran herramienta para los desarrolladores, permite abrir multiples terminales
-y poder ordenarlos, muy personalizable, entre muchas otras cosas. **RECOMENDADO**
+===================
+Terminal Terminator
+===================
 
-Paquete: terminator / multiple GNOME terminals in one window
+Gran herramienta para los desarrolladores, permite abrir multiples terminales
+y poder ordenarlos, muy personalizable, entre muchas otras cosas.
+**RECOMENDADO**.
 
-aptitude install terminator // Para instalarlo
-apt-get install terminator
+Paquete: terminator / multiple GNOME terminals in one window.
+
+Para instalarlo
+
+# apt-get install terminator
 
 Dentro de Terminator:
-Ctrl + Shift + o // Abrir un terminal horizontal y paralelo
-Ctrl + Shift + e // Abrir un terminal vertical y paralelo
-Ctrl + Shift + t // Abrir una nueva pestaña en el terminal
-Alt + flechas // Moverse por los terminales
-Ctrl + Shift + w // Cerrar un terminal
-Ctrl + Shift + x // Maximizar un terminal, igual para salir
-Ctrl + Shift + z // Maximizar un terminal(aumentado), igual para salir
-Ctrl + Shift + flechas // Cambiar el tamaño a voluntad de un terminal
-Ctrl + (+) // Aumentar tamaño de fuente, el (+) del Qwerty
-Ctrl + (-) // Minimizar tamaño de fuente, el (-) del Qwerty 
-Ctrl + d // Si no hay sesion de usuario abierta, como root y otros cerrará la pestaña o ventana.
-f11 // Pantalla completa.
 
-#################################
-### DIA - Editor de diagramas ###
-#################################
+Abrir un terminal horizontal y paralelo
 
-Es un editor de diagramas, grafos, gráficas, etc. Ofrece soporte para diagramas de estructuras
-estáticas en UML (diagramas de clases), diagramas de  Entidad-Relación, diagramas de redes y mucho más.
+Ctrl + Shift + o
+
+Abrir un terminal vertical y paralelo
+
+Ctrl + Shift + e
+
+Abrir una nueva pestaña en el terminal
+
+Ctrl + Shift + t
+
+Moverse por los terminales
+
+Alt + flechas
+
+Cerrar un terminal
+
+Ctrl + Shift + w
+
+Maximizar un terminal, igual para salir
+
+Ctrl + Shift + x
+
+Maximizar un terminal(aumentado), igual para salir
+
+Ctrl + Shift + z
+
+Cambiar el tamaño a voluntad de un terminal
+
+Ctrl + Shift + flechas
+
+Aumentar tamaño de fuente, el (+) del Qwerty
+
+Ctrl + (+)
+
+Minimizar tamaño de fuente, el (-) del Qwerty
+
+Ctrl + (-)
+
+Si no hay sesion de usuario abierta, como root y otros cerrará la pestaña o
+ventana.
+
+Ctrl + d
+
+Pantalla completa.
+
+f11
+
+=========================
+DIA - Editor de diagramas
+=========================
+
+Es un editor de diagramas, grafos, gráficas, etc. Ofrece soporte para diagramas
+de estructuras estáticas en UML (diagramas de clases), diagramas de
+Entidad-Relación, diagramas de redes y mucho más.
+
 Los diagramas se pueden exportar a postscript y a otros formatos.
 
 $ aptitude install dia
 
-################
-##### Meld #####
-################
+====
+Meld
+====
 
 Es una herramienta gráfica para hacer archivos diff y fusionarlos.
-Permite al usuario ver los cambios entre, y fusionar, dos archivos, dos directorios, o dos archivos con un ancestro común.
 
-$ aptitude install meld
+Permite al usuario ver los cambios entre, y fusionar, dos archivos, dos
+directorios, o dos archivos con un ancestro común.
 
-####################################
-##### Editor de texto VI o VIM #####
-####################################
+# apt install meld
 
-// Es un editor de texto poderoso, muy usado en la comunidad de desarrolladores de Software Libre para escribir scripts, modificar ficheros
-de texto en el shell, programar etc. No posee botones y todas sus funcionalidades se usan a traves de comandos.
-Por lo general viene preinstalado en la mayoria de distribuciones, si no es así solo basta con un:
+========================
+Editor de texto VI o VIM
+========================
 
-# apt-get install vim // con apt-get
+Es un editor de texto poderoso, muy usado en la comunidad de desarrolladores de
+Software Libre para escribir scripts, modificar ficheros de texto en el shell,
+programar etc. No posee botones y todas sus funcionalidades se usan a traves de
+comandos.
 
-# aptitude install vim // con aptitude
+Por lo general viene preinstalado en la mayoria de distribuciones, si no es así
+solo basta con un:
 
-----------------
+# apt-get install vim
 
---- Modos de uso ---
+============
+Modos de uso
+============
 
-// Al entrar a VIM para editar un fichero por primera vez, estamos en modo de comandos, quiere decir que no podemos editar el texto
-sino que solo podremos usar comandos.
+Al entrar a VIM para editar un fichero por primera vez, estamos en modo de
+comandos, quiere decir que no podemos editar el texto sino que solo podremos
+sar comandos.
 
-vim // Abrir vim, un fichero en blanco sin nombre ni contenido
+Abrir vim, un fichero en blanco sin nombre ni contenido.
 
-i // Tecleamos i para entrar en modo de edicion, podemos insertar texto
+$ vim
 
-escape // Pulsamos la tecla escape para salir del modo edicion o de cualquier otro modo, y volvemos al modo comandos.
+Tecleamos i para entrar en modo de edicion, podemos insertar texto.
 
-:q // En modo comandos escribimos :q para salir del editor sin guardar
+i
 
-:q! // Salir del editor sin guardar ni pedir confirmacion
+Pulsamos la tecla escape para salir del modo edicion o de cualquier otro modo,
+y volvemos al modo comandos.
 
-:w nombre_fichero.xxx //Guardamos un fichero nuevo, le asignamos el nombre y la extension si es necesario.
+escape
 
-vim nombre_archivo.xxx // Nos aparecerá una ventana en negro, donde nos aparecerá el contenido del fichero o en negro si está vacío
-// En la parte inferior, nos aparecerán los mensajes o comandos que escribamos para manejar el editor, así como la línea en la que estamos, porcentaje del fichero, etc.
+En modo comandos escribimos :q para salir del editor sin guardar.
 
-:w // Guardar un documento
+:q
 
-:wq! // Guardar y salir, esta accion aplica a un fichero ya creado, que estemos editando.
+Salir del editor sin guardar ni pedir confirmacion.
 
-:f // Para saber el nombre y extensión del fichero abierto.
+:q!
 
-u // Deshacer el ultimo cambio
+Guardamos un fichero nuevo, le asignamos el nombre y la extension si es
+necesario.
 
-Ctrl + R // Rehacer el ultimo cambio
+:w nombre_fichero.xxx
 
-yy // Copiar la linea
+Nos aparecerá una ventana en negro, donde nos aparecerá el contenido del fichero
+o en negro si está vacío.
 
-dd // Eliminar una linea, en tal caso la corta y esta lista para pegarse
+En la parte inferior, nos aparecerán los mensajes o comandos que escribamos
+para manejar el editor, así como la línea en la que estamos, porcentaje del
+fichero, etc.
 
-p // Pegar una linea cortada
+vim nombre_archivo.xxx
 
-guu // Convertir la linea actual en minusculas
+Guardar un documento.
 
-gUU // Convertir la linea actual en mayusculas
+:w
 
-g // Ir al principio del archivo
+Guardar y salir, esta accion aplica a un fichero ya creado, que estemos
+editando.
 
-G // Ir al final del documento
+:wq!
 
-w // navegar palabra por palabra en el fichero
+Para saber el nombre y extensión del fichero abierto.
 
-v // Entra en modo Visual. En este modo seleccionaremos un texto con los cursores, y
+:f
+
+Deshacer el ultimo cambio.
+
+u
+
+Rehacer el ultimo cambio.
+
+Ctrl + R
+
+Copiar la linea.
+
+yy
+
+Eliminar una linea, en tal caso la corta y esta lista para pegarse.
+
+dd
+
+Pegar una linea cortada.
+
+p
+
+Convertir la linea actual en minusculas.
+
+guu
+
+Convertir la linea actual en mayusculas.
+
+gUU
+
+Ir al principio del archivo.
+
+g
+
+Ir al final del documento.
+
+G
+
+Navegar palabra por palabra en el fichero.
+
+w
+
+Entra en modo Visual. En este modo seleccionaremos un texto con los cursores, y
 después podremos cortar, copiar y pegar con los comandos:  
+
 Copiar: y
+
 Copiar el texto seleccionado en modo visual (de "yank".)
+
 Cortar: c
-Cortar el texto seleccionado en modo visual 
+
+Cortar el texto seleccionado en modo visual.
+
 Pegar: p
+
 Pegar el texto copiado o cortar en modo visual con anterioridad. 
 
-:/palabra // Para hacer una busqueda de una palabra dentro del archivo
-n // Para ir a la siguiente coincidencia.
-N // Para ir a la coincidencia anterior
+v
 
-:set nu // Enumerar las líneas del fichéro.
+Para hacer una busqueda de una palabra dentro del archivo.
+
+:/palabra
+
+Para ir a la siguiente coincidencia.
+
+n
+
+Para ir a la coincidencia anterior.
+
+N
+
+Enumerar las líneas del fichéro.
+
+:set nu
 
 Si queremos que se enumeren siempre las lineas editamos el fichero:
 
@@ -1242,38 +2020,26 @@ Si queremos que se enumeren siempre las lineas editamos el fichero:
 
 y quitámos las comillas (") a la línea que tiene a set number y guardamos.
 
-:123 // Ir a la linea (x) donde 123 es el número de linea a la cual queremos ir.
+Ir a la linea (x) donde 123 es el número de linea a la cual queremos ir.
 
-:syntax on // Sirve para dar color al codigo que estemos editando, VIM reconoce la sintaxis de muchos lenguajes y
-la resalta en colores como muchos otros editores graficos como gedit, sublime, ninja, komodo, Geany.
+:123
 
-En /etc/vim en el fichero vimrc descomentamos la linea 
-"syntax on // Quitamos las (") para que quede activado directamente la coloracion de codigos
+Sirve para dar color al codigo que estemos editando, VIM reconoce la sintaxis de
+muchos lenguajes y la resalta en colores como muchos otros editores graficos
+como gedit, sublime, ninja, komodo, Geany.
 
-######################################################
-########## Instalar y configurar phpMyAdmin ##########
-######################################################
+:syntax on
 
-# aptitude install phpmyadmin // Instalar
+Quitamos las (") para que quede activado directamente la coloracion de codigos
 
-http://localhost/phpmyadmin // Acceder al servicio
+En /etc/vim en el fichero vimrc descomentamos la linea "syntax on
 
-***After the installation has completed, add phpmyadmin to the apache configuration.**
+===============================
+Configurar el localhost / hosts
+===============================
 
-# sudo nano /etc/apache2/apache2.conf // Agregar en este archivo la configuracion de abajo
-
-***Add the phpmyadmin config to the file.
-
-Include /etc/phpmyadmin/apache.conf // Esta linea se agrega al final de la configuracion del apache para que reconozca el phpMyAdmin
-
-/etc/init.d/xxx restart // xxx mysql, apache etc... restart
-
-###########################################
-##### Configurar el localhost / hosts #####
-###########################################
-
-En el fichero /etc/hosts está configurado el localhost de la máquina, el contenido
-puede ser parecido a:
+En el fichero /etc/hosts está configurado el localhost de la máquina, el
+contenido puede ser parecido a:
 
 ---
 
@@ -1295,44 +2061,51 @@ Para hacer una prueba agregaremos y comentaremos una línea al fichero:
 
 ---
 
-Lo que hicimos es cambiar localhost por una url arbitraria, ahora si accedemos a www.x.x accederemos a 127.0.0.1
+Lo que hicimos es cambiar localhost por una url arbitraria, ahora si accedemos a
+www.x.x accederemos a 127.0.0.1
 
-#######################################################
-##### Bloquear acceso localmente a una página web #####
-#######################################################
+===========================================
+Bloquear acceso localmente a una página web
+===========================================
 
 $ ping www.pagina_a_bloquear.com
 
-Eso va a hacer ping o enviar paquetes a esa web y nos mostrara la ip pública
-del sitio, es decir un número con este formato: 111.222.333.444
+Eso va a hacer ping o enviar paquetes a esa web y nos mostrara la ip pública del
+sitio, es decir un número con este formato: 111.222.333.444
 
 Ahora, con esa ip hacemos lo siguiente:
 
-// Para bloquear el acceso a esa página
+Para bloquear el acceso a esa página
+
 # iptables -I INPUT -s 111.222.333.444 -j DROP
 
-// Para habilitar el acceso a esa página
+Para habilitar el acceso a esa página
+
 # iptables -I INPUT -s 111.222.333.444 -j ACCEPT
 
-##### Otra forma #####
+==========
+Otra forma
+==========
 
-Para bloquear sitios vamos a modificar el archivo hosts, abrimos un terminal y escribimos la siguiente
-linea de comando:
+Para bloquear sitios vamos a modificar el archivo hosts, abrimos un terminal y
+escribimos la siguiente linea de comando:
 
-// Como super usuario abrimos el fichero /etc/hosts con el editor gedit, puede ser nano vi, vim, u otro.
+Como super usuario abrimos el fichero /etc/hosts con el editor gedit, puede ser
+nano vi, vim, u otro.
 
 # gedit /etc/hosts
 
-Ahora para bloquear en este ejemplo a Instagram, vamos a escribir al principio del archivo:
+Ahora para bloquear en este ejemplo a Instagram, vamos a escribir al principio
+del archivo:
 
 127.0.0.1 instagram.com
 127.0.0.1 www.instagram.com
 
 Guardamos y listo.
 
-##################################################################
-##### Bloquear acceso localmente a una página web en Windows #####
-##################################################################
+======================================================
+Bloquear acceso localmente a una página web en Windows
+======================================================
 
 Probado en 7
 
@@ -1346,8 +2119,8 @@ Nos encontraremos con algo como esto:
 127.0.0.1       localhost
 127.0.0.1       localhost
 
-Para bloquear una página, solamente agregamos un par de lineas al final del fichero
-Por ejemplo, vamos a bloquear a instagram, entonces quedaría así:
+Para bloquear una página, solamente agregamos un par de lineas al final del
+fichero Por ejemplo, vamos a bloquear a instagram, entonces quedaría así:
 
 127.0.0.1       localhost
 127.0.0.1       www.instagram.com
@@ -1355,43 +2128,44 @@ Por ejemplo, vamos a bloquear a instagram, entonces quedaría así:
 
 Guardamos y listo, podemos agregar tantas webs como queramos.
 
-################################################
-##### Generar certificado ssl auto-firmado #####
-################################################
+====================================
+Generar certificado ssl auto-firmado
+====================================
 
-// Para establecer una conexión segura y de confianza es necesario
-// generar certificados que respalden la identidad del servidor.
-// Estos certificados son generalmente emitidos por entidades
-// certificadoras (Certificate Authority) independientes y de
-// confianza reconocida. Sin embargo, para una utilización más
-// casera y económica, es posible crear un certificado "auto-firmado".
+Para establecer una conexión segura y de confianza es necesario generar
+certificados que respalden la identidad del servidor. Estos certificados son
+generalmente emitidos por entidades certificadoras (Certificate Authority)
+independientes y de confianza reconocida. Sin embargo, para una utilización más
+casera y económica, es posible crear un certificado "auto-firmado".
 
-// Hay que configurar el sitio a proteger en /etc/hosts, esto es opcional
-// muy específico e independiente del manual que continúa.
+Hay que configurar el sitio a proteger en /etc/hosts, esto es opcional muy
+específico e independiente del manual que continúa.
 
-##### Instalar dependencias #####
+=====================
+Instalar dependencias
+=====================
 
 # aptitude install openssl ca-certificates
 
-##### Generar la clave RSA #####
+Generar la clave RSA
 
 $ openssl genrsa -des3 -out x.gob.ve.key 1024
 
-// ó 2048
+ó 2048
 
-##### Generar CSR (Petición de Firma de Certificado) #####
+Generar CSR (Petición de Firma de Certificado)
 
 $ openssl req -new -key x.gob.ve.key -out x.gob.ve.csr
 
-// Esto realiza una petición para la firma con la clave privada especificada
-// al realizarlo nos pide algunos datos que tendrá el certificado
-// algunos los podemos omitir.
+Esto realiza una petición para la firma con la clave privada especificada al
+realizarlo nos pide algunos datos que tendrá el certificado algunos los podemos
+omitir.
 
-// El "Common Name" que nos pide debe corresponder con la URL que queremos
-// Securizar. Si la URL a poner por https es x.gob.ve, este campo debe
-// contener exactamente eso.
+El "Common Name" que nos pide debe corresponder con la URL que queremos
+Securizar. Si la URL a poner por https es x.gob.ve, este campo debe contener
+exactamente eso.
 
-##### Generar Certificado Autofirmado #####
+Generar Certificado Autofirmado
 
 $ openssl x509 -req -days 365 -in x.gob.ve.csr -signkey x.gob.ve.key -out x.gob.ve.crt
 
@@ -1400,25 +2174,38 @@ x.gob.ve.crt // Este es el certificado final.
 x.gob.ve.csr
 x.gob.ve.key
 
-#################
-##### rsync #####
-#################
+=====
+rsync
+=====
 
-Es una aplicación que ofrece transmisión eficiente de datos, que opera también con datos comprimidos y cifrados.
-Mediante una técnica de delta encoding, permite sincronizar archivos y directorios entre dos máquinas de una red
-o entre dos ubicaciones en una misma máquina, minimizando el volumen de datos transferidos.
+Es una aplicación que ofrece transmisión eficiente de datos, que opera también
+con datos comprimidos y cifrados. Mediante una técnica de delta encoding,
+permite sincronizar archivos y directorios entre dos máquinas de una red o entre
+dos ubicaciones en una misma máquina, minimizando el volumen de datos
+transferidos.
+
 Muy recomendable para hacer respaldos en discos externos.
 
 # apt-get install rsync // Para instalarlo
 
-Parametros: -P para mostrar el progreso de la copia y -r cuando se van a copiar directorios
+Parametros: -P para mostrar el progreso de la copia y -r cuando se van a copiar
+directorios
 
-rsync -P ficehero /directorio/carpeta2 // Para copiar ficheros, archivos, etc. 
+Para copiar ficheros, archivos, etc.
 
-rsync -P -r /directorio/carpeta1_origen /directorio/carpeta2_destino // -r para copiar directorios se ponen las dos rutas: origen y destino separados por un espacio
-**Ojo con carpeta1, sin el / al final, lo cual significa que se va copiar la carpeta completa con su contenido y no solo su contenido.
+$ rsync -P ficehero /directorio/carpeta2
 
-##### rsync para copiar ficheros a un servidor a través de ssh #####
+-r para copiar directorios se ponen las dos rutas: origen y destino separados
+por un espacio
+
+$ rsync -P -r /directorio/carpeta1_origen /directorio/carpeta2_destino
+
+Ojo con carpeta1, sin el / al final, lo cual significa que se va copiar la
+carpeta completa con su contenido y no solo su contenido.
+
+========================================================
+rsync para copiar ficheros a un servidor a través de ssh
+========================================================
 
 -v : Verbose (try -vv for more detailed information)
 -e "ssh options" : specify the ssh as remote shell
@@ -1427,7 +2214,9 @@ rsync -P -r /directorio/carpeta1_origen /directorio/carpeta2_destino // -r para 
 
 $ rsync -P -r -v -e ssh name_dir_or_filename user@192.168.1.100:/home/use/dir/
 
-##### Usando rsync desde python para copiar un fichero a un servidor #####
+==============================================================
+Usando rsync desde python para copiar un fichero a un servidor
+==============================================================
 
 $ python
 
@@ -1442,51 +2231,68 @@ total size is 0  speedup is 0.00
 0
 >>> 
 
-// Fichero copiado al servidor!
+Fichero copiado al servidor!
 
-################################################
-##### CCLive - Descargar videos de youtube #####
-################################################
+====================================
+CCLive - Descargar videos de youtube
+====================================
 
-// CCLive es una aplicación que nos permite descargar un vídeo que esté en YouTube
-// hacia nuestro ordenador mediante un simple comando. Por defecto guarda los vídeos en webm.
+CCLive es una aplicación que nos permite descargar un vídeo que esté en YouTube
+hacia nuestro ordenador mediante un simple comando. Por defecto guarda los
+vídeos en webm.
 
-$ aptitude show cclive // Para ver si lo tenemos en los repos, y ver la descripción, si es así.
+ // Para ver si lo tenemos en los repos, y ver la descripción, si es así.
 
-$ aptitude install cclive // Instalación, como root.
+$ aptitude show cclive
 
-ó
+Instalación
 
-$ sudo apt-get install cclive // Instalación, como root.
+# apt install cclive
 
-$ cclive https://www.youtube.com/watch?v=yWVrvce5R9 // Descargar un video pasando la url de youtube.
+Descargar un video pasando la url de youtube.
 
-$ cclive URL1 URL2 URL3 URL4 // Soporta varias URLs a la vez, para bajar mas de 1 video.
+$ cclive https://www.youtube.com/watch?v=yWVrvce5R9
 
-$ cclive < urls.txt // Descargar un vídeo detrás de otro, desde un archivo de texto plano con todas las URLs (en líneas diferentes).
+Soporta varias URLs a la vez, para bajar mas de 1 video.
 
-$ man cclive // Manual del paquete.
+$ cclive URL1 URL2 URL3 URL4
 
-$ cclive -F https://www.youtube.com/watch?v=Lfj667lLLnE // Comprobar los formatos disponibles antes de descargar el video.
-// Se podrá ver un listado de formatos disponibles separados por "|"
+Descargar un vídeo detrás de otro, desde un archivo de texto plano con todas
+las URLs (en líneas diferentes).
 
-$ cclive -f fmt22_720p https://www.youtube.com/watch?v=LtzFg4JiL5E // Se elige el formato y se pasa en el comando, luego comenzará la descarga.
+$ cclive < urls.txt
 
-$ cclive -f best http://www.youtube.com/xxxxxx // Download the best available format of the media.
+Manual del paquete.
 
-####################################################
-##### youtube-dl - Descargar videos de youtube #####
-####################################################
+$ man cclive
 
-// Instalación de youtube-dl desde el repositorio de Debian.
+Comprobar los formatos disponibles antes de descargar el video.
+
+Se podrá ver un listado de formatos disponibles separados por "|"
+
+$ cclive -F https://www.youtube.com/watch?v=Lfj667lLLnE
+
+Se elige el formato y se pasa en el comando, luego comenzará la descarga.
+
+$ cclive -f fmt22_720p https://www.youtube.com/watch?v=LtzFg4JiL5E
+
+Download the best available format of the media.
+
+$ cclive -f best http://www.youtube.com/xxxxxx
+
+========================================
+youtube-dl - Descargar videos de youtube
+========================================
+
+Instalación de youtube-dl desde el repositorio de Debian.
 
 # apt-get install youtube-dl
 
 # apt-get install python-pip
 
-// Nota: De vez en cuando salen actualizaciones por lo cual hay que actualizar manualmente
-// el paquete, y si no se actualiza puede presentar errores, entonces, lo actualizamos
-// con los siguientes comandos:
+Nota: De vez en cuando salen actualizaciones por lo cual hay que actualizar
+manualmente el paquete, y si no se actualiza puede presentar errores, entonces,
+lo actualizamos con los siguientes comandos:
 
 # apt-get update
 
@@ -1494,7 +2300,7 @@ $ cclive -f best http://www.youtube.com/xxxxxx // Download the best available fo
 
 $ pip install --upgrade youtube-dl
 
-// Instalación desde la página oficial.
+Instalación desde la página oficial.
 
 $ sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
 
@@ -1502,7 +2308,7 @@ $ sudo chmod a+rx /usr/local/bin/youtube-dl
 
 $ sudo pip install --upgrade youtube_dl
 
-// ó usando wget
+ó usando wget
 
 $ sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
 
@@ -1510,12 +2316,12 @@ $ sudo chmod a+rx /usr/local/bin/youtube-dl
 
 $ sudo pip install --upgrade youtube_dl
 
-// Para enumerar todos los formatos de video disponibles, use la opción
-// "-list-formats" con el comando youtube-dl.
+Para enumerar todos los formatos de video disponibles, use la opción
+"-list-formats" con el comando youtube-dl.
 
 $ youtube-dl --list-formats my_youtube_url
 
-// Ejemplo de la salida del comando:
+Ejemplo de la salida del comando:
 
 [youtube] vKtwZmhX0lw: Downloading webpage
 [youtube] vKtwZmhX0lw: Downloading video info webpage
@@ -1524,38 +2330,40 @@ $ youtube-dl --list-formats my_youtube_url
 [youtube] vKtwZmhX0lw: Downloading DASH manifest
 [info] Available formats for vKtwZmhX0lw:
 format code  extension  resolution note
-171          webm       audio only DASH audio  113k , vorbis@128k (44100Hz), 1.86MiB
-140          m4a        audio only DASH audio  128k , m4a_dash container, aac  @128k (44100Hz), 2.14MiB
-141          m4a        audio only DASH audio  255k , m4a_dash container, aac  @256k (44100Hz), 4.30MiB
-278          webm       180x144    DASH video   63k , webm container, vp9, 1fps, video only, 946.76KiB
-160          mp4        180x144    DASH video  112k , avc1.4d400c, 15fps, video only, 1.86MiB
-242          webm       300x240    DASH video  170k , vp9, 1fps, video only, 2.50MiB
-133          mp4        300x240    DASH video  247k , avc1.4d400d, 25fps, video only, 4.11MiB
-243          webm       400x320    DASH video  288k , vp9, 1fps, video only, 4.07MiB
-13           3gp        unknown    small
-17           3gp        176x144    small ,  mp4a.40.2, mp4v.20.3
-36           3gp        320x240    small ,  mp4a.40.2, mp4v.20.3
-5            flv        400x240    small
-43           webm       640x360    medium ,  vorbis, vp8.0
-18           mp4        640x360    medium ,  mp4a.40.2, avc1.42001E (best)
+171    webm    audio only DASH audio  113k , vorbis@128k (44100Hz), 1.86MiB
+140    m4a     audio only DASH audio  128k , m4a_dash container, aac  @128k (44100Hz), 2.14MiB
+141    m4a     audio only DASH audio  255k , m4a_dash container, aac  @256k (44100Hz), 4.30MiB
+278    webm    180x144    DASH video   63k , webm container, vp9, 1fps, video only, 946.76KiB
+160    mp4     180x144    DASH video  112k , avc1.4d400c, 15fps, video only, 1.86MiB
+242    webm    300x240    DASH video  170k , vp9, 1fps, video only, 2.50MiB
+133    mp4     300x240    DASH video  247k , avc1.4d400d, 25fps, video only, 4.11MiB
+243    webm    400x320    DASH video  288k , vp9, 1fps, video only, 4.07MiB
+13     3gp     unknown    small
+17     3gp     176x144    small ,  mp4a.40.2, mp4v.20.3
+36     3gp     320x240    small ,  mp4a.40.2, mp4v.20.3
+5      flv     400x240    small
+43     webm    640x360    medium ,  vorbis, vp8.0
+18     mp4     640x360    medium ,  mp4a.40.2, avc1.42001E (best)
 
-// Para descargar un formato de archivo preferido, use la opción '-f'
-// (código de formato de video). Por ejemplo, me gustaría descargar el formato mp4
-// así que uso el código de formato como '18' como se muestra a continuación.
+Para descargar un formato de archivo preferido, use la opción '-f' (código de
+formato de video). Por ejemplo, me gustaría descargar el formato mp4 así que uso
+el código de formato como '18' como se muestra a continuación.
 
 $ youtube-dl -f 18 my_youtube_url
 
-###########################################
-##### Formatear pendrives desde linux #####
-###########################################
+===============================
+Formatear pendrives desde linux
+===============================
 
 # aptitude install dosfstools
 
-Luego de instalar el paquede, montamos el pendrive, solo esta montado si aparece el nombre de la unidad en /media, luego escribimos:
+Luego de instalar el paquede, montamos el pendrive, solo esta montado si aparece
+el nombre de la unidad en /media, luego escribimos:
 
 $ df -h
 
-Visualizamos la ruta de nuestro usb, ejemplo /dev/sdc1 que es el puerto donde está montado, luego desmontamos el pendrive.
+Visualizamos la ruta de nuestro usb, ejemplo /dev/sdc1 que es el puerto donde
+está montado, luego desmontamos el pendrive.
 
 $ umount /media/nombre_usb
 
@@ -1563,30 +2371,36 @@ Luego, estando desmontado la unidad usb, pero conectado al puerto
 
 # mkfs.vfat -F 32 -n Nombre_usb /dev/sdc1
 
-Esperamos y listo. Con la opción -F 32 le decimos que será formateada como Fat32, y con la opción -n le ponemos una etiqueta o nombre al dispositivo y
-al final ponemos la ruta hasta nuestro dispositivo, la que vimos con df -h
+Esperamos y listo. Con la opción -F 32 le decimos que será formateada como
+Fat32, y con la opción -n le ponemos una etiqueta o nombre al dispositivo y al
+final ponemos la ruta hasta nuestro dispositivo, la que vimos con df -h
 
-#########################
-##### sqlitebrowser #####
-#########################
+=============
+sqlitebrowser
+=============
 
-Herramienta de alta calidad visual para crear, diseñar y editar archivos de bases de datos compatibles con SQLite.
-Es para usuarios y desarrolladores que desean crear bases de datos, buscar y editar datos.
-Utiliza una interfaz de tipo hoja de cálculo familiar y no necesita aprender comandos SQL complicados.
+Herramienta de alta calidad visual para crear, diseñar y editar archivos de
+bases de datos compatibles con SQLite. Es para usuarios y desarrolladores que
+desean crear bases de datos, buscar y editar datos. Utiliza una interfaz de tipo
+hoja de cálculo familiar y no necesita aprender comandos SQL complicados.
+
+Para instalarlo
 
 # aptitude install sqlitebrowser
 
-$ sqlitebrowser // Para ejecutarlo
+Para ejecutarlo
 
-##########################################################
-##### Quemar o grabar una imagen .iso en un pendrive #####
-##########################################################
+$ sqlitebrowser
+
+==============================================
+Quemar o grabar una imagen .iso en un pendrive
+==============================================
 
 # dd if=[imagen] of=[dispositivo]
 
-// En donde imagen es la ruta completa a la imagen ISO que deseas grabar y dispositivo
-// la ruta de sistema hacia la unidad usb, no la ruta con el nombre del usb, estas
-// rutas las vemos con:
+En donde imagen es la ruta completa a la imagen ISO que deseas grabar y
+dispositivo la ruta de sistema hacia la unidad usb, no la ruta con el nombre del
+usb, estas rutas las vemos con:
 
 $ df -h
 
@@ -1594,17 +2408,15 @@ Por ejemplo:
 
 # dd if=/home/user/Descargas/debian-testing-i386-businesscard.iso of=/dev/media/sdb
 
-###############################################
-##### Copiar un imagen .iso en unidad USB #####
-###############################################
+Copiar un imagen .iso en unidad USB
 
-// Para hacerlo booteable, debe estar desmontado pero conectado en el puerto usb.
+Para hacerlo booteable, debe estar desmontado pero conectado en el puerto usb.
 
 $ cat xxxx.iso > /dev/sdxxx ; sync
 
-################################################
-##### Instalación de gnome en sistema base #####
-################################################
+====================================
+Instalación de gnome en sistema base
+====================================
 
 # apt-get install gnome-shell
 
@@ -1616,29 +2428,31 @@ $ cat xxxx.iso > /dev/sdxxx ; sync
 
 # apt-get install task-spanish-desktop
 
-#####################################
-##### Remover gnome del sistema #####
-#####################################
+=========================
+Remover gnome del sistema
+=========================
 
 # apt-get autoremove --purge 'gnome*'
 
 # apt-get autoremove
 
-########################################################
-##### Instalación de gnome classic en sistema base #####
-########################################################
+============================================
+Instalación de gnome classic en sistema base
+============================================
 
-Probado en Ubuntu 11 y 12 nada más, puede que funcione en anteriores o superiores.
+Probado en Ubuntu 11 y 12 nada más, puede que funcione en anteriores o
+superiores.
 
 # apt-get install gnome-panel
 
 # apt-get install gnome-session-flashback
 
-Luego de reiniciar, saldrá el gnome-classic en las opciones de escritorio antes de iniciar sesión.
+Luego de reiniciar, saldrá el gnome-classic en las opciones de escritorio antes
+de iniciar sesión.
 
-######################################################
-##### Configuraciones visuales extras para gnome #####
-######################################################
+==========================================
+Configuraciones visuales extras para gnome
+==========================================
 
 # apt-get install gnome-themes-extras
 
@@ -1646,20 +2460,25 @@ Luego de reiniciar, saldrá el gnome-classic en las opciones de escritorio antes
 ##### Usando los programas de gnome #####
 #########################################
 
-$ gnome-screenshot --interactive // Captura de pantalla del escritorio usando el panel de herramientas.
+Captura de pantalla del escritorio usando el panel de herramientas.
 
-$ gnome-screenshot // Captura de pantalla del escritorio
+$ gnome-screenshot --interactive
 
-$ gnome-shell --replace & disown // Recargar el entorno gráfico, evitando el reinicio del pc.
+Captura de pantalla del escritorio.
 
-$ pdfimages fichero.pdf nombre_imagene // Extrae las imagenes de un .pdf
+$ gnome-screenshot
 
-###############################################
-##### Instalación de xfce en sistema base #####
-###############################################
+Extrae las imagenes de un .pdf
 
-Xfce es un entorno de escritorio ligero para sistemas tipo UNIX. Su objetivo es ser rápido y usar pocos recursos
-del sistema, sin dejar de ser visualmente atractivo y fácil de usar.
+$ pdfimages fichero.pdf nombre_imagene
+
+===================================
+Instalación de xfce en sistema base
+===================================
+
+Xfce es un entorno de escritorio ligero para sistemas tipo UNIX. Su objetivo es
+ser rápido y usar pocos recursos del sistema, sin dejar de ser visualmente
+atractivo y fácil de usar.
 
 # aptitude install xfce4
 
@@ -1669,13 +2488,17 @@ Luego instalamos utilidades extras, si se quiere, se le conoce como "goodies".
 
 # aptitude install lightdm
 
-Luego de eso, cuando reiniciemos la máquina, podremos elegir acceder con xfce como entorno de escritorio.
+Luego de eso, cuando reiniciemos la máquina, podremos elegir acceder con xfce
+como entorno de escritorio.
 
-########################################
-##### wget para descargar ficheros #####
-########################################
+============================
+wget para descargar ficheros
+============================
 
-$ wget www.ejemplo_web.com // Descargar toda una página completa, wget no está limitado a solo descargas de archivos. Sitios completos pueden descargarse también.
+Descargar toda una página completa, wget no está limitado a solo descargas de
+archivos. Sitios completos pueden descargarse también.
+
+$ wget www.ejemplo_web.com
 
 $ wget -p www.ejemplo_web.com  // Lo mismo que lo anterior pero con esta opción -p descarga además todos los elementos extras necesarios de la página
 como hojas de estilos, imágenes en línea, etc.

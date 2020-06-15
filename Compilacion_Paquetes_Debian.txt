@@ -1,130 +1,238 @@
-##### Guía Compilacion_Paquetes_Debian by dM #####
+============================================
+Guía de Compilacion de Paquetes Debian by dM
+============================================
 
 ¿Qué es empaquetamiento?
 
-Empaquetamiento es la posibilidad de tomar el código fuente de un programa y compilarlo, generando un "paquete" que es un instalador para Debian (formato .deb) de ese programa.
+Empaquetamiento es la posibilidad de tomar el código fuente de un programa y
+compilarlo, generando un "paquete" que es un instalador para Debian
+(formato .deb) de ese programa.
 
-#########################
-##### dpkg - debian #####
-#########################
+=============
+dpkg - debian
+=============
 
-El programa dpkg es la base del sistema de gestión de paquetes de Debian GNU/Linux. Fue creado por Ian Jackson en 1993. Se utiliza para instalar
-quitar, y proporcionar información sobre los paquetes .deb.
+El programa dpkg es la base del sistema de gestión de paquetes de Debian
+GNU/Linux. Fue creado por Ian Jackson en 1993. Se utiliza para instalar quitar,
+y proporcionar información sobre los paquetes .deb.
 
-dpkg es en sí misma una herramienta de bajo nivel; se necesita un frontal de alto nivel para traer los paquetes desde lugares remotos o resolver
-conflictos complejos en las dependencias de paquetes. Debian cuenta con apt para esta tarea.
+dpkg es en sí misma una herramienta de bajo nivel; se necesita un frontal de
+alto nivel para traer los paquetes desde lugares remotos o resolver conflictos
+complejos en las dependencias de paquetes. Debian cuenta con apt para esta
+tarea.
 
-Herramientas Dpkg, Debian posee una serie de herramientas que es necesario llamar para construir un paquete:
+Herramientas Dpkg, Debian posee una serie de herramientas que es necesario
+llamar para construir un paquete:
 
 -dpkg-source Empaqueta y desempaqueta los archivos fuentes de un paquete Debian.
--dpkg-gencontrol Lee la información de un árbol fuente Debian desempaquetado y genera un paquete binario de control, generando una
-entrada para éste en el fichero debian/files.
--dpkg-shlibdeps Calcula las dependencias de ejecutables respecto a bibliotecas.
--dpkg-genchanges Lee la información de un árbol fuente Debian desempaquetado y ya construido, generando un fichero de control de los últimos cambios (un.changes).
--dpkg-buildpackage Es un script de control que se puede utilizar para automatizar la construcción del paquete.
--dpkg-distaddfile Añade una entrada de un fichero a debian/files.
--dpkg-parsechangelog Lee el fichero de cambios changelog) de un árbol fuente Debian desempaquetado y genera una salida con la información
-de estos cambios, convenientemente preparada.
 
-###############
-##### deb #####
-###############
+-dpkg-gencontrol Lee la información de un árbol fuente Debian desempaquetado y
+genera un paquete binario de control, generando una entrada para éste en el
+fichero debian/files.
+
+-dpkg-shlibdeps Calcula las dependencias de ejecutables respecto a bibliotecas.
+
+-dpkg-genchanges Lee la información de un árbol fuente Debian desempaquetado y
+ya construido, generando un fichero de control de los últimos cambios
+(un.changes).
+
+-dpkg-buildpackage Es un script de control que se puede utilizar para
+automatizar la construcción del paquete.
+
+-dpkg-distaddfile Añade una entrada de un fichero a debian/files.
+
+-dpkg-parsechangelog Lee el fichero de cambios changelog) de un árbol fuente
+Debian desempaquetado y genera una salida con la información de estos cambios,
+convenientemente preparada.
+
+===
+deb
+===
 
 -Extensión de archivo: .deb
+
 -Tipo de formato: Sistema de gestión de paquetes
 
-.deb es la extensión del formato de paquetes de software de la distribución de Linux, Debian GNU/Linux y derivadas (e.j.Ubuntu), y
-el nombre más usado para dichos paquetes. Como Debian, su nombre proviene de Deborah Murdock, ex-esposa del fundador de la distribución Ian Murdock.
+.deb es la extensión del formato de paquetes de software de la distribución de
+Linux, Debian GNU/Linux y derivadas (e.j.Ubuntu), y el nombre más usado para
+dichos paquetes. Como Debian, su nombre proviene de Deborah Murdock, ex-esposa
+del fundador de la distribución Ian Murdock.
 
-El programa predeterminado para manejar estos paquetes es dpkg, generalmente usando apt/aptitude aunque también hay interfaces gráficas como Synaptic PackageKit, Gdebi o en Ubuntu Software Center (este último solo para Ubuntu), desde la versión 3.0. Es posible convertir un paquete deb a otros formatos de paquete (como RPM), y viceversa, usando la aplicación alien.
+El programa predeterminado para manejar estos paquetes es dpkg, generalmente
+usando apt/aptitude aunque también hay interfaces gráficas como Synaptic
+PackageKit, Gdebi o en Ubuntu Software Center (este último solo para Ubuntu),
+desde la versión 3.0. Es posible convertir un paquete deb a otros formatos de
+paquete (como RPM), y viceversa, usando la aplicación alien.
 
---- Estructura interna ---
+==================
+Estructura interna
+==================
 
-Los paquetes deb son archivos estándar de Unix que incluyen dos archivos tar en formato gzip, bzip2 o lzma: uno de los cuales alberga la información de control y el otro los datos.
+Los paquetes deb son archivos estándar de Unix que incluyen dos archivos tar en
+formato gzip, bzip2 o lzma: uno de los cuales alberga la información de control
+y el otro los datos.
 
 Estos paquetes contienen tres archivos:
--debian-binary - número de versión del formato deb. Este es "2.0" para las versiones actuales de Debian.
+
+-debian-binary - número de versión del formato deb. Este es "2.0" para las
+versiones actuales de Debian.
+
 -control.tar.gz - toda la meta-información del paquete.
+
 -data.tar, data.tar.gz, data.tar.bz2 o data.tar.lzma: - los archivos a instalar.
 
-########################################
-##### Instalación de paquetes .deb #####
-########################################
+============================
+Instalación de paquetes .deb
+============================
 
-Documentacion oficial de debian --> https://debian-handbook.info/browse/es-ES/stable/sect.manipulating-packages-with-dpkg.html
+Documentacion oficial de debian:
 
-dpkg es la herramienta para instalar un paquete Debian, para hacer esto utilizamos su opción -i o --install.
+https://debian-handbook.info/browse/es-ES/stable/sect.manipulating-packages-with-dpkg.html
 
---- Ejemplo de instalación de un paquete con dpkg ---
+dpkg es la herramienta para instalar un paquete Debian, para hacer esto
+utilizamos su opción -i o --install.
 
-$ dpkg -c dsc-nombre-paquete-xxx_i386.deb // Listar o mostrar el contenido del paquete.
+=============================================
+Ejemplo de instalación de un paquete con dpkg
+=============================================
 
-$ dpkg -L xxx // Lista los ficheros instalados en el sistema, que pertenecen al paquete xxx.
+Listar o mostrar el contenido del paquete.
 
-$ dpkg -x dsc-nombre-paquete-xxx_i386.deb /home/dir/ // Desempaquetamos el contenido del paquete en una ruta, necesario es crear la ruta antes.
+$ dpkg -c dsc-nombre-paquete-xxx_i386.deb
 
-# dpkg -i man-db_2.7.0.2-5_amd64.deb // El comando desempaquetara, configurara y comprobará las dependencias del paquete, si hay paquetes sin instalar, lo notificara, una vez instalados los paquetes necesarios, el paquete pendiente por configurar lo hará automaticamente, completando así la instalacion, se podrá comprobar con un aptitude show nombre_paquete. Si agregamos un paquete generado por nosotros a un repositorio personalizado podremos contar con la resolución automática de dependencias lo cual no pasa si se instala con dpkg.
+Lista los ficheros instalados en el sistema, que pertenecen al paquete xxx.
 
-# dpkg -l | grep nombre-del-paquete // Comprobar la instalación, Deberías ver ii delante del nombre del paquete en la salida en pantalla, ello significaría que el programa ha sido correctamente instalado.
+$ dpkg -L xxx
 
-# dpkg -r nombre-del-paquete // Desinstalar paquete con dpkg, Este comando removerá el paquete, pero dejara los archivos de configuracion intactos, esto es util en caso que hubieras realizado cambios en ellos y quieras una copia para usos posteriores. Pero si deseas quitar todo rastro del paquete debes usar purge
+Desempaquetamos el contenido del paquete en una ruta, necesario es crear la ruta
+antes.
 
-$ dpkg --purge package_name // dpkg --purge is used to remove the package binaries and the configuration files.
+$ dpkg -x dsc-nombre-paquete-xxx_i386.deb /home/dir/
 
-$ dpkg -force -r xxx.deb // Forzar la desinstalación del paquete xxx.deb.
+El comando desempaquetara, configurara y comprobará las dependencias del paquete
+si hay paquetes sin instalar, lo notificara, una vez instalados los paquetes
+necesarios, el paquete pendiente por configurar lo hará automaticamente,
+completando así la instalacion, se podrá comprobar con un aptitude show
+nombre_paquete. Si agregamos un paquete generado por nosotros a un repositorio
+personalizado podremos contar con la resolución automática de dependencias lo
+cual no pasa si se instala con dpkg.
 
-# dpkg -P nombre-del-paquete // Ahora no quedará rastro del paquete antes instalado.
+# dpkg -i man-db_2.7.0.2-5_amd64.deb
 
-$ dpkg --info nombre_paquete.deb // Muestra información sobre el paquete, sobre las dependencias y las versiones de las mismas, lo que mostrario con un aptitude show.
+Comprobar la instalación, Deberías ver ii delante del nombre del paquete en la
+salida en pantalla, ello significaría que el programa ha sido correctamente
+instalado.
 
-$ dpkg --get-selections // Para listar el total de paquetes instalados.
+# dpkg -l | grep nombre-del-paquete
 
-# dpkg --get-selections > /home/dir/mis_paquetes.txt // Gracias a este herramienta también es posible exportar la lista de paquetes instalados, crear el fichero
+Desinstalar paquete con dpkg, Este comando removerá el paquete, pero dejara los
+archivos de configuracion intactos, esto es util en caso que hubieras realizado
+cambios en ellos y quieras una copia para usos posteriores. Pero si deseas
+quitar todo rastro del paquete debes usar purge
 
-# dpkg --set-selections < /home/dir/mis_paquetes.txt // Luego podemos instalarlos en otra máquina pasandole la lista, obtención de la lista precedente.
+# dpkg -r nombre-del-paquete
 
-# apt-get dselect-upgrade // Instalación de la lista
+dpkg --purge is used to remove the package binaries and the configuration files.
 
-$ dpkg -l // Da la lista de paquetes instalados pero con mayor información. Sin embargo, no es posible utilizarlo para instalar una lista de paquetes. 
+$ dpkg --purge package_name
 
-$ dpkg -l xxx // Lista los paquetes instalados que coincidan con el nombre xxx
+Forzar la desinstalación del paquete xxx.deb.
 
-$ dpkg -l *xxx* // Lista los paquetes que contienen la cadena xx en su nombre de paquete.
+$ dpkg -force -r xxx.deb
 
-###########################################
-##### Descargando los paquetes fuente #####
-###########################################
+Ahora no quedará rastro del paquete antes instalado.# dpkg -P nombre-del-paquete
 
-Es muy común en el mundo del software libre estudiar el código fuente o corregir código erróneo. Para lograr esto, se necesita descargar el código fuente del programa.
-El sistema APT provee de una manera fácil de obtener código fuente de muchos programas contenidos en la distribución, incluyendo todos los archivos necesarios
-para crear un .deb para el programa.
+Muestra información sobre el paquete, sobre las dependencias y las versiones de
+las mismas, lo que mostrario con un aptitude show.
 
-Otro uso común de las fuentes de Debian es el de adaptar la versión más reciente de un programa, de la versión inestable. Compilar un programa en la versión estable
-generará .debs con las dependencias ajustadas para acoplarse a los paquetes en la distribución.
+$ dpkg --info nombre_paquete.deb
 
-Para lograr esto una entrada deb-src en el archivo /etc/apt/sources.list debe apuntar hacia "unstable". Esta línea debe estar habilitada (sin comentar).
+Para listar el total de paquetes instalados.
+
+$ dpkg --get-selections
+
+Gracias a este herramienta también es posible exportar la lista de paquetes
+instalados, crear el fichero
+
+# dpkg --get-selections > /home/dir/mis_paquetes.txt
+
+Luego podemos instalarlos en otra máquina pasandole la lista, obtención de la
+lista precedente.
+
+# dpkg --set-selections < /home/dir/mis_paquetes.txt
+
+Instalación de la lista
+
+# apt-get dselect-upgrade
+
+Da la lista de paquetes instalados pero con mayor información. Sin embargo, no
+es posible utilizarlo para instalar una lista de paquetes.
+
+$ dpkg -l
+
+Lista los paquetes instalados que coincidan con el nombre xxx.
+
+$ dpkg -l xxx
+
+Lista los paquetes que contienen la cadena xx en su nombre de paquete.
+
+$ dpkg -l *xxx*
+
+===============================
+Descargando los paquetes fuente
+===============================
+
+Es muy común en el mundo del software libre estudiar el código fuente o corregir
+código erróneo. Para lograr esto, se necesita descargar el código fuente del
+programa.
+
+El sistema APT provee de una manera fácil de obtener código fuente de muchos
+programas contenidos en la distribución, incluyendo todos los archivos
+necesarios para crear un .deb para el programa.
+
+Otro uso común de las fuentes de Debian es el de adaptar la versión más reciente
+de un programa, de la versión inestable. Compilar un programa en la versión
+estable generará .debs con las dependencias ajustadas para acoplarse a los
+paquetes en la distribución.
+
+Para lograr esto una entrada deb-src en el archivo /etc/apt/sources.list debe
+apuntar hacia "unstable". Esta línea debe estar habilitada (sin comentar).
 
 Para descargar un paquete fuente, haga lo siguiente:
 
 $ apt-get source packagename
 
-Esto descargará tres archivos: un .orig.tar.gz, un .dsc y un .diff.gz. En el caso de paquetes especiales para Debian, el último de estos archivos no es descargado y el primero generalmente no tendrá el "orig" en el nombre.
+Esto descargará tres archivos: un .orig.tar.gz, un .dsc y un .diff.gz. En el
+caso de paquetes especiales para Debian, el último de estos archivos no es
+descargado y el primero generalmente no tendrá el "orig" en el nombre.
 
-El archivo .dsc es utilizado por dbpkg-source para descomprimir el paquete en el directorio packagename-version. Con cada paquete descargado existe un directorio debian/ que contiene los archivos necesarios para crear un paquete .deb.
+El archivo .dsc es utilizado por dbpkg-source para descomprimir el paquete en el
+directorio packagename-version. Con cada paquete descargado existe un directorio
+debian/ que contiene los archivos necesarios para crear un paquete .deb.
 
-Para automáticamente compilar el paquete cuando está siendo descargado, sólo agrega -b a la línea de comando así.
+Para automáticamente compilar el paquete cuando está siendo descargado, sólo
+agrega -b a la línea de comando así.
 
 $ apt-get -b source packagename
 
-Hay una diferencia entre el apt-get source y las otras opciones. La opción source puede ser utilizada por usuarios normales, sin necesitar de poderes especiales de root. Los archivos son descargados a un directorio desde el cual el comando apt-get source package es ejecutado.
+Hay una diferencia entre el apt-get source y las otras opciones. La opción
+source puede ser utilizada por usuarios normales, sin necesitar de poderes
+especiales de root. Los archivos son descargados a un directorio desde el cual
+el comando apt-get source package es ejecutado.
 
-###########################################
-##### Estructura de un paquete fuente #####
-###########################################
+===============================
+Estructura de un paquete fuente
+===============================
 
-Un paquete fuente generalmente consiste de tres archivos: uno .dsc, uno .orig.tar.gz y uno .debian.tar.gz (o .diff.gz). Ellos permiten la creación de paquetes binarios (.deb) a partir de los archivos de código fuente del programa, escritos en un lenguaje de programación.
+Un paquete fuente generalmente consiste de tres archivos: uno .dsc, uno
+.orig.tar.gz y uno .debian.tar.gz (o .diff.gz). Ellos permiten la creación de
+paquetes binarios (.deb) a partir de los archivos de código fuente del programa,
+escritos en un lenguaje de programación.
 
-El archivo .dsc («Debian Source Control»: control de fuente Debian) es un archivo de texto corto que contiene una cabecera RFC 2822 que describe el paquete fuente e indica qué otros archivos forman parte del mismo. Está firmado por su encargado, lo que garantiza su autenticidad.
+El archivo .dsc («Debian Source Control»: control de fuente Debian) es un
+archivo de texto corto que contiene una cabecera RFC 2822 que describe el
+paquete fuente e indica qué otros archivos forman parte del mismo. Está firmado
+por su encargado, lo que garantiza su autenticidad.
 
 # Ejemplo 5.1. Un archivo .dsc
 
@@ -168,53 +276,114 @@ edtjiTJqOaFUA0x1zB/XGv5tHr1MjP8naT+kfVoVHTOox51CDbeu5D3DZY4imcY=
 =Wtoa
 -----END PGP SIGNATURE-----
 
-Note que el paquete fuente también tiene dependencias (Build-Depends) completamente distintas de aquellas del paquete binario ya que
-indican las herramientas necesarias para compilar el software en cuestión y construir su paquete binario. 
+Note que el paquete fuente también tiene dependencias (Build-Depends)
+completamente distintas de aquellas del paquete binario ya que indican las
+herramientas necesarias para compilar el software en cuestión y construir su
+paquete binario.
 
---- PRECAUCIÓN Espacios de nombres distintos ---
+========================================
+PRECAUCIÓN Espacios de nombres distintos
+========================================
 
-Es importante saber que no hay una correspondencia necesaria entre el nombre de un paquete fuente y el de el o los paquetes binarios que genera. Es suficientemente fácil de entender si sabe que cada paquete fuente puede generar varios paquetes binarios. Es por esto que el archivo .dsc tiene los campos Source y Binary para nombrar explícitamente el paquete fuente y almacenar la lista de paquetes binarios que genera, respectivamente.
+Es importante saber que no hay una correspondencia necesaria entre el nombre de
+un paquete fuente y el de el o los paquetes binarios que genera. Es
+suficientemente fácil de entender si sabe que cada paquete fuente puede generar
+varios paquetes binarios. Es por esto que el archivo .dsc tiene los campos
+Source y Binary para nombrar explícitamente el paquete fuente y almacenar la
+lista de paquetes binarios que genera, respectivamente.
 
---- CULTURA Porqué dividir en varios paquetes ---
+=========================================
+CULTURA Porqué dividir en varios paquetes
+=========================================
 
-Frecuentemente un paquete fuente (para un programa dado) puede generar varios paquetes binarios. La división es justificada por la posibilidad de utilizar (partes de) el mismo en varios contextos. Si consideramos una biblioteca compartida, ésta puede ser instalada para hacer funcionar una aplicación (por ejemplo, libc6) o para desarrollar un nuevo programa (libc6-dev sería el paquete correcto). Encontramos la misma lógica para servicios cliente/servidor donde deseamos instalar el servidor en una máquina y la parte cliente en otras (este es el caso, por ejemplo, de openssh-server y openssh-client).
-Tan frecuentemente también se provee la documentación en un paquete dedicado: el usuario puede instalarla independientemente del software y puede elegir eliminarla en cualquier momento para ahorrar espacio en disco. Adicionalmente, esto también ahorra espacio en disco en las réplicas Debian ya que todas las arquitecturas comparten los paquetes de documentación (en lugar de tener la documentación duplicada en los paquetes para cada arquitectura).
+Frecuentemente un paquete fuente (para un programa dado) puede generar varios
+paquetes binarios. La división es justificada por la posibilidad de utilizar
+(partes de) el mismo en varios contextos. Si consideramos una biblioteca
+compartida, ésta puede ser instalada para hacer funcionar una aplicación
+(por ejemplo, libc6) o para desarrollar un nuevo programa (libc6-dev sería el
+paquete correcto). Encontramos la misma lógica para servicios cliente/servidor
+donde deseamos instalar el servidor en una máquina y la parte cliente en otras
+(este es el caso, por ejemplo, de openssh-server y openssh-client). Tan
+frecuentemente también se provee la documentación en un paquete dedicado: el
+usuario puede instalarla independientemente del software y puede elegir
+eliminarla en cualquier momento para ahorrar espacio en disco. Adicionalmente,
+esto también ahorra espacio en disco en las réplicas Debian ya que todas las
+arquitecturas comparten los paquetes de documentación (en lugar de tener la
+documentación duplicada en los paquetes para cada arquitectura).
 
---- PERSPECTIVA Diferentes formatos de paquetes fuente ---
+==================================================
+PERSPECTIVA Diferentes formatos de paquetes fuente
+==================================================
 
-Originalmente sólo existía un formato de paquete fuente. Este es el formato 1.0 que asocia un compendio .orig.tar.gz con un parche de «debianización» .diff.gz (también hay una variante que consiste de un simple compendio .tar.gz, utilizada automáticamente si hay disponible un archivo .orig.tar.gz).
-Desde Debian Squeeze, los desarrolladores Debian tienen la opción de utilizar nuevos formatos que corrigen varios problemas del formato histórico. El formato 3.0 (quilt) puede combinar varios compendios de origen en el mismo paquete fuente: puede incluir compendios .orig-componente.tar.gz además del .orig.tar.gz usual. Esto es útil con el software distribuido desde origen en varios componentes pero para el que se desea sólo un paquete fuente. Estos compendios también puede comprimirse con bzip2 o xz en lugar de gzip, lo que ahorra espacio en disco y recursos de red. Finalmente, se reemplaza el parche monolítico .diff.gz por un compendio .debian.tar.gz que contiene las instrucciones de compilación y un conjunto de parches al origen contribuidos por el desarrollador del paquete. Estos últimos son registrados en un formato compatible con quilt — una herramienta que facilita la gestión de una serie de parches. 
+Originalmente sólo existía un formato de paquete fuente. Este es el formato 1.0
+que asocia un compendio .orig.tar.gz con un parche de «debianización» .diff.gz
+(también hay una variante que consiste de un simple compendio .tar.gz, utilizada
+automáticamente si hay disponible un archivo .orig.tar.gz).
 
---- HERRAMIENTA Descomprimiendo un paquete fuente ---
+Desde Debian Squeeze, los desarrolladores Debian tienen la opción de utilizar
+nuevos formatos que corrigen varios problemas del formato histórico. El formato
+3.0 (quilt) puede combinar varios compendios de origen en el mismo paquete
+fuente: puede incluir compendios .orig-componente.tar.gz además del .orig.tar.gz
+usual. Esto es útil con el software distribuido desde origen en varios
+componentes pero para el que se desea sólo un paquete fuente. Estos compendios
+también puede comprimirse con bzip2 o xz en lugar de gzip, lo que ahorra espacio
+en disco y recursos de red. Finalmente, se reemplaza el parche monolítico
+.diff.gz por un compendio .debian.tar.gz que contiene las instrucciones de
+compilación y un conjunto de parches al origen contribuidos por el desarrollador
+del paquete. Estos últimos son registrados en un formato compatible con quilt —
+una herramienta que facilita la gestión de una serie de parches.
 
-Si tiene un paquete fuente, puede utilizar dpkg-source (del paquete role="pkg") para descomprimirlo:
+=============================================
+HERRAMIENTA Descomprimiendo un paquete fuente
+=============================================
+
+Si tiene un paquete fuente, puede utilizar dpkg-source (del paquete role="pkg")
+para descomprimirlo:
 
 $ dpkg-source -x package_0.7-1.dsc
 
-########################
-##### Dependencias #####
-########################
+============
+Dependencias
+============
 
-Una dependencia es un paquete accesorio requerido por un paquete instalador para hacer funcionar correctamente un programa después de instalarlo.
-Generalmente son bibliotecas de código o programas accesorios. Un programa puede tener múltiples dependencias, las cuales no siempre vienen instaladas
-en la distribución Linux elegida por diversas razones, por no ser necesarias, por aumentar demasiado el tamaño del archivo ISO, etc. Algunas distros, por ser una
-distribuciones minimalistas, de tamaño ligero, encaminan con frecuencia al usuario  tener que buscar dependencias de programas que no se suelen ofrecer en los
-repositorios o en los foros, por eso el administrador de paquetes incluye una herramienta para detectar y descargar las dependencias junto con el programa principal.
-Aunque es posible ofrecer un solo paquete que incluya el programa principal más las dependencias, muchos compiladores y desarrolladores optan por ofrecer esos
-componentes por separado para facilitar la descarga a través de conexiones lentas, o para darle al usuario la opción de instalar sólo los componentes que sabe
-que están ausentes en su sistema. Por eso, siempre es recomendable investigar cuáles son las dependencias del programa que se desea instalar, así como verificar
-que se tiene suficiente espacio para la instalación. No todas las dependencias son absolutamente necesarias, algunas sólo dan soporte adicional para ciertas
-funciones o efectos visuales que extienden las características del programa en sí mismo.
+Una dependencia es un paquete accesorio requerido por un paquete instalador para
+hacer funcionar correctamente un programa después de instalarlo.
 
-Muchas veces cuando ejecutamos un programa, pero más frecuente cuando estamos instalando algún programa en Unix/Linux nos podemos enfrentar
-con errores de dependencias de librerías. Esto se da por diversos motivos pero hay un comando que nos indica las dependencias de librerías
-que tiene cada programa, el comando es ldd.
+Generalmente son bibliotecas de código o programas accesorios. Un programa puede
+tener múltiples dependencias, las cuales no siempre vienen instaladas en la
+distribución Linux elegida por diversas razones, por no ser necesarias, por
+aumentar demasiado el tamaño del archivo ISO, etc. Algunas distros, por ser una
+distribuciones minimalistas, de tamaño ligero, encaminan con frecuencia al
+usuario  tener que buscar dependencias de programas que no se suelen ofrecer en
+los repositorios o en los foros, por eso el administrador de paquetes incluye
+una herramienta para detectar y descargar las dependencias junto con el programa
+principal.
 
-ldd es un comando que enlista las dependencias dinámicas de archivos ejecutables o de objetos compartidos.
+Aunque es posible ofrecer un solo paquete que incluya el programa principal más
+las dependencias, muchos compiladores y desarrolladores optan por ofrecer esos
+componentes por separado para facilitar la descarga a través de conexiones
+lentas, o para darle al usuario la opción de instalar sólo los componentes que
+sabe que están ausentes en su sistema. Por eso, siempre es recomendable
+investigar cuáles son las dependencias del programa que se desea instalar, así
+como verificar que se tiene suficiente espacio para la instalación. No todas las
+dependencias son absolutamente necesarias, algunas sólo dan soporte adicional
+para ciertas funciones o efectos visuales que extienden las características del
+programa en sí mismo.
 
-Si el archivo es un archivo ejecutable o un objeto compartido, ldd enlista las rutas de todas las librerías u objetos compartidos que son cargados
-cuando es ejecutado el programa o cuando es cargado el objeto compartido. Si los objetos compartidos no tuvieran permisos de ejecución ldd enviará
-un mensaje de advertencia antes de intentar procesar el archivo. Ejemplo:
+Muchas veces cuando ejecutamos un programa, pero más frecuente cuando estamos
+instalando algún programa en Unix/Linux nos podemos enfrentar con errores de
+dependencias de librerías. Esto se da por diversos motivos pero hay un comando
+que nos indica las dependencias de librerías que tiene cada programa, el comando
+es ldd.
+
+ldd es un comando que enlista las dependencias dinámicas de archivos ejecutables
+o de objetos compartidos.
+
+Si el archivo es un archivo ejecutable o un objeto compartido, ldd enlista las
+rutas de todas las librerías u objetos compartidos que son cargados cuando es
+ejecutado el programa o cuando es cargado el objeto compartido. Si los objetos
+compartidos no tuvieran permisos de ejecución ldd enviará un mensaje de
+advertencia antes de intentar procesar el archivo. Ejemplo:
 
 $ ldd /usr/bin/python2.7 // Ver las dependencias de una librería o ejecutable
 

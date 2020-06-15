@@ -1015,3 +1015,33 @@ en que PHP funciona como módulo de servidor, esto sucede únicamente cuando se
 inicia el servidor. En las versiones CGI y CLI, esto ocurre en cada ejecución.
 
 La ubicaión del fichero es /etc/php5/apache2/php.ini
+
+================================
+Instalar y configurar phpMyAdmin
+================================
+
+Instalar
+
+# aptitude install phpmyadmin
+
+Acceder al servicio
+
+http://localhost/phpmyadmin
+
+After the installation has completed, add phpmyadmin to the apache
+configuration.**
+
+Agregar en este archivo la configuracion de abajo
+
+# sudo nano /etc/apache2/apache2.conf
+
+Add the phpmyadmin config to the file.
+
+Esta íinea se agrega al final de la configuracion del apache para que reconozca
+el phpMyAdmin
+
+Include /etc/phpmyadmin/apache.conf
+
+xxx mysql, apache etc... restart
+
+/etc/init.d/xxx restart
