@@ -7,8 +7,8 @@ Apache HTTP Server
 ==================
 
 Servidor HTTP Apache es un servidor web HTTP de código abierto, para plataformas
-Unix (BSD, GNU/Linux, etc.), Microsoft Guindows, Macintosh y otras, que implementa
-el protocolo HTTP/1.1
+Unix (BSD, GNU/Linux, etc.), Microsoft Guindows, Macintosh y otras, que
+implementa el protocolo HTTP/1.1
 
 ===========
 Instalación
@@ -16,11 +16,12 @@ Instalación
 
 # apt-get install apache2
 
-Para comprobar la correcta instalación de apache abriremos el navegador web de la máquina
-y escribiremos localhost, 127.0.0.1 o la IP de la máquina si está conectado a una red local.
-Cualquiera de las tres opciones nos sirve, y tecleamos enter, si está bien instalado nos
-aparecerá una página que indica que apache está funcionando, a su vez, esa instalación creara
-la siguiente ruta en la máquina:
+Para comprobar la correcta instalación de apache abriremos el navegador web de
+la máquina y escribiremos localhost, 127.0.0.1 o la IP de la máquina si está
+conectado a una red local. Cualquiera de las tres opciones nos sirve, y
+tecleamos enter, si está bien instalado nos aparecerá una página que indica que
+apache está funcionando, a su vez, esa instalación creara la siguiente ruta en
+la máquina:
 
 /var/www/
 
@@ -33,10 +34,11 @@ Dependiendo de la versión de Apache que se haya instalado será uno u otro.
 En este directorio es donde podemos guardar nuestros proyectos, ficheros, etc.
 Que queremos que sean servidos por Apache en la web.
 
-http://192.xxx.xx.xxx/ // La direccion ip sirve para acceder al directorio del servidor
+http://192.xxx.xx.xxx/ // La direccion ip sirve para acceder al directorio del
+servidor.
 
-127.0.0.1:80 // Apache cuando está en ejecucion siempre está escuchando por el puerto 80
-por lo que si visitamos 127.0.0.1:80 accederemos al servicio
+127.0.0.1:80 // Apache cuando está en ejecucion siempre está escuchando por el
+puerto 80 por lo que si visitamos 127.0.0.1:80 accederemos al servicio.
 
 Sus archivos e configuracion están en etc/apache2
 
@@ -70,72 +72,94 @@ Breve repaso por algunos de sus ficheros:
 
 apache2.conf
 
-Este es el archivo de configuración principal del servidor. Desde aquí se pueden configurar
-la mayoría de las opciones con las que cuenta apache para el servicio. Lee y ordena el resto
-de los archivos de configuración cuando arranca el servidor. El propio archivo "apache2.conf"
-contiene instrucciones y explicación de cada archivo y directorio del servidor.
+Este es el archivo de configuración principal del servidor. Desde aquí se pueden
+configurar la mayoría de las opciones con las que cuenta apache para el
+servicio. Lee y ordena el resto de los archivos de configuración cuando arranca
+el servidor. El propio archivo "apache2.conf" contiene instrucciones y
+explicación de cada archivo y directorio del servidor.
 
 ports.conf
 
-Este archivo especifica los puertos de escucha de los hosts virtuales. Se agrega al archivo de
-configuración "apache2.conf". Se agregan tantos "Listen numpuerto" como puertos queramos que
-escuche nuestro servidor.
+Este archivo especifica los puertos de escucha de los hosts virtuales. Se agrega
+al archivo de configuración "apache2.conf". Se agregan tantos "Listen numpuerto"
+como puertos queramos que escuche nuestro servidor.
 
 mods-enabled
 
-Contiene configuraciones de módulos opcionales del servidor (seguridad, speedy, ssl, multiproceso)
-y los módulos en sí mismos.
+Contiene configuraciones de módulos opcionales del servidor (seguridad, speedy,
+ssl, multiproceso) y los módulos en sí mismos.
 
 conf-enabled
 
-Fragmentos de configuración global. Almacena archivos ".conf" que contienen parte de la configuración
-de apache. Contiene enlaces simbólicos a los ficheros de conf-available.
+Fragmentos de configuración global. Almacena archivos ".conf" que contienen
+parte de la configuración de apache. Contiene enlaces simbólicos a los ficheros
+de conf-available.
 
 sites-availables
 
-Es donde definiremos los host virtuales del servidor Apache, es donde configuramos
-los accesos, puertos, y otras cosas relativas nuestros proyectos, que queremos que sean servidos
-en la web por apache.
+Es donde definiremos los host virtuales del servidor Apache, es donde
+configuramos los accesos, puertos, y otras cosas relativas nuestros proyectos,
+que queremos que sean servidos en la web por apache.
 
 sites-enabled
 
-En el hay enlaces simbólicos a los ficheros de configuracion que están en sites-availables.
+En el hay enlaces simbólicos a los ficheros de configuracion que están en
+sites-availables.
 
 ==============================
 Comandos para gestionar apache
 ==============================
 
-$ chmod -R 777 /var/www/html // Cambiar los permisos de /var/www puesto que solo tiene permisos root, 
--R para que los permisos se hagan de forma recursiva, esto se hace porque al pegar ficheros
-o carpetas estas no tiene los permisos de lectura/escritura necesarios.
+$ chmod -R 777 /var/www/html // Cambiar los permisos de /var/www puesto que solo
+tiene permisos root, -R para que los permisos se hagan de forma recursiva, esto
+se hace porque al pegar ficheros o carpetas estas no tiene los permisos de
+lectura/escritura necesarios.
 
-$ sudo service apache2 restart // Restart apache para guardar los cambios.
+Restart apache para guardar los cambios.
 
-$ sudo service apache2 stop // Detener el servicio de apache.
+$ sudo service apache2 restart
 
-$ sudo service apache2 status // Ver el estado del servicio
+Detener el servicio de apache.
 
-$ sudo service apache2 reload // Para recargar la configuración del servicio de Apache.
+$ sudo service apache2 stop
 
-$ sudo service apache2 force-reload // Forzar la recargar de configuración del servicio.
+Ver el estado del servicio.
+
+$ sudo service apache2 status
+
+Para recargar la configuración del servicio de Apache.
+
+$ sudo service apache2 reload
+
+Forzar la recargar de configuración del servicio.
+
+$ sudo service apache2 force-reload
 
 ==============
 log de accesos
 ==============
 
-$ sudo tail -f /var/log/apache2/access.log // Para ver el log de acceso via Web al servidor Web Apache.
+Para ver el log de acceso via Web al servidor Web Apache.
+
+$ sudo tail -f /var/log/apache2/access.log
 
 Ejemplo de una petición, vista en el log:
 
-ip visitante || fecha y hora || Método de acceso || url visitada || codigo http || codigo de estado || ip + url visitada || navegador usando, SO usado, arquitectura usada en la petición
+ip visitante || fecha y hora || Método de acceso || url visitada || codigo http
+|| codigo de estado || ip + url visitada || navegador usando, SO usado,
+arquitectura usada en la petición
 
-192.168.200.201 - - [31/Aug/2017:14:59:44 -0400] "GET /files/2017/ HTTP/1.1" 200 1287 "http://192.168.200.201/files/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:55.0) Gecko/20100101 Firefox/55.0"
+192.168.200.201 - - [31/Aug/2017:14:59:44 -0400] "GET /files/2017/ HTTP/1.1" 200
+1287 "http://192.168.200.201/files/" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv
+:55.0) Gecko/20100101 Firefox/55.0"
 
 ==============
 Log de errores
 ==============
 
-$ sudo tail -f /var/log/apache2/error.log // Para depurar posibles errores del servidor.
+Para depurar posibles errores del servidor.
+
+$ sudo tail -f /var/log/apache2/error.log
 
 =============
 Borrar apache
@@ -149,7 +173,8 @@ Borrar apache
 Ejemplo de configuración para un sitio de pruebas
 =================================================
 
-Creamos un fichero prueba.conf en /etc/apache2/sites/availables con el siguiente contenido:
+Creamos un fichero prueba.conf en /etc/apache2/sites/availables con el siguiente
+contenido:
 
 # touch prueba.conf
 
@@ -162,14 +187,23 @@ Creamos un fichero prueba.conf en /etc/apache2/sites/availables con el siguiente
 
 ---
 
-ServerAdmin // Es una opción obligatoria e indica una dirección de correo electrónico
+Es una opción obligatoria e indica una dirección de correo electrónico
 del responsable del sitio.
 
-ServerName // Aquí anotamos el FQDN vinculado al sitio, es decir, el nombre de dominio que luego configuraremos en el servidor BIND9
+ServerAdmin
 
-DocumentRoot // Apunta al directorio donde tenemos nuestro proyecto.
+Aquí anotamos el FQDN vinculado al sitio, es decir, el nombre de dominio que
+luego configuraremos en el servidor BIND9.
 
-DirectoryIndex // Indica el archivo de inicio definido por defecto.
+ServerName
+
+Apunta al directorio donde tenemos nuestro proyecto.
+
+DocumentRoot
+
+Indica el archivo de inicio definido por defecto.
+
+DirectoryIndex
 
 Ahora crearemos un enlace simbólico de esta configuración a sites-enabled
 
@@ -189,33 +223,36 @@ El archivo .htaccess
 
 ¿Qué es el archivo .htaccess?
 
-El archivo .htaccess (hypertext access) es un archivo de configuración muy popular en servidores
-web basados en Apache que permite a los administradores aplicar distintas políticas de acceso a
-directorios o archivos con la idea de mejorar la seguridad de su página web y, por tanto, evitar
-acceso a terceros. Cuando visitamos una página web cualquiera y pulsamos sobre un enlace o queremos
-descargarnos un archivo, en el proceso de trámite de la petición, el servidor web consulta el
-archivo .htaccess con la idea de aplicar las directivas y restricciones definidas antes de cursar
-la petición y, lógicamente, cancelar peticiones que se encuentren prohibidas dentro de este
-archivo (cuyo ámbito de actuación es el directorio en el que se encuentra y todos los
-subdirectorios que se encuentran por debajo de éste).
+El archivo .htaccess (hypertext access) es un archivo de configuración muy
+popular en servidores web basados en Apache que permite a los administradores
+aplicar distintas políticas de acceso a directorios o archivos con la idea de
+mejorar la seguridad de su página web y, por tanto, evitar acceso a terceros.
+Cuando visitamos una página web cualquiera y pulsamos sobre un enlace o queremos
+descargarnos un archivo, en el proceso de trámite de la petición, el servidor
+web consulta el archivo .htaccess con la idea de aplicar las directivas y
+restricciones definidas antes de cursar la petición y, lógicamente, cancelar
+peticiones que se encuentren prohibidas dentro de este archivo (cuyo ámbito de
+actuación es el directorio en el que se encuentra y todos los subdirectorios que
+se encuentran por debajo de éste).
 
-¿Y qué podremos controlar con este archivo? Gracias a este archivo podremos configurar
-nuestro servidor web para hacerlo algo más seguro pero, además, también podremos realizar
-redirecciones, crear mensajes de error personalizados, restringir el acceso a carpetas, evitar
-el listado de directorios de nuestro servidor o permitir el uso de nuestro dominio sin
-usar las famosas "www".
+¿Y qué podremos controlar con este archivo? Gracias a este archivo podremos
+configurar nuestro servidor web para hacerlo algo más seguro pero, además,
+también podremos realizar redirecciones, crear mensajes de error personalizados,
+restringir el acceso a carpetas, evitar el listado de directorios de nuestro
+servidor o permitir el uso de nuestro dominio sin usar las famosas "www".
 
 ================================================
 Evitar el listado del contenido de un directorio
 ================================================
 
-Uno de los primeros indicadores que nos pueden alertar de una configuración insegura
-de un servidor web es poner en la barra de direcciones del navegador una url que apunte
-a un directorio del servidor (http://www.dominio.es/images) y que el navegador nos muestre
-un listado de las carpetas y archivos que ahí se alojan. Salvo que lo tengamos pensado así
-de manera expresa, deberíamos evitar que este tipo de cosas sucedan puesto que estamos
-abriendo el contenido completo de nuestra web a terceros y, precisamente, para controlar
-este tipo de situaciones podemos usar las directivas DirectoryIndex u -Indexes para definir
+Uno de los primeros indicadores que nos pueden alertar de una configuración
+insegura de un servidor web es poner en la barra de direcciones del navegador
+una url que apunte a un directorio del servidor (http://www.dominio.es/images) y
+que el navegador nos muestre un listado de las carpetas y archivos que ahí se
+alojan. Salvo que lo tengamos pensado así de manera expresa, deberíamos evitar
+que este tipo de cosas sucedan puesto que estamos abriendo el contenido completo
+de nuestra web a terceros y, precisamente, para controlar este tipo de
+situaciones podemos usar las directivas DirectoryIndex u -Indexes para definir
 índices que eviten listar el contenido de una carpeta.
 
 ========================================
@@ -226,25 +263,28 @@ Si bien es importante evitar el acceso a los directorios, también lo es protege
 archivos considerados críticos, como por ejemplo los archivos de configuración.
 Si bien usar un gestor de contenidos web nos facilita mucho las cosas, éstos
 responden a esquemas fijos que se repiten en cada instalación y, por tanto, los
-archivos de configuración se encuentran en ubicaciones muy concretas y conocidas.
+archivos de configuración se encuentran en ubicaciones muy concretas y
+conocidas.
 
-Si pensamos un momento en WordPress, el archivo wp-config.php (que se encuentra en el raíz)
-almacena la dirección de nuestra base de datos, la base de datos que usamos así como el
-usuario y la contraseña, una información de gran valor para un atacante externo. Para evitar
-el acceso a este tipo de archivos "singulares"” podremos valernos de reglas como la
-siguiente para evitar que alguien acceda pueda acceder a nuestro archivo:
+Si pensamos un momento en WordPress, el archivo wp-config.php (que se encuentra
+en el raíz) almacena la dirección de nuestra base de datos, la base de datos que
+usamos así como el usuario y la contraseña, una información de gran valor para
+un atacante externo. Para evitar el acceso a este tipo de archivos "singulares"”
+podremos valernos de reglas como la siguiente para evitar que alguien acceda
+pueda acceder a nuestro archivo:
 
 <files wp-config.php>
 order allow,deny
 deny from all
 </files>
 
-Otro detalle a tener en cuenta es la protección de carpetas críticas a las que nadie, salvo un
-administrador, debería poder entrar. ¿Y de qué tipo de carpetas estamos hablando? Si
-retomamos el ejemplo de WordPress, nadie debería poder entrar en la carpeta de los
-plugins o en la carpeta uploads y así evitar que alguien recopile más información de
-la cuenta. ¿Y qué podemos hacer en estos casos? Una buena forma, y elegante, de evitar
-el acceso es forzar una redirección hacia nuestra página principal siguiendo esquemas como:
+Otro detalle a tener en cuenta es la protección de carpetas críticas a las que
+nadie, salvo un administrador, debería poder entrar. ¿Y de qué tipo de carpetas
+estamos hablando? Si retomamos el ejemplo de WordPress, nadie debería poder
+entrar en la carpeta de los plugins o en la carpeta uploads y así evitar que
+alguien recopile más información de la cuenta. ¿Y qué podemos hacer en estos
+casos? Una buena forma, y elegante, de evitar el acceso es forzar una
+redirección hacia nuestra página principal siguiendo esquemas como:
 
 Redirect 301 /wp-content/index.php http://www.tudominio.com/
 Redirect 301 /wp-content/themes/index.html http://www.tudominio.com/
@@ -253,28 +293,32 @@ Redirect 301 /wp-content/themes/index.html http://www.tudominio.com/
 Evitar el hotlink
 =================
 
-Dependiendo del tipo de licencia que utilicemos a la hora de publicar nuestros contenidos
-o si, por ejemplo, queremos evitar que las fotos que colgamos acaben siendo utilizadas en
-otras páginas, quizás nos interese aplicar algún tipo de regla que evite que alguien pueda
-insertar una imagen que nosotros estamos hospedando (forzando así a que, al menos, se la
-tengan que descargar y subir a su servidor).
+Dependiendo del tipo de licencia que utilicemos a la hora de publicar nuestros
+contenidos o si, por ejemplo, queremos evitar que las fotos que colgamos acaben
+siendo utilizadas en otras páginas, quizás nos interese aplicar algún tipo de
+regla que evite que alguien pueda insertar una imagen que nosotros estamos
+hospedando (forzando así a que, al menos, se la tengan que descargar y subir a
+su servidor).
 
 ===================================================
 Restringir el acceso por IP y luchar contra el spam
 ===================================================
 
-Si nuestro blog es víctima de algún tipo de ataque y tenemos localizado el origen
-(una dirección IP o un rango de direcciones), podemos aplicar medidas estrictas de
-seguridad en el archivo .htaccess para restringir el acceso y bloquear cualquier
-tipo de petición que provenga de las direcciones IP que agreguemos a esta lista negra.
+Si nuestro blog es víctima de algún tipo de ataque y tenemos localizado el
+origen (una dirección IP o un rango de direcciones), podemos aplicar medidas
+estrictas de seguridad en el archivo .htaccess para restringir el acceso y
+bloquear cualquier tipo de petición que provenga de las direcciones IP que
+agreguemos a esta lista negra.
 
-Además, si somos algo habilidosos y no tenemos ninguna protección contra el spam (Askimet es
-una buena opción en WordPress), también podríamos definir reglas que eviten a ciertos usuarios
-(identificados por su dirección IP o por un rango de éstas) a comentar en nuestro blog
-(bloqueándoles el acceso a la opción de publicar comentarios).
+Además, si somos algo habilidosos y no tenemos ninguna protección contra el spam
+(Askimet es una buena opción en WordPress), también podríamos definir reglas que
+eviten a ciertos usuarios (identificados por su dirección IP o por un rango de
+éstas) a comentar en nuestro blog (bloqueándoles el acceso a la opción de
+publicar comentarios).
+
 ¿Cómo pasamos de la teoría a la práctica?
 
-Un buen archivo .htaccess combinado con unos permisos adecuados en nuestros archivos
-son una buena barrera de defensa contra ataques y accesos no autorizados, si bien la
-seguridad total no se puede garantizar, al menos se lo pondremos algo más difícil a
-aquéllos que no tienen muy buenas intenciones.
+Un buen archivo .htaccess combinado con unos permisos adecuados en nuestros
+archivos son una buena barrera de defensa contra ataques y accesos no
+autorizados, si bien la seguridad total no se puede garantizar, al menos se lo
+pondremos algo más difícil a aquéllos que no tienen muy buenas intenciones.

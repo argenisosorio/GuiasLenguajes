@@ -486,7 +486,8 @@ siguiente manera:
 
 -Uno o más ficheros fuente .c o .cpp con el código de nuestras funciones.
 
--Uno o más ficheros de cabecera, las librerías .h con los tipos (typedefs, structs y enums) y prototipos de las funciones que queramos que se puedan utilizar.
+-Uno o más ficheros de cabecera, las librerías .h con los tipos (typedefs,
+structs y enums) y prototipos de las funciones que queramos que se puedan utilizar.
 
 ===============================
 Librerias estáticas y dinámicas

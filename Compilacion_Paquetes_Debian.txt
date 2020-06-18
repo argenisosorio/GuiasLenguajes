@@ -385,26 +385,33 @@ ejecutado el programa o cuando es cargado el objeto compartido. Si los objetos
 compartidos no tuvieran permisos de ejecución ldd enviará un mensaje de
 advertencia antes de intentar procesar el archivo. Ejemplo:
 
-$ ldd /usr/bin/python2.7 // Ver las dependencias de una librería o ejecutable
+Ver las dependencias de una librería o ejecutable
 
-########################
-##### Metapaquetes #####
-########################
+$ ldd /usr/bin/python2.7
 
-Un metapaquete es un como un paquete que enlaza varios paquetes, es decir, es un paquete que contiene referencias a
-varios paquetes pero no realiza ninguna funcionalidad.
+============
+Metapaquetes
+============
 
-Los metapaquetes sirven para poder instalar fácilmente varios paquetes con una sola orden. Estos paquetes guardan entre
-sí una cierta coherencia.
+Un metapaquete es un como un paquete que enlaza varios paquetes, es decir, es un
+paquete que contiene referencias a varios paquetes pero no realiza ninguna
+funcionalidad.
+
+Los metapaquetes sirven para poder instalar fácilmente varios paquetes con una
+sola orden. Estos paquetes guardan entre sí una cierta coherencia.
 
 El funcionamiento de un metapaquete es el siguiente:
 
-Imaginemos que tenemos el metapaquete A, que contiene a B, C , D y E. Cuando instalamos el metapaquete A, lo que en realidad estamos instalando
-son los paquetes B, C, D y E.
+Imaginemos que tenemos el metapaquete A, que contiene a B, C , D y E. Cuando
+instalamos el metapaquete A, lo que en realidad estamos instalando son los
+paquetes B, C, D y E.
 
---- Estructura de un metapaquete ---
+============================
+Estructura de un metapaquete
+============================
 
-Tal como los paquetes comunes, los metapaquetes deben ser generados a partir de un código fuente basado en las políticas de Debian.
+Tal como los paquetes comunes, los metapaquetes deben ser generados a partir de
+un código fuente basado en las políticas de Debian.
 
 metapaquete
     |-- AUTHORS                (opcional)
@@ -429,84 +436,165 @@ metapaquete
 
 La carpeta debian contiene los siguientes archivos:
 
--changelog: Lista cronológica de versiones del metapaquete, que además contiene una descripción significativa de los cambios hechos en cada una de ellas.
--compat: versión de debhelper utilizada.
--control: El archivo más importante en un metapaquete. Especifica las dependencias, el nombre del paquete, el responsable (mantenedor),
-descripción, entre otros campos.
--copyright: Declaración de derechos de autor (si los hubiere) y licencia de distribución del paquete.
--postinst, postrm, preinst, prerm: Los scripts del mantenedor permiten configurar o modificar partes del sistema en diferentes momentos de la instalación del paquete.
--rules: El archivo rules especifica las reglas para el empaquetado de la aplicación.
--source/format: Especifica el formato del código fuente, el más recomendado es 3.0 (quilt).
+-changelog: Lista cronológica de versiones del metapaquete, que además contiene
+una descripción significativa de los cambios hechos en cada una de ellas.
 
-Los siguientes son archivos opcionales que pueden o no ser incluidos a gusto del desarrollador. Normalmente se incluyen, pero en el caso de los
-metapaquetes no hay código que compilar, ni copiar dentro del paquete (que es para lo que sirve el Makefile), ni tampoco hay
-código que documentar o describir.
+-compat: versión de debhelper utilizada.
+
+-control: El archivo más importante en un metapaquete. Especifica las
+dependencias, el nombre del paquete, el responsable (mantenedor), descripción,
+entre otros campos.
+
+-copyright: Declaración de derechos de autor (si los hubiere) y licencia de
+distribución del paquete.
+
+-postinst, postrm, preinst, prerm: Los scripts del mantenedor permiten
+configurar o modificar partes del sistema en diferentes momentos de la
+instalación del paquete.
+
+-rules: El archivo rules especifica las reglas para el empaquetado de la
+aplicación.
+
+-source/format: Especifica el formato del código fuente, el más recomendado es
+3.0 (quilt).
+
+Los siguientes son archivos opcionales que pueden o no ser incluidos a gusto del
+desarrollador. Normalmente se incluyen, pero en el caso de los metapaquetes no
+hay código que compilar, ni copiar dentro del paquete (que es para lo que sirve
+el Makefile), ni tampoco hay código que documentar o describir.
 
 -AUTHORS: Contiene el o los autores del código fuente.
--COPYING: Declaración de derechos de autor (si los hubiere) y licencia de distribución del código fuente.
--LICENSE: Una copia exacta de la licencia con que se distribuye el código fuente.
--Makefile: Son el conjunto de instrucciones necesarias para que el código fuente se organice, (compile si es necesario) e instale en
-el sistema. También contiene instrucciones para limpiar y desinstalar.
--README: Descripción detallada del software. Se responden preguntas como: ¿Para que sirve? ¿Cómo se instala? ¿Cómo se desinstala? ¿Donde consigo ayuda?
+
+-COPYING: Declaración de derechos de autor (si los hubiere) y licencia de
+distribución del código fuente.
+
+-LICENSE: Una copia exacta de la licencia con que se distribuye el código
+fuente.
+
+-Makefile: Son el conjunto de instrucciones necesarias para que el código fuente
+se organice, (compile si es necesario) e instale en el sistema. También contiene
+instrucciones para limpiar y desinstalar.
+
+-README: Descripción detallada del software. Se responden preguntas como: ¿Para
+que sirve? ¿Cómo se instala? ¿Cómo se desinstala? ¿Donde consigo ayuda?
+
 -THANKS: Agradecimientos a las personas que contribuyeron contigo.
+
 -TODO: Cosas que quisieras hacer en el futuro con tu software.
 
-##### Fundamentos de la compilacion de programas en GNU - Linux #####
+=========================================================
+Fundamentos de la compilacion de programas en GNU - Linux
+=========================================================
 
+===================
 ¿Qué es "compilar"?
+===================
 
-Compilar es transformar el código fuente (código escrito en un determinado lenguaje de programación, por ejemplo C, C++, etc) en un programa ejecutable para su funcionamiento mediante el uso del procesador para la conversión del lenguaje usado para generar el código a el binario y ensamblador. También se le suele llamar empaquetamiento.
+Compilar es transformar el código fuente (código escrito en un determinado
+lenguaje de programación, por ejemplo C, C++, etc) en un programa ejecutable
+para su funcionamiento mediante el uso del procesador para la conversión del
+lenguaje usado para generar el código a el binario y ensamblador. También se le
+suele llamar empaquetamiento.
 
+================
 make y makefiles
+================
 
-Make es una herramienta de gestión de dependencias, típicamente, las que existen entre los archivos que componen el código fuente de un programa, para dirigir su recompilación o "generación" automáticamente. Su función básica consiste en determinar automáticamente qué partes de un programa requieren ser recompiladas y ejecutar los comandos necesarios para hacerlo, también lo es que Make puede usarse en cualquier escenario en el que se requiera, de alguna forma, actualizar automáticamente un conjunto de archivos a partir de otro, cada vez que éste cambie.
+Make es una herramienta de gestión de dependencias, típicamente, las que existen
+entre los archivos que componen el código fuente de un programa, para dirigir su
+recompilación o "generación" automáticamente. Su función básica consiste en
+determinar automáticamente qué partes de un programa requieren ser recompiladas
+y ejecutar los comandos necesarios para hacerlo, también lo es que Make puede
+usarse en cualquier escenario en el que se requiera, de alguna forma, actualizar
+automáticamente un conjunto de archivos a partir de otro, cada vez que éste
+cambie.
 
-Por defecto lee las instrucciones para generar el programa u otra acción del fichero makefile. Las instrucciones escritas en este fichero se llaman dependencias.
+Por defecto lee las instrucciones para generar el programa u otra acción del
+fichero makefile. Las instrucciones escritas en este fichero se llaman
+dependencias.
 
-La herramienta make se usa para las labores de creación de fichero ejecutable o programa, para su instalación, la limpieza de los archivos temporales en la creación del fichero, todo ello especificando unos parámetros iniciales (que deben estar en el makefile) al ejecutarlo.
+La herramienta make se usa para las labores de creación de fichero ejecutable o
+programa, para su instalación, la limpieza de los archivos temporales en la
+creación del fichero, todo ello especificando unos parámetros iniciales (que
+deben estar en el makefile) al ejecutarlo.
 
-Además de ser éste su objetivo principal, es utilizado para automatización de otras tareas como la creación de documentos del formato docbook, mantenimiento del sistema, simplemente usando o creando makefiles que hagan estas tareas.
+Además de ser éste su objetivo principal, es utilizado para automatización de
+otras tareas como la creación de documentos del formato docbook, mantenimiento
+del sistema, simplemente usando o creando makefiles que hagan estas tareas.
 
 Estructura de un makefile
 
-Los makefiles son los ficheros de texto que utiliza make para llevar la gestión de la compilación de programas. Se podrían entender como los guiones de la película que quiere hacer make, o la base de datos que informa sobre las dependencias entre las diferentes partes de un proyecto. Todos los Makefiles están ordenados en forma de reglas, especificando qué es lo que hay que hacer para obtener un módulo en concreto. El formato de cada una de esas reglas es el siguiente:
+Los makefiles son los ficheros de texto que utiliza make para llevar la gestión
+de la compilación de programas. Se podrían entender como los guiones de la
+película que quiere hacer make, o la base de datos que informa sobre las
+dependencias entre las diferentes partes de un proyecto. Todos los Makefiles
+están ordenados en forma de reglas, especificando qué es lo que hay que hacer
+para obtener un módulo en concreto. El formato de cada una de esas reglas es el
+siguiente:
 
 objetivo: dependencias
     comandos
 
-En "objetivo" definimos el módulo o programa que queremos crear, un ejecutble o un archivo objeto, después de los dos puntos y en la misma línea podemos definir qué otros módulos o programas son necesarios para conseguir el "objetivo", esas son las dependencias. Por último, en la línea siguiente y sucesivas indicamos los comandos necesarios para llevar esto a cabo. Es muy importante que los comandos estén separados por un tabulador del comienzo de línea.
+En "objetivo" definimos el módulo o programa que queremos crear, un ejecutble o
+un archivo objeto, después de los dos puntos y en la misma línea podemos definir
+qué otros módulos o programas son necesarios para conseguir el "objetivo", esas
+son las dependencias. Por último, en la línea siguiente y sucesivas indicamos
+los comandos necesarios para llevar esto a cabo. Es muy importante que los
+comandos estén separados por un tabulador del comienzo de línea.
 
 juego : ventana.o motor.o bd.o
     gcc –O2 –c juego.c –o juego.o
     gcc –O2 juego.o ventana.o motor.o bd.o –o juego
 
-Para crear "juego" es necesario que se hayan creado "ventana.o", "motor.o" y "bd.o" (típicamente habrá una regla para cada uno de esos ficheros objeto en ese mismo Makefile).
+Para crear "juego" es necesario que se hayan creado "ventana.o", "motor.o" y
+"bd.o" (típicamente habrá una regla para cada uno de esos ficheros objeto en ese
+mismo Makefile).
 
 Comentarios en makefiles
 
-Todo lo que esté escrito desde el carácter "#" hasta el final de la línea será ignorado por make. Las líneas que comiencen por el carácter "#" serán tomadas como líneas en blanco. Es bastante recomendable hacer uso de comentarios para dotar de mayor claridad a los Makefiles. Podemos añadir una cabecera con la fecha, autor y número de versión del fichero, para llevar un control de versiones más eficiente.
+Todo lo que esté escrito desde el carácter "#" hasta el final de la línea será
+ignorado por make. Las líneas que comiencen por el carácter "#" serán tomadas
+como líneas en blanco. Es bastante recomendable hacer uso de comentarios para
+dotar de mayor claridad a los Makefiles. Podemos añadir una cabecera con la
+fecha, autor y número de versión del fichero, para llevar un control de
+versiones más eficiente.
 
 Variables
 
-La forma de definir una variable es indicar el nombre de la variable (típicamente en mayúsculas) y su valor:
+La forma de definir una variable es indicar el nombre de la variable
+(típicamente en mayúsculas) y su valor:
 
 CC = gcc –O2
 
 Comandos de mantenimiento
 
-Es habitual que los ficheros makefile puedan contener otros comandos de mantenimiento, que no generen un fichero en concreto, sino que sirvan para realizar una determinada acción dentro de nuestro proyecto. Normalmente estos comandos suelen tener un objetivo, pero ninguna dependencia. El ejemplo más típico de este tipo de comando es "clean" que incluyen casi la totalidad de makefiles, utilizada para "limpiar" de ficheros ejecutables y ficheros objeto los directorios que haga falta, con el propósito de rehacer todo la próxima vez que se llame a "make":
+Es habitual que los ficheros makefile puedan contener otros comandos de
+mantenimiento, que no generen un fichero en concreto, sino que sirvan para
+realizar una determinada acción dentro de nuestro proyecto. Normalmente estos
+comandos suelen tener un objetivo, pero ninguna dependencia. El ejemplo más
+típico de este tipo de comando es "clean" que incluyen casi la totalidad de
+makefiles, utilizada para "limpiar" de ficheros ejecutables y ficheros objeto
+los directorios que haga falta, con el propósito de rehacer todo la próxima vez
+que se llame a "make":
 
 clean:
     rm –f juego *.o
 
 Reglas implícitas
 
-No todos los objetivos de un makefile tienen por qué tener una lista de comandos asociados para poder realizarse. En ocasiones se definen reglas que sólo indican las dependencias necesarias, y es el propio make quien decide cómo se lograrán cada uno de los objetivos, ejemplo:
+No todos los objetivos de un makefile tienen por qué tener una lista de comandos
+asociados para poder realizarse. En ocasiones se definen reglas que sólo indican
+las dependencias necesarias, y es el propio make quien decide cómo se lograrán
+cada uno de los objetivos, ejemplo:
 
 juego : juego.o
 juego.o : juego.c
 
-Con un Makefile como este, make verá que para generar "juego" es preciso generar previamente "juego.o" y para generar "juego.o" no existen comandos que lo puedan realizar, por lo tanto, make presupone que para generar un fichero objeto basta con compilar su fuente, y para generar el ejecutable final, basta con enlazar el fichero objeto. Así pues, implícitamente ejecuta las siguientes reglas:
+Con un Makefile como este, make verá que para generar "juego" es preciso generar
+previamente "juego.o" y para generar "juego.o" no existen comandos que lo puedan
+realizar, por lo tanto, make presupone que para generar un fichero objeto basta
+con compilar su fuente, y para generar el ejecutable final, basta con enlazar el
+fichero objeto. Así pues, implícitamente ejecuta las siguientes reglas:
 
 cc –c juego.c –o juego.o
 cc juego.o –o juego
@@ -515,20 +603,28 @@ Generando el ejecutable, mediante llamadas al compilador estándar.
 
 Invocando al comando make
 
-Cuando invocamos al comando make desde la línea de comandos, lo primero que se busca es un fichero que se llama "GNUmakefile", si no se encuentra se busca un fichero llamado makefile y si por último no se encontrase, se buscaría el fichero Makefile. Si no se encuentra en el directorio actual ninguno de esos tres ficheros, se producirá un error y make no continuará:
+Cuando invocamos al comando make desde la línea de comandos, lo primero que se
+busca es un fichero que se llama "GNUmakefile", si no se encuentra se busca un
+fichero llamado makefile y si por último no se encontrase, se buscaría el
+fichero Makefile. Si no se encuentra en el directorio actual ninguno de esos
+tres ficheros, se producirá un error y make no continuará:
 
 $ make
-make: *** No se especificó ningún objetivo y no se encontró ningún makefile. Alto.
+
+make: *** No se especificó ningún objetivo y no se encontró ningún makefile.
+Alto.
 
 CMake
 
-Es una herramienta multiplataforma de generación o automatización de código. Se utiliza para ahorrar tiempo y esfuerzo en la compilación de nuestras fuentes.
+Es una herramienta multiplataforma de generación o automatización de código. Se
+utiliza para ahorrar tiempo y esfuerzo en la compilación de nuestras fuentes.
 
 Instalación:
 
 $ sudo apt-get install cmake
 
-Para comprobar que funciona crearemos un directorio llamado compilacion y entramos en el directorio.
+Para comprobar que funciona crearemos un directorio llamado compilacion y
+entramos en el directorio.
 
 debian@debian:~$ mkdir compilacion && cd compilacion
 
@@ -545,19 +641,29 @@ int main () {
 
 Lo guardamos como source.cpp
 
-CMake necesita como entrada un fichero llamado CMakeLists.txt Este fichero contiene un programa que describe qué dependencias deben cumplirse (como un ./configure convencional) y cómo se construye el proyecto (una especie de Makefile de alto nivel).
+CMake necesita como entrada un fichero llamado CMakeLists.txt Este fichero
+contiene un programa que describe qué dependencias deben cumplirse (como un
+./configure convencional) y cómo se construye el proyecto (una especie de
+Makefile de alto nivel).
 
-El lenguaje que se utiliza para crear este programa es propio de CMake, se ejecuta de forma secuencial y su sintaxis es bastante regular y simple.
+El lenguaje que se utiliza para crear este programa es propio de CMake, se
+ejecuta de forma secuencial y su sintaxis es bastante regular y simple.
 
-En el mismo directorio compilacion creamos un fichero CMakeLists.txt con el siguiente contenido:
+En el mismo directorio compilacion creamos un fichero CMakeLists.txt con el
+siguiente contenido:
 
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT(application)
 ADD_EXECUTABLE(executable source.cpp)
 
-Todo el fichero CMakeLists.txt está constituido por comandos que describen tanto las dependencias como la forma de construir el proyecto. También existen estructuras de control (if) y bucles (foreach, while). Gracias a estas estructuras, construir un programa que describa los pormenores de la construcción de un proyecto.
+Todo el fichero CMakeLists.txt está constituido por comandos que describen tanto
+las dependencias como la forma de construir el proyecto. También existen
+estructuras de control (if) y bucles (foreach, while). Gracias a estas
+estructuras, construir un programa que describa los pormenores de la
+construcción de un proyecto.
 
-Ahora creamos dentro del directorio, la carpeta build con el siguientes comandos:
+Ahora creamos dentro del directorio, la carpeta build con el siguientes
+comandos:
 
 $ mkdir build
 
@@ -587,11 +693,13 @@ Que nos mostrara la siguiente salida:
 -- Generating done
 -- Build files have been written to: /home/debian/compilacion
 
-Luego del comando anterior, nuestro directorio /compilacion ahora guarda los ficheros y carpetas:
+Luego del comando anterior, nuestro directorio /compilacion ahora guarda los
+ficheros y carpetas:
 
 debian@debian:~/compilacion$ ls
 
-build  CMakeCache.txt  CMakeFiles  cmake_install.cmake  CMakeLists.txt  Makefile  source.cpp
+build  CMakeCache.txt  CMakeFiles  cmake_install.cmake  CMakeLists.txt  Makefile
+source.cpp
 
 Ejecutamos un:
 
@@ -604,11 +712,13 @@ Scanning dependencies of target executable
 Linking CXX executable executable
 [100%] Built target executable
 
-Si todo esta bien, nos creara un programa ejecutable a partir de source.cpp, entonces, nuestro directorio /compilacion guarda los ficheros y carpetas:
+Si todo esta bien, nos creara un programa ejecutable a partir de source.cpp,
+entonces, nuestro directorio /compilacion guarda los ficheros y carpetas:
 
 debian@debian:~/compilacion$ ls
 
-build  CMakeCache.txt  CMakeFiles  cmake_install.cmake  CMakeLists.txt  executable  Makefile  source.cpp
+build  CMakeCache.txt  CMakeFiles  cmake_install.cmake  CMakeLists.txt
+executable  Makefile  source.cpp
 
 El fichero ejecutable que se creo es executable
 
@@ -616,9 +726,15 @@ Para comprobar que funciona correctamente, escribimos:
 
 debian@debian:~/compilacion$ ./executable
 
-Y nos mostraria el contenido de source.cpp compilado, en este caso, un simple Hola Mundo!
+Y nos mostraria el contenido de source.cpp compilado, en este caso, un simple
+Hola Mundo!
 
-Con cada proyecto descargado que use Cmake tiene un fichero CMakeLists.txt en el que describimos el proyecto utilizando un lenguaje con su propia sintaxis. Con él declaramos dónde están los directorios de inclusión, los ficheros fuente, las librerías de las que depende, los productos que generamos (ejecutables o librerías), etc. Partiendo de esta declaración de proyecto, el script es procesado por CMake y genera los ficheros de compilación.
+Con cada proyecto descargado que use Cmake tiene un fichero CMakeLists.txt en el
+que describimos el proyecto utilizando un lenguaje con su propia sintaxis. Con
+él declaramos dónde están los directorios de inclusión, los ficheros fuente, las
+librerías de las que depende, los productos que generamos (ejecutables o
+librerías), etc. Partiendo de esta declaración de proyecto, el script es
+procesado por CMake y genera los ficheros de compilación.
 
 Otro ejemplo
 
@@ -627,7 +743,8 @@ Dentro de un directorio x creamos el CMakeLists.txt con el siguiente contenido:
 SET(saludo "Hola Mundo")
 MESSAGE(${saludo})
 
-En este ejemplo creamos una variable utilizando SET y accedemos a su contenido con ${variable}.
+En este ejemplo creamos una variable utilizando SET y accedemos a su contenido
+con ${variable}.
 
 Luego ejecutamos:
 
@@ -651,7 +768,9 @@ Hola Mundo
 -- Generating done
 -- Build files have been written to: /x
 
-Las comprobaciones que CMake hace antes del mensaje "Hola Mundo" son las correspondientes para un proyecto programado en C/C++. Por defecto, si no se especifica otro lenguaje, se harán estas comprobaciones.
+Las comprobaciones que CMake hace antes del mensaje "Hola Mundo" son las
+correspondientes para un proyecto programado en C/C++. Por defecto, si no se
+especifica otro lenguaje, se harán estas comprobaciones.
 
 Pruebamos de nuevo el comando anterior:
 
@@ -663,71 +782,105 @@ Hola Mundo
 
 Makefile generado
 
-Por defecto, en sistema UNIX como GNU/Linux, CMake genera un Makefile con diferentes objetivos. Si ejecutamos make para el ejemplo del "Hola Mundo" no pasará nada ya que hasta el momento no se ha creado un programa para compilar proyectos.
+Por defecto, en sistema UNIX como GNU/Linux, CMake genera un Makefile con
+diferentes objetivos. Si ejecutamos make para el ejemplo del "Hola Mundo" no
+pasará nada ya que hasta el momento no se ha creado un programa para compilar
+proyectos.
 
 ./configure
 
-Es un script en bash con una funcion especial y que existe en el directorio con las fuentes del programa que estemos intentando instalar. Es el encargado de configurar y crear un fichero Makefile que sera utilizado por make para compilar/instalar el programa que estemos instalando.
+Es un script en bash con una funcion especial y que existe en el directorio con
+las fuentes del programa que estemos intentando instalar. Es el encargado de
+configurar y crear un fichero Makefile que sera utilizado por make para
+compilar/instalar el programa que estemos instalando.
 
-configure se ejecuta con $ ./configure porque al ser un script en el directorio fuente del programa a instalar, se debe llamar desde este directorio con ./ delante para definir que nos referimos al configure del directorio donde nos encontramos y para que sistema lo pueda encontrar.
+configure se ejecuta con $ ./configure porque al ser un script en el directorio
+fuente del programa a instalar, se debe llamar desde este directorio con ./
+delante para definir que nos referimos al configure del directorio donde nos
+encontramos y para que sistema lo pueda encontrar.
 
-El ejecutar configure + make + make install es el método mas común de instalación de un programa cuando lo compilamos nosotros mismos, pero no es el único y algunos programas tienen sus propios métodos de configuracion/compilacion/instalacion.
+El ejecutar configure + make + make install es el método mas común de
+instalación de un programa cuando lo compilamos nosotros mismos, pero no es el
+único y algunos programas tienen sus propios métodos de
+configuracion/compilacion/instalacion.
 
-########################################
-##### Compilar e instalar paquetes #####
-########################################
+============================
+Compilar e instalar paquetes
+============================
 
-$ aptitude search build-essential // Este paquete es esencial para crear y manejar paquetes debian,
-por consiguiente para la creación, compilacion e instalación de programas en debian, ubuntu etc.
-Tambien se instala cuando se va a desarrollar con c y c++ puesto que la instalacion incluye
-los compiladores y las librerias necesarias para comenzar a trabajar en estos lenguajes.
+Este paquete es esencial para crear y manejar paquetes debian, por consiguiente
+para la creación, compilacion e instalación de programas en debian, ubuntu etc.
+
+Tambien se instala cuando se va a desarrollar con c y c++ puesto que la
+instalacion incluye los compiladores y las librerias necesarias para comenzar a
+trabajar en estos lenguajes.
+
+$ aptitude search build-essential
 
 Descargámos el código fuente del programa que queremos compilar e instalar.
+
 Normalmente lo encontraremos en un archivo comprimido, con extensión tar.bz2. 
+
 Así que tendrás que descomprimirlo escribiendo en la consola:
 
 $ tar xvzf paquete.tar.gz (o ver sección de Comprimir/Descomprimir archivos arriba)
 
-//Ahora vamos al directorio donde hemos extraído el contenido del paquete:
+hora vamos al directorio donde hemos extraído el contenido del paquete:
+
 $ cd path_del_paquete
 
-// Confguramos el modo de compilación con:
-./configure
+Confguramos el modo de compilación con:
+
+$./configure
 
 Luego escribimos:
-make
+
+$ make
 
 Y finalmente, instalamos con:
-make install
 
-// Si no hay errores ya deberíamos poder usar el programa instalado.
+$ make install
 
-#############################################
-##### Crear un paquete .deb desde cero. #####
-#############################################
+Si no hay errores ya deberíamos poder usar el programa instalado.
+
+================================
+Crear un paquete .deb desde cero
+================================
 
 ¿Qué es un paquete .deb?
 
-.deb es la extensión del formato de paquetes de software de la distribución de Linux, Debian GNU/Linux y derivadas.
+.deb es la extensión del formato de paquetes de software de la distribución de
+Linux, Debian GNU/Linux y derivadas.
 
-El programa predeterminado para manejar estos paquetes es dpkg, generalmente usando apt/aptitude.
+El programa predeterminado para manejar estos paquetes es dpkg, generalmente
+usando apt/aptitude.
 
 ¿Qué es dpkg?
 
-dpkg es la base del sistema de gestión de paquetes de Debian GNU/Linux. Se utiliza para instalar, configurar, construir, quitar, y proporcionar información sobre los paquetes .deb. 
+dpkg es la base del sistema de gestión de paquetes de Debian GNU/Linux. Se
+utiliza para instalar, configurar, construir, quitar, y proporcionar información
+sobre los paquetes .deb.
 
 **Nota: usando deb-src:
-Hay que asegurarte que tenemos algunos "repositorios de código fuente" configurados en el ordenador.
-Abrimos el fichero /etc/apt/sources.list y comprobamos que tienemos una o más lineas que empiecen con deb-src.
+
+Hay que asegurarte que tenemos algunos "repositorios de código fuente"
+configurados en el ordenador.
+
+Abrimos el fichero /etc/apt/sources.list y comprobamos que tienemos una o más
+lineas que empiecen con deb-src.
+
 Estas lineas se necesitan para trabajar con los paquetes de código fuente. 
 
 **Nota: Descargando las dependencias necesarias para crear el paquete
 
-Para construir casi cualquier programa, necesitarás algunas dependencias instaladas. Las dependencias son los programas o librerías que se necesitan para
-compilar tu programa. Normalmente son un montón de paquetes acabados en -dev, pero también pueden ser otras cosas com automake o gcc, dependerá de la
-cantidad de herramientas de desarrollo que ya hayas instalado en la máquina.
+Para construir casi cualquier programa, necesitarás algunas dependencias
+instaladas. Las dependencias son los programas o librerías que se necesitan para
+compilar tu programa. Normalmente son un montón de paquetes acabados en -dev,
+pero también pueden ser otras cosas com automake o gcc, dependerá de la cantidad
+de herramientas de desarrollo que ya hayas instalado en la máquina.
 
-apt te proporciona una manera muy fácil para instalar las dependencias que necesitas:
+apt te proporciona una manera muy fácil para instalar las dependencias que
+necesitas:
 
 $ sudo apt-get build-dep nombre_paquete
 
@@ -749,9 +902,13 @@ Podemos probarlo con:
 
 $ bash script.sh
 
-Los scripts de ejecución de la mayoría de programas instalados en GNU - Linux Debian se guardan la ruta /usr/bin del sistema, por tanto crearemos un paquete que siga esa regla.
+Los scripts de ejecución de la mayoría de programas instalados en GNU - Linux
+Debian se guardan la ruta /usr/bin del sistema, por tanto crearemos un paquete
+que siga esa regla.
 
-Creamos un directorio donde guardaremos todos los ficheros que irán dentro de nuestro paquete. Podemos usar cualquier nombre, luego entramos en el directorio creado.
+Creamos un directorio donde guardaremos todos los ficheros que irán dentro de
+nuestro paquete. Podemos usar cualquier nombre, luego entramos en el directorio
+creado.
 
 $ mkdir tmp && cd tmp
 
@@ -777,7 +934,10 @@ $ cd
 
 $ mv script.sh tmp/mipaquete/usr/bin/
 
-Ahora creamos otro directorio junto a la carpeta "mipaquete" llamado DEBIAN, que contendra el fichero de paquete de control. Este es un fichero con un determinado formato y que proporciona informacion del contenido del paquete .deb.
+Ahora creamos otro directorio junto a la carpeta "mipaquete" llamado DEBIAN, que
+contendra el fichero de paquete de control. Este es un fichero con un
+determinado formato y que proporciona informacion del contenido del paquete
+.deb.
 
 tmp$ mkdir DEBIAN
 
@@ -845,12 +1005,17 @@ dpkg-deb: construyendo el paquete `script' en `/home/debian/mipaquete.deb'.
 Me generara mipaquete.deb con el script listo para instalar.
 
 Listar el contenido de nuestro paquete
+
 $ dpkg -c mipaquete.deb
 
-Desempaquetamos el contenido del paquete en una ruta, necesario es crear la ruta donde se va a guardar antes de ejecutar el comando.
+Desempaquetamos el contenido del paquete en una ruta, necesario es crear la ruta
+donde se va a guardar antes de ejecutar el comando.
+
 $ dpkg -x mipaquete.deb /home/debian/tmp/
 
-Mostrar información sobre el paquete, sobre las dependencias y las versiones de las mismas, con esto veremos el contenido que escribimos en el fichero control.
+Mostrar información sobre el paquete, sobre las dependencias y las versiones de
+las mismas, con esto veremos el contenido que escribimos en el fichero control.
+
 $ dpkg --info mipaquete.deb
 
 Package: Script
@@ -863,37 +1028,46 @@ Depends:
 Description: Este script imprime el valor de una variable precargada.
  Este script imprime el valor de una variable precargada, usa una cabecera que lo distingue como script de bash.
 
------------
+========================================================================
+Recompilar o Reconstruir paquetes Debian (.deb) desde los códigos fuente
+========================================================================
 
-##### Recompilar o Reconstruir paquetes Debian (.deb) desde los códigos fuente #####
-
-Es común en el mundo del software libre estudiar el código fuente o corregir código erróneo. Para
-lograr esto, se necesita descargar el código fuente del programa.
+Es común en el mundo del software libre estudiar el código fuente o corregir
+código erróneo. Para lograr esto, se necesita descargar el código fuente del
+programa.
 
 **Nota: usando deb-src:
-Hay que asegurarte que tenemos algunos "repositorios de código fuente" configurados en el ordenador.
+
+Hay que asegurarte que tenemos algunos "repositorios de código fuente"
+configurados en el ordenador.
+
 Abrimos el fichero /etc/apt/sources.list y comprobamos que tienemos una o más lineas que empiecen con deb-src.
 Estas lineas se necesitan para trabajar con los paquetes de código fuente.
 
-**Nota: Descargando las dependencias necesarias para crear el paquete
-Para construir casi cualquier programa, necesitarás algunas dependencias instaladas. Las dependencias son
-los programas o librerías que se necesitan para compilar tu programa. Normalmente son un montón de paquetes
-acabados en -dev, pero también pueden ser otras cosas com automake o gcc, dependerá de la cantidad
-de herramientas de desarrollo que ya hayas instalado en la máquina.
+**Nota: Descargando las dependencias necesarias para crear el paquete Para
+construir casi cualquier programa, necesitarás algunas dependencias instaladas.
+Las dependencias son los programas o librerías que se necesitan para compilar tu
+programa. Normalmente son un montón de paquetes acabados en -dev, pero también
+pueden ser otras cosas com automake o gcc, dependerá de la cantidad de
+herramientas de desarrollo que ya hayas instalado en la máquina.
 
-apt te proporciona una manera muy fácil para instalar las dependencias que necesitas:
+apt te proporciona una manera muy fácil para instalar las dependencias que
+necesitas:
 
 $ sudo apt-get build-dep nombre_paquete
 
-Para este ejemplo trabajaremos con las fuentes de Meld (Es una herramienta que permite al usuario ver los
-cambios entre, y fusionar, dos  archivos, dos directorios, o dos archivos con un ancestro común.)
+Para este ejemplo trabajaremos con las fuentes de Meld (Es una herramienta que
+permite al usuario ver los cambios entre, y fusionar, dos  archivos, dos
+directorios, o dos archivos con un ancestro común.)
 
-Primero creamos un directorio y entramos en el, allí trabajaremos y haremos las pruebas:
+Primero creamos un directorio y entramos en el, allí trabajaremos y haremos las
+pruebas:
 
 $ mkdir tmp && cd tmp
 
-Luego, descargamos las fuentes del paquete Meld. Con las fuentes podemos hacer modificaciones, compilar e
-instalar el programa y construir o reconstruir un paquete original o con modificaciones.
+Luego, descargamos las fuentes del paquete Meld. Con las fuentes podemos hacer
+modificaciones, compilar e instalar el programa y construir o reconstruir un
+paquete original o con modificaciones.
 
 tmp$ apt-get source meld
 
@@ -904,32 +1078,43 @@ meld_3.12.1-2.debian.tar.xz
 meld_3.12.1-2.dsc
 meld_3.12.1.orig.tar.xz
 
-Un paquete fuente generalmente consiste de tres archivos: .dsc, .orig.tar.gz y .debian.tar.gz (o .diff.gz).
-Ellos permiten la creación de paquetes binarios .deb, partir de los archivos de código fuente del programa, escritos
-en un lenguaje de programación.
+Un paquete fuente generalmente consiste de tres archivos: .dsc, .orig.tar.gz y
+.debian.tar.gz (o .diff.gz). Ellos permiten la creación de paquetes binarios
+.deb, partir de los archivos de código fuente del programa, escritos en un
+lenguaje de programación.
 
-El fichero .dsc (Debian Source Control) en español: Control de Fuente Debian, es un archivo de texto corto que contiene
-una cabecera RFC 2822 que describe el paquete fuente e indica qué otros archivos forman parte del mismo, similar a
+El fichero .dsc (Debian Source Control) en español: Control de Fuente Debian, es
+un archivo de texto corto que contiene una cabecera RFC 2822 que describe el
+paquete fuente e indica qué otros archivos forman parte del mismo, similar a
 la del fichero control que esta en el directorio raiz en la carpeta debian.
 
-Hay que notar que el paquete fuente también tiene dependencias (Build-Depends) completamente distintas de aquellas del paquete
-binario ya que indican las herramientas necesarias para compilar el software en cuestión y construir su paquete binario.
+Hay que notar que el paquete fuente también tiene dependencias (Build-Depends)
+completamente distintas de aquellas del paquete binario ya que indican las
+herramientas necesarias para compilar el software en cuestión y construir su
+paquete binario.
 
-El fichero .dsc es utilizado por dbpkg-source para descomprimir el paquete en el directorio raiz, como descargamos las
-fuentes con apt-get se nos crea el directorio raíz por defecto, es este caso meld-3.12.1/.
+El fichero .dsc es utilizado por dbpkg-source para descomprimir el paquete en el
+directorio raiz, como descargamos las fuentes con apt-get se nos crea el
+directorio raíz por defecto, es este caso meld-3.12.1/.
 
-El archivo .orig.tar.gz es un compendio que contiene el código fuente como es provisto por el desarrollador original.
-Se le pide a los encargados de paquetes Debian que no modifiquen este compendio para poder verificar fácilmente el origen
-e integridad del archivo (comparándolo simplemente con una suma de verificación) y para respetar los deseos de algunos autores.
+El archivo .orig.tar.gz es un compendio que contiene el código fuente como es
+provisto por el desarrollador original. Se le pide a los encargados de paquetes
+Debian que no modifiquen este compendio para poder verificar fácilmente el
+origen e integridad del archivo (comparándolo simplemente con una suma de
+verificación) y para respetar los deseos de algunos autores.
 
-El archivo .debian.tar.gz contiene todas las modificaciones realizadas por el desarrollador Debian, especialmente el agregado
-de un directorio debian que contiene las instrucciones para construir un paquete Debian.
+El archivo .debian.tar.gz contiene todas las modificaciones realizadas por el
+desarrollador Debian, especialmente el agregado de un directorio debian que
+contiene las instrucciones para construir un paquete Debian.
 
 ¿Que es dpkg-source?
-Es una herramienta de manipulación de paquetes fuente de Debian, empaqueta y desempaqueta los archivos fuente.
 
-Con cada paquete descargado existe un directorio debian/ que contiene los archivos necesarios para crear un paquete
-.deb, en este caso ese directorio esta dentro de la carpeta meld-3.12.1/ que es el directorio raíz de las fuentes.
+Es una herramienta de manipulación de paquetes fuente de Debian, empaqueta y
+desempaqueta los archivos fuente.
+
+Con cada paquete descargado existe un directorio debian/ que contiene los
+archivos necesarios para crear un paquete .deb, en este caso ese directorio esta
+dentro de la carpeta meld-3.12.1/ que es el directorio raíz de las fuentes.
 
 Entramos en el directorio raíz de las fuentes:
 
@@ -939,23 +1124,29 @@ Ahora ejecutamos el comando que construirá nuestro .deb en el directorio tmp/
 
 tmp/meld-3.12.1$ dpkg-buildpackage -rfakeroot
 
-¿Que es dpkg-buildpackage? Es un programa que automatiza el proceso de construcción de un paquete Debian.
+¿Que es dpkg-buildpackage? Es un programa que automatiza el proceso de
+construcción de un paquete Debian.
 
-¿Y fakeroot? Proporciona un entorno de raíz temporal, elimina la necesidad de convertirse en root para la construcción del paquete.
+¿Y fakeroot? Proporciona un entorno de raíz temporal, elimina la necesidad de
+convertirse en root para la construcción del paquete.
 
 Al final, dentro de nuestro directorio tmp/ tendremos nuestro .deb construido
 
 tmp/
   meld_3.12.1-2_all.deb
 
-###################
-##### dh-make #####
-###################
 
-dh-make es una herramienta para convertir archivos de código fuente en paquetes de código fuente de Debian
+=======
+dh-make
+=======
 
--Configuraración: Primero debemos configurar las variables de entorno $DEBEMAIL y $DEBFULLNAME que son utilizadas por varias herramientas
-de mantenimiento de Debian para obtener el nombre y correo electrónico del constructor o mantenedor de los paquetes.
+dh-make es una herramienta para convertir archivos de código fuente en paquetes
+de código fuente de Debian
+
+-Configuraración: Primero debemos configurar las variables de entorno $DEBEMAIL
+y $DEBFULLNAME que son utilizadas por varias herramientas de mantenimiento de
+Debian para obtener el nombre y correo electrónico del constructor o mantenedor
+de los paquetes.
 
 En el /home/user editamos el fichero .bashrc le añadimos al final lo siguiente:
 
@@ -967,14 +1158,17 @@ Guardamos...
 
 Con esto tendríamos configurado dh-make.
 
-############################################
-##### Lintian - Debian package checker #####
-############################################
+================================
+Lintian - Debian package checker
+================================
 
-Lintian es una utilidad para buscar errores en paquetes .deb, comprueba los paquetes en busca de incoherencias y errores comunes y es usado
-por los administradores de los repositorios de Debian para descartar solicitudes de inclusion de paquetes que no cumplan con los estándares
-del GNU/Linux Debian.
+Lintian es una utilidad para buscar errores en paquetes .deb, comprueba los
+paquetes en busca de incoherencias y errores comunes y es usado por los
+administradores de los repositorios de Debian para descartar solicitudes de
+inclusion de paquetes que no cumplan con los estándares del GNU/Linux Debian.
 
 # apt-get install lintian
 
-$ lintian name_package_0.0.1.deb // Nos mostrara el resultado de las comprobaciones de lintian.
+Nos mostrara el resultado de las comprobaciones de lintian.
+
+$ lintian name_package_0.0.1.deb
