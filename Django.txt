@@ -195,58 +195,74 @@ Django es compatible con cuatro motores de base de datos:
 -MySQL (http://www.mysql.com/) #Django requiere MySQL 4.0 o superior
 -Oracle (http://www.oracle.com/)
 
-###############################
-##### Creando un proyecto #####
-###############################
+===================
+Creando un proyecto
+===================
 
--Un proyecto es una colección de ajustes de una instancia de Django
-incluyendo la configuración de la base de datos, las opciones
-específicas de Django, y la configuración de la aplicación.
+-Un proyecto es una colección de ajustes de una instancia de Django incluyendo
+la configuración de la base de datos, las opciones específicas de Django, y la
+configuración de la aplicación.
 
--Para crear un proyecto hay que abrir unaconsola
-situarse donde se quiere crear el proyecto y Ejecutar:
+-Para crear un proyecto hay que abrir unaconsola situarse donde se quiere crear
+el proyecto y Ejecutar:
 
-$ django-admin.py startproject NombreDelProyecto #Se creará un directorio NombreDelProyecto 
+$ django-admin.py startproject NombreDelProyecto
 
--El comando startproject crea un directorio (NombreDelProyecto)
-que contiene cuatro archivos:
+Se creará un directorio NombreDelProyecto.
+
+-El comando startproject crea un directorio (NombreDelProyecto) que contiene
+cuatro archivos:
 
 1) __init__.py
--Es un fichero vacío, y normalmente no se le añade nada
--Le dice a Python que este directorio debería ser considerado
-un paquete Python (un grupo de módulos)
+
+-Es un fichero vacío, y normalmente no se le añade nada.
+
+-Le dice a Python que este directorio debería ser considerado un paquete Python
+(un grupo de módulos).
 
 2) manage.py
+
 -Permite interactuar con el proyecto Django, administrar el proyecto.
 
 3) settings.py
--Opciones/configuraciones para este proyecto de Django
--Muestra las características de configuración
-de este proyecto Django: Administradores, conexion y acceso
-a la base de datos, aplicaciones instaladas, sesiones etc.
--Es un módulo Python normal con variables a nivel de
-módulo que representan configuraciones de Django
+
+-Opciones/configuraciones para este proyecto de Django.
+
+-Muestra las características de configuración de este proyecto Django:
+Administradores, conexion y acceso a la base de datos, aplicaciones instaladas,
+sesiones etc.
+
+-Es un módulo Python normal con variables a nivel de módulo que representan
+configuraciones de Django.
 
 4) urls.py
+
 -La declaración de las URL para este proyecto de Django;
+
 -Es como una tabla de contenidos de tu sitio hecho con Django.
--Las URLs(Localizador uniforme de recursos: Sirve para nombrar recursos
-en Internet o en servidores locales. Tiene como proposito asignar una 
-direccion unica a cada uno de los recursos disponibles ejemplo:
-textos, imagenes, vdeos, etc...) para este proyecto Django
+
+-Las URLs(Localizador uniforme de recursos: Sirve para nombrar recursos en
+Internet o en servidores locales. Tiene como proposito asignar una direccion
+unica a cada uno de los recursos disponibles ejemplo: textos, imagenes, vdeos,
+etc...) para este proyecto Django.
+
 -Contiene las direcciones URL de este proyecto Django.
+
 -Al principio no contiene ninguna.
 
 (Estos archivos ya constituyen una aplicación Django de trabajo)
 
-##### El servidor de desarrollo #####
+=========================
+El servidor de desarrollo
+=========================
 
--Entrar al directorio (NombreDelProyecto)
-y ejecuta el comando:
+-Entrar al directorio (NombreDelProyecto) y ejecuta el comando:
 
-$ python manage.py runserver #Verás la siguiente salida en la línea de comandos:
+$ python manage.py runserver
 
-$ python manage.py check #Validar los modelos en busca de errores sin necesidad de correr el servidor.
+Validar los modelos en busca de errores sin necesidad de correr el servidor.
+
+$ python manage.py check
 
 Validating models...
 
@@ -256,21 +272,22 @@ Django version 1.5.12, using settings 'NombreDelProyecto.settings'
 Development server is running at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
 
-(Arranca el servidor de desarrollo de Django
-un servidor web liviano escrito completamente en Python.
-Se incluye en Django para que puedas desarrollar de manera rápida
-sin tener que vértelas con la configuración de un servidor de producción
-como Apache, hasta que estés listo para producción)
+(Arranca el servidor de desarrollo de Django un servidor web liviano escrito
+completamente en Python. Se incluye en Django para que puedas desarrollar de
+manera rápida sin tener que vértelas con la configuración de un servidor de
+producción como Apache, hasta que estés listo para producción).
 
--Cuando el servidor está inicializado, visita http://127.0.0.1:8000/
-usando un navegador web. Se observara una página "Welcome to Django"
+-Cuando el servidor está inicializado, visita http://127.0.0.1:8000/ usando un
+navegador web. Se observara una página "Welcome to Django".
 
--Por defecto, el comando runserver arranca el servidor de desarrollo
-en el puerto 8000
+-Por defecto, el comando runserver arranca el servidor de desarrollo en el
+puerto 8000.
 
-$ python manage.py runserver 8080 #Arranca el servido en el puerto 8080
+Arranca el servido en el puerto 8080.
 
--Cambiando la direccion IP donde va a correr el servidor:
+$ python manage.py runserver 8080
+
+Cambiando la direccion IP donde va a correr el servidor:
 
 $ python manage.py runserver 127.0.0.1:8000
 
@@ -278,43 +295,45 @@ $ python manage.py runserver 127.0.0.1:8000
 
 $ python manage.py runserver mi_ip_privada_en_la_red:8000
 
--Con 0.0.0.0:8000 toma automáticamente la ip privada del equipo en la red local.
+Con 0.0.0.0:8000 toma automáticamente la ip privada del equipo en la red local.
 
 $ python manage.py runserver 0.0.0.0:8000
 
-#############################################
-##### Configuración de la base de datos #####
-#############################################
+=================================
+Configuración de la base de datos
+=================================
 
-En settings.py se pueden configurar los privilegios, nombre, etc a la base de datos.
-y ya existen unas variables predeterminadas a las cuales podemos cambiar el valor
-según se necesite, entre ellas están las variables de conexión con la base de datos como:
+En settings.py se pueden configurar los privilegios, nombre, etc a la base de
+datos. En el archivo existen unas variables predeterminadas a las cuales podemos
+cambiar el valor según se necesite, entre ellas están las variables de conexión
+con la base de datos como:
 
-ENGINE: Ya sea 'django.db.backends.postgresql_psycopg2', 'django.db.backends.mysql'
-o 'django.db.backends.sqlite3'. Otros backends también están disponibles.
+ENGINE: Ya sea 'django.db.backends.postgresql_psycopg2',
+'django.db.backends.mysql' o 'django.db.backends.sqlite3'. Otros backends
+también están disponibles.
 
 NAME: El nombre de tu base de datos. Si estás usando SQLite la base de datos
 será un archivo en tu ordenador; en tal caso, NAME debería ser la ruta absoluta
-incluyendo nombre de archivo, de dicho archivo. Si el archivo
-no existe se creará automáticamente cuando sincronices la base
-de datos por primera vez.
+incluyendo nombre de archivo, de dicho archivo. Si el archivo no existe se
+creará automáticamente cuando sincronices la base de datos por primera vez.
 
 USER: El usuario de la base de datos (no usado en SQLite).
 
 PASSWORD: La contraseña de la base de datos (no usado en SQLite).
 
-HOST: La máquina donde está ubicada la base de datos.
-Déjalo como una cadena vacía si la base de datos está en la misma
-máquina física (no usado en SQLite).
+HOST: La máquina donde está ubicada la base de datos. Déjalo como una cadena
+vacía si la base de datos está en la misma máquina física (no usado en SQLite).
 
-PORT: Le indica a Django qué puerto usar cuando se conecte a la base de datos. Si
-estás utilizando SQLite, deja este en blanco. En otro caso, si dejas este en blanco,
-el adaptador de base de datos subyacente usará el puerto por omisión acorde al
-servidor de base de datos. En la mayoría de los casos, el puerto por omisión está
-bien, por lo tanto puedes dejar este en blanco.
+PORT: Le indica a Django qué puerto usar cuando se conecte a la base de datos.
+Si estás utilizando SQLite, deja este en blanco. En otro caso, si dejas este en
+blanco, el adaptador de base de datos subyacente usará el puerto por omisión
+acorde al servidor de base de datos. En la mayoría de los casos, el puerto por
+omisión está bien, por lo tanto puedes dejar este en blanco.
 
-'PORT': '5432', # Puerto por defecto de postgresql, generalmente no es necesario especificar uno
-# porque así lo tomará por defecto.
+Puerto por defecto de postgresql, generalmente no es necesario especificar uno
+porque así lo tomará por defecto.
+
+'PORT': '5432'
 
 Fragmento tomado de un settings.py sobre éste tópico:
 
@@ -330,9 +349,9 @@ DATABASES = {
     }
 }
 
-##########################################
-##### Ejemplo de conexión con sqlite #####
-##########################################
+==============================
+Ejemplo de conexión con sqlite
+==============================
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -344,188 +363,229 @@ DATABASES = {
     }
 }
 
-##########################
-##### INSTALLED_APPS #####
-##########################
+==============
+INSTALLED_APPS
+==============
 
-En el settings.py, la variable INSTALLED_APPS contiene el nombre de todas
-las aplicaciones Django que están activadas en esta instancia de Django.
-Las aplicaciones pueden ser empacadas y distribuidas para ser usadas por otros proyectos.
+En el settings.py, la variable INSTALLED_APPS contiene el nombre de todas las
+aplicaciones Django que están activadas en esta instancia de Django. Las
+aplicaciones pueden ser empacadas y distribuidas para ser usadas por otros
+proyectos.
 
-Por defecto, INSTALLED_APPS contiene las siguientes aplicaciones, todas ellas vienen con Django:
+Por defecto, INSTALLED_APPS contiene las siguientes aplicaciones, todas ellas
+vienen con Django:
 
 -django.contrib.auth -- Un sistema de autenticación.
 -django.contrib.contenttypes -- Un framework para tipos de contenidos.
 -django.contrib.sessions -- Un framework para manejar sesiones.
--django.contrib.sites -- Un framework para manejar múltiples sitios con una única instalación Django.
+-django.contrib.sites -- Un framework para manejar múltiples sitios con una
+única instalación Django.
 
-################################
-##### Aplicación de Django ##### 
-################################
+====================
+Aplicación de Django
+====================
 
-Es una colección de archivos de código fuente, incluyendo modelos y vistas, que conviven en un solo
-paquete de Python y representen una aplicación completa de Django.
+Es una colección de archivos de código fuente, incluyendo modelos y vistas, que
+conviven en un solo paquete de Python y representen una aplicación completa de
+Django.
 
 -La aplicacion se creara en el directorio (NombreDelProyecto) con:
 
-python manage.py startapp NombreAplicacion
+$ python manage.py startapp NombreAplicacion
 
--Esto creará un directorio NombreAplicacion, que contiene los siguiente archivos:
+-Esto creará un directorio NombreAplicacion, que contiene los siguiente
+archivos:
 
-- __init__.py
+-__init__.py
 
-- models.py: En este archivo es donde vamos a crear nuestras tablas de las bases de datos.
-Un modelo de Django es una descripción de los datos en la base de datos, esta es tu capa de datos
+-models.py: En este archivo es donde vamos a crear nuestras tablas de las bases
+de datos. Un modelo de Django es una descripción de los datos en la base de
+datos, esta es tu capa de datos.
 
-- tests.py
+-tests.py
 
-- views.py: En este archivo es donde pondremos todas las funciones que necesitemos
-ejecutar en nuestro proyecto
+-views.py: En este archivo es donde pondremos todas las funciones que
+necesitemos ejecutar en nuestro proyecto.
 
 Las variables las llamo en mi template así: {{ variable }}
 
-#######################
-##### Tips varios #####
-#######################
+===========
+Tips varios
+===========
 
-*****Crear el proyecto
-django-admin startproject NombreDelProyecto
+Crear el proyecto
 
-*****Configura el settings
-Configurar zona horaria, lenguaje
---> Using Language Identifiers: http://www.i18nguy.com/unicode/language-identifiers.html
+$ django-admin startproject NombreDelProyecto
 
-*****Configurar la base de datos
-Elegir el motor y el nombre de la db, si se usa postgres esta debe estar creada y tner un usuario, si se
-usa sqlite3 no hace falta crearla, solo agregando el nombre Django la crea
+Configura el settings
 
-*****Habilitar el administrador (apps,urls)
+Configurar zona horaria, lenguaje --> Using Language Identifiers:
+http://www.i18nguy.com/unicode/language-identifiers.html
+
+Configurar la base de datos
+
+Elegir el motor y el nombre de la db, si se usa postgres esta debe estar creada
+y tner un usuario, si se usa sqlite3 no hace falta crearla, solo agregando el
+nombre Django la crea
+
+Habilitar el administrador (apps,urls)
+
 Descomentar las lineas correspondientes en el settings/apps y en el urls
 
-*****Sincronisar la db
-python manage.py syncdb #Anterior a Django 1.7.x
+Sincronisar la db.
 
-*****Crear el super usuario
-Escribir el user, pass y email del superuser
+Anterior a Django 1.7.x
 
-*****Correr el servidor, validar los modelos y probar el admin
+$ python manage.py syncdb
+
+Crear el super usuario.
+
+Escribir el user, pass y email del superuser.
+
+Correr el servidor, validar los modelos y probar el admin.
+
 Probar el admin /admin 
 
-python manage.py runserver
+$ python manage.py runserver
 
-*****Crear aplicacion y registrarla en el settings
-python manage.py startapp NombreAplicacion
+Crear aplicacion y registrarla en el settings.
 
-*****Crear carpeta templates y declararla en el settings
-Declarar la carpeta de nuestras plantillas en el settings en 
-TEMPLATE_DIRS con la ruta completa '/home/osorio/Escritorio/inscripcion/templates'
+$ python manage.py startapp NombreAplicacion
 
-*****Abrir el views.py y declarar la funcion con el render y la template que corresponda
-En la vista iran nuestras funciones y clases y decimos que plantillas
-vamos a usar 
+Crear carpeta templates y declararla en el settings.
 
-*****Crear el Index de la funcion y guardarlo en templates
-Crear el html y guardarlo en nuestra carpeta de plantillas 
+Declarar la carpeta de nuestras plantillas en el settings en TEMPLATE_DIRS con
+la ruta completa '/home/osorio/Escritorio/inscripcion/templates'.
 
-*****Declarar la funcion de la vista en las urls
+Abrir el views.py y declarar la funcion con el render y la template que
+corresponda.
+
+En la vista iran nuestras funciones y clases y decimos que plantillas vamos a
+usar.
+
+Crear el Index de la funcion y guardarlo en templates.
+
+Crear el html y guardarlo en nuestra carpeta de plantillas .
+
+Declarar la funcion de la vista en las urls.
+
 Las vistas deben ser declaradas en las urls
+
 url(r'^$', 'aplicacion.views.funcion', name='funcion'),
 
-*****Probar el index con el servidor andando
-python manage.py runserver
+Probar el index con el servidor andando.
 
-*****Creamos los modelos 
-En el models.py crearemos las clases que al final
-seran nuestras tablas con sus campos en nuestra base de datos 
+$ python manage.py runserver
 
-python manage.py sqlall books / books es el nombre de la aplicación, podremos
-observar nuestros modelos de datos antes de crear las tablas con la sincronizacion de la db
+Creamos los modelos.
 
-*****Sincronizamos la db 
-Al sincronizar, las clases que creamos en los modelos
-se generaran en tablas de nuestra base de datos 
+En el models.py crearemos las clases que al final seran nuestras tablas con sus
+campos en nuestra base de datos.
 
-python manage.py syncdb
+$ python manage.py sqlall books / books es el nombre de la aplicación, podremos
+observar nuestros modelos de datos antes de crear las tablas con la
+sincronizacion de la db.
 
-*****Corremos el servidor y entramos al admin para ver nuestras tablas
-En principio no veremos nuestras tablas en el admin, tenemos que crear el archivo admin.py
-en el directorio de la aplicacion y declaramos
+Sincronizamos la db.
 
-from django.contrib import admin 
+Al sincronizar, las clases que creamos en los modelos se generaran en tablas de
+nuestra base de datos.
+
+$ python manage.py syncdb
+
+Corremos el servidor y entramos al admin para ver nuestras tablas En principio
+no veremos nuestras tablas en el admin, tenemos que crear el archivo admin.py
+en el directorio de la aplicacion y declaramos.
+
+from django.contrib import admin
 from .models import NombreClase
 
-admin.site.register(NombreClase) 
+admin.site.register(NombreClase)
 
-volvemos a correr el servidor, entramos al admin y ya podemos ver nuestra tabla creada
-y podemos llenarla de datos
+volvemos a correr el servidor, entramos al admin y ya podemos ver nuestra tabla
+creada y podemos llenarla de datos.
 
-*****Creamos un template donde mostraremos nuestro formulario
-basado en los modelos de la base de datos, podemos usar el modelo como base para los 
-forms, creamos el template con el formulario, el metodo etc
+Creamos un template donde mostraremos nuestro formulario basado en los modelos
+de la base de datos, podemos usar el modelo como base para los forms, creamos el
+template con el formulario, el metodo etc.
 
-<form method="POST"> {% csrf_token %} # Este token lo agregamos por segridad, Django lo exige
+
+
+<form method="POST"> {% csrf_token %} Este es el token de segridad.
     {{ form }}
     <input type="submit" value="Enviar">
 </form>
 
-*****En la vista creamos una clase que contendra nuestro modelo
+En la vista creamos una clase que contendra nuestro modelo
 
 class RegistrarAlumno(CreateView):
     template_name = "registrar.html"
     model = Alumno
 
-Con esto mandamos a la plantilla declarada un form el cual recibe el form en el template
-asignado
+Con esto mandamos a la plantilla declarada un form el cual recibe el form en el
+template asignado
 
-*****Declaramos nuestra clase en la URLS para que la lea como vista 
+Declaramos nuestra clase en la URLS para que la lea como vista.
+
 url(r'^registrar/$', RegistrarAlumno.as_view(), name='RegistrarAlumno'),
-####Debemos revisar siempre los import, son muy importantes
 
-##### Declarando los CSS #####
+Debemos revisar siempre los import, son muy importantes.
 
-Creamos la carpeta static que contendra nuetros css, imagenes y demas
-archvos estaticos, se debe guardar a nivel de las plantillas
- (aplicacion/static/css/estilo.css)
- (aplicacion/templates/index.html)
+==================
+Declarando los CSS
+==================
 
- Con esto llamamos nuestro CSS en la plantilla:
+Creamos la carpeta static que contendra nuetros css, imagenes y demas archvos
+estaticos, se debe guardar a nivel de las plantillas
 
- <head>
-    <title>PAGOS</title> 
-    <meta http-equiv="content-type" content="text/html;charset=utf-8" /> 
-    <meta charset="UTF-8" /> 
-    {% load staticfiles %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/estilo.css' %}" />
+(aplicacion/static/css/estilo.css)
+(aplicacion/templates/index.html)
+
+Con esto llamamos nuestro CSS en la plantilla:
+
+<head>
+  <title>PAGOS</title>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  <meta charset="UTF-8" />
+  {% load staticfiles %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/estilo.css' %}" />
 </head>
 
-##### Agregando imagenes a la plantilla #####
+=================================
+Agregando imagenes a la plantilla
+=================================
 
-Los archivos de media seran llamados de la carpeta Img
-que por lo general acompaña al css, se hace referencia a la 
-carpeta static con {{STATIC_URL}} y luego la ruta de la imagen:
+Los archivos de media seran llamados de la carpeta Img que por lo general
+acompaña al css, se hace referencia a la carpeta static con {{STATIC_URL}} y
+luego la ruta de la imagen:
+
 Ejemplo:
 
 <img src="Imagen.jpg" width="200px" heigth="200px"></img>
 
 <img src="{{STATIC_URL}}css/Img/gris.JPG"></img> Agregando una imagen local
 
-######################
-##### Migrations #####
-######################
+==========
+Migrations
+==========
 
-Mediante la ejecución de makemigrations, le estás diciendo a Django que has hecho algunos cambios a
-sus modelos y que desea que los cambios se almacenarán como la migración.
+Mediante la ejecución de makemigrations, le estás diciendo a Django que has
+hecho algunos cambios a sus modelos y que desea que los cambios se almacenarán
+como la migración.
 
-Las migraciones son cómo almacena Django cambios a sus modelos (y por tanto el esquema de base de datos)
+Las migraciones son cómo almacena Django cambios a sus modelos (y por tanto el
+esquema de base de datos).
 
-Si hay modelos declarados en una aplicación, se creará una carpeta "migrations" que contiene el esquema de la
-base de datos, muy similar a un fichero .sql, con los nombres de las tablas, sus campos, y las fechas en que se crearon.
+Si hay modelos declarados en una aplicación, se creará una carpeta "migrations"
+que contiene el esquema de la base de datos, muy similar a un fichero .sql, con
+los nombres de las tablas, sus campos, y las fechas en que se crearon.
 
-####################################
-##### Estructura de un proyecto ####
-####################################
+=========================
+Estructura de un proyecto
+=========================
 
-# Algunos directorios debemos crearlos nosotros por ejemplo: templates, static, admin.py
+# Algunos directorios debemos crearlos nosotros por ejemplo: templates, static,
+admin.py
 
 project
   manage.py
@@ -556,9 +616,10 @@ project
 
     js/
       jquery.js
------
 
-##### Recommended Django Project Layout #####
+=================================
+Recommended Django Project Layout
+=================================
 
 myproject/
     manage.py
@@ -619,10 +680,9 @@ myproject/
          test.txt
          prod.txt
 
-'''
-Estructura con los templates fuera de las aplicaciones
-Es un tipo de proyecto menos modular
-'''
+
+Estructura con los templates fuera de las aplicaciones, es un tipo de proyecto
+menos modular.
 
 myproject/
     manage.py
@@ -660,14 +720,15 @@ myproject/
         test.txt
         prod.txt
 
-# La siguiente configuración de los templates dirs aplica a la estructura menos modular.
+La siguiente configuración de los templates dirs aplica a la estructura menos
+modular.
 
-##############################################################
-##### Configuración del settings para los templates dirs #####
-##############################################################
+==================================================
+Configuración del settings para los templates dirs
+==================================================
 
-# Esta configuración se usa cuando se crea una carpeta templates/app/xxx.html
-# para alvergar todos los templates de las aplicaciones
+Esta configuración se usa cuando se crea una carpeta templates/app/xxx.html para
+alvergar todos los templates de las aplicaciones.
 
 TEMPLATES = [
     {
@@ -685,31 +746,31 @@ TEMPLATES = [
     },
 ]
 
-#################################################
-##### LANGUAGE_CODE, idioma de los mensajes #####
-#################################################
+=====================================
+LANGUAGE_CODE, idioma de los mensajes
+=====================================
 
-Django por defecto muestra una variedad de mensajes
-en los templates, ya sea para validaciones en formularios u otros...
+Django por defecto muestra una variedad de mensajes en los templates, ya sea
+para validaciones en formularios u otros...
 
 Por ellos el cambio del codigo de lenguaje es muy importante, por ejemplo
 
 #LANGUAGE_CODE = 'en-us' Ver los mensajes en ingles
 #LANGUAGE_CODE = 'en-es' Ver los mensajes en español
 
-#######################
-##### Comentarios #####
-#######################
+===========
+Comentarios
+===========
 
-Al igual que en HTML o en un lenguaje de programación como Python, el lenguaje de
-plantillas de Django permite usar comentarios. Para designar un comentario, usa
-{# #}
-{# Esto es un comentario #}
-Este comentario no será mostrado cuando la plantilla sea renderizada.
+Al igual que en HTML o en un lenguaje de programación como Python, el lenguaje
+de plantillas de Django permite usar comentarios. Para designar un comentario,
+usa {# #} {# Esto es un comentario #} Este comentario no será mostrado cuando la
+plantilla sea renderizada.
+
 Un comentario no puede abarcar múltiples líneas. Esta limitación mejora la
-performance del analizador sintáctico de plantillas. En la siguiente plantilla, la salida
-del renderizado mostraría exactamente lo mismo que la plantilla (esto es, la etiqueta
-comentario no será tomada como comentario):
+performance del analizador sintáctico de plantillas. En la siguiente plantilla,
+la salida del renderizado mostraría exactamente lo mismo que la plantilla (esto
+es, la etiqueta comentario no será tomada como comentario):
 
 Esto es una {# Esto no es
 un comentario #}
@@ -723,164 +784,222 @@ comment %}, así:
     que abarca varias líneas
 {% endcomment %}
 
-############################
-##### Tiempo de sesión #####
-############################
+================
+Tiempo de sesión
+================
 
-#Variable del settings.py que indica que a los 40min se destruye la sesión creada de algún usuario autenticado.
+#Variable del settings.py que indica que a los 40min se destruye la sesión
+creada de algún usuario autenticado.
+
 # SESSION AGE 40 Minutes
 #SESSION_COOKIE_AGE = 40*60
 
-#######################################################
-##### Cerrar sesión cuando se cierra el navegador #####
-#######################################################
+===========================================
+Cerrar sesión cuando se cierra el navegador
+===========================================
 
 #Variable del settings.py
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-##############################
-##### Modelos en Django  #####
-##############################
+=================
+Modelos en Django
+=================
 
 ¿Qué es un modelo?
 
-- En Django los modelos son como django tratara los datos, contendrá los campos de los objetos que queremos guardar.
-Generalmente django creara por cada modelo una tabla en la base de datos.
+-En Django los modelos son como django tratara los datos, contendrá los campos
+de los objetos que queremos guardar. Generalmente django creara por cada modelo
+una tabla en la base de datos.
 
-- Cada modelo es una clase python que hereda de django.db.models.Model
+-Cada modelo es una clase python que hereda de django.db.models.Model
 
-- Cada atributo del modelo representa un campo de la tabla de la base de datos.
+-Cada atributo del modelo representa un campo de la tabla de la base de datos.
 
-##### Los campos #####
+==========
+Los campos
+==========
 
 Los campos son el tipo de objeto del atributo que guardara, hay varios tipos:
 
-**AutoField: Es un IntegerField que se incrementa cuando creas un nuevo objeto, casi que no es
-necesario ya que django lo crea solo si no especificas otro campo como id.
+-AutoField: Es un IntegerField que se incrementa cuando creas un nuevo objeto,
+casi que no es necesario ya que django lo crea solo si no especificas otro campo
+como id.
 
-**BigIntegerField: Representa un Entero de 64 bit, es como el IntegerField, solo que permite números
-desde el -9223372036854775808 hasta el 9223372036854775807. El campo por defecto de los formularios es el TextField.
+-BigIntegerField: Representa un Entero de 64 bit, es como el IntegerField, solo
+que permite números desde el -9223372036854775808 hasta el 9223372036854775807.
+El campo por defecto de los formularios es el TextField.
 
-**BooleanField: El campo de true/false. El campo por defecto de los formularios es un CheckboxInput.
-El vlaor por defecto es None si no defines el default.
+-BooleanField: El campo de true/false. El campo por defecto de los formularios
+es un CheckboxInput. El valor por defecto es None si no defines el default.
 
-**CharField: Para string pequeños, frases o palabras. El campo por defecto en los formularios es el TextInput.
-    max_length=20: Establece el tamaño máximo del string, es requerido.
+-CharField: Para string pequeños, frases o palabras. El campo por defecto en
+los formularios es el TextInput. max_length=20: Establece el tamaño máximo del
+string, es requerido.
 
-**CommaSeparateIntegerField: Guarda una lista de enteros separados por coma. 
-    Max_length=20: Establece el valor máximo de los enteros, es requerido.
+-CommaSeparateIntegerField: Guarda una lista de enteros separados por coma.
+Max_length=20: Establece el valor máximo de los enteros, es requerido.
 
-**DateField: Guarda una instancia de la fecha a partir de la clase datetime.date de python.
-    auto_now=True: Actualiza la fecha cada vez que se actualiza el objeto.
-    auto_now_add=True: Guarda la fecha de cuando se creo.
+DateField: Guarda una instancia de la fecha a partir de la clase datetime.date
+de python.
+auto_now=True: Actualiza la fecha cada vez que se actualiza el objeto.
+auto_now_add=True: Guarda la fecha de cuando se creo.
 
-**DateTimeField: Como el DateField solo que guarda también la hora
-    auto_now=True: Actualiza la fecha cada vez que se actualiza el objeto.
-    auto_now_add=True: Guarda la fecha de cuando se creo.
+DateTimeField: Como el DateField solo que guarda también la hora.
+auto_now=True: Actualiza la fecha cada vez que se actualiza el objeto.
+auto_now_add=True: Guarda la fecha de cuando se creo.
 
-**DecimalField: Guarda números decimales.
-    max_digits=5: Establece el numero de dígitos máximo, la suma de la parte entera y la decimal
-    decimal_places=2: Establece el número de dígitos de la parte decimal.
+DecimalField: Guarda números decimales.
+max_digits=5: Establece el numero de dígitos máximo, la suma de la parte entera
+y la decimal
+decimal_places=2: Establece el número de dígitos de la parte decimal.
 
-**EmailField: Es un CharField que comprueba lo introducido para verificar que sea un email.
-    max_length=75: Establece el tamaño máximo del email, es requerido.
+EmailField: Es un CharField que comprueba lo introducido para verificar que sea
+un email.
+max_length=75: Establece el tamaño máximo del email, es requerido.
 
-**FileField: Sirve para guardar archivos en el servidor. En el formulario saldría el campo de escoger un
-fichero del ordenador. Tiene que estar definido el MEDIA_ROOT en el settings para que guarde los archivos.
-Guardara el archivo en la ruta especificada por el MEDIA_ROOT.
-upload_to='/videos': Subirá el archivo a la carpeta vídeos alojada en la carpeta definida por MEDIA_ROOT. (Requerido)
-FileField(upload_to='/video'[, max_length=100, **options]): si se quiere poner los atributos opcionales tendrán que añadirse así.
+-FileField: Sirve para guardar archivos en el servidor. En el formulario saldría
+el campo de escoger un fichero del ordenador. Tiene que estar definido el
+MEDIA_ROOT en el settings para que guarde los archivos. Guardara el archivo en
+la ruta especificada por el MEDIA_ROOT. upload_to='/videos': Subirá el archivo a
+la carpeta vídeos alojada en la carpeta definida por MEDIA_ROOT. (Requerido)
+FileField(upload_to='/video'[, max_length=100, **options]): si se quiere poner
+los atributos opcionales tendrán que añadirse así.
 
-**FilePathField: Sirve para mostrar los archivos accesible de una carpeta siguiendo una restricción si se quiera, para
-hacer alguna operación sobre ellos.
-FilePathField(path=None[, match=None,recursive=False, max_length=100, **options])
-    path (requerido): directorio del que sacara FilePathField las opciones.
-    match: filtro por el que pasaran los archivos, se usaran expresiones regulares.
-    recursive: False por defecto, especifica si entran las subcarpetas de la ruta indicada por path.
-    max_length: Indica el tamaño máximo del nombre del archivo.
+-FilePathField: Sirve para mostrar los archivos accesible de una carpeta
+siguiendo una restricción si se quiera, para hacer alguna operación sobre ellos.
 
-**FloatField: Campo que guarda una instancia del modelo Float de python.
+FilePathField(path=None[,match=None,recursive=False, max_length=100, **options])
+path (requerido): directorio del que sacara FilePathField las opciones.
+match: filtro por el que pasaran los archivos, se usaran expresiones regulares.
+recursive: False por defecto, especifica si entran las subcarpetas de la ruta
+indicada por path.
+max_length: Indica el tamaño máximo del nombre del archivo.
 
-**ImageField: Como el FileField pero solo acepta formatos de imágenes. Tiene dos campos opcionales mas que el FielField
-    height_field: Representa el alto máximo de la imagen.
-    width_field: Representa el ancho máximo de la imagen.
+-FloatField: Campo que guarda una instancia del modelo Float de python.
 
-**IntegerField: Guarda un entero.
+-ImageField: Como el FileField pero solo acepta formatos de imágenes. Tiene dos
+campos opcionales mas que el FielField.
+height_field: Representa el alto máximo de la imagen.
+width_field: Representa el ancho máximo de la imagen.
 
-**IPAddressField: Guarda un string que coincida con el formato ip (192.168.0.1).
+-IntegerField: Guarda un entero.
 
-**GenericIPAddressField: Guarda una ip, ya sea ipv4 o ipv6. Para saber como las guarda Doc Django.
+-IPAddressField: Guarda un string que coincida con el formato ip (192.168.0.1).
 
-**NullBooleanField: Como el BooleanField pero permite null.
+-GenericIPAddressField: Guarda una ip, ya sea ipv4 o ipv6. Para saber como las
+guarda Doc Django.
 
-**PositiveIntegerField: Guarda un entero mayor o igual que cero.
+-NullBooleanField: Como el BooleanField pero permite null.
 
-**SlugField:  Campo que guarda una pequeña etiqueta (letras, números, guiones) suele usarse en las url.
+-PositiveIntegerField: Guarda un entero mayor o igual que cero.
 
-**TextField: Campo que guarda texto.
+-SlugField:  Campo que guarda una pequeña etiqueta (letras, números, guiones)
+suele usarse en las url.
 
-**TimeField: Guarda una hora, comparte los campos con DateField
-    auto_now=True: Actualiza la hora cada vez que se actualiza el objeto.
-    auto_now_add=True: Guarda la hora de cuando se creo.
+-TextField: Campo que guarda texto.
 
-**URLField: Guarda una dirección html, comprueba que lo introducido sea una dirección html.
+-TimeField: Guarda una hora, comparte los campos con DateField
+auto_now=True: Actualiza la hora cada vez que se actualiza el objeto.
+auto_now_add=True: Guarda la hora de cuando se creo.
 
-##### Campos de relación #####
+-URLField: Guarda una dirección html, comprueba que lo introducido sea una
+dirección html.
 
-ForeignKey:  Para referir objetos a un objeto, un modelo puede referirse a un modelo, pero un modelo puede estar referido a mas de uno, es lo que se llama un many-to-one referencia.
+==================
+Campos de relación
+==================
 
-ManyToManyField: Para guardar una referencia a varios objetos de la misma clase. Hay que definir la clase con la que se relaciona. Va guardando las referencias a esos objetos en una lista con las primary keys referncia.
+ForeignKey:  Para referir objetos a un objeto, un modelo puede referirse a un
+modelo, pero un modelo puede estar referido a mas de uno, es lo que se llama un
+many-to-one referencia.
 
-OneToOneField: Es como el ForeignKey pero tiene unique=True, por lo que solo puede haber una referencia a ese objeto.
+ManyToManyField: Para guardar una referencia a varios objetos de la misma clase.
+Hay que definir la clase con la que se relaciona. Va guardando las referencias a
+esos objetos en una lista con las primary keys referncia.
 
-##### Opciones que tienen todos los campos #####
+OneToOneField: Es como el ForeignKey pero tiene unique=True, por lo que solo
+puede haber una referencia a ese objeto.
+
+====================================
+Opciones que tienen todos los campos
+====================================
 
 null=True: Permite que los valores puedan ser null.
 
 blank=True: Permite que el campo se pueda quedar en blanco.
 
-blank=True,null=True # Para que de verdad acepte valores en blanco en la base de datos y en el formulario.
+blank=True,null=True # Para que de verdad acepte valores en blanco en la base de
+datos y en el formulario.
 
-choices=meses: Permite asignar un diccionario de elementos a un objetos para que los valores solo sean los contenidos en el diccionario. La clave del diccionario sera lo que se guarda en la base de datos, el valor asociado sera lo que se mostrar en el formulario que lo use.
+choices=meses: Permite asignar un diccionario de elementos a un objetos para que
+los valores solo sean los contenidos en el diccionario. La clave del diccionario
+sera lo que se guarda en la base de datos, el valor asociado sera lo que se
+mostrar en el formulario que lo use.
 
-db_column: El nombre de la columna donde django guardara el campo, si no se especifica guarda el nombre del campo.
+db_column: El nombre de la columna donde django guardara el campo, si no se
+especifica guarda el nombre del campo.
 
-db_index=True: Sirve para indexar el campo en las búsqueda de django. Por defecto django busca entre las PK de la base de datos, si añades esto también buscara entre esos datos y no tendrás que acceder directamente al objeto para comprobar el campo en las búsquedas.
+db_index=True: Sirve para indexar el campo en las búsqueda de django. Por
+defecto django busca entre las PK de la base de datos, si añades esto también
+buscara entre esos datos y no tendrás que acceder directamente al objeto para
+comprobar el campo en las búsquedas.
 
-db_tablespace: El nombre al que se referencia para buscar si ha sido indicado como index.
+db_tablespace: El nombre al que se referencia para buscar si ha sido indicado
+como index.
 
-default: El valor por defecto que tiene el modelo, si se va a guardar un valor distinto a vació se guardara con el valor por defecto.
+default: El valor por defecto que tiene el modelo, si se va a guardar un valor
+distinto a vació se guardara con el valor por defecto.
 
-editable=False: Indica si el valor se puede modificar, si es falso no aparecerá en el admin ni similares.
+editable=False: Indica si el valor se puede modificar, si es falso no aparecerá
+en el admin ni similares.
 
-error_messages={null:"Hay que darle un valor",blank:"No se puede dejar en blanco",invalid="El valor introducido es erróneo", invalid_choice:"Has escogido un valor inadecuado", unique="Este valor ya existe"}: Como se ve en el ejemplo hacer referencia a los mensajes que se mostraran si se produce ese error. No hace falta crear todos los mensajes. Si no los creas saldrá el que tiene por defecto.
+error_messages={null:"Hay que darle un valor",blank:"No se puede dejar en blanco
+",invalid="El valor introducido es erróneo", invalid_choice:"Has escogido un
+valor inadecuado", unique="Este valor ya existe"}: Como se ve en el ejemplo
+hacer referencia a los mensajes que se mostraran si se produce ese error. No
+hace falta crear todos los mensajes. Si no los creas saldrá el que tiene por
+defecto.
 
-help_text="Inserta un nombre": Un texto que aparecerá en forma de ayuda en el campo del formulario.
+help_text="Inserta un nombre": Un texto que aparecerá en forma de ayuda en el
+campo del formulario.
 
 primary_key=True: Para asignar que el campos es la clave primaria del modelo.
 
-unique=True: Indica que el valor es único, solo podrá haber uno en la base de datos.
+unique=True: Indica que el valor es único, solo podrá haber uno en la base de
+datos.
 
-unique_for_date='pub_date': El valor de esta propiedad tendrá que existir como campo del modelo y tendrá que ser del tipo DateField o DateTimeField. Lo que hace es no dejar que haya un elemento con el mismo valor del campo y el mismo día.
+unique_for_date='pub_date': El valor de esta propiedad tendrá que existir como
+campo del modelo y tendrá que ser del tipo DateField o DateTimeField. Lo que
+hace es no dejar que haya un elemento con el mismo valor del campo y el mismo
+día.
 
-unique_for_month='pub_date': El valor de esta propiedad tendrá que existir como campo del modelo y tendrá que ser del tipo DateField o DateTimeField. Lo que hace es no dejar que haya un elemento con el mismo valor del campo y el mismo mes.
+unique_for_month='pub_date': El valor de esta propiedad tendrá que existir como
+campo del modelo y tendrá que ser del tipo DateField o DateTimeField. Lo que
+hace es no dejar que haya un elemento con el mismo valor del campo y el mismo
+mes.
 
-unique_for_year='pub_date': El valor de esta propiedad tendrá que existir como campo del modelo y tendrá que ser del tipo DateField o DateTimeField. Lo que hace es no dejar que haya un elemento con el mismo valor del campo y el mismo año.
+unique_for_year='pub_date': El valor de esta propiedad tendrá que existir como
+campo del modelo y tendrá que ser del tipo DateField o DateTimeField. Lo que
+hace es no dejar que haya un elemento con el mismo valor del campo y el mismo
+año.
 
-verbose_name="Nombre de usuario": Nombre del campo comprensible por humanos, si no se crea django lo generar automáticamente, convirtiendo los guiones en espacios.
+verbose_name="Nombre de usuario": Nombre del campo comprensible por humanos, si
+no se crea django lo generar automáticamente, convirtiendo los guiones en
+espacios.
 
 validators=[]: Una lista de validaciones para el campo referencia.
 
-on_delete: Se utiliza para decirle a Django qué hacer con instancias de modelo que dependen de la instancia de modelo que elimine.
-(Por ejemplo, una relación de ForeignKey). El on_delete = models.CASCADE le dice a Django que coloque en cascada el efecto
-de supresión, es decir, continúe eliminando también los modelos dependientes.
+on_delete: Se utiliza para decirle a Django qué hacer con instancias de modelo
+que dependen de la instancia de modelo que elimine.
+
+(Por ejemplo, una relación de ForeignKey). El on_delete = models.CASCADE le dice
+a Django que coloque en cascada el efecto de supresión, es decir, continúe
+eliminando también los modelos dependientes.
 
 user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-'''
 Declarando la clase Articulo y Comentarios para una publicacion, y estableciendo
 la relacion entre los comentarios y un articulo
-'''
 
 from django.db import models
 
@@ -896,8 +1015,8 @@ class Comentario(models.Model):
    fecha_pub = models.DateTimeField('fecha publicacion')
    articulo = models.ForeignKey(Articulo)
 
-#Modelos para un blog, con un método para la fecha de publicación.
-#Más en --> https://tutorial.djangogirls.org/es/
+Modelos para un blog, con un método para la fecha de publicación. Más en -->
+https://tutorial.djangogirls.org/es/
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -923,10 +1042,9 @@ class Post(models.Model):
     def __str__(self): # Para python 3.x
         return self.title
 
-
-##################################
-##### Hello world con Django #####
-##################################
+======================
+Hello world con Django
+======================
 
 # En urls.py
 from django.conf.urls import url
@@ -942,14 +1060,16 @@ from django.http import HttpResponse
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
-############################
-##### *args y **kwargs #####
-############################
+================
+*args y **kwargs
+================
 
-La sintaxis especial, *args y **kwargs en definiciones de funciones se utiliza para pasar un número variable
-de argumentos a una función. El forma simple (*args) se utiliza para pasar una lista de argumentos de longitud
-variable sin palabra clave y la forma de doble asterisco (**kwargs) se utiliza para pasar una lista de
-argumentos con palabras clave de longitud variable o diccionarios, un ejemplo sería:
+La sintaxis especial, *args y **kwargs en definiciones de funciones se utiliza
+para pasar un número variable de argumentos a una función. El forma simple
+(*args) se utiliza para pasar una lista de argumentos de longitud variable sin
+palabra clave y la forma de doble asterisco (**kwargs) se utiliza para pasar una
+lista de argumentos con palabras clave de longitud variable o diccionarios, un
+ejemplo sería:
 
 def get_context_data(self, **kwargs):
 
@@ -957,9 +1077,9 @@ equivale a:
 
 def get_context_data(self, pk, id_x, id_y):
 
-##############################################################################
-##### Ejemplo de admin.py para mostrar los modelos en el admin de django #####
-##############################################################################
+==================================================================
+Ejemplo de admin.py para mostrar los modelos en el admin de django
+==================================================================
 
 # -*- coding: utf-8 -*-
 from django.contrib import admin
@@ -967,9 +1087,9 @@ from .models import Post
 
 admin.site.register(Post)
 
-###############################################
-##### Pasando un diccionario en el render #####
-###############################################
+===================================
+Pasando un diccionario en el render
+===================================
 
 """
 xdata = ["Apple", "Apricot", "Avocado", "Banana", "Boysenberries", "Blueberries", "Dates", "Grapefruit", "Kiwi", "Lemon"]
@@ -992,9 +1112,9 @@ data = {
 data = {'x': "xxxx", 'y': "yyyy"}
 return render_to_response('piechart.html', data)
 
-##################################################
-##### Pasando un diccionario en TemplateView #####
-##################################################
+======================================
+Pasando un diccionario en TemplateView
+======================================
 
 #views.py
 class Xxx(TemplateView):
@@ -1012,9 +1132,9 @@ class Xxx(TemplateView):
   {{ data.y }}
 </div>
 
-###########################################################
-##### Pasando un diccionario o queryset en CreateView #####
-###########################################################
+===============================================
+Pasando un diccionario o queryset en CreateView
+===============================================
 
 class Registrar(CreateView):
     model = Persona
@@ -1041,9 +1161,9 @@ class Registrar(CreateView):
         context.update(kwargs)
         return super(Registrar, self).get_context_data(**context)
 
-######################################################################
-##### Contando objetos con querysets y pasando datos al template #####
-######################################################################
+==========================================================
+Contando objetos con querysets y pasando datos al template
+==========================================================
 
 # views.py
 def datos(request):
@@ -1065,19 +1185,20 @@ def datos(request):
 {{ data.y }}
 {{ data.z }}
 
-##############################################
-##### Declarando variable en el template #####
-##############################################
+==================================
+Declarando variable en el template
+==================================
 
 {% with name="World" greeting="Hello" %}
     <div>{{ greeting }} {{name}}!</div>
 {% endwith %}
 
-##################################
-##### Creating an admin user #####
-##################################
+======================
+Creating an admin user
+======================
 
-First we’ll need to create a user who can login to the admin site. Run the following command:
+First we’ll need to create a user who can login to the admin site. Run the
+following command:
 
 $ python manage.py createsuperuser
 
@@ -1089,19 +1210,22 @@ You will then be prompted for your desired email address:
 
 Email address: admin@example.com
 
-The final step is to enter your password. You will be asked to enter your password twice, the second time as a confirmation of the first.
+The final step is to enter your password. You will be asked to enter your
+password twice, the second time as a confirmation of the first.
 
 Password: #####
 Password (again): *********
 Superuser created successfully.
 
-##########################
-##### login_required #####
-##########################
+==============
+login_required
+==============
 
-# Trabaja con el from django.contrib.auth.decorators import login_required en las urls
-# url(r'^lista$', login_required(views.PostLista.as_view()), name='post_lista'),
-# url(r'^detalle/(?P<pk>\d+)$', login_required(views.PostDetalle), name='post_detalle'),
+Trabaja con el from django.contrib.auth.decorators import login_required en las
+urls.
+
+url(r'^lista$', login_required(views.PostLista.as_view()), name='post_lista'),
+url(r'^detalle/(?P<pk>\d+)$', login_required(views.PostDetalle), name='post_detalle'),
 
 # Variable en el settings.py, url a la que se redirecciona cuando no hay usuario logeado
 # y se intenta acceder a una url protegida. 
@@ -1131,13 +1255,13 @@ urlpatterns = [
     url(r'logout/$', views.Logout.as_view(), name='logout'),
 ]
 
-################################
-##### if/else en templates #####
-################################
+====================
+if/else en templates
+====================
 
-La etiqueta {% if %} evalúa una variable, y si esta es "true" (esto es, existe, no está
-vacía y no es un valor Boolean falso), el sistema mostrará todo lo que hay entre
-{% if %} y {% endif %}, por ejemplo:
+La etiqueta {% if %} evalúa una variable, y si esta es "true" (esto es, existe,
+no está vacía y no es un valor Boolean falso), el sistema mostrará todo lo que
+hay entre {% if %} y {% endif %}, por ejemplo:
 
 {% if es_fin_de_semana %}
     <p>¡Bienvenido fin de semana!</p>
@@ -1187,18 +1311,20 @@ La etiqueta {% else %} es opcional:
 </tr>
 {% endfor %}
 
-############################
-##### for en templates #####
-############################
+================
+for en templates
+================
 
 La etiqueta {% for %} permite iterar sobre cada uno de los elementos de una
-secuencia. Como en la sentencia for de Python, la sintaxis es for X in Y, dónde Y es la
-secuencia sobre la que se hace el bucle y X es el nombre de la variable que se usará
-para cada uno de los ciclos del bucle.
-Cada vez que atravesamos el bucle, el sistema de plantillas renderizará todo entre
-{% for %} y {% endfor %}.
-Por ejemplo, puedes usar lo siguiente para mostrar una lista de atletas tomadas de
-la variable lista_atletas:
+secuencia. Como en la sentencia for de Python, la sintaxis es for X in Y, dónde
+Y es la secuencia sobre la que se hace el bucle y X es el nombre de la variable
+que se usará para cada uno de los ciclos del bucle.
+
+Cada vez que atravesamos el bucle, el sistema de plantillas renderizará todo
+entre {% for %} y {% endfor %}.
+
+Por ejemplo, puedes usar lo siguiente para mostrar una lista de atletas tomadas
+de la variable lista_atletas:
 
 <ul>
 {% for atleta in lista_atletas %}
@@ -1206,16 +1332,17 @@ la variable lista_atletas:
 {% endfor %}
 </ul>
 
-# Cuando instanciamos un objeto en la vista, para ser renderizado en la plantilla usamos:
+# Cuando instanciamos un objeto en la vista, para ser renderizado en la
+plantilla usamos:
 <ul>
 {% for objeto in objetos %}
     <li>{{ objeto.attr }}</li>
 {% endfor %}
 </ul>
 
-##################################################
-##### Permisos de contenido según el usuario #####
-##################################################
+======================================
+Permisos de contenido según el usuario
+======================================
 
 # Si el usuario está autenticado
 {% if request.user.is_authenticated %}
@@ -1249,14 +1376,12 @@ la variable lista_atletas:
   {% endif %}
 {% endif %}
 
-##############################################################
-##### Permisos de contenido según el usuario en la vista #####
-##############################################################
+==================================================
+Permisos de contenido según el usuario en la vista
+==================================================
 
-'''
-En este caso tenemos una vista que renderiza una bitacora de eventos
-y que solo se podrá acceder si es superusuario entonces queda así:
-'''
+En este caso tenemos una vista que renderiza una bitacora de eventos y que solo
+se podrá acceder si es superusuario entonces queda así:
 
 from django.template import RequestContext
 
@@ -1286,58 +1411,61 @@ class BitacoraView(ListView):
             #print "No tiene permiso"
             return render_to_response('index.html',context_instance=RequestContext(request))
 
-#######################################################
-##### Ruta de instalación convencional de Django ######
-#######################################################
+==========================================
+Ruta de instalación convencional de Django
+==========================================
 
 $ python
 >>> import django
 >>> django.__file__
 '/usr/local/lib/python2.7/dist-packages/django/__init__.pyc'
 
-####################################################################
-##### Ruta de instalación de Django dentro de entorno virtual ######
-####################################################################
+=======================================================
+Ruta de instalación de Django dentro de entorno virtual
+=======================================================
 
-/home/user/Entornos_virtuales/Django_1.10.1/local/lib/python2.7/site-packages/django
+/home/user/Entornos_virt/Django_1.10.1/local/lib/python2.7/site-packages/django
 
-###############################
-##### Estáticos en Django #####
-###############################
+===================
+Estáticos en Django
+===================
 
-El primer lugar donde inicia el manejo de los archivos estáticos reside en el archivo
-de configuraciones del proyecto: settings.py, en este archivo tenemos líneas
-exclusivamente dedicadas al manejo del contenido estático.
+El primer lugar donde inicia el manejo de los archivos estáticos reside en el
+archivo de configuraciones del proyecto: settings.py, en este archivo tenemos
+líneas exclusivamente dedicadas al manejo del contenido estático.
 
-**STATICFILES_DIRS, esta variable permite declarar la ruta, desde la cual
-se enlazará el contenido estático, por ejemplo:
+STATICFILES_DIRS, esta variable permite declarar la ruta, desde la cual se
+enlazará el contenido estático, por ejemplo:
 
 # Configuración de los directorios en donde se encuentran los archivos estáticos
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static/'),
 )
 
-Podemos tener mas carpetas para los estáticos como: static y media, y para que sean bien servidas deben incluirse
-en STATICFILES_DIRS tal que:
+Podemos tener mas carpetas para los estáticos como: static y media, y para que
+sean bien servidas deben incluirse en STATICFILES_DIRS tal que:
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static/'),
     os.path.join(BASE_DIR, 'media/'),
 )
 
-Ahora las dos carpetas serán servidas desde mysite/static/ por la definición de la variable STATIC_URL.
+Ahora las dos carpetas serán servidas desde mysite/static/ por la definición de
+la variable STATIC_URL.
 
-Su proyecto probablemente también tendrá activos estáticos que no están vinculados a una aplicación en particular.
-Además de usar un directorio static/ dentro de sus aplicaciones, puede definir una lista de directorios (STATICFILES_DIRS)
-en su archivo de configuración donde Django también buscará archivos estáticos. Por ejemplo:
+Su proyecto probablemente también tendrá activos estáticos que no están
+vinculados a una aplicación en particular. Además de usar un directorio static/
+dentro de sus aplicaciones, puede definir una lista de directorios
+(STATICFILES_DIRS) en su archivo de configuración donde Django también buscará
+archivos estáticos. Por ejemplo:
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     '/var/www/static/',
 ]
 
-**STATIC_URL, es la variable que va a definir la url donde se encuentras
-los archivos estáticos a ser servidos.
+STATIC_URL, es la variable que va a definir la url donde se encuentras los
+archivos estáticos a ser servidos.
 
 STATIC_URL = '/static/'
 
@@ -1347,52 +1475,59 @@ http:example.com/static/css/theme.css
 http:example.com/static/js/functions.js
 http:example.com/static/img/x.png
 
-Así la carpeta donde se encuentran se llame media o estaticos o x, a nivel de url serán servidos
-desde lo que se definió en STATIC_URL.
+Así la carpeta donde se encuentran se llame media o estaticos o x, a nivel de
+url serán servidos desde lo que se definió en STATIC_URL.
 
-**{% load staticfiles %}
-Cuando usamos el tag load staticfiles cargamos la ruta de nuestro directorio de archivos estáticos,
-es decir <name_project>/static, luego cada vez que escribamos una etiqueta static estaremos haciendo
-referencia a esa ruta.
+{% load staticfiles %}
+Cuando usamos el tag load staticfiles cargamos la ruta de nuestro directorio de
+archivos estáticos, es decir <name_project>/static, luego cada vez que
+escribamos una etiqueta static estaremos haciendo referencia a esa ruta.
 
-**MEDIA_ROOT
-Ruta del sistema de archivos absoluto al directorio que contiene archivos cargados por el usuario.
+MEDIA_ROOT
+Ruta del sistema de archivos absoluto al directorio que contiene archivos
+cargados por el usuario.
+
 Valor predeterminado: '' (Cadena vacía)
 
 Ejemplo: "/var/www/example.com/media/"
 
-**STATIC_ROOT
-La ruta absoluta del directorio donde collectstatic va a colectar los estaticos, esto para entornos de producción.
-Establezca la configuración STATIC_ROOT en el directorio desde el que desea servir estos archivos, por ejemplo:
+STATIC_ROOT
+La ruta absoluta del directorio donde collectstatic va a colectar los estaticos,
+esto para entornos de producción. Establezca la configuración STATIC_ROOT en el
+directorio desde el que desea servir estos archivos, por ejemplo:
 
 STATIC_ROOT should be the absolute path to the directory static files should be
 collected to:
 
 STATIC_ROOT = "/var/www/example.com/static/"
 
-**MEDIA_ROOT
+MEDIA_ROOT
 Esta es la ruta absoluta a la carpeta que mantendrá las subidas del usuario.
+
 Por ejemplo MEDIA_ROOT = "/User/Timmy/Sites/Pho/root/media/".
 
-MEDIA_ROOT y STATIC_ROOT deben tener valores diferentes. Antes de que STATIC_ROOT se introdujera, era
-común confiar o fallback en MEDIA_ROOT para también servir archivos estáticos; Sin embargo, ya que
-esto puede tener serias implicaciones de seguridad, hay una comprobación de validación para evitarlo.
+MEDIA_ROOT y STATIC_ROOT deben tener valores diferentes. Antes de que
+STATIC_ROOT se introdujera, era común confiar o fallback en MEDIA_ROOT para
+también servir archivos estáticos; Sin embargo, ya que esto puede tener serias
+implicaciones de seguridad, hay una comprobación de validación para evitarlo.
 
-**MEDIA_URL
+MEDIA_URL
 Valor predeterminado: '' (Cadena vacía)
 
-URL que maneja los medios servidos desde MEDIA_ROOT, utilizados para administrar archivos almacenados.
-Debe terminar en una barra inclinada si se establece en un valor no vacío. Tendrá que configurar estos
-archivos para que se publiquen en entornos de desarrollo y producción.
+URL que maneja los medios servidos desde MEDIA_ROOT, utilizados para administrar
+archivos almacenados. Debe terminar en una barra inclinada si se establece en un
+valor no vacío. Tendrá que configurar estos archivos para que se publiquen en
+entornos de desarrollo y producción.
 
 MEDIA_URL = "media/"
 
-Si desea utilizar {{ MEDIA_URL }} en sus plantillas, añada 'django.template.context_processors.media' en la
-opción 'context_processors' de TEMPLATES.
+Si desea utilizar {{ MEDIA_URL }} en sus plantillas, añada
+'django.template.context_processors.media' en la opción 'context_processors' de
+TEMPLATES.
 
-#######################################################
-##### Agregando enlaces a archivos para descargas #####
-#######################################################
+===========================================
+Agregando enlaces a archivos para descargas
+===========================================
 
 Deben estar en la carpeta static del proyecto
 
@@ -1402,11 +1537,11 @@ Deben estar en la carpeta static del proyecto
 <br />
 <img src="{% static 'biblioteca/2017/x.jpg' %}"></img>
 
-####################################
-##### Recolectar los estáticos #####
-####################################
+========================
+Recolectar los estáticos
+========================
 
-definir en el settings.py a:
+Definir en el settings.py a:
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
@@ -1422,62 +1557,75 @@ luego:
 
 $ python manage.py collectstatic
 
-Si todo va bien se tienen que haber copiado los estáticos del admin de django a static.
+Si todo va bien se tienen que haber copiado los estáticos del admin de django a
+static.
 
 Cuando el:
 
 $ python manage.py collectstatic
 
-falla, se pueden recolectar manualmente los estáticos, solo hay que buscar la ruta adecuada dentro del core de django, en
-un entorno virtual sería en:
+Falla, se pueden recolectar manualmente los estáticos, solo hay que buscar la
+ruta adecuada dentro del core de django, en un entorno virtual sería en:
 
 /home/user/Entornos_virtuales/Django_1.10.1/local/lib/python2.7/site-packages/django/contrib/admin/static/
 
-Dentro está la carpeta admin/ con todos los estáticos que necesita el servidor, sobre todo los estáticos del admin de django, por lo tanto
-podemos copiar esa carpeta admin/ a la carpeta static de nuestro proyecto.
+Dentro está la carpeta admin/ con todos los estáticos que necesita el servidor,
+sobre todo los estáticos del admin de django, por lo tanto podemos copiar esa
+carpeta admin/ a la carpeta static de nuestro proyecto.
 
-####################################################
-##### Personalizar templates del administrador #####
-####################################################
+========================================
+Personalizar templates del administrador
+========================================
 
-Para poder personalizar las plantillas del administrador es recomendable no trabajar directamente
-en los templates del core del framework si no copiar esos templates en nuestro proyecto.
+Para poder personalizar las plantillas del administrador es recomendable no
+trabajar directamente en los templates del core del framework si no copiar esos
+templates en nuestro proyecto.
 
-El sitio de administración muestra "Administración de Django" en la cabecera porque esto es lo que se incluye en la plantilla
-admin/base_site.html. Por defecto, esta plantilla se encuentra en el directorio de plantillas de administración de
-Django, django/contrib/admin/templates, que puedes encontrar buscando en tu directorio site-packages de Python, o donde sea
-que Django fue instalado. Para personalizar esta plantilla base_site.html, copia la original dentro de un subdirectorio
-llamado admin dentro de cualquier directorio este usando TEMPLATE_DIRS. Por ejemplo, si tu TEMPLATE_DIRS
-incluye "/home/misplantillas", entonces copia django/contrib/admin/templates/admin/base_site.html
-a /home/misplantillas/admin/base_site.html. No te olvides del subdirectorio admin, entonces asi Django encuentra las plantillas por
-defecto de la interfaz de administración primero en nuestros directorios templates, lo que sucede es que, por defecto, Django
-automáticamente busca plantillas dentro del subdirectorio templates/ de cada paquete de aplicación
-como alternativa, si no consigue nada usara las plantillas de su core.
+El sitio de administración muestra "Administración de Django" en la cabecera
+porque esto es lo que se incluye en la plantilla admin/base_site.html. Por
+defecto, esta plantilla se encuentra en el directorio de plantillas de
+administración de Django, django/contrib/admin/templates, que puedes encontrar
+buscando en tu directorio site-packages de Python, o donde sea que Django fue
+instalado. Para personalizar esta plantilla base_site.html, copia la original
+dentro de un subdirectorio llamado admin dentro de cualquier directorio este
+usando TEMPLATE_DIRS. Por ejemplo, si tu TEMPLATE_DIRS incluye
+"/home/misplantillas", entonces copia
+django/contrib/admin/templates/admin/base_site.html a
+/home/misplantillas/admin/base_site.html. No te olvides del subdirectorio
+admin, entonces asi Django encuentra las plantillas por defecto de la interfaz
+de administración primero en nuestros directorios templates, lo que sucede es
+que, por defecto, Django automáticamente busca plantillas dentro del
+subdirectorio templates/ de cada paquete de aplicación como alternativa, si no
+consigue nada usara las plantillas de su core.
 
-###################################################################
-##### Desplegar aplicación web en Django - pythonanywhere.com #####
-###################################################################
+=======================================================
+Desplegar aplicación web en Django - pythonanywhere.com
+=======================================================
 
-Tutorial en Español en --> ttps://stories.devacademy.la/django-y-como-desplegar-tu-peque%C3%B1a-aplicaci%C3%B3n-web-y-no-morir-en-el-intento-e18551c0c8b6#.z8mol0onp
+Pythonanywhere que cuenta con un sin fin de paquetes de Python y soporta Python
+desde la ultima versión estable de la 2.7.x y las ultimas versiones estables de
+la 3.x.
 
-Otro Tutorial en Español en --> https://tutorial.djangogirls.org/es/deploy/
+1) Creamos una cuenta en Pythonanywhere como principiante ( Beginner), lo que
+nos da un plan gratuito (obviamente con algunas limitaciones, como solo poder
+crear o desplegar un proyecto por cuenta).
 
-Pythonanywhere que cuenta con un sin fin de paquetes de Python y soporta Python desde la ultima versión estable de la 2.7.x y
-las ultimas versiones estables de la 3.x.
+Al ingresar vamos a dar click en Dashboard para acceder a nuestro panel
+principal en donde tendremos 5 pestañas especiales de las cuales en esta vez
+solo usaremos 4: Consoles, Files, Web y Databases. En la pestaña de consola
+podremos elegir abrir una consola bash que nos situará en el directorio de
+nuestro usuario: /home/dm/ desde la consola podemos clonar repositorios y para
+nuestro caso podemos clonar el proyecto que queremos desplegar. También podemos
+crear entornos virtuales por si necesitamos paquetes python adicionales, por
+defecto nuestra sesion en bash ya tiene instalado django 1.10 y python 2.7.x.
 
-1) Creamos una cuenta en Pythonanywhere como principiante ( Beginner), lo que nos da un plan gratuito (obviamente con algunas
-limitaciones, como solo poder crear o desplegar un proyecto por cuenta).
+Cuando te hayas registrado en PythonAnywhere serás redirigida a tu panel de
+control o página "Consoles". Elije la opción para iniciar una consola "Bash",
+que es la versión PythonAnywhere de una consola, como la que tienes en tu PC.
 
-Al ingresar vamos a dar click en Dashboard para acceder a nuestro panel principal en donde tendremos 5 pestañas especiales de las cuales
-en esta vez solo usaremos 4: Consoles, Files, Web y Databases. En la pestaña de consola podremos elegir abrir una consola bash que nos 
-situará en el directorio de nuestro usuario: /home/dm/ desde la consola podemos clonar repositorios y para nuestro caso podemos clonar el proyecto
-que queremos desplegar. También podemos crear entornos virtuales por si necesitamos paquetes python adicionales, por defecto nuestra sesion en bash ya
-tiene instalado django 1.10 y python 2.7.x.
-
-Cuando te hayas registrado en PythonAnywhere serás redirigida a tu panel de control o página "Consoles". Elije la opción para iniciar una consola "Bash", que
-es la versión PythonAnywhere de una consola, como la que tienes en tu PC.
-
-Descarguemos nuestro código desde GitHub a PythonAnywhere mediante la creación de un "clon" del repositorio. Escribe lo siguiente en la consola de PythonAnywhere:
+Descarguemos nuestro código desde GitHub a PythonAnywhere mediante la creación
+de un "clon" del repositorio. Escribe lo siguiente en la consola de
+PythonAnywhere:
 
 $ git clone https://github.com/<tu-usuario-github>/my-first-blog.git
 
@@ -1485,24 +1633,33 @@ $ virtualenv my_env
 
 Instalamos los requerimientos en el entorno virtual.
 
-Ahora toca configurar el fichero WSGI, Django funciona utilizando el "protocolo WSGI", un estándar para servir
-sitios web usando Python, que PythonAnywhere soporta. La forma de configurar PythonAnywhere para que reconozca
-nuestro proyecto Django es editar un fichero de configuración WSGI.
+Ahora toca configurar el fichero WSGI, Django funciona utilizando el "protocolo
+WSGI", un estándar para servir sitios web usando Python, que PythonAnywhere
+soporta. La forma de configurar PythonAnywhere para que reconozca nuestro
+proyecto Django es editar un fichero de configuración WSGI.
 
-Haz clic en el enlace "WSGI configuration file" (en la sección "Code" en la parte de arriba de la página; se
-llamará algo parecido a /var/www/<tu-usuario>_pythonanywhere_com_wsgi.py) y te redirigirá al editor, o tambien
-lo puedes editar desde la consola web, eso está en /var/www
+Haz clic en el enlace "WSGI configuration file" (en la sección "Code" en la
+parte de arriba de la página; se llamará algo parecido a
+/var/www/<tu-usuario>_pythonanywhere_com_wsgi.py) y te redirigirá al editor, o
+tambien lo puedes editar desde la consola web, eso está en /var/www
 
-Lo que me ha funcionado es crear un proyecto desde la interfaz web y luego desde la pestaña web modificar las
-rutas para que apunten al proyecto que clone, los estáticos del admin ya deben estar collectados antes de clonar un proyecto.
+Lo que me ha funcionado es crear un proyecto desde la interfaz web y luego desde
+la pestaña web modificar las rutas para que apunten al proyecto que clone, los
+estáticos del admin ya deben estar collectados antes de clonar un proyecto.
 
-##### Tips #####
+====
+Tips
+====
 
-- El nombre de usuario que elijamos sera parte de nuestro subdominio en la web, es decir, si mi usuario es dm, el dominio de mi web/applicación sera:
---> dm.pythonanywhere.com es decir, cuando elijas tu nombre de usuario ten en cuenta que la URL de tu blog tendrá la forma
-nombredeusuario.pythonanywhere.com, así que o bien elije tu propio apodo o bien un nombre que describa sobre qué trata tu blog.
+El nombre de usuario que elijamos sera parte de nuestro subdominio en la web, es
+decir, si mi usuario es dm, el dominio de mi web/applicación sera: -->
+dm.pythonanywhere.com es decir, cuando elijas tu nombre de usuario ten en cuenta
+que la URL de tu blog tendrá la forma nombredeusuario.pythonanywhere.com, así
+que o bien elije tu propio apodo o bien un nombre que describa sobre qué trata
+tu blog.
 
-- En /var/www está el fichero usuario_pythonanywhere_com_wsgi.py para editarlo, lo reemplazamos todo con lo siguiente:
+En /var/www está el fichero usuario_pythonanywhere_com_wsgi.py para editarlo, lo
+reemplazamos todo con lo siguiente:
 
 import os
 import sys
@@ -1545,17 +1702,20 @@ os.environ['DJANGO_SETTINGS_MODULE'] = 'nombre_del_proyecto.settings'
 from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
 
-En la pestaña de web se configura todo, la ruta de los estáticos, la ruta del proyecto, la versión de python, la ruta del
-entorno virtual si se usa uno, por eso hay que configurar todo eso primero.
+En la pestaña de web se configura todo, la ruta de los estáticos, la ruta del
+proyecto, la versión de python, la ruta del entorno virtual si se usa uno, por
+eso hay que configurar todo eso primero.
 
 ########################################
 ##### Graficando modelos de Django #####
 ########################################
 
-Cuando desarrollas en Django la logica la mandas a los modelos. A veces nos abastraemos de la capa y lo que se escribe en la base de datos, para esto
+Cuando desarrollas en Django la logica la mandas a los modelos. A veces nos
+abastraemos de la capa y lo que se escribe en la base de datos, para esto
 siempre es bueno poder visualizar de manera gráfica los modelos del proyecto.
 
-Para Django existe una orma de poder graficar los modelos con PyGraphviz, que es un software de visualización.
+Para Django existe una orma de poder graficar los modelos con PyGraphviz, que
+es un software de visualización.
 
 Para instalar PyGraphviz usaremos pip:
 
@@ -1575,8 +1735,8 @@ Es porque debes instalar django-extensions con:
 
 $ pip install django django-extensions
 
-Y luego debes agregar django-extensions a las INSTALLED_APPS en tu archivo settings.py de tu proyecto
- 
+Y luego debes agregar django-extensions a las INSTALLED_APPS en tu archivo
+settings.py de tu proyecto
 
 INSTALLED_APPS = (
     ...
@@ -1584,9 +1744,9 @@ INSTALLED_APPS = (
     ...
 )
 
-###################################################
-##### Definiendo todos los fields en la clase #####
-###################################################
+=======================================
+Definiendo todos los fields en la clase
+=======================================
 
 #En views.py
 class PostCrear(SuccessMessageMixin,CreateView):
@@ -1607,9 +1767,9 @@ class Meta:
     model = Post
     exclude = ('id',)
 
-#############################################
-##### Mensajes / messages al hacer post #####
-#############################################
+=================================
+Mensajes / messages al hacer post
+=================================
 
 #En el views.py
 
@@ -1800,9 +1960,9 @@ class Borrar(DeleteView):
   {% endfor %}
 {% endif %}
 
-#########################################
-##### Uso de formularios / forms.py #####
-########################################
+=============================
+Uso de formularios / forms.py
+=============================
 
 #En el models.py
 
@@ -1922,32 +2082,39 @@ class PostCrear(SuccessMessageMixin,CreateView):
     success_url = reverse_lazy('post_lista')
     success_message = "Se creó la publicación con éxito"
 
-#####################################
-##### Validación de formularios #####
-#####################################
 
-'''
-Los validadores son funciones simples que toman un solo argumento y disparan un ValidationError
-en el caso de que una entrada sea no válida. Estos nos sirven para crear alarmas cuando los usuarios
-insertan información errónea en los campos de un formulario de nuestra app.
+=========================
+Validación de formularios
+=========================
 
-##### ¿Cómo crear un validador en Django? #####
+Los validadores son funciones simples que toman un solo argumento y disparan un
+ValidationError en el caso de que una entrada sea no válida. Estos nos sirven
+para crear alarmas cuando los usuarios insertan información errónea en los
+campos de un formulario de nuestra app.
 
-Supongamos que queremos validar el campo cuerpo que tenemos disponible en nuestro modelo Post.
-Lo primero que tenemos que hacer es declarar un método dentro de la misma clase (PostForm), en donde
-definiremos toda nuestra lógica de validación para un campo del formulario en especifico.
+===================================
+¿Cómo crear un validador en Django?
+===================================
 
-Vamos a validar el numéro de caractéres mínimo del campo del cuerpo. Para eso definimos el método
-clean_cuerpo, si el número de caractéres escrito en el formulario no es mayor a 3 no dejará guardar
-los datos del formulario y mostrara el error "El cuerpo debe tener mas de 3 caractéres", de momento
-solo lo mostrara si renderizamos el formulario completo {{ form }}.
+Supongamos que queremos validar el campo cuerpo que tenemos disponible en
+nuestro modelo Post. Lo primero que tenemos que hacer es declarar un método
+dentro de la misma clase (PostForm), en donde definiremos toda nuestra lógica de
+validación para un campo del formulario en especifico.
 
-Por convención debemos denominar nuestro método con el prefijo clean seguido del nombre del campo.
-En nuestro caso seria clean_cuerpo
+Vamos a validar el numéro de caractéres mínimo del campo del cuerpo. Para eso
+definimos el método clean_cuerpo, si el número de caractéres escrito en el
+formulario no es mayor a 3 no dejará guardar los datos del formulario y mostrara
+el error "El cuerpo debe tener mas de 3 caractéres", de momento solo lo mostrara
+si renderizamos el formulario completo {{ form }}.
 
-Siempre debemos obtener el diccionario de data que proviene del formulario de manera limpia, para eso
-utilizamos la siguiente instrucción: cuerpo = self.cleaned_data['cuerpo']
-'''
+Por convención debemos denominar nuestro método con el prefijo clean seguido del
+nombre del campo. En nuestro caso seria clean_cuerpo
+
+Siempre debemos obtener el diccionario de data que proviene del formulario de
+manera limpia, para eso utilizamos la siguiente instrucción:
+
+cuerpo = self.cleaned_data['cuerpo']
+
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -2082,9 +2249,10 @@ def clean_cedula(self):
 </div>
 {% endblock %}
 
-#####################################
-##### Validación en los modelos #####
-#####################################
+
+=========================
+Validación en los modelos
+=========================
 
 from django.core.validators import RegexValidator
 
@@ -2095,9 +2263,9 @@ class Pago(models.Model):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
     telefono = models.CharField(validators=[phone_regex], max_length=20, blank=True,null=True) # validators should be a list
 
-##################################################
-##### forms.py para el modelo User de django #####
-##################################################
+======================================
+forms.py para el modelo User de django
+======================================
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -2126,9 +2294,9 @@ class RegisterForm(UserCreationForm):
             user.save()
             return user
 
-#######################################################
-###### Método save del UserCreationForm de django #####
-#######################################################
+==========================================
+Método save del UserCreationForm de django
+==========================================
 
 class UserForm(UserCreationForm):
     """
@@ -2267,9 +2435,9 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ('first_name', 'last_name',  'email', 'username', 'password1', 'password2')
 
-##############################################
-##### Pasando varios parametros a la url #####
-##############################################
+==================================
+Pasando varios parametros a la url
+==================================
 
 # En el template
 <td>
@@ -2279,21 +2447,24 @@ class RegisterForm(UserCreationForm):
 # En la url
 url(r'^search/(?P<pk>\d+)/(?P<id_x>\d+)/(?P<id_y>\d+)$', ParticipacionCreate.as_view(), name = "search"),
 
-###################
-##### Filtros #####
-###################
+=======
+Filtros
+=======
 
-Los filtros de plantillas son formas simples de alterar el valor de una variable antes de mostrarla.
+Los filtros de plantillas son formas simples de alterar el valor de una variable
+antes de mostrarla.
+
 Los filtros se parecen a esto:
 
 {{ nonmbre|lower }}
 
-Esto muestra el valor de {{ nombre }} después de aplicarle el filtro lower, el cual
-convierte el texto a minúscula. Usa una pipe o tubería (|) para aplicar el filtro.
+Esto muestra el valor de {{ nombre }} después de aplicarle el filtro lower, el
+cual convierte el texto a minúscula. Usa una pipe o tubería (|) para aplicar el
+filtro.
 
-Los filtros pueden ser encadenados, esto quiere decir que, la salida de uno de los
-filtros puede ser aplicada al próximo. Aquí un ejemplo que toma el primer elemento
-de una lista y la convierte a mayusculas:
+Los filtros pueden ser encadenados, esto quiere decir que, la salida de uno de
+los filtros puede ser aplicada al próximo. Aquí un ejemplo que toma el primer
+elemento de una lista y la convierte a mayusculas:
 
 {{ mi_lista|first|upper }}
 
@@ -2308,28 +2479,37 @@ Un filtro con argumentos se ve de este modo:
 # palabras de la variable bio. Los argumentos de los
 # filtros están siempre entre comillas dobles.
 
-{{ value|linebreaks }} # Replaces line breaks in plain text with appropriate HTML; a single newline becomes
-# an HTML line break (<br>) and a new line followed by a blank line becomes a paragraph break (</p>).
+{{ value|linebreaks }} # Replaces line breaks in plain text with appropriate
+HTML; a single newline becomes # an HTML line break (<br>) and a new line
+followed by a blank line becomes a paragraph break (</p>).
 
-{{ value|linebreaksbr }} # Converts all newlines in a piece of plain text to HTML line breaks (<br>).
+Converts all newlines in a piece of plain text to HTML line breaks (<br>).
 
-{{ value|linenumbers }} # Displays text with line numbers.
+{{ value|linebreaksbr }}
 
-{{ my_test | wordcount }} # Contar la cantidad de palabras.
+Displays text with line numbers.
 
-##### Herencia de plantillas #####
+{{ value|linenumbers }}
 
-Para trabajar correctamente en Django se usará el sistema de plantillas para crear páginas HTML
-enteras, sin este tipo de sistemas de plantillas nos preguntaríamos ¿Cómo reducimos la duplicación y la redundancia
-de las áreas comunes de las páginas, como por ejemplo, los paneles de navegación?
-Una forma clásica de solucionar este problema es usar includes, insertando dentro
-de las páginas HTML a "incluir" una página dentro de otra. Es más, Django admite
-esta aproximación, con la etiqueta {% include %} Pero la
-mejor forma de solucionar este problema con Django es usar una estrategia más
-elegante llamada herencia de plantillas.
-En esencia, la herencia de plantillas te deja construir una plantilla base "esqueleto"
-que contenga todas las partes comunes de tu sitio y definir "bloques" que las
-plantillas hijas puedan sobrescribir.
+Contar la cantidad de palabras.
+
+{{ my_test | wordcount }}
+
+======================
+Herencia de plantillas
+======================
+
+Para trabajar correctamente en Django se usará el sistema de plantillas para
+crear páginas HTML enteras, sin este tipo de sistemas de plantillas nos
+preguntaríamos ¿Cómo reducimos la duplicación y la redundancia de las áreas
+comunes de las páginas, como por ejemplo, los paneles de navegación? Una forma
+clásica de solucionar este problema es usar includes, insertando dentro de las
+páginas HTML a "incluir" una página dentro de otra. Es más, Django admite esta
+aproximación, con la etiqueta {% include %} Pero la mejor forma de solucionar
+este problema con Django es usar una estrategia más elegante llamada herencia
+de plantillas. En esencia, la herencia de plantillas te deja construir una
+plantilla base "esqueleto" que contenga todas las partes comunes de tu sitio y
+definir "bloques" que las plantillas hijas puedan sobrescribir.
 
 Ejemplo de plantilla base:
 
@@ -2376,58 +2556,67 @@ Ejemplo de plantilla base:
   <h1>fff</h1>
 {% endblock %}
 
-#########################################
-##### Etiqueta include en templates #####
-#########################################
+=============================
+Etiqueta include en templates
+=============================
 
-{% include %} Esta etiqueta te permite incluir el contenido de otra plantilla. El
-argumento para esta etiqueta debería ser el nombre de la plantilla a incluir, y el
-nombre de la plantilla puede ser una variable string hard-coded (entre comillas),
-entre simples o dobles comillas. En cualquier momento que tengas el mismo código
-en varias etiquetas, considera utilizar la etiqueta {% include %} para eliminar la
-redundancia entre las plantillas.
-Estos dos ejemplos incluyen el contenido de la plantilla nav.html. Los ejemplos son
+{% include %} Esta etiqueta te permite incluir el contenido de otra plantilla.
+El argumento para esta etiqueta debería ser el nombre de la plantilla a incluir,
+y el nombre de la plantilla puede ser una variable string hard-coded
+(entre comillas), entre simples o dobles comillas. En cualquier momento que
+tengas el mismo código en varias etiquetas, considera utilizar la etiqueta
+{% include %} para eliminar la redundancia entre las plantillas. Estos dos
+ejemplos incluyen el contenido de la plantilla nav.html. Los ejemplos son
 equivalentes e ilustran que cualquier modo de comillas está permitido:
- 
+
 {% include 'nav.html' %}
 {% include "nav.html" %}
 
 Por convención las plantillas que van a ser incluidas se guardan en un
-directorio "includes". En el ejemplo incluímos el contenido de la plantilla includes/nav.html:
+directorio "includes". En el ejemplo incluímos el contenido de la plantilla
+includes/nav.html:
 
 {% include 'includes/nav.html' %}
 
-####################
-##### render() #####
-####################
+========
+render()
+========
 
 La función llamada render(), se encuentra en el módulo django.shortcuts.
 
-Es un idioma muy común para cargar una template llenar un contexto y retornar un objeto HttpResponse con el resultado
-de una template renderizada.
+Es un idioma muy común para cargar una template llenar un contexto y retornar un
+objeto HttpResponse con el resultado de una template renderizada.
 
-La función render toma como primer argumento la solicitud (objeto request), el nombre de una template como segundo
-argumento y un diccionario como tercer argumento. Este devuelve un objeto HttpResponse de la template solicitada renderizada
-con el contexto dado.
+La función render toma como primer argumento la solicitud (objeto request), el
+nombre de una template como segundo argumento y un diccionario como tercer
+argumento. Este devuelve un objeto HttpResponse de la template solicitada
+renderizada con el contexto dado.
 
-################################
-##### render_to_response() #####
-################################
+====================
+render_to_response()
+====================
 
-El primer argumento de render_to_response() debe ser el nombre de la plantilla a utilizar.
-El segundo argumento, si es pasado, debe ser un diccionario para usar en la creación de un Context para esa plantilla.
-Si no se le pasa un segundo argumento, render_to_response() utilizará un diccionario vacío.
+El primer argumento de render_to_response() debe ser el nombre de la plantilla a
+utilizar.
 
-###############################################################
-##### Agregar nuestros modelos al sitio del administrador #####
-###############################################################
+El segundo argumento, si es pasado, debe ser un diccionario para usar en la
+creación de un Context para esa plantilla.
 
-Para poder agregar, cambiar y borrar objetos en las tablas de la base de datos usando la interfaz
-por defecto del administrador de Django es necesario declarar esos modelos en un fichero específico.
+Si no se le pasa un segundo argumento, render_to_response() utilizará un
+diccionario vacío.
 
-Dentro del directorio interno algún proyecto generado (project/app), existe un archivo
-vacio llamado admin.py, creado automáticamente por el comando startapp
-agreguémosle las siguientes líneas de código, para registrar nuestros tres modelos:
+===================================================
+Agregar nuestros modelos al sitio del administrador
+===================================================
+
+Para poder agregar, cambiar y borrar objetos en las tablas de la base de datos
+usando la interfaz por defecto del administrador de Django es necesario declarar
+esos modelos en un fichero específico.
+
+Dentro del directorio interno algún proyecto generado (project/app), existe un
+archivo vacio llamado admin.py, creado automáticamente por el comando startapp
+agreguémosle las siguientes líneas de código, para registrar nuestros tres
+modelos:
 
 En app/admin.py
 
@@ -2439,30 +2628,31 @@ from .models import Mymodel, MyModel2
 admin.site.register(Mymodel)
 admin.site.register(MyModel2)
 
-Y si recargamos la interfáz de administración ya podremos listar los objetos de nuestras tablas de la base de datos.
+Y si recargamos la interfáz de administración ya podremos listar los objetos de
+nuestras tablas de la base de datos.
 
-#####################################################
-##### Estatus de usuarios en el admin de django #####
-#####################################################
+=========================================
+Estatus de usuarios en el admin de django
+=========================================
 
 La opción "Activo" define si el usuario está activo en todo sentido. Si está
 desactivada, el usuario no tendrá acceso a ninguna URL que requiera
 identificación.
 
-La opción Es "staff" indica que el usuario está habilitado a ingresar a la interfaz
-de administración (por ejemplo, indica que el usuario es considerado un
-miembro del staff en tu organización). Como el mismo sistema de usuarios
-puede usarse para controlar el acceso al sitio público (es decir, sitios
-restringidos no administrativos. Mira él capítulo 12.), esta opción diferencia
-entre usuarios públicos y administradores.
+La opción Es "staff" indica que el usuario está habilitado a ingresar a la
+interfaz de administración (por ejemplo, indica que el usuario es considerado un
+miembro del staff en tu organización). Como el mismo sistema de usuarios puede
+usarse para controlar el acceso al sitio público (es decir, sitios restringidos
+no administrativos. Mira él capítulo 12.), esta opción diferencia entre usuarios
+públicos y administradores.
 
 La opción es "superusuario" da al usuario completo e irrestricto acceso a todos
 los elementos de la interfaz de administración, y sus permisos regulares son
 ignorados.
 
-#################################################
-##### Integracions de postgresql con django #####
-#################################################
+=====================================
+Integracions de postgresql con django
+=====================================
 
 # aptitude install postgresql postgresql-server libpq-dev python-dev
 
@@ -2485,9 +2675,9 @@ DATABASES = {
     }
 }
 
-####################################################################
-##### Generar json a partir de un modelo (dumpdata y loaddata) #####
-####################################################################
+========================================================
+Generar json a partir de un modelo (dumpdata y loaddata)
+========================================================
 
 Generar un fichero json con los datos de los modelos de una aplicación:
 
@@ -2507,22 +2697,27 @@ $ python manage.py loaddata initial_data.json
 
 Ejemplo:
 
-Generamos un proyecto en django, migramos y creamos un usuario administrador, ahora vamos a generar
-un fichero que tendra los datos del usuario creado, y haremos referencia al modelo que gestiona los usuarios
+Generamos un proyecto en django, migramos y creamos un usuario administrador,
+ahora vamos a generar un fichero que tendra los datos del usuario creado, y
+haremos referencia al modelo que gestiona los usuarios.
 
 $ python manage.py dumpdata auth.user > auth_user.json
 
 En ese fichero json estan los datos de usuario que se creo
 
-Borramos la db, la volvemos a generar con migrate, como es obvio esta nueva db no tiene usuarios creados, entonces:
+Borramos la db, la volvemos a generar con migrate, como es obvio esta nueva db
+no tiene usuarios creados, entonces:
 
 $ python manage.py loaddata auth_user.json
 
-Installed 1 object(s) from 1 fixture(s) # Sera el mensaje si agregó el usuario con éxito
+Installed 1 object(s) from 1 fixture(s) # Sera el mensaje si agregó el usuario
+con éxito
 
-Con esto ya estará disponible el usuario en la db con todos los demas datos que corresponden a ese modelo.
+Con esto ya estará disponible el usuario en la db con todos los demas datos que
+corresponden a ese modelo.
 
-Es posible hacer un dumpdata de todos los modelos en general, no especificando un modelo en particula
+Es posible hacer un dumpdata de todos los modelos en general, no especificando
+un modelo en particula
 
 $ python manage.py dumpdata > data.json
 
@@ -2546,11 +2741,12 @@ $ python manage.py dumpdata --indent 2 > data.json
 
 $ python manage.py dumpdata auth.user --indent 2 --format xml > user.xml
 
-################################
-##### Relaciones en Django #####
-################################
+====================
+Relaciones en Django
+====================
 
-Ejemplo de como hacer una relacion triple, usando estados, municipios y parroquias.
+Ejemplo de como hacer una relacion triple, usando estados, municipios y
+parroquias.
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -2624,56 +2820,33 @@ class Article(models.Model):
     class Meta:
         ordering = ('headline',)
 
-#########################################################
-##### Serialización de consultas de django con json #####
-#########################################################
-
-from django.contrib.auth.models import User
-from django.http import HttpResponse
-import json
-
-
-def index(request):
-    """
-    Index view, to tray.
-    """
-    # Consultamos todos los usuarios
-    usuarios = User.objects.all()
-    #print usuarios
-    # Covertimos los objetos del query en una lista mas limpia
-    lista = [{'pk': x.pk,'username': x.username} for x in usuarios]
-    #print lista
-    # Convertimos la lista en un json
-    serializado = json.dumps(lista)
-    #print serializado
-    # Descerializamos el json
-    deserializado = json.loads(serializado)
-    print deserializado
-    return HttpResponse("Hello, world!")
-
-################################################
-##### ALLOWED_HOSTS = [] en el settings.py #####
-################################################
+====================================
+ALLOWED_HOSTS = [] en el settings.py
+====================================
 
 Es una variable que contiendrá una lista de cadenas que representan los nombres
 de host/dominio que ese sitio de Django puede servir.
 
-Esta es una medida de seguridad para evitar ataques de encabezado HTTP Host, que son posibles
-incluso bajo muchas configuraciones de servidor web aparentemente seguras.
+Esta es una medida de seguridad para evitar ataques de encabezado HTTP Host, que
+son posibles incluso bajo muchas configuraciones de servidor web aparentemente
+seguras.
 
-###########################################################
-##### Sobrescribiendo métodos de las clases genéricas #####
-###########################################################
+===============================================
+Sobrescribiendo métodos de las clases genéricas
+===============================================
 
-Las clases genéricas de Django simplifican el tiempo de creación de aplicaciones, puesto que
-están predefinidas para realizar acciones específicas como crear, leer, eliminar, y detallar objetos,
-pero a veces necesitamos realizar tareas mas complejas que van mas allá de lo que nos ofrecen por defecto
-algunas de estas clases, es por ello que es común sobrescribir los métodos de estas clases y adaptarlos a
-las necesidades que se tengan.
+Las clases genéricas de Django simplifican el tiempo de creación de
+aplicaciones, puesto que están predefinidas para realizar acciones específicas
+como crear, leer, eliminar, y detallar objetos, pero a veces necesitamos
+realizar tareas mas complejas que van mas allá de lo que nos ofrecen por defecto
+algunas de estas clases, es por ello que es común sobrescribir los métodos de
+estas clases y adaptarlos a las necesidades que se tengan.
 
-Para encontrar ejemplos de las cláses y su métodos: --> https://ccbv.co.uk/projects/Django/1.11/
+Para encontrar ejemplos de las cláses y su métodos: -->
+https://ccbv.co.uk/projects/Django/1.11/
 
-# Ejemplo: Creando un post en una aplicación tipo blog y usando los métodos por defecto.
+# Ejemplo: Creando un post en una aplicación tipo blog y usando los métodos por
+defecto.
 
 class PostCrear(SuccessMessageMixin,CreateView):
     """
@@ -2686,7 +2859,8 @@ class PostCrear(SuccessMessageMixin,CreateView):
 
     def get(self, request, *args, **kwargs):
         """
-        Método de la clase que imprime cuando se accede por get a la clase para crear posts
+        Método de la clase que imprime cuando se accede por get a la clase para
+        crear posts.
         """
         self.object = None
         print "Accediendo por GET"
@@ -2698,25 +2872,24 @@ class PostCrear(SuccessMessageMixin,CreateView):
         """
         self.object = None
         print "********************************"
-        print "Usuario:("+(request.user.username)+") creo la publicacion con exito"
+        print "Usuario:("+(request.user.username)+") creo publicacion con exito"
         print "********************************"
         return super(PostCrear, self).post(request, *args, **kwargs)
 
-########################
-##### http y https #####
-########################
+============
+http y https
+============
 
-Es común que cuando un proyecto esté en producción se protejan
-los accesos a las páginas usando certificados ssl y se pueda
-navegar usando https, pero en realidad solo es necesario en las
-páginas donde se envian datos, como puede ser un login o un formulario
-de consulta, o las páginas del administrador, las cuales si deben
-cifrarse por seguridad, entonces podemos usar la variable SECURE_SSL_REDIRECT
-como True en el settings, que hace que  todo vaya por https, y la variable
-SECURE_REDIRECT_EXEMPT que es una lista de las urls que no queremos que
-vayan por https, para nuestro cas necesitamos lo opuesto, entoncesagregando una
-expresión regular con negación al valor de la variable logramos que
-hiciera lo contrario , entonces quedaría así:
+Es común que cuando un proyecto esté en producción se protejan los accesos a las
+páginas usando certificados ssl y se pueda navegar usando https, pero en
+realidad solo es necesario en las páginas donde se envian datos, como puede ser
+un login o un formulario de consulta, o las páginas del administrador, las
+cuales si deben cifrarse por seguridad, entonces podemos usar la variable
+SECURE_SSL_REDIRECT como True en el settings, que hace que  todo vaya por https,
+y la variable SECURE_REDIRECT_EXEMPT que es una lista de las urls que no
+queremos que vayan por https, para nuestro cas necesitamos lo opuesto,
+entoncesagregando una expresión regular con negación al valor de la variable
+logramos que hiciera lo contrario , entonces quedaría así:
 
 SECURE_SSL_REDIRECT = True
 SECURE_REDIRECT_EXEMPT = ['^(?!admin).*$']
@@ -2728,9 +2901,9 @@ Para un set mas configurable se puede usar el middleware personalizado:
 --> https://github.com/argenisosorio/django_ssl_secure_redirect
 En sustitución del middleware de django.
 
-##############################################################
-##### Clases y funciones para crear un usuario de Django #####
-##############################################################
+==================================================
+Clases y funciones para crear un usuario de Django
+==================================================
 
 #urls.py
 url(r'^crear_usuario/$', UsuarioCreate.as_view(), name='registro'),
@@ -2816,7 +2989,7 @@ class UserForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name',  'email', 'username', 'password1', 'password2',)
+        fields = ('first_name','last_name','email','username','password1','password2',)
 
     def clean_username(self):
         """
@@ -2855,7 +3028,8 @@ class UsuarioCreate(SuccessMessageMixin,CreateView):
 
     def form_valid(self,form):
         """
-        Método que verifica si el formulario es válido, en cuyo caso procede a registrar los datos del usuario.
+        Método que verifica si el formulario es válido, en cuyo caso procede a
+        registrarlos datos del usuario.
         Autor: Argenis Osorio (aosorio@cenditel.gob.ve)
         Fecha: 22-05-2017
         """
@@ -2870,10 +3044,9 @@ class UsuarioCreate(SuccessMessageMixin,CreateView):
 
         return super(UsuarioCreate, self).form_valid(form)
 
-
-##########################################################################
-##### Clases y funciones para editar el perfil del usuario de Django #####
-##########################################################################
+==============================================================
+Clases y funciones para editar el perfil del usuario de Django
+==============================================================
 
 #urls.py
 url(r'^perfil/(?P<pk>\d+)$', login_required(views.edit_profile), name="perfil"),
@@ -2954,10 +3127,11 @@ def edit_profile(request, pk):
         if form.is_valid():
             form.save()
         messages = '¡Perfil actualizado!'
-        return render_to_response('user_profile.html', {'form': form, 'messages': messages}, context_instance=RequestContext(request))
+        return render_to_response('user_profile.html',{'form':form,'messages':messages},context_instance=RequestContext(request))
     return render(request, 'user_profile.html', {'form':form})
 
 ó
+
 #views.py con clases genéricas
 class PerfilUpdate(SuccessMessageMixin,UpdateView):
     """
@@ -3007,18 +3181,18 @@ class PerfilUpdate(SuccessMessageMixin,UpdateView):
 
         return super(PerfilUpdate, self).form_valid(form)
 
-####################################
-##### Redirigir una url a otra #####
-####################################
+========================
+Redirigir una url a otra
+========================
 
 from django.views.generic import RedirectView
 
 urlpatterns = patterns('',
     url(r'^some-page/$', RedirectView.as_view(url='/')),
 
-####################################################################
-##### Usando el select field para leer de datos de otro modelo #####
-####################################################################
+========================================================
+Usando el select field para leer de datos de otro modelo
+========================================================
 
 #models.py
 # -*- coding: utf-8 -*-
@@ -3073,9 +3247,9 @@ class Borrar(DeleteView):
     model = Persona
     success_url = reverse_lazy('registro:consultar')
 
-################################################################
-##### Ejemplo de instanciar otro modelo en un select field #####
-################################################################
+====================================================
+Ejemplo de instanciar otro modelo en un select field
+====================================================
 
 # models.py
 class Proyecto(models.Model):
@@ -3150,9 +3324,9 @@ class ReporteForm(forms.ModelForm):
         'required': 'True',
     }), required = True)
 
-###################################################
-##### Imprimiento la fecha y hora del sistema #####
-###################################################
+=======================================
+Imprimiento la fecha y hora del sistema
+=======================================
 
 from datetime import datetime
 
@@ -3172,9 +3346,9 @@ formatedDate = myDate.strftime("%d-%m-%Y %H:%M")
 b = str(formatedDate)
 print b
 
-##################################################
-##### Imprimiendo las acciones de un usuario #####
-##################################################
+======================================
+Imprimiendo las acciones de un usuario
+======================================
 
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse
@@ -3201,7 +3375,7 @@ class Consultar(ListView):
             raise Http404(_(u"Empty list and '%(class_name)s.allow_empty' is False.")
                           % {'class_name': self.__class__.__name__})
         context = self.get_context_data(object_list=self.object_list)
-        print "***** El usuario: "+str(request.user)+", visito la lista de personas el: "+str(datetime.now())+" *****"
+        print "El usuario: "+str(request.user)+", visito la lista de personas el: "+str(datetime.now())+""
         return self.render_to_response(context)
 
 
@@ -3253,14 +3427,15 @@ class Borrar(DeleteView):
         print "***** El usuario: "+str(self.request.user)+", elimino a una persona el: "+str(datetime.now())+" *****"
         return super(Borrar, self).delete(self, request, *args, **kwargs)
 
-########################################
-##### Creando una bitácora de logs #####
-########################################
+============================
+Creando una bitácora de logs
+============================
 
 """
-Creamos un modelo Bitacora, y hacemos un query para crear un objeto al realizar una acción específica.
-Para este ejemplo crea una entrada en la bitacora cuando visita una vista y guarda el usuario y la fecha.
-Así, si editamos el admin.py podemos ver la bitácora desde el admin, y podemos ordenar mejor el modelo,
+Creamos un modelo Bitacora, y hacemos un query para crear un objeto al realizar
+una acción específica. Para este ejemplo crea una entrada en la bitacora cuando
+visita una vista y guarda el usuario y la fecha. Así, si editamos el admin.py
+podemos ver la bitácora desde el admin, y podemos ordenar mejor el modelo,
 agregando fecha y hora por ejemplo.
 """
 
@@ -3280,112 +3455,141 @@ def index(request):
     Bitacora.objects.create(entrada=a)
     return render_to_response('registro/index.html', context_instance=RequestContext(request))
 
-#################################################
-##### Usando las querys(consultas) QuerySet #####
-#################################################
+=====================================
+Usando las querys(consultas) QuerySet
+=====================================
 
-Un QuerySet es una lista de objetos de un modelo determinado. Un QuerySet te permite leer los
-datos de una base de datos, filtrarlos y ordenarlos.
+Un QuerySet es una lista de objetos de un modelo determinado. Un QuerySet te
+permite leer los datos de una base de datos, filtrarlos y ordenarlos.
 
-# Abrimos la consola interactiva de python que provee Django
+Abrimos la consola interactiva de python que provee Django.
+
 $ python manage.py shell
 
-# Importamos el modelo a consultar, en este caso consultaremos los objetos registrados del model User de Django
+Importamos el modelo a consultar, en este caso consultaremos los objetos
+registrados del model User de Django.
+
 >>> from django.contrib.auth.models import User
 
-# Si hay usuarios registrados nos mostrará la lista de objetos guardados
+Si hay usuarios registrados nos mostrará la lista de objetos guardados.
+
 >>> User.objects.all()
 [<User: admin>, <User: aosorio>, <User: dasd>, <User: dasdasd>, <User: dasda>]
 
-##### Crear objeto #####
+============
+Crear objeto
+============
 
-'''
 En este ejemplo tenemos un modelo Persona, con dos campos, nombre y cedula.
-'''
 
-# Importamos el modelo
+Importamos el modelo
+
 >>> from registro.models import Persona
 
-# Listamos los objetos
+Listamos los objetos
+
 >>> Persona.objects.all()
 [<Persona: aosorio>, <Persona: maria>]
 
-# Insertamos un nuevo objeto
+Insertamos un nuevo objeto
+
 >>> Persona.objects.create(nombre='karla', cedula=12345678)
 <Persona: karla>
 
-# Listamos los objetos de nuevo, vemos que hay uno nuevo, el que creamos.
+Listamos los objetos de nuevo, vemos que hay uno nuevo, el que creamos.
+
 >>> Persona.objects.all()
 [<Persona: aosorio>, <Persona: maria>, <Persona: karla>]
 
-##### Creando usuarios de django #####
+==========================
+Creando usuarios de django
+==========================
 
 >>> from django.contrib.auth.models import User
 >>> user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
 >>> user.last_name = 'Lennon'
 >>> user.save()
 
-##### Filtrar objetos #####
+===============
+Filtrar objetos
+===============
 
-'''
-Una parte importante de los QuerySets es la habilidad para filtrarlos. Digamos que queremos encontrar
-todos los posts cuyo autor es el User ola. Usaremos filter en vez de all.
-'''
 
-# Filtrar cuando un objeto con el campo username coincída con la cadena.
+Una parte importante de los QuerySets es la habilidad para filtrarlos. Digamos
+que queremos encontrar todos los posts cuyo autor es el User ola. Usaremos
+filter en vez de all.
+
+
+Filtrar cuando un objeto con el campo username coincída con la cadena.
+
 >>> User.objects.filter(username='admin')
 [<User: admin>]
 
-# Filtrar cuando un objeto con el id coincída con el número.
+Filtrar cuando un objeto con el id coincída con el número.
+
 >>> User.objects.filter(id=1)
 [<User: admin>]
 
-# Filtrar cuando un objeto contenga la cadena descrita.
+Filtrar cuando un objeto contenga la cadena descrita.
+
 >>> User.objects.filter(username__icontains='ad')
 [<User: admin>]
 
-# Filtrar la lista de objetos por un solo campo de la tabla, en este caso
-# obtenemos todos los valores del campo username de la tabla User.
+Filtrar la lista de objetos por un solo campo de la tabla, en este caso
+obtenemos todos los valores del campo username de la tabla User.
+
 >>> User.objects.all().values('username')
 [{'username': u'admin'}, {'username': u'aosorio'}]
 
-##### Ordenando objetos #####
+=================
+Ordenando objetos
+=================
 
-'''
-Los QuerySets también te permiten ordenar la lista de objetos. Intentemos ordenarlos por el campo
-'''
+Los QuerySets también te permiten ordenar la lista de objetos. Intentemos
+ordenarlos por el campo.
 
 >>> Persona.objects.all()
 [<Persona: aosorio>, <Persona: maria>, <Persona: karla>]
 
-# Ordenar los objetos por id
+Ordenar los objetos por id.
+
 >>> Persona.objects.order_by('id')
 [<Persona: aosorio>, <Persona: maria>, <Persona: karla>]
 
-# Con un - antes podemos invertir el ordenamiento
+Con un - antes podemos invertir el ordenamiento.
+
 >>> Persona.objects.order_by('-id')
 [<Persona: karla>, <Persona: maria>, <Persona: aosorio>]
 
-# Ordenar los objetos por cedula
+Ordenar los objetos por cedula.
+
 >>> Persona.objects.order_by('cedula')
 [<Persona: maria>, <Persona: karla>, <Persona: aosorio>]
 
-# Contar todos los objetos
+Contar todos los objetos.
+
 x = Persona.objects.count()
 print x
 
-# Contar todos los objetos que contengan admin en el username
+Contar todos los objetos que contengan admin en el username.
+
 x = Persona.objects.filter(username__icontains='admin').count()
 
-##### Limitando el número de objetos a consultar #####
+==========================================
+Limitando el número de objetos a consultar
+==========================================
 
-# Mostrar solo 5 objetos
+Mostrar solo 5 objetos.
+
 >>> Persona.objects.all()[:5]
 
-# Mostrar solo 2 objetos
+Mostrar solo 2 objetos.
+
 >>> Persona.objects.all()[:2]
 
-##### Mostrar los objetos de la lista #####
+===============================
+Mostrar los objetos de la lista
+===============================
 
 >>> Persona.objects.all()[0]
 <Persona: aosorio>
@@ -3396,11 +3600,14 @@ x = Persona.objects.filter(username__icontains='admin').count()
 >>> Persona.objects.all()[2]
 <Persona: karla>
 
-# Mostrar objetos en un rango
+Mostrar objetos en un rango.
+
 >>> Persona.objects.all()[5:10]
 <Persona: karla>
 
-##### Ejemplo de queryset para filtrar objetos #####
+========================================
+Ejemplo de queryset para filtrar objetos
+========================================
 
 class BitacoraView(ListView):
     """
@@ -3411,7 +3618,8 @@ class BitacoraView(ListView):
 
     def get_queryset(self):
         """
-        Método que filtra los datos de la tabla, solo muestra si coincide con el filtro
+        Método que filtra los datos de la tabla, solo muestra si coincide con el
+        filtro.
         """
         #queryset = Bitacora.objects.filter(tipo='Actualización')
         queryset = Bitacora.objects.filter(tipo='Acceso')
@@ -3430,9 +3638,9 @@ def Consulta_datos(request, template_name='app/template.html'):
     print data
     return render(request,template_name, data)
 
-#################################
-##### search form in django #####
-#################################
+=====================
+Search form in django
+=====================
 
 #urls.py
 # -*- coding: utf-8 -*-
@@ -3514,9 +3722,9 @@ def busqueda(request):
 {% endif %}
 {% endblock %}
 
-##################################################
-##### search form in django con doble filtro #####
-##################################################
+======================================
+search form in django con doble filtro
+======================================
 
 # urls.py
 # -*- coding: utf-8 -*-
@@ -3621,9 +3829,9 @@ def busqueda(request):
 {% endif %}
 {% endblock %}
 
-###############################################################
-##### Filtro de búsqueda con dependencia de otros modelos #####
-###############################################################
+===================================================
+Filtro de búsqueda con dependencia de otros modelos
+===================================================
 
 #urls.py
 url(r'^buscar/$', login_required(views.Buscar_pago.as_view()), name='buscar'),
@@ -3775,9 +3983,9 @@ def busqueda(request):
 {% endif %}
 {% endblock %}
 
-#####################
-##### form.as_p #####
-#####################
+=========
+form.as_p
+=========
 
 form.as_p nos permite renderizar un formulario de manera ordenada, tipo
 párrafo o tabla sin necesidad deincluir mas nada. Los unicos requerimientos
@@ -3789,9 +3997,9 @@ como los otros atributos propios como label, requiered, etc.
   <input type="submit" value="Submit" />
 </form>
 
-##############################################
-##### Usando los labels en el formulario #####
-##############################################
+==================================
+Usando los labels en el formulario
+==================================
 
 <form method="post">{% csrf_token %}
     {{ form.username.label }}
@@ -3806,9 +4014,9 @@ como los otros atributos propios como label, requiered, etc.
     <button class="btn btn-success" type="submit">Entrar</button>
   </form>
 
-#############################################
-##### Ejemplo de .gitignore para Django #####
-#############################################
+=================================
+Ejemplo de .gitignore para Django
+=================================
 
 *.*.backup
 *.*~
@@ -3822,9 +4030,9 @@ como los otros atributos propios como label, requiered, etc.
 #/project/app/migrations
 #/project/settings.py
 
-#######################################################
-##### Campos del user de django - table auth_user #####
-#######################################################
+===========================================
+Campos del user de django - table auth_user
+===========================================
 
 id
 password
@@ -3838,36 +4046,43 @@ is_active
 date_joined
 username
 
-############################
-##### Reiniciar id_seq #####
-############################
+================
+Reiniciar id_seq
+================
 
 Con PhpPgAdmin
 
-// instalacion
+Instalacion
+
 # aptitude install phppgadmin
 
-http://localhost/phppgadmin/ // Interfaz grafica en el navegador web
+Interfaz grafica en el navegador web.
+
+http://localhost/phppgadmin/
 
 El usuario y contraseña para conectarse debe ser un usuario de postgres.
 
-Entramos en la db, luego en public, luego en secuencias, luego en app_model_id_seq, modificar
-el campo que dice "reiniciar valor" que equivale al campo "last_value" de la tabla app_model_id_seq
+Entramos en la db, luego en public, luego en secuencias, luego en
+app_model_id_seq, modificar el campo que dice "reiniciar valor" que equivale al
+campo "last_value" de la tabla app_model_id_seq
 
-Por ahora me ha servido para reiniciar las secuencias de las tablas de django y esto permite
-por ejemplo, que al restaurar valores desde un csv, permite insertar nuevos registros en la tabla.
+Por ahora me ha servido para reiniciar las secuencias de las tablas de django y
+esto permite por ejemplo, que al restaurar valores desde un csv, permite
+insertar nuevos registros en la tabla.
 
-Si hay 3976 registros se debe configurar que el último valor es 3977 para que guarde bien en la tabla.
+Si hay 3976 registros se debe configurar que el último valor es 3977 para que
+guarde bien en la tabla.
 
-##############################################################
-##### Subir archivos usando un formulario en el tempalte #####
-##############################################################
+==================================================
+Subir archivos usando un formulario en el tempalte
+==================================================
 
-# En la rama upload del siguiente repo está el ejemplo funcional:
-# https://github.com/argenisosorio/registro_vistas_clases/
+En la rama upload del siguiente repo está el ejemplo funcional:
 
-# Activamos las siguientes variables en el settings, y le damos la
-# ruta donde se va a almacenar el fichero adjunto.
+https://github.com/argenisosorio/registro_vistas_clases/
+
+Activamos las siguientes variables en el settings, y le damos la ruta donde se
+va a almacenar el fichero adjunto.
 
 # settings.py
 MEDIA_URL = '/media/'
@@ -3880,7 +4095,6 @@ url(r'^file$', views.file, name='file'),
 from django.shortcuts import render
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
-
 
 def file(request):
     """
@@ -3899,7 +4113,6 @@ def file(request):
     # El archivo será guardado en la carpeta "media" en la raíz del proyecto.
     return render(request, 'registro/file.html')
 
-
 # file.html
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
   <input type="file" name="myfile">
@@ -3910,17 +4123,18 @@ def file(request):
   <p>File uploaded at: <a href="{{ file }}">{{ file }}</a></p>
 {% endif %}
 
-# Luego de renderizar el formulario y subir un archivo, vamos a la carpeta media
-# en la raíz del proyecto para verificar si se subio correctamente.
+Luego de renderizar el formulario y subir un archivo, vamos a la carpeta media
+en la raíz del proyecto para verificar si se subio correctamente.
 
-#############################################
-##### Subir archivos usando Model Forms #####
-#############################################
+=================================
+Subir archivos usando Model Forms
+=================================
 
-# En la rama upload_model del siguiente repo está el ejemplo funcional:
-# https://github.com/argenisosorio/registro_vistas_clases/
+En la rama upload_model del siguiente repo está el ejemplo funcional:
+https://github.com/argenisosorio/registro_vistas_clases/
 
-# Activamos las siguientes variables en el settings, y le damos la ruta donde se va a almacenar el fichero adjunto
+Activamos las siguientes variables en el settings, y le damos la ruta donde se
+va a almacenar el fichero adjunto.
 
 # settings.py
 MEDIA_URL = '/media/'
@@ -3935,7 +4149,6 @@ url(r'^list_files$', views.List_files.as_view(), name='list_files'),
 from django.db import models
 from django.core.urlresolvers import reverse
 
-
 class Document(models.Model):
     description = models.CharField(max_length=255, blank=True)
     document = models.FileField(upload_to='')
@@ -3945,7 +4158,6 @@ class Document(models.Model):
 # -*- coding: utf-8 -*-
 from django import forms
 from registro.models import Document
-
 
 class DocumentForm(forms.ModelForm):
     class Meta:
@@ -4006,16 +4218,17 @@ class List_files(ListView):
 </ul>
 {% endblock %}
 
-#############################################################
-##### Levantar un proyecto de Django, con uwsgi y nginx #####
-#############################################################
+=================================================
+Levantar un proyecto de Django, con uwsgi y nginx
+=================================================
 
-# Ver guías de uwsgi y nginx para entender mejor.
+Ver guías de uwsgi y nginx para entender mejor.
 
-En este ejemplo trabajaremos con un entorno virtual de python, y nuestro proyecto de Django se llama "prueba".
+En este ejemplo trabajaremos con un entorno virtual de python, y nuestro
+proyecto de Django se llama "prueba".
 
-El fichero wsgi.py que está junto al settings.py lo moveremos a la raíz del proyecto, esto para que uwsgi
-lo consiga con la configuración que haremos luego.
+El fichero wsgi.py que está junto al settings.py lo moveremos a la raíz del
+proyecto, esto para que uwsgi lo consiga con la configuración que haremos luego.
 
 Instalamos nginx.
 
@@ -4025,12 +4238,17 @@ Instalamos uwsgi globalmente y el plugin de uwsgi de python.
 
 # apt-get install uwsgi uwsgi-core
 
-# apt-get install uwsgi-plugin-python // Para python 2.7
+Para python 2.7.
+
+# apt-get install uwsgi-plugin-python
 
 El crear y mover ficheros o directorios lo harémos siempre como root.
-Ahora vamos a configurar nginx y a mover la aplicación "prueba" al directorio de trabajo /srv
 
-En /etc/nginx/sites-available vamos a crear un fichero de configuración para nuestra aplicación "prueba"
+Ahora vamos a configurar nginx y a mover la aplicación "prueba" al directorio de
+trabajo /srv.
+
+En /etc/nginx/sites-available vamos a crear un fichero de configuración para
+nuestra aplicación "prueba"
 
 /etc/nginx/sites-available# touch prueba
 
@@ -4113,12 +4331,13 @@ Ahora harémos las configuraciones de uwsgi en /etc/uwsgi
 etc/uwsgi# ls
 apps-available  apps-enabled
 
-Al igual que en nginx crearemos un fichero de configuración, pero este va a ser un xml
-que se va a guardar en apps-available:
+Al igual que en nginx crearemos un fichero de configuración, pero este va a ser
+un xml que se va a guardar en apps-available:
 
-Tenemos que tener mucho cuidado al momento de configurar este fichero, las rutas deben ser
-declaradas muy bien, especial énfasis en la ruta del entorno virtual, y el usuario del sistema y grupo
-dueño de la aplicación, así como la ruta local o dirección donde está alojada la aplicación.
+Tenemos que tener mucho cuidado al momento de configurar este fichero, las rutas
+deben ser declaradas muy bien, especial énfasis en la ruta del entorno virtual,
+y el usuario del sistema y grupo dueño de la aplicación, así como la ruta local
+o dirección donde está alojada la aplicación.
 
 # cd /etc/uwsgi/apps-available
 
@@ -4130,9 +4349,11 @@ dueño de la aplicación, así como la ruta local o dirección donde está aloja
         <master/>
         <chmod-socket>666</chmod-socket>
         <!-- Ruta del entorno virtual donde está instalado Django -->
-        <!-- Si el django está instalado en el sistema base no hace falta especificar alguna ruta, solo se comenta o borra la directiva home -->
+        <!-- Si el django está instalado en el sistema base no hace falta
+        especificar alguna ruta, solo se comenta o borra la directiva home -->
         <home>/home/user/Entornos_virtuales/Django_1.8.8</home>
-        <!-- prueba hace referencia a los archivos de configuración que creamos en apps-available, en este caso, prueba.xml -->
+        <!-- prueba hace referencia a los archivos de configuración que creamos
+        en apps-available, en este caso, prueba.xml -->
         <socket>/var/run/uwsgi/app/prueba/socket</socket>
         <pidfile>/var/run/uwsgi/app/prueba/pid</pidfile>
         <!-- Identificador de usuario con el que se va a correr el proyecto -->
@@ -4144,33 +4365,40 @@ dueño de la aplicación, así como la ruta local o dirección donde está aloja
         <max-requests>1000</max-requests>
         <!-- Ruta donde está alojado el código fuente de la aplicación -->
         <chdir>/srv/prueba</chdir>
-        <!-- Ruta donde está alojado el código fuente de la aplicación y el directorio donde esta el wsgi.py etc... -->
+        <!-- Ruta donde está alojado el código fuente de la aplicación y el
+        directorio donde esta el wsgi.py etc... -->
         <pythonpath>/srv/prueba/prueba/</pythonpath>
         <module>wsgi</module>
         <!-- Si usamos python 3 en el proyecto configuramos "python3" -->
         <plugins>python27</plugins>
 </uwsgi>
 
-// Guardamos como prueba prueba.xml y ahora creamos el enlace simbolico en app-enabled
+Guardamos como prueba prueba.xml y ahora creamos el enlace simbolico en
+app-enabled.
 
 # ln -s /etc/uwsgi/apps-available/prueba.xml /etc/uwsgi/apps-enabled/
 
-// Reiniciar servicio de nginx
+Reiniciar servicio de nginx
+
 # systemctl restart nginx
 
-// Reiniciar el servicio de uwsgi
+Reiniciar el servicio de uwsgi
+
 # systemctl restart uwsgi
 
-Cada vez que se haga un cambio en la configuración de nginx reiniciaremos el servicio, y si el cambio
-es de python, es decir en el proyecto de Django entonces reiniciaremos el servicio de uwsgi o si hubo
-una modificación en la configuración de uwsgi también reiniciamos el servicio.
+Cada vez que se haga un cambio en la configuración de nginx reiniciaremos el
+servicio, y si el cambio es de python, es decir en el proyecto de Django
+entonces reiniciaremos el servicio de uwsgi o si hubo una modificación en la
+configuración de uwsgi también reiniciamos el servicio.
 
-// Para no detener e iniciar los servicios y a su vez tumbar las conexiones usaremos reload en vez de restart:
+Para no detener e iniciar los servicios y a su vez tumbar las conexiones
+usaremos reload en vez de restart:
 
 # systemctl reload nginx
 
-Si todo está bien, podemos visitar la ip local desde el navegador, 192.168.12.148 configurada en
-nginx y por la cual va a estar servida la aplicación.
+Si todo está bien, podemos visitar la ip local desde el navegador,
+192.168.12.148 configurada en nginx y por la cual va a estar servida la
+aplicación.
 
 Si la aplicación no se muestra nos ayudaremos con los logs a encontrar el error
 
@@ -4186,19 +4414,20 @@ Para ver en tiempo real el log de uwsgi:
 
 # tailf /var/log/uwsgi/app/prueba.log
 
-##############################################################
-##### Levantar un proyecto de Django, con uwsgi y Apache #####
-##############################################################
+==================================================
+Levantar un proyecto de Django, con uwsgi y Apache
+==================================================
 
-# Ver guías de uwsgi y apache para entender mejor.
+Ver guías de uwsgi y apache para entender mejor.
 
-Instalamos apache
+Instalamos apache.
 
 # apt-get install apache2
 
 Esto nos creará el directorio /var/www/html/
 
-Movemos el proyecto de django a /var/www/html/ y le damos permisos de lectura, escritura y ejecución al proyecto
+Movemos el proyecto de django a /var/www/html/ y le damos permisos de lectura,
+escritura y ejecución al proyecto.
 
 # chmod -R 777 /var/www/html
 
@@ -4206,13 +4435,15 @@ Instalamos el modulo uwsgi
 
 # apt-get install libapache2-mod-wsgi
 
-// Reiniciamos el servicio de apache
+Reiniciamos el servicio de apache
+
 # service apache2 restart
 
-Una vez apache se halla reiniciado tendremos el modulo instalado y activado en apache.
-A este punto solo nos queda configurar el host virtual.
+Una vez apache se halla reiniciado tendremos el modulo instalado y activado en
+apache. A este punto solo nos queda configurar el host virtual.
 
-// En base al fichero de configuración por defecto creamos una copia
+En base al fichero de configuración por defecto creamos una copia.
+
 # cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/prueba.conf
 
 Editamos prueba.conf
@@ -4271,71 +4502,79 @@ Editamos prueba.conf
 
 Falta...
 
-#########################
-##### sqlitebrowser #####
-#########################
+=============
+sqlitebrowser
+=============
 
-Herramienta de alta calidad visual para crear, diseñar y editar archivos de bases de datos compatibles con SQLite.
-Es para usuarios y desarrolladores que desean crear bases de datos, buscar y editar datos.
-Utiliza una interfaz de tipo hoja de cálculo familiar y no necesita aprender comandos SQL complicados.
+Herramienta de alta calidad visual para crear, diseñar y editar archivos de
+bases de datos compatibles con SQLite.
+
+Es para usuarios y desarrolladores que desean crear bases de datos, buscar y
+editar datos.
+
+Utiliza una interfaz de tipo hoja de cálculo familiar y no necesita aprender
+comandos SQL complicados.
 
 Ideal para gestionar datos de las db de django.
 
 # aptitude install sqlitebrowser
 
-$ sqlitebrowser // Para ejecutarlo
+Para ejecutarlo.
 
-########################################
-##### Línea de comandos de sqlite3 #####
-########################################
+$ sqlitebrowser
+
+============================
+Línea de comandos de sqlite3
+============================
 
 # apt-get install sqlite3
 
-// Para abrir la línea de comandos:
+Para abrir la línea de comandos:
 
 $ sqlite3
 
-// Acceder a una base de datos desde la consola de sqlite3
+Acceder a una base de datos desde la consola de sqlite3.
 
 $ sqlite3 db.sqlite3
 
-// Listar las tablas de la db a la cual se acceso.
+Listar las tablas de la db a la cual se acceso.
 
 sqlite> .tables
 
-// Acceder al modo csv, para poder ejecutar operaciones con estos ficheros.
+Acceder al modo csv, para poder ejecutar operaciones con estos ficheros.
 
 sqlite> .mode csv
 
-// Importamos los datos de el fichero .csv a la tabla especifica.
-// Obviamente deben coincidir los campos en el .csv y en la tabla.
+Importamos los datos de el fichero .csv a la tabla especifica.
+
+Obviamente deben coincidir los campos en el .csv y en la tabla.
 
 sqlite> .import test.csv yourtable
 
-// Ver esquema de creación de la tabla.
+Ver esquema de creación de la tabla.
 
 sqlite> .schema tablename
 
-// Listar todos los registros de una tabla.
+Listar todos los registros de una tabla.
 
 sqlite> SELECT * FROM tablename;
 
-// Agregar una nueva columna a una tabla existente en una base de datos.
+Agregar una nueva columna a una tabla existente en una base de datos.
 
 sqlite> ALTER TABLE appname_modelname ADD COLUMN name_column DEFAULT 'value';
 
-// Acceder a la consola de sqlite3 desde dentro de un proyecto de django con una
-// db ya existente.
+Acceder a la consola de sqlite3 desde dentro de un proyecto de django con una db
+ya existente.
 
 $ python manage.py dbshell
 
-// Para salir del prompt de sqlite3.
+Para salir del prompt de sqlite3.
 
 sqlite> .exit
 
-###############################################################################
-##### Insertar data csv en una base de datos sqlite con un script de bash #####
-###############################################################################
+===================================================================
+Insertar data csv en una base de datos sqlite con un script de bash
+===================================================================
 
 #!/bin/sh
 # Insertar data csv en una base de datos sqlite con un script de bash.
@@ -4344,17 +4583,17 @@ sqlite3 db.sqlite3 <<EOF
 .import data.csv table_name
 EOF
 
-###################################################
-##### Implementación de django simple captcha #####
-###################################################
+=======================================
+Implementación de django simple captcha
+=======================================
 
 Paquete requerido django-simple-captcha==0.5.5
 
-// Instalamos el paquete
+Instalamos el paquete.
 
 $ pip install django-simple-captcha==0.5.5
 
-// Agregamos en el settings.py en la sección de aplicaciones el paquete captcha
+Agregamos en el settings.py en la sección de aplicaciones el paquete captcha.
 
 DJANGO_APPS = [
     'django.contrib.admin',
@@ -4366,19 +4605,20 @@ DJANGO_APPS = [
     'captcha',
 ]
 
-// En los forms.py importamos a:
+En los forms.py importamos a:
 
 from captcha.fields import CaptchaField
 
-// Agregamos el campo captcha a la clase del form que lo va a tener, como la clase del login por ejemplo
+Agregamos el campo captcha a la clase del form que lo va a tener, como la clase
+del login por ejemplo.
 
 captcha = CaptchaField()
 
-// En la urls generales agregamos la url del captcha.
+En la urls generales agregamos la url del captcha.
 
 url(r'^captcha/', include('captcha.urls')),
 
-// En la plantilla html agregamos
+En la plantilla html agregamos.
 
 <div class="input-field {% if form.captcha.errors %}invalid{% endif %}">
     <label>{{form.captcha.label}}</label>
@@ -4398,7 +4638,7 @@ url(r'^captcha/', include('captcha.urls')),
     <a href="" class="js-captcha-refresh">Refrescar</a>
 </div>
 
-// En los js
+En los js
 
 /**
  * @brief Función para recargar el captcha vía json
@@ -4416,9 +4656,9 @@ function refresh_captcha(element) {
     return false;
 }
 
-##################################################################
-##### Resetear o cambiar el password de un usuario de django #####
-##################################################################
+======================================================
+Resetear o cambiar el password de un usuario de django
+======================================================
 
 $ python manage.py changepassword <user_name>
 
@@ -4426,9 +4666,9 @@ Ejemplo:
 
 $ python manage.py changepassword admin
 
-###############################################
-##### Plantilla error 404.html y 500.html #####
-###############################################
+===================================
+Plantilla error 404.html y 500.html
+===================================
 
 La siguiente prueba se realiza en entorno de producción, osea DEBUG = False
 
@@ -4439,14 +4679,16 @@ declarar ningun handler404 = 'views.page_not_found' en las urls.
 
 2) Editar en el settings.py a 'DIRS': ['myapp/templates/myapp'],
 
-3) Finalmente, crear la plantilla 404.html y 500.html en el directorio myapp/templates/myapp.
+3) Finalmente, crear la plantilla 404.html y 500.html en el directorio
+myapp/templates/myapp.
 
 Ejemplos:
 
 # 404.html
 <div align="center">
   <h1>Error 404 Not Found</h1>
-  <p>Recurso no encontrado. Se utiliza cuando el servidor web no encuentra la página o recurso solicitado.</p>
+  <p>Recurso no encontrado. Se utiliza cuando el servidor web no encuentra la
+  página o recurso solicitado.</p>
 </div>
 
 y
@@ -4454,14 +4696,19 @@ y
 # 500.html
 <div align="center">
   <h1>Error 500 Internal Server Error</h1>
-   <p>Es un código comúnmente emitido por aplicaciones empotradas en servidores web, mismas que generan contenido dinámicamente, por ejemplo aplicaciones montadas en IIS o Tomcat, cuando se encuentran con situaciones de error ajenas a la naturaleza del servidor web.</p>
+   <p>Es un código comúnmente emitido por aplicaciones empotradas en servidores
+   web, mismas que generan contenido dinámicamente, por ejemplo aplicaciones
+   montadas en IIS o Tomcat, cuando se encuentran con situaciones de error
+   ajenas a la naturaleza del servidor web.</p>
 </div>
 
-#################################
-##### Ejemplo de DetailView #####
-#################################
+=====================
+Ejemplo de DetailView
+=====================
 
-##### Usando Funciones #####
+================
+Usando Funciones
+================
 
 # urls.py
 url(r'^detalle/(?P<pk>\d+)$', login_required(views.PostDetail), name='post_detail'),
@@ -4490,7 +4737,9 @@ def PostDetail(request, pk):
     {{ post.body }}
 </div>
 
-##### Usando clases genéricas #####
+=======================
+Usando clases genéricas
+=======================
 
 # urls.py
 url(r'^post_detail/(?P<pk>\d+)$', login_required(views.Post_detail.as_view()), name='post_detail'),
@@ -4521,9 +4770,9 @@ class Detallar_reporte(DetailView):
     {{ post.body }}
 </div>
 
-######################################################
-##### Método __init__ de un formulario de django #####
-######################################################
+==========================================
+Método __init__ de un formulario de django
+==========================================
 
 from django import forms
 
@@ -4542,9 +4791,9 @@ class MyModelForm(forms.ModelForm):
     class Meta:
         model = MyModel
 
-##############################################
-##### Método get en una clase CreateView #####
-##############################################
+==================================
+Método get en una clase CreateView
+==================================
 
 class BaseCreateView(SuccessMessageMixin,CreateView):
     model = Mymodel
@@ -4556,9 +4805,9 @@ class BaseCreateView(SuccessMessageMixin,CreateView):
         self.object = None
         return super(BaseCreateView, self).get(request, *args, **kwargs)
 
-###########################################################################
-##### Formulario para el cambio de contraseña del usuario autenticado #####
-###########################################################################
+===============================================================
+Formulario para el cambio de contraseña del usuario autenticado
+===============================================================
 
 # urls.py
 # -*- coding: utf-8 -*-
@@ -4567,13 +4816,11 @@ from usuarios import views
 from .views import *
 from django.contrib.auth.decorators import login_required
 
-
 urlpatterns = patterns('',
     url(r'^$', LoginView.as_view(), name = "login"),
     url(r'logout/$', views.Logout.as_view(), name='logout'),
     url(r'^cambiar-contrasena/$', login_required(views.change_password), name='change_password'),
 )
-
 
 # views.py
 from django.shortcuts import render, redirect, render_to_response
@@ -4636,9 +4883,9 @@ def change_password(request):
 <button class="btn btn-success" type="submit">Cambiar contraseña</button>
 </form>
 
-####################################################################
-##### Validando la existencía de objetos pasados a un template #####
-####################################################################
+========================================================
+Validando la existencía de objetos pasados a un template
+========================================================
 
 {% if object_list %}
   Muestro mi lista de objetos
@@ -4647,9 +4894,9 @@ def change_password(request):
   {% endif %}
 {% endblock %}
 
-###############################################################
-##### Realizando cálculos con los valores en el models.py #####
-###############################################################
+===================================================
+Realizando cálculos con los valores en el models.py
+===================================================
 
 # -*- coding: utf-8 -*-
 from django.db import models
@@ -4677,7 +4924,6 @@ class Proyecto(models.Model):
 from django.db import models
 from django.core.urlresolvers import reverse
 
-
 class Proyecto(models.Model):
     nombre = models.CharField(max_length=200)
     actividad_1 = models.IntegerField()
@@ -4693,10 +4939,7 @@ class Proyecto(models.Model):
     def get_absolute_url(self):
         return reverse('registro:editar', kwargs={'pk': self.pk})
 
-
-################################################################
-##### Escribir un campo select directamente en el template #####
-################################################################
+Escribir un campo select directamente en el template
 
 <select name="myselect" class="i-can-add-my-own-attrs-now" id="id_myselect">
   {% for id, name in form.myselect.field.choices %}
@@ -4729,9 +4972,9 @@ class Buscar_tarea(TemplateView):
   <button class="btn btn-success" type="submit">Buscar</button>
 </form>
 
-#########################################
-##### Campo checkbox en formularios #####
-#########################################
+=============================
+Campo checkbox en formularios
+=============================
 
 # En forms.py
 from django.forms import (
@@ -4748,11 +4991,13 @@ is_staff = forms.BooleanField(label='¿Es staff?',widget=CheckboxInput(attrs={
     #'style': 'min-width: 0; width: 25%; display: inline;',
 }), required = True)
 
-################################################################
-##### Clases genéricas de Django 1.8 de https://ccbv.co.uk #####
-################################################################
+====================================================
+Clases genéricas de Django 1.8 de https://ccbv.co.uk
+====================================================
 
-##### TemplateView #####
+============
+TemplateView
+============
 
 from django.views.generic import TemplateView
 
@@ -4835,8 +5080,6 @@ def http_method_not_allowed(self, request, *args, **kwargs):
     )
     return http.HttpResponseNotAllowed(self._allowed_methods())
 
-
-
 def __init__(self, **kwargs):
     """
     Constructor. Called in the URLconf; can contain helpful extra
@@ -4847,7 +5090,6 @@ def __init__(self, **kwargs):
     for key, value in six.iteritems(kwargs):
         setattr(self, key, value)
 
-
 def options(self, request, *args, **kwargs):
     """
     Handles responding to requests for the OPTIONS HTTP verb.
@@ -4856,7 +5098,6 @@ def options(self, request, *args, **kwargs):
     response['Allow'] = ', '.join(self._allowed_methods())
     response['Content-Length'] = '0'
     return response
-
 
 def render_to_response(self, context, **response_kwargs):
     """
@@ -4874,7 +5115,9 @@ def render_to_response(self, context, **response_kwargs):
         **response_kwargs
     )
 
-##### View #####
+====
+View
+====
 
 from django.views.generic import View
 
@@ -4955,7 +5198,9 @@ def options(self, request, *args, **kwargs):
     response['Content-Length'] = '0'
     return response
 
-##### DetailView #####
+==========
+DetailView
+==========
 
 from django.views.generic import DetailView
 
@@ -5211,7 +5456,9 @@ def render_to_response(self, context, **response_kwargs):
         **response_kwargs
     )
 
-##### CreateView #####
+==========
+CreateView
+==========
 
 from django.views.generic import CreateView
 
@@ -5641,7 +5888,9 @@ def render_to_response(self, context, **response_kwargs):
         **response_kwargs
     )
 
-##### DeleteView #####
+==========
+DeleteView
+==========
 
 from django.views.generic import DeleteView
 
@@ -5926,7 +6175,9 @@ def render_to_response(self, context, **response_kwargs):
         **response_kwargs
     )
 
-##### FormView #####
+========
+FormView
+========
 
 from django.views.generic import FormView
 
@@ -6141,7 +6392,9 @@ def render_to_response(self, context, **response_kwargs):
         **response_kwargs
     )
 
-##### UpdateView #####
+==========
+UpdateView
+==========
 
 from django.views.generic import UpdateView
 
@@ -6569,7 +6822,9 @@ def render_to_response(self, context, **response_kwargs):
         **response_kwargs
     )
 
-##### ListView #####
+========
+ListView
+========
 
 from django.views.generic import ListView
 
@@ -6860,32 +7115,32 @@ def render_to_response(self, context, **response_kwargs):
         **response_kwargs
     )
 
-##########################################################################
-##### Validando que un campo sea de tipo entero en models y en forms #####
-##########################################################################
+==============================================================
+Validando que un campo sea de tipo entero en models y en forms
+==============================================================
 
-# Validando desde los modelos
+Validando desde los modelos.
 
 # models.py
 porc_avan_act_1 = models.IntegerField()
 
 
-# Validando desde los foms
+Validando desde los foms.
 
 # models.py
 porc_act_1 = models.CharField(max_length=100, blank=True,null=True)
 
 # forms.py
 # Ponderación asignada (%) de la planificación.
-porc_act_1 = forms.IntegerField(label='Ponderación asignada (%)', widget=TextInput(attrs={
+porc_act_1 = forms.IntegerField(label='Ponderación asignada (%)',widget=TextInput(attrs={
     'class':'form-control input-md',
     'style': 'min-width: 0; width: 100%; display: inline;',
     'value': '0',
 }), required = False)
 
-#############################################################
-##### Obtener la url relativa en la cual se está parado #####
-#############################################################
+=================================================
+Obtener la url relativa en la cual se está parado
+=================================================
 
 # view.html
 a = self.request.path
@@ -6893,15 +7148,15 @@ a = self.request.path
 # template.html
 {{ request.path }}
 
-##########################
-##### Function str() #####
-##########################
+==============
+Function str()
+==============
 
 The str() function converts the specified value into a string.
 
-##############################################
-##### Botón para ir atrás en el tempalte #####
-##############################################
+==================================
+Botón para ir atrás en el tempalte
+==================================
 
 #template.html
 <a href="{{ request.META.HTTP_REFERER }}">Back</a>
@@ -6909,13 +7164,16 @@ The str() function converts the specified value into a string.
 # con javascript
 <a href="javascript:window.history.go(-1);">Back</a>
 
-#################################################################
-##### Configurar reestablecimiento de contraseña por correo #####
-#################################################################
+=====================================================
+Configurar reestablecimiento de contraseña por correo
+=====================================================
 
 # setting.py
 
-# Configuración de variables para envío de correo electrónico de recuperación de contraseña
+"""
+Configuración de variables para envío de correo electrónico de recuperación
+de contraseña.
+"""
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com' # mail service smtp
@@ -7049,11 +7307,12 @@ password_reset_form.html
 </div>
 {% endblock %}
 
-##################################################################################
-##### Recuperación de contraseña por correo en Django con correo de CENDITEL #####
-##################################################################################
+======================================================================
+Recuperación de contraseña por correo en Django con correo de CENDITEL
+======================================================================
 
-Para utilizar la opción de recuperar contraseña por correo se debe instalar el paquete exim4
+Para utilizar la opción de recuperar contraseña por correo se debe instalar el
+paquete exim4.
 
 # apt-get install exim4
 
@@ -7061,10 +7320,10 @@ Despues de instalado usar el comando:
 
 # dpkg-reconfigure exim4-config
 
-Allí nos aparecera un formulario para llenar la configuración en un principio marcamos
-la tercera opcion "el correo se envía mediante un «smarthost»; sin correo local"
-y presionamos aceptar hasta que nos pida Dirección IP para el smarthost saliente
-ahi pondremos: smtp.cenditel.gob.ve::465
+Allí nos aparecera un formulario para llenar la configuración en un principio
+marcamos la tercera opcion "el correo se envía mediante un «smarthost»; sin
+correo local" y presionamos aceptar hasta que nos pida Dirección IP para el
+smarthost saliente ahi pondremos: smtp.cenditel.gob.ve::465
 
 En las siguientes opciones les diremos que no hasta salir del formulario
 luego para aplicar la configuracion usamos los comandos:
@@ -7108,17 +7367,17 @@ Luego para guardar la configuracion utilizamos el comando:
 
 # service exim4 restart
 
-########################################################################
-##### Limitar la cantidad de caracteres a mostrar con una consulta #####
-########################################################################
+============================================================
+Limitar la cantidad de caracteres a mostrar con una consulta
+============================================================
 
 Mostrar hasta 60 caracteres
 
 <td>{{ x.descripcion |slice:":60" }}...</td>
 
-#####################################################
-##### Instalación de Django 3 usando virtualenv #####
-#####################################################
+=========================================
+Instalación de Django 3 usando virtualenv
+=========================================
 
 Esta sección fue probada en GNU/Linux Debian 10 Stretch
 por lo que tiene disponible Django 3
@@ -7139,9 +7398,9 @@ $ source mi_env/bin/activate
 
 (mi_env)$ pip install Django==3.0.3
 
-############################################
-##### Eliminar registro con javascript #####
-############################################
+================================
+Eliminar registro con javascript
+================================
 
 {% extends "registro/base.html" %}
 {% block titulo %}Lista{% endblock %}
@@ -7182,9 +7441,9 @@ $ source mi_env/bin/activate
 </table>
 {% endblock %}
 
-####################################################
-##### Eliminar registro con modal de bootstrap #####
-####################################################
+========================================
+Eliminar registro con modal de bootstrap
+========================================
 
 {% extends "registro/base.html" %}
 {% block titulo %}Lista{% endblock %}
@@ -7246,9 +7505,9 @@ $(document).ready(function() {
 </script>
 {% endblock %}
 
-#######################################################
-##### Registro de usuarios con modal de bootstrap #####
-#######################################################
+===========================================
+Registro de usuarios con modal de bootstrap
+===========================================
 
 #list_users.html
 
@@ -7384,9 +7643,9 @@ $(document).ready(function() {
   </div>
 </div>
 
-#######################################################
-##### Llenar un array de js con objetos de django #####
-#######################################################
+===========================================
+Llenar un array de js con objetos de django
+===========================================
 
 <script type="text/javascript">
 var personas = new Array();
@@ -7407,9 +7666,36 @@ var cedula = new Array();
   cedula.push('{{ persona.cedula }}');
 {% endfor %}
 
-#######################################
-##### Servir objetos como un json #####
-#######################################
+=============================================
+Serialización de consultas de django con json
+=============================================
+
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+import json
+
+
+def index(request):
+    """
+    Index view, to tray.
+    """
+    # Consultamos todos los usuarios
+    usuarios = User.objects.all()
+    #print usuarios
+    # Covertimos los objetos del query en una lista mas limpia
+    lista = [{'pk': x.pk,'username': x.username} for x in usuarios]
+    #print lista
+    # Convertimos la lista en un json
+    serializado = json.dumps(lista)
+    #print serializado
+    # Descerializamos el json
+    deserializado = json.loads(serializado)
+    print deserializado
+    return HttpResponse("Hello, world!")
+
+===========================
+Servir objetos como un json
+===========================
 
 url(r'^datos$', views.datos, name='datos'),
 
@@ -7429,14 +7715,18 @@ def datos2(request):
     print data
     return HttpResponse(json.dumps(data), content_type="application/json")
 
-##### Otra forma #####
+==========
+Otra forma
+==========
 
 def datos(request):
     result=Persona.objects.values('nombre','cedula').all();
     result=list(result)  #after getting data from model convert result to list
     return HttpResponse(json.dumps(result), content_type = "application/json")
 
-##### Otra forma #####
+==========
+Otra forma
+==========
 
 from django.core import *
 
@@ -7446,7 +7736,9 @@ def datos(request):
     print a
     return HttpResponse(json.dumps(a), content_type="application/json")
 
-##### Otra forma #####
+==========
+Otra forma
+==========
 
 from django.core import *
 from django.core import serializers
@@ -7459,7 +7751,9 @@ def datos(request):
     data = json.dumps(struct)
     return HttpResponse(data, content_type="application/json")
 
-##### Otra forma #####
+==========
+Otra forma
+==========
 
 def datos(request):
     result=Persona.objects.values('nombre','cedula').all();
@@ -7475,7 +7769,9 @@ def datos(request):
     print items
     return HttpResponse(json.dumps(items), content_type = "application/json")
 
-##### Otra forma #####
+==========
+Otra forma
+==========
 
 from django.http import JsonResponse
 
@@ -7487,18 +7783,16 @@ class  PersonaList(View):
         data['personas'] = personas
         return JsonResponse(data)
 
-#############################
-##### get_object_or_404 #####
-#############################
+=================
+get_object_or_404
+=================
 
 from django.shortcuts import get_object_or_404
 
+==================================
+for in form para renderizar campos
+==================================
 
-##############################################
-##### for in form para renderizar campos #####
-##############################################
-
-"""
 {% for field in form %}
   <div class="form-group{% if field.errors %} has-error{% endif %}">
     <label for="{{ field.id_for_label }}">{{ field.label }}</label>
@@ -7508,4 +7802,3 @@ from django.shortcuts import get_object_or_404
     {% endfor %}
   </div>
 {% endfor %}
-"""
