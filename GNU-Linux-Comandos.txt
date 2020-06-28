@@ -5569,3 +5569,25 @@ Instalación de Mate
 ===================
 
 # apt-get install mate-desktop-environment-extras
+
+========================================
+Conectar 2 computadoras de punto a punto
+========================================
+
+Conectar con un cable de red, de puerto eternet a puerto eternet 2 pc
+
+Entrar en la pc A, luego escribimos:
+
+% ip link
+
+Con esto veremos los dispositivos de red y su configuración, algo como esto
+
+aosorio@debian:~$ ip link
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eth0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc pfifo_fast state DOWN mode DEFAULT group default qlen 1000
+    link/ether 00:26:2d:9c:39:12 brd ff:ff:ff:ff:ff:ff
+3: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DORMANT group default qlen 1000
+    link/ether 88:9f:fa:4d:5d:53 brd ff:ff:ff:ff:ff:ff
+
+Falta probar bien...
