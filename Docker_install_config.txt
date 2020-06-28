@@ -1,80 +1,124 @@
-##### Guía Instalación y Configuración de Docker by dM #####
+=================================================
+Guía Instalación y Configuración de Docker by dM
+=================================================
 
-##################
-##### Teoría #####
-##################
+===============
+¿Qué es Docker?
+===============
 
---- ¿Qué es Docker? ---
+La idea detrás de Docker es crear contenedores ligeros y portables para las
+aplicaciones software que puedan ejecutarse en cualquier máquina con Docker
+instalado, independientemente del sistema operativo que la máquina tenga por
+debajo, facilitando así también los despliegues.
 
-La idea detrás de Docker es crear contenedores ligeros y portables para las aplicaciones software que puedan ejecutarse en cualquier máquina con Docker instalado, independientemente del sistema operativo que la máquina tenga por debajo, facilitando así también los despliegues.
+Supongamos que queremos probar una aplicación en una máquina, dicha
+aplicación/software necesita estar ejecutándose en esa máquina. Pero además,
+dependiendo del tipo de aplicación, dicha máquina también necesita tener
+instaladas una serie de cosas para que la aplicación se ejecute correctamente:
+cierta versión de Python o PHP instalado, un servidor de aplicaciones (p.e
+tomcat, que es el software que realmente estará ejecutando mi aplicación y
+haciendo que pueda interactuar con ella).
 
-Supongamos que queremos probar una aplicación en una máquina, dicha aplicación/software necesita estar ejecutándose en esa máquina. Pero además, dependiendo del tipo de aplicación, dicha máquina también necesita tener instaladas una serie de cosas para que la aplicación se ejecute correctamente: cierta versión de Python o PHP instalado, un servidor de aplicaciones (p.e tomcat, que es el software que realmente estará ejecutando mi aplicación y haciendo que pueda interactuar con ella).
+Docker, me permite meter en un contenedor ("una caja", algo auto contenido,
+cerrado) todas aquellas cosas que mi aplicación necesita para ser ejecutada
+(Python, Django, Apache…) y la propia aplicación. Así yo me puedo llevar ese
+contenedor a cualquier máquina que tenga instalado Docker y ejecutar la
+aplicación sin tener que hacer nada más, ni preocuparme de qué versiones de
+software tiene instalada esa máquina, de si tiene los elementos necesarios para
+que funcione mi aplicación , de si son compatibles…
 
-Docker, me permite meter en un contenedor ("una caja", algo auto contenido, cerrado) todas aquellas cosas que mi aplicación necesita para ser ejecutada (Python, Django, Apache…) y la propia aplicación. Así yo me puedo llevar ese contenedor a cualquier máquina que tenga instalado Docker y ejecutar la aplicación sin tener que hacer nada más, ni preocuparme de qué versiones de software tiene instalada esa máquina, de si tiene los elementos necesarios para que funcione mi aplicación , de si son compatibles…
+Yo ejecutaré mi aplicación software desde el contenedor de Docker, y dentro de
+él estarán todas las librerías y cosas que necesita dicha aplicación para
+funcionar correctamente.
 
-Yo ejecutaré mi aplicación software desde el contenedor de Docker, y dentro de él estarán todas las librerías y cosas que necesita dicha aplicación para funcionar correctamente.
+============================
+Docker vs Máquinas virtuales
+============================
 
---- Docker vs Máquinas virtuales ---
+El concepto de Docker y máquina virtual es algo similar, pero un contenedor no
+es lo mismo que una máquina virtual. Un contenedor es más ligero, ya que
+mientras que a una máquina virtual necesitas instalarle un sistema operativo
+para funcionar, en los aspectos más básicos, un contenedor de Docker funciona
+utilizando el sistema operativo que tiene la máquina en la que se ejecuta el
+contenedor.
 
-El concepto de Docker y máquina virtual es algo similar, pero un contenedor no es lo mismo que una máquina virtual. Un contenedor es más ligero, ya que mientras que a una máquina virtual necesitas instalarle un sistema operativo para funcionar, en los aspectos más básicos, un contenedor de Docker funciona utilizando el sistema operativo que tiene la máquina en la que se ejecuta el contenedor
+Docker es un proyecto de código abierto que automatiza el despliegue de
+aplicaciones dentro de contenedores de software, proporcionando una capa
+adicional de abstracción y automatización de Virtualización a nivel de sistema
+operativo en Linux.
 
-Otro poco de teoría...
+Docker utiliza características de aislamiento de recursos del kernel de Linux,
+tales como cgroups y espacios de nombres (namespaces) para permitir que
+"contenedores" independientes se ejecuten dentro de una sola instancia de Linux,
+evitando la sobrecarga de iniciar y mantener máquinas virtuales.
 
-Docker es un proyecto de código abierto que automatiza el despliegue de aplicaciones dentro de contenedores de software, proporcionando una capa adicional de abstracción y automatización de Virtualización a nivel de sistema operativo en Linux.
+Docker es una herramienta que puede empaquetar una aplicación y sus dependencias
+en un contenedor virtual que se puede ejecutar en cualquier servidor Linux. Esto
+ayuda a permitir la flexibilidad y portabilidad en donde la aplicación se puede
+ejecutar, ya sea en las instalaciones físicas, la nube, otras.
 
-Docker utiliza características de aislamiento de recursos del kernel de Linux, tales como cgroups y espacios de nombres (namespaces) para permitir que "contenedores" independientes se ejecuten dentro de una sola instancia de Linux, evitando la sobrecarga de iniciar y mantener máquinas virtuales.
+===========
+Instalación
+===========
 
-Docker es una herramienta que puede empaquetar una aplicación y sus dependencias en un contenedor virtual que se puede ejecutar en cualquier servidor Linux. Esto ayuda a permitir la flexibilidad y portabilidad en donde la aplicación se puede ejecutar, ya sea en las instalaciones físicas, la nube, otras.
+Comprobamos la versión del kernel, tendría que ser superior a la 3.10.
 
-#######################
-##### Instalación #####
-#######################
-
-// Comprobamos la versión del kernel, tendría que ser superior a la 3.10.
 $ uname -r
 
-// Actualizamos la lista de paquetes.
+Actualizamos la lista de paquetes.
+
 # apt-get update
 
-// Instalamos/actualizamos los certificados del sistema.
+Instalamos/actualizamos los certificados del sistema.
+
 # apt-get install apt-transport-https ca-certificates
 
-// Añadir la clave GPG del repositorio del proyecto docker.
+Añadir la clave GPG del repositorio del proyecto docker.
+
 # apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 
-// Añadir el repositorio del proyecto docker al /etc/apt/source.list
+Añadir el repositorio del proyecto docker al /etc/apt/source.list
+
 deb https://apt.dockerproject.org/repo debian-jessie main"
 
-// Actualizamos la lista de paquetes, para que encuentre los del proyecto docker.
+Actualizamos la lista de paquetes, para que encuentre los del proyecto docker.
+
 # apt update
 
-// Instalar docker-engine
+Instalar docker-engine
+
 # apt install docker-engine
 
-// Arrancar el demonio o proceso de docker
+Arrancar el demonio o proceso de docker
+
 # service docker start
 
-// Probar que funciona
+Probar que funciona
+
 # docker run hello-world
 
-// Esto nos debería mostrar:
+Esto nos debería mostrar:
 Hello from Docker!
 This message shows that your installation appears to be working correctly.
 .
 .
 .
 
-// Para saber la versión de docker que estamos usando.
+Para saber la versión de docker que estamos usando.
+
 # docker version
 
-// Si queremos ver los contenedores que tenemos ejecutándose.
+Si queremos ver los contenedores que tenemos ejecutándose.
+
 # docker ps
 
-// Las imágenes que tenemos en local las podemos ver con:
-// Las imágenes las podemos encontrar en /var/lib/docker/graph
+Las imágenes que tenemos en local las podemos ver con:
+Las imágenes las podemos encontrar en /var/lib/docker/graph
+
 # docker images
 
-// Todo lo relacionado con docker se almacenan en /var/lib/docker
+Todo lo relacionado con docker se almacenan en /var/lib/docker
 
-// Eliminar o desinstalar docker project
+Eliminar o desinstalar docker project
+
 # apt-get remove docker docker-engine docker.io

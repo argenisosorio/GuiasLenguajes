@@ -1,59 +1,104 @@
-######################################################
-####### GIT - Software de Control de Versiones #######
-######################################################
+==========================
+Guía de Git y GitHub by dM
+==========================
 
-Software de control de versiones diseñado por Linus Torvalds, pensando en la eficiencia
-y la confiabilidad del mantenimiento de versiones de aplicaciones cuando éstas tienen un gran número de
-archivos de código fuente. Hay algunos proyectos de mucha relevancia que ya usan Git
-en particular, el grupo de programación del núcleo Linux.
+Software de control de versiones diseñado por Linus Torvalds, pensando en la
+eficiencia y la confiabilidad del mantenimiento de versiones de aplicaciones
+cuando éstas tienen un gran número de archivos de código fuente. Hay algunos
+proyectos de mucha relevancia que ya usan Git en particular, el grupo de
+programación del núcleo Linux.
 
-# aptitude install git // fast, scalable, distributed revision control system.
+# aptitude install git
 
-$ git // Con este comando nos listara la lista de comandos Git que podemos usar en un proyecto
+Con este comando nos listara la lista de comandos Git que podemos usar en un
+proyecto.
 
-$ git --version // Para saber que versión tenemos instalada.
+$ git
 
-// Lo primero que debemos hacer despues de la instalacion es configurar nuestro Git
+Saber que versión tenemos instalada.
 
-$ git config --global user.name "Argenis Osorio" // Asignamos el nombre de usuario que será la firma del usuario en cada commit
+$ git --version
 
-$ git config --global user.email aosorio@example.com // igualmente el correo que siempre acompañara al autor de cada commit
+Lo primero que debemos hacer despues de la instalacion es configurar nuestro
+Git.
 
-// Comprobar el valor de las variables de configuración inicial de git, las que acabamos de introducir.
+Asignamos el nombre de usuario que será la firma del usuario en cada commit.
+
+$ git config --global user.name "Argenis Osorio"
+
+Igualmente el correo que siempre acompañara al autor de cada commit.
+
+$ git config --global user.email aosorio@example.com
+
+Comprobar el valor de las variables de configuración inicial de git, las que
+acabamos de introducir.
+
 $ git config --list
 
-$ git init // Crear un directorio, dentro del directorio ejecutar para crear un nuevo repositorio de git, nos crea una carpeta .git
-Dentro están todos los ficheros de configuración de git para ese repositorio específico.
+Crear un directorio, dentro del directorio ejecutar para crear un nuevo
+repositorio de git, nos crea una carpeta .git.
 
-$ rm -rf .git // Remover git del directorio de trabajo.
+$ git init
 
-$ git status // Muestra el estado actual de la rama, como los cambios que hay sin commitear.
+Dentro están todos los ficheros de configuración de git para ese repositorio
+específico.
 
-$ git status -s // Lista los archivos del proyecto y se visualiza si fueron agregados al seguimiento de Git.
-//Tambien podemos ver si un archivo fue modificado y no a sido agregado al seguimiento de Git.
+Remover git del directorio de trabajo.
 
-$ git add * // Agregar todos los archivos al seguimiento de Git.
+$ rm -rf .git
 
-$ git commit -m "Primer commit del proyecto" //Hacer un commit al proyecto, se activara la rama master por defecto.
+Muestra el estado actual de la rama, como los cambios que hay sin commitear.
 
-$ git log // Podemos ver todos los commits que se han hecho a un proyecto, fecha, autor, etc...
+$ git status
 
-$ git shortlog // Ver los autores de los commits además de listar cuantos commits han realizado.
+Lista los archivos del proyecto y se visualiza si fueron agregados al
+seguimiento de Git.
 
-$ git branch // Lista todas las ramas locales.
+Tambien podemos ver si un archivo fue modificado y no a sido agregado al
+seguimiento de Git.
 
-$ git branch -a // Lista todas las ramas locales y remotas.
+$ git status -s
 
-// Ejemplo de archivos agregados al seguimiento de git:
+Agregar todos los archivos al seguimiento de Git.
+
+$ git add *
+
+Hacer un commit al proyecto, se activara la rama master por defecto.
+
+$ git commit -m "Primer commit del proyecto"
+
+Podemos ver todos los commits que se han hecho a un proyecto, fecha,
+autor, etc...
+
+$ git log
+
+Ver los autores de los commits además de listar cuantos commits han realizado.
+
+$ git shortlog
+
+Lista todas las ramas locales.
+
+$ git branch
+
+Lista todas las ramas locales y remotas.
+
+$ git branch -a
+
+Ejemplo de archivos agregados al seguimiento de git:
+
 A  gris.jpg // Agregado
-A  principal.html // Agregado
-AM principal2.html // Agregado y modificado, se debe agregar otra ver para aceptar los cambios
-?? principal3.html // Archivo agregado al directorio pero no agregado al seguimiento de Git
+A  file.html // Agregado
+AM file2.html // Agregado y modificado, se debe agregar otra vez
+?? file3.html // Archivo agregado al directorio pero no agregado al seguimiento
 
-$ git add Nombre_archivo.xxx // Agregar un fichero específico al seguimiento de Git, esto es útil si tenemos muchos ficheros
-con modificaciones pero solo queremos subir los cambios de algunos específicos, no de todos, entonces los agregamos manualmente.
+Agregar un fichero específico al seguimiento de Git, esto es útil si tenemos
+muchos ficheros con modificaciones pero solo queremos subir los cambios de
+algunos específicos, no de todos, entonces los agregamos manualmente.
 
-Ejemplo de varios archivos modificados, solo agregaremos algunos al seguimiento de git:
+$ git add Nombre_archivo.xxx
+
+Ejemplo de varios archivos modificados, solo agregaremos algunos al seguimiento
+de git:
 
 	modified:    fichero1.xxx
 	modified:    fichero2.xxx
@@ -61,35 +106,60 @@ Ejemplo de varios archivos modificados, solo agregaremos algunos al seguimiento 
 	modified:    fichero4.xxx
 	modified:    fichero4.xxx
 
-$ git add fichero1.xxx fichero2.xxx fichero3.xxx // Agregando ficheros específicos al seguimiento de git.
+Agregando ficheros específicos al seguimiento de git.
 
-El resto seguira esperando por una accion, como ser eliminado, seguir siendo modificado o agregado al seguimiento.
+$ git add fichero1.xxx fichero2.xxx fichero3.xxx
 
-$ git rm Nombre_fichero.xxx // Borrar un fichero de manera segura, puesto que lo borra del directorio y del seguimiento de git, es un error
-común borrar los archivos directamente y estos siguen estando en el seguimiento de git por lo que se lia bastantes veces
-al subir los cambios, recomendable borrarlos desde git.
+El resto seguira esperando por una accion, como ser eliminado, seguir siendo
+modificado o agregado al seguimiento.
 
-$ git rm -f Nombre_fichero.xxx // Forzar el borrado del fichero.
+Borrar un fichero de manera segura, puesto que lo borra del directorio y del
+seguimiento de git, es un error común borrar los archivos directamente y estos
+siguen estando en el seguimiento de git por lo que se lia bastantes veces al
+subir los cambios, recomendable borrarlos desde git.
 
-$ git rm --cached Nombre_archivo.xxx // Si un archivo fue modificado queda un registro de su nombre anterior en el cache
+$ git rm Nombre_fichero.xxx
+
+Forzar el borrado del fichero.
+
+$ git rm -f Nombre_fichero.xxx
+
+Si un archivo fue modificado queda un registro de su nombre anterior en el cache
 para borrarlo se usa este comando.
 
-$ git rm --cached -r dir/dir // Para borrar un directorio y su contenido del seguimiento de git.
+$ git rm --cached Nombre_archivo.xxx
 
-$ git rm --cached -r dir/* // Para borrar un directorio y su contenido del seguimiento de git, esta opción funciona optimamente en mis pruebas.
+Para borrar un directorio y su contenido del seguimiento de git.
+
+$ git rm --cached -r dir/dir
+
+Para borrar un directorio y su contenido del seguimiento de git, esta opción
+funciona optimamente en mis pruebas.
+
+$ git rm --cached -r dir/*
+
 ---
 
-$ git commit --amend -m "comentario commit corregido" // Corregir algun error en el texto del último commit
+Corregir algun error en el texto del último commit
 
-$ git commit --amend // Corregir un error en el commit, abrira un editor de texto
+$ git commit --amend -m "comentario commit corregido"
+
+Corregir un error en el commit, abrira un editor de texto
+
+$ git commit --amend
 
 ---
 
-$ git rebase -i hash-del-commit~1 // Correguir un commit particular:
+Correguir un commit particular:
 
-git rebase -i hash-del-commit~1 para pedir hacer rebase interactivo de la rama actual a partir del commit anterior
-(~1) al que estás queriendo modificar. Eso disparará tu editor por defecto con un listado de todos los commits que
-existen desde ese hasta el tope de tu rama, indicando pick, hash y mensaje de cada uno. Algo como:
+$ git rebase -i hash-del-commit~1
+
+git rebase -i hash-del-commit~1 para pedir hacer rebase interactivo de la rama
+actual a partir del commit anterior (~1) al que estás queriendo modificar. Eso
+disparará tu editor por defecto con un listado de todos los commits que existen
+desde ese hasta el tope de tu rama, indicando pick, hash y mensaje de cada uno.
+
+Algo como:
 
 pick abcdef0 Mensaje del commit más nuevo
 pick bcdef01 Mensaje del commit anterior
@@ -101,58 +171,95 @@ pick abcdef0 Mensaje del commit más nuevo
 pick bcdef01 Mensaje del commit anterior
 r fde2152 Mensaje del commit a editar
 
-Guardar el fichero y salir, git va a volver hasta ese commit y abrirá el editor nuevamente, pero esta vez con el mensaje
-del commit ahí presente. Algo como:
+Guardar el fichero y salir, git va a volver hasta ese commit y abrirá el editor
+nuevamente, pero esta vez con el mensaje del commit ahí presente. Algo como:
 
 Mensaje del commit a editar
 
 Este mensaje es el que habías escrito en el primer
 git commit, y que ahora querés reemplazar por uno nuevo
 
-Editar el mensaje para corregirlo, guardamos el archivo, salimos del editor, y git aplicará todos los commits que faltaban para que tu
-rama quede igual, excepto por tener el mensaje actualizado.
+Editar el mensaje para corregirlo, guardamos el archivo, salimos del editor, y
+git aplicará todos los commits que faltaban para que tu rama quede igual,
+excepto por tener el mensaje actualizado.
 
-No olvidar que se está modificando la historia de tu repositorio, por lo que si habías publicado el commit al que estás editando
-el mensaje o cualquiera de sus sucesores podés generar conflictos.
+No olvidar que se está modificando la historia de tu repositorio, por lo que si
+habías publicado el commit al que estás editando el mensaje o cualquiera de sus
+sucesores podés generar conflictos.
 
 ---
 
-$ git reset --hard HEAD~1 // Borrar el ultimo commit hecho.
+Borrar el ultimo commit hecho.
 
-$ git reset HEAD name_file.xxx // Deshaciendo la preparación de un archivo, con esto le decimos a git que deje de seguir a un archivo.
+$ git reset --hard HEAD~1
 
-$ git branch Nombre_Rama // Crear una rama.
+Deshaciendo la preparación de un archivo, con esto le decimos a git que deje de
+seguir a un archivo.
 
-$ git checkout -b Nombre_Rama // Crear una rama y cambiarse a ella.
+$ git reset HEAD name_file.xxx
 
-$ git branch -d Nombre_Rama // Borrar una rama, se debe estar en otra rama para borrarla
+Crear una rama.
 
-$ git branch -D Nombre_Branch // Forzar el borrado de una rama, a veces no se dejan borrar si hay cambios sin guardar.
+$ git branch Nombre_Rama
 
-$ git push origin :the_remote_branch // Borrar una rama del repositorio remoto
+Crear una rama y cambiarse a ella.
 
-$ git checkout Nombre_Rama // Cambiarse de rama
+$ git checkout -b Nombre_Rama
 
-$ git branch -v // Para ver los ultimos commits de cada rama.
+Borrar una rama, se debe estar en otra rama para borrarla
 
-$ git push origin master // Subir los cambios al repositorio remoto en la rama master
+$ git branch -d Nombre_Rama
 
-$ git push origin nombre_rama // Estando en otra rama local, Subir los cambios al repositorio remoto en la rama master, si no existe la rama, la creará.
+Forzar el borrado de una rama, a veces no se dejan borrar si hay cambios sin
+guardar.
 
-$ git push -f origin master // git push -f <remote> <branch> forzar el push para sobreescribir los ficheros en el repositorio remoto.
+$ git branch -D Nombre_Branch
 
-$ git stash // Guardado rápido provisional de los cambios pendientes, lo cual nos va a permitir cambiarnos de rama sin que se nos queje de que hay cambios pendientes.
+Borrar una rama del repositorio remoto
 
-$ git stash list // listar los estados guardados provicionalmente
+$ git push origin :the_remote_branch
+
+Cambiarse de rama
+
+$ git checkout Nombre_Rama
+
+Para ver los ultimos commits de cada rama.
+
+$ git branch -v
+
+Subir los cambios al repositorio remoto en la rama master.
+
+$ git push origin master
+
+Estando en otra rama local, Subir los cambios al repositorio remoto en la rama
+master, si no existe la rama, la creará.
+
+$ git push origin nombre_rama
+
+git push -f <remote> <branch> forzar el push para sobreescribir los ficheros en
+el repositorio remoto.
+
+$ git push -f origin master
+
+Guardado rápido provisional de los cambios pendientes, lo cual nos va a permitir
+cambiarnos de rama sin que se nos queje de que hay cambios pendientes.
+
+$ git stash
+
+Listar los estados guardados provicionalmente.
+
+$ git stash list
     stash@{0}: WIP on master: 049d078 added the index file
     stash@{1}: WIP on master: c264051... Revert "added file_size"
     stash@{2}: WIP on master: 21d80a5... added number to log
 
-$ git stash apply stash@{0} // Reactivando el primer cambio guardado rápídamente, falta probar bien.
+Reactivando el primer cambio guardado rápídamente, falta probar bien.
 
-##############################################
-##### Configurando el fichero .gitignore #####
-##############################################
+$ git stash apply stash@{0}
+
+==================================
+Configurando el fichero .gitignore
+==================================
 
 Cuando creamos un repositorio git dentro de un directorio, inicialmente se incluyen todos los archivos de dicho directorio dentro del control de
 versiones de git, para así poder seguir los cambios que se van realizando en el proceso de desarrollo.
