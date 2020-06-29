@@ -261,25 +261,35 @@ $ git stash apply stash@{0}
 Configurando el fichero .gitignore
 ==================================
 
-Cuando creamos un repositorio git dentro de un directorio, inicialmente se incluyen todos los archivos de dicho directorio dentro del control de
-versiones de git, para así poder seguir los cambios que se van realizando en el proceso de desarrollo.
+Cuando creamos un repositorio git dentro de un directorio, inicialmente se
+incluyen todos los archivos de dicho directorio dentro del control de versiones
+de git, para así poder seguir los cambios que se van realizando en el proceso de
+desarrollo.
 
-Ficheros .gitignore, es en estos archivos donde se incluyen las rutas de todos los directorios y ficheros que queremos excluir de git, es decir, que
-no queremos que sean rastreados.
+Ficheros .gitignore, es en estos archivos donde se incluyen las rutas de todos
+los directorios y ficheros que queremos excluir de git, es decir, que no
+queremos que sean rastreados.
 
-Básicamente git hace una lectura en todos los directorios dentro de la carpeta del proyecto, y cada vez que encuentre un archivo .gitignore lo lee para
-saber que otros archivos debe excluir.
+Básicamente git hace una lectura en todos los directorios dentro de la carpeta
+del proyecto, y cada vez que encuentre un archivo .gitignore lo lee para saber
+que otros archivos debe excluir.
 
-La ubicación del .gitignore depende de ti, puedes tener un único archivo global en el directorio principal o uno independiente dentro de cada carpeta que
+La ubicación del .gitignore depende de ti, puedes tener un único archivo global
+en el directorio principal o uno independiente dentro de cada carpeta que
 quieras configurar.
 
-##### Creando un archivo .gitignore #####
+=============================
+Creando un archivo .gitignore
+=============================
 
-Esto es muy sencillo, básicamente es un archivo de texto plano donde debes escribir las rutas que deseas excluir del repositorio, esto no quiere decir que los
-ficheros van a ser borrados, simplemente los cambios que hagas allí no se van a ver reflejados en ningún commit mientras la ruta se
-encuentre definida en el .gitignore.
+Esto es muy sencillo, básicamente es un archivo de texto plano donde debes
+escribir las rutas que deseas excluir del repositorio, esto no quiere decir que
+los ficheros van a ser borrados, simplemente los cambios que hagas allí no se
+van a ver reflejados en ningún commit mientras la ruta se encuentre definida en
+el .gitignore.
 
-Es importante que el nombre sea exactamente ".gitignore" sin preposiciones, símbolos o cualquier otro caracter diferente a esto.
+Es importante que el nombre sea exactamente ".gitignore" sin preposiciones,
+símbolos o cualquier otro caracter diferente a esto.
 
 Supón que tienes el siguiente directorio:
 
@@ -295,9 +305,10 @@ Supón que tienes el siguiente directorio:
 --config.php
 --server_config.php
 
-Digamos que en tu archivoserver_config.php tienes información delicada sobre conexiones a tu servidor que no quieres incluir en el repositorio
-para compartirlo con tus colaboradores, ese tal vez sea el primer archivo que quieras excluir, para ello creas
-el archivo .gitignore y agregas la siguiente linea:
+Digamos que en tu archivoserver_config.php tienes información delicada sobre
+conexiones a tu servidor que no quieres incluir en el repositorio para
+compartirlo con tus colaboradores, ese tal vez sea el primer archivo que quieras
+excluir, para ello creas el archivo .gitignore y agregas la siguiente linea:
 
 server_config.php
 
@@ -315,7 +326,8 @@ Ahora git incluirá todo el directorio menos ese archivo:
 --config.php
 XXX - server_config.php
 
-Bien, tal vez la carpeta assets/js se haya creado para hacer algunas pruebas de forma local y aun no quieras incluirla en el commit:
+Bien, tal vez la carpeta assets/js se haya creado para hacer algunas pruebas de
+forma local y aun no quieras incluirla en el commit:
 
 server_config.php
 assets/js
@@ -326,28 +338,36 @@ omitir el contenido entonces sería
 
 assets/js/
 
-##### Ignorando un fichero que no se deja en el .gitignore #####
+====================================================
+Ignorando un fichero que no se deja en el .gitignore
+====================================================
 
-Cuando un fichero ya está bajo el control de versiones de git, git seguirá rastreando el archivo, no importa lo que escriba en .gitignore. Tienes que decir
+Cuando un fichero ya está bajo el control de versiones de git, git seguirá
+rastreando el archivo, no importa lo que escriba en .gitignore. Tienes que decir
 explícitamente a git que se olvide de ese fichero con:
 
-1-) Agregar el fichero a ignorar en el .gitignore
+1) Agregar el fichero a ignorar en el .gitignore
 
-2-) Remover el fichero del seguimiento con:
+2) Remover el fichero del seguimiento con:
+
 $ git rm --cached projectname/settings.py
 
-3-) Hacer el commit del cambio con:
+3) Hacer el commit del cambio con:
+
 $ git commit -m "Removido settings del seguimiento"
 
-##### Ignorando settings globales #####
+===========================
+Ignorando settings globales
+===========================
 
-Es probable que en algún momento se trabaje con un proyecto modular, es decir que los componentes
-de dicho proyecto pueden ser ejecutados por separado pero a su vez se pueden comunicar cuando se
-necesite, entonces, al ser sub proyectos o aplicaciones es posible que cada uno posea un fichero
-de configuración y que por alguna razón queremos ignorarlo, si estas aplicaciones forman
-parte de un proyecto entonces es posible que tengas un fichero .gitignore global y que abarca todos
-los subdirectorios, entonces de manera manual, si queremos omitir esos archivos de configuración sería
-tal que asi:
+Es probable que en algún momento se trabaje con un proyecto modular, es decir
+que los componentes de dicho proyecto pueden ser ejecutados por separado pero a
+su vez se pueden comunicar cuando se necesite, entonces, al ser sub proyectos o
+aplicaciones es posible que cada uno posea un fichero de configuración y que por
+alguna razón queremos ignorarlo, si estas aplicaciones forman parte de un
+proyecto entonces es posible que tengas un fichero .gitignore global y que
+abarca todos los subdirectorios, entonces de manera manual, si queremos omitir
+esos archivos de configuración sería tal que asi:
 
 project/app1/settings
 project/app2/settings
@@ -357,18 +377,22 @@ pero si declaramos un settings en el gitignore
 
 settings
 
-Entonces se omitiran de manera global todos los ficheros que coincidan, es decir, no
-hay que especificar la ruta completa de los ficheros a omitir, para este caso, puede
-ser que si lo amerite para otro casos.
+Entonces se omitiran de manera global todos los ficheros que coincidan, es
+decir, no hay que especificar la ruta completa de los ficheros a omitir, para
+este caso, puede ser que si lo amerite para otro casos.
 
-##### El fichero README.md #####
+====================
+El fichero README.md
+====================
 
-README (en español LEEME o LEAME) es un documento de texto que acompaña normalmente a los programas (Proyectos), en el cual
-hay información de relevancia sobre éste en cuanto a su uso, nuevas características, errores (bugs) y
-requisitos de software o hardware.
+README (en español LEEME o LEAME) es un documento de texto que acompaña
+normalmente a los programas (Proyectos), en el cual hay información de
+relevancia sobre éste en cuanto a su uso, nuevas características, errores (bugs)
+y requisitos de software o hardware.
 
-Generalmente se distribuye en formato de texto plano, aunque también puede estar en otros formatos que permiten agregar
-estilos como Encabezados, subrayados, listas, enlaces, imágenes, etc.
+Generalmente se distribuye en formato de texto plano, aunque también puede estar
+en otros formatos que permiten agregar estilos como Encabezados, subrayados,
+listas, enlaces, imágenes, etc.
 
 Generalmente la estructura del fichero debería ser la siguiente:
 
@@ -383,14 +407,14 @@ Generalmente la estructura del fichero debería ser la siguiente:
 -Deployment instructions
 *****
 
-Es posible omitir algunas, lo que se desea es que el que lea este fichero, pueda correr con éxito
-el proyecto siguiendo los pasos descritos.
+Es posible omitir algunas, lo que se desea es que el que lea este fichero, pueda
+correr con éxito el proyecto siguiendo los pasos descritos.
 
 Con (#) escribimos comentarios dentro de un fichero .gitignore
 
-#############################################
-##### Ejemplo de .gitignore para Django #####
-#############################################
+=================================
+Ejemplo de .gitignore para Django
+=================================
 
 *.*.backup
 *.*~
@@ -404,104 +428,167 @@ Con (#) escribimos comentarios dentro de un fichero .gitignore
 #/project/app/migrations
 #/project/settings.py
 
-##########################################################
-##### Ejemplo de .gitignore para archivos temporales #####
-##########################################################
+==============================================
+Ejemplo de .gitignore para archivos temporales
+==============================================
 
 # Temporary files of every sort
 *~
 *.swp
 *.swp~
 
-###############################################################################
-##### Eliminando varios archivos de Git que ya se han eliminado del disco #####
-###############################################################################
+===================================================================
+Eliminando varios archivos de Git que ya se han eliminado del disco
+===================================================================
 
 $ git add -u
 
 $ git commit -m "Deleted files manually"
 
-###########################
-##### Mezclando Ramas #####
-###########################
+===============
+Mezclando ramas
+===============
 
-Para fusionar dos ramas, en este caso una rama de desarrollo con la rama master se hace un git merge, para realizar la mezcla vamos
-a situarnos en la rama master, y luego escribimos el comando donde especificamos que rama queremos mezclar con master.
+Para fusionar dos ramas, en este caso una rama de desarrollo con la rama master
+se hace un git merge, para realizar la mezcla vamos a situarnos en la rama
+master, y luego escribimos el comando donde especificamos que rama queremos
+mezclar con master.
 
-Tambien está el caso de una mezcla de versiones de una rama, ya sea de la rama master local, con la rama master del repositorio, entonces
-si se hace un pull y hay conflictos hay que arreglarlos manualmente y luego hacer el commit, por ejemplo "Fix conflicts", si se hace
-la mezcla y no hay conflictos entonces el propio git te ofrecera crear el commit, algo parecido a "Merge branch xxx in to xxx"...
+Tambien está el caso de una mezcla de versiones de una rama, ya sea de la rama
+master local, con la rama master del repositorio, entonces si se hace un pull y
+hay conflictos hay que arreglarlos manualmente y luego hacer el commit, por
+ejemplo "Fix conflicts", si se hace la mezcla y no hay conflictos entonces el
+propio git te ofrecera crear el commit, algo parecido a "Merge branch xxx in to
+xxx"...
 
-$ git checkout master // Cambiarsa a la rama master
+Cambiarsa a la rama master
 
-$ git merge desarrollo // Mezclar la rama desarrollo con master, si hay conflictos tal vez se tengan que resolver (automáticamente) antes de mezclar.
+$ git checkout master
 
-$ git pull origin master // Recuperar y unir automáticamente la rama remota con tu rama actual, traerse los cambios del repo al repo local. A veces puede haber 
-conflictos con ficheros locales y no deja hacer el pull, por lo que es necesario descartar esos ficheros.
+Mezclar la rama desarrollo con master, si hay conflictos tal vez se tengan que
+resolver (automáticamente) antes de mezclar.
 
-$ git checkout // Descartar cambios, probar el pull de nuevo
+$ git merge desarrollo
 
-$ git checkout fichero.xxx // Si no deja hacer el pull, descartar cambios en ese fichero/s para poder hacer el pull.
+Recuperar y unir automáticamente la rama remota con tu rama actual, traerse los
+cambios del repo al repo local. A veces puede haber conflictos con ficheros
+locales y no deja hacer el pull, por lo que es necesario descartar esos
+ficheros.
 
-$ git status origin master // Comparar la rama local con la rama del repositorio, nos dirá si estamos atrás o delante del repo, y por cuantos commits.
-Si estamos detrás, con un pull nos traeremos los cambios del repo, si estamos delante, se hará un merge o una mezcla del repo local y el remoto y así tendra todos los cambios listos, luego en el status del repo local, pedirá hacer un push para estabilizar todos los cambios en el repo remoto.
+$ git pull origin master
 
-##### Borrando ramas remotas #####
+Descartar cambios, probar el pull de nuevo
 
-// Imagina que ya has terminado con una rama remota. Es decir, tanto tu como tus colaboradores
-// habeis completado una determinada funcionalidad y la habeis incorporado (merge) a la rama master
-// en el remoto (o donde quiera que tengais la rama de código estable). Puedes borrar la rama remota
-// utilizando la un tanto confusa sintaxis: git push [nombreremoto] :[rama]. Por ejemplo, si quieres
-// borrar la rama serverfix del servidor, puedes utilizar:
+$ git checkout
+
+Si no deja hacer el pull, descartar cambios en ese fichero/s para poder hacer
+el pull.
+
+$ git checkout fichero.xxx
+
+Comparar la rama local con la rama del repositorio, nos dirá si estamos atrás o
+delante del repo, y por cuantos commits.
+
+$ git status origin master
+
+Si estamos detrás, con un pull nos traeremos los cambios del repo, si estamos
+delante, se hará un merge o una mezcla del repo local y el remoto y así tendra
+todos los cambios listos, luego en el status del repo local, pedirá hacer un
+push para estabilizar todos los cambios en el repo remoto.
+
+======================
+Borrando ramas remotas
+======================
+
+Imagina que ya has terminado con una rama remota. Es decir, tanto tu como tus
+colaboradores habeis completado una determinada funcionalidad y la habeis
+incorporado (merge) a la rama master en el remoto (o donde quiera que tengais la
+rama de código estable). Puedes borrar la rama remota utilizando la un tanto
+confusa sintaxis: git push [nombreremoto] :[rama]. Por ejemplo, si quieres
+borrar la rama serverfix del servidor, puedes utilizar:
 
 $ git push origin :serverfix
 To git@github.com:schacon/simplegit.git
  - [deleted]         serverfix
 
-Y... ¡Boom!. La rama en el servidor ha desaparecido. Puedes grabarte a fuego esta página, porque necesitarás ese comando y, lo más probable es que hayas olvidado su sintaxis. Una manera de recordar este comando es dándonos cuenta de que proviene de la sintaxis git push [nombreremoto] [ramalocal]:[ramaremota]. Si omites la parte [ramalocal], lo que estás diciendo es: "no cojas nada de mi lado y haz con ello [ramaremota]".
+Y... ¡Boom!. La rama en el servidor ha desaparecido. Puedes grabarte a fuego
+esta página, porque necesitarás ese comando y, lo más probable es que hayas
+olvidado su sintaxis. Una manera de recordar este comando es dándonos cuenta de
+que proviene de la sintaxis git push [nombreremoto] [ramalocal]:[ramaremota]. Si
+omites la parte [ramalocal], lo que estás diciendo es: "no cojas nada de mi lado
+y haz con ello [ramaremota]".
 
----------------------------
 
-$ git checkout XXXXXX123456 // Este comando sirve para moverse entre los commits, cada commit genera una
-etiqueta, un identificador muy largo alfanumerico, estas etiquetas identifican una version del proyecto
-lo que permite restaurar el proyecto a estados anteriores donde XXXXXX123456 representa la etiqueta del commit al que queremos ir.
+Este comando sirve para moverse entre los commits, cada commit genera una
+etiqueta, un identificador muy largo alfanumerico, estas etiquetas identifican
+una version del proyecto lo que permite restaurar el proyecto a estados
+anteriores donde XXXXXX123456 representa la etiqueta del commit al que queremos
+ir.
 
-//Una vez movidos a ese commit especifico del historial se puede crear una nueva rama desde ese punto con:
+$ git checkout XXXXXX123456
+
+Una vez movidos a ese commit especifico del historial se puede crear una nueva
+rama desde ese punto con:
 
 $ git checkout -b Nombre_Rama
 
-Si hacemos git log nos mostrara los commits que habian hasta ese momento y el ultimo es en el que nos encontramos, si queremos
-volver a tener los commits anteriores solo hacemos git checkout a la rama en que estabamos antes o a alguna rama especifica.
+Si hacemos git log nos mostrara los commits que habian hasta ese momento y el
+ultimo es en el que nos encontramos, si queremos volver a tener los commits
+anteriores solo hacemos git checkout a la rama en que estabamos antes o a alguna
+rama especifica.
 
-$ git checkout -f master // Para forzar volver a la rama master por ejemplo, a veces no nos deja porque no commitemos algunos cambios, como logs, etc.
+Para forzar volver a la rama master por ejemplo, a veces no nos deja porque no
+commitemos algunos cambios, como logs, etc.
 
-$ git diff // Si se hacen cambios o se agregaron archivos al proyecto este comando nos hará mostrara una comparacion entre los
-ultimos cambios hechos el ultimo commit hecho, es recomendable revisar esos cambios antes de agregarlos al seguimiento de git
+$ git checkout -f master
+
+Si se hacen cambios o se agregaron archivos al proyecto este comando nos hará
+mostrara una comparacion entre los ultimos cambios hechos el ultimo commit hecho
+,es recomendable revisar esos cambios antes de agregarlos al seguimiento de git
 y por supuesto antes de hacer un commit.
 
-$ git diff --stat // Muestra la lista de ficheros modificados luego del último cambio.
+$ git diff
 
-$ git diff --stat xxxxxxx xxxxxxx // Mostrar los ficheros modificados de dos commits específicos.
+Muestra la lista de ficheros modificados luego del último cambio.
 
-$ git diff xxxxxxx xxxxxxx file_name.xxx // Mostrar las modificaciones de un fichero o más entre dos commits específicos, los ficheros se separan con espacio
-y no con comas.
+$ git diff --stat
 
-$ git diff nombre_fichero.xxx // Ver solo los cambios o modificaciones de ese fichero, por ejemplo, si hacemos un git status y se muestra:
+Mostrar los ficheros modificados de dos commits específicos.
+
+$ git diff --stat xxxxxxx xxxxxxx
+
+Mostrar las modificaciones de un fichero o más entre dos commits específicos,
+los ficheros se separan con espacio y no con comas.
+
+$ git diff xxxxxxx xxxxxxx file_name.xxx
+
+Ver solo los cambios o modificaciones de ese fichero, por ejemplo:
+
+$ git diff nombre_fichero.xxx
+
+Si hacemos un git status y se muestra:
 
 #	modified:   a.txt
 #	modified:   b.html
 #	modified:   b.py
 
-$ git diff a.txt // Mostrar solo los cambios del fichero especificado.
+Mostrar solo los cambios del fichero especificado.
+
+$ git diff a.txt
 
 ---------
 
-//Luego de hacer el commit en la rama master y luego de haber creado la rama desarrollo y hacer el commit
-se pueden listar los commits de las ramas existentes y asi poder realizar comparacaiones entre las
-diferentes versiones del codigo. En este caso se agregaron 2 lineas al <div id="cabecera"> de una plantilla del proyecto
-//Usando los identificadores de cada commit se pueden comparar las versiones del software.
+Luego de hacer el commit en la rama master y luego de haber creado la rama
+desarrollo y hacer el commit se pueden listar los commits de las ramas
+existentes y asi poder realizar comparacaiones entre las diferentes versiones
+del codigo. En este caso se agregaron 2 lineas al <div id="cabecera"> de una
+plantilla del proyecto
+
+Usando los identificadores de cada commit se pueden comparar las versiones del
+software.
 
 $ git branch -v
+
 * desarrollo e6dcbf4 Modificacion de texto de la cabecera
   master     a537ef5 Primer commit
 user@debian:~/DIV$ git diff a537ef5 e6dcbf4
@@ -519,105 +606,192 @@ index 554fd4f..94b3eac 100755
  
                 <div id="cuerpo1">
 
+Crea una copia local del repositorio se debe situar en la carpeta onde se quiere
+hacer la copia y luego se le da la ruta del proyecto a copiar .
 
-$ git clone /home/directorio/proyecto/proyecto //Crea una copia local del repositorio se debe situar en la carpeta
-donde se quiere hacer la copia y luego se le da la ruta del proyecto a copiar 
+$ git clone /home/directorio/proyecto/proyecto
 
-$ git clone https://xxx.xxx.gob.ve/xxx/xxx/xxx.git // Si esta subido en algun servidor 
+Si esta subido en algun servidor.
 
----Recomendado---
+$ git clone https://xxx.xxx.gob.ve/xxx/xxx/xxx.git
 
-*Cada desarrollador o equipo de desarrollo puede hacer uso de Git de la forma que le parezca
- conveniente. Sin embargo una buena práctica es la siguiente:
+===========
+Recomendado
+===========
+
+-Cada desarrollador o equipo de desarrollo puede hacer uso de Git de la forma
+que le parezca conveniente. Sin embargo una buena práctica es la siguiente:
 
 Se deben utilizar 4 tipos de ramas: Master, Development, Features, y Hotfix.
 
--Master: Es la rama principal. Contiene el repositorio que se encuentra publicado
-en producción, por lo que debe estar siempre estable.
+-Master: Es la rama principal. Contiene el repositorio que se encuentra
+publicado en producción, por lo que debe estar siempre estable.
 
--Development: Es una rama sacada de master. Es la rama de integración, todas las nuevas
-funcionalidades se deben integrar en esta rama. Luego que se realice la integración y se
- corrijan los errores (en caso de haber alguno), es decir que la rama se encuentre estable,
- se puede hacer un merge de development sobre la rama master.
+-Development: Es una rama sacada de master. Es la rama de integración, todas las
+nuevas funcionalidades se deben integrar en esta rama. Luego que se realice la
+integración y se corrijan los errores (en caso de haber alguno), es decir que la
+rama se encuentre estable, se puede hacer un merge de development sobre la rama
+master.
 
--Features: Cada nueva funcionalidad se debe realizar en una rama nueva, específica para
-esa funcionalidad. Estas se deben sacar de development. Una vez que la funcionalidad
-esté pronta, se hace un merge de la rama sobre development, donde
-se integrará con las demás funcionalidades.
+-Features: Cada nueva funcionalidad se debe realizar en una rama nueva,
+específica para esa funcionalidad. Estas se deben sacar de development. Una vez
+que la funcionalidad esté pronta, se hace un merge de la rama sobre development,
+donde se integrará con las demás funcionalidades.
 
--Hotfix: Son bugs que surgen en producción, por lo que se deben arreglar y publicar
-de forma urgente. Es por ello, que son ramas sacadas de master. Una vez corregido
-el error, se debe hacer un merge de la rama sobre master. Al final, para que no
-quede desactualizada, se debe realizar el merge de master sobre development.
+-Hotfix: Son bugs que surgen en producción, por lo que se deben arreglar y
+publicar de forma urgente. Es por ello, que son ramas sacadas de master. Una vez
+corregido el error, se debe hacer un merge de la rama sobre master. Al final,
+para que no quede desactualizada, se debe realizar el merge de master sobre
+development.
 
 Algo de teoría...
 
-##### ¿Qué es un fork? #####
+================
+¿Qué es un fork?
+================
 
-La palabra fork se traduce al castellano, dentro del contexto que nos ocupa, como bifurcación. Cuando hacemos un fork de un repositorio, se hace una copia exacta en crudo (en inglés “bare”) del repositorio original que podemos utilizar como un repositorio git cualquiera. Después de hacer fork tendremos dos repositorios git idénticos pero con distinta URL. Justo después de hacer el fork, estos dos repositorios tienen exactamente la misma historia, son una copia idéntica. Finalizado el proceso, tendremos dos repositorios independientes que pueden cada uno evolucionar de forma totalmente autónoma. De hecho, los cambios que se hacen el repositorio original NO se transmiten automáticamente a la copia (fork). Esto tampoco ocurre a la inversa: las modificaciones que se hagan en la copia (fork) NO se transmiten automáticamente al repositorio original.
+La palabra fork se traduce al castellano, dentro del contexto que nos ocupa,
+como bifurcación. Cuando hacemos un fork de un repositorio, se hace una copia
+exacta en crudo (en inglés “bare”) del repositorio original que podemos utilizar
+como un repositorio git cualquiera. Después de hacer fork tendremos dos
+repositorios git idénticos pero con distinta URL. Justo después de hacer el
+fork, estos dos repositorios tienen exactamente la misma historia, son una copia
+idéntica. Finalizado el proceso, tendremos dos repositorios independientes que
+pueden cada uno evolucionar de forma totalmente autónoma. De hecho, los cambios
+que se hacen el repositorio original NO se transmiten automáticamente a la copia
+(fork). Esto tampoco ocurre a la inversa: las modificaciones que se hagan en la
+copia (fork) NO se transmiten automáticamente al repositorio original.
+
 ¿Y en qué se diferencia un fork de un clon?
 
-Cuando hacemos un clon de un repositorio, te bajas una copia del mismo a tu máquina. Empiezas a trabajar, haces modificaciones y haces un push. Cuando haces el push estás modificando el repositorio que has clonado.
+Cuando hacemos un clon de un repositorio, te bajas una copia del mismo a tu
+máquina. Empiezas a trabajar, haces modificaciones y haces un push. Cuando haces
+el push estás modificando el repositorio que has clonado.
 
-Cuando haces un fork de un repositorio, se crea un nuevo repositorio en tu cuenta de Github o Bitbucket, con una URL diferente (fork). Acto seguido tienes que hacer un clon de esa copia sobre la que empiezas a trabajar de forma que cuando haces push, estás modificando TU COPIA (fork). El repositorio original sigue intacto. Lo vamos a ver en breve con un ejemplo.
+Cuando haces un fork de un repositorio, se crea un nuevo repositorio en tu
+cuenta de Github o Bitbucket, con una URL diferente (fork). Acto seguido tienes
+que hacer un clon de esa copia sobre la que empiezas a trabajar de forma que
+cuando haces push, estás modificando TU COPIA (fork). El repositorio original
+sigue intacto. Lo vamos a ver en breve con un ejemplo.
+
 ¿Para qué sirve?
 
-Tiene varios usos. El más común es el de permitir a los desarrolladores contribuir a un proyecto de forma segura.
+Tiene varios usos. El más común es el de permitir a los desarrolladores
+contribuir a un proyecto de forma segura.
 
-¿Porqué decimos de forma segura? Imaginaos un super proyecto como puede ser el código fuente de Apache. ¿Cómo se trabajaba antes de existir git? con Subversion o CVS existía un servidor centralizado que tenía dos tipos de usuarios: lo que podían “escribir” en el repositorio (subir cambios al código fuente) y los que sólo podían “leer” el repositorio. Estos últimos sólo podían bajarse el código a su máquina y podían modificarlo sólo en su copia local. No podían subir ninguna modificación al servidor central.
+¿Porqué decimos de forma segura? Imaginaos un super proyecto como puede ser el
+código fuente de Apache. ¿Cómo se trabajaba antes de existir git? con Subversion
+o CVS existía un servidor centralizado que tenía dos tipos de usuarios: lo que
+podían “escribir” en el repositorio (subir cambios al código fuente) y los que
+sólo podían “leer” el repositorio. Estos últimos sólo podían bajarse el código a
+su máquina y podían modificarlo sólo en su copia local. No podían subir ninguna
+modificación al servidor central.
 
-¿Qué tenías que hacer para contribuir? Tenías que solicitar permiso de escritura y que alguien te lo diese. Una vez te lo concedían, ya podías subir tus modificaciones y, por supuesto, liarla si no sabías lo que estabas haciendo. Otra opción era enviar parches, trabajar con ramas… había varias formas pero todas bastante engorrosas.
+¿Qué tenías que hacer para contribuir? Tenías que solicitar permiso de escritura
+y que alguien te lo diese. Una vez te lo concedían, ya podías subir tus
+modificaciones y, por supuesto, liarla si no sabías lo que estabas haciendo.
+Otra opción era enviar parches, trabajar con ramas… había varias formas pero
+todas bastante engorrosas.
 
-Además, este procedimiento de dar acceso de escritura a un repositorio centralizado es un poco arriesgado. Siguiendo con el ejemplo que he puesto de Apache ¿cómo sé yo, responsable del repositorio, que esta persona que está a 10000Km de mí en la otra punta del planeta sabe lo que está haciendo? ¿puedo confiar en él?. Al final, contribuir a un proyecto se convertía en una tarea tediosa tanto para el que pretendía contribuir como para el que lo tenía que gestionar. Y no hablemos de lo divertido que era hacer un merge…
+Además, este procedimiento de dar acceso de escritura a un repositorio
+centralizado es un poco arriesgado. Siguiendo con el ejemplo que he puesto de
+Apache ¿cómo sé yo, responsable del repositorio, que esta persona que está a
+10000Km de mí en la otra punta del planeta sabe lo que está haciendo? ¿puedo
+confiar en él?. Al final, contribuir a un proyecto se convertía en una tarea
+tediosa tanto para el que pretendía contribuir como para el que lo tenía que
+gestionar. Y no hablemos de lo divertido que era hacer un merge…
 
-Git, al tratarse de un sistema distribuido, resuelve este tipo de problemas de una forma muy elegante a través de los forks. Digamos que Pepito es una persona quiere contribuir al proyecto. Ha encontrado un bug y sabe cómo corregirlo. Como propietario del repositorio me interesa que Pepito pueda enviarme el parche de forma rápida, que no pierda mucho tiempo. Si es así ¡Pepito estará encantado de colaborar con nosotros! ;-). Además, necesito que el proceso sea ágil, no quiero tener que invertir 5 horas de mi tiempo cada vez que tenga que hacer un merge del trabajo que Pepito me envíe. ¿Cómo resuelve git el problema?
+Git, al tratarse de un sistema distribuido, resuelve este tipo de problemas de
+una forma muy elegante a través de los forks. Digamos que Pepito es una persona
+quiere contribuir al proyecto. Ha encontrado un bug y sabe cómo corregirlo. Como
+propietario del repositorio me interesa que Pepito pueda enviarme el parche de
+forma rápida, que no pierda mucho tiempo. Si es así ¡Pepito estará encantado de
+colaborar con nosotros! ;-). Además, necesito que el proceso sea ágil, no quiero
+tener que invertir 5 horas de mi tiempo cada vez que tenga que hacer un merge
+del trabajo que Pepito me envíe. ¿Cómo resuelve git el problema?
 
--Pepito hace un fork de mi repositorio, para lo que sólo necesito darle permiso de lectura.
--Pepito trabaja en SU COPIA (fork) del repositorio. Como es suya, puede hacer lo que quiera, la puede borrar, corromper, dinamitar, reescribir la historia del proyecto… nos da lo mismo, es SU COPIA (fork).
--Cuando Pepito termina de programar y testear el parche, me avisa de que ya lo tiene y me dice “En la rama parche_de_pepito de MI COPIA (fork), tienes el parche que corrige el Bug XXXX”.
--Yo voy a su repositorio, miro lo que ha hecho y si está bien lo incorporo (merge) a mi repositorio, que es el original.
+-Pepito hace un fork de mi repositorio, para lo que sólo necesito darle permiso
+de lectura.
+
+-Pepito trabaja en SU COPIA (fork) del repositorio. Como es suya, puede hacer lo
+que quiera, la puede borrar, corromper, dinamitar, reescribir la historia del
+proyecto… nos da lo mismo, es SU COPIA (fork).
+
+-Cuando Pepito termina de programar y testear el parche, me avisa de que ya lo
+tiene y me dice “En la rama parche_de_pepito de MI COPIA (fork), tienes el
+parche que corrige el Bug XXXX”.
+
+-Yo voy a su repositorio, miro lo que ha hecho y si está bien lo incorporo
+(merge) a mi repositorio, que es el original.
 
 Las ventajas de este proceso son las siguientes:
 
--Pepito trabaja con SU COPIA. En ningún momento le tengo que dar acceso al repositorio central.
--El proceso de incorporación de los cambios de Pepito es muy sencillo. Si no hay conflictos en los ficheros puede que sea tan simple como ejecutar un par de comandos git.
+-Pepito trabaja con SU COPIA. En ningún momento le tengo que dar acceso al
+repositorio central.
+
+-El proceso de incorporación de los cambios de Pepito es muy sencillo. Si no hay
+conflictos en los ficheros puede que sea tan simple como ejecutar un par de
+comandos git.
+
 -Pepito tiene muy fácil contribuir, no le cuesta esfuerzo.
--Yo puedo gestionar muy fácilmente las contribuciones de muchas personas ¡me cuesta muy poco trabajo!
 
-#############################################
-######### Subir proyectos a GitHub ##########
-#############################################
+-Yo puedo gestionar muy fácilmente las contribuciones de muchas personas ¡me
+cuesta muy poco trabajo!
 
-// Repositorio: Un repositorio, depósito o archivo es un sitio centralizado donde
-se almacena y mantiene información digital, habitualmente bases de datos o archivos informáticos.
+========================
+Subir proyectos a GitHub
+========================
+
+Repositorio: Un repositorio, depósito o archivo es un sitio centralizado donde
+se almacena y mantiene información digital, habitualmente bases de datos o
+archivos informáticos.
 
 1- Crearnos una cuenta en GitHub
 
-2- Crear un repositorio, desde la intefáz gráfica de github nos pedirá el nombre para el repositorio
-ese repo tendra una URL asignada, ejem: https://github.com/name_user/name_repo
+2- Crear un repositorio, desde la intefáz gráfica de github nos pedirá el nombre
+para el repositorio ese repo tendra una URL asignada, ejem:
+https://github.com/name_user/name_repo
 
-3- La forma mas rápida de subir un proyecto al repositorio creado es bajando ese repositorio creado, clonandolo en nuestro directorio,
-al clonarlo ya viene configurado con los ficheros de git lo que nos permitira hacer push directamente sin hacer mayores esfuerzos.
+3- La forma mas rápida de subir un proyecto al repositorio creado es bajando ese
+repositorio creado, clonandolo en nuestro directorio, al clonarlo ya viene
+configurado con los ficheros de git lo que nos permitira hacer push directamente
+sin hacer mayores esfuerzos.
 
-$ git clone https://github.com/name_user/name_repo.git // Clonamos el repositorio del proyecto, se guardará en nuestro directorio
+Clonamos el repositorio del proyecto, se guardará en nuestro directorio.
 
-$ git clone -b branch_name https://xxx.xxx.com/xxx/xxx/git/xxx.git // Clonar directamente una rama específica.
+$ git clone https://github.com/name_user/name_repo.git
 
-$ cd name_repo/ //Nos cambiamos a la carpeta del proyecto, 
+Clonar directamente una rama específica.
 
-4- Una vez hecho es veremos una carpeta local con el nombre de nuestro repositorio de GitHub
-esta carpeta estará vacía, dentro de la carpeta irá el proyecto que queremos subir. Ahora metemos dentro de la carpeta
-todos los directorios y ficehros de nuestro proyecto.
+$ git clone -b branch_name https://xxx.xxx.com/xxx/xxx/git/xxx.git
 
-$ git add . // Para agregar todos los archivos que pegamos al seguimiento de git.
+Nos cambiamos a la carpeta del proyecto
 
-$ git commit -m "Comentario" // Hacemos el primer commit del proyecto, ejemplo: "Primer commit" o "Caga inicial del proyecto"
+$ cd name_repo/
 
-$ git push origin master // Este comando es para subir el proyecto directamente a la rama master de nuestro repo.
+4- Una vez hecho es veremos una carpeta local con el nombre de nuestro
+repositorio de GitHub esta carpeta estará vacía, dentro de la carpeta irá el
+proyecto que queremos subir. Ahora metemos dentro de la carpeta todos los
+directorios y ficehros de nuestro proyecto.
 
-// Cabe mencionar que en el proyecto git descargado, oculta está la carpeta .git, dentro en el fichero config estará por defecto
-escrita la URL de nuestro repo, lo que facilita subir los proyectos y los cambios directamente, por ello 
-el paso de la clonacion del repo.
+Para agregar todos los archivos que pegamos al seguimiento de git.
+
+$ git add .
+
+Hacemos el primer commit del proyecto, ejemplo: "Primer commit" o "Caga inicial
+del proyecto"
+
+$ git commit -m "Comentario"
+
+Este comando es para subir el proyecto directamente a la rama master de nuestro
+repo.
+
+$ git push origin master
+
+Cabe mencionar que en el proyecto git descargado, oculta está la carpeta .git,
+dentro en el fichero config estará por defecto escrita la URL de nuestro repo,
+lo que facilita subir los proyectos y los cambios directamente, por ello el paso
+de la clonacion del repo.
 
 Ejemplo de un fichero config:
 
@@ -633,10 +807,12 @@ Ejemplo de un fichero config:
         remote = origin
         merge = refs/heads/master
 
--Nota: Podemos añadir este contenido a otro proyecto de git, cambiando el usuario y el nombre del proyecto, para
-que apunte al repositorio remoto que se desee, debe estar creado en github para que no haya problema al hacer el push.
+-Nota: Podemos añadir este contenido a otro proyecto de git, cambiando el
+usuario y el nombre del proyecto, para que apunte al repositorio remoto que se
+desee, debe estar creado en github para que no haya problema al hacer el push.
 
-// Antes de subir los cambios nos pedira el user y pass de la cuenta github para realizar la autenticación
+Antes de subir los cambios nos pedira el user y pass de la cuenta github para
+realizar la autenticación
 
 user@debian:~/MiProyecto$ git push origin master
 Username for 'https://github.com': user
@@ -649,47 +825,76 @@ Total 13 (delta 0), reused 0 (delta 0)
 To https://github.com/user/proyecto.git
    af47064..228246e  master -> master
 
-// Listo ya deberias porder ver tu proyecto en github
+Listo ya deberias porder ver tu proyecto en github
 
-$ git push origin --delete your_branch // Eliminar una rama en tu GitHub o en tu repositorio remoto.
+Eliminar una rama en tu GitHub o en tu repositorio remoto.
 
-$ git push origin :your_branch // Eliminar una rama, alternativa al anterior.
+$ git push origin --delete your_branch
 
-$ git push origin +master // Para borrar o deshacer un commit en github, se debe primero borrar el commit 
-de manera local, luego volvemos a subir el proyecto con este comando para que quede como estaba.
+Eliminar una rama, alternativa al anterior.
+
+$ git push origin :your_branch
+
+Para borrar o deshacer un commit en github, se debe primero borrar el commit de
+manera local, luego volvemos a subir el proyecto con este comando para que quede
+como estaba.
+
+$ git push origin +master
 
 ----- Inviting collaborators to a personal repository -----
 
 You can invite users to become collaborators on your personal repository.
 Tip: You can grant read/write access to collaborators on a personal repository.
-Repositories owned by an organization can grant more granular access. For more information, see "What are the different access permissions?"
+Repositories owned by an organization can grant more granular access. For more
+information, see "What are the different access permissions?"
 
-Ask for the username of the person you're inviting as a collaborator. If they don't have a username yet, they can sign up for GitHub.
+Ask for the username of the person you're inviting as a collaborator. If they
+don't have a username yet, they can sign up for GitHub.
+
 On GitHub, navigate to the main page of the repository.
 Repository settings buttonUnder your repository name, click Settings.
-Repository settings sidebar with Collaborators highlightedIn the left sidebar, click Collaborators.
+Repository settings sidebar with Collaborators highlightedIn the left sidebar,
+click Collaborators.
 Under "Collaborators", start typing the collaborator's username.
 Select the collaborator's username from the drop-down menu.
 Click Add collaborator.
 The user will receive an email inviting them to the repository.
-Once they accept your invitation, they will have collaborator access to your repository.
 
-##### ¿Qué es un pull request? #####
+Once they accept your invitation, they will have collaborator access to your
+repository.
 
-Un pull request es una petición que el propietario de un fork de un repositorio hace al propietario del repositorio original
-para que este último incorpore los commits que están en el fork.
+========================
+¿Qué es un pull request?
+========================
+
+Un pull request es una petición que el propietario de un fork de un repositorio
+hace al propietario del repositorio original para que este último incorpore los
+commits que están en el fork.
 
 Ejemplo:
+
 -El usuario A crea un repositorio X en github: https://github.com/A/X
--El usuario B crea un fork (bifurcación) para trabajar en él: https://github.com/B/X
--Los dos usuarios realizan modificaciones cada uno en su repositorio, cada uno de ellos hace un commit y posteriormente un push.
-Cada uno sube los cambios a su correspondiente repositorio.
--El usuario B configura un repositorio remoto adicional (upstream) e incorpora, haciendo un merge, los cambios en el código que hizo A.
-Después de hacer el merge, B hace un push para actualizar su repositorio remoto.
 
-En el caso del ejemplo, el usuario B le enviará la petición a A para que este último incorpore los commits que tiene en su fork.
+-El usuario B crea un fork (bifurcación) para trabajar en él:
+https://github.com/B/X
 
-##### Otros #####
+-Los dos usuarios realizan modificaciones cada uno en su repositorio, cada uno
+de ellos hace un commit y posteriormente un push. Cada uno sube los cambios a su
+correspondiente repositorio.
 
-$ export GIT_SSL_NO_VERIFY=True // Si un repostirotio git remoto no cuenta con el certificado
-digital del servidor a veces se debe saltar chequeo de la firma para bajar las fuentes con este comando.
+-El usuario B configura un repositorio remoto adicional (upstream) e incorpora,
+haciendo un merge, los cambios en el código que hizo A. Después de hacer el
+merge, B hace un push para actualizar su repositorio remoto.
+
+En el caso del ejemplo, el usuario B le enviará la petición a A para que este
+último incorpore los commits que tiene en su fork.
+
+=====
+Otros
+=====
+
+Si un repostirotio git remoto no cuenta con el certificado digital del servidor
+a veces se debe saltar chequeo de la firma para bajar las fuentes con este
+comando.
+
+$ export GIT_SSL_NO_VERIFY=True
