@@ -1,0 +1,37 @@
+======================
+Guía de composer by dM
+======================
+
+Composer es un manejador de dependencias, no un gestor de paquetes. Pero es
+cierto que trata con paquetes y librerías, la instalación siempre es local para
+cualquier proyecto, las librerías se instalan en un directorio por defecto
+(normalmente es /vendor). Composer es capaz de instalar las librerías que
+requiere tu proyecto con las versiones que necesiten. ¿Y si mis librerías
+dependen de otras? También es capaz de resolver eso y descargar todo lo
+necesario para que funcione y así quitarnos del dolor de cabeza de hacer todo
+eso de forma manual.
+
+=================================
+¿Qué problemas resuelve Composer?
+=================================
+
+Tienes un proyecto que depende de ciertas librerías desarrolladas por terceros,
+y a su vez, éstas librerías también dependen de otras (tú no tienes porqué
+conocer estas librerías) lo que hace Composer en este caso es averiguar que
+librerías deben instalarse; es decir, resuelve todas las dependencias indirectas
+y descarga automáticamente la versión correcta de cada paquete.
+
+Descargamos composer:
+
+$ php -r "readfile('https://getcomposer.org/installer');" | php
+
+El comando anterior nos descarga el fichero "composer.phar"
+
+Movemos composer a /usr/local/bin, lo cual nos permitirá que este disponible
+desde donde sea que lo necesitemos:
+
+# mv composer.phar /usr/local/bin/composer
+
+Comprobamos la instalación con el siguiente comando:
+
+$ composer
