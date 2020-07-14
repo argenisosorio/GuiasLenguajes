@@ -1,5 +1,19 @@
 <!--  Guía PHP by dM -->
 
+=======================================
+Instalar php 7.4 en GNU/Linux Debian 10
+=======================================
+
+$ sudo apt-get install apt-transport-https lsb-release ca-certificates
+
+$ sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+
+$ echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+
+$ sudo apt-get update
+
+$ sudo apt-get install php7.4
+
 ##########################################################################
 ########## Instalar y configurar PHP 7.2 en GNU/Linux Debian 9  ##########
 ##########################################################################
@@ -37,6 +51,14 @@ Zend Engine v3.0.0, Copyright (c) 1998-2017 Zend Technologies
 
 // Para usar con mysql y apache
 # aptitude install php7.0-gd php7.0-mysql libapache2-mod-php7.0 php7.0-mbstring
+
+===============
+Desinstalar php
+===============
+
+$ sudo apt remove php7.2*
+
+$ sudo apt-get purge php7.2*
 
 ###############################################
 ########## Instalar y configurar PHP ##########

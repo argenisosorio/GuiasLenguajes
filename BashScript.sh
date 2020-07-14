@@ -547,3 +547,28 @@ printf "${YELLOW}xxxx \n"
 printf "${BLUE}yyyy \n"
 printf "${RED}zzzz \n${NOCOLOR}"
 printf "my text solo \n"
+
+-----
+
+#!/bin/bash
+#Script para re generar una base de datos sqlite en Laravel.
+
+rm -rf /home/aosorio/Proyectos/my_project/database/database.sqlite
+
+echo "--- Eliminada la base de datos actual ---"
+
+touch /home/aosorio/Proyectos/my_project/database/database.sqlite
+
+echo "--- Creada la base de datos database.sqlite ---"
+
+cd Proyectos/my_project &&
+
+php artisan migrate
+
+echo " --- Realizadas migraciones a la base de datos ---"
+
+php artisan db:seed
+
+echo "--- Guardados datos en la base de datos ---"
+
+echo "--- Listo!!! ---"
