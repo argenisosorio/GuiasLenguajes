@@ -70,7 +70,7 @@ Guía HTML by dM
 <body> <!-- CUERPO, donde va el contenido de la página -->
 <center><h2>Pagina Web</h2></center>
 <p>
-<p align="justify"> El fútbol o futbol (del inglés británico football), también conocido como fútbol asociación, balompié o soccer, es un deporte de equipo jugado entre dos conjuntos de once jugadores cada uno y cuatro árbitros que se ocupan de que las normas se cumplan correctamente. Es ampliamente considerado el deporte más popular del mundo, pues participan en él unos 270 millones de personas. <p>
+<p align="justify"> El fútbol o futbol (del inglés británico football), también conocido como fútbol asociación, balompié o soccer, es un deporte de equipo jugado entre dos conjuntos de once jugadores cada uno y cuatro árbitros que se ocupan de que las normas se cumplan correctamente. Es ampliamente considerado el deporte más popular del mundo, pues participan en él unos 270 millones de personas.<p>
 
 <p align="justify"> El terreno de juego es rectangular de césped natural o artificial, con una portería o arco a cada lado del campo. El objetivo del juego es desplazar con cualquier parte del cuerpo que no sea los brazos o las manos, y mayoritariamente con los pies (de ahí su nombre), una pelota a través del campo para intentar introducirla dentro de la portería contraria, acción que se denomina marcar un gol. El equipo que logre más goles al cabo del partido, de una duración de 90 minutos, es el que resulta ganador del encuentro. <p>
 </body>
@@ -83,12 +83,9 @@ Guía HTML by dM
     document.oncontextmenu = function(){return false;}
 </script>
 
---------------
-
 <!-- Botón Rollover con dos imágenes
 ========================================================== -->
 <a href="#"><img src="1.PNG" onmouseover="this.src='2.PNG' " onmouseout="this.src='1.PNG' "/> </a>
-
 
 <!-- Etiquepas para párrafos
 ========================================================== -->
@@ -116,8 +113,9 @@ Guía HTML by dM
 
 <p align="left"></p> Sirve para justificar un parrafo a LEFT, CENTER, RIGHT o JUSTIFY 
 
-<!-- TIPOS DE LETRA, EFECTOS Y MÁS 
-========================================================== -->
+=============================
+TIPOS DE LETRA, EFECTOS Y MÁS
+=============================
 
 <h1></h1> Le da tamaño al texto, varia del 1 al 6
 
@@ -151,8 +149,9 @@ font-style: italic // Cursiva en css
 
 <font face="arial">TEXTO</font> Tipo de fuente del texto            
 
-<!-- COLORES Y FONDO
-========================================================== -->
+===============
+COLORES Y FONDO
+===============
 
 <body text="red"></body> Para dar color a todo el texto de la página
 
@@ -164,8 +163,9 @@ font-style: italic // Cursiva en css
 
 <body alink="yellow"></body> Color de enlaces ya visitados
 
-<!-- LISTAS
-========================================================== -->
+======
+LISTAS
+======
 
 <ol> ó <ul> Tipo de demarcacion de una lista, numerica y punto
 <li>techo</li>
@@ -221,8 +221,9 @@ list-style: none outside none;
 </body>
 </html>
 
-<!-- LINKS O ENLACES
-========================================================== -->
+===============
+LINKS O ENLACES
+===============
 
 <a href="LINK">Título del enlace</a> Crear un link
 
@@ -374,7 +375,7 @@ siempre los mostrara en orden en la vista -->
     tbody {color:blue;}
     tfoot {color:red;}
     table, th, td {
-        border: 1px solid black;
+      border: 1px solid black;
     }
   </style>
 </head>
@@ -411,86 +412,88 @@ siempre los mostrara en orden en la vista -->
 <!-- Tabla con estilo -->
 <html>
     <head>
-        <title></title>
-        <meta charset="UTF-8" />
+      <title></title>
+      <meta charset="UTF-8" />
     </head>
     <style>
-        table {
-            width:50%;
-            text-align: center;
-            border-color: red;
-            /*color:yellow;*/
-            /*color: white;*/            
-        }
-        div {            
-            font-size:20px;
-            color: Red;
-        }
+      table {
+        width:50%;
+        text-align: center;
+        border-color: red;
+        /*color:yellow;*/
+        /*color: white;*/
+      }
+      div {
+        font-size:20px;
+        color: Red;
+      }
     </style>
 <body>
-    <center>
-        <table border="1px" cellpadding="5px" cellspacing="1px">
-            <p >
-            <caption></caption>
-            <tr>
-                <td><button id="grafo" type="" class="btn btn-success" >Grafo de menciones</button></td>
-                <td>CÓNDOR</td>
-                <td><button id="conteos" type="" class="btn btn-success" >Conteos comparativos</button></td>
-            </tr>            
-            <tr>
-                <td><button id="agrupar" type="" class="btn btn-success" >Agrupamiento por temas</button></td>
-                <td><img src="condor.png" width="100px" heigth="100px"></img></td>
-                <td><button id="conteos_simp" type="" class="btn btn-success" >Conteos simples</button></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><button id="graficos" type="" class="btn btn-success" >Comportamientos en el Tiempo</button></td>
-                <td></td>
-            </tr>            
-        </table>
-        <div>
-            hola
-        </div>
-    </center>
+  <center>
+      <table border="1px" cellpadding="5px" cellspacing="1px">
+        <p >
+        <caption></caption>
+        <tr>
+          <td><button id="grafo" type="" class="btn btn-success" >Grafo de menciones</button></td>
+          <td>CÓNDOR</td>
+          <td><button id="conteos" type="" class="btn btn-success" >Conteos comparativos</button></td>
+        </tr>
+        <tr>
+          <td><button id="agrupar" type="" class="btn btn-success" >Agrupamiento por temas</button></td>
+          <td><img src="condor.png" width="100px" heigth="100px"></img></td>
+          <td><button id="conteos_simp" type="" class="btn btn-success" >Conteos simples</button></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><button id="graficos" type="" class="btn btn-success" >Comportamientos en el Tiempo</button></td>
+          <td></td>
+        </tr>
+      </table>
+      <div>
+          hola
+      </div>
+  </center>
 </body>
 </html>
 
 <!-- Tabla con estilo e identificador -->
 <html>
-    <head>
-        <title></title>
-        <meta charset="UTF-8" />
-    </head>
-    <style>
-        table#X {
-            width:50%;
-            text-align: center;
-            color: red;
-            border-color: red;
-        }
-        table#Y {
-            width:50%;
-            text-align: center;
-            color: blue;
-            border-color: blue;
-        }
-    </style>
+  <head>
+    <title></title>
+    <meta charset="UTF-8" />
+  </head>
+  <style>
+    table#X {
+      width:50%;
+      text-align: center;
+      color: red;
+      border-color: red;
+    }
+    table#Y {
+      width:50%;
+      text-align: center;
+      color: blue;
+      border-color: blue;
+    }
+  </style>
 <body>
-    <center>
-        tabla 1 <br />
-        <table id="X" border="1px" cellpadding="0px" cellspacing="0px">
-            <tr><td>1</td>  <td>2</td> <td>3</td> </tr>
-            <tr><td>4</td>  <td>5</td> <td>6</td> </tr>
-            <tr><td>7</td>  <td>8</td> <td>9</td> </tr>
-        </table>
-        <p></p>
-        tabla 2 <br />
-        <table id="Y" border="1px" cellpadding="0px" cellspacing="0px">
-            <tr><td>1</td>  <td>2</td> <td>3</td> </tr>
-            <tr><td>4</td>  <td>5</td> <td>6</td> </tr>
-            <tr><td>7</td>  <td>8</td> <td>9</td> </tr>
-        </table>
-    </center>
+  <center>
+    tabla 1
+    <br />
+    <table id="X" border="1px" cellpadding="0px" cellspacing="0px">
+      <tr><td>1</td>  <td>2</td> <td>3</td> </tr>
+      <tr><td>4</td>  <td>5</td> <td>6</td> </tr>
+      <tr><td>7</td>  <td>8</td> <td>9</td> </tr>
+    </table>
+    <p></p>
+    tabla 2
+    <br />
+    <table id="Y" border="1px" cellpadding="0px" cellspacing="0px">
+      <tr><td>1</td>  <td>2</td> <td>3</td> </tr>
+      <tr><td>4</td>  <td>5</td> <td>6</td> </tr>
+      <tr><td>7</td>  <td>8</td> <td>9</td> </tr>
+    </table>
+  </center>
 </body>
 </html>
 
@@ -498,82 +501,82 @@ siempre los mostrara en orden en la vista -->
 <!DOCtype html>
 <html>
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
 <style>
 table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
+  border: 1px solid black;
+  border-collapse: collapse;
 }
 th, td {
-    padding: 5px;
-    text-align: left;
+  padding: 5px;
+  text-align: left;
 }
 table#t01 {
 }
 
 table#t01 tr:nth-child(even) {
-    background-color: LightCyan;
+  background-color: LightCyan;
 }
 table#t01 tr:nth-child(odd) {
-   background-color: green;
+  background-color: green;
 }
 table#t01 th    {
-    background-color: DodgerBlue;
-    color: white;
+  background-color: DodgerBlue;
+  color: white;
 }
 </style>
 </head>
 <body>
 <br>
 <table id="t01" border="1px" cellpadding="1px" cellspacing="0px" style="text-align:center;margin-left:10px">
-    <tr>
-        <th><b>ID</b></th>
-        <th><b>Usuario</b></th>
-        <th><b>Nombre</b></th>
-        <th><b>Apellido</b></th>
-        <th><b>Correo electrónico</b></th>
-        <th><b>Creado</b></th>
-        <th><b>Último acceso</b></th>
-        <th><b>Admin</b></th>
-        <th><b>Activo</b></th>
-        <th><b>Grupo</b></th>        
-    </tr>
-    <tr>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>                  
-        <td>XXXX</td>
-        <td>XXXX</td>        
-        <td>Sí</td>
-        <td>No</td>        
-        <td>Grupo </td>
-    </tr>
-    <tr>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>                  
-        <td>XXXX</td>
-        <td>XXXX</td>        
-        <td>Sí</td>
-        <td>No</td>        
-        <td>Grupo </td>
-    </tr>
-    <tr>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>                  
-        <td>XXXX</td>
-        <td>XXXX</td>        
-        <td>Sí</td>
-        <td>No</td>        
-        <td>Grupo </td>
-    </tr>
+  <tr>
+    <th><b>ID</b></th>
+    <th><b>Usuario</b></th>
+    <th><b>Nombre</b></th>
+    <th><b>Apellido</b></th>
+    <th><b>Correo electrónico</b></th>
+    <th><b>Creado</b></th>
+    <th><b>Último acceso</b></th>
+    <th><b>Admin</b></th>
+    <th><b>Activo</b></th>
+    <th><b>Grupo</b></th>
+  </tr>
+  <tr>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>Sí</td>
+    <td>No</td>
+    <td>Grupo</td>
+  </tr>
+  <tr>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>Sí</td>
+    <td>No</td>
+    <td>Grupo </td>
+  </tr>
+  <tr>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>Sí</td>
+    <td>No</td>
+    <td>Grupo </td>
+  </tr>
 </table>
 </body>
 </html>
@@ -582,19 +585,19 @@ table#t01 th    {
 <!DOCtype html>
 <html>
 <head>
-    <meta charset="UTF-8">
+  <meta charset="UTF-8">
 <style>
 table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
+  border: 1px solid black;
+  border-collapse: collapse;
 }
 th, td {
-    padding: 5px;
-    text-align: left;
+  padding: 5px;
+  text-align: left;
 }
 table#t01 th    {
-    background-color: DodgerBlue;
-    color: white;
+  background-color: DodgerBlue;
+  color: white;
 }
 table#t01 {
   color: gray;
@@ -603,113 +606,134 @@ table#t01 {
 table#t01 tr:nth-child(even) {
 }
 table#t01 tr:nth-child(even):hover {
-    background-color: LightCyan;
+  background-color: LightCyan;
 }
 table#t01 tr:nth-child(odd) {
 }
 table#t01 tr:nth-child(odd):hover {
-   background-color: LightCyan;
+  background-color: LightCyan;
 }
 </style>
 </head>
 <table id="t01" border="1px" cellpadding="1px" cellspacing="0px" style="text-align:center;margin-left:10px">
-    <tr>
-        <th><b>ID</b></th>
-        <th><b>Usuario</b></th>
-        <th><b>Nombre</b></th>
-        <th><b>Apellido</b></th>
-        <th><b>Correo electrónico</b></th>
-        <th><b>Creado</b></th>
-        <th><b>Último acceso</b></th>
-        <th><b>Admin</b></th>
-        <th><b>Activo</b></th>
-        <th><b>Grupo</b></th>        
-    </tr>
-    <tr>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>                  
-        <td>XXXX</td>
-        <td>XXXX</td>        
-        <td>Sí</td>
-        <td>No</td>        
-        <td>Grupo </td>
-    </tr>
-    <tr>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>                  
-        <td>XXXX</td>
-        <td>XXXX</td>        
-        <td>Sí</td>
-        <td>No</td>        
-        <td>Grupo </td>
-    </tr>
-    <tr>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>                  
-        <td>XXXX</td>
-        <td>XXXX</td>        
-        <td>Sí</td>
-        <td>No</td>
-        <td>Grupo </td>
-    </tr>
-    <tr>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>                  
-        <td>XXXX</td>
-        <td>XXXX</td>        
-        <td>Sí</td>
-        <td>No</td>
-        <td>Grupo </td>
-    </tr>
-    <tr>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>
-        <td>XXXX</td>                  
-        <td>XXXX</td>
-        <td>XXXX</td>        
-        <td>Sí</td>
-        <td>No</td>
-        <td>Grupo </td>
-    </tr>
+  <tr>
+    <th><b>ID</b></th>
+    <th><b>Usuario</b></th>
+    <th><b>Nombre</b></th>
+    <th><b>Apellido</b></th>
+    <th><b>Correo electrónico</b></th>
+    <th><b>Creado</b></th>
+    <th><b>Último acceso</b></th>
+    <th><b>Admin</b></th>
+    <th><b>Activo</b></th>
+    <th><b>Grupo</b></th>
+  </tr>
+  <tr>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>Sí</td>
+    <td>No</td>
+    <td>Grupo</td>
+  </tr>
+  <tr>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>Sí</td>
+    <td>No</td>
+    <td>Grupo </td>
+  </tr>
+  <tr>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>Sí</td>
+    <td>No</td>
+    <td>Grupo </td>
+  </tr>
+  <tr>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>Sí</td>
+    <td>No</td>
+    <td>Grupo </td>
+  </tr>
+  <tr>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>XXXX</td>
+    <td>Sí</td>
+    <td>No</td>
+    <td>Grupo </td>
+  </tr>
 </table>
 </body>
 </html>
 
-<!-- 91 etiquetas disponibles en HTML 
-a, abbr, acronym, address, applet, area, b, base, basefont, bdo, big, blockquote, body, br, button,    caption, center, cite, code, col, colgroup, dd, del, dfn, dir, div, dl, dt, em, fieldset, font, form, frame, frameset, h1, h2, h3, h4, h5, h6, head, hr, html, i, iframe, img, input, ins, isindex, kbd, label, legend, li,
-link, map, menu, meta, noframes, noscript, object, ol, optgroup, option, p, param, pre, q, s, samp, script, select, small, span, strike, strong, style, sub, sup, table, tbody, td, textarea, tfoot, th, thead, title, tr, tt, u, ul, var
--->
+==========
+GET y POST
+==========
 
-<!-- GET y POST
-========================================================== -->
+Se suele prestar a confusión ya que tanto GET como POST son métodos del
+protocolo HTTP el cual esta compuesto por un envío al servidor conocido como
+petición (request) y una respuesta a dicha solicitud (response).
 
-Se suele prestar a confusión ya que tanto GET como POST son métodos del protocolo HTTP el cual esta compuesto por un envío al servidor conocido como petición (request) y una respuesta a dicha solicitud (response).
+Tanto GET como POST, justamente por ser métodos ambos de HTTP, ejecutan un
+request y response, y a mi criterio esto suele ser parte de la confusión sobre
+los objetivos reales de ambos métodos.
 
-Tanto GET como POST, justamente por ser métodos ambos de HTTP, ejecutan un request y response, y a mi criterio esto suele ser parte de la confusión sobre los objetivos reales de ambos métodos.
+El concepto GET es obtener información del servidor. Traer datos que están en el
+servidor, ya sea en un archivo o base de datos, al cliente. Independientemente
+de que para eso tengamos que enviar (request) algún dato que será procesado para
+luego devolver la respuesta (response) que esperamos, como por ejemplo un
+identificador para obtener una noticia de la base de datos.
 
-El concepto GET es obtener información del servidor. Traer datos que están en el servidor, ya sea en un archivo o base de datos, al cliente. Independientemente de que para eso tengamos que enviar (request) algún dato que será procesado para luego devolver la respuesta (response) que esperamos, como por ejemplo un identificador para obtener una noticia de la base de datos.
+POST sin embargo es enviar información desde el cliente para que sea procesada y
+actualice o agregue información en el servidor, como sería la carga o
+actualización en sí de una noticia. Cuando enviamos (request) datos a través de
+un formulario, estos son procesados y luego a través de una redirección por
+ejemplo devolvemos (response) alguna página con información.
 
-POST sin embargo es enviar información desde el cliente para que sea procesada y actualice o agregue información en el servidor, como sería la carga o actualización en sí de una noticia. Cuando enviamos (request) datos a través de un formulario, estos son procesados y luego a través de una redirección por ejemplo devolvemos (response) alguna página con información.
+Ambos métodos solicitan una respuesta del servidor y ahí es donde parecen que
+los conceptos son iguales ya que con ambos se podría lograr los mismos
+objetivos. Yo podría, aunque estaría mal, enviar por GET ciertos datos en la URL
+y “actualizar o insertar” información en mi base de datos, pero eso le
+correspondería al método POST. De la misma manera podría solicitar una página
+diferente por medio de POST y simplemente mostrarla como respuesta aunque eso
+debería ser a través de una llamada GET.
 
-Ambos métodos solicitan una respuesta del servidor y ahí es donde parecen que los conceptos son iguales ya que con ambos se podría lograr los mismos objetivos. Yo podría, aunque estaría mal, enviar por GET ciertos datos en la URL y “actualizar o insertar” información en mi base de datos, pero eso le correspondería al método POST. De la misma manera podría solicitar una página diferente por medio de POST y simplemente mostrarla como respuesta aunque eso debería ser a través de una llamada GET.
+Las llamadas GET pueden ser cacheadas (historial del navegador), indexadas por
+buscadores, agregar los enlaces a nuestros favoritos o hasta pasar una url
+completa a otra persona para que directamente ingrese a esa página. Con el
+método POST sin embargo no se puede hacer esto.
 
-Las llamadas GET pueden ser cacheadas (historial del navegador), indexadas por buscadores, agregar los enlaces a nuestros favoritos o hasta pasar una url completa a otra persona para que directamente ingrese a esa página. Con el método POST sin embargo no se puede hacer esto.
-
-Generalmente usamos links para ejecutar llamadas GET ya que la idea del link es simplemente “solicitar” una información (página) al servidor y que sea devuelta como una respuesta. Mientras usamos formularios para actualizar datos de productos, clientes, noticias, etc, también teniendo en cuenta que por el método POST también se puede enviar mucha más cantidad de datos que por GET.
+Generalmente usamos links para ejecutar llamadas GET ya que la idea del link es
+simplemente “solicitar” una información (página) al servidor y que sea devuelta
+como una respuesta. Mientras usamos formularios para actualizar datos de
+productos, clientes, noticias, etc, también teniendo en cuenta que por el método
+POST también se puede enviar mucha más cantidad de datos que por GET.
 
 <!-- Formularios -forms
 ========================================================== -->
@@ -722,13 +746,13 @@ autocomplete=off // Atributo para evitar recordar los datos introducidos en los 
 placeholder="Tu Nombre" //Texto de ejemplo dentro del campo del formulario, a manera de ejemplos
 
 <form action="datos.php" method="get"> formulario de USUARIO y CONTRASEÑA también method="post"
-    Nombre: <input type="text" name="nombre" autocomplete=off><br />
-    Contraseña: <input type="password" name="contrasena"><br />
-    <input type="submit" value="Enviar">
-    <input type="reset" value="Borrar">
-    <input type=image src="guardar.png" width="25" height="15"> Imagen como boton submit
-    <a href="#"><img src="guardar.png" alt="Enviar"></a> Imagen como boton submit
-    <input type="image" name="imageField" src="guardar.png" /> Imagen como boton submit
+  Nombre: <input type="text" name="nombre" autocomplete=off><br />
+  Contraseña: <input type="password" name="contrasena"><br />
+  <input type="submit" value="Enviar">
+  <input type="reset" value="Borrar">
+  <input type=image src="guardar.png" width="25" height="15"> Imagen como boton submit
+  <a href="#"><img src="guardar.png" alt="Enviar"></a> Imagen como boton submit
+  <input type="image" name="imageField" src="guardar.png" /> Imagen como boton submit
 </form>
 
 <!-- HTML agrega nuevos tipos de formularios y validacion de campos sin el uso de JavaScript -->
@@ -761,35 +785,35 @@ caracteres si no el valor introducido -->
 ------
 
 <form action="#" method="get">
-    Usuario: <input type="text" name="user" placeholder="Tu Usuario" required> <br />
-    Usuario: <input type="text" name="user" placeholder="Tu Usuario" disabled="disabled" required> <br />
-    Contraseña: <input type="password" name="pass" placeholder="Tu clave" required> <br />
-    <input type="submit" value="Enviar">
-    <input type="reset" value="Borrar">
+  Usuario: <input type="text" name="user" placeholder="Tu Usuario" required> <br />
+  Usuario: <input type="text" name="user" placeholder="Tu Usuario" disabled="disabled" required> <br />
+  Contraseña: <input type="password" name="pass" placeholder="Tu clave" required> <br />
+  <input type="submit" value="Enviar">
+  <input type="reset" value="Borrar">
 </form>
 
 <!-- Básico para login -->
 <form action="#" method="get">
-    Usuario: <input type="text" name="user"> <br />
-    Contraseña: <input type="password" name="pass"> <br />
-    <input type="submit" value="Enviar">
-    <input type="reset" value="Borrar">
+  Usuario: <input type="text" name="user"> <br />
+  Contraseña: <input type="password" name="pass"> <br />
+  <input type="submit" value="Enviar">
+  <input type="reset" value="Borrar">
 </form>
 
 --------
 
 <!-- Botón enviar -->
 <form action="" method="get">
-    Nombre: <input type="text" name="nombre"> <br />
-    <!--input type="submit" value="Enviar"-->
-    <button>Enviar</button>
+  Nombre: <input type="text" name="nombre"> <br />
+  <!--input type="submit" value="Enviar"-->
+  <button>Enviar</button>
 </form>
 
 <!-- textarea -->
 <form>
-    <textarea name="texto" rows="10" cols="50">
-        Hola hdspm
-    </textarea>
+  <textarea name="texto" rows="10" cols="50">
+    Hola hdspm
+  </textarea>
 </form>
 
 <!-- Formulario de Selección -->
@@ -810,32 +834,33 @@ caracteres si no el valor introducido -->
 
 <!-- Checkbox -->
 <form action="datos.php" method="get">
-    ¿Cuáles son sus pasatiempos favoritos?<br>
-    <input type="checkbox" name="pasa" value="tv">TV<br>
-    <input type="checkbox" name="pasa" value="libros">Libros<br>
-    <input type="checkbox" name="pasa" value="musica">Música<br>
-    <input type="checkbox" name="pasa" value="otros">Otros<br>
+  ¿Cuáles son sus pasatiempos favoritos?<br>
+  <input type="checkbox" name="pasa" value="tv">TV<br>
+  <input type="checkbox" name="pasa" value="libros">Libros<br>
+  <input type="checkbox" name="pasa" value="musica">Música<br>
+  <input type="checkbox" name="pasa" value="otros">Otros<br>
 </form>
 
 <!-- Subir una imagen a la página o al servidor -->
 <form action="foto.php" method="post" accept="image/jpg">
-    Ingrese la foto: <input type="file" name="foto"><br />
-    <input type="submit" value="Enviar">
-    <input type="reset" value="Borrar">
+  Ingrese la foto: <input type="file" name="foto"><br />
+  <input type="submit" value="Enviar">
+  <input type="reset" value="Borrar">
 </form>
 
 <!-- Tipo radio -->
 <form action="colores.php" method="get"> 
-    Elija un color<br>
-    <input type="radio" name="col" value="red">Rojo<br>
-    <input type="radio" name="col" value="blue">Azul<br>
-    <input type="radio" name="col" value="green">Verde<br>
-    <input type="submit" value="Enviar">
-    <input type="reset" value="Borrar">
+  Elija un color<br>
+  <input type="radio" name="col" value="red">Rojo<br>
+  <input type="radio" name="col" value="blue">Azul<br>
+  <input type="radio" name="col" value="green">Verde<br>
+  <input type="submit" value="Enviar">
+  <input type="reset" value="Borrar">
 </form>
 
-<!-- Estilos
-========================================================== -->
+=======
+Estilos
+=======
 
 <div style="color:red;font-size:20px">
     hola
@@ -852,13 +877,13 @@ caracteres si no el valor introducido -->
 ------
 
 <html>
-    <head>
-        <title>Ejemplo de estilos con CSS</title>
-        <style>
-              h1 { color: red;  font-family: Arial;   font-size: large;  }
-              p  { color: blue; font-family: Verdana; font-size: medium; }
-        </style>
-    </head> 
+  <head>
+    <title>Ejemplo de estilos con CSS</title>
+    <style>
+      h1 { color: red;  font-family: Arial;   font-size: large;  }
+      p  { color: blue; font-family: Verdana; font-size: medium; }
+    </style>
+  </head> 
 <body>
   <h1>Titular de la página</h1>
   <p>CSS permite separar los contenidos de la página y la información sobre su aspecto. En el ejemplo anterior, dentro de la propia página HTML se crea una zona especial en la que se incluye toda la información relacionada con los estilos de la página.</p>

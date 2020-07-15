@@ -377,7 +377,8 @@ app/Http/routes.php: para la definición de las rutas.
 
 app/config/app.php: contiene configuración general de la aplicación.
 
-public: carpeta pública desde dónde se inicia el proceso de ejecución de una aplicación Laravel.
+public: carpeta pública desde dónde se inicia el proceso de ejecución de una
+aplicación Laravel.
 
 ================================================
 Actualizar proyectos de Laravel luego de un pull
