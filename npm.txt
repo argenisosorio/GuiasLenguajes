@@ -2,9 +2,88 @@
 Guía de npm by dM
 =================
 
+====
+Nota
+====
+
+Usaremos $ para describir los comandos que se usaran con usuario regular.
+
+Usaremos # para describir los comandos que se usaran con superusuario.
+
 ============
 ¿Qué es npm?
 ============
 
 NPM es el manejador de paquetes por defecto para Node.js, es como decir apt para
 GNU/Linux Debian o PIP para Python.
+
+JavaScript ha pasado de ser un lenguaje utilizado para brindar interactividad a
+las páginas web, a ser utilizado ahora también en el lado de los servidores
+gracias a Node.js, leer guía de Node. Dentro de Node, el código se organiza por
+módulos o paquetes, así que al momento de trabajar con él va a ser necesario
+agregar más módulos, es aquí donde entra npm.
+
+Node Package Manager o simplemente npm es un gestor de paquetes, el cual hará
+más fáciles nuestras vidas al momento de trabajar con Node, ya que gracias a él
+podremos tener cualquier librería disponible con solo una línea de código, npm
+nos ayudará a administrar nuestros módulos, distribuir paquetes y agregar
+dependencias de una manera sencilla.
+
+Cuando instalamos nuevos paquetes lo que hace npm es instalarlo de manera local
+en nuestro proyecto dentro de la carpeta node_modules, pero nosotros podemos
+decirle que lo instale de manera global de ser necesario.
+
+Cuando instalamos paquetes se genera el directorio node_modules y un archivo
+package-lock.json que es el responsable de llevar un historial de los cambios
+realizados dentro de node_modules o cuando se realizan cambios en el archivo
+package.json.
+
+Además, existen módulos que ya vienen instalados por defecto en Node.js por lo
+que no será necesario usar npm para traerlas, a estos módulos se les conoce como
+"módulos nativos".
+
+Para instalar npm en nuestro ordenador es necesario primero tener Node.js. Así
+que verificaremos que se encuentre instalado, para eso vamos a usar el siguiente
+comando:
+
+$ nodejs -v
+
+ó
+
+$ nodejs --version
+
+==================
+Instalacion de npm
+==================
+
+# apt-get install npm
+
+Para instalar un paquete con npm vamos a hacerlo de la siguiente manera,
+escribiendo:
+
+$ npm install nombre_paquete@version
+
+Esto se instalará de manera local(en el proyecto), pero si queremos instalarlo
+de manera global tenemos que agregar el -g después del nombre del paquete:
+
+$ npm install Nombre_paquete@version -g
+
+Al momento de iniciar un proyecto sobre el que queremos instalar dependencias a
+través de npm, es recomendable ubicarnos en nuestro proyecto desde una terminal
+y ejecutar el comando:
+
+$ npm init
+
+Este comando nos pedirá una serie de datos acerca de nuestro proyecto y una vez
+finalizado creará el archivo package.json.
+
+El archivo package.json es el responsable de almacenar el nombre de las
+dependencias instaladas catalogándolas principalmente en dos tipos: dependencias
+de desarrollo y dependencias de la aplicación.
+
+=======
+Fuentes
+=======
+
+-https://devcode.la/blog/que-es-npm/
+-https://styde.net/como-instalar-paquetes-con-npm-en-laravel/

@@ -2,6 +2,14 @@
 Guía de Laravel by dM
 =====================
 
+====
+Nota
+====
+
+Usaremos $ para describir los comandos que se usaran con usuario regular.
+
+Usaremos # para describir los comandos que se usaran con superusuario.
+
 =======================
 ¿Como funciona Laravel?
 =======================
