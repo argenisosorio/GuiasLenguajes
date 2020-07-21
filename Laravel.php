@@ -452,3 +452,17 @@ $ php artisan db:seed
 Levantar el servidor de desarrollo.
 
 $ php artisan serve
+
+===================
+Comandos de artisan
+===================
+
+Permite hacer un rollback de nuestras migraciones y re-ejecutarlas de nuevo.
+Esto ayuda a regenerar nuestra base de datos.
+
+$ php artisan migrate:refresh
+
+Omite los métodos down o los rollbacks eliminando todas las tablas para luego
+ejecutar los métodos up.
+
+$ php artisan migrate:fresh
