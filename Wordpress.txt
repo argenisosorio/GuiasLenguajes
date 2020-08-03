@@ -1,54 +1,79 @@
-##### Guía Instalación y Configuración de Wordpress by dM #####
+===================================================
+Guía Instalación y Configuración de Wordpress by dM
+===================================================
 
-########################################################
-##### Descargar versiones específicas de Wordpress #####
-########################################################
+WordPress es ( en inglés, Content Management System o CMS) un sistema de gestión
+de contenidos lanzado el 27 de mayo de 2003, enfocado a la creación de cualquier
+tipo de página web. Originalmente alcanzó una gran popularidad en la creación de
+blogs, para luego convertirse, en una de las principales herramientas para la
+creación de páginas web comerciales.
 
-// Desde aquí: https://wordpress.org/download/releases/
+============================================
+Descargar versiones específicas de Wordpress
+============================================
 
-###############################################
-##### Usando wordpress con servidor nginx #####
-###############################################
+https://wordpress.org/download/releases/
+
+===================================
+Usando wordpress con servidor nginx
+===================================
 
 Nota:
+
 Usaremos $ para describir los comandos que se usaran con usuario regular.
 Usaremos # para describir los comandos que se usaran con superusuario.
 
-// Instalamos MySQL server y lo configuramos la clave
-// del usuario de mysql que nos la pedirá desde la consola.
+Instalamos MySQL server y lo configuramos la clave del usuario de mysql que nos
+la pedirá desde la consola.
+
 # apt-get install mysql-server
 
-// Instalamos php
+Instalamos php.
+
 # apt-get install php5 php5-mysql php5-gd php5-fpm
 
-// Instalamos Nginx server
+Instalamos Nginx server
+
 # apt-get install nginx
 
 Vamos a /var/www/html y dentro descargamos la última versión de Wordpress
+
 $ wget http://wordpress.org/latest.tar.gz
 
-// Extraemos el contenido del fichero, nos debe quedar una carpeta llamada wordpress.
+Extraemos el contenido del fichero, nos debe quedar una carpeta llamada
+wordpress.
+
 # tar -xzvf latest.tar.gz
 
-// Acceder a la consola de mysql, nos pedirá la contraseña solamente.
+Acceder a la consola de mysql, nos pedirá la contraseña solamente.
+
 # mysql -p
 
-// Dentro de la consola de MySQL creamos el usuario y la contraseña del sistema de wordpress:
+Dentro de la consola de MySQL creamos el usuario y la contraseña del sistema de
+wordpress:
+
 mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY '123456';
 
-// Creamos la base de datos del sistema wordpress.
+Creamos la base de datos del sistema wordpress.
+
 mysql> CREATE DATABASE wordpress_db;
 
-// Sobre la base de datos recién creada le asignamos el usuario:
+Sobre la base de datos recién creada le asignamos el usuario:
+
 mysql> GRANT ALL PRIVILEGES ON wordpress_db.* TO 'user'@'localhost';
 
-// Refrescamos el esquema de las tablas de MySQL.
+Refrescamos el esquema de las tablas de MySQL.
+
 mysql> FLUSH PRIVILEGES;
 
-// Renombramos el archivo de configuración por defecto de wp-config-sample.php a wp-config.php
+Renombramos el archivo de configuración por defecto de wp-config-sample.php a
+wp-config.php
+
 # mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
 
-// Editamos el fichero y agregamos la db_name, user y password que creamos en el paso anterior y guardamos.
+Editamos el fichero y agregamos la db_name, user y password que creamos en el
+paso anterior y guardamos.
+
 # vim /var/www/html/wordpress/wp-config.php
 
 Configuramos el fichero /etc/nginx/sites-available/default con lo siguiente:
@@ -78,79 +103,94 @@ server {
   }
 }
 
-// Probamos la configuración de nginx que acabamos de hacer, si dice:OK segimos.
+Probamos la configuración de nginx que acabamos de hacer, si dice:OK segimos.
 
 # nginx -t
 
-// Reiniciamos el servicio de nginx.
+Reiniciamos el servicio de nginx.
 
 # service nginx restart
 
-// Visitamos la url http://127.0.0.1/wordpress/
+Visitamos la url http://127.0.0.1/wordpress/
 
-// Con esto ya deberíamos ver nuestra interfáz de inicio de wordpress, donde llenaremos
-// los campos del nombre del sitio, usuario, contraseña, correo, otros.
+Con esto ya deberíamos ver nuestra interfáz de inicio de wordpress, donde
+llenaremos los campos del nombre del sitio, usuario, contraseña, correo, otros.
 
-################################################
-##### Usando wordpress con servidor apache #####
-################################################
+====================================
+Usando wordpress con servidor apache
+====================================
 
-// Instalamos apache server
+Instalamos apache server
+
 # apt-get install apache2
 
-// Instalamos MySQL server y lo configuramos
+Instalamos MySQL server y lo configuramos
+
 # apt-get install mysql-server
 
-// Instalamos php, en este caso el 5
+Instalamos php, en este caso el 5
+
 # apt-get install php5 php5-gd php5-mysql libapache2-mod-php5
 
-Vamos a /var/www/html que se creo luego de instalar apache y dentro descargamos la última versión de Wordpress
+Vamos a /var/www/html que se creo luego de instalar apache y dentro descargamos
+la última versión de Wordpress
+
 $ wget http://wordpress.org/latest.tar.gz
 
-// Extraemos el contenido del fichero, nos debe quedar una carpeta llamada wordpress.
+Extraemos el contenido del fichero, nos debe quedar una carpeta llamada wordpress.
+
 # tar -xzvf latest.tar.gz
 
-// Acceder a la consola de mysql, nos pedirá la contraseña solamente.
+Acceder a la consola de mysql, nos pedirá la contraseña solamente.
+
 # mysql -p
 
-// Dentro de la consola de MySQL creamos el usuario y la contraseña del sistema de wordpress:
+Dentro de la consola de MySQL creamos el usuario y la contraseña del sistema de
+wordpress:
+
 mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY '123456';
 
-// Creamos la base de datos del sistema wordpress.
+Creamos la base de datos del sistema wordpress.
+
 mysql> CREATE DATABASE wordpress_db;
 
-// Sobre la base de datos recién creada le asignamos el usuario:
+Sobre la base de datos recién creada le asignamos el usuario:
+
 mysql> GRANT ALL PRIVILEGES ON wordpress_db.* TO 'user'@'localhost';
 
-// Refrescamos el esquema de las tablas de MySQL.
+Refrescamos el esquema de las tablas de MySQL.
+
 mysql> FLUSH PRIVILEGES;
 
-// Renombramos el archivo de configuración por defecto de wp-config-sample.php a wp-config.php
+Renombramos el archivo de configuración por defecto de wp-config-sample.php a
+wp-config.php
+
 # mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
 
-// Editamos el fichero y agregamos la db_name, user y password que creamos en el paso anterior y guardamos.
+Editamos el fichero y agregamos la db_name, user y password que creamos en el
+paso anterior y guardamos.
+
 # vim /var/www/html/wordpress/wp-config.php
 
-// Reiniciamos el servicio de apache para que todo ande calidad.
+Reiniciamos el servicio de apache para que todo ande calidad.
+
 # service apache2 restart
 
 Visitamos la url http://127.0.0.1/wordpress/
 
-Con esto ya deberíamos ver nuestra interfáz de inicio de wordpress, donde llenaremos los campos del nombre
-del sitio, usuario, contraseña, correo, otros.
+Con esto ya deberíamos ver nuestra interfáz de inicio de wordpress, donde
+llenaremos los campos del nombre del sitio, usuario, contraseña, correo, otros.
 
-##### Configurar el sitio para que sea accecible desde una red interna con un nombre de dominio #####
+==========================
+Poner wordpress en español
+==========================
 
-xxxx
+Hay dos maneras de hacerlo, la primera es bajarse el wordpress en español
+directamente.
 
-######################################
-##### Poner wordpress en español #####
-######################################
-
-Hay dos maneras de hacerlo, la primera es bajarse el wordpress en español directamente.
-
-La otra es bajarse el paquete de lenguajes donde viene incluído el idioma español o copiarse
-la carpeta languajes al directorio /var/www/html/wordpress/wp-content/
+La otra es bajarse el paquete de lenguajes donde viene incluído el idioma
+español o copiarse la carpeta languajes al directorio
+/var/www/html/wordpress/wp-content/
 
 El contenido de la carpeta languajes debería ser:
 
@@ -164,18 +204,20 @@ El contenido de la carpeta languajes debería ser:
   continents-cities-es_ES.po
   es_ES.po  themes
 
-Ahora editamos el fichero de configuraión de wordpress /var/www/html/wordpress/wp-config.php
+Ahora editamos el fichero de configuraión de wordpress
+/var/www/html/wordpress/wp-config.php
 
-Despues de la 62 o 63, donde quepa, y antes del la variable debub, declaramos la variable del lenguaje
+Despues de la 62 o 63, donde quepa, y antes del la variable debub, declaramos la
+variable del lenguaje
 
 define('WPLANG', 'es_ES');
 
-Listo, si recargamos nuestro sitio ya debería estar en español, tanto la interfaz de administrador
-como el sitio en general.
+Listo, si recargamos nuestro sitio ya debería estar en español, tanto la
+interfaz de administrador como el sitio en general.
 
-#################################
-##### Modificar/Crear temas #####
-#################################
+=====================
+Modificar/Crear temas
+=====================
 
 Por defecto hay tres temas predeterminados, que están en:
 
@@ -183,29 +225,33 @@ Por defecto hay tres temas predeterminados, que están en:
 /var/www/html/wordpress/wp-content/themes/twentyseventeen/
 /var/www/html/wordpress/wp-content/themes/twentysixteen/
 
-Si se quieren hacer pruebas o modificar un tema se puede crear una copia de la carpeta o cambiarle el nombre y activar el tema
-en el panel de administración, también está el caso de instalar o copiar un tema externo y solamente se deberá activar desde
-el panel de administración.
+Si se quieren hacer pruebas o modificar un tema se puede crear una copia de la
+carpeta o cambiarle el nombre y activar el tema en el panel de administración,
+también está el caso de instalar o copiar un tema externo y solamente se deberá
+activar desde el panel de administración.
 
 Ademas se debe editar el fichero:
 
 /var/www/html/wordpress/wp-content/themes/mi_tema/style.css
 
-Editamos la línea que dice Theme Name y ponemos el nombre de nuestro tema, y así aparecera en el panel de administración:
+Editamos la línea que dice Theme Name y ponemos el nombre de nuestro tema, y así
+aparecera en el panel de administración:
 
 Theme Name: mi_tema
 
-##############################
-##### Plugins para temas #####
-##############################
+==================
+Plugins para temas
+==================
 
-Duplicate Theme // Choose an existing theme, duplicate it or create a child while giving it a new name.
+Duplicate Theme: Choose an existing theme, duplicate it or create a child while
+giving it a new name.
 
-Download Plugins and Themes from Dashboard // Download installed plugins and themes ZIP files directly from your admin dashboard without using FTP.
+Download Plugins and Themes from Dashboard: Download installed plugins and
+themes ZIP files directly from your admin dashboard without using FTP.
 
-#########################################
-##### Inlcluir bootstrap en un tema #####
-#########################################
+=============================
+Inlcluir bootstrap en un tema
+=============================
 
 Agregar al final de functions.php
 
@@ -217,9 +263,12 @@ Esto hará que en nuestra plantilla se llame a bootstrap con:
 
 <link rel='stylesheet' id='bootstrap-css'  href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css?ver=5.2.4' type='text/css' media='all' />
 
-##### La otra forma #####
+=============
+La otra forma
+=============
 
-1) Descargar el bootstrap.min.css y el bootstrap.min.js de la página de bootstrap
+1) Descargar el bootstrap.min.css y el bootstrap.min.js de la página de
+bootstrap.
 
 2) pegarlos en la carpeta:
 
@@ -229,104 +278,140 @@ y
 
 wp-content/themes/twentyseventeen/assets/js
 
-3) Ir a /wp-content/themes/mi_tema/functions.php y pegar al final el siguiente código:
+3) Ir a /wp-content/themes/mi_tema/functions.php y pegar al final el siguiente
+código:
 
-// Incluir Bootstrap CSS
+Incluir Bootstrap CSS
+
 function bootstrap_css() {
   wp_enqueue_style('bootstrap_css',get_stylesheet_directory_uri().'/assets/css/bootstrap.min.css',array(),'4.3.8');
 }
 add_action('wp_enqueue_scripts','bootstrap_css');
 
-// Incluir Bootstrap JS
+Incluir Bootstrap JS
+
 function bootstrap_js() {
   wp_enqueue_script('bootstrap_js',get_stylesheet_directory_uri().'/assets/js/bootstrap.min.js',array('jquery'),'4.3.8',true); 
 }
 add_action('wp_enqueue_scripts','bootstrap_js');
 
-#######################################
-##### Tips sobre gestión de temas #####
-#######################################
+===========================
+Tips sobre gestión de temas
+===========================
 
-##### hooks #####
+=====
+hooks
+=====
 
 ¿Qué son y para qué te sirven los hooks de WordPress?
 
-Si estás aprendiendo WordPress y quieres crear plugins o desarrollar un tema completo entonces deberías saber qué son los hooks y aprender a dominarlos.
+Si estás aprendiendo WordPress y quieres crear plugins o desarrollar un tema
+ completo entonces deberías saber qué son los hooks y aprender a dominarlos.
 
-Invariablemente, y sin importar el tipo o magnitud del proyecto al que te enfrentes, los hooks de WordPress te serán siempre de gran ayuda, sin embargo el
-concepto puede ser un poco intimidante para aquellos usuarios que apenas empiezan en el desarrollo en esta plataforma.
+Invariablemente, y sin importar el tipo o magnitud del proyecto al que te
+enfrentes, los hooks de WordPress te serán siempre de gran ayuda, sin embargo el
+concepto puede ser un poco intimidante para aquellos usuarios que apenas
+empiezan en el desarrollo en esta plataforma.
 
 ¿Qué son exactamente los hooks de WordPress?
 
-Hook es un termino genérico en WordPress, que se usa como referencia en lugares estratégicos dentro del core para poder inyectar código
-propio y agregar comportamientos o cambiar el funcionamiento por defecto de WordPress.
+Hook es un termino genérico en WordPress, que se usa como referencia en lugares
+estratégicos dentro del core para poder inyectar código propio y agregar
+comportamientos o cambiar el funcionamiento por defecto de WordPress.
 
-Un hook puede ser declarado en dos lugares, dependiendo del tipo de desarrollo que estés haciendo, function.php si estás trabajando con
-un tema o tema hijo, o directamente en un plugin.
+Un hook puede ser declarado en dos lugares, dependiendo del tipo de desarrollo
+que estés haciendo, function.php si estás trabajando con un tema o tema hijo, o
+directamente en un plugin.
 
-##### child theme #####
+===========
+child theme
+===========
 
-¿Qué es un child theme de WordPress y por qué es importante usarlos? / ¿Qué es un child theme o tema hijo de WordPress?
+¿Qué es un child theme de WordPress y por qué es importante usarlos? o
+¿Qué es un child theme o tema hijo de WordPress?
 
-Si eres usuario de WordPress ya sabrás que el theme, tema o la plantilla es el conjunto de archivos que determina la organización externa
-y el look de tu página web: colores, distribución de elementos, tipografías, navegación, localización de
-los widgets, estructura de las páginas, etc.
+Si eres usuario de WordPress ya sabrás que el theme, tema o la plantilla es el
+conjunto de archivos que determina la organización externa y el look de tu
+página web: colores, distribución de elementos, tipografías, navegación,
+localización de los widgets, estructura de las páginas, etc.
 
-Un child theme (tema hijo) es un tema desarrollado a partir de un tema padre (parent theme), que hereda su funcionalidad básica. Aunque el child theme
-recoge la mayoría de características de su tema padre, es un tema que no se actualiza directamente. Al trabajar con un child theme en tu web están
-instalados tanto el tema padre como el hijo, pero solo el padre se actualiza.
+Un child theme (tema hijo) es un tema desarrollado a partir de un tema padre
+(parent theme), que hereda su funcionalidad básica. Aunque el child theme recoge
+la mayoría de características de su tema padre, es un tema que no se actualiza
+directamente. Al trabajar con un child theme en tu web están instalados tanto el
+tema padre como el hijo, pero solo el padre se actualiza.
 
 ¿Para qué sirve un child theme?
 
-Cuando desarrollas una página web con WordPress, aunque hayas elegido un tema maravilloso con todas las características que buscabas, es posible
-que por diferentes razones acabes queriendo o necesitando modificar el código del tema para hacer algún cambio, como por ejemplo:
+Cuando desarrollas una página web con WordPress, aunque hayas elegido un tema
+maravilloso con todas las características que buscabas, es posible que por
+diferentes razones acabes queriendo o necesitando modificar el código del tema
+para hacer algún cambio, como por ejemplo:
 
 -Pequeñas modificaciones en el css de tu tema para personalizar su aspecto.
+
 -Introducir algún pedazo de código que añada alguna funcionalidad.
+
 -Añadir algún código necesario para funcionar con alguna aplicación externa…
 
-Pero si tú modificas o añades este código dentro de los archivos de tu tema, te encontrarás con que ya no puedes volver a actualizarlo, porque
-si lo haces, se perderán los cambios. Este es un problema muy habitual con el que se encuentran muchas personas.
+Pero si tú modificas o añades este código dentro de los archivos de tu tema, te
+encontrarás con que ya no puedes volver a actualizarlo, porque si lo haces, se
+perderán los cambios. Este es un problema muy habitual con el que se encuentran
+muchas personas.
 
-########################
-##### Los usuarios #####
-########################
+============
+Los usuarios
+============
 
-##### Roles de usuarios #####
+=================
+Roles de usuarios
+=================
 
-WordPress usa el concepto de Roles, y ofrece algunos prediseñados para dar a los administradores
-del blog la capacidad de controlar los poderes de lo que puede hacerse en el sitio, que poseen
-distintas usuarios. Un administrador puede otorgar acceso a las funciones de escribir y editar
-entradas, crear páginas, crear enlaces, crear categorías, moderar comentarios, administrar plugins,
-administrar temas y administrar usuarios. Una forma lógica y sencilla de asignar estas
-capacidades, es la capacidad de asignar Roles a las usuarios.
+WordPress usa el concepto de Roles, y ofrece algunos prediseñados para dar a los
+administradores del blog la capacidad de controlar los poderes de lo que puede
+hacerse en el sitio, que poseen distintas usuarios. Un administrador puede
+otorgar acceso a las funciones de escribir y editar entradas, crear páginas,
+crear enlaces, crear categorías, moderar comentarios, administrar plugins,
+administrar temas y administrar usuarios. Una forma lógica y sencilla de asignar
+estas capacidades, es la capacidad de asignar Roles a las usuarios.
 
-WordPress tiene cinco Roles prediseñados: Administrador, Editor, Autor, Colaborador y Suscriptor. A cada
-rol se le permite realizar una serie de tareas llamadas Capacidades. Hay muchas Capacidades incluyendo
-publish_posts (publicar entradas), moderate_comments ((moderar comentarios), y edit_users (editar usuarias).
+WordPress tiene cinco Roles prediseñados: Administrador, Editor, Autor,
+Colaborador y Suscriptor. A cada rol se le permite realizar una serie de tareas
+llamadas Capacidades. Hay muchas Capacidades incluyendo publish_posts (publicar
+entradas), moderate_comments ((moderar comentarios), y edit_users
+(editar usuarias).
 
 Hay un conjunto de Capacidades preasignadas a cada Rol.
 
-Quienes tienen el Rol de Administrador se les otorga todas las Capacidades. Cada uno de los otros Roles tienen
-un número decreciente de Capacidades asignadas. Por ejemplo, el Rol de Suscriptor tan solo tiene la capacidad
-de lectura. Un Rol en particular no debería ser considerado como superior a otro Rol. Es mejor, considerar que
-los Roles definen las responsabilidades de los usuarios dentro del blog. 
+Quienes tienen el Rol de Administrador se les otorga todas las Capacidades. Cada
+uno de los otros Roles tienen un número decreciente de Capacidades asignadas.
+Por ejemplo, el Rol de Suscriptor tan solo tiene la capacidad de lectura. Un Rol
+en particular no debería ser considerado como superior a otro Rol. Es mejor,
+considerar que los Roles definen las responsabilidades de los usuarios dentro
+del blog. 
 
-##### Sumario de Roles #####
+================
+Sumario de Roles
+================
 
--Super Admin - Quien cuenta con acceso a la característica de administración de la red de blogs completa. (Referencia: Crear una red -en inglés).
+-Super Admin - Quien cuenta con acceso a la característica de administración de
+la red de blogs completa. (Referencia: Crear una red -en inglés).
 
--Administrador - Quien tiene acceso a todas las características de administración de un sitio en particular.
+-Administrador - Quien tiene acceso a todas las características de
+administración de un sitio en particular.
 
--Editor - Quien puede publicar y editar entradas propias y de otros usuarios así como crear y editar páginas.
+-Editor - Quien puede publicar y editar entradas propias y de otros usuarios así
+como crear y editar páginas.
 
 -Autor - Quien puede publicar y editar sus propias entradas.
 
--Colaborador - Quien puede escribir y editar sus propias entradas pero no publicarlas.
+-Colaborador - Quien puede escribir y editar sus propias entradas pero no
+publicarlas.
 
 -Subscriptor - Quien solamente puede editar su perfil.
 
-Al momento de instalar WordPress, una cuenta e Administrador con todas las Capacidades es creada automáticamente.
+Al momento de instalar WordPress, una cuenta e Administrador con todas las
+Capacidades es creada automáticamente.
 
 #########################################
 ##### Incluir una imagen en un tema #####
@@ -334,6 +419,13 @@ Al momento de instalar WordPress, una cuenta e Administrador con todas las Capac
 
 Se debe guardar la imagen en: wp-content/themes/my_theme/assets/images/my_image.png
 
-y luego ya se puede llamar en alguna de las plantillas, como index.php por ejemplo, con:
+y luego ya se puede llamar en alguna de las plantillas, como index.php por
+ejemplo, con:
 
 <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/my_image.png' );?>" class="xxx">
+
+=======
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/WordPress
