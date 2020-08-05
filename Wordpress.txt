@@ -459,6 +459,30 @@ Es un campo para las publicaciones, es un texto opcional asociado a una entrada.
 La mayoría de las veces, se usa como el resumen de la entrada.
 
 =======
+sidebar
+=======
+
+El sidebar o la columna de la derecha donde se nos muestran algunos witgets
+como Meta, Categorías o el formulario de busqueda se llama en la plantilla
+con la función.
+
+<?php get_sidebar(); ?>
+
+Si queremos desactivarlo podemos comentar su línea en los siguientes templates:
+
+page-templates/right-sidebar.php:34:                <?php get_sidebar(); ?>
+page-templates/left-sidebar.php
+search.php
+page.php
+single.php
+archive.php
+index.php
+404.php
+
+Y si queremos que nuestra columna central ocupe el 100% de la página solo
+debemos jugar con los anchos de las columnas en las plantillas.
+
+=======
 Fuentes
 =======
 
