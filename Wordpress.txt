@@ -279,19 +279,15 @@ y
 wp-content/themes/twentyseventeen/assets/js
 
 3) Ir a /wp-content/themes/mi_tema/functions.php y pegar al final el siguiente
-código:
-
-Incluir Bootstrap CSS
+código para incluir Bootstrap CSS y JS:
 
 function bootstrap_css() {
-  wp_enqueue_style('bootstrap_css',get_stylesheet_directory_uri().'/assets/css/bootstrap.min.css',array(),'4.3.8');
+  wp_enqueue_style('bootstrap_css',get_stylesheet_directory_uri().'/assets/css/bootstrap.min.css',array(),'4.5.0');
 }
 add_action('wp_enqueue_scripts','bootstrap_css');
 
-Incluir Bootstrap JS
-
 function bootstrap_js() {
-  wp_enqueue_script('bootstrap_js',get_stylesheet_directory_uri().'/assets/js/bootstrap.min.js',array('jquery'),'4.3.8',true); 
+  wp_enqueue_script('bootstrap_js',get_stylesheet_directory_uri().'/assets/js/bootstrap.min.js',array(),'4.5.0',true);
 }
 add_action('wp_enqueue_scripts','bootstrap_js');
 
@@ -413,9 +409,9 @@ publicarlas.
 Al momento de instalar WordPress, una cuenta e Administrador con todas las
 Capacidades es creada automáticamente.
 
-#########################################
-##### Incluir una imagen en un tema #####
-#########################################
+=============================
+Incluir una imagen en un tema
+=============================
 
 Se debe guardar la imagen en: wp-content/themes/my_theme/assets/images/my_image.png
 
@@ -424,8 +420,48 @@ ejemplo, con:
 
 <img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/my_image.png' );?>" class="xxx">
 
+======================================================
+¿Qué es el nombre de host de MySQL y cómo encontrarlo?
+======================================================
+
+Tu nombre de host de MySQL define la ubicación donde se aloja tu base de datos
+MySQL. Si quieres conectarte a tu base de datos, necesitas especificar el nombre
+de host MySQL para que tu aplicación sepa dónde conectarse.
+
+En la mayoría de las situaciones, incluyendo el hospedaje de un sitio de
+WordPress en servicios de hosting, su nombre de host de MySQL será localhost.
+
+Esencialmente, esto significa que tu base de datos MySQL se ejecuta en el mismo
+servidor que la aplicación con la que estás trabajando (como tu sitio de
+WordPress).
+
+En un sitio de WordPress, tu nombre de host MySQL está definido en el archivo
+wp-config.php de tu sitio.
+
+==========================
+search form en el template
+==========================
+
+La plantilla searchform.php contiene el formulario de búsqueda que puede ser
+llamado en index.php con:
+
+<?php get_search_form(); ?>
+
+La plantilla search.php es la que se renderiza luego de hacer unas búsqueda.
+
+========================
+Publicaciones o entradas
+========================
+
+¿Qué es un extracto?
+
+Es un campo para las publicaciones, es un texto opcional asociado a una entrada.
+La mayoría de las veces, se usa como el resumen de la entrada.
+
 =======
 Fuentes
 =======
 
 -https://es.wikipedia.org/wiki/WordPress
+-https://kinsta.com/es/base-de-conocimiento/nombre-host-mysql/
+-https://codex.wordpress.org/Creating_a_Search_Page
