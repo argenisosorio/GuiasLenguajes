@@ -482,6 +482,104 @@ index.php
 Y si queremos que nuestra columna central ocupe el 100% de la página solo
 debemos jugar con los anchos de las columnas en las plantillas.
 
+==============================
+Agregar Google Fonts en página
+==============================
+
+1) Seleccionando las Fuentes a usar desde https://fonts.google.com/
+
+2) Agregar archivo de estilos externo, en paso ejemplo anterior Google nos ha
+generado el siguiente código:
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700|Ubuntu:500,700" rel="stylesheet">
+
+De este código sólo necesitamos la url con sus parámetros, es decir esta url:
+
+https://fonts.googleapis.com/css?family=Roboto:400,700|Ubuntu:500,700
+
+3) Luego en el archivo functions.php de tu theme puedes agregar el siguiente
+al final código:
+
+add_action("wp_enqueue_scripts", "dcms_insertar_google_fonts");
+
+function dcms_insertar_google_fonts(){
+    $url = "https://fonts.googleapis.com/css?family=Roboto:400,700|Ubuntu:500,700";
+    wp_enqueue_style('google_fonts', $url);
+}
+
+4) Modificamos el CSS, ya incluiste el tipo de letra, ahora la puedes usar en
+tu sitio, esto a través de CSS. Google también te proporciona las reglas CSS que
+puedes usar:
+
+font-family: 'Roboto', sans-serif;
+font-family: 'Ubuntu', sans-serif;
+
+Sin embargo para asignar esto a tu theme tienes que incluirlas dentro de una
+clase CSS o tag, por ejemplo:
+
+body {
+  font-family: 'Ubuntu', sans-serif;
+}
+
+ó
+
+html * { font-family: 'Ubuntu', sans-serif; }
+
+================================
+Agregar font-awesome a la página
+================================
+
+Agregar en el archivo functions.php de tu theme puedes lo siguiente al final
+código:
+
+add_action( 'wp_enqueue_scripts', 'enqueue_load_fa' );
+
+function enqueue_load_fa() {
+    wp_enqueue_style( 'load-fa', 'https://pro.fontawesome.com/releases/v5.10.0/css/all.css' );
+}
+
+y lo podemos llamar en la plantilla con:
+
+<i class="fab fa-wordpress"></i>
+
+===========================
+Llamada desde los estáticos
+===========================
+
+Guardar la font-awesome/ que contiene a css/ y fonts/ en assets/ y luego lo
+llamamos en el template, en header.php tal que:
+
+<head>
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="profile" href="http://gmpg.org/xfn/11">
+    <?php wp_head(); ?>
+    <link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri().'/assets/font-awesome/css/font-awesome.min.css' ); ?>" />
+</head>
+
+================================
+Llamar estáticos en la plantilla
+================================
+
+Guardar el fichero que se quiere llamar, style.css por ejemplo, en assets/ y
+luego lo llamamos en el template, en header.php tal que:
+
+<head>
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="profile" href="http://gmpg.org/xfn/11">
+    <?php wp_head(); ?>
+    <link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri().'/assets/style.css' ); ?>" />
+</head>
+
+==============================
+While de los post en index.php
+==============================
+
+La página que contiene la lista de post de index.php está en:
+
+/wp-content/themes/wp-bootstrap-4/template-parts/content.php
+
 =======
 Fuentes
 =======
@@ -489,3 +587,4 @@ Fuentes
 -https://es.wikipedia.org/wiki/WordPress
 -https://kinsta.com/es/base-de-conocimiento/nombre-host-mysql/
 -https://codex.wordpress.org/Creating_a_Search_Page
+-https://wpinsideout.com/quitar-barra-lateral-sidebar-wordpress/
