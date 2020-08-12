@@ -453,9 +453,9 @@ Levantar el servidor de desarrollo.
 
 $ php artisan serve
 
-===================
-Comandos de artisan
-===================
+===========================
+Comandos de artisan y otros
+===========================
 
 Permite hacer un rollback de nuestras migraciones y re-ejecutarlas de nuevo.
 Esto ayuda a regenerar nuestra base de datos.
@@ -466,3 +466,9 @@ Omite los métodos down o los rollbacks eliminando todas las tablas para luego
 ejecutar los métodos up.
 
 $ php artisan migrate:fresh
+
+El comando dump-autoload actualiza la información del cargador automático de
+clases. Este comando es útil cuando añades nuevas clases y no quieres ejecutar
+el comando install o update.
+
+$ composer dumpautoload
