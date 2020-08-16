@@ -5585,3 +5585,58 @@ aosorio@debian:~$ ip link
     link/ether 88:9f:fa:4d:5d:53 brd ff:ff:ff:ff:ff:ff
 
 Falta probar bien...
+
+================
+Telegram desktop
+================
+
+===========
+Instalacion
+===========
+
+Para instalar el telegram desktop se debe descargar y descomprimir el fichero
+desde la pagina oficial de telegram, al descomprimir nos dejara un directorio
+que contiene 2 ficheros:
+
+Telegram Updater
+
+Para ejecutar la instalacion, ejecutamos desde la consola:
+
+$ ./Telegram
+
+Luego de eso, si no hay errores, deberia aparecer en el menu el icono de
+telegram.
+
+================
+Remover Telegram
+================
+
+Borramos la carpeta donde esta el script de instalacion de telegra, la del paso
+anteior, de la de instalacion
+
+y tambien borramos la carpeta que esta en el hoem del usuario:
+
+.local/shares/TelegramDesktop
+
+=======================
+Instalar snap en Debian
+=======================
+
+En Debian 9 (Stretch) y Debian 10 (Buster), snap puede ser instalado
+directamente desde la linea de comandos con:
+
+$ sudo apt update
+
+$ sudo apt install snapd
+
+$ snap install core
+
+$ snap install hello-world
+
+hello-world 6.3 from Canonical✓ installed
+
+Este paso final no se por que coño no me funciono.
+
+$ hello-world
+
+Hello World!
