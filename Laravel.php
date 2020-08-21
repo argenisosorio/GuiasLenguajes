@@ -396,6 +396,8 @@ $ composer install
 
 $ npm install
 
+% composer dumpautoload
+
 $ php artisan migrate
 
 $ php artisan db:seed
@@ -472,3 +474,25 @@ clases. Este comando es útil cuando añades nuevas clases y no quieres ejecutar
 el comando install o update.
 
 $ composer dumpautoload
+
+===============
+Seed y Seeders
+===============
+
+Una manera de cargar datos en la base de datos es  utilizando los Seeders de
+Laravel.
+
+Laravel incluye un método simple para sembrar su base de datos con datos de
+prueba utilizando clases semilla (Seed). Todas las clases de semillas se
+almacenan en el directorio database/seeds. Las clases de semillas pueden tener
+el nombre que desee, pero probablemente deberían seguir alguna convención
+razonable, como nombretablaSeeder, etc. De manera predeterminada, se define una
+clase DatabaseSeeder para usted. Desde esta clase, puede utilizar el método de
+llamada para ejecutar otras clases semilla, lo que le permite controlar el orden
+de siembra.
+
+=======
+Fuentes
+=======
+
+-https://solibeth.net/aprende-usar-seed-en-laravel
