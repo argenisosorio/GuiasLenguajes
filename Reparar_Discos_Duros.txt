@@ -1,12 +1,14 @@
-##### Guía de reparación de discos duros by dM #####
+=======================================================
+Guía de diagnostico y reparación de discos duros by dM
+======================================================
 
-#####################################################################
-##### Reparar sectores y recuperar un disco duro (HDD) en Linux #####
-#####################################################################
+================================================
+Reparar sectores y recuperar un disco duro (HDD)
+================================================
 
-##### Con badblocks #####
-
-Fuente: https://blog.desdelinux.net/reparar-sectores-recuperar-hdd-linux/
+=========================
+Con el programa badblocks
+=========================
 
 Si algún disco duro tiene sectores defectuosos podemos repararlos con la
 herramienta badblocks, lo primero será saber cuál es el disco duro que
@@ -28,25 +30,43 @@ estar montada una partición del disco duro en el cual van a trabajar!!
 $ badblocks -s -v -n -f /dev/sdb
 
 -s : indica que se mostrará el proceso con por cientos
+
 -v : modo verbose, lo cual significa que nos mostrará el número de errores
--n : indica que se intentará usar un modo no destructivo, o sea, que se intentarán
-recuperar esos sectores pero también la información que estaba en ellos
--f : fuerza la lectura y escritura en dispositivos que estén montados. Normalmente si
-el HDD estuviera montado badblocks no revisaría los sectores que se estén usando, pero
-como ya les advertí y aconsejé que NO pueden tener el disco duro montado, usaremos el
-parámetro -f para forzar la recuperación de todos los sectores posibles.
+
+-n : indica que se intentará usar un modo no destructivo, o sea, que se
+intentarán recuperar esos sectores pero también la información que estaba en
+ellos
+
+-f : fuerza la lectura y escritura en dispositivos que estén montados.
+Normalmente si el HDD estuviera montado badblocks no revisaría los sectores que
+se estén usando, pero como ya les advertí y aconsejé que NO pueden tener el
+disco duro montado, usaremos el parámetro -f para forzar la recuperación de
+todos los sectores posibles.
 
 Demorará bastante, y repito, bastante. Fácilmente podría durar horas o días en
 dependencia del tamaño del disco duro, de qué tan dañado esté, de la velocidad
-de su ordenador, etc. Por lo que les recomiendo dejar el ordenador ahí tranquilo,
-sin moverlo durante el tiempo necesario, eso y muuuucha paciencia.
+de su ordenador, etc. Por lo que les recomiendo dejar el ordenador ahí
+tranquilo, sin moverlo durante el tiempo necesario, eso y muuuucha paciencia.
 
-##### Con fsck #####
+================
+El programa fsck
+================
 
-Fuente: https://lignux.com/reparar-sectores-danados-del-disco-duro-con-ubuntu/
-y http://francisconi.org/linux/comandos/fsck
+fsck (file system check o bien file system consistency check) es una utilidad de
+los sistemas Unix y similares, como Linux, AIX y MAC OS X que se utiliza ante
+alguna inconsistencia del sistema de archivos para corregir los posibles errores
+en el sistema.
 
-Utilidad para detectar, verificar y corregir los errores del sistema de archivos.
+fsck se ejecuta automáticamente al inicio del sistema ante alguna anomalía, pero
+también puede ser utilizada manualmente por el administrador del sistema para
+forzar una verificación.
+
+Para verificar un sistema de archivos es muy aconsejable hacerlo mientras éste
+está desmontado. 
+
+Utilidad para detectar, verificar y corregir los errores del sistema de
+archivos.
+
 Es recomendable utilizarlo solo con sistemas desmontados.
 
 Más que reparar, lo que haremos es aislar esos sectores dañados para que
@@ -66,3 +86,11 @@ por ejemplo si es la partición 3 sería /dev/sda3
 -v . (verbose) despliega más información.
 -r . Modo interactivo. Espera nuestra respuesta.
 -y. Asume yes de respuesta.
+
+=======
+Fuentes
+=======
+
+-https://blog.desdelinux.net/reparar-sectores-recuperar-hdd-linux/
+-https://lignux.com/reparar-sectores-danados-del-disco-duro-con-ubuntu/
+-http://francisconi.org/linux/comandos/fsck
