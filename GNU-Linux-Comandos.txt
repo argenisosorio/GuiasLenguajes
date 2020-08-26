@@ -245,6 +245,10 @@ Reiniciar la maquina.
 
 $ reboot
 
+Reiniciar la maquina en Debian 10.
+
+# systemctl reboot
+
 Detectar las resoluciones de pantalla disponibles del sistema así como los hz
 correspondientes, la que tenga (*) es la que está siendo usada.
 
@@ -4688,24 +4692,31 @@ $ curl -O https://www.virtualbox.org/download/oracle_vbox_2016.asc
 
 # apt-get install virtualbox-5.2
 
-================================================================
-Instalación en GNU/Linux Debian 9 Stretch desde los repositorios
-backports de Debian
-================================================================
+==========================================================================
+Instalación en GNU/Linux Debian 9 Stretch desde los repositorios backports
+==========================================================================
 
 Agregamos la siguiente línea en el /etc/apt/sources.list
 
-deb http://debian.cenditel/debian/ stretch-backports main contrib non-free
+deb http://deb.debian.org/debian/ stretch-backports main contrib non-free
 
 # apt-get update
 
 # apt-get install virtualbox
 
-Usar tty en la máquina virtual
+=======================================================
+Instalación de Virtualbox en GNU/Linux Debian 10 Buster
+=======================================================
 
-Entrar en tty1 desde la máquina virtual, lo mismo para ttyn...
+Hay que poner a apuntar a los repositorios de Stretch y seguir los pasos de
+arriba y ligar que no haya peos con dependencias y versiones de paquetes,
+prender una vela a Neo en este proceso.
 
-RightCtrl + F1
+# apt-get install virtualbox-5.2
+
+y si da peo instalar
+
+# apt install virtualbox-5.1
 
 =================================================
 Instalar Guest Additions de Virtual Box en Debian
@@ -4729,6 +4740,26 @@ automáticamente, ahora solo queda ejecutar el script de instalación:
 Si no hay problemas con la instalación, reiniciamos la máquina virtual  y ya se
 debería poder usar el modo pantalla completa, el modo fluido o la función de las
 carpetas compartidas.
+
+======================
+Desinstalar VirtualBox
+======================
+
+# apt-get remove --purge virtualbox
+
+# rm -rf VirtualBox\ VMs/
+
+# rm -rf .config/VirtualBox/
+
+=====
+Otros
+=====
+
+Usar tty en la máquina virtual
+
+Entrar en tty1 desde la máquina virtual, lo mismo para ttyn...
+
+RightCtrl + F1
 
 ================
 Debian backports
@@ -5640,3 +5671,49 @@ Este paso final no se por que coño no me funciono.
 $ hello-world
 
 Hello World!
+
+======================
+Solucion de aviso dpkg
+======================
+
+dpkg: aviso: `ldconfig' no se ha encontrado en el PATH o no es ejecutable
+
+Ejecutar:
+
+$ echo 'export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin' >> /home/usuario/.bashrc
+
+Otro error...
+
+dpkg: atención: `ldconfig' no se ha encontrado en el PATH o no es ejecutable
+
+Ejecutar:
+
+export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
+
+=============================
+Instalar Sublime Text con apt
+=============================
+
+Install the GPG key:
+
+wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | sudo apt-key add -
+
+Ensure apt is set up to work with https sources:
+
+sudo apt-get install apt-transport-https
+
+Select the channel to use:
+
+Stable
+
+echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+
+Dev
+
+echo "deb https://download.sublimetext.com/ apt/dev/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
+
+Update apt sources and install Sublime Text
+
+sudo apt-get update
+
+sudo apt-get install sublime-text
