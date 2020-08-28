@@ -121,3 +121,9 @@ ERROR 1396 (HY000): Operation CREATE USER failed for 'admin'@'localhost'
 > flush privileges;
 
 > CREATE USER 'user'@'localhost' IDENTIFIED BY 'admin_password';
+
+======================================
+Hacer un respaldo de una base de datos
+======================================
+
+$ mysqldump -u nombre_de_usuario -p nombre_base_de_datos > nombredelarchivo.sql

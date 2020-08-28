@@ -132,7 +132,9 @@ Enumerar todas las fuentes instaladas que están disponibles en su tistema linux
 
 $ fc-list
 
-##### Memoria ram #####
+===========
+Memoria ram
+===========
 
 Muestra el estado de la memoria RAM, total, usado, disponible, cached, buffers.
 
@@ -2462,9 +2464,9 @@ Configuraciones visuales extras para gnome
 
 # apt-get install gnome-themes-extras
 
-#########################################
-##### Usando los programas de gnome #####
-#########################################
+=============================
+Usando los programas de gnome
+=============================
 
 Captura de pantalla del escritorio usando el panel de herramientas.
 
@@ -4496,9 +4498,7 @@ buscados, sujetos a comparación de versiones, etc.
 **The format is
 deb <respository server/mirror> <repository name> <sub branches of the repo>
 
-----------------------------------
-
-##### Debian GNU/Linux Testing & Unstable #####
+#===== Debian GNU/Linux Testing & Unstable =====
 
 # Testing repository - main, contrib and non-free branches
 #deb http://http.us.debian.org/debian testing main non-free contrib
@@ -4512,9 +4512,7 @@ deb <respository server/mirror> <repository name> <sub branches of the repo>
 #deb http://http.us.debian.org/debian unstable main non-free contrib
 #deb-src http://http.us.debian.org/debian unstable main non-free contrib
 
-----------------------------------
-
-##### Debian GNU/Linux 10 (Buster) Updates #####
+#===== Debian GNU/Linux 10 (Buster) Updates =====
 
 deb http://deb.debian.org/debian buster main
 deb-src http://deb.debian.org/debian buster main
@@ -4522,14 +4520,12 @@ deb-src http://deb.debian.org/debian buster main
 deb http://security.debian.org/debian-security/ buster/updates main
 deb-src http://security.debian.org/debian-security/ buster/updates main
 
-##### Non free #####
+#===== Non free =====
 
 deb http://deb.debian.org/debian buster main contrib non-free
 deb-src http://deb.debian.org/debian buster main contrib non-free
 
-----------------------------------
-
-##### Debian GNU/Linux 9 (Stretch) Updates #####
+#===== Debian GNU/Linux 9 (Stretch) Updates =====
 
 deb http://deb.debian.org/debian stretch main
 deb-src http://deb.debian.org/debian stretch main
@@ -4540,14 +4536,12 @@ deb-src http://security.debian.org/debian-security/ stretch/updates main
 deb http://deb.debian.org/debian stretch-updates main
 deb-src http://deb.debian.org/debian stretch-updates main
 
-##### Non free #####
+#===== Non free =====
 
 #deb http://deb.debian.org/debian stretch main contrib non-free
 #deb-src http://deb.debian.org/debian stretch main contrib non-free
 
-----------------------------------
-
-##### Debian GNU/Linux 8 (Jessie) Estable #####
+#===== Debian GNU/Linux 8 (Jessie) Estable =====
 
 # Repositorio Oficial
 deb http://http.us.debian.org/debian/ jessie main contrib non-free
@@ -4565,9 +4559,7 @@ deb-src http://security.debian.org/ jessie/updates main contrib non-free
 deb http://security.debian.org/ jessie/updates main
 deb-src http://security.debian.org/ jessie/updates main
 
-----------------------------------
-
-##### Debian GNU/Linux 7 (Wheezy) Estable #####
+#===== Debian GNU/Linux 7 (Wheezy) Estable =====
 
 #Repositorio Oficial
 deb http://ftp.us.debian.org/debian/ wheezy main contrib
@@ -4584,9 +4576,7 @@ deb-src http://ftp.debian.org/debian wheezy-updates main contrib non-free
 #Backports
 deb http://ftp.debian.org/debian/ wheezy-backports main
 
-----------------------------------
-
-##### Debian GNU/Linux 8 (Jessie) Multimedia repo #####
+#===== Debian GNU/Linux 8 (Jessie) Multimedia repo =====
 
 deb http://www.deb-multimedia.org jessie main non-free
 #or
@@ -4596,9 +4586,7 @@ deb http://www.deb-multimedia.org jessie main non-free
 #or
 #deb ftp://ftp.deb-multimedia.org stable main non-free
 
-----------------------------------
-
-##### Debian GNU/Linux 7 (Wheezy) Multimedia repo #####
+#===== Debian GNU/Linux 7 (Wheezy) Multimedia repo =====
 
 deb http://www.deb-multimedia.org wheezy main
 #or
@@ -4608,9 +4596,7 @@ deb http://www.deb-multimedia.org wheezy main
 #or
 #deb ftp://ftp.deb-multimedia.org oldstable main
 
-----------------------------------
-
-##### CENDITEL mirror - Debian GNU/Linux 10 (Buster) #####
+#===== CENDITEL mirror - Debian GNU/Linux 10 (Buster) =====
 
 deb http://debian.cenditel/debian buster main contrib non-free
 deb-src http://debian.cenditel/debian stretch main contrib non-free
@@ -4618,9 +4604,7 @@ deb-src http://debian.cenditel/debian stretch main contrib non-free
 deb http://debian.cenditel/debian buster-updates main contrib non-free
 deb-src http://debian.cenditel/debian stretch-updates main contrib non-free
 
-----------------------------------
-
-##### CENDITEL mirror - Debian GNU/Linux 9 (Stretch) #####
+#===== CENDITEL mirror - Debian GNU/Linux 9 (Stretch) =====
 
 deb http://debian.cenditel/debian stretch main contrib non-free
 deb-src http://debian.cenditel/debian stretch main contrib non-free
@@ -4631,9 +4615,7 @@ deb-src http://debian.cenditel/debian stretch-updates main contrib non-free
 deb http://debian.cenditel/debian-security stretch/updates main contrib non-free
 deb-src http://debian.cenditel/debian-security stretch/updates main contrib non-free
 
-----------------------------------
-
-##### CENDITEL mirror - Debian GNU/Linux 8 (Jessie) Estable #####
+#===== CENDITEL mirror - Debian GNU/Linux 8 (Jessie) Estable =====
 
 deb http://debian.cenditel/debian/ jessie main contrib non-free
 deb-src http://debian.cenditel/debian/ jessie main contrib non-free
@@ -4648,9 +4630,7 @@ deb-src http://debian.cenditel/debian/ jessie-updates main contrib non-free
 # Agregar la llave del repositorio al sistema, como root escribimos:
 # wget -q -O- http://repositorio.cenditel.gob.ve/debian/repositorio_cenditel.asc | apt-key add -
 
-----------------------------------
-
-##### CENDITEL mirror - Debian GNU/Linux 7 (Wheezy) Estable #####
+#===== CENDITEL mirror - Debian GNU/Linux 7 (Wheezy) Estable =====
 
 deb http://debian.cenditel/debian/ wheezy main
 deb-src http://debian.cenditel/debian/ wheezy main
