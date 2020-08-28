@@ -5,7 +5,9 @@
 #######################
 
 # aptitude update // Actualizar los repositorios
+
 # aptitude search postgresql // Buscar la version actual en los repositotios
+
 # aptitude install postgresql postgresql-server // Instalar la version de PostgreSQL
 
 $ sudo service postgresql restart // Reiniciar el servicio de PostgreSQL, para aplicar cambios etc.
@@ -457,3 +459,13 @@ postgres=# update pg_database set encoding=16 where datname='db_name';
 // Para LATIN1
 postgres=# update pg_database set encoding=16 where datname='db_name';
 
+Instalando postgresql en chroot
+
+Si sale el error:
+
+psql: error: no se pudo conectar al servidor: no se pudo conectar con el
+servidor: No existe el fichero o el directorio
+
+Se debe reiniciar el servicio de postgresql
+
+# service postgresql restart

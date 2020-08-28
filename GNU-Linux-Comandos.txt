@@ -382,7 +382,7 @@ Calcular el tamaño ocupado por un directorio.
 
 # du -h -s /var/log
 
-9,6M	/var/log
+9,6M    /var/log
 
 Nos dira el tipo de archivo de todos los ficheros del directorio.
 
@@ -4038,37 +4038,40 @@ enjaulado, en este ejemplo lo mostrare para debían Wheezy pero siguiendo la
 misma secuencia y sustituyendo adecuadamente se puede instalar cualquier versión
 de debían.
 
-$ sudo mkdir /home/user/jaulas/wheezy
+# mkdir /home/user/jaulas/wheezy
 
 Instalamos la aplicación necesaria para ejecutar la jaula:
 
-$ sudo apt-get install debootstrap
+# apt-get install debootstrap
 
-Creamos la jaula 
+Creamos la jaula indicando el mirror
 
 $ sudo debootstrap wheezy /home/user/jaulas/wheezy http://ftp.us.debian.org/debian/
 
-o usamos un repo local o mas cercano para que las descarga de los ficheros sea
+O usamos un repo local o mas cercano para que las descarga de los ficheros sea
 mas rápida
 
-$ sudo debootstrap wheezy /home/user/jaulas/wheezy http://debian.cenditel/debian/
+# debootstrap wheezy /home/user/jaulas/wheezy http://debian.cenditel/debian/
+
+Y también se puede especificar la arquitectura:
+
+# debootstrap -arch i386 /home/user/jaulas/wheezy http://ftp.es.debian.org/debian
 
 Cuando termine, dependiendo de la velocidad de descarga, habrá creado todo el
 sistema básico para correr debían wheezy en el directorio definido.
 
 Antes de ejecutar la jaula se deben montar algunos directorios:
 
-$ sudo mount -o bind /proc /home/user/jaulas/wheezy/proc 
+# mount -o bind /proc /home/user/jaulas/wheezy/proc
 
 Si senecesita conexión a periféricos como un módem usb o una impresora estos se
-guardan en el directorio /dev/
-por ende tambien se debe montar.
+guardan en el directorio /dev/ por ende tambien se debe montar.
 
-$ sudo mount -o bind /dev/ /home/user/jaulas/wheezy/dev/ 
+# mount -o bind /dev/ /home/user/jaulas/wheezy/dev/
 
-$ sudo mount -o bind /dev/pts/ /home/user/jaulas/wheezy/dev/pts/
+# mount -o bind /dev/pts/ /home/user/jaulas/wheezy/dev/pts/
 
-$ sudo mount -o bind /sys/ /home/user/jaulas/wheezy/sys/ 
+# mount -o bind /sys/ /home/user/jaulas/wheezy/sys/
 
 o creamos un script para montar los directorios, creamos el script: montar.sh
 
@@ -4110,6 +4113,52 @@ continuar con tu sistema solo debes ejecutar:
 Para accecer a la jaula o ejecutarla debes ser usuario root o usar sudo
 
 # chroot /home/user/jaulas/wheezy
+
+===========================
+Instalar el paquete locales
+===========================
+
+# apt install locales y locales-all
+
+$ dpkg-reconfigure locales
+
+Escogemos las configuraciones regionales que desea generar:
+
+es_VE.UTF-8 UTF-8
+
+Configuración regional predeterminada para el entorno del sistema:
+es_VE.UTF-8
+
+==================================================
+Montando una jaula para GNU-Linux Debian 10 Buster
+==================================================
+
+Instalar la jaula
+
+# debootstrap buster /home/user/jaulas/debian/buster http://deb.debian.org/debian/
+
+Montar directorios
+
+# mount -o bind /proc /home/user/jaulas/debian/buster/proc/
+
+# mount -o bind /dev/ /home/user/jaulas/debian/buster/dev/
+
+# mount -o bind /dev/pts/ /home/user/jaulas/debian/buster/dev/pts/
+
+# mount -o bind /sys/ /home/user/jaulas/debian/buster/sys/
+
+El siguiente paso solo se realiza luego de comprobar que los archivos no
+existan:
+
+Copiar el archivo /etc/hosts del entorno principal al entorno chroot:
+
+# cp /etc/apt/sources.list /home/user/jaulas/debian/buster/etc/apt/sources.list
+
+# cp /etc/hosts /home/user/jaulas/debian/buster/hosts
+
+Acceder a la jaula
+
+# chroot /home/user/jaulas/debian/buster
 
 ====
 Nota
@@ -4165,7 +4214,18 @@ Listo, jaula de wheezy lista!
 Remover un entorno chroot
 =========================
 
-Desmontar los directorios montados y borrar el directorio de que alverga la jaulea (wheezzy)
+Desmontar los directorios montados y borrar el directorio que alverga la jaula
+(wheezzy)
+
+================================
+El error con el update y el /tmp
+================================
+
+Couldn't create temporary file /tmp/apt.conf for passing config to apt-key
+
+# chown root:root /tmp
+
+# chmod ugo+rwXt /tmp
 
 ====================
 Variables de entorno
@@ -4760,6 +4820,25 @@ Usar tty en la máquina virtual
 Entrar en tty1 desde la máquina virtual, lo mismo para ttyn...
 
 RightCtrl + F1
+
+===========
+Gnome Boxes
+===========
+
+GNOME Boxes es una aplicación del entorno de escritorio GNOME, que se utiliza
+para acceder a sistemas remotos o virtuales. Boxes utiliza las tecnologías de
+virtualización QEMU, KVM y libvirt.
+
+GNOME Boxes requiere que la CPU sea compatible con algún tipo de virtualización
+sistida por hardware (Intel VT-x , por ejemplo); por lo tanto, GNOME Boxes no
+funcionan con las CPU con procesador Intel Pentium / Celeron ya que carecen de
+esta característica.
+
+===========
+Instalación
+===========
+
+# apt-get install -y gnome-boxes qemu-kvm libvirt0 virt-manager bridge-utils
 
 ================
 Debian backports
@@ -5717,3 +5796,60 @@ Update apt sources and install Sublime Text
 sudo apt-get update
 
 sudo apt-get install sublime-text
+
+=================
+Programa progress
+=================
+
+Progress , anteriormente conocido como Coreutils Viewer, es un comando ligero C
+que busca los comandos básicos de coreutils como cp , mv , tar, dd , gzip/gunzip
+, cat, grep, etc. actualmente en ejecución en el sistema y muestra el porcentaje
+de datos copiados, solo se ejecuta en sistemas operativos Linux y Mac OS X.
+
+# apt install progress
+
+Luego usamos el comando cp para copiar algun directorio
+
+$ cp -r dir /tmp
+
+Ahora podemos ver el % de avance de la copia si ejecutamos el siguiente comando
+en otra consola
+
+$ progress -q
+
+[28281] cp /tmp
+    10.0% (380.2 MiB / 3.7 GiB)
+
+Para ver en vivo el progreso usamos -m
+
+$ progress -m
+
+[28281] cp /tmp
+    10.0% (380.2 MiB / 3.7 GiB)
+
+=======
+Fuentes
+=======
+
+-https://es.linux-console.net/?p=896
+
+=============================
+Paquete locales y locales-all
+=============================
+
+Este paquete contiene los datos regionales precompilados de todas las regiones
+que se pueden elegir. Un alternativa mejor es instalar el paquete locales y
+seleccionar sólo las regiones deseadas, pero puede ser útil en una máquina con
+poca memoria porque algunos archivos regionalización necesitan un montón de
+memoria para compilarse.
+
+# apt install locales y locales-all
+
+$ dpkg-reconfigure locales
+
+Escogemos las configuraciones regionales que desea generar:
+
+es_VE.UTF-8 UTF-8
+
+Configuración regional predeterminada para el entorno del sistema:
+es_VE.UTF-8

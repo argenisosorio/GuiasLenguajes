@@ -898,3 +898,19 @@ a veces se debe saltar chequeo de la firma para bajar las fuentes con este
 comando.
 
 $ export GIT_SSL_NO_VERIFY=True
+
+================================
+Ejemplo de archivo config de git
+================================
+
+[core]
+        repositoryformatversion = 0
+        filemode = true
+        bare = false
+        logallrefupdates = true
+[remote "origin"]
+        url = https://github.com/user/repo_name.git
+        fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+        remote = origin
+        merge = refs/heads/master

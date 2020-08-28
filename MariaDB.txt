@@ -31,13 +31,10 @@ password.
 
 $ mysql -u root -p
 
-<<<<<<< HEAD
 ó
 
 $ sudo mysql -u root
 
-=======
->>>>>>> dfa9c36c0fdebd75c38a54cf02ad28d90e1e4a03
 Para salir de la consola de MariaDB usamos:
 
 MariaDB [(none)]> exit
@@ -81,7 +78,6 @@ Eliminar un usuario creado.
 
 MariaDB [(none)]> DROP USER user_name;
 
-<<<<<<< HEAD
 Mostrar la lista de usuarios con todos sus campos
 
 SELECT * FROM mysql.user;
@@ -90,8 +86,6 @@ Mostrar la lista de usuarios con campos relevantes
 
 SELECT host, USER, password FROM mysql.user;
 
-=======
->>>>>>> dfa9c36c0fdebd75c38a54cf02ad28d90e1e4a03
 =========================
 Gestión de bases de datos
 =========================
@@ -117,3 +111,13 @@ $ sudo rm -rf /var/lib/mysql/
 $ sudo apt-get autoremove --purge mariadb-server
 
 $ sudo apt install mariadb-server
+
+========================================================================
+ERROR 1396 (HY000): Operation CREATE USER failed for 'admin'@'localhost'
+========================================================================
+
+> drop user admin@localhost;
+
+> flush privileges;
+
+> CREATE USER 'user'@'localhost' IDENTIFIED BY 'admin_password';

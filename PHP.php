@@ -14,6 +14,10 @@ $ sudo apt-get update
 
 $ sudo apt-get install php7.4
 
+$ sudo apt remove php7.3*
+
+$ sudo apt-get purge php7.3*
+
 ##########################################################################
 ########## Instalar y configurar PHP 7.2 en GNU/Linux Debian 9  ##########
 ##########################################################################

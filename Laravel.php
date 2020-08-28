@@ -396,7 +396,7 @@ $ composer install
 
 $ npm install
 
-% composer dumpautoload
+$ composer dumpautoload
 
 $ php artisan migrate
 
