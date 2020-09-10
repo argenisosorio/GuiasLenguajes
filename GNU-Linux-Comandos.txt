@@ -5860,3 +5860,62 @@ es_VE.UTF-8 UTF-8
 
 Configuración regional predeterminada para el entorno del sistema:
 es_VE.UTF-8
+
+=============================================
+Cron y Crontab en Linux para programar tareas
+=============================================
+
+¿Has intentado programar una tarea en Linux y no has sabido como? ¿A pesar de
+consultar el manual propio no has sido capaz? Primero hay que entender a  Cron y
+Crontab. Estos dos elementos son muy importantes a la hora de programar tareas
+periódicas y que se ejecuten sin que tengamos que estar pendientes de su estado.
+
+En los sistemas operativos Windows existe algo similar denominado Tareas
+Programadas. En esta ocasión el proceso no se realiza de forma gráfica y se
+tiene que realizar a través de terminal.
+
+Hemos mencionado con anterioridad Cron y Crontab. En primer lugar, vamos a ver
+que diferencias existen entre ambos elementos. Posteriormente aprenderemos a
+agregar tareas y para finalizar nos adentraremos en la gestión de los jobs
+(trabajos) de Cron.
+
+================================
+Diferencias entre Cron y Crontab
+================================
+
+Aunque pueda parecer que estamos hablando de lo mismo, no es así, y se podrían
+considerar dos elementos dependientes uno del otro. Para ser más claros, son los
+encargados de que la programación de tareas en sistemas Linux sea posible.
+
+===========
+Qué es Cron
+===========
+
+Es un demonio (proceso en segundo plano) que se ejecuta desde el mismo instante
+en el que arranca el sistema. Comprueba si existe alguna tarea (job) para ser
+ejecutado de acuerdo a la hora configurada en el sistema. Muy importante que la
+zona horaria esté bien configurada ya que de lo contrario las ejecuciones puede
+que no coincidan con los ajustado.
+
+En función de la distribución, se inicia utilizando las carpetas /etc/rc.d/ o
+/etc/init.d y cada minuto comprueba los ficheros /etc/crontab o /var/spool/cron
+es busca de posibles ejecuciones (ahora empieza todo a cuadrar).
+
+==============
+Qué es Crontab
+==============
+
+Un archivo de texto. Por simple que parezca la definición es así. Aunque es
+verdad que se trata de un archivo con contenido especial. Posee una lista con
+todos los scripts a ejecutar. Generalmente cada usuario del sistema posee su
+propio fichero Crontab. Se considera que el ubicado en la carpeta etc pertenece
+al usuario root.
+
+Para generar el archivo propio, cada usuario deberá hacer uso del comando
+crontab (sí, es el mismo nombre).
+
+=======
+Fuentes
+=======
+
+-https://www.redeszone.net/2017/01/09/utilizar-cron-crontab-linux-programar-tareas/
