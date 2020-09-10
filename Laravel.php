@@ -496,3 +496,36 @@ Fuentes
 =======
 
 -https://solibeth.net/aprende-usar-seed-en-laravel
+
+=============================================
+Descargue y cargue bases de datos rápidamente
+=============================================
+
+Usando el paquete laravel-db-snapshots
+
+Disponible desde > https://github.com/spatie/laravel-db-snapshots
+
+Este paquete proporciona comandos Artisan para descargar y cargar rápidamente
+bases de datos en una aplicación de Laravel.
+
+Crear un dump
+
+$ php artisan snapshot:create my-first-dump
+
+Nos creara un archivo "my-first-dump.sql" en la ruta project/database/snapshots
+
+Crear otro dump
+
+$ php artisan snapshot:create my-second-dump
+
+Cargar el primer dump
+
+$ php artisan snapshot:load my-first-dump
+
+Cargar el último dump
+
+$ php artisan snapshot:load --latest
+
+Listar todas las snapshots
+
+$ php artisan snapshot:list
