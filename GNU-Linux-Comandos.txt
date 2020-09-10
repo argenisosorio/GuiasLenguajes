@@ -5914,6 +5914,115 @@ al usuario root.
 Para generar el archivo propio, cada usuario deberá hacer uso del comando
 crontab (sí, es el mismo nombre).
 
+Cada usuario tiene sus crontabs, el root tiene los suyos y los demás usuarios
+los suyos.
+
+Para ver los contrabs configurados del usuario regular utilizamos este comando:
+
+$ crontab -l
+
+Para ver los contrabs configurados del usuario root utilizamos este comando:
+
+# crontab -l
+
+Para editarlos el crontab por defecto del usuario regular
+
+$ crontab -e
+
+Para editarlos el crontab por defecto del usuario root
+
+# crontab -e
+
+=====================
+Formato de las tareas
+=====================
+
+Las tareas cron siguen una determinada sintaxis. Tienen 5 asteriscos seguidos
+del comando a ejecutar. Ahora explicaré para qué sirve cada cosa.
+
+* * * * * /bin/ejecutar/script.sh
+
+Los 5 asteriscos, de izquierda a derecha, representan:
+
+Minutos: de 0 a 59.
+Horas: de 0 a 23.
+Día del mes: de 1 a 31.
+Mes: de 1 a 12.
+Día de la semana: de 0 a 6, siendo 0 el domingo.
+
+Si se deja un asterisco, quiere decir "cada" minuto, hora, día de mes, mes o
+día de la semana. Por ejemplo:
+
+* * * * * /bin/ejecutar/script.sh
+
+Ejecuta este script:
+
+Cada minuto
+De cada hora
+De cada día del mes
+De cada mes
+De cada día de la semana
+
+Otro ejemplo:
+
+30 2 * * 1 /bin/ejecutar/script.sh
+
+Ejecutar este script:
+
+En el minuto 30
+De las 2 de la noche
+De cada día del mes
+De cada mes
+Sólo si es Lunes
+
+En resumen, todos los lunes a las 2:30 horas se ejecutará el script.
+
+====================
+Intervalos de tiempo
+====================
+
+Ejecutar un script de lunes a viernes a las 2:30 horas:
+
+30 2 * * 1-5 /bin/ejecutar/script.sh
+
+Ejecutar un script de lunes a viernes cada 10 minutos desde las 2:00 horas
+durante una hora:
+
+0,10,20,30,40,50 2 * * 1-5 /bin/ejecutar/script.sh
+
+Esto quizá puede ser largo. La sintaxis de crontab permite lo siguiente.
+Imaginemos que queremos ejecutarlo cada 5 minutos:
+
+*/5 2 * * 1-5 /bin/ejecutar/script.sh
+
+===================
+Palabras reservadas
+===================
+
+Muchas veces tenemos palabras reservadas para facilitar el uso de programas o
+lenguajes de programación. Cron no podía ser menos, así que tenemos algunas que
+suelen ser las más comunes. Ya cada uno que lo configure conforme a sus
+necesidades. Aquí van:
+
+@reboot: se ejecuta una única vez al inicio.
+@yearly/@annually: ejecutar cada año.
+@monthly: ejecutar una vez al mes.
+@weekly: una vez a la semana.
+@daily/@midnight: una vez al día.
+@hourly: cada hora.
+
+Por ejemplo, para ejecutar el script cada hora:
+
+@hourly /bin/ejecutar/script.sh
+
+==============================
+Ejemplo de script para pruebas
+==============================
+
+#!/bin/bash
+# Abrir un fichero específico con el editor gedit
+gedit /home/user/try.txt
+
 =======
 Fuentes
 =======
