@@ -6061,3 +6061,218 @@ Fuentes
 =======
 
 -https://ubunlog.com/asi-puedes-recuperar-la-transparencia-dinamica-de-la-barra-superior-en-ubuntu-19-04/
+
+==========================================
+Crear o añadir memoria swap en un servidor
+==========================================
+
+1) Comprobar el sistema de información Swap
+
+$ sudo swapon -s
+
+ó
+
+$ cat /proc/swaps
+
+Si tras ejecutar lo anterior solo aparece en pantalla las cabeceras de una
+tabla, significará que actualmente no tenemos espacio swap habilitado.
+
+Filename				Type		Size	Used	Priority
+
+Otra forma de ver si tenemos disponible memoria swap en nuestro sistema es
+mediante el comando «free». Este comando se encarga de mostrar el uso de los
+diferentes tipos de memoria del sistema.
+
+$ free -m
+
+El resultado que aparecería por pantalla sería algo parecido a lo que os
+mostramos a continuación:
+
+             total       used       free     shared    buffers     cached
+Mem:          3953        154       3799          0          8         83
+-/+ buffers/cache:         62       3890
+Swap:            0          0          0
+
+Si en el apartado «Swap» aparece el valor 0, esto quiere decir que no tenemos
+espacio disponible para este fin.
+
+2) Revisar el espacio disponible en la partición del disco duro
+
+Para asignar espacio para el intercambio se suele utilizar una partición
+independiente. Sin embargo, no siempre es posible cambiar el esquema de
+particionado utilizado en un servidor. Lo que se puede hacer en estos casos es
+crear un archivo de intercambio de forma sencilla, que resida en una de las
+particiones ya existentes. Antes de hacer esto, es muy importante que sepamos el
+estado de uso de las distintas particiones para ver donde sería más factible
+crearlo. Podemos conseguir esta información mediante la instrucción:
+
+$ df -h
+
+Por pantalla tenemos que ver algo parecido a lo siguiente:
+
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda         59G  1.3G   55G   3% /
+none            4.0K     0  4.0K   0% /sys/fs/cgroup
+udev            2.0G   12K  2.0G   1% /dev
+tmpfs           396M  312K  396M   1% /run
+none            5.0M     0  5.0M   0% /run/lock
+none            2.0G     0  2.0G   0% /run/shm
+none            100M     0  100M   0% /run/user
+
+Como podemos ver en el resultado anterior, nuestro disco duro tiene un tamaño de
+55 GB disponibles, lo que se traduce en un gran espacio para trabajar. Ya que
+sabemos el espacio disponible, ya podemos determinar el tamaño que destinaremos
+a la memoria swap. En este punto existen opiniones diversas, pero nosotros os
+recomendamos asignar un espacio que sea al menos igual o el doble de la RAM; por
+supuesto, esto también dependerá del espacio disponible que tengamos. En nuestro
+caso, dedicaremos 4 GB a este fin.
+
+3) Crear un archivo swap
+
+Una vez que sabemos el espacio que tenemos disponible, vamos a proceder a crear
+un fichero swap en nuestro sistema de archivos. Para ello vamos a crear uno de
+nombre «swapfile» en nuestro directorio root. A este archivo tenemos que
+asignarle el espacio que queremos que tenga. Para ello lo podemos hacer de dos
+formas diferentes.
+
+==================
+Método tradicional
+==================
+
+Primero de todo, cabe decir que el método tradicional es la opción más lenta.
+El sistema que se utiliza en este caso es el comando «dd», una herramienta que
+es capaz de escribir de una ubicación a otra. Para conseguir un tamaño de 4 GB,
+tenemos que ejecutar la siguiente instrucción:
+
+$ sudo dd if=/dev/zero of=/swapfile bs=1G count=4
+
+Con esto, lo que hacemos es asignar un bloque de tamaño de 1 GB y un contador
+con el valor 4, que serán las veces que se debería ejecutar. De esta forma
+conseguiríamos los 4 GB de espacio mediante el uso de ceros como contenido. Os
+recomendamos que tengáis mucho cuidado a la hora de utilizarlo, ya que si
+ponemos mal algún tipo de información, podríamos corromper el sistema. Tampoco
+os preocupéis si veis que tarda mucho tiempo en generarse, se trata de un
+fichero muy grande, así que es normal que tarde.
+
+=============
+Método rápido
+=============
+
+La forma más rápida de conseguir esto es utilizando el programa «fallocate».
+Este comando crea un fichero del tamaño indicado de forma inmediata. Para crear
+un archivo hay que ejecutar lo siguiente:
+
+$ sudo fallocate -l 4G /swapfile
+
+El archivo se crea inmediatamente y lo podemos comprobar ejecutando la siguiente
+instrucción:
+
+$ ls -lh /swapfile
+
+Como salida deberíamos ver algo parecido a lo siguiente:
+
+-rw-r--r-- 1 root root 4.0G Jul 03 17:15 /swapfile
+
+4) Habilitar el archivo swap
+
+Aunque ya hemos creado nuestro archivo, el sistema no sabe que queremos
+utilizarlo como partición de intercambio. Así que ahora toca darle formato y
+activarlo. Para ello debemos ajustar los permisos en nuestro archivo, para que
+solo el usuario root pueda leerlo, porque dejar que cualquiera pudiera acceder a
+él supondría un problema de seguridad importante.
+
+Para cambiar los permisos debemos ejecutar:
+
+$ sudo chmod 600 /swapfile
+
+Lo siguiente que haremos será indicar al sistema que ese fichero se usará como
+memoria swap. Para ello ejecutaremos lo siguiente:
+
+$ sudo mkswap /swapfile
+
+Por pantalla tenemos que ver algo parecido a esto:
+
+Setting up swapspace version 1, size = 4194300 KiB
+no label, UUID=e2f1e9cf-c0a9-4ed4-b8ab-714b8a7d6944
+
+Nuestro archivo está listo para ser utilizado como espacio swap, así que vamos a
+activarlo.
+
+$ sudo swapon /swapfile
+
+Ahora podemos verificar si nuestro sistema nos informa de que tenemos un espacio
+creado de tipo swap.
+
+$ sudo swapon -s
+
+Por pantalla deberíamos ver algo así:
+
+Filename                Type        Size    Used    Priority
+/swapfile               file        4194300 0       -1
+
+Si utilizamos la herramienta «free», nos debería aparecer que la memoria swap
+tiene espacio disponible, en lugar del valor 0 que aparecía antes.
+
+$ free -m
+
+La salida sería la siguiente:
+
+             total       used       free     shared    buffers     cached
+Mem:          3953        101       3851          0          5         30
+-/+ buffers/cache:         66       3887
+Swap:         4095          0       4095
+
+5) Hacer permanente el archivo de intercambio
+
+Aunque hayamos creado nuestro archivo de intercambio, cada vez que reiniciemos
+la máquina el sistema no lo habilitará de forma automática. Para que esto ocurra
+tenemos que modificar el archivo «fstab». Para ello lo editaremos con
+privilegios root con nuestro editor de preferencia.
+
+$ sudo nano /etc/fstab
+
+En la parte inferior del archivo tenemos que añadir una línea que será la
+encargada de indicar al sistema que utilice el archivo creado de forma
+automática.
+
+/swapfile   none    swap    sw    0   0
+
+Cuando hayas añadido esa línea, puedes guardar y salir.
+
+6) Afinar la configuración de nuestra memoria swap
+
+Para finalizar, es bueno que realicemos algunas acciones para mejorar el
+rendimiento del sistema de intercambio. El parámetro «swappiness» configura la
+frecuencia con la que su sistema intercambia datos de memoria RAM con el espacio
+de intercambio. El «swappinness» es un valor que va de 0 a 100. Cuando el valor
+esté cerca de 0, no se intercambiará datos en el disco a menos que sea
+absolutamente necesario. Si por el contrario, el valor está más cerca de 100, se
+llevarán a cabo un mayor número de intercambios para dejar más espacio libre en
+la RAM.
+
+Si queremos ver el valor actual de «swappiness», lo podemos hacer ejecutando la
+siguiente instrucción:
+
+cat /proc/sys/vm/swappiness
+
+Para asignar un valor de 10 a este parámetro, podemos ejecutar:
+
+sudo sysctl vm.swappiness=10
+
+El valor se mantendrá así hasta el próximo reinicio de la máquina. Si queremos
+que sea permanente, podemos añadir la siguiente línea al final de nuestro
+/etc/sysctl.conf.
+
+vm.swappiness=10
+
+Cuando termines, guarda y cierra el archivo. Como véis, crear un archivo para
+utilizarlo como memoria swap en Ubuntu no es nada complicado. El beneficio para
+el rendimiento de nuestro sistema puede ser considerable. Recuerda realizar
+siempre copias de seguridad antes y, si dudas, pregunta o delega en
+profesionales de administración de sistemas.
+
+=======
+Fuentes
+=======
+
+-https://www.stackscale.com/es/blog/anadir-memoria-swap-servidor-ubuntu/
