@@ -132,6 +132,10 @@ Enumerar todas las fuentes instaladas que están disponibles en su tistema linux
 
 $ fc-list
 
+Saber que gestor de sesiones estoy utilizando
+
+$ cat /etc/X11/default-display-manager
+
 ===========
 Memoria ram
 ===========
@@ -785,7 +789,7 @@ Recargar el entorno gráfico, evitando el reinicio del pc.
 
 Refrescar el escritorio gnome sin reiniciar.
 
-Alt + F2 y escrba r y presione enter, esto para gnome3
+Alt + F2 y escriba r y presione enter, esto para gnome3
 
 Para refrescar el desktop en xfce.
 
@@ -6276,3 +6280,53 @@ Fuentes
 =======
 
 -https://www.stackscale.com/es/blog/anadir-memoria-swap-servidor-ubuntu/
+
+======================================================
+Cambiar el fondo de la pantalla de login en gnome gdm3
+======================================================
+
+Cada vez que inicies sesión o bloquees y desbloquee tu escritorio, serás
+recibido con una pantalla de color gris. Es el fondo de GDM
+(GNOME Display Manager) por defecto.
+
+Para cambiar el fondo debemos editar el archivo
+
+/usr/share/gnome-shell/theme/gnome-classic.css
+
+Antes de modificar este archivo, haz una copia de seguridad del mismo. Así que,
+podemos restaurarla si algo sale mal.
+
+Ahora, edita el archivo ubuntu.css:
+
+# nano /usr/share/gnome-shell/theme/gnome-classic.css
+
+Encuentra las siguientes líneas bajo la directiva llamada "lockDialogGroup" en
+el archivo:
+
+#lockDialogGroup {
+  background: #2e3436 url(resource:///org/gnome/shell/theme/noise-texture.png);
+  background-repeat: repeat;
+}
+
+y lo cambiamos a
+
+/* Nuevo fondo para pantalla del login */
+#lockDialogGroup {
+  background: #2e3436 url(file:///home/aosorio/Imágenes/mi_nuevo_fondo.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+Nota que hay que poner la ruta completa a la nueva imágen.
+
+Guardamos, refrescamos el escritorio con Alt + F2 y escriba r y presione enter
+esto para gnome3.
+
+y listo, ya deberíamos ver nuestra nueva imagen como fondo de login.
+
+=======
+Fuentes
+=======
+
+-https://www.linuxenespañol.com/tutoriales/como-cambiar-fond-pantalla-inicio-sesion-gdm-ubuntu/
