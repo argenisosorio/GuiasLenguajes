@@ -41,3 +41,160 @@ Fuentes
 =======
 
 -https://www.luciamonterorodriguez.com/tipos-de-relaciones-en-bases-de-datos/
+
+====
+ACID
+====
+
+En bases de datos se denomina ACID a las características de los parámetros que
+permiten clasificar las transacciones de los sistemas de gestión de bases de
+datos. Cuando se dice que una acción es ACID compliant se indica -en diversos
+grados- que ésta permite realizar transacciones.
+
+En concreto, ACID es un acrónimo en inglés de Atomicity, Consistency, Isolation
+and Durability: Atomicidad, Consistencia, Aislamiento y Durabilidad, en español.
+
+============
+Definiciones
+============
+
+-Atomicidad: Si cuando una operación consiste en una serie de pasos, de los que
+o bien se ejecutan todos o ninguno, es decir, las transacciones son completas.
+
+-Consistencia: (Integridad). Es la propiedad que asegura que sólo se empieza
+aquello que se puede acabar. Por lo tanto se ejecutan aquellas operaciones que
+no van a romper las reglas y directrices de Integridad de la base de datos. La
+propiedad de consistencia sostiene que cualquier transacción llevará a la base
+de datos desde un estado válido a otro también válido. "La Integridad de la Base
+de Datos nos permite asegurar que los datos son exactos y consistentes, es decir
+que estén siempre intactos, sean siempre los esperados y que de ninguna manera
+cambian ni se deformen. De esta manera podemos garantizar que la información que
+se presenta al usuario será siempre la misma."
+
+-Aislamiento: Esta propiedad asegura que una operación no puede afectar a otras.
+Esto asegura que la realización de dos transacciones sobre la misma información
+sean independientes y no generen ningún tipo de error. Esta propiedad define
+cómo y cuándo los cambios producidos por una operación se hacen visibles para
+las demás operaciones concurrentes. El aislamiento puede alcanzarse en distintos
+niveles, siendo el parámetro esencial a la hora de seleccionar SGBDs.
+
+-Durabilidad: (Persistencia). Esta propiedad asegura que una vez realizada la
+operación, esta persistirá y no se podrá deshacer aunque falle el sistema y que
+de esta forma los datos sobrevivan de alguna manera.
+
+Cumpliendo estos 4 requisitos un sistema gestor de bases de datos puede ser
+considerado ACID Compliant.
+
+=======
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/ACID
+
+=====
+NoSQL
+=====
+
+En informática, NoSQL (a veces llamado "no solo SQL") es una amplia clase de
+sistemas de gestión de bases de datos que difieren del modelo clásico de SGBDR
+(Sistema de Gestión de Bases de Datos Relacionales) en aspectos importantes,
+siendo el más destacado que no usan SQL como lenguaje principal de consultas.
+Los datos almacenados no requieren estructuras fijas como tablas, normalmente no
+soportan operaciones JOIN, ni garantizan completamente ACID (atomicidad,
+consistencia, aislamiento y durabilidad) y habitualmente escalan bien
+horizontalmente. Los sistemas NoSQL se denominan a veces "no solo SQL" para
+subrayar el hecho de que también pueden soportar lenguajes de consulta de tipo
+SQL.
+
+Por lo general, los investigadores académicos se refieren a este tipo de bases
+de datos como almacenamiento estructurado, término que abarca también las bases
+de datos relacionales clásicas. A menudo, las bases de datos NoSQL se clasifican
+según su forma de almacenar los datos, y comprenden categorías como clave-valor,
+las implementaciones de BigTable, bases de datos documentales, y bases de datos
+orientadas a grafos.
+
+Los sistemas de bases de datos NoSQL crecieron con las principales redes
+sociales, como Google, Amazon, Twitter y Facebook. Estas tenían que enfrentarse
+a desafíos con el tratamiento de datos que las tradicionales SGBDR no
+solucionaban. Con el crecimiento de la web en tiempo real existía una necesidad
+de proporcionar información procesada a partir de grandes volúmenes de datos que
+tenían unas estructuras horizontales más o menos similares. Estas compañías se
+dieron cuenta de que el rendimiento y sus propiedades de tiempo real eran más
+importantes que la coherencia, en la que las bases de datos relacionales
+tradicionales dedicaban una gran cantidad de tiempo de proceso.
+
+En ese sentido, a menudo, las bases de datos NoSQL están altamente optimizadas
+para las operaciones recuperar y agregar, y normalmente no ofrecen mucho más que
+la funcionalidad de almacenar los registros (p.ej. almacenamiento clave-valor).
+La pérdida de flexibilidad en tiempo de ejecución, comparado con los sistemas
+SQL clásicos, se ve compensada por ganancias significativas en escalabilidad y
+rendimiento cuando se trata con ciertos modelos de datos.
+
+========
+Ventajas
+========
+
+-Estos sistemas responden a las necesidades de escalabilidad horizontal que
+tienen cada vez más empresas.
+
+-Pueden manejar enormes cantidades de datos.
+
+-No generan cuellos de botella.
+
+-Escalamiento sencillo.
+
+-Diferentes DBs NoSQL para diferentes proyectos.
+
+===========
+Desventajas
+===========
+
+-Limitaciones de Inteligencia de Negocios.- Hay una o dos cuestiones acerca de
+las capacidades de BI de las bases de datos NoSQL. ¿Pueden estas bases de datos
+proporcionar la clase de minería de datos rigurosos que las empresas se utilizan
+con las SGBDRes? ¿Cuántos conocimientos de programación se necesitan para hacer
+la consulta ad hoc y análisis?. Las respuestas no son precisamente positivas.
+Las bases de datos NoSQL no tienen muchos ganchos para el uso general de
+herramientas de BI, mientras que la más simple consulta ad-hoc y análisis
+implica conocimientos de programación bastante buenos. Sin embargo, las
+soluciones están disponibles. Quest Software, por ejemplo, ha creado Toad para
+bases de datos en la nube, que proporciona capacidades de consulta ad-hoc para
+algunas bases de datos NoSQL.
+
+-La falta de experiencia. La novedad de NoSQL significa que no hay una gran
+cantidad de desarrolladores y administradores que conocen la tecnología -lo que
+hace difícil a las empresas encontrar personas con los conocimientos técnicos
+apropiados. Por el contrario, el mundo SGBDR tiene miles de personas muy
+cualificadas.
+
+-Problemas de compatibilidad. A diferencia de las bases de datos relacionales,
+que comparten ciertos estándares, las bases de datos NoSQL tienen pocas normas
+en común. Cada base de datos NoSQL tiene su propia API, las interfaces de
+consultas son únicas y tienen peculiaridades. Esta falta de normas significa que
+es imposible cambiar simplemente de un proveedor a otro, por si no quedara
+satisfecho con el servicio.
+
+=======
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/NoSQL
+
+===
+SQL
+===
+
+SQL (por sus siglas en inglés Structured Query Language; en español lenguaje de
+consulta estructurada) es un lenguaje de dominio específico utilizado en
+programación, diseñado para administrar, y recuperar información de sistemas de
+gestión de bases de datos relacionales.  Una de sus principales características
+es el manejo del álgebra y el cálculo relacional para efectuar consultas con el
+fin de recuperar, de forma sencilla, información de bases de datos, así como
+realizar cambios en ellas.
+
+Originalmente basado en el álgebra relacional y en el cálculo relacional, SQL
+consiste en un lenguaje de definición de datos, un lenguaje de manipulación de
+datos y un lenguaje de control de datos. El alcance de SQL incluye la inserción
+de datos, consultas, actualizaciones y borrado, la creación y modificación de
+esquemas y el control de acceso a los datos. También el SQL a veces se describe
+como un lenguaje declarativo, también incluye elementos procesales.
