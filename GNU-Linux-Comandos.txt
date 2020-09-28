@@ -6330,3 +6330,110 @@ Fuentes
 =======
 
 -https://www.linuxenespañol.com/tutoriales/como-cambiar-fond-pantalla-inicio-sesion-gdm-ubuntu/
+
+=============
+Programa curl
+=============
+
+Instalar curl
+
+# apt install curl
+
+Verifica la versión de Curl
+
+$ curl --version
+
+Sintaxis básica del comando Curl
+
+$ curl [OPTIONS] [URL]
+
+El uso más simple de Curl es mostrar el contenido de una página. El siguiente
+ejemplo mostrará la página de inicio de testdomain.com.
+
+$ curl testdomain.com
+
+La salida sería:
+
+<html><head><title>testdomain.com</title></head><body><h1>testdomain.com</h1><p>
+Coming soon.</p></body></html>
+
+=======================================
+Opciones de archivo de comandos de Curl
+=======================================
+
+Los comandos Curl pueden descargar archivos desde una ubicación remota. Puedes
+hacerlo de dos maneras diferentes:
+
+-O guardará el archivo en el directorio de trabajo actual con el mismo nombre de archivo que el remoto.
+
+-o permite especificar un nombre de archivo o ubicación diferente.
+
+A continuación se muestra un ejemplo:
+
+Guardar testfile.tar.gz.
+
+$ curl -O http://testdomain.com/testfile.tar.gz
+
+Guardar el archivo como newtestfile.tar.gz.
+
+$ curl -o newtestfile.tar.gz http://testdomain.com/testfile.tar.gz
+
+Reanudar descarga
+
+$ curl -C - http://testdomain.com/testfile.tar.gz
+
+Descargar varios archivos a la vez
+
+$ curl -O http://testdomain.com/testfile.tar.gz -O http://mydomain.com/myfile.tar.gz
+
+Si quieres descargar múltiples archivos de múltiples URLs, inclúyelos todos en
+un archivo. Los comandos Curl se pueden combinar con xargs para descargar las
+diferentes URLs.
+
+Por ejemplo, si tenemos un archivo allUrls.txt que contiene una lista de todas
+las URLs que se descargarán, el siguiente ejemplo se puede usar para descargar
+todos los archivos.
+
+$ xargs -n 1 curl -O < allUrls.txt
+
+=======================
+Comandos Curl para Http
+=======================
+
+Curl también se puede usar cuando hay un servidor proxy. Si estás detrás de un
+servidor proxy que escucha en el puerto 8090 en sampleproxy.com, descarga los
+archivos como se muestra a continuación:
+
+$ curl -x sampleproxy.com:8090 -U username:password -O http:// testdomain.com/testfile.tar.gz
+
+En el ejemplo anterior, puedes omitir -U username:password si el proxy no
+requiere un método de autenticación.
+
+Una solicitud HTTP típica siempre contendrá un encabezado. El encabezado HTTP
+envía información adicional sobre el servidor web remoto junto con la solicitud
+real. Si bien a través de las herramientas de desarrollador de un navegador
+puedes verificar la información del encabezado, puedes verificarla utilizando un
+comando curl.
+
+Recuperar o consultar la información del encabezado de un sitio web.
+
+$ curl -I www.testdomain.com
+
+Hacer una solicitud GET
+
+$ curl http://mydomain.com
+
+Hacer una solicitud POST. El sitio web o url al cual se hace la solicitud
+debería estar preparado para dar respuestas, de lo contrario dara error el
+comando.
+
+Aquí text=Hello es el parámetro de solicitud POST. Este comportamiento sería
+similar a los formularios HTML.
+
+$ curl -data "text=Hello" https://myDomain.com/firstPage.php
+
+=======
+Fuentes
+=======
+
+-https://www.hostinger.es/tutoriales/comando-curl/
