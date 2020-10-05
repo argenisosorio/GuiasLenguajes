@@ -52,19 +52,19 @@ $ sudo mysql -p
 Dentro de la consola de MySQL creamos el usuario y la contraseña del sistema de
 wordpress:
 
-mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY '123456';
+> CREATE USER 'user'@'localhost' IDENTIFIED BY '123456';
 
 Creamos la base de datos del sistema wordpress.
 
-mysql> CREATE DATABASE wordpress_db;
+> CREATE DATABASE wordpress_db;
 
 Sobre la base de datos recién creada le asignamos el usuario:
 
-mysql> GRANT ALL PRIVILEGES ON wordpress_db.* TO 'user'@'localhost';
+> GRANT ALL PRIVILEGES ON wordpress_db.* TO 'user'@'localhost';
 
 Refrescamos el esquema de las tablas de MySQL.
 
-mysql> FLUSH PRIVILEGES;
+> FLUSH PRIVILEGES;
 
 Renombramos el archivo de configuración por defecto de wp-config-sample.php a
 wp-config.php
@@ -148,19 +148,19 @@ Acceder a la consola de mysql, nos pedirá la contraseña solamente.
 Dentro de la consola de MySQL creamos el usuario y la contraseña del sistema de
 wordpress:
 
-mysql> CREATE USER 'user'@'localhost' IDENTIFIED BY '123456';
+> CREATE USER 'user'@'localhost' IDENTIFIED BY '123456';
 
 Creamos la base de datos del sistema wordpress.
 
-mysql> CREATE DATABASE wordpress_db;
+> CREATE DATABASE wordpress_db;
 
 Sobre la base de datos recién creada le asignamos el usuario:
 
-mysql> GRANT ALL PRIVILEGES ON wordpress_db.* TO 'user'@'localhost';
+> GRANT ALL PRIVILEGES ON wordpress_db.* TO 'user'@'localhost';
 
 Refrescamos el esquema de las tablas de MySQL.
 
-mysql> FLUSH PRIVILEGES;
+> FLUSH PRIVILEGES;
 
 Renombramos el archivo de configuración por defecto de wp-config-sample.php a
 wp-config.php
@@ -588,3 +588,162 @@ Fuentes
 -https://kinsta.com/es/base-de-conocimiento/nombre-host-mysql/
 -https://codex.wordpress.org/Creating_a_Search_Page
 -https://wpinsideout.com/quitar-barra-lateral-sidebar-wordpress/
+
+==================
+Instalar un plugin
+==================
+
+1) Instalación desde el repositorio de WordPress
+
+WordPress dispone de un repositorio oficial de plugins donde los desarrolladores
+que quieren compartirlo con la comunidad, lo suben y lo ponen a nuestra
+disposición, tras pasar por una serie de controles de calidad y seguridad.
+
+Para instalar un plugin en WordPress desde el repositorio, sigue estos sencillos
+pasos:
+
+Ve al menú de administración y allí selecciona Plugins > Añadir nuevo
+
+En el buscador, escribe el nombre o palabra clave para buscar el plugin
+
+Da al botón «Instalar ahora». Una vez instalado, en este mismo botón pondrá
+«Activar». Haz clic
+
+Después de activar el plugin, deberás comprobar si necesitas realizar algún tipo
+de ajuste o, por el contrario el plugin viene ya configurado para que se ejecute
+sin necesidades de modificar ningún parámetro.
+
+2) Actualizar plugins del repositorio
+
+Con frecuencia, los desarrolladores actualizarán sus plugins para incluir
+mejoras o corregir errores. En este caso bastará con hacer clic sobre el enlace
+de "actualizar" que te aparecerá debajo del plugin, en el listado de plugis de
+tu instalación de WordPress.
+
+3) Instalar un plugin adquirido en terceros
+
+También cabe la posibilidad de que estés utilizando un plugin con opciones
+premium y que lo hayas comprado directamente en la web del desarrollador.
+
+En este caso te habrán proporcionado un fichero comprimido .ZIP
+
+Ahora tendrás que subir ese archivo hasta tu hosting, instalándolo dentro de
+WordPress. Esto suena muy complicado pero es tan secillo como seguir estos
+pasos:
+
+Plugins > Añadir nuevo
+
+En la parte superior de la pantalla haz clic en el botón "Subir plugin"
+
+Selecciona el archivo en tu disco duro
+
+Pulsa el botón "Instalar ahora"
+
+Una vez que ya lo tengas instalado, en el aviso que te da WordPress confirmando
+esa instalación, aparece un enlace debajo que te invita a instalar el plugin que
+acabas de instalar. Recuerda que tendrás que activarlo para que ejecute su
+función. Pero esto no me funciono a mí porque la prueba la estaba haciendo
+desde localhost y le pide a uno los datos del Servidor, Usuario FTP, Contraseña
+FTP.
+
+4) Instalar un plugin manualmente
+
+También cabe la posibilidad, si dispones del fichero .ZIP, de instalarlo de
+forma totalmente manual
+
+Para hacerlo, sigue estos pasos:
+
+Descomprime el fichero .zip en el disco duro de tu ordenador
+
+busca la carpeta wp-content/plugins
+
+Sube ahí la carpeta completa que has descomprimido antes en tu disco duro.
+Cuidado con no subir los archivos sueltos, tienen que ir dentro de una carpeta
+que se llamará como el plugin.
+
+Vuelve al backend de WordPress > Plugins > Plugins instalados > activa el plugin
+que acabas de subir.
+
+=================================================================
+Añadir manualmente campos personalizados a los posts de wordpress
+=================================================================
+
+Añadir campos personalizados de WordPress manualmente es más fácil de lo que te
+imaginas. Lo difícil es configurar tu tema para que muestre los metadatos que
+agregues usando estos campos. Por ahora, vamos a ver el proceso desde el inicio.
+
+Para agregar un campo personalizado a una de tus páginas o posts, tendrás que
+abrir el editor de WordPress, como creando una nueva entrada. Una vez allí,
+busca la pestaña Opciones de pantalla en la parte superior de la pantalla y haz
+clic en ella. Dentro de esta, puedes elegir qué campos de WordPress se mostrarán
+por defecto.
+
+Notarás que hay una opción llamada Campos personalizados; esta es la que debes
+marcar. Luego de hacerlo, aparecerá un cuadro de Campos personalizados en la
+parte inferior de la pantalla.
+
+Agregar un nuevo campo personalizado es fácil. Solo debes crear un nombre para
+el campo, y luego agregar un valor correspondiente en el campo a la derecha.
+
+Después de ingresar ambos valores, presiona el botón Añadir un campo
+personalizado en la parte inferior del cuadro, esto los guardará y te permitirá
+crear más campos personalizados de WordPress (si lo deseas).
+
+Los metadatos que ingreses aquí se guardarán junto con tu post. Sin embargo, aún
+no aparecerán cuando alguien mire tu contenido en tu sitio publicado. Para que
+esto suceda, debes decirle a tu tema: «Quiero que busques el campo personalizado
+que cree y muestres su contenido en esta ubicación».
+
+En este ejmplo, desde la interfaz creamos un campo llamado "Precio"
+
+Ahora hay que editar el código fuente de wordpress para que muestre los valores
+que estamos guardando en este nuevo campo.
+
+Notese que se debe hacer la modificación en el tema de wordpress que se esté
+utilizando, en este caso es wp-bootstrap-4, por lo que fuí a editar el contenido
+de un post cuya while de los postes está en:
+
+wp-content/themes/wp-bootstrap-4/single.php
+
+y cuyo contenido individual está en:
+
+wp-content/themes/wp-bootstrap-4/template-parts/content.php
+
+Es en esta plantilla que agregué:
+
+<h1>Precio: <?php echo get_post_meta($post->ID, 'Precio', true); ?></h1>
+
+Y pude visualizar el valor guardado en la base de datos.
+
+Otro ejemplo, desde la interfaz creamos un campo llamado "Ubicación"
+
+<h1>Ubicación: <?php echo get_post_meta($post->ID, 'Ubicación', true); ?></h1>
+
+Al utilizar el plugin advanced-custom-fields también se muestran los valores
+editando wp-content/themes/wp-bootstrap-4/template-parts/content.php de la misma
+manera.
+
+=======
+Fuentes
+=======
+
+-https://www.hostinger.es/tutoriales/campos-personalizados-wordpress/#2-Anadir-manualmente-los-campos-personalizados-de-WordPress-y-editar-el-tema-para-mostrarlos
+
+=============================
+Plugin advanced custom fields
+=============================
+
+Luego de instalarlo, configurarlo y crear un nuevo campo "precio" por ejemplo
+se puede hacer que se vea en la página mediante modificación de código fuente
+o mediante un shortcode, es decir, editamos el html de una entrada que contenga
+el campo creado, y agregamos la etiqueta
+
+[acf field="precio"]
+
+Guardamos, y listo, debemos visualizar el valor desde la entrada publicada
+
+=======
+Fuentes
+=======
+
+-https://www.advancedcustomfields.com/resources/displaying-custom-field-values-in-your-theme/

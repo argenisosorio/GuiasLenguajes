@@ -475,6 +475,12 @@ el comando install o update.
 
 $ composer dumpautoload
 
+Con este comando Laravel compilará todos los paquetes que se encuentran en
+node_modules y unificará los archivos que se encuentran en el directorio
+resources/js y resources/sass a los archivos app.js y app.css respectivamente.
+
+$ npm run dev
+
 ===============
 Seed y Seeders
 ===============

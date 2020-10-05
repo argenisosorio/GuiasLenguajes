@@ -5593,6 +5593,7 @@ Paquete para dar formatos a unidades usb
 rsync
 meld
 audacity
+gnome-paint
 
 Herramienta sencilla para la edición de menús de GNOME
 
@@ -6432,8 +6433,24 @@ similar a los formularios HTML.
 
 $ curl -data "text=Hello" https://myDomain.com/firstPage.php
 
+Otro ejemplo curl post real
+
+$ curl -X POST https://petroapp-price.petro.gob.ve/price/PTR -H 'Content-Type: application/json' -d' {"coins":["BTC","DASH","LTC","ETH"]}'
+
+Respuesta
+
+{"status":200,"success":true,"data":{"BTC":{"BTC":185.10780816,"PTR":0.00540226}}}
+
 =======
 Fuentes
 =======
 
 -https://www.hostinger.es/tutoriales/comando-curl/
+
+===========
+gnome-paint
+===========
+
+Programa parecido al paint de windows, muy facil de usar
+
+# apt install gnome-paint

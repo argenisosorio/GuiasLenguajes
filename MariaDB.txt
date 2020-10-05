@@ -80,11 +80,11 @@ MariaDB [(none)]> DROP USER user_name;
 
 Mostrar la lista de usuarios con todos sus campos
 
-SELECT * FROM mysql.user;
+> SELECT * FROM mysql.user;
 
 Mostrar la lista de usuarios con campos relevantes
 
-SELECT host, USER, password FROM mysql.user;
+> SELECT host, USER, password FROM mysql.user;
 
 =========================
 Gestión de bases de datos
@@ -92,13 +92,17 @@ Gestión de bases de datos
 
 Crear una base de datos
 
-CREATE DATABASE db_name;
+> CREATE DATABASE db_name;
 
 Listar las bases de datos
 
-MariaDB [(none)]> show databases;
+> show databases;
 
 Completely Unistall and then Reinstall Mariadb 10.3
+
+Borrar una base de datos específica.
+
+> DROP DATABASE db_name;
 
 ==============================
 Desinstalar e instalar MariaDB
