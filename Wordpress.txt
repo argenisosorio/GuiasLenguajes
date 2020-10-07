@@ -747,3 +747,121 @@ Fuentes
 =======
 
 -https://www.advancedcustomfields.com/resources/displaying-custom-field-values-in-your-theme/
+
+===================
+¿Qué es el hosting?
+===================
+
+La palabra Hosting es un término anglosajón que traducido al castellano sería
+algo así como “Alojamiento, hospedaje“.
+
+Por deducción, el alojamiento de un sitio web, no es otra cosa que el espacio
+dentro de un ordenador donde estarán “guardados” los archivos de tu página web.
+
+Imagínate por un momento que tus archivos son un huésped al que tienes que
+buscarle una habitación en un hotel, y que esté disponible en cualquier momento,
+a cualquier hora.
+
+Para que estos archivos estén disponibles prácticamente siempre y se puedan
+consultar en cualquier momento, necesitamos que ese ordenador donde los vamos a
+guardar esté en un Centro de Datos, con una serie de medidas de seguridad y
+acondicionamiento específico de temperatura, conexión, etc. A este ordenador se
+le conoce con el nombre de Servidor.
+
+Por tanto, cuando te hablo de hosting, me estoy refiriendo al espacio que
+tendrás que alquilar dentro de un ordenador (que está en un Centro de Datos),
+para guardar tus archivos y poder mostrarlos al mundo.
+
+Volvamos al ejemplo del Hotel. Imagina que una empresa se dedica a alquilar
+plantas enteras de habitaciones de ese hotel, y a su vez re-alquilan las
+habitaciones a un tercero: a tu huésped (tus archivos).
+
+Hay empresas que se dedican a alquilar espacios grandes dentro de un ordenador
+ubicado en un Centro de Datos y trocear ese espacio en otros más pequeños y
+realquilarlos: es lo que ocurre con algunos proveedores de hosting. A esto se
+le llama Servidor Compartido.
+
+=========================================
+¿De qué se compone un paquete de hosting?
+=========================================
+
+Un paquete de hosting, por norma general, suele estar compuesto, básicamente
+por:
+
+-Espacio en disco dentro de un Servidor compartido (en Gb)
+-Ancho de Banda o Transferencia de datos mensual (en Gb)
+-Cuentas de Email
+-Cuentas de FTP
+-Panel de Control
+
+Después, dependiendo del proveedor, irá añadiendo a este paquete básico otras
+opciones para hacerlo más útil y diferenciarlo así de su competencia.
+
+====================================
+Requisitos de hosting para WordPress
+====================================
+
+Los requisitos mínimos que debe tener un paquete de hosting para que WordPress
+funcione de forma adecuada son:
+
+-PHP versión 7.3 o superior.
+-MySQL versión 5.6 o superior O MariaDB versión 10.1 o superior.
+-Compatible con HTTPS
+
+=======
+Fuentes
+=======
+
+-https://wpnovatos.com/mejor-hosting-para-wordpress/
+
+=======================
+Editando el widget meta
+=======================
+
+Los archivos que nos serviran son:
+
+Desde
+
+/wordpress/wp-includes/default-widgets.php
+
+se llama a
+
+/wordpress/wp-includes/widgets/class-wp-widget-meta.php
+
+Que contiene el código del widget
+
+========================
+La función wp_loginout()
+========================
+
+La función wp_loginout es la encargada de renderizar en la plantilla un enlace
+para iniciar sesión y también para cerrar la sesión, dependiendo si el usuario
+se encuentra o no autenticado muestra uno y otro enlace.
+
+Se encuentra en: /wordpress/wp-includes/general-template.php
+
+==========================
+Plantilla register y login
+==========================
+
+Se encuentran en:
+
+/compra_venta/wordpress/wp-login.php
+
+============================================
+Función que lleva al home o inicio del sitio
+============================================
+
+<a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a>
+
+=============================
+Función que lleva al register
+=============================
+
+<a href="<?php echo esc_url( wp_registration_url() ); ?>">Registrarse</a>
+
+==========================
+Función que lleva al login
+==========================
+
+<a href="<?php echo esc_url( wp_login_url ); ?>">Acceder</a>
