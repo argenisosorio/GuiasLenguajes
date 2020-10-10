@@ -14,42 +14,62 @@ archivos nautilus de Gnome.
 
 Crtl + h
 
+-----
+
 Para saber la versión de SO que tenemos.
 
 $ cat /etc/issue.net
+
+-----
 
 Para saber la versión de SO que tenemos.
 
 $ cat /etc/issue
 
+-----
+
 Para ver la información del cpu o procesador.
 
 $ cat /proc/cpuinfo
+
+-----
 
 Para ver la información del cpu o procesador pero menor a la anterior.
 
 $ lscpu
 
+-----
+
 Comando que nos va a dar detalles de SO.
 
 $ lsb_release -a
 
+-----
+
 Muestra información del sistema.
 
 $ uname
+
+-----
 
 Muestra la versión del SO instalado, Version de Kernel y arquitectura de
 procesador.
 
 $ uname -a
 
+-----
+
 Saber mi version de Kernel especifica, recomendada.
 
 $ uname -mrs
 
+-----
+
 Ver info del sistema.
 
 $ cat /etc/*-release
+
+-----
 
 Indica cuánto tiempo ha estado funcionando el sistema, muestra:
 
@@ -64,73 +84,105 @@ Los parámetros que muestra son:
 -Los usuarios que están actualmente registrados.
 -Tiempo de carga del sistema durante los últimos 1, 5 y 15 minutos.
 
+-----
+
 Saber cuantos demonios(daemons) del sistema están en ejecución. En esta ruta se
 encuentran algunos de los scripts que se ejecutan con el arrenque del SO.
 
 $ ls -l /etc/init.d/
 
+-----
+
 Muestra la fecha.
 
 $ date
+
+-----
 
 Asignar la fecha manualmente.
 
 # date --set 1998-11-02
 
+-----
+
 Asignar la hora manualmente.
 
 # date --set 21:08:00
 
+-----
+
 Muestra un calendario.
 
 $ cal
+
+-----
 
 Ver informacion de los discos duros, particiones y dispositivos montados en el
 sistema.
 
 # fdisk -l
 
+-----
+
 Este comando muestra todos los puertos USB y los detalles acerca de los
 dispositivos conectados a ellos.
 
 $ lsusb
+
+-----
 
 Lista todos los componentes tipo pci (Peripheral Component Interconnec) como
 las tarjetas de red, de sonido o de televisión.
 
 $ lspci
 
+-----
+
 Leer el fichero meminfo que contiene datos dinámicos de la memoria, similar
 a free.
 
 $ cat /proc/meminfo
 
+-----
+
 Muestra el estado de la memoria virtual.
 
 $ vmstat
+
+-----
 
 Muestra el espacio disponible del disco y demas dispositivos asi como el espacio
 usado.
 
 $ df
 
+-----
+
 Muestra el espacio disponible del disco y demas dispositivos asi como el espacio
 usado, pero en mg o gb según sea el caso.
 
 $ df -h
+
+-----
 
 Muestra el espacio disponible del disco y demas dispositivos asi como el espacio
 usado, pero en mg.
 
 $ df -m
 
+-----
+
 Muestra los procesos del sistema en forma de arbol.
 
 $ pstree
 
+-----
+
 Enumerar todas las fuentes instaladas que están disponibles en su tistema linux.
 
 $ fc-list
+
+-----
 
 Saber que gestor de sesiones estoy utilizando
 

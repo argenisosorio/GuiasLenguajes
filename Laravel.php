@@ -535,3 +535,28 @@ $ php artisan snapshot:load --latest
 Listar todas las snapshots
 
 $ php artisan snapshot:list
+
+
+Script en bash para proyectos ya creados
+
+#!/bin/bash
+
+composer install
+
+composer dumpautoload
+
+npm install
+
+php artisan migrate:fresh
+
+echo " --- Regeneradas las tablas de la base de datos ---"
+
+php artisan migrate
+
+echo " --- Realizadas migraciones a la base de datos ---"
+
+php artisan db:seed
+
+echo "--- Guardados datos en la base de datos ---"
+
+echo "--- Listo!!! ---"

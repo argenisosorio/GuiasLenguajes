@@ -12,6 +12,20 @@
 
 $ sudo service postgresql restart // Reiniciar el servicio de PostgreSQL, para aplicar cambios etc.
 
+Reiniciar el servidor de postgresql
+
+$ sudo /etc/init.d/postgresql restart
+
+=========
+Monitoreo
+=========
+
+Ver el estatus del servidor de postgresql
+
+$ service postgresql status
+
+$ sudo /etc/init.d/postgresql restart
+
 ##############################
 ##### Remover postgresql #####
 ##############################
@@ -374,15 +388,25 @@ Por ahora me ha servido para reiniciar las secuencias de las tablas de django.
 
 Si hay 3976 registros se debe configurar que el último valor es 3977 para que guarde bien en la tabla.
 
-#######################
-##### pgadmin III #####
-#######################
+===========
+pgadmin III
+===========
 
-pgAdmin is the leading graphical Open Source management, development and administration tool for PostgreSQL.
+pgAdmin is the leading graphical Open Source management, development and
+administration tool for PostgreSQL.
 
 # aptitude install pgadmin3
 
-Pgadmin nos permite generar un json a partir de los datos de una tabla, con una secuencia sql directamente:
+--
+
+Cambiar la contraseña del usuario de postgres
+
+postgres=# ALTER USER postgres WITCH PASSWORD '123456';
+
+--
+
+Pgadmin nos permite generar un json a partir de los datos de una tabla, con una
+secuencia sql directamente:
 
 SELECT array_to_json(array_agg(name_table)) FROM name_table;
 

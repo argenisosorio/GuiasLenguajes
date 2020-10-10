@@ -573,3 +573,30 @@ php artisan db:seed
 echo "--- Guardados datos en la base de datos ---"
 
 echo "--- Listo!!! ---"
+
+-----
+
+#!/bin/bash
+#Script para re generar una base de datos sqlite en Laravel.
+
+cd /home/siniif
+
+composer install
+
+composer dumpautoload
+
+npm install
+
+php artisan migrate:fresh
+
+echo " --- Regeneradas las tablas de la base de datos ---"
+
+php artisan migrate
+
+echo " --- Realizadas migraciones a la base de datos ---"
+
+php artisan db:seed
+
+echo "--- Guardados datos en la base de datos ---"
+
+echo "--- Listo!!! ---"

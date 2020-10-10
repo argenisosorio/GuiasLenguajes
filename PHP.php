@@ -1032,9 +1032,9 @@ if (array_key_exists('cifra1',$_POST) and array_key_exists('cifra2',$_POST) and 
 </body>
 </html>
 
-###############################################
-##### El fichero de configuración php.ini #####
-###############################################
+===================================
+El fichero de configuración php.ini
+===================================
 
 El fichero de configuración (php.ini) es leído al arrancar PHP. En las versiones
 en que PHP funciona como módulo de servidor, esto sucede únicamente cuando se
