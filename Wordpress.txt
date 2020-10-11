@@ -302,7 +302,7 @@ hooks
 ¿Qué son y para qué te sirven los hooks de WordPress?
 
 Si estás aprendiendo WordPress y quieres crear plugins o desarrollar un tema
- completo entonces deberías saber qué son los hooks y aprender a dominarlos.
+completo entonces deberías saber qué son los hooks y aprender a dominarlos.
 
 Invariablemente, y sin importar el tipo o magnitud del proyecto al que te
 enfrentes, los hooks de WordPress te serán siempre de gran ayuda, sin embargo el
@@ -865,3 +865,318 @@ Función que lleva al login
 ==========================
 
 <a href="<?php echo esc_url( wp_login_url ); ?>">Acceder</a>
+
+===============================
+Funcion hola mundo en WordPress
+===============================
+
+En este ejemplo se copiara la final al final del archivo
+/wordpress/wp-content/themes/my-theme/functions.php
+
+function hola_mundo() {
+  $mensaje = 'Hola mundo!!!';
+  echo $mensaje;
+}
+
+La podemos imprimir en el archivo /wordpress/wp-content/themes/my-theme/index.php
+
+<h1><?php hola_mundo(); ?></h1>
+
+==================================
+¿Qué es un shortcode de WordPress?
+==================================
+
+Los shortcodes o códigos cortos son una de las pequeñas maravillas de este
+popular CMS y su uso te hará la vida más fácil.
+
+Son pequeñas líneas de código, simples y fáciles de memorizar, que sustituyen a
+otro código mucho más largo, complejo y difícil de realizar. Se incluyen a
+partir de WordPress 2.5 para permitir ejecutar código sin tener que escribirlo
+directamente.
+
+La estructura básica de un shortcode es:
+
+[nombre_shortcode]
+
+Si ponemos este código en una entrada o página, será sustituido por otro más
+complejo que haya definido el desarrollador del mismo.
+
+Pero pueden tener una estructura más compleja:
+
+[nombre_shortcode atributo1="valor1" atributo2="valor2"]Contenido[/nombre_shortcode]
+
+Como se puede ver, tiene una apertura ([nombre_shortcode]) y un cierre
+([/nombre_shortcode]). Los atributos son opcionales y sirven para modificar el
+comportamiento del shortcode. El contenido dentro dentro de la apertura y cierre
+se verá modificado por el código corto y por los atributos elegidos.
+
+Todo quedará más claro con un ejemplo. WordPress tiene varios shortcodes
+incluidos. Uno de ellos es «gallery». Una forma de usarlo sería:
+
+[gallery ids="729,732,731,720"]
+
+Si lo incluimos en un post, éste mostrará una galería con las imágenes cuyos ids
+son 729,732,731 y 720.
+
+============
+Cómo usarlos
+============
+
+Básicamente ya lo hemos visto. Tenemos que conocer el nombre del shortcode,
+saber si lleva o no cierre y qué atributos podemos usar. Para encontrar esta
+información podemos acudir al codex de WordPress o a la documentación del plugin
+o tema que nos esté facilitando el shortcode.
+
+Otro ejemplo más. Si estoy usando Woocommerce, el famosísimo plugin para crear
+tiendas online, me podría preguntar: ¿cómo puedo mostrar, de manera fácil y
+sencilla, mis productos más vendidos? Si me voy a la documentación del plugin
+encuentro que tiene muchos shortcodes y muy útiles. En concreto veo esto. Tema
+solucionado. Voy a la página donde quiero mostrar mis productos más vendidos y
+pego el siguiente código corto:
+
+[products limit="3" columns="3" best_selling="true" ]
+
+Si quisiera cambiar el número de productos que se muestran o el número de
+columnas en que se dividirán, sólo tendría que cambiar los valores de los
+atributos.
+
+==========================
+Ventajas de los shortcodes
+==========================
+
+-Nos permiten ejecutar código sin tener que escribirlo. Ni siquiera conocerlo.
+
+-Nos facilitan la maquetación de páginas y post. Sin embargo, este uso es cada
+vez menor debido a la proliferación de los page builder.
+
+-Nos ayudan a hacer tareas complejas de manera fácil, rápida y sencilla.
+
+-Nos permiten colocar contenido dinámico en nuestra web. Por ejemplo, si en una
+de mis páginas quiero tener siempre destacado el día que el usuario está
+visitando la web, puedo buscar o crear un shortcode que muestre el día actual y
+así me evito tener que entrar todos los días en esa página y cambiarlo.
+
+===========
+Desventajas
+===========
+
+Yo sólo veo una. Si es el tema el que nos proporciona el shortcode, perderemos
+su funcionalidad si algún día decidimos cambiarlo. En su lugar quedará el
+propio código corto, con sus corchetes y atributos, pero nada del código
+asociado a él.
+
+==========
+Resumiendo
+==========
+
+Los shortcodes nos ayudan a crear nuestras páginas webs y son muy fáciles de
+usar. No dudes en acudir a la documentación de los plugins que uses para saber
+qué shortcodes te proporcionan. Ahorrarás mucho trabajo con ellos. Eso sí, yo
+evitaría, en la medida de los posible, usar aquellos incluidos en un tema para
+no perder contenido si decides cambiarlo.
+
+=======
+Fuentes
+=======
+
+-https://www.rafaelmartinweb.com/que-es-shortcode-wordpress/
+
+====================================
+¿Cómo crear shortcodes en WordPress?
+====================================
+
+Los shortcodes o códigos cortos son una característica muy popular en WordPress.
+Son muchos los temas y plugins que los incluyen. Nos hacen la vida más fácil y
+sencilla. Pero no siempre tenemos uno disponible para lo que necesitamos. Y para
+eso estoy aquí, para enseñarte cómo crear shortcodes en WordPress. Con tus
+propios códigos cortos personalizados podrás sacar el máximo provecho a tu tema,
+plugins y WordPress.
+
+A continuación realizaremos juntos un shortcode básico con un parámetro,
+suficiente para entender cómo se crean. Podrás ampliar esta información en el
+propio codex de WordPress.
+
+====================================
+¿Cómo crear shortcodes en WordPress?
+====================================
+
+Tendremos que seguir los siguientes pasos:
+
+-Escribir la función que determinará qué hace nuestro código corto.
+
+-Registrarlo para poder usarlo en WordPress
+
+-Añadirlo a nuestro proyecto.
+
+=================================
+Escribir la función del shortcode
+=================================
+
+El primer paso será definir qué hará nuestro shortcode. Y esto lo haremos con
+una función.
+
+Vamos a realizar un shortcode que imprima "Hola mundo" en pantalla.
+
+function fun_hola_mundo() {
+  return '¡Hola mundo!';
+}
+
+======================
+Registrar el shortcode
+======================
+
+El siguiente paso es registrar el shortcode para que WorPress pueda
+interpretarlo. Esto se hace mediante la función add_shortcode, que tiene dos
+parámetros:
+
+-La etiqueta que será usada en el editor
+-El nombre de la función que se encarga de ejecutar el shortcode
+
+Si añadimos el registro a nuestra función nos quedará:
+
+function fun_hola_mundo() {
+  return '¡Hola mundo!';
+}
+add_shortcode('hello', 'fun_hola_mundo');
+
+Con esto ya tenemos nuestro shortcode personalizado. Ahora sólo falta añadir
+este código a nuestro proyecto.
+
+======================================
+Añadir el shortcode a nuestro proyecto
+======================================
+
+Tenemos que copiar el código del shortcode en el functions.php de nuestro child
+theme o en nuestro plugin de funciones o en nuestro tema. Con esto ya tendremos
+disponible nuestro código corto.
+
+En este ejemplo se copiara en /wordpress/wp-content/themes/my-theme/functions.php
+
+Para usarlo sólo tendremos que escribir:
+
+[hello]
+
+=============
+Otro ejemplo
+=============
+
+function demo_shortcode() {
+  $message = 'Hello world!';
+  return $message;
+}
+add_shortcode('hello', 'demo_shortcode');
+
+Llamandolo en template:
+
+[hello]
+
+====================================
+Shortcodes enclosing vs self-closing
+====================================
+
+El shortcode que hemos creado es del tipo self-closing, es decir, sólo hay que
+escribir el código corto y ya está. Pero existe otro tipo: los enclosing. Éstos
+tienen una etiqueta de apertura y otra de cierre y afectarán a todo el contenido
+que se escriba en medio. La principal diferencia a la hora de crearlos es que la
+función que ejecutará el shortcode recibirá un segundo parámetro, que es el
+contenido entre las etiquetas de apertura y cierre.
+
+Veámoslo con un ejemplo. Vamos a crear un shortcode que transforme a mayúsculas
+(uppercase), minúsculas (lowercase) o capitalice (capitalize) el texto entre sus
+etiquetas. Para ello, añadimos al nuestro child theme o plugin de funciones el
+siguiente código:
+
+function rmw_transformar_texto( $atts, $content = null ) {
+  $a = shortcode_atts( array(
+    'tipo' => 'none',
+  ), $atts );
+  return '<span style="text-transform:' . esc_attr($a['tipo']) . '">' . $content . '</span>';
+}
+add_shortcode( 'transformar', 'rmw_transformar_texto' );
+
+La principal diferencia en el código es el nuevo parámetro $content. Gracias a
+él podemos modificar el contenido entre las etiquetas del shortcode. Como se
+puede ver, hemos creado un atributo llamado «tipo», con valor por defecto
+«none», que será el que podamos modificar para transformar el texto. La salida
+de nuestra función, es decir, el resultado de nuestro shortcode será el texto
+que hay entre las etiquetas de nuestro código corto rodeado de una etiqueta span
+que se encargará de transformar nuestro texto gracias a la propiedad css
+text-transform. Un ejemplo de uso de este shortcode es:
+
+[transformar tipo='uppercase']Caracola[/transformar]
+
+==========
+Resumiendo
+==========
+
+Los shortcodes son una herramienta muy útil de WordPress. Saber usarlos y
+crearlos puede solucionarnos muchos problemas y ahorrarnos mucho tiempo.
+Siguiendo los pasos que he dado podréis empezar a usar vuestros propios códigos
+cortos para vuestros proyectos o de vuestros clientes.
+
+=======
+Fuentes
+=======
+
+-https://www.rafaelmartinweb.com/como-crear-shortcodes-wordpress/
+
+============
+Crear plugin
+============
+
+Cuando queremos agregar funciones personalizadas a nuestro proyecto de
+ordPress, ya sea creadas por nosotros o que hayamos visto en otros sitios web,
+tenemos que incorporarlas normalmente al archivo functions.php de nuestro tema activo.
+
+El problema es, que si estamos usando un tema de terceros y este se actualiza,
+también será actualizado el archivo functions.php y perderemos todas las
+funciones que hayamos añadido manualmente.
+
+Para evitar esto también tenemos la opción de usar un tema hijo o child-theme.
+
+Pero si ya estamos usando un tema hijo que también es de terceros, y no queremos
+perder los cambios en el functions.php si este se actualiza, podemos optar por
+crear nuestro propio plugin de funciones.
+
+Esto consiste básicamente en crear un archivo dentro del directorio de plugins
+de nuestro proyecto, que va a actuar como un archivo de funciones independiente
+del tema de WordPress, pero que todas las funciones que incorporemos a él
+funcionarán de igual modo.
+
+Para hacerlo, solamente tenemos que irnos al directorio de plugins de WordPress
+y crear un nuevo directorio al que llamaremos por ejemplo «mi-plugin».
+
+Ahora dentro del nuevo directorio creamos un archivo .php llamado por ejemplo
+«mi-plugin.php»
+
+Lo editamos con nuestro editor de código favorito y vamos añadir algunas líneas
+comentadas que serán usadas por WordPress para reconocer detalles del nuevo
+plugin:
+
+<?php
+/*
+Plugin Name: Mi plugin de funciones
+Description: Funciones adicionales para mi proyecto WordPress (no desactivar).
+Version: 1.0
+Author: Argenis Osorio
+Author URI: https://github.com/argenisosorio
+*/
+?>
+
+Creo que no hace falta explicar las líneas pues son muy intuitivas. En el
+momento que guardemos los cambios, si nos dirigimos a la sección de plugins de
+WordPress, veremos que este ha sido detectado y reconocido por las líneas
+anteriores que hemos especificado.
+
+Ahora solo tenemos que activarlo y mantenerlo activado para que todo lo que
+incorporemos a él funcione.
+
+Ya no tenemos que preocuparnos de que nuestro tema se actualice y perdamos
+cualquier función que hayamos especificado en el functions.php, porque estarán
+a salvo en nuestro propio plugin de funciones.
+
+=======
+Fuentes
+=======
+
+-https://www.gestionatuweb.net/wordpress-crear-nuestro-propio-plugin-de-funciones/
