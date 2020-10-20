@@ -409,6 +409,61 @@ publicarlas.
 Al momento de instalar WordPress, una cuenta e Administrador con todas las
 Capacidades es creada automáticamente.
 
+============================================
+Cómo crear roles personalizados en WordPress
+============================================
+
+¿No te convencen los roles de usuario que muestra WordPress por defecto? En
+muchas ocasiones necesitas crear roles personalizados, especialmente si tu web
+es gestionada por muchos usuarios.
+
+Imagínate que para las tareas de SEO quieres crear un usuario que pueda editar o
+eliminar entradas de tu blog y, además, acceder a la gestión de ciertos plugins
+relacionados con analítica, optimización web o posicionamiento, pero no quieres
+que pueda actualizar o instalar otros plugins. ¿Cómo puedes hacerlo? Creando
+roles de usuario personalizados.
+
+Ya vimos que, por defecto, WordPress solamente muestra cinco tipos de roles
+(administrador, editor, autor, colaborador y suscriptor), pero tú podrás crear
+los tuyos propios mediante la instalación de algún plugin como User Role Editor
+o User Roles and Capabilities.
+
+Como con cualquiera de ellos vas a poder crear roles personalizado en WordPress,
+en este post vamos a centrarnos en User Role Editor, que es el más utilizado
+(con más de 500.000 instalaciones activas) y tiene muy buena valoración en el
+repositorio oficial de WordPress.
+
+======================================
+Instalar y configurar User Role Editor
+======================================
+
+Para crear roles personalizados en WordPress en base a las necesidades de tu web
+y tu negocio, sigue estos pasos:
+
+1) Instala el plugin
+
+En el menú lateral de WordPress pulsa sobre “Plugins” > “Añadir nuevo”. Busca
+User Role Editor e instálalo y actívalo en tu web.
+
+2) Configúralo
+
+Una vez que hayas instalado y activado el plugin, accede al apartado "Ajustes" >
+"User Role Editor" y, en la pestaña "General" selecciona la opción “Mostrar
+perfil del administrador en el editor de perfiles de usuario”.
+
+3) Crea perfiles personalizados o edita los ya existentes
+
+Ahora que tienes el plugin configurado, ya puedes empezar a crear tus propios
+perfiles y asignar roles personalizados desde el apartado “"Usuarios". Puedes
+crear un nuevo rol o modificar los ya existentes seleccionado las capacidades
+que se muestra el plugin.
+
+=======
+Fuentes
+=======
+
+-https://www.lucushost.com/blog/roles-wordpress-que-son-como-gestionarlos/#Como_crear_roles_personalizados_en_WordPress
+
 =============================
 Incluir una imagen en un tema
 =============================
@@ -1180,3 +1235,26 @@ Fuentes
 =======
 
 -https://www.gestionatuweb.net/wordpress-crear-nuestro-propio-plugin-de-funciones/
+
+================================================================
+Desactivar mensaje de actualización de wordpress en el dashboard
+================================================================
+
+Pegar el siguiente código al final de functions.php
+
+add_action('after_setup_theme', 'remove_core_updates');
+
+function remove_core_updates() {
+    if (!current_user_can('update_core')) {
+    return;
+    }
+    add_action('init', create_function('$a', "remove_action( 'init', 'wp_version_check' );"), 2);
+    add_filter('pre_option_update_core', '__return_null');
+    add_filter('pre_site_transient_update_core', '__return_null');
+}
+
+=======
+Fuentes
+=======
+
+-https://decodecms.com/desactivar-las-notificaciones-de-actualizacion-en-wordpress/

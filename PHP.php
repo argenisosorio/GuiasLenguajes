@@ -1040,7 +1040,24 @@ El fichero de configuración (php.ini) es leído al arrancar PHP. En las version
 en que PHP funciona como módulo de servidor, esto sucede únicamente cuando se
 inicia el servidor. En las versiones CGI y CLI, esto ocurre en cada ejecución.
 
-La ubicaión del fichero es /etc/php5/apache2/php.ini
+Lo primero que se debe hacer es ejecutar el comando php -v para que te de la
+versión de php que estas usando.
+
+De acuerdo a eso buscas el php.ini en la ruta /etc/php/7.x/cli/php.ini
+
+Aqui puedes ver que el php.ini esta en la carpeta "cli" que es donde busca la
+configuración cuando estas ejecutando php por consola.
+
+La ruta seria entonces /etc/php/7.4/cli/php.ini
+
+Cuando se está usando el servidor apache, el busca la configuración en esta
+ruta:
+
+/etc/php/7.4/apache2/php.ini
+
+Cuando se ejecuta mediante consola, el busca la configuración en esta ruta:
+
+/etc/php/7.4/cli/php.ini
 
 ================================
 Instalar y configurar phpMyAdmin

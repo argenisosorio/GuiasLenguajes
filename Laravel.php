@@ -2,10 +2,6 @@
 Guía de Laravel by dM
 =====================
 
-====
-Nota
-====
-
 Usaremos $ para describir los comandos que se usaran con usuario regular.
 
 Usaremos # para describir los comandos que se usaran con superusuario.
@@ -94,6 +90,8 @@ Instalar Apache:
 
 # apt-get install apache2 
 
+-----
+
 Instalar PHP y extras para apache:
 
 # apt-get install php7.0
@@ -101,6 +99,8 @@ Instalar PHP y extras para apache:
 # aptitude install php7.0-gd php7.0-mysql libapache2-mod-php7.0 php-zip php7.0-mbstring php7.0-xml php7.0-intl php-symfony-intl php7.0-libsodium
 
 # aptitude install php-symfony-config php-symfony-dependency-injection php-symfony-expression-language php-symfony-yaml php-symfony-browser-kit php-libsodium php-symfony-http-kernel php-uuid
+
+-----
 
 Instalar Mysql para usarlo en un futuro como motor de base de datos:
 
@@ -135,10 +135,14 @@ $ php -r "readfile('https://getcomposer.org/installer');" | php
 
 El comando anterior nos descarga el fichero "composer.phar"
 
+-----
+
 Movemos composer a /usr/local/bin, lo cual nos permitirá que este disponible
 desde donde sea que lo necesitemos:
 
 # mv composer.phar /usr/local/bin/composer
+
+-----
 
 Comprobamos la instalación con el siguiente comando:
 
@@ -249,17 +253,25 @@ Buscamos la versión de php disponible en el repositorio.
 
 $ aptitude search search php
 
+-----
+
 Instalamos la versión disponible del paquete
 
 $ sudo apt-get install php7.2-cli
+
+-----
 
 Verificar la versión de php que se instaló.
 
 $ php -v
 
+-----
+
 Instalar Apache:
 
 # apt-get install apache2
+
+-----
 
 Instalar dependencias extras necesarias:
 
@@ -267,9 +279,13 @@ Instalar dependencias extras necesarias:
 
 # aptitude install php-symfony-config php-symfony-dependency-injection php-symfony-expression-language php-symfony-yaml php-symfony-browser-kit php-libsodium php-symfony-http-kernel php-uuid
 
+-----
+
 Instalar Mysql para usarlo en un futuro como motor de base de datos
 
 # apt-get install mysql-server
+
+-----
 
 Descargamos composer:
 
@@ -277,10 +293,14 @@ $ php -r "readfile('https://getcomposer.org/installer');" | php
 
 El comando anterior nos descarga el fichero "composer.phar"
 
+-----
+
 Movemos composer a /usr/local/bin, lo cual nos permitirá que este disponible
 desde donde sea que lo necesitemos:
 
 # mv composer.phar /usr/local/bin/composer
+
+-----
 
 Comprobamos la instalación con el siguiente comando:
 
@@ -290,16 +310,28 @@ $ composer
 Instalación de Laravel
 ======================
 
+Instalar composer
+
+-----
+
+Instalar Laravel
+
 $ composer global require "laravel/installer"
+
+-----
 
 Luego de la instalación, comprobamos la ruta donde está laravel con:
 
 $ cd .config/composer/vendor/bin
 
+-----
+
 Si navegamos bien hacia ese directorio, entonces seguimos, agregamos al final
 del .bashrc lo siguiente:
 
 PATH=$PATH:~/.config/composer/vendor/bin
+
+-----
 
 Aplicamos los cambios con el siguiente comando:
 
@@ -308,11 +340,15 @@ $ source .bashrc
 El primer comando es para una comprobación corta, el segundo es completa y
 larga, recomendado el primero.
 
+-----
+
 Creamos un proyecto de laravel para probar:
 
 $ laravel new mysite
 
 Luego de la generación del proyecto e instalación de dependendencias
+
+-----
 
 Entramos en el dirctorio del proyecto y corremos el servidor de desarrollo:
 
@@ -329,6 +365,8 @@ Otra forma de generar el proyecto es usando composer, y especificando versiones:
 
 $ composer create-project --prefer-dist laravel/laravel mysite
 
+-----
+
 Luego de la generación del proyecto e instalación de dependendencias
 
 Entramos en el dirctorio del proyecto y corremos el servidor de desarrollo:
@@ -344,13 +382,19 @@ proyecto creado:
 
 $ php artisan --version
 
+-----
+
 Para cambiar el puerto donde se esta sirviendo el proyecto:
 	
 $ php artisan serve --port=9000
 
+-----
+
 Para cambiar la ip y el puerto donde se esta sirviendo el proyecto:
 
 $ php artisan serve --host=192.168.0.100 --port=8000
+
+-----
 
 Si se va a servir el proyecto por una url diferente a localhost, algunas cosas
 como las imágenes puede ser que sigan siendo servidas por localhost por tanto se
@@ -432,9 +476,13 @@ Instalar el paquete de sqlite para php.
 
 # apt install php7.3-sqlite3
 
+-----
+
 Crear un archivo database.sqlite en la ruta my_project/database.
 
 my_project/database$ touch database.sqlite
+
+-----
 
 Configurar el fichero .env, debemos poner la ruta absoluta de la db.
 
@@ -445,11 +493,13 @@ DB_DATABASE=/home/user/my_project/database/database.sqlite
 DB_USERNAME=homestead
 DB_PASSWORD=secret
 
+-----
+
 Una vez configurada el gestor de base de datos, realizamos las migraciones.
 
 $ php artisan migrate
 
-$ php artisan db:seed
+-----
 
 Levantar el servidor de desarrollo.
 
@@ -464,16 +514,22 @@ Esto ayuda a regenerar nuestra base de datos.
 
 $ php artisan migrate:refresh
 
+-----
+
 Omite los métodos down o los rollbacks eliminando todas las tablas para luego
 ejecutar los métodos up.
 
 $ php artisan migrate:fresh
+
+-----
 
 El comando dump-autoload actualiza la información del cargador automático de
 clases. Este comando es útil cuando añades nuevas clases y no quieres ejecutar
 el comando install o update.
 
 $ composer dumpautoload
+
+-----
 
 Con este comando Laravel compilará todos los paquetes que se encuentran en
 node_modules y unificará los archivos que se encuentran en el directorio
@@ -520,24 +576,33 @@ $ php artisan snapshot:create my-first-dump
 
 Nos creara un archivo "my-first-dump.sql" en la ruta project/database/snapshots
 
+-----
+
 Crear otro dump
 
 $ php artisan snapshot:create my-second-dump
+
+-----
 
 Cargar el primer dump
 
 $ php artisan snapshot:load my-first-dump
 
+-----
+
 Cargar el último dump
 
 $ php artisan snapshot:load --latest
+
+-----
 
 Listar todas las snapshots
 
 $ php artisan snapshot:list
 
-
+========================================
 Script en bash para proyectos ya creados
+========================================
 
 #!/bin/bash
 
