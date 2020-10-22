@@ -1234,23 +1234,33 @@ Copiar un fichero o carpeta
 
 $ cp
 
+-----
+
 Copiar un fichero o carpeta
 
 $ cp -r
+
+-----
 
 Copiar un fichero en un directorio se debe estar situado en la carpeta del
 archivo a copiar
 
 $ cp Nombre_de_archivo.txt /Carpeta/destino/a/copiar
 
-/ Copiar un directorio en otro, se debe estar situado en la carpeta de la
+-----
+
+Copiar un directorio en otro, se debe estar situado en la carpeta de la
 carpeta a copiar.
 
 $ cp Nombre_carpeta -r /Carpeta/destino/a/copiar
 
+-----
+
 Saber la ruta de un directorio: Desde el explorador de archivar (nautilus) desde
 cualquier directorio sin importar el nivel donde estemos, tecleamos Ctrl + l
 esto nos dirá la ruta completa hasta el directorio.
+
+-----
 
 Se pueden copiar archivos o carpetas especificando las rutas completas, en este
 caso la primera ruta es el directorio o archivo a copiar y la segunda es la ruta
@@ -1261,19 +1271,25 @@ $ cp -r /home/usuario/carpeta1/ /home/usuario/carpeta2/
 Ambas carpetas estan en el mismo directorio donde estamos situados, por lo tanto
 no hay que especificar las rutas completas de las carpetas involucradas.
 
-$ cp -r carpeta/ carpeta2/
+-----
 
 Hacer una copia de un fichero y cambiarle el nombre.
 
 $ cp nombre_fichero.xxx nombre_fichero2.xxx
 
+-----
+
 Hacer una copia de un directorio y cambiarle el nombre.
 
 $ cp -r carpeta1 carpeta2
 
+-----
+
 Mover un fichero o carpeta y/o cambiar su nombre.
 
 $ mv
+
+-----
 
 Mover una carpeta o archivo especificando el directorio de salida y el de
 llegada, si estan en el mismo directorio no hace falta poner las rutas
@@ -1281,34 +1297,50 @@ completas.
 
 $ mv /home/carpeta/archivo1.txt /home/carpeta2/
 
+-----
+
 Renombrar un archivo o carpeta.
 
 $ mv archivo1.txt archivo2.txt
 
+-----
+
 Borrar una carpeta.
 
-$ rmdir
+$ rmdir nombre_carpeta
+
+-----
 
 Borrar un fichero.
 
 $ rm nombre_fichero
 
+-----
+
 Borrar varios ficheros.
 
 $ rm fichero1 fichero2 fichero3
+
+-----
 
 Para borrar una carpeta, se le da la ruta del directorio a borrar.
 
 $ rm -r /directorio
 
+-----
+
 Borrar todos el contenido de una carpeta, se debe estar dentro del directorio.
 
 $ rm *
 
- Borrar todo el contenido de una carpeta, incluyendo las carpetas de ese
- directorio se debe estar dentro del directorio
+-----
+
+Borrar todo el contenido de una carpeta, incluyendo las carpetas de ese
+directorio se debe estar dentro del directorio
 
 $ rm -r *
+
+-----
 
 rm: Comando "remove", eliminar. -rf: r de "recursivo" donde se borra todo y f de
 "force"; nunca solicita confirmación. /xxx/xxx indica la ruta de los ficehros o
@@ -1316,33 +1348,50 @@ carpetas a borrar.
 
 $ sudo rm -rf /xxx/xxxx
 
+-----
+
 Borrar todos los elementos de un directorio exeptuando lo que está entre "",
 donde try es un directorio pero también puede ser un fichero, "x.txt" por
 ejemplo.
 
-Pedir contraseña root, algunas versiones basadas en Debian.
-
 $ rm -r !("try")
 
+-----
+
+Pedir contraseña root, algunas versiones basadas en Debian.
+
 $ sudo -i
+
+-----
 
 Pedir contraseña del root.
 
 $ su
+
+-----
 
 Para salir del root, tambien exit, funciona en algunas consolas como python,
 ruby, entre otras.
 
 root@debian:/home/user# Ctrl + d
 
+-----
+
 En la consola, para hacer una busqueda de comandos usados baasndose en la
 palabra que se introduzca.
 
 Ctrl + r
 
+-----
+
 Moverse a traves de los logs de la consola, simula el scroll up/down del mouse.
 
 Shift + Page up <--> Page down
+
+
+Borrar y purgar un paquete con todos sus archivos y configuraciones
+
+# apt-get --purge remove nombre-paquete
 
 =======================
 Ip pública e Ip privada
