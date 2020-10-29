@@ -3973,3 +3973,30 @@ Fuentes
 =======
 
 -https://developer.mozilla.org/es/docs/Web/HTTP/Access_control_CORS
+
+=====================================================================
+Atributo HTML de integridad de subrecursos - Integrity HTML Attribute
+=====================================================================
+
+Hoy en día, los sitios web se construyen en su mayoría con recursos diferentes
+de otros orígenes. Por ejemplo, muchos sitios incluyen scripts u hojas de estilo
+como jQuery o Bootstrap de Content Delivery Network (CDN). Esto induce a que los
+webmasters confíen implícitamente en las fuentes externas vinculadas. Pero,
+¿qué pasa si un atacante puede obligar al usuario a cargar el contenido de un
+servidor controlado por el atacante en lugar del recurso genuino (por ejemplo,
+mediante envenenamiento de DNS o reemplazando archivos en una CDN)? Un webmaster
+consciente de la seguridad no tuvo la oportunidad de proteger su sitio web
+contra tal incidente.
+
+Este es el punto en el que la integridad de los recursos secundarios entra en
+acción. La integridad de los recursos secundarios garantiza la integridad de los
+recursos externos con un atributo adicional para las dos etiquetas HTML <link> y
+<script>. El atributo de integridad contiene un hash criptográfico del recurso
+externo que debe integrarse en el sitio. A continuación, el navegador comprueba
+si el hash del recurso obtenido y el hash del atributo HTML son idénticos.
+
+=======
+Fuentes
+=======
+
+-https://blog.compass-security.com/2015/12/subresource-integrity-html-attribute/
