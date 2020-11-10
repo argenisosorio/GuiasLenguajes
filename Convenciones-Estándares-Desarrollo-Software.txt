@@ -1,0 +1,728 @@
+=================================================================
+Guía de convenciones y estándares en desarrollo de software by dM
+=================================================================
+
+=========================
+Programación estructurada
+=========================
+
+La programación estructurada es un paradigma de programación orientado a mejorar
+la claridad, calidad y tiempo de desarrollo de un programa de computadora
+recurriendo únicamente a subrutinas y tres estructuras básicas: secuencia,
+selección (if y switch) e iteración (bucles for y while); asimismo, se considera
+innecesario y contraproducente el uso de la instrucción de transferencia
+incondicional (GOTO), que podría conducir a código espagueti, mucho más difícil
+de seguir y de mantener, y fuente de numerosos errores de programación.
+
+Surgió en la década de 1960, particularmente del trabajo de Böhm y Jacopini y un
+famoso escrito de 1968: «La sentencia goto, considerada perjudicial», de Edsger
+Dijkstra.  Sus postulados se verían reforzados, a nivel teórico, por el teorema
+del programa estructurado y, a nivel práctico, por la aparición de lenguajes
+como ALGOL, dotado de estructuras de control consistentes y bien formadas.
+
+Ventajas de la programación estructurada
+
+Entre las ventajas de la programación estructurada sobre el modelo anterior (hoy llamado despectivamente código espagueti), cabe citar las siguientes:
+
+-Los programas son más fáciles de entender, pueden ser leídos de forma
+secuencial y no hay necesidad de tener que rastrear saltos de líneas (GOTO)
+dentro de los bloques de código para intentar entender la lógica interna.
+
+-La estructura de los programas es clara, puesto que las instrucciones están más
+ligadas o relacionadas entre sí.
+
+-Se optimiza el esfuerzo en las fases de pruebas y depuración. El seguimiento de
+los fallos o errores del programa (debugging), y con él su detección y
+corrección, se facilita enormemente.
+
+-Se reducen los costos de mantenimiento. Análogamente a la depuración, durante
+la fase de mantenimiento, modificar o extender los programas resulta más fácil.
+
+-Los programas son más sencillos y más rápidos de confeccionar.
+
+-Se incrementa el rendimiento de los programadores.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Programaci%C3%B3n_estructurada
+
+====================
+Programación modular
+====================
+
+La programación modular es un paradigma de programación que consiste en dividir
+un programa en módulos o subprogramas con el fin de hacerlo más legible y
+manejable.
+
+Se presenta históricamente como una evolución de la programación estructurada
+para solucionar problemas de programación más grandes y complejos de lo que esta
+puede resolver.
+
+Al aplicar la programación modular, un problema complejo debe ser dividido en
+varios subproblemas más simples, y estos a su vez en otros subproblemas más
+simples aún. Esto debe hacerse hasta obtener subproblemas lo suficientemente
+simples como para poder ser resueltos fácilmente con algún lenguaje de
+programación. Esta técnica se llama refinamiento sucesivo, divide y vencerás o
+análisis descendente (Top-Down).
+
+Un 'módulo' es cada una de las partes de un programa que resuelve uno de los
+subproblemas en que se divide el problema complejo original. Cada uno de estos
+módulos tiene una tarea bien definida y algunos necesitan de otros para poder
+operar. En caso de que un módulo necesite de otro, puede comunicarse con este
+mediante una interfaz de comunicación que también debe estar bien definida.
+
+Si bien un módulo puede entenderse como una parte de un programa en cualquiera
+de sus formas y variados contextos, en la práctica se los suele tomar como
+sinónimos de procedimientos y funciones. Pero no necesaria ni estrictamente un
+módulo es una función o un procedimiento, ya que el mismo puede contener muchos
+de ellos. No debe confundirse el término "módulo" (en el sentido de programación
+modular) con términos como "función" o "procedimiento", propios del lenguaje que
+lo soporte.
+
+======================
+Programación por capas
+======================
+
+La programación por capas es un modelo de desarrollo software en el que el
+objetivo primordial es la separación (desacoplamiento) de las partes que
+componen un sistema software o también una arquitectura cliente-servidor: lógica
+de negocios, capa de presentación y capa de datos. De esta forma, por ejemplo,
+es sencillo y mantenible crear diferentes interfaces sobre un mismo sistema sin
+requerirse cambio alguno en la capa de datos o lógica.
+
+La ventaja principal de este estilo es que el desarrollo se puede llevar a cabo
+en varios niveles y, en caso de que sobrevenga algún cambio, solo afectará al
+nivel requerido sin tener que revisar entre el código fuente de otros módulos,
+dado que se habrá reducido el Acoplamiento informático hasta una interfaz de
+paso de mensajes.
+
+Además, permite distribuir el trabajo de creación de una aplicación por niveles;
+de este modo, cada grupo de trabajo está totalmente abstraído del resto de
+niveles, de forma que basta con conocer la API que existe entre niveles.
+
+En el diseño de sistemas informáticos actual se suelen usar las arquitecturas
+multinivel o programación por capas. En dichas arquitecturas a cada nivel se le
+confía una misión simple, lo que permite el diseño de arquitecturas escalables
+(que pueden ampliarse con facilidad en caso de que las necesidades aumenten).
+
+El más utilizado actualmente es el diseño en tres niveles (o en tres capas). 
+
+Capas y niveles
+===============
+
+-Capa de presentación: la que ve el usuario (también se la denomina «capa de
+usuario»), presenta el sistema al usuario, le comunica la información y captura
+la información del usuario en un mínimo de proceso (realiza un filtrado previo
+para comprobar que no hay errores de formato). También es conocida como interfaz
+gráfica y debe tener la característica de ser «amigable» (entendible y fácil de
+usar) para el usuario. Esta capa se comunica únicamente con la capa de negocio.
+
+-Capa de negocio: es donde residen los programas que se ejecutan, se reciben las
+peticiones del usuario y se envían las respuestas tras el proceso. Se denomina
+capa de negocio (e incluso de lógica del negocio) porque es aquí donde se
+establecen todas las reglas que deben cumplirse. Esta capa se comunica con la
+capa de presentación, para recibir las solicitudes y presentar los resultados, y
+con la capa de datos, para solicitar al gestor de base de datos almacenar o
+recuperar datos de él. También se consideran aquí los programas de aplicación.
+
+-Capa de datos: es donde residen los datos y es la encargada de acceder a los
+mismos. Está formada por uno o más gestores de bases de datos que realizan todo
+el almacenamiento de datos, reciben solicitudes de almacenamiento o recuperación
+de información desde la capa de negocio.
+
+Todas estas capas pueden residir en un único ordenador, si bien lo más usual es
+que haya una multitud de ordenadores en donde reside la capa de presentación
+(son los clientes de la arquitectura cliente/servidor). Las capas de negocio y
+de datos pueden residir en el mismo ordenador, y si el crecimiento de las
+necesidades lo aconseja se pueden separar en dos o más ordenadores. Así, si el
+tamaño o complejidad de la base de datos aumenta, se puede separar en varios
+ordenadores los cuales recibirán las peticiones del ordenador en que resida la
+capa de negocio.
+
+Si, por el contrario, fuese la complejidad en la capa de negocio lo que obligase
+a la separación, esta capa de negocio podría residir en uno o más ordenadores
+que realizarían solicitudes a una única base de datos. En sistemas muy complejos
+se llega a tener una serie de ordenadores sobre los cuales corre la capa de
+negocio, y otra serie de ordenadores sobre los cuales corre la base de datos.
+
+En una arquitectura de tres niveles, los términos «capas» y «niveles» no
+significan lo mismo ni son similares.
+
+El término «capa» hace referencia a la forma como una solución es segmentada
+desde el punto de vista lógico:
+
+-Presentación. (Conocida como capa Web en aplicaciones Web o como capa de
+usuario en Aplicaciones Nativas)
+
+-Lógica de Negocio. (Conocida como capa Aplicativa)
+
+-Datos. (Conocida como capa de Base de Datos)
+
+En cambio, el término «nivel» corresponde a la forma en que las capas lógicas se
+encuentran distribuidas de forma física.
+
+Por ejemplo:
+
+-Una solución de tres capas (presentación, lógica del negocio, datos) que
+residen en un solo ordenador (Presentación+lógica+datos). Se dice que la
+arquitectura de la solución es de tres capas y un nivel.
+
+-Una solución de tres capas (presentación, lógica del negocio, datos) que
+residen en dos ordenadores (Presentación+lógica por un lado; lógica+datos por el
+otro lado). Se dice que la arquitectura de la solución es de tres capas y dos
+niveles.
+
+===================
+Pruebas de software
+===================
+
+Las pruebas de software (en inglés software testing) son las investigaciones
+empíricas y técnicas cuyo objetivo es proporcionar información objetiva e
+independiente sobre la calidad del producto a la parte interesada o stakeholder.
+Es una actividad más en el proceso de control de calidad.
+
+Las pruebas son básicamente un conjunto de actividades dentro del desarrollo de
+software. Dependiendo del tipo de pruebas, estas actividades podrán ser
+implementadas en cualquier momento de dicho proceso de desarrollo. Existen
+distintos modelos de desarrollo de software, así como modelos de pruebas. A
+cada uno corresponde un nivel distinto de involucramiento en las actividades de
+desarrollo.
+
+Pruebas estáticas
+=================
+
+Son el tipo de pruebas que se realizan sin ejecutar el código de la aplicación.
+
+Puede referirse a la revisión de documentos, ya que no se hace una ejecución de
+código. Esto se debe a que se pueden realizar "pruebas de escritorio" con el
+objetivo de seguir los flujos de la aplicación.
+
+Pruebas dinámicas
+=================
+
+Todas aquellas pruebas que para su ejecución requieren la ejecución de la
+aplicación.
+
+Las pruebas dinámicas permiten el uso de técnicas de caja negra y caja blanca
+con mayor amplitud. Debido a la naturaleza dinámica de la ejecución de pruebas
+es posible medir con mayor precisión el comportamiento de la aplicación
+desarrollada.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Pruebas_de_software
+
+===============
+Pruebas de humo
+===============
+
+En ingeniería de software y pruebas de software, las pruebas de humo (smoke
+testing) son una revisión rápida de un producto de software para comprobar que
+funciona y no tiene defectos evidentes que interrumpan la operación básica del
+mismo. Son pruebas que pretenden hacer una evaluación inicial de la calidad de
+un producto de software previo a una recepción formal, ya sea al equipo de
+pruebas (quien ejecutará una batería completa de comprobaciones) o al usuario
+final.
+
+El nombre es por analogía a las pruebas rudimentarias en ingeniería electrónica,
+en las que se comprueba que el encendido de un circuito no causa humo ni
+chispas.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Pruebas_de_humo
+
+======================
+Pruebas de caja blanca
+======================
+
+En programación, se denomina cajas blancas a un tipo de pruebas de software qu
+se realiza sobre las funciones internas de un módulo. Así como las pruebas de
+caja negra ejercitan los requisitos funcionales desde el exterior del módulo,
+las de caja blanca están dirigidas a las funciones internas. Entre las técnicas
+usadas se encuentran; la cobertura de caminos (pruebas que hagan que se recorran
+todos los posibles caminos de ejecución), pruebas sobre las expresiones
+lógico-aritméticas, pruebas de camino de datos (definición-uso de variables),
+comprobación de bucles (se verifican los bucles para 0,1 e interacciones, y
+luego para las interacciones máximas, máximas menos uno y más uno).
+
+Las pruebas de caja blanca se llevan a cabo en primer lugar, sobre un módulo
+concreto, para luego realizar las de caja negra sobre varios subsistemas
+(integración).
+
+En los sistemas orientados a objetos, las pruebas de caja blanca pueden
+aplicarse a los métodos de la clase, pero según varias opiniones, ese esfuerzo
+debería dedicarse a otro tipo de pruebas más especializadas (un argumento podría
+ser que los métodos de una clase suelen ser menos complejos que los de una
+función de programación estructurada). Dentro de las Pruebas de Caja Blanca
+encontramos las llamadas coberturas (sentencia, decisión, condición y múltiple
+además de los mencionados caminos ciclomáticos propuestos por McCabe).
+
+Este concepto también es utilizado de manera análoga en la teoría general de
+sistemas.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Caja_blanca_(sistemas)
+
+=====================
+Pruebas de caja negra
+=====================
+
+En teoría de sistemas y física, una caja negra es un elemento que se estudia
+desde el punto de vista de las entradas que recibe y las salidas o respuestas
+que produce, sin tener en cuenta su funcionamiento interno. En otras palabras,
+de una caja negra nos interesará su forma de interactuar con el medio que le
+rodea (en ocasiones, otros elementos que también podrían ser cajas negras)
+entendiendo qué es lo que hace, pero sin dar importancia a cómo lo hace. Por
+tanto, de una caja negra deben estar muy bien definidas sus entradas y salidas,
+es decir, su interfaz; en cambio, no se precisa definir ni conocer los detalles
+internos de su funcionamiento.
+
+Justificación
+=============
+
+Un sistema formado por módulos que cumplan las características de caja negra
+será más fácil de entender ya que permitirá dar una visión más clara del
+conjunto. El sistema también será más robusto y fácil de mantener, en caso de
+ocurrir un fallo, este podrá ser aislado y abordado más ágilmente.
+
+Caja negra y programación modular
+=================================
+
+En programación modular, donde un programa (o un algoritmo) es dividido en
+módulos, en la fase de diseño se buscará que cada módulo sea una caja negra
+dentro del sistema global que es el programa que se pretende desarrollar, de
+esta manera se consigue una independencia entre los módulos que facilita su
+implementación separada por un equipo de trabajo donde cada miembro va a
+encargarse de implementar una parte (un módulo) del programa global; el
+implementador de un módulo concreto deberá conocer como es la comunicación con
+los otros módulos (la interfaz), pero no necesitará conocer como trabajan esos
+otros módulos internamente; en otras palabras, para el desarrollador de un
+módulo, idealmente, el resto de módulos serán cajas negras.
+
+Caja negra vs Cajanegrizar
+==========================
+
+Este concepto de caja negra utilizado en física, informática y disciplinas
+técnicas o tecnológicas en general, aunque está relacionado, no debe confundirse
+con el 'Cajanegrismo'; este es un concepto más vinculado a la sociología que
+hace referencia al hecho de que las personas solemos olvidarnos del
+funcionamiento interno de las cosas (generalmente nuevos dispositivos
+tecnológicos) a medida que nos familiarizamos con ellos y terminamos por
+asimilarlos como de uso cotidiano. A este proceso de olvidar el funcionamiento
+interno de las cosas se le conoce con el nombre de 'cajanegrizar'.
+
+Se podría decir que la principal diferencia entre ambos conceptos es que
+mientras el primero, el estudio de un sistema como una caja negra, es un proceso
+de abstracción, el segundo, el 'cajanegrismo', es más bien un proceso de olvido.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Caja_negra_(sistemas)
+
+===============
+Prueba unitaria
+===============
+
+En programación, una prueba unitaria es una forma de comprobar el correcto
+funcionamiento de una unidad de código. Por ejemplo en diseño estructurado o en
+diseño funcional una función o un procedimiento, en diseño orientado a objetos
+una clase. Esto sirve para asegurar que cada unidad funcione correctamente y
+eficientemente por separado. Además de verificar que el código hace lo que tiene
+que hacer, verificamos que sea correcto el nombre, los nombres y tipos de los
+parámetros, el tipo de lo que se devuelve, que si el estado inicial es válido,
+entonces el estado final es válido también.
+
+La idea es escribir casos de prueba para cada función no trivial o método en el
+módulo, de forma que cada caso sea independiente del resto. Luego, con las
+Pruebas de Integración, se podrá asegurar el correcto funcionamiento del sistema
+o subsistema en cuestión.
+
+Características
+===============
+
+Para que una prueba unitaria tenga la calidad suficiente se deben cumplir los
+siguientes requisitos:
+
+-Automatizable: No debería requerirse una intervención manual. Esto es
+especialmente útil para integración continua.
+
+-Completas: Deben cubrir la mayor cantidad de código.
+
+-Repetibles o Reutilizables: No se deben crear pruebas que sólo puedan ser
+ejecutadas una sola vez. También es útil para integración continua.
+
+-Independientes: La ejecución de una prueba no debe afectar a la ejecución de
+otra.
+
+-Profesionales: Las pruebas deben ser consideradas igual que el código, con la
+misma profesionalidad, documentación, etc.
+
+Aunque estos requisitos no tienen que ser cumplidos al pie de la letra, se
+recomienda seguirlos o de lo contrario las pruebas pierden parte de su función.
+
+Ventajas
+========
+
+El objetivo de las pruebas unitarias es aislar cada parte del programa y mostrar
+que las partes individuales son correctas. Proporcionan un contrato escrito que
+el trozo de código debe satisfacer. Estas pruebas aisladas proporcionan cinco
+ventajas básicas:
+
+-Fomentan el cambio: Las pruebas unitarias facilitan que el programador cambie
+el código para mejorar su estructura1​ (lo que se ha dado en llamar
+refactorización), puesto que permiten hacer pruebas sobre los cambios y así
+asegurarse de que los nuevos cambios no han introducido defectos.
+
+-Simplifica la integración: Puesto que permiten llegar a la fase de integración
+con un grado alto de seguridad de que el código está funcionando correctamente.
+De esta manera se facilitan las pruebas de integración.
+
+-Documenta el código: Las propias pruebas son documentación del código, puesto
+que ahí se puede ver cómo utilizarlo.
+
+-Separación de la interfaz y la implementación: Dado que la única interacción
+entre los casos de prueba y las unidades bajo prueba son las interfaces de estas
+últimas, se puede cambiar cualquiera de los dos sin afectar al otro, a veces
+usando objetos maquetados (mock object - maqueta) que habilitan de forma aislada
+(unitaria) el comportamiento de objetos complejos.
+
+Los errores están más acotados y son más fáciles de localizar: Dado que tenemos
+pruebas unitarias que pueden desenmascararlos.
+
+Limitaciones
+============
+
+Es importante darse cuenta de que las pruebas unitarias no descubrirán todos los
+errores del código. Algunos enfoques se basan en la generación aleatoria de
+objetos para amplificar el alcance de las pruebas de unidad.2 Esta técnica se
+conoce como testing aleatorio (RT, por random testing). Por definición, sólo
+prueban las unidades por sí solas. Por lo tanto, no descubrirán errores de
+integración, problemas de rendimiento y otros problemas que afectan a todo el
+sistema en su conjunto. Además, puede no ser trivial anticipar todos los casos
+especiales de entradas que puede recibir en realidad la unidad de programa bajo
+estudio. Las pruebas unitarias sólo son efectivas si se usan en conjunto con
+otras pruebas de software.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Prueba_unitaria
+
+====================
+Prueba de usabilidad
+====================
+
+La prueba de usabilidad por parte del usuario es una técnica usada en el diseño
+de interacciones centrado en el usuario para evaluar un producto mediante
+pruebas con los usuarios mismos. Esto puede ser visto como una práctica de
+usabilidad irreemplazable, dado que entrega información directa de cómo los
+usuarios reales utilizan el sistema.  Este es en contraste con los métodos de
+inspección de usabilidad donde expertos usan diferentes métodos para evaluar una
+interfaz de usuario sin involucrar a usuarios reales.
+
+Las pruebas de usabilidad se enfocan en medir la capacidad de un producto de
+fabricación humana en cumplir el propósito para el cual fue diseñado. Ejemplos
+de productos que normalmente se benefician de pruebas de usabilidad son comidas,
+productos de consumo, sitios web o aplicaciones web, interfaces de usuario,
+documentos y dispositivos. Las pruebas de usabilidad miden la usabilidad, o
+facilidad de uso, de un objeto específico o un conjunto de objetos, mientras que
+los estudios de interacción persona-computador intentan formular los principios
+generales.
+
+Las pruebas de usabilidad consisten en seleccionar a un grupo de usuarios de una
+aplicación y solicitarles que lleven a cabo las tareas para las cuales fue
+diseñada, en tanto el equipo de diseño, desarrollo y otros involucrados toman
+nota de la interacción, particularmente de los errores y dificultades con las
+que se encuentren los usuarios.
+
+No es necesario que se trate de una aplicación completamente terminada, pudiendo
+tratarse de un prototipo.
+
+Métricas de usabilidad
+======================
+
+-Exactitud: Número de errores cometidos por los sujetos de prueba y si estos
+fueron recuperables o no al usar los datos o procedimientos adecuados.
+
+-Tiempo requerido para concluir la actividad.
+
+-Recuerdo: Qué tanto recuerda el usuario después de un periodo sin usar la
+aplicación.
+
+-Respuesta emocional: Cómo se siente el usuario al terminar la tarea (bajo
+tensión, satisfecho, molesto, etcétera).
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Prueba_de_usabilidad
+
+=====================
+Prueba de integración
+=====================	
+
+Pruebas integrales o pruebas de integración son aquellas que se realizan en el
+ámbito del desarrollo de software una vez que se han aprobado las pruebas
+unitarias y lo que prueban es que todos los elementos unitarios que componen el
+software, funcionan juntos correctamente probándolos en grupo. Se centra
+principalmente en probar la comunicación entre los componentes y sus
+comunicaciones ya sea hardware o software.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Prueba_de_integraci%C3%B3n
+
+====================
+Integración continua
+====================
+
+La integración continua (continuous integration en inglés) es una práctica de
+ingeniería de software que consiste en hacer integraciones automáticas de un
+proyecto lo más a menudo posible para así poder detectar fallos cuanto antes.
+
+Entendemos por integración la compilación y ejecución de pruebas de todo un
+proyecto.
+
+El proceso suele ser: cada cierto tiempo (horas), descargarse las fuentes desde
+el control de versiones (por ejemplo CVS, Git, Subversion, Mercurial o Microsoft
+Visual SourceSafe) compilarlo, ejecutar pruebas y generar informes.
+
+Para esto suelen utilizarse aplicaciones como Solano CI, Bamboo, Pipeline,
+Apache Continuum, Hudson, Jenkins, GoCD, CruiseControl o Anthill (para proyectos
+Java) o CruiseControl.Net, Team Foundation Build para .Net, que se encargan de
+controlar las ejecuciones, apoyadas en otras herramientas como Ant o Maven
+(también para proyectos Java), o Nant o MSBUILD (para .Net) que se encargan de
+realizar las compilaciones, ejecutar las pruebas y realizar los informes.
+
+A menudo la integración continua está asociada con las metodologías de
+programación extrema y desarrollo ágil.
+
+Ventajas
+========
+
+-Los desarrolladores pueden detectar y solucionar problemas de integración de
+forma continua, evitando el caos de última hora cuando se acercan las fechas de
+entrega.
+
+-Disponibilidad constante de una versión para pruebas, demos o lanzamientos
+anticipados.
+
+-Ejecución inmediata de las pruebas unitarias.
+
+-Monitorización continua de las métricas de calidad del proyecto.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Integraci%C3%B3n_continua
+
+=====
+CI/CD
+=====
+
+En ingeniería de software, CI/CD o CICD generalmente refiere a las prácticas
+combinadas de integración continua y entrega continua (también conocida como
+despliegue continuo).
+
+Contamos con herramientas para esto en GitLab por ejemplo.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/CI/CD
+
+================
+Entrega continua
+================
+
+Entrega continua (continuous delivery en inglés) es un enfoque de la ingeniería
+del software en que los equipos de desarrollo producen software en ciclos
+cortos, asegurando que el software puede ser liberado en cualquier momento, de
+forma confiable.
+
+Apunta a la construcción, prueba, y liberación del software de forma más rápida
+y más frecuente. Este enfoque ayuda en la reducción del costo, tiempo, y riesgo
+de la liberación de versiones a través de la liberación de versiones más
+incrementales a aplicaciones en producción. Un proceso directo y repetible de
+liberación es importante para una entrega continua.
+
+Etapas
+======
+
+-Automatización de la compilación e integración continua: Esta etapa consta de
+la creación de archivos binarios a partir del código fuente. A medida que los
+desarrolladores implementan nuevas funciones, estas son integradas al código
+central, compiladas, y probadas.
+
+-Automatización de pruebas: En esta etapa se prueba rigurosamente la nueva
+versión de aplicación, para asegurar que cumple con todos los requerimientos de
+calidad del sistema.
+
+-Automatización de implementación: Luego que las etapas anteriores fueron
+verificadas, se puede implementar la nueva versión en el ambiente de producción.
+
+Esta implementación se realiza de forma automática, dejando disponibles las
+nuevas funcionalidades al usuario, en solo unos minutos.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Entrega_continua
+
+===================================
+Pruebas de rendimiento del software
+===================================
+
+En la ingeniería del software, las pruebas de rendimiento son las pruebas que se
+realizan, desde una perspectiva, para determinar lo rápido que realiza una tarea
+un sistema en condiciones particulares de trabajo. También puede servir para
+validar y verificar otros atributos de la calidad del sistema, tales como la
+escalabilidad, fiabilidad y uso de los recursos. Las pruebas de rendimiento son
+un subconjunto de la ingeniería de pruebas, una práctica informática que se
+esfuerza por mejorar el rendimiento, englobándose en el diseño y la arquitectura
+de un sistema, antes incluso del esfuerzo inicial de la codificación.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Pruebas_de_rendimiento_del_software
+
+========================
+Pruebas de escalabilidad
+========================
+
+En informática, se conocen como pruebas de escalabilidad a aquellas pruebas no
+funcionales que permiten determinar el grado de escalabilidad que tiene un
+sistema. Se entiende como escalable la capacidad que tiene el sistema para que,
+sin aplicar cambios drásticos en su configuración, pueda soportar el incremento
+de demanda en la operación.
+
+Un ejemplo de escalabilidad es si el sistema soporta la agregación de un nodo
+extra en su esquema de balanceo en la capa aplicativa o de base de datos, o un
+incremento en la memoria RAM o CPU´s en su infraestructura.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Pruebas_de_escalabilidad
+
+=================
+Testing aleatorio
+=================
+
+En el desarrollo de software, el testing es una de las tareas más importantes,
+pero también es compleja y no siempre adoptada correctamente. Las Prueba
+unitaria, de carga, integración y funcionales son distintos tipos de testing,
+cada uno con objetivos diferentes y aplicados en diferentes etapas del
+desarrollo del software. En el testing de unidad se desarrollan pruebas
+individuales sobre componentes de un sistema. En la codificación de dichas
+pruebas, se busca simular el entorno de dicho componente y descubrir la
+presencia de errores o "bugs". Más allá del esfuerzo, las pruebas de unidad
+pueden probar la presencia de ciertos errores, pero no pueden asegurar la
+ausencia de ellos.
+
+Buscando ampliar el ámbito de las pruebas de unidad, se han aplicado diversas
+técnicas que van desde la automatización de pasos o caminos de ejecución, con
+valores fijos o componentes predefinidos (hard-coded) o estáticos, y condiciones
+específicas, hasta los enfoques basados en la generación de objetos de manera
+aleatoria, aplicados a la Programación Orientada a Objetos. El fundamento básico
+de este enfoque propuesto es el testing aleatorio.
+
+Tanto la generación de valores aleatorios para testing, como el testing
+aleatorio (RT o random testing) en sí no son técnicas nuevas. Por ejemplo, en el
+paradigma funcional existe una herramienta para probar especificaciones sobre
+funciones llamada QuickCheck. Esta herramienta (escrita en Haskell) y sus ideas
+subyacentes son usadas como fundamento para algunas herramientas desarrolladas
+para RT en POO.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Testing_aleatorio
+
+===============
+Refactorización
+===============
+
+La refactorización (del inglés refactoring) es una técnica de la ingeniería de
+software para reestructurar un código fuente, alterando su estructura interna
+sin cambiar su comportamiento externo.
+
+Refactorización de código
+=========================
+
+En ingeniería del software, el término refactorización se usa a menudo para
+describir la modificación del código fuente sin cambiar su comportamiento, lo
+que se conoce informalmente por limpiar el código. La refactorización se realiza
+a menudo como parte del proceso de desarrollo del software: los desarrolladores
+alternan la inserción de nuevas funcionalidades y casos de prueba con la
+refactorización del código para mejorar su consistencia interna y su claridad.
+Los tests aseguran que la refactorización no cambia el comportamiento del
+código.
+
+La refactorización es la parte del mantenimiento del código que no arregla
+errores ni añade funcionalidad. El objetivo, por el contrario, es mejorar la
+facilidad de comprensión del código o cambiar su estructura y diseño y eliminar
+código muerto, para facilitar el mantenimiento en el futuro. Añadir nuevo
+comportamiento a un programa puede ser difícil con la estructura dada del
+programa, así que un desarrollador puede refactorizarlo primero para facilitar
+esta tarea y luego añadir el nuevo comportamiento.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Refactorizaci%C3%B3n
+
+==========
+Camel case
+==========
+
+Camel case (estilizado como CamelCase) o caja camello es un estilo de escritura
+que se aplica a frases o palabras compuestas. El nombre se debe a que las
+mayúsculas a lo largo de una palabra en CamelCase se asemejan a las jorobas de
+un camello. El nombre CamelCase se podría traducir como Mayúsculas/Minúsculas
+Camello. El término case se traduce como "caja tipográfica", que a su vez
+implica si una letra es mayúscula o minúscula y tiene su origen en la
+disposición de los tipos móviles en casilleros o cajas.
+
+Existen dos tipos de CamelCase:
+
+-UpperCamelCase (más conocido como PascalCase), cuando la primera letra de cada
+una de las palabras es mayúscula.
+
+Ejemplo: EjemploDeUpperCamelCase.
+
+-lowerCamelCase (o simplemente CamelCase), igual que la anterior con la
+excepción de que la primera letra es minúscula.
+
+Ejemplo: ejemploDeLowerCamelCase.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Camel_case
+
+==========
+Snake case
+==========
+
+Snake case (estilizado como snake_case) se refiere al estilo de escritura en el
+que cada espacio se reemplaza por un carácter de subrayado (_) y la primera
+letra de cada palabra escrita en minúsculas. Es una convención de nomenclatura
+de uso común en informática, por ejemplo, para nombres de variables y subrutinas
+y para nombres de archivos. Un estudio ha encontrado que los lectores pueden
+reconocer los valores de los casos de snake_case más rápidamente que los de
+CamelCase.
+
+Fuentes
+=======
+
+-https://en.wikipedia.org/wiki/Snake_case
