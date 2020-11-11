@@ -6640,3 +6640,52 @@ Instalar Tor browser
 ====================
 
 1) Descargar el paquete desde https://www.torproject.org/es/
+
+2) Descomprimir el paquete tor-browser-linux64-10.0.2_es-ES.tar.xz
+
+3) Entrar en la carpeta tor-browser_es-ES
+
+4) Ejecutar el siguiente comando:
+
+$ ./start-tor-browser.desktop
+
+5) Esto nos abre el navegador en una nueva ventana y ya está listo para usarse.
+
+==================================================================
+Mejorar el rendimiento de un sistema operativo de escritorio Linux
+==================================================================
+
+Para aprovechar mejor la memoria de nuestro equipo les recomiendo realicen lo
+siguiente.
+
+1) Abre un terminal y ejecuten el siguiente comando:
+
+$ sudo nano /etc/sysctl.conf
+
+2) Cuando se abra el editor de texto nano vayanse al final del archivo y peguen
+el siguiente código:
+
+vm.swappiness = 10
+vm.vfs_cache_pressure = 50
+vm.watermark_scale_factor = 200
+vm.dirty_ratio = 3
+
+3) Una vez pegado el código ya pueden guardar los cambios, cerrar el fichero, para
+aplicar los cambios sin reiniciar usamos el siguiente comando:
+
+$ sudo sysctl -p
+
+4) Para chequear los nuevos valores ejecutar los siguientes comando:
+
+$ cat /proc/sys/vm/swappiness
+
+$ cat /proc/sys/vm/vfs_cache_pressure
+
+$ cat /proc/sys/vm/watermark_scale_factor
+
+$ cat /proc/sys/vm/dirty_ratio
+
+Fuentes
+=======
+
+-https://geekland.eu/mejorar-el-rendimiento-de-un-sistema-operativo-de-escritorio-linux/
