@@ -7802,3 +7802,103 @@ for in form para renderizar campos
     {% endfor %}
   </div>
 {% endfor %}
+
+==================================================================
+Enviar un correo cuando se realiza un registro en la base de datos
+==================================================================
+
+# settings.py
+
+# Configuración necesaria para el envío de correos desde gmail
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mi_email@gmail.com'
+EMAIL_HOST_PASSWORD = 'mi_password'
+EMAIL_PORT = 587
+
+# Administradores a los que se enviara el correo.
+ADMINS = (
+    'admin@mail.com',
+    'admin2@mail.com',
+)
+
+# views.py
+
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from my_project.settings import ADMINS
+
+class Registrar(SuccessMessageMixin,CreateView):
+    """
+    Clase que permite registrar un pago.
+    """
+    model = Pago
+    form_class = PagoForm
+    success_url = reverse_lazy('inicio:index')
+    success_message = "Se registro el pago con éxito"
+
+    def form_valid(self, form):
+        """
+        Método que permite guardar un evento en la Bitácora cuando
+        se registra un pago de el sistema.
+        """
+        self.object = form.save(commit=False)
+        self.object.estatus = "En revisión"
+        self.object.observacion = "."
+        self.object = form.save()
+        nombres = self.object.nombres
+        apellidos = self.object.apellidos
+        nombre_completo = nombres +" "+apellidos
+        bit_correo = self.object.correo_electronico
+        accion = "Registro un pago"
+        bit_servicio = self.object.servicio
+        myDate = datetime.now()
+        formatedDate = myDate.strftime("%d-%m-%Y %H:%M")
+        fecha_hora = str(formatedDate)
+        Bitacora.objects.create(nombre_completo=nombre_completo,bit_correo=bit_correo,accion=accion,bit_servicio=bit_servicio,fecha_hora=fecha_hora)
+
+        """
+        Método que envia un correo a los administradores cuando
+        se registra un pago en el sistema.
+        """
+        doc_identificacion = self.object.doc_identificacion
+        fecha_registro = self.object.fecha_registro
+        fechapago = self.object.fechapago
+        body = render_to_string(
+            'registro/email_content.html', {
+                'nombres': nombres,
+                'apellidos': apellidos,
+                'doc_identificacion': doc_identificacion,
+                'correo_electronico': bit_correo,
+                'fecha_registro': fecha_registro,
+                'fechapago': fechapago,
+                },
+            )
+        email_message = EmailMessage(
+            subject = 'Se ha registrado un nuevo pago en el Sistema de gestión de registro de pagos de CENDITEL',
+            body = body,
+            to = ADMINS,
+        )
+        email_message.content_subtype = 'html'
+        email_message.send()
+        return super(Registrar, self).form_valid(form)
+
+-----
+
+# email_content.html
+
+<h3>Datos del pago:</h3>
+<ul>
+  <li>Fecha de pago: {{ fechapago }}</li>
+  <li>Nombres: {{ nombres }}</li>
+  <li>Apellidos: {{ apellidos}}</li>
+  <li>Correo electrónico: {{ correo_electronico }}</li>
+  <li>Número de documento de identidad: {{ doc_identificacion }}</li>
+  <li>Fecha de registro del pago en el sistema: {{ fecha_registro }}</li>
+</ul>
+
+El último paso es entrar en "Administrar tu cuenta de google" del correo que se
+usará como emisor, entrar en "Seguridad" y donde dice "Acceso de aplicaciones
+poco seguras" darle a Permitir el acceso de aplicaciones poco seguras: SI
+
+Eso sería todo ahora solo basta probar.
