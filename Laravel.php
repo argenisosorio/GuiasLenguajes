@@ -455,6 +455,15 @@ Laravel.
 
 $ php artisan cache:clear
 
+==============================================================
+Eliminar rastros de la configuración de un proyecto en Laravel
+==============================================================
+
+Elimina rastros de la configuración del sistema y las carga de nuevo, es decir,
+es como si borraras los .pyc en proyectos de python.
+
+php artisan config:cache
+
 =================================
 Configurar Laravel con postgresql
 =================================
