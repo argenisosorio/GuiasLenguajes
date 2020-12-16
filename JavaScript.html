@@ -2940,21 +2940,42 @@ en base-64. Puedes utilizar el método btoa() para codificar y transmitir datos 
 problemas de comunicación. Luego de ser transmitidos se puede usar el método atob() para decodificar los datos
 de nuevo.
 -->
+
+<!-- The btoa() method encodes a string in base-64 -->
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>XXX</title>
-        <meta charset="UTF-8">
-    </head>
+<body>
+<p>Click the button to encode a string in base-64.</p>
+<button onclick="myFunction()">Try it</button>
+<p id="demo"></p>
+<script>
+function myFunction() {
+  var str = "Hello World!";
+  var enc = window.btoa(str);
+  var res = "Encoded String: " + enc;
+  document.getElementById("demo").innerHTML = "The original string: " + str + "<br>" + res;
+}
+</script>
+</body>
+</html>
+
+-------------------------------------
+
+<html>
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+  </head>
 <body>
 <script type="text/javascript">
-    var texto = "Hola mundo"
-    alert("El texto original es: "+texto);
-    // Codificar cadena
-    var encoded_texto = btoa(texto);
-    alert("El texto codificado es: "+encoded_texto);
-    // Decodificar cadena
-    var decoded_texto = atob(encoded_texto); 
-    alert("El texto decodificado es: "+decoded_texto);
+  var texto = "Hola mundo"
+  alert("El texto original es: "+texto);
+  // Codificar cadena
+  var encoded_texto = btoa(texto);
+  alert("El texto codificado es: "+encoded_texto);
+  // Decodificar cadena
+  var decoded_texto = atob(encoded_texto);
+  alert("El texto decodificado es: "+decoded_texto);
 </script>
 </body>
 </html>

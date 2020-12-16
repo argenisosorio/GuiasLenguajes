@@ -6464,6 +6464,54 @@ Fuentes
 
 -https://www.linuxenespañol.com/tutoriales/como-cambiar-fond-pantalla-inicio-sesion-gdm-ubuntu/
 
+====================================
+Editar el tema por defecto en Debian
+====================================
+
+En este ejemplo, mi Debian tiene el gnome-classic por defecto, y el tema
+Adwaita-dark configurado por defecto y la hoja de estilos del tema está en:
+
+/usr/share/themes/Adwaita-dark/gtk-3.0/gtk.css
+
+Sin embargo dentro de ese archivo encontramos una referencia a otro archivo:
+
+@import url("resource:///org/gtk/libgtk/theme/Adwaita/gtk-contained-dark.css");
+
+Nosotros vamos a escribir otra hoja de estilos para sobre escribir los estilos
+del tema por defecto.
+
+Nos vamos a /home/my-user/.config/gtk-3.0 y vamos a crear gtk.css
+
+Dentro vamos a agregar el siguiente código que cambiara los colores de la
+cabecera del explorador de archivos nautilus. Copiamos, pegamos, guardamos.
+
+/* REMOVE "-dark" IF USING LIGHT THEME */
+@import url("resource:///org/gtk/libgtk/theme/Adwaita/gtk-contained-dark.css");
+
+/* Fonde de la mayoría de aplicaciones de gnome 
+.background { color: #eeeeec; background-color: #000000; } */
+
+/* THIS ONE CHANGES TITLEBAR COLOR */
+headerbar.titlebar,
+headerbar.titlebar:active {
+    background:#000000;
+}
+
+/* THIS CHANGES NAUTILUS SEARCH BAR */
+.horizontal.path-bar-box,
+row:selected:backdrop {
+    background:#3F51B5;
+    border-color:#3F51B5;
+}
+
+Ahora recargamos el escritorio con Alt + f2 + r + enter y si abrimos nautilus
+podremos ver los cambios en los colores.
+
+Fuentes
+=======
+
+-https://unix.stackexchange.com/questions/175385/where-may-i-find-a-reference-scheme-for-gnome-3-theming-e-g-adwaita
+
 =============
 Programa curl
 =============
@@ -6700,3 +6748,5 @@ Fuentes
 =======
 
 -https://geekland.eu/mejorar-el-rendimiento-de-un-sistema-operativo-de-escritorio-linux/
+
+/home/aosorio/.config/gtk-3.0
