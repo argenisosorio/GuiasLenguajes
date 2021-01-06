@@ -546,6 +546,26 @@ resources/js y resources/sass a los archivos app.js y app.css respectivamente.
 
 $ npm run dev
 
+-----
+
+Con este comando Laravel compilará todos los paquetes que se encuentran en
+node_modules y unificará los archivos que se encuentran en el directorio
+resources/js y resources/sass a los archivos app.js y app.css respectivamente.
+
+$ npm run prod
+
+Diferencias entre run dev y run prod
+====================================
+
+run dev: Compilar para desarrollo, los archivos resultantes mantienen el código
+fuente desminificados. Las herramientas usadas en el navegador identifican los
+objetos y componentes para poder depurar el código.
+
+run prod -> compilar para producción, los archivos resultantes estan
+minificados. Las herramientas de desarrollo usadas en el navegador no pueden
+acceder a los componentes u objetos por lo que es complicado poder interactuar
+con ellos a través del navegador.
+
 ===============
 Seed y Seeders
 ===============
