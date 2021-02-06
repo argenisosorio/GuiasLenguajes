@@ -8,16 +8,30 @@ cuando éstas tienen un gran número de archivos de código fuente. Hay algunos
 proyectos de mucha relevancia que ya usan Git en particular, el grupo de
 programación del núcleo Linux.
 
-# aptitude install git
+Nota:
+-Usaremos $ para describir los comandos que se usaran con usuario regular.
+-Usaremos # para describir los comandos que se usaran con superusuario.
+
+-----
+
+Instalar Git
+
+# apt install git
+
+-----
 
 Con este comando nos listara la lista de comandos Git que podemos usar en un
 proyecto.
 
 $ git
 
+-----
+
 Saber que versión tenemos instalada.
 
 $ git --version
+
+-----
 
 Lo primero que debemos hacer despues de la instalacion es configurar nuestro
 Git.
@@ -35,6 +49,8 @@ acabamos de introducir.
 
 $ git config --list
 
+-----
+
 Crear un directorio, dentro del directorio ejecutar para crear un nuevo
 repositorio de git, nos crea una carpeta .git.
 
@@ -43,9 +59,13 @@ $ git init
 Dentro están todos los ficheros de configuración de git para ese repositorio
 específico.
 
+-----
+
 Remover git del directorio de trabajo.
 
 $ rm -rf .git
+
+-----
 
 Muestra el estado actual de la rama, como los cambios que hay sin commitear.
 
@@ -54,35 +74,51 @@ $ git status
 Lista los archivos del proyecto y se visualiza si fueron agregados al
 seguimiento de Git.
 
-Tambien podemos ver si un archivo fue modificado y no a sido agregado al
+-----
+
+Tambien podemos ver si un archivo fue modificado y no ha sido agregado al
 seguimiento de Git.
 
 $ git status -s
+
+-----
 
 Agregar todos los archivos al seguimiento de Git.
 
 $ git add *
 
+-----
+
 Hacer un commit al proyecto, se activara la rama master por defecto.
 
 $ git commit -m "Primer commit del proyecto"
+
+-----
 
 Podemos ver todos los commits que se han hecho a un proyecto, fecha,
 autor, etc...
 
 $ git log
 
+-----
+
 Ver los autores de los commits además de listar cuantos commits han realizado.
 
 $ git shortlog
+
+-----
 
 Lista todas las ramas locales.
 
 $ git branch
 
+-----
+
 Lista todas las ramas locales y remotas.
 
 $ git branch -a
+
+-----
 
 Ejemplo de archivos agregados al seguimiento de git:
 
@@ -113,6 +149,8 @@ $ git add fichero1.xxx fichero2.xxx fichero3.xxx
 El resto seguira esperando por una accion, como ser eliminado, seguir siendo
 modificado o agregado al seguimiento.
 
+-----
+
 Borrar un fichero de manera segura, puesto que lo borra del directorio y del
 seguimiento de git, es un error común borrar los archivos directamente y estos
 siguen estando en el seguimiento de git por lo que se lia bastantes veces al
@@ -120,18 +158,26 @@ subir los cambios, recomendable borrarlos desde git.
 
 $ git rm Nombre_fichero.xxx
 
+-----
+
 Forzar el borrado del fichero.
 
 $ git rm -f Nombre_fichero.xxx
+
+-----
 
 Si un archivo fue modificado queda un registro de su nombre anterior en el cache
 para borrarlo se usa este comando.
 
 $ git rm --cached Nombre_archivo.xxx
 
+-----
+
 Para borrar un directorio y su contenido del seguimiento de git.
 
 $ git rm --cached -r dir/dir
+
+-----
 
 Para borrar un directorio y su contenido del seguimiento de git, esta opción
 funciona optimamente en mis pruebas.
@@ -193,43 +239,63 @@ Borrar el ultimo commit hecho.
 
 $ git reset --hard HEAD~1
 
+-----
+
 Deshaciendo la preparación de un archivo, con esto le decimos a git que deje de
 seguir a un archivo.
 
 $ git reset HEAD name_file.xxx
 
+-----
+
 Crear una rama.
 
 $ git branch Nombre_Rama
+
+-----
 
 Crear una rama y cambiarse a ella.
 
 $ git checkout -b Nombre_Rama
 
+-----
+
 Borrar una rama, se debe estar en otra rama para borrarla
 
 $ git branch -d Nombre_Rama
+
+-----
 
 Forzar el borrado de una rama, a veces no se dejan borrar si hay cambios sin
 guardar.
 
 $ git branch -D Nombre_Branch
 
+-----
+
 Borrar una rama del repositorio remoto
 
 $ git push origin :the_remote_branch
+
+-----
 
 Cambiarse de rama
 
 $ git checkout Nombre_Rama
 
+-----
+
 Para ver los ultimos commits de cada rama.
 
 $ git branch -v
 
+-----
+
 Subir los cambios al repositorio remoto en la rama master.
 
 $ git push origin master
+
+-----
 
 Estando en otra rama local, Subir los cambios al repositorio remoto en la rama
 master, si no existe la rama, la creará.
@@ -241,10 +307,14 @@ el repositorio remoto.
 
 $ git push -f origin master
 
+-----
+
 Guardado rápido provisional de los cambios pendientes, lo cual nos va a permitir
 cambiarnos de rama sin que se nos queje de que hay cambios pendientes.
 
 $ git stash
+
+-----
 
 Listar los estados guardados provicionalmente.
 
@@ -253,9 +323,18 @@ $ git stash list
     stash@{1}: WIP on master: c264051... Revert "added file_size"
     stash@{2}: WIP on master: 21d80a5... added number to log
 
+-----
+
 Reactivando el primer cambio guardado rápídamente, falta probar bien.
 
 $ git stash apply stash@{0}
+
+-----
+
+Es posible que no desee guardar algunos trabajos o archivos en su directorio de
+trabajo, sino simplemente deshacerse de ellos; para eso es el comando:
+
+$ git clean
 
 ==================================
 Configurando el fichero .gitignore
