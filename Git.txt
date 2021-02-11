@@ -120,6 +120,30 @@ $ git branch -a
 
 -----
 
+Lista todas las ramas locales y remotas.
+
+$ git remote
+
+-----
+
+Lista todas las ramas, locales y remotas con más detalles como la url.
+
+$ git remote -v
+
+-----
+
+Agregar un repositorio remoto a mi repo de Git.
+
+git remote add my_name_remote https://github.com/darknesstrue/myrepo.git
+
+-----
+
+Push a la rama del repositorio remoto
+
+$ git push <remote> <branch>
+
+-----
+
 Ejemplo de archivos agregados al seguimiento de git:
 
 A  gris.jpg // Agregado
@@ -597,6 +621,7 @@ que proviene de la sintaxis git push [nombreremoto] [ramalocal]:[ramaremota]. Si
 omites la parte [ramalocal], lo que estás diciendo es: "no cojas nada de mi lado
 y haz con ello [ramaremota]".
 
+-----
 
 Este comando sirve para moverse entre los commits, cada commit genera una
 etiqueta, un identificador muy largo alfanumerico, estas etiquetas identifican
@@ -616,10 +641,14 @@ ultimo es en el que nos encontramos, si queremos volver a tener los commits
 anteriores solo hacemos git checkout a la rama en que estabamos antes o a alguna
 rama especifica.
 
+-----
+
 Para forzar volver a la rama master por ejemplo, a veces no nos deja porque no
 commitemos algunos cambios, como logs, etc.
 
 $ git checkout -f master
+
+-----
 
 Si se hacen cambios o se agregaron archivos al proyecto este comando nos hará
 mostrara una comparacion entre los ultimos cambios hechos el ultimo commit hecho
@@ -628,22 +657,32 @@ y por supuesto antes de hacer un commit.
 
 $ git diff
 
+-----
+
 Muestra la lista de ficheros modificados luego del último cambio.
 
 $ git diff --stat
 
+-----
+
 Mostrar los ficheros modificados de dos commits específicos.
 
 $ git diff --stat xxxxxxx xxxxxxx
+
+-----
 
 Mostrar las modificaciones de un fichero o más entre dos commits específicos,
 los ficheros se separan con espacio y no con comas.
 
 $ git diff xxxxxxx xxxxxxx file_name.xxx
 
+-----
+
 Ver solo los cambios o modificaciones de ese fichero, por ejemplo:
 
 $ git diff nombre_fichero.xxx
+
+-----
 
 Si hacemos un git status y se muestra:
 
