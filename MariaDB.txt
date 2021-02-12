@@ -1,4 +1,6 @@
-##### Guía MariaDB by dM #####
+===================
+Guía MariaDB by dM
+===================
 
 ===========
 Instalación
@@ -53,13 +55,19 @@ Iniciar el servidor de MariaDB
 
 $ sudo systemctl start mariadb
 
+-----
+
 Detener el servidor de MariaDB
 
 $ sudo systemctl stop mariadb
 
+-----
+
 Reiniciar el servidor de MariaDB
 
 $ sudo systemctl restart mariadb
+
+-----
 
 Chequear el estaus del servidor de MariaDB
 
@@ -73,6 +81,8 @@ Crear un usuario y asignarle el password.
 
 MariaDB [(none)]> CREATE USER 'user_name' IDENTIFIED BY 'user123456';
 Query OK, 0 rows affected (0.00 sec)
+
+-----
 
 Eliminar un usuario creado.
 
@@ -90,15 +100,26 @@ Mostrar la lista de usuarios con campos relevantes
 Gestión de bases de datos
 =========================
 
-Crear una base de datos
+Crear una base de datos y asignarele un dueño
+=============================================
 
 > CREATE DATABASE db_name;
+
+Sobre la base de datos recién creada le asignamos el usuario:
+
+> GRANT ALL PRIVILEGES ON db_name.* TO 'user_name'@'localhost';
+
+Refrescamos el esquema de las tablas de MySQL.
+
+> FLUSH PRIVILEGES;
+
+-----
 
 Listar las bases de datos
 
 > show databases;
 
-Completely Unistall and then Reinstall Mariadb 10.3
+-----
 
 Borrar una base de datos específica.
 
