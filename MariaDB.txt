@@ -2,6 +2,10 @@
 Guía MariaDB by dM
 ===================
 
+Nota:
+-Usaremos $ para describir los comandos que se usaran con usuario regular.
+-Usaremos # para describir los comandos que se usaran con superusuario.
+
 ===========
 Instalación
 ===========
@@ -14,8 +18,10 @@ Instalar MariaDB
 
 # apt-get install mariadb-server
 
-Luego de la Instalación nos pedirá que escribamos una contraseña para el usuario
+Luego de la instalación nos pedirá que escribamos una contraseña para el usuario
 root de mariadb.
+
+-----
 
 Chequear la instalación con:
 
@@ -37,15 +43,19 @@ $ mysql -u root -p
 
 $ sudo mysql -u root
 
+-----
+
 Para salir de la consola de MariaDB usamos:
 
-MariaDB [(none)]> exit
-MariaDB [(none)]> \q
+> exit
+> \q
 Ctrl + D
+
+-----
 
 Para ver los comandos disponibles
 
-MariaDB [(none)]> \h
+> \h
 
 ==================
 Gestión de MariaDB
@@ -79,18 +89,21 @@ Gestión de usuarios
 
 Crear un usuario y asignarle el password.
 
-MariaDB [(none)]> CREATE USER 'user_name' IDENTIFIED BY 'user123456';
-Query OK, 0 rows affected (0.00 sec)
+> CREATE USER 'user_name' IDENTIFIED BY 'user123456';
 
 -----
 
 Eliminar un usuario creado.
 
-MariaDB [(none)]> DROP USER user_name;
+> DROP USER user_name;
+
+-----
 
 Mostrar la lista de usuarios con todos sus campos
 
 > SELECT * FROM mysql.user;
+
+-----
 
 Mostrar la lista de usuarios con campos relevantes
 
@@ -101,7 +114,6 @@ Gestión de bases de datos
 =========================
 
 Crear una base de datos y asignarele un dueño
-=============================================
 
 > CREATE DATABASE db_name;
 
@@ -115,15 +127,30 @@ Refrescamos el esquema de las tablas de MySQL.
 
 -----
 
-Listar las bases de datos
+Listas las bases de datos disponibles.
 
 > show databases;
+
+-----
+
+Listar todas las tablas de una base de datos en MySQL
+
+> SHOW FULL TABLES FROM mi_base_de_datos;
+
+De hecho, podemos hacer consultas del tipo:
+
+> SHOW FULL TABLES FROM mi_base_de_datos LIKE '%busqueda%'
 
 -----
 
 Borrar una base de datos específica.
 
 > DROP DATABASE db_name;
+
+Si la base de datos no existe va a dar error, podemos usar el parámeteo IF
+EXISTS para que no de error.
+
+> DROP DATABASE IF EXISTS db_name;
 
 ==============================
 Desinstalar e instalar MariaDB
