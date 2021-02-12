@@ -1,18 +1,34 @@
-##### Guía PostgreSQL by dM #####
+=====================
+Guía PostgreSQL by dM
+=====================
 
-#######################
-##### Instalacion #####
-#######################
+===========
+Instalacion
+===========
 
-# aptitude update // Actualizar los repositorios
+Actualizar los repositorios
 
-# aptitude search postgresql // Buscar la version actual en los repositotios
+# aptitude update
 
-# aptitude install postgresql postgresql-server // Instalar la version de PostgreSQL
+-----
 
-$ sudo service postgresql restart // Reiniciar el servicio de PostgreSQL, para aplicar cambios etc.
+Buscar la version actual en los repositotios
 
-Reiniciar el servidor de postgresql
+# aptitude search postgresql
+
+-----
+
+Instalar la version de PostgreSQL
+
+# aptitude install postgresql postgresql-server
+
+-----
+
+Reiniciar el servicio de PostgreSQL, para aplicar cambios etc.
+
+$ sudo service postgresql restart
+
+ó
 
 $ sudo /etc/init.d/postgresql restart
 
@@ -26,9 +42,9 @@ $ service postgresql status
 
 $ sudo /etc/init.d/postgresql restart
 
-##############################
-##### Remover postgresql #####
-##############################
+==================
+Remover postgresql
+==================
 
 Los siguientes paquetes se instalan por defecto en Debin Jessie 8, por eso
 los removemos manualmente, pero aplicará a las versiones que tenga instaladas,
@@ -36,7 +52,9 @@ lo sabremos con un $ aptitude search postgresql
 
 # apt-get --purge remove postgresql-9.4 postgresql-client-9.4 postgresql-client-common postgresql-common
 
-##### Entrar en la consola de postgresql #####
+==================================
+Entrar en la consola de postgresql
+==================================
 
 $ su
 
@@ -51,12 +69,24 @@ postgresql@xxx:$ psql
 
 ---
 
-psql (9.x.x) // Al ver esto postgresql fue instalado correctamente
+Al ver esto postgresql fue instalado correctamente
+
+psql (9.x.x)
 Type "help" for help.
 
-postgres@xxx:$ psql name_db // Conectarse diréctamente a una db desde la línea de comandos.
+-----
 
-postgres=# // Línea de comandos de postgresql
+Conectarse diréctamente a una db desde la línea de comandos.
+
+postgres@xxx:$ psql name_db
+
+-----
+
+Línea de comandos de postgresql
+
+postgres=#
+
+-----
 
 postgres=# help // Ayuda de postgresql
 Está usando psql, la interfaz de línea de órdenes de PostgreSQL.
@@ -67,13 +97,25 @@ Digite:  \copyright para ver los términos de distribución
        \q para salir       
 postgres=# 
 
---------------------
+-----
 
-# \q //Salir de la consola de Postgres
+Salir de la consola de Postgres
 
-# \quit //Salir de la consola de Postgres
+# \q
 
-# \du // Para ver los roles existentes (usuarios)
+-----
+
+Salir de la consola de Postgres
+
+# \quit
+
+-----
+
+Para ver los roles existentes (usuarios)
+
+# \du
+
+-----
 
 # \l // Ver las bases de datos creadas
 
@@ -238,63 +280,78 @@ prueba=# SELECT * FROM usuarios;
 
 -------
 
-nombredb=# CREATE TABLE nombre_tabla (id serial primary key, nombre_campo varchar(20)); //Creando un campo id tipo clave primaria.
+Creando un campo id tipo clave primaria.
 
-########################################################
-########## Hacer un dump de una base de datos ##########
-########################################################
+nombredb=# CREATE TABLE nombre_tabla (id serial primary key, nombre_campo varchar(20));
 
-Significa hacer una copia de seguridad de una base de datos, generando un fichero .sql
-que contiene todos los comandos y sentencias para crear los esquemas de una base de datos, además
-de albergar registros previos, si existiesen.
+=============================================
+Hacer un dump o respaldo de una base de datos
+=============================================
+
+Significa hacer una copia de seguridad de una base de datos, generando un
+fichero .sql que contiene todos los comandos y sentencias para crear los
+esquemas de una base de datos, además de albergar registros previos, si
+existiesen.
 
 $ pg_dump -U username -W -h host databasename > databasename.sql
 
-$ pg_dump -U username -W -h 127.0.0.1 databasename > basename.sql // Recomendado éste.
+Recomendado éste.
+
+$ pg_dump -U username -W -h 127.0.0.1 databasename > basename.sql
 
 $ pg_dump -U username db_name > db_ename.sql
 
 $ pg_dump -U usuario -h 127.0.0.1 nombre_database > nombre_database.sql
 
-##### postgresql dump ERROR: permiso denegado a la relación name_table #####
+postgresql dump ERROR: permiso denegado a la relación name_table
+================================================================
 
-// A veces no deja hacer el dump, porque dice que el usuario no tiene permisos en la tabla específica
-// Entonces escribimos el siguiente comando:
+A veces no deja hacer el dump, porque dice que el usuario no tiene permisos en
+la tabla específica, entonces escribimos el siguiente comando:
+
 name_db=# GRANT SELECT ON name_table TO PUBLIC;
 
-##################################################
-##### Restaurar / Importar una base de datos #####
-##################################################
+======================================
+Restaurar / Importar una base de datos
+======================================
 
-// Para restaurar, Se debe tener creado el usuario con la contraseña y la base de datos, luego el dump sustituirá a la bd creada
+Para restaurar, Se debe tener creado el usuario con la contraseña y la base de
+datos, luego el dump sustituirá a la bd creada
 
 $ psql -h localhost -U nombre_usuario -d nombre_bd -f /ruta/al/archivo.sql
 
 Parametros:
--h : Es la ip en donde esta el servidor de la base de datos, si esta trabajando localmente entonces es localhost o 127.0.0.1
+-h : Es la ip en donde esta el servidor de la base de datos, si esta trabajando
+localmente entonces es localhost o 127.0.0.1
 -U : Nombre de usuario propietario de la base de datos.
 -d : Nombre de la base de datos.
 -f : Ruta del archivo sql, si esta en el directorio no hay que poner la ruta
 
 Ejemplo:
+
 $ psql -h 127.0.0.1 -U usuario_cliente -d banco_db -f banco_db.sql
 
 ----- Otra forma -----
 
-// Se debe tener creado el usuario con la contraseña y la base de datos, luego el dump sustituirá a la bd creada
+Se debe tener creado el usuario con la contraseña y la base de datos, luego el
+dump sustituirá a la bd creada
 
 $ psql -U username -W -h localhost nombre_base < dump_base.sql
 
--U Se refiere al Usuario, en este caso puede ser el usuario propietario de la base de datos o el usuario postgres
+-U Se refiere al Usuario, en este caso puede ser el usuario propietario de la
+base de datos o el usuario postgres
 
--W Con este parámetro conseguiremos que nos solicite el password del usuario antes especificado
+-W Con este parámetro conseguiremos que nos solicite el password del usuario
+antes especificado
 
--h Con este indicamos cuál es el servidor PostgreSQL al que nos conectaremos para obtener nuestro dump, si estamos
-local podemos colocar localhost sino ponemos la IP del servidor PostgreSQL
+-h Con este indicamos cuál es el servidor PostgreSQL al que nos conectaremos
+para obtener nuestro dump, si estamos local podemos colocar localhost sino
+ponemos la IP del servidor PostgreSQL
 
-databasename // Este es el ultimo parámetro realmente en esta linea de comando, por esa razon no tiene alguna letra que indique que
-el siguiente parámetro es el nombre de la base de datos basename.sql Esta parte en realidad solo indica que la salida de nuestro
-comando pg_dump la guarde en un archivo databasename.sql
+databasename Este es el ultimo parámetro realmente en esta linea de comando, por
+esa razon no tiene alguna letra que indique que el siguiente parámetro es el
+nombre de la base de datos basename.sql Esta parte en realidad solo indica que
+la salida de nuestro comando pg_dump la guarde en un archivo databasename.sql
 
 ####################################################
 ##### Restaurando .sql desde psql command line #####
