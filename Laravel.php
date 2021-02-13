@@ -462,7 +462,40 @@ Eliminar rastros de la configuración de un proyecto en Laravel
 Elimina rastros de la configuración del sistema y las carga de nuevo, es decir,
 es como si borraras los .pyc en proyectos de python.
 
-php artisan config:cache
+$ php artisan config:cache
+
+================================================
+Borrar la caché de ruta de su aplicación Laravel
+================================================
+
+Para borrar el caché de ruta de su aplicación Laravel, ejecute el siguiente
+comando
+
+$ php artisan route:clear
+
+=============================
+Borrar caché de configuración
+=============================
+
+Puede usar config:clear para borrar la caché de configuración de la aplicación
+Laravel.
+
+$ php artisan config:clear
+
+=================================
+Borrar caché de vistas compiladas
+=================================
+
+Además, es posible que deba borrar los archivos de vista compilados de su
+aplicación Laravel. Para borrar los archivos de vista compilados, ejecute el
+siguiente comando desde la terminal.
+
+$ php artisan view:clear
+
+Fuentes
+=======
+
+-https://tecadmin.net/clear-cache-laravel-5/
 
 =================================
 Configurar Laravel con postgresql
