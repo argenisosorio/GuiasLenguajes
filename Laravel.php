@@ -603,7 +603,7 @@ con ellos a través del navegador.
 Seed y Seeders
 ===============
 
-Una manera de cargar datos en la base de datos es  utilizando los Seeders de
+Una manera de cargar datos en la base de datos es utilizando los Seeders de
 Laravel.
 
 Laravel incluye un método simple para sembrar su base de datos con datos de
