@@ -17,27 +17,32 @@ Sass (lenguaje de hojas de estilo)
 
 Sass (Syntactically Awesome Stylesheets) es un lenguaje de hoja de estilos.
 
-Sass es un metalenguaje de Hojas de Estilo en Cascada (CSS). Es un lenguaje
-de script que es traducido a CSS. SassScript es el lenguaje de script en sí mismo.
+Sass es un metalenguaje de Hojas de Estilo en Cascada (CSS). Es un lenguaje de
+script que es traducido a CSS. SassScript es el lenguaje de script en sí mismo.
 
 Sass consiste en una sintaxis de bloques como CSS. Éste usa llaves para denotar
-bloques de código y punto y coma (;) para separar las líneas dentro de un bloque.
+bloques de código y punto y coma (;) para separar las líneas dentro de un
+bloque.
 
-La sintaxis indentada y los ficheros SCSS tienen las extensiones .sass y .scss respectivamente.
+La sintaxis indentada y los ficheros SCSS tienen las extensiones .sass y .scss
+respectivamente.
 
-CSS3 consiste en una serie de selectores y pseudo-selectores que agrupan las reglas que son aplicadas.
+CSS3 consiste en una serie de selectores y pseudo-selectores que agrupan las
+reglas que son aplicadas.
 
-Sass (en el amplio contexto de ambas sintaxis) extiende CSS proveyendo de varios mecanismos que
-están presentes en los lenguajes de programación tradicionales, particularmente lenguajes
-orientados a objetos, pero éste no está disponible para CSS3 como tal.
+Sass (en el amplio contexto de ambas sintaxis) extiende CSS proveyendo de varios
+mecanismos que están presentes en los lenguajes de programación tradicionales,
+particularmente lenguajes orientados a objetos, pero éste no está disponible
+para CSS3 como tal.
 
 La implementación oficial de Sass es open-source y escrita en Ruby.
 
-SCSS es un metalenguaje anidado, lo que es válido en CSS es válido en SCSS con la misma semántica.
-Sass soporta la integración con la extensión de Firefox Firebug.
+SCSS es un metalenguaje anidado, lo que es válido en CSS es válido en SCSS con
+la misma semántica. Sass soporta la integración con la extensión de Firefox
+Firebug.
 
-SassScript proporciona los mecanismos siguientes: variables, nesting (anidamiento),
-mixins, y herencia de los selectores.
+SassScript proporciona los mecanismos siguientes: variables, nesting
+(anidamiento), mixins, y herencia de los selectores.
 
 ----- Variables -----
 
@@ -52,9 +57,11 @@ SassScript permite 4 tipos de datos:6
 -Colores (código, o nombre)
 -Booleanos
 
-Las variables pueden ser resultados o argumentos de varias funciones disponibles.
-Durante el proceso de traducción, los valores de las variables son
-insertados en el documento CSS de salida.
+Las variables pueden ser resultados o argumentos de varias funciones
+disponibles.
+
+Durante el proceso de traducción, los valores de las variables son insertados en
+el documento CSS de salida.
 
 En el estilo SCSS
 
@@ -103,7 +110,9 @@ Debe compilar a:
 ----- Nesting (Anidamiento) -----
 
 CSS soporta anidamiento lógico, pero los bloques de código no son anidados.
-Sass permite que el código anidado sea insertado dentro de cualquier otro bloque.
+
+Sass permite que el código anidado sea insertado dentro de cualquier otro
+bloque.
 
 table.hl {
   margin: 2em 0;
@@ -140,11 +149,13 @@ referencias al padre son discutidos en la documentación de Sass.
 
 ----- Mixins -----
 
-CSS no soporta mixins. Cualquier código duplicado debe ser repetido en cada lugar.
-Un mixin es una sección de código que contiene código Sass. Cada vez que se llama
-un mixin en el proceso de conversión el contenido del mismo es insertado en el lugar
-de la llamada. Los mixin permiten una solución limpia a las repeticiones de código,
-así como una forma fácil de alterar el mismo.
+CSS no soporta mixins. Cualquier código duplicado debe ser repetido en cada
+lugar.
+
+Un mixin es una sección de código que contiene código Sass. Cada vez que se
+llama un mixin en el proceso de conversión el contenido del mismo es insertado
+en el lugar de la llamada. Los mixin permiten una solución limpia a las
+repeticiones de código, así como una forma fácil de alterar el mismo.
 
 @mixin table-base {
   th {
@@ -224,11 +235,11 @@ Debe compilar a:
 
 ----- Herencia de selectores -----
 
-Mientras CSS3 soporta la jerarquía Document Object Model (DOM), éste no
-permite la herencia de selectores. La herencia se logra insertando una línea
-dentro de un bloque de código que use la palabra clave @extend y haga referencia
-a otro selector. Los atributos del selector extendido serán aplicados al
-selector que hace la llamada.
+Mientras CSS3 soporta la jerarquía Document Object Model (DOM), éste no permite
+la herencia de selectores. La herencia se logra insertando una línea dentro de
+un bloque de código que use la palabra clave @extend y haga referencia a otro
+selector. Los atributos del selector extendido serán aplicados al selector que
+hace la llamada.
 
 .error {
   border: 1px #f00;
