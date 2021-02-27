@@ -1,66 +1,72 @@
-##### Guía de Qt by dM #####
+================
+Guía de Qt by dM
+================
 
-##############
-##### Qt #####
-##############
+Es una biblioteca multiplataforma ampliamente usada para desarrollar
+aplicaciones con interfaz gráfica de usuario, así como también para el
+desarrollo de programas sin interfaz gráfica, como herramientas para la línea de
+comandos y consolas para servidores.
 
---- Información general ---
+Qt es desarrollada como un software libre y de código abierto a través de Qt
+Project, donde participa tanto la comunidad, como desarrolladores de Nokia,
+Digia y otras empresas.3 Anteriormente, era desarrollado por la división de
+software de Qt de Nokia, que entró en vigor después de la adquisición por parte
+de Nokia de la empresa noruega Trolltech, el productor original de Qt, el 17 de
+junio de 2008.4 Qt es distribuida bajo los términos de GNU Lesser General Public
+License (y otras). Por otro lado, Digia está a cargo de las licencias
+comerciales de Qt desde marzo de 2011.
 
-Modelo de desarrollo: Software libre y de código abierto
-Última versión estable: 5.6
-Género: Biblioteca de desarrollo
-Programado en: C++
-Sistema operativo: Multiplataforma
-Licencia: GNU LGPL 2.1, GNU GPL 2 y 3
-Estado actual: Activo
+Qt es utilizada en KDE, entorno de escritorio para sistemas como GNU/Linux o
+FreeBSD, entre otros.
 
-Es una biblioteca multiplataforma ampliamente usada para desarrollar aplicaciones con interfaz gráfica de usuario, así como también para el
-desarrollo de programas sin interfaz gráfica, como herramientas para la línea de comandos y consolas para servidores.
+============================
+Propósitos y características
+============================
 
-Qt es desarrollada como un software libre y de código abierto a través de Qt Project, donde participa tanto la comunidad, como desarrolladores
-de Nokia, Digia y otras empresas.3 Anteriormente, era desarrollado por la división de software de Qt de Nokia, que entró en vigor después de la
-adquisición por parte de Nokia de la empresa noruega Trolltech, el productor original de Qt, el 17 de junio de 2008.4 Qt es distribuida bajo los
-términos de GNU Lesser General Public License (y otras). Por otro lado, Digia está a cargo de las licencias comerciales de Qt desde marzo de 2011.
+Qt utiliza el lenguaje de programación C++ de forma nativa, adicionalmente puede
+ser utilizado en varios otros lenguajes de programación a través de bindings.
 
-Qt es utilizada en KDE, entorno de escritorio para sistemas como GNU/Linux o FreeBSD, entre otros.
+Funciona en todas las principales plataformas, y tiene un amplio apoyo. El API
+de la biblioteca cuenta con métodos para acceder a bases de datos mediante SQL,
+así como uso de XML, gestión de hilos, soporte de red, una API multiplataforma
+unificada para la manipulación de archivos y una multitud de otros para el
+manejo de ficheros, además de estructuras de datos tradicionales.
 
---- Propósitos y características ---
+===================================
+Instalación de QT5 en Debian jessie
+===================================
 
-Qt utiliza el lenguaje de programación C++ de forma nativa, adicionalmente puede ser utilizado en varios otros lenguajes de programación a
-través de bindings.
+QT4 viene por defecto en debian 8, pero somos libres de usar QT5 también. Para
+hacer eso simplemente seguimos las instrucciones siguientes:
 
-Funciona en todas las principales plataformas, y tiene un amplio apoyo. El API de la biblioteca cuenta con métodos para acceder a bases de
-datos mediante SQL, así como uso de XML, gestión de hilos, soporte de red, una API multiplataforma unificada para la manipulación de archivos
-y una multitud de otros para el manejo de ficheros, además de estructuras de datos tradicionales.
+1) Actualiza tu fichero sources.list si acabas de instalar Debian, para que las
+actualizaciones de paquetes provengan de los servidores oficiales de Debian.
 
-###############################################
-##### Instalación de QT5 en Debian jessie #####
-###############################################
-
-QT4 viene por defecto en debian 8, pero somos libres de usar QT5 también. Para hacer eso simplemente seguimos las instrucciones siguientes:
-
-- 1. Actualiza tu fichero sources.list si acabas de instalar Debian, para que las actualizaciones de paquetes provengan de los servidores oficiales de Debian.
 Añadir:
 
 deb http://security.debian.org/ jessie/updates main
 deb-src http://security.debian.org/ jessie/updates main
 deb http://http.debian.net/debian/ jessie main
 
-- 2. Actualizamos
+2) Actualizamos
 
 $ apt-get update
 
-- 3. Instalamos el paquete qt5-default:
+3) Instalamos el paquete qt5-default:
 
 # apt-get install qt5-default
 
 Se instalaran todas las dependencias también.
 
-4. Instalamos qtcreator, Qt Creator es un IDE creado por Trolltech para el desarrollo de aplicaciones con las bibliotecas Qt, requiriendo su versión 4.x.
+4) Instalamos qtcreator, Qt Creator es un IDE creado por Trolltech para el
+desarrollo de aplicaciones con las bibliotecas Qt, requiriendo su versión 4.x.
+
 Los sistemas operativos que soporta en forma oficial son:
-- GNU/Linux 2.6.x, para versiones de 32 y 64 bits con Qt 4.x instalado. Además hay una versión para Linux con gcc 3.3.
-- Mac OS X 10.4 o superior, requiriendo Qt 4.x
--  Windows XP y superiores, requiriendo el compilador MinGW y Qt 4.4.3 para MinGW.
+- GNU/Linux 2.6.x, para versiones de 32 y 64 bits con Qt 4.x instalado. Además
+hay una versión para Linux con gcc 3.3.
+
+-Mac OS X 10.4 o superior, requiriendo Qt 4.x
+-Windows XP y superiores, requiriendo el compilador MinGW y Qt 4.4.3 para MinGW.
 
 # apt-get install qtcreator
 
