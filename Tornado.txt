@@ -25,17 +25,21 @@ Se instaló tornado==5.1.1
 
 Tornado requiere Python superior a la versión 3.4 y no soportará Python 2.
 
-##### Mi primera aplicación con Tornado #####
+=================================
+Mi primera aplicación con Tornado
+=================================
 
-// Habiendo realizado el paso de la instalación con éxito, se procederá a crear un archivo, se
-llamará en este caso: holamundo con una extensión .py dado que será escrito con Python. 
+Habiendo realizado el paso de la instalación con éxito, se procederá a crear un
+archivo, se llamará en este caso: holamundo con una extensión .py dado que será
+escrito con Python. 
 
-// Ahora se abre el archivo y dentro de escribirá lo siguiente:
+Ahora se abre el archivo y dentro de escribirá lo siguiente:
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # IOLoop maneja los eventos relacionados con los sockets, por ejemplo, si tienen
-# datos disponibles para leer, si pueden escribirse y si se ha producido un error.
+# datos disponibles para leer, si pueden escribirse y si se ha producido un
+# error.
 import tornado.ioloop
 
 # Envía la aplicación al servidor web
@@ -63,14 +67,16 @@ if __name__ == "__main__":
     # Corre el servidor
     tornado.ioloop.IOLoop.current().start()
 
-##### Despliegue de la aplicación #####
+===========================
+Despliegue de la aplicación
+===========================
 
-// Desde la consola se debe correr el comando:
+Desde la consola se debe correr el comando:
 
 $ python holamundo.py
 
-// Visitamos la siguiente URL http://localhost:8888/ en el navegador web
-// y se nos mostrará el mensaje de hola mundo
+Visitamos la siguiente URL http://localhost:8888/ en el navegador web y se nos
+mostrará el mensaje de hola mundo.
 
 ##### Probando saludos en otras urls #####
 
