@@ -615,6 +615,12 @@ clase DatabaseSeeder para usted. Desde esta clase, puede utilizar el método de
 llamada para ejecutar otras clases semilla, lo que le permite controlar el orden
 de siembra.
 
+-----
+
+Se puede aplicar un seeder de maner individual con el siguiente comando:
+
+$ php artisan db:seed --class NombreDelSeeder
+
 =======
 Fuentes
 =======
