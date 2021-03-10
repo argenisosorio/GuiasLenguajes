@@ -331,7 +331,8 @@ Ejemplo:
 
 $ psql -h 127.0.0.1 -U usuario_cliente -d banco_db -f banco_db.sql
 
------ Otra forma -----
+Otra forma
+==========
 
 Se debe tener creado el usuario con la contraseña y la base de datos, luego el
 dump sustituirá a la bd creada
@@ -353,41 +354,67 @@ esa razon no tiene alguna letra que indique que el siguiente parámetro es el
 nombre de la base de datos basename.sql Esta parte en realidad solo indica que
 la salida de nuestro comando pg_dump la guarde en un archivo databasename.sql
 
-####################################################
-##### Restaurando .sql desde psql command line #####
-####################################################
+========================================
+Restaurando .sql desde psql command line
+========================================
 
 postgres=# \i [full path and file name with extension]
 
-postgres=# \i /home/user/dump.sql // Desde la db postgres (por defecto) importamos el .sql que creará la db automáticamente, con el nombre y el dueño originales, esto en drupal, para hacerlo con django por ejemplo es:
+Desde la db postgres (por defecto) importamos el .sql que creará la db
+automáticamente, con el nombre y el dueño originales
 
-name_db=# \i /home/user/dump.sql // Conectado a la nueva db vacía, con el usuario y contraseña correctos, es decir, los originales, hacemos la restauración.
+postgres=# \i /home/user/dump.sql 
 
-#######################################################
-##### Copiar datos de una tabla a un fichero .csv #####
-#######################################################
+Conectado a la nueva db vacía, con el usuario y contraseña correctos, es decir,
+los originales, hacemos la restauración.
 
-Creamos un fichero .csv, en este ejemplo será "x.csv" y lo guardamos en el /home/user/ luego le damos permisos con:
+name_db=# \i /home/user/dump.sql 
+
+===========================================
+Copiar datos de una tabla a un fichero .csv
+===========================================
+
+Creamos un fichero .csv, en este ejemplo será "x.csv" y lo guardamos en el
+/home/user/ luego le damos permisos con:
 
 # chmod 777 x.csv
 
-Luego, desde la línea de comandos de postgres, nos conectamos a la db y ahí ponemos el comando de copia de la tabla que queremos:
+Luego, desde la línea de comandos de postgres, nos conectamos a la db y ahí
+ponemos el comando de copia de la tabla que queremos:
 
-db_name=# \copy name_table to 'x.csv' csv header; // Nos pasará los datos de la name_tabla al fichero .csv, separando los datos por filas y comas ",". Si se lanza de nuevo el comando el fichero se sobreescribe, no se duplica la data.
+Nos pasará los datos de la name_tabla al fichero .csv, separando los datos por
+filas y comas ",". Si se lanza de nuevo el comando el fichero se sobreescribe,
+no se duplica la data.
 
-db_name=# \copy name_table to '/home/user/x.csv' csv header; // Pasándole la ruta absoluta del fichero.
+db_name=# \copy name_table to 'x.csv' csv header;
+
+-----
+
+Pasándole la ruta absoluta del fichero.
+
+db_name=# \copy name_table to '/home/user/x.csv' csv header;
 
 -Nota: A veces falla en la copia: xxxxx.csv: Permiso denegado, por lo que se recomienda mover el .csv a /home/user/tmp/ para que no haya problema, y en el comando meter la ruta absoluta del fichero.
 
-######################################################################
-##### Copiar datos de una tabla where x='xxxx' a un fichero .csv #####
-######################################################################
+==========================================================
+Copiar datos de una tabla where x='xxxx' a un fichero .csv
+==========================================================
 
-db_name=# \COPY (select * from name_table WHERE x='xxxx') to 'x.csv' csv header; // Copiando todos los campos.
+Copiando todos los campos.
 
-db_name=# \COPY (select id from name_table WHERE x='xxxx') to 'x.csv' csv header; // Especifícando un campo.
+db_name=# \COPY (select * from name_table WHERE x='xxxx') to 'x.csv' csv header;
 
-db_name=# \COPY (select id,username from name_table WHERE x='xxxx') to 'x.csv' csv header; // Especifícando mas de un campo.
+-----
+
+Especifícando un campo.
+
+db_name=# \COPY (select id from name_table WHERE x='xxxx') to 'x.csv' csv header;
+
+-----
+
+Especifícando mas de un campo.
+
+db_name=# \COPY (select id,username from name_table WHERE x='xxxx') to 'x.csv' csv header;
 
 ######################################################
 ##### Copiando columnas específicas de la tabla  #####

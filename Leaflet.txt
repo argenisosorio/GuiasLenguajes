@@ -1,0 +1,158 @@
+=====================
+Guía de Leaflet by dM
+=====================
+
+Leaflet es una librería JavaScript opensource para crear mapas interactivos en
+un entorno móvil.
+
+Leaflet es la elección utilizada por Flickr, Wikimedia, foursquare, OSM, CARTO,
+GIS Cloud, Washington Post, Wall Street Journal, Geocaching.com, etc.
+
+Algunas de las ventajas de la API de Leaflet son:
+
+-Sencillo y rápido de aprender
+-Facilidad de uso
+-Características básicas pero que funcionan a la perfección
+-Soporte móvil
+-HTML 5 y CSS3
+-Funciona tanto en los modernos como en los viejos navegadores web
+-Ampliable con plugins
+-API bien documentada
+
+==========================
+Primeros pasos con Leaflet
+==========================
+
+El primer paso para la creación de cualquier mapa web JavaScript es elaborar el
+marco HTML básico. Esta es la estructura que tendrá nuestro HTML:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+    </style>
+</head>
+    <body>
+        <div id='map'>
+        </div>
+    </body>
+</html>
+
+La cabecera
+===========
+
+Vamos a crear un mapa con Leaflet, para ello incluiremos en la cabecera <head>
+de nuestra página web la librería JavaScript leaflet.js (que contiene el código
+de la libería) y la hoja de estilo leaflet.css (con la hoja de estilos de la
+librería):
+
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+
+Estilo del mapa (CSS)
+=====================
+
+Nos aseguramos que el contenedor de mapa tenga un tamaño definido, dentro de la
+etiqueta <style> lo fijamos en CSS:
+
+<style>
+  #map {
+    width: 100%;
+    height: 580px;
+    box-shadow: 5px 5px 5px #888;
+ }
+</style>
+
+El cuerpo
+=========
+
+Dentro de la etiqueta <body> encontramos el marcado para el mapa, que genera un
+único elemento de documento. También damos al contenedor un atributo id para que
+podamos hacer referencia a él en nuestro código:
+
+<body>
+<div id="map"></div>
+
+El script con el código JavaScript
+==================================
+
+<script>
+  var map = L.map('map').
+     setView([41.66, -4.72],
+     15);
+</script>
+
+L.map es la clase central de la API. Se usa para crear y manipular el mapa. En
+el mapa establecemos unas coordeanas de la vista y un nivel de zoom.
+
+Añadiendo las capas de OpenStreetMap
+====================================
+
+A continuación añadimos un mapa base como tile layer, en este caso las imágenes
+de OSM. Crear un tile layer lleva implícito establecer la URL, el texto con la
+atribución y el máximo nivel de zoom de la capa:
+
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+maxZoom: 18
+}).addTo(map);
+
+Añadiendo un control de escala
+==============================
+
+L.control.scale().addTo(map);
+
+Añadiendo un marcador
+=====================
+
+Y después un icono ¡que también se puede mover!
+
+L.marker([41.66, -4.71],{draggable: true}).addTo(map);
+
+Solo falta cerrar el script, el cuerpo y el html:
+
+ </script>
+</body> 
+</html>
+
+El codigo resultande del ejercicio sería:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+    <style>
+      #map {
+        width: 100%;
+        height: 580px;
+        box-shadow: 5px 5px 5px #888;
+     }
+    </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+var map = L.map('map').setView([41.66, -4.72],15);
+
+L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',maxZoom:18
+}).addTo(map);
+
+L.control.scale().addTo(map);
+
+L.marker([41.66, -4.71],{draggable: true}).addTo(map);
+</script>
+</body>
+</html>
+
+Podemos buscar coordenadas geográficas en: https://www.openstreetmap.org
+
+=======
+Fuentes
+=======
+
+-https://mappinggis.com/2013/06/como-crear-un-mapa-con-leaflet/
+-https://sipeinformatica.com/como-crear-un-mapa-con-leaflet/

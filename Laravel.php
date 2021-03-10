@@ -6,6 +6,19 @@ Usaremos $ para describir los comandos que se usaran con usuario regular.
 
 Usaremos # para describir los comandos que se usaran con superusuario.
 
+================
+¿Qué es Laravel?
+================
+
+Laravel es un framework de código abierto para desarrollar aplicaciones y
+servicios web con PHP 5 y PHP 7. Su filosofía es desarrollar código PHP de forma
+elegante y simple, evitando el "código espagueti". Fue creado en 2011 y tiene
+una gran influencia de frameworks como Ruby on Rails, entre otros...
+
+Gran parte de Laravel está formado por dependencias, especialmente de Symfony,
+esto implica que el desarrollo de Laravel dependa también del desarrollo de sus
+dependencias.
+
 =======================
 ¿Como funciona Laravel?
 =======================
@@ -48,26 +61,6 @@ queremos que todos los usuarios puedan acceder a ese panel, si no solo usuarios
 con permisos adecuados, entonces ahí aparecen los middlewares y sus
 funcionalidades. Las rutas y los controladores pueden acceder a los middlewares.
 
-======================
-Instalación de Laravel
-======================
-
-**Importante** Esta guía fue probada en GNU/Linux Debian 9 Stretch
-usando las siguientes versiones:
--PHP 7.0
--Composer 1.6.3
--Laravel Installer 1.5.0
--Laravel Framework 5.4.36
-
-Laravel es un framework de código abierto para desarrollar aplicaciones y
-servicios web con PHP 5 y PHP 7. Su filosofía es desarrollar código PHP de forma
-elegante y simple, evitando el "código espagueti". Fue creado en 2011 y tiene
-una gran influencia de frameworks como Ruby on Rails, entre otros...
-
-Gran parte de Laravel está formado por dependencias, especialmente de Symfony,
-esto implica que el desarrollo de Laravel dependa también del desarrollo de sus
-dependencias.
-
 ===============
 Características
 ===============
@@ -82,9 +75,12 @@ Características
 -Usa componentes de Symfony
 -Adopta las especificaciones PSR-212​ y PSR-4
 
-==================================
-Instalación de paquetes necesarios
-==================================
+=================================================================
+Instalación de paquetes necesarios para la instalación de Laravel
+=================================================================
+
+**Importante** Esta guía fue probada en GNU/Linux Debian 9 Stretch
+usando las siguientes versiones:
 
 Instalar Apache:
 
@@ -444,8 +440,6 @@ $ composer dumpautoload
 
 $ php artisan migrate
 
-$ php artisan db:seed
-
 ===========================
 Limpiar la cache en Laravel
 ===========================
@@ -491,11 +485,6 @@ aplicación Laravel. Para borrar los archivos de vista compilados, ejecute el
 siguiente comando desde la terminal.
 
 $ php artisan view:clear
-
-Fuentes
-=======
-
--https://tecadmin.net/clear-cache-laravel-5/
 
 =================================
 Configurar Laravel con postgresql
@@ -551,8 +540,40 @@ $ php artisan serve
 Comandos de artisan y otros
 ===========================
 
-Permite hacer un rollback de nuestras migraciones y re-ejecutarlas de nuevo.
-Esto ayuda a regenerar nuestra base de datos.
+Para conocer el listado completo de los comandos disponibles ejecutamos en
+consola, en el directorio raíz de un proyecto de Laravel.
+
+$ php artisan list
+
+-----
+
+Sacar la aplicación del modo de mantenimiento.
+
+$ php artisan up
+
+-----
+
+Poner la aplicación en modo de mantenimiento.
+
+$ php artisan down
+
+-----
+
+Para ver el listado completo de rutas, Como resultado nos mostrará un listado de
+todas las rutas de la aplicación con la información sobre el método HTTP, la
+URI, la acción, el nombre y los middleware definidos para cada ruta, con lo
+cual, entre otras cosas, podemos verificar que todas las rutas de nuestra
+aplicación están bien definidas.
+
+php artisan route:list
+
+-----
+
+Mismo que el anterior pero más compacta la información.
+
+php artisan route:list -c
+
+-----
 
 $ php artisan migrate:refresh
 
@@ -562,6 +583,10 @@ Omite los métodos down o los rollbacks eliminando todas las tablas para luego
 ejecutar los métodos up.
 
 $ php artisan migrate:fresh
+
+-----
+
+$ php artisan up
 
 -----
 
@@ -620,12 +645,6 @@ de siembra.
 Se puede aplicar un seeder de maner individual con el siguiente comando:
 
 $ php artisan db:seed --class NombreDelSeeder
-
-=======
-Fuentes
-=======
-
--https://solibeth.net/aprende-usar-seed-en-laravel
 
 =============================================
 Descargue y cargue bases de datos rápidamente
@@ -837,3 +856,10 @@ copiando el archivo .env.example y renombrando la copia como .env.
 Por motivos de seguridad de la base de datos el archivo .env nunca se sube
 cuando hacemos un push en nuestro repositorio. Es por eso que aparece escrito
 dentro del archivo .gitignore en la raíz de nuestro proyecto.
+
+=======
+Fuentes
+=======
+
+-https://tecadmin.net/clear-cache-laravel-5/
+-https://solibeth.net/aprende-usar-seed-en-laravel
