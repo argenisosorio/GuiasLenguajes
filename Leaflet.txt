@@ -19,6 +19,16 @@ Algunas de las ventajas de la API de Leaflet son:
 -Ampliable con plugins
 -API bien documentada
 
+=============
+OpenStreetMap
+=============
+
+OpenStreetMap es un proyecto colaborativo para crear mapas editables y libres.
+
+En lugar del mapa en sí, los datos generados por el proyecto se consideran su
+salida principal. Los mapas se crean utilizando información geográfica capturada
+con dispositivos GPS móviles, ortofotografías y otras fuentes libres.
+
 ==========================
 Primeros pasos con Leaflet
 ==========================
@@ -148,7 +158,77 @@ L.marker([41.66, -4.71],{draggable: true}).addTo(map);
 </body>
 </html>
 
-Podemos buscar coordenadas geográficas en: https://www.openstreetmap.org
+-----
+
+Podemos buscar coordenadas geográficas en: https://www.openstreetmap.org para
+probar en la implementación anterior.
+
+=====================================================
+Otro ejemplo trazando polígonos y circulos en el mapa
+=====================================================
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin="">
+  </script>
+<style>
+#map {
+  width: 100%;
+  height: 580px;
+  box-shadow: 5px 5px 5px #888;
+ }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+var map = L.map('map').setView([51.505, -0.09], 13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: 'hola mi gente',
+  maxZoom: 18,
+  id: 'opcional-id',
+  tileSize: 512,
+  zoomOffset: -1
+}).addTo(map);
+
+var marker = L.marker([51.5, -0.09]).addTo(map);
+
+var circle = L.circle([51.508, -0.11], {
+  color: 'blue',
+  fillColor: '#f03',
+  fillOpacity: 0.2,
+  radius: 500
+}).addTo(map);
+
+var polygon = L.polygon([
+  [51.509, -0.08],
+  [51.503, -0.06],
+  [51.51, -0.047]
+]).addTo(map);
+
+marker.bindPopup("<b>Hello world!</b><br>I am a popup.");
+
+var popup = L.popup()
+  .setLatLng([51.5, -0.09])
+  .setContent("I am a standalone popup.")
+  .openOn(map);
+
+var popup = L.popup();
+map.on('click', onMapClick);
+
+function onMapClick(e) {
+  popup
+    .setLatLng(e.latlng)
+    .setContent("You clicked the map at " + e.latlng.toString())
+    .openOn(map);
+}
+</script>
+</body>
+</html>
 
 =======
 Fuentes
