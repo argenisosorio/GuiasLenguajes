@@ -1,8 +1,10 @@
-######################################
-##### Guía de NodeJS y NPM by dM #####
-######################################
+==========================
+Guía de NodeJS y NPM by dM
+==========================
 
-##### Qué es NodeJS #####
+=============
+Qué es NodeJS
+=============
 
 Node.js es un entorno en tiempo de ejecución multiplataforma, de código abierto,
 para la capa del servidor (pero no limitándose a ello) basado en el lenguaje de
@@ -11,12 +13,15 @@ orientada a eventos y basado en el motor V8 de Google. Fue creado con el enfoque
 de ser útil en la creación de programas de red altamente escalables, como por
 ejemplo, servidores web.
 
-##### Qué es NPM #####
+==========
+Qué es NPM
+==========
 
 NPM es el manejador de paquetes por defecto para Node.js, es como
 decir apt para GNU/Linux Debian o PIP para Python.
 
-##### Instalación de última versión de NodeJS #####
+Instalación de última versión de NodeJS
+=======================================
 
 Nota:
 Usaremos $ para describir los comandos que se usaran con usuario regular.
@@ -25,7 +30,8 @@ Usaremos # para describir los comandos que se usaran con superusuario.
 Para instalar la última versión compilaremos el paquete bajado desde
 https://nodejs.org/es/
 
-##### Instalación de NodeJS desde repos de GNU/Linux Debian #####
+Instalación de NodeJS desde repos de GNU/Linux Debian
+=====================================================
 
 Esta opción instalara la última versión de NodeJS disponjible desde el
 repositorio, no necesariamente será la última del paquete por lo que
@@ -33,15 +39,20 @@ se recomienda la opción desde el PPA oficial de NodeSource descrita mas adelant
 
 # apt-get install nodejs nodejs-legacy
 
+-----
+
 Verificar la versión instalada de nodejs
 
 $ nodejs -v
+
+-----
 
 Instalar el gestor de paquetes npm
 
 # apt-get install npm
 
-##### Instalar Node.js desde el PPA oficial de NodeSource #####
+Instalar Node.js desde el PPA oficial de NodeSource
+==================================================
 
 # apt-get install curl
 
@@ -61,11 +72,15 @@ Si quisiésemos instalar otra versión, el primer comando sería:
 9.x: curl -sL https://deb.nodesource.com/setup_9.x | sudo -E bash -
 10.x: curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 
+-----
+
 Verificar la versión instalada de nodejs
 
 $ nodejs -v
 
-##### Eliminar NodeJS del sistema #####
+===========================
+Eliminar NodeJS del sistema
+===========================
 
 # apt-get --purge remove node
 

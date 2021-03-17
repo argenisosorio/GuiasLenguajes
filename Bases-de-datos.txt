@@ -189,3 +189,63 @@ datos y un lenguaje de control de datos. El alcance de SQL incluye la inserción
 de datos, consultas, actualizaciones y borrado, la creación y modificación de
 esquemas y el control de acceso a los datos. También el SQL a veces se describe
 como un lenguaje declarativo, también incluye elementos procesales.
+
+===============================
+Normalización de bases de datos
+===============================
+
+La normalización de bases de datos es un proceso que consiste en designar y
+aplicar una serie de reglas a las relaciones obtenidas tras el paso del modelo
+entidad-relación al modelo relacional. Con objeto de minimizar la redundancia de
+datos, facilitando su gestión posterior.
+
+Objetivo
+========
+
+Las bases de datos relacionales se normalizan para:
+
+-Minimizar la redundancia de los datos.
+-Disminuir problemas de actualización de los datos en las tablas.
+-Proteger la integridad de datos.
+
+En el modelo relacional es frecuente llamar tabla a una relación; para que una
+tabla sea considerada como una relación tiene que cumplir con algunas
+restricciones:
+
+-Cada tabla debe tener su nombre único.
+-No puede haber dos filas iguales. No se permiten los duplicados.
+-Todos los datos en una columna deben ser del mismo tipo.
+
+Claves
+======
+
+Una clave primaria es el conjunto mínimo de columnas que identifica unívocamente
+a cada fila. La clave primaria es un identificador que va a ser siempre único
+para cada fila. Se acostumbra a poner la clave primaria como la primera columna
+de la tabla pero es más una conveniencia que una obligación. Muchas veces la
+clave primaria es numérica auto-incrementada, es decir, generada mediante una
+secuencia numérica incrementada automáticamente cada vez que se inserta una
+fila.
+
+En una tabla puede que tengamos más de una columna que puede ser clave primaria
+por sí misma. En ese caso se puede escoger una para ser la clave primaria y las
+demás claves serán claves candidatas.
+
+Una clave ajena (foreign key o clave foránea) es aquella columna que existiendo
+como dependiente en una tabla, es a su vez clave primaria en otra tabla.
+
+Una clave alternativa es aquella clave candidata que no ha sido seleccionada
+como clave primaria, pero que también puede identificar de forma única a una
+fila dentro de una tabla. Ejemplo: Si en una tabla clientes definimos el número
+de documento (id_cliente) como clave primaria, el número de seguro social de ese
+cliente podría ser una clave alternativa. En este caso no se usó como clave
+primaria porque es posible que no se conozca ese dato en todos los clientes.
+
+Una clave compuesta es una clave que está compuesta por más de una columna.
+
+La visualización de todas las posibles claves candidatas en una tabla ayudan a
+su optimización. Por ejemplo, en una tabla PERSONA podemos identificar como
+claves su DNI, o el conjunto de su nombre, apellidos, fecha de nacimiento y
+dirección. Podemos usar cualquiera de las dos opciones o incluso todas a la vez
+como clave primaria, pero es mejor en la mayoría de sistemas la elección del
+menor número de columnas como clave primaria.
