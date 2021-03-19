@@ -586,10 +586,6 @@ $ php artisan migrate:fresh
 
 -----
 
-$ php artisan up
-
------
-
 El comando dump-autoload actualiza la información del cargador automático de
 clases. Este comando es útil cuando añades nuevas clases y no quieres ejecutar
 el comando install o update.
