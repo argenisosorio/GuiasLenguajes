@@ -608,6 +608,17 @@ resources/js y resources/sass a los archivos app.js y app.css respectivamente.
 
 $ npm run prod
 
+-----
+
+npm run dev combina todos sus componentes de Vue y otros archivos JavaScript en
+un archivo combinado compatible con el navegador.
+
+npm run watch hace lo mismo, pero luego permanece activo y "observa" las
+actualizaciones de sus archivos .vue y .js. Si detecta un cambio, reconstruirá
+el archivo compatible con el navegador para que pueda actualizar la página. 
+
+$ npm run watch
+
 Diferencias entre run dev y run prod
 ====================================
 
@@ -852,6 +863,14 @@ copiando el archivo .env.example y renombrando la copia como .env.
 Por motivos de seguridad de la base de datos el archivo .env nunca se sube
 cuando hacemos un push en nuestro repositorio. Es por eso que aparece escrito
 dentro del archivo .gitignore en la raíz de nuestro proyecto.
+
+=======================
+El archivo package.json
+=======================
+
+Es el responsable de almacenar el nombre de las dependencias instaladas
+catalogándolas principalmente en dos tipos: dependencias de desarrollo y
+dependencias de la aplicación.
 
 =======
 Fuentes
