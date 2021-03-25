@@ -545,6 +545,171 @@ consola, en el directorio raíz de un proyecto de Laravel.
 
 $ php artisan list
 
+Comando disponibles:
+
+clear-compiled  Eliminar el archivo de clase compilado
+db              Iniciar una nueva sesión de CLI de base de datos
+down            Ponga la aplicación en modo de mantenimiento / demostración
+dump-server     Inicie el servidor de volcado para recopilar información de volcado
+env             Mostrar el entorno del actual del framework
+help            Muestra ayuda para un comando
+inspire         Muestra una cita inspiradora
+list            Lista de comandos de artisan
+migrate         Ejecute las migraciones de la base de datos
+optimize        Almacenar en caché los archivos de arranque del framework
+serve           Sirve la aplicación en el servidor de desarrollo PHP
+test            Ejecute las pruebas de la aplicación
+tinker          Interactuar con su aplicación
+ui              Swap the front-end scaffolding for the application
+up              Saque la aplicación del modo de mantenimiento
+
+auditing
+  auditing:audit-driver  Cree un nuevo controlador de auditoría
+  auditing:install       Instale todos los recursos de auditoría
+
+auth
+  auth:clear-resets      Vacíe los tokens de restablecimiento de contraseña caducados
+
+backup
+  backup:clean           Elimine todas las copias de seguridad anteriores al número de días especificado en config.
+  backup:list            Muestra una lista de todas las copias de seguridad.
+  backup:monitor         Supervise el estado de todas las copias de seguridad.
+  backup:run             Ejecute la copia de seguridad.
+
+cache
+  cache:clear            Vaciar la caché de la aplicación
+  cache:forget           Eliminar un elemento de la caché
+  cache:table            Crear una migración para la tabla de la base de datos de caché
+
+config
+  config:cache           Cree un archivo de caché para una carga de configuración más rápida
+  config:clear           Eliminar el archivo de caché de configuración
+
+countries
+  countries:update       Actualizar todos los datos
+
+db
+  db:seed                Sembrar la base de datos con registros
+  db:wipe                Eliminar todas las tablas, vistas y tipos
+
+debugbar
+  debugbar:clear         Borrar el almacenamiento de la barra de depuración
+
+event
+  event:cache            Descubrir y almacenar en caché los eventos y los oyentes de la aplicación.
+  event:clear            Borrar todos los eventos y oyentes almacenados en caché
+  event:generate         Genere los eventos y oyentes que faltan en función del registro
+  event:list             Enumere los eventos y los oyentes de la aplicación
+
+key
+  key:generate           Establecer la clave de la aplicación
+
+log-viewer
+  log-viewer:check       Verifique todos los requisitos de LogViewer.
+  log-viewer:clear       Borrar todos los archivos de registro generados
+  log-viewer:publish     Publique todos los recursos y archivos de configuración de LogViewer
+  log-viewer:stats       Muestra estadísticas de todos los registros.
+
+make
+  make:cast              Create a new custom Eloquent cast class
+  make:channel           Create a new channel class
+  make:command           Create a new Artisan command
+  make:component         Create a new view component class
+  make:controller        Create a new controller class
+  make:event             Create a new event class
+  make:exception         Create a new custom exception class
+  make:export            Create a new export class
+  make:factory           Create a new model factory
+  make:import            Create a new import class
+  make:job               Create a new job class
+  make:listener          Create a new event listener class
+  make:mail              Create a new email class
+  make:middleware        Create a new middleware class
+  make:migration         Create a new migration file
+  make:model             Create a new Eloquent model class
+  make:notification      Create a new notification class
+  make:observer          Create a new observer class
+  make:policy            Create a new policy class
+  make:provider          Create a new service provider class
+  make:request           Create a new form request class
+  make:resource          Create a new resource
+  make:rule              Create a new validation rule
+  make:seeder            Create a new seeder class
+  make:test              Create a new test class
+
+migrate
+  migrate:fresh          Elimine todas las tablas y vuelva a ejecutar todas las migraciones
+  migrate:install        Crea el repositorio de migración
+  migrate:refresh        Restablecer y volver a ejecutar todas las migraciones
+  migrate:reset          Revertir todas las migraciones de bases de datos
+  migrate:rollback       Revertir la última migración de la base de datos
+  migrate:status         Muestra el estado de cada migración.
+
+notifications
+  notifications:table    Crea una migración para la tabla de notificaciones
+
+optimize
+  optimize:clear         Eliminar los archivos de arranque en caché
+
+package
+  package:discover       Reconstruir el manifiesto del paquete en caché
+
+queue
+  queue:batches-table    Create a migration for the batches database table
+  queue:clear            Delete all of the jobs from the specified queue
+  queue:failed           List all of the failed queue jobs
+  queue:failed-table     Create a migration for the failed queue jobs database table
+  queue:flush            Flush all of the failed queue jobs
+  queue:forget           Delete a failed queue job
+  queue:listen           Listen to a given queue
+  queue:prune-batches    Prune stale entries from the batches database
+  queue:restart          Restart queue worker daemons after their current job
+  queue:retry            Retry a failed queue job
+  queue:retry-batch      Retry the failed jobs for a batch
+  queue:table            Create a migration for the queue jobs database table
+  queue:work             Start processing jobs on the queue as a daemon
+
+route
+  route:cache            Cree un archivo de caché de ruta para un registro de ruta más rápido
+  route:clear            Eliminar el archivo de caché de ruta
+  route:list             Lista de todas las rutas registradas
+
+schedule
+  schedule:list          List the scheduled commands
+  schedule:run           Run the scheduled commands
+  schedule:test          Run a scheduled command
+  schedule:work          Start the schedule worker
+
+schema
+  schema:dump            Volcar el esquema de base de datos dado
+
+session
+  session:table          Crear una migración para la tabla de la base de datos de la sesión
+
+snapshot
+  snapshot:cleanup       Specify how many snapshots to keep and delete the rest
+  snapshot:create        Create a new snapshot.
+  snapshot:delete        Delete a snapshot.
+  snapshot:list          List all the snapshots.
+  snapshot:load          Load up a snapshot.
+
+storage
+  storage:link           Create the symbolic links configured for the application
+
+stub
+  stub:publish           Publish all stubs that are available for customization
+
+ui
+  ui:auth                Scaffold basic login and registration views and routes
+  ui:controllers         Scaffold the authentication controllers
+
+vendor
+  vendor:publish         Publish any publishable assets from vendor packages
+
+view
+  view:cache             Compile todas las plantillas Blade de la aplicación
+  view:clear             Borrar todos los archivos de vista compilados
+
 -----
 
 Sacar la aplicación del modo de mantenimiento.
