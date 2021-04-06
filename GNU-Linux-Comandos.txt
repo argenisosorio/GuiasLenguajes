@@ -6842,3 +6842,19 @@ Una vez abierto le se deben cargar los siguientes documentos:
 -Segundo (El sistema coloca el nombre del archivo firmado)
 -Tercero el archivo .p12
 -Cuarto la frase de paso o contraseña del archivo .p12
+
+Para firmar se ejecuta.
+
+$ java -jar ruta-ejecutable -n -t ruta-documento-firmar -o ruta-almacenar-documento-firmardo -s ruta-del-certificado -p frase-de-paso
+
+$ java -jar PortableSigner.jar -n -t descarga.pdf -o descargar-sign.pdf -s miarchivo.p12 -p "micontraseñ@"
+
+======
+pdfsig
+======
+
+Portable Document Format (PDF) digital signatures tool.
+
+Para verificar la firma de un archivo se ejecuta el siguiente comando:
+
+$ pdfsig mi-archivo-firmado.pdf
