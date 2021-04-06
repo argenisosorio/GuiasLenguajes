@@ -6809,3 +6809,29 @@ Configuración manual y definitiva
 =================================
 
 https://1.1.1.1/es/
+
+==============
+PortableSigner
+==============
+
+Es un programa de firma (con certificados X.509) para archivos PDF. Es
+independiente de la plataforma ya que se puede ejecutar GNU/Linux, Windows y
+Mac OS X.
+
+Se puede descargar desde: http://portablesigner.sourceforge.net/
+
+Una vez descargado y descomprimido se obtienen los siguientes archivos:
+
+PortableSigner.jar
+linux-install.sh
+linux
+lib
+
+Para ejecutarlo y levantar la interfaz del sistema se debe instalar el paquete
+de java disponible:
+
+$ sudo aptitude install default-jre
+
+Luego si ejecutamos el archivo principal:
+
+$ java -jar PortableSigner.jar
