@@ -23,7 +23,7 @@ dependencias.
 ¿Como funciona Laravel?
 =======================
 
-Laravel utiliza el paradigma del "Modelo-vista-controlador"
+Laravel utiliza el paradigma del "Modelo-Vista-Controlador"
 
 1) Un usuario ingresa a una página o sistema web creado con Laravel, a ese
 ingreso se le llama "solicitud" o "petición".
@@ -65,8 +65,8 @@ funcionalidades. Las rutas y los controladores pueden acceder a los middlewares.
 Características
 ===============
 
--Sistema de ruteo, también RESTful3
--Blade, Motor de plantillas4​
+-Sistema de ruteo, también RESTful
+-Blade, Motor de plantillas
 -Peticiones Fluent
 -Eloquent ORM7
 -Basado en Composer
@@ -74,6 +74,22 @@ Características
 -Soporte para MVC
 -Usa componentes de Symfony
 -Adopta las especificaciones PSR-212​ y PSR-4
+
+¿Qué es el eloquent?
+====================
+
+Eloquent es el ORM que incluye Laravel para manejar de una forma fácil y
+sencilla los procesos correspondientes al manejo de bases de datos en nuestro
+proyecto, gracias a las funciones que provee podremos realizar complejas
+consultas y peticiones de base de datos sin escribir una sola línea de código
+SQL.
+
+¿Qué es un blade en laravel?
+============================
+
+Blade es un motor de plantillas simple y a la vez poderoso proporcionado por
+Laravel. A diferencia de otros motores de plantillas populares de PHP, Blade no
+te impide utilizar código PHP plano en tus vistas.
 
 =================================================================
 Instalación de paquetes necesarios para la instalación de Laravel
@@ -200,30 +216,6 @@ recomendado el primero.
 Creamos un proyecto de laravel para probar:
 
 $ laravel new nombre_del_proyecto
-
-===============================================
-Otra forma de generar el proyecto, vía composer
-===============================================
-
-En caso de que el comando anterior no funcione porque se va a quejar porque el
-php instalado no es superior al 7.2 entonces probar:
-
-$ composer create-project --prefer-dist laravel/laravel mysite "5.4.*"
-
-Con el comando anterior lo que estamos declarando que que cree el proyecto
-"mysite" y que se use la ultima actualización de la versión 5.4 de Laravel, que
-es compatible con el php7.0 que está instalado.
-
-Ahora vamos a correr el servidor local de desarrllo usando el script Artisan.
-
-Este comando inicia el servidor de desarrllo en http://localhost:8000:
-
-Entramos en el dirctorio del proyecto y corremos el servidor de desarrollo:
-
-$ php artisan serve
-
-Si corre sin problemas podemos visitar: localhost:8000/ y visualizar Laravel en
-letras grandes.
 
 =================================================================
 En la siguiente sección instalaremos Laravel en su última versión
@@ -357,9 +349,9 @@ letras grandes.
 Otra forma de generar el proyecto, vía composer
 ===============================================
 
-Otra forma de generar el proyecto es usando composer, y especificando versiones:
 
-$ composer create-project --prefer-dist laravel/laravel mysite
+
+
 
 -----
 
@@ -368,6 +360,37 @@ Luego de la generación del proyecto e instalación de dependendencias
 Entramos en el dirctorio del proyecto y corremos el servidor de desarrollo:
 
 $ php artisan serve
+
+===============================================
+Otra forma de generar el proyecto, vía composer
+===============================================
+
+Esta es la opción recomendada.
+
+Primero hay que instalar composer
+
+Con el siguiente comando especificacoms la versión que queremos instalar:
+
+$ composer create-project --prefer-dist laravel/laravel mysite "5.4.*"
+
+Con el comando anterior lo que estamos declarando es que cree el proyecto
+"mysite" y que se use la ultima actualización de la versión 5.4 de Laravel, que
+es compatible con el php7.0 que está instalado.
+
+Ahora vamos a correr el servidor local de desarrllo usando el script Artisan.
+
+Este comando inicia el servidor de desarrllo en http://localhost:8000:
+
+Entramos en el dirctorio del proyecto y corremos el servidor de desarrollo:
+
+$ php artisan serve
+
+Si corre sin problemas podemos visitar: localhost:8000/ y visualizar Laravel en
+letras grandes.
+
+Con el siguiente comando se instala la última versión disponible:
+
+$ composer create-project --prefer-dist laravel/laravel mysite
 
 ===========
 Tips/Extras
@@ -417,13 +440,13 @@ donde puedes encontrar información más detallada:
 app: contiene los modelos, y el código base de nuestra aplicación, incluirá
 los directorios Console, Http y Providers.
 
-resources/views: contiene las vistas, donde usaremos el motor de plantillas Blade.
+app/Http/routes.php: para la definición de las rutas.
 
 app/Http/Controllers: aquí será donde se definirán los controladores.
 
-app/Http/routes.php: para la definición de las rutas.
-
 app/config/app.php: contiene configuración general de la aplicación.
+
+resources/views: contiene las vistas, donde usaremos el motor de plantillas Blade.
 
 public: carpeta pública desde dónde se inicia el proceso de ejecución de una
 aplicación Laravel.
