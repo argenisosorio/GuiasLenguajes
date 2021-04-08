@@ -355,9 +355,18 @@ Con el siguiente comando se instala la última versión disponible:
 
 $ composer create-project --prefer-dist laravel/laravel mysite
 
+Con esta opción Laravel quedará instalao dentro del proyecto creado, no estará
+instalado de manera global en el sistema.
+
 ===========
 Tips/Extras
 ===========
+
+Primero que nada deberemos saber que cuando se ejecuta un proyecto este busca la
+carpeta publica (public) la cual contiene un archivo index.php que se carga por
+default el cual carga el proyecto.
+
+-----
 
 Para comprobar la versión de Laravel instalada entramos en el directorio de un
 proyecto creado:
@@ -1074,6 +1083,50 @@ hacerlo a cada rato, debes usar composer install para instalar tu nuevo paquete
 sin actualizar las versiones de tus otros paquetes. Esto sería mucho más seguro
 y evitamos fallas por actualizar nuevos paquetes y dependencias.
 
+===========================================
+Agregar una nueva ruta para mostrar mensaje
+===========================================
+
+En mysite/router/web.php agregamos lo siguiente:
+
+Route::get('/hola', function () {
+    echo "Hola!!!";
+});
+
+Ahora visitamos http://127.0.0.1:8000/hola y veremos "Hola!!!".
+
+====================================
+Crear una ruta y una vista sencillas
+====================================
+
+Crear una ruta
+==============
+
+En mysite/router/web.php agregamos lo siguiente:
+
+Route::get('/hola', function () {
+    return view('HolaMundo');
+});
+
+Crear una vista
+===============
+
+En mysite/resources/views/ creamos HolaMundo.blade.php
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Laravel</title>
+    </head>
+    <body>
+        <p>Hola!!!</p>
+    </body>
+</html>
+
+Ahora visitamos http://127.0.0.1:8000/hola y veremos "Hola!!!".
+
 ===============================================
 Crear un controlador desde la línea de comandos
 ===============================================
@@ -1098,10 +1151,56 @@ class HolaMundo extends Controller
     //
 }
 
+==================================================
+Crear una ruta un controlado y una vista sencillas
+==================================================
+
+Funciona hasta Laravel 7, con el 8 no funciona de esta manera a menos que se
+especifique la ruta donde está el controlador.
+
+1) En mysite/routes/web.php agregamos:
+
+Route::get('/miruta','MiController@miFuncion');
+
+Para Laravel 8:
+Route::get('/miruta','App\Http\Controllers\MiController@miFuncion');
+
+2) Creamos MiController.php en mysite7/app/Http/Controllers/ y debe contener lo
+siquiente:
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class MiController extends Controller
+{
+    public function miFuncion() {
+        return view('mivista');
+    }
+}
+
+3) Creamos mivista.blade.php en mysite7/resources/views/mivista.blade.php con el
+siguiente contenido:
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Laravel</title>
+    </head>
+    <body>
+        <p>zzzz</p>
+    </body>
+</html>
+
+4) Visitamos http://127.0.0.1:8000/miruta y deberíamos poder ver la vista
+creada.
+
 =======
 Fuentes
 =======
 
--https://tecadmin.net/clear-cache-laravel-5/
--https://solibeth.net/aprende-usar-seed-en-laravel
--https://rimorsoft.com/el-archivo-misterioso-composer-lock
+-http://blogger1889.blogspot.com/2017/07/hola-mundo-con-laravel.html
