@@ -1275,3 +1275,73 @@ Consultar la versión de Laravel y de PHP directamente en una plantilla html
 Laravel v{{ Illuminate\Foundation\Application::VERSION }}
 <br />
 PHP v{{ PHP_VERSION }}
+
+==============
+Kits de inicio
+==============
+
+Para darle una ventaja en la construcción de su nueva aplicación Laravel, nos
+complace ofrecer kits de inicio de aplicaciones y autenticación. Estos kits
+configuran automáticamente su aplicación con las rutas, controladores y vistas
+que necesita para registrar y autenticar a los usuarios de su aplicación.
+
+Si bien puede utilizar estos kits de inicio, no son obligatorios.  Eres libre de
+crear tu propia aplicación desde cero simplemente instalando una copia nueva de
+Laravel.
+
+Laravel Breeze
+==============
+
+Laravel Breeze es una implementación mínima y simple de todas las funciones de
+autenticación de Laravel, que incluyen inicio de sesión, registro,
+restablecimiento de contraseña, verificación de correo electrónico y
+confirmación de contraseña. La capa de vista predeterminada de Laravel Breeze
+está formada por plantillas Blade simples diseñadas con Tailwind CSS.  Breeze
+proporciona un maravilloso punto de partida para comenzar una nueva aplicación
+de Laravel.
+
+Primero, debe crear una nueva aplicación Laravel, configurar su base de datos y
+ejecutar sus migraciones de base de datos:
+
+$ php artisan migrate
+
+Una vez que haya creado una nueva aplicación Laravel, puede instalar Laravel
+Breeze usando Composer:
+
+$ composer require laravel/breeze --dev
+
+Después de que Composer haya instalado el paquete Laravel Breeze, puede ejecutar
+el comando de artisan $ breeze:install. Este comando publica las vistas de
+autenticación, las rutas, los controladores y otros recursos de su aplicación.
+
+Laravel Breeze publica todo su código en su aplicación para que tenga control
+total y visibilidad sobre sus características e implementación. Después de
+instalar Breeze, también debe compilar sus activos para que el archivo CSS de su
+aplicación esté disponible:
+
+$ php artisan breeze:install
+
+$ npm install
+
+$ npm run dev
+
+$ php artisan migrate
+
+A continuación, puede navegar a las URL /login o /register de su aplicación en
+su navegador web. Todas las rutas de Breeze se definen en el archivo
+routes/auth.php.
+
+Breeze & Inertia
+================
+
+Laravel Breeze también ofrece una implementación de frontend Inertia.js
+impulsada por Vue. Para usar la inercia stack, pase la opción --inertia al
+ejecutar el comando breeze: install Artisan:
+
+$ php artisan breeze:install --inertia
+
+$ npm install
+
+$ npm run dev
+
+$ php artisan migrate
