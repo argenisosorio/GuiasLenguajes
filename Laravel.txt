@@ -409,19 +409,74 @@ Vamos a comentar los principales directorios de la estructura de Laravel para
 ello me he ayudado de la documentación de la estructura en español de Laravel,
 donde puedes encontrar información más detallada:
 
-app: contiene los modelos, y el código base de nuestra aplicación, incluirá
+-app: Contiene los modelos, y el código base de nuestra aplicación, incluirá
 los directorios Console, Http y Providers.
 
-app/Http/routes.php: para la definición de las rutas.
+-app/Http/routes.php: para la definición de las rutas.
 
-app/Http/Controllers: aquí será donde se definirán los controladores.
+-app/Http/Controllers: Aquí será donde se definirán los controladores.
 
-app/config/app.php: contiene configuración general de la aplicación.
+-app/config/app.php: Contiene configuración general de la aplicación.
 
-resources/views: contiene las vistas, donde usaremos el motor de plantillas Blade.
+-bootstrap: Contiene el archivo app.php que arranca el framework. Este directorio
+también alberga un directorio de caché que contiene archivos generados por el
+framework para la optimización del rendimiento, como los archivos de caché de
+rutas y servicios. Normalmente, no debería necesitar modificar ningún archivo
+dentro de este directorio.
 
-public: carpeta pública desde dónde se inicia el proceso de ejecución de una
+-config: Como su nombre lo indica, contiene todos los archivos de configuración
+de su aplicación. Es una gran idea leer todos estos archivos y familiarizarse
+con todas las opciones disponibles.
+
+-database: El directorio de la base de datos contiene las migraciones de la base
+de datos, las fábricas de modelos y las semillas o seeds. Si lo desea, también
+puede utilizar este directorio para almacenar una base de datos SQLite.
+
+-resources/views: Contiene las vistas, donde usaremos el motor de plantillas
+Blade. El directorio de recursos contiene sus vistas, así como archivos CSS o
+JavaScript sin compilar, este directorio también aloja todos sus archivos de
+idioma.
+
+-public: Carpeta pública desde dónde se inicia el proceso de ejecución de una
 aplicación Laravel.
+
+-routes: El directorio de rutas contiene todas las definiciones de ruta para su
+aplicación.  De forma predeterminada, se incluyen varios archivos de ruta con
+Laravel: web.php, api.php, console.php y channels.php.
+
+-routes/web.php: Contiene rutas que RouteServiceProvider coloca en el grupo de
+middleware web, que proporciona el estado de la sesión, la protección CSRF y el
+cifrado de cookies.  Si su aplicación no ofrece una API RESTful sin estado, es
+probable que todas sus rutas estén definidas en el archivo web.php.
+
+-routes/api.php: Contiene rutas que RouteServiceProvider coloca en el grupo de
+middleware api. Estas rutas están destinadas a ser sin estado, por lo que las
+solicitudes que ingresan a la aplicación a través de estas rutas deben
+autenticarse mediante tokens y no tendrán acceso al estado de la sesión.
+
+-routes/console.php: Es donde puedes definir todos tus comandos de consola
+basados ​​en el cierre. Cada cierre está vinculado a una instancia de comando, lo
+que permite un enfoque simple para interactuar con los métodos de I/O de cada
+comando. Aunque este archivo no define rutas HTTP, define puntos de entrada
+(rutas) basados ​​en la consola en su aplicación.
+
+-routes/channels.php: Es donde puede registrar todos los canales de transmisión
+de eventos que admite su aplicación.
+
+-storage: El directorio de almacenamiento contiene sus registros, plantillas
+Blade compiladas, sesiones basadas en archivos, cachés de archivos y otros
+archivos generados por el framework. Este directorio está segregado en
+los directorios app, framework y logs. El directorio app se puede utilizar para
+almacenar cualquier archivo generado por su aplicación. El directorio framewok
+se utiliza para almacenar cachés y archivos generados por el marco. Finalmente,
+el directorio logs contiene los archivos de registro de su aplicación.
+
+-storage/app/public: Se puede utilizar para almacenar archivos generados por el
+usuario, como los avatares de perfil, que deberían ser de acceso público. Debe
+crear un enlace simbólico en public/storage que apunte a este directorio. Puede
+crear el enlace usando el comando de artisan php artisan storage:link
+
+-vendor: Contiene los paquetes y dependencias de Composer instaladas.
 
 ================================================
 Actualizar proyectos de Laravel luego de un pull
