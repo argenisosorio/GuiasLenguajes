@@ -177,16 +177,19 @@ foo && bar;  // devuelve 0, el cual es falso (false)
 foo && baz;  // devuelve 2, el cual es verdadero (true)
 baz && foo;  // devuelve 1, el cual es verdadero (true)
 
-El operador || (OR lógico) devuelve el valor del primer operando, si éste es verdadero; caso contrario devuelve el segundo
-operando. Si ambos operandos son falsos devuelve falso (false). El operador && (AND lógico) devuelve el valor del primer operando
-si éste es falso; caso contrario devuelve el segundo operando. Cuando ambos valores son verdaderos devuelve verdadero (true),
-sino devuelve falso.
+El operador || (OR lógico) devuelve el valor del primer operando, si éste es
+verdadero; caso contrario devuelve el segundo operando. Si ambos operandos son
+falsos devuelve falso (false). El operador && (AND lógico) devuelve el valor del
+primer operando si éste es falso; caso contrario devuelve el segundo operando.
+Cuando ambos valores son verdaderos devuelve verdadero (true), sino devuelve falso.
 
-Puede consultar la sección "Elementos Verdaderos y Falsos" para más detalles sobre que valores se evalúan como true y cuales se
-evalúan como false.
+Puede consultar la sección "Elementos Verdaderos y Falsos" para más detalles
+sobre que valores se evalúan como true y cuales se evalúan como false.
 
 **Nota:
-Puede que a veces note que algunos desarrolladores utilizan esta lógica en flujos de control en lugar de utilizar la declaración
+
+Puede que a veces note que algunos desarrolladores utilizan esta lógica en
+flujos de control en lugar de utilizar la declaración
 if. Por ejemplo:
 
 // realizar algo con foo si foo es verdadero
@@ -197,11 +200,15 @@ foo && doSomething(foo);
 // valor de createBar()
 var bar = baz || createBar();
 
-Este estilo de declaración es muy elegante y conciso; pero puede ser difícil para leer (sobretodo para principiantes). Por eso se explícita, para reconocerlo cuando este leyendo código. Sin embargo su utilización no es recomendable a menos que esté cómodo con el concepto y su comportamiento.
+Este estilo de declaración es muy elegante y conciso; pero puede ser difícil
+para leer (sobretodo para principiantes). Por eso se explícita, para reconocerlo
+cuando este leyendo código. Sin embargo su utilización no es recomendable a
+menos que esté cómodo con el concepto y su comportamiento.
 
 2.3.4. Operadores de comparación
 
-Los operadores de comparación permiten comprobar si determinados valores son equivalentes o idénticos.
+Los operadores de comparación permiten comprobar si determinados valores son
+equivalentes o idénticos.
 
 Operadores de Comparación
 
@@ -224,7 +231,9 @@ foo <= baz;  // devuelve verdadero (true)
 
 Código condicional
 
-A veces se desea ejecutar un bloque de código bajo ciertas condiciones. Las estructuras de control de flujo — a través de la utilización de las declaraciones if y else permiten hacerlo.
+A veces se desea ejecutar un bloque de código bajo ciertas condiciones. Las
+estructuras de control de flujo — a través de la utilización de las
+declaraciones if y else permiten hacerlo.
 
 Control del flujo
 
@@ -246,7 +255,9 @@ if (bar) {
 
 ##### Elementos verdaderos y falsos #####
 
-Para controlar el flujo adecuadamente, es importante entender qué tipos de valores son "verdaderos" y cuales "falsos". A veces, algunos valores pueden parecer una cosa pero al final terminan siendo otra.
+Para controlar el flujo adecuadamente, es importante entender qué tipos de
+valores son "verdaderos" y cuales "falsos". A veces, algunos valores pueden
+parecer una cosa pero al final terminan siendo otra.
 
 Valores que devuelven verdadero (true)
 
@@ -266,7 +277,11 @@ undefined; // tenga cuidado -- indefinido (undefined) puede ser redefinido
 
 Variables condicionales utilizando el operador ternario
 
-A veces se desea establecer el valor de una variable dependiendo de cierta condición. Para hacerlo se puede utilizar una declaración if/else, sin embargo en muchos casos es más conveniente utilizar el operador ternario. [Definición: El operador ternario evalúa una condición; si la condición es verdadera, devuelve cierto valor, caso contrario devuelve un valor diferente.]
+A veces se desea establecer el valor de una variable dependiendo de cierta
+condición. Para hacerlo se puede utilizar una declaración if/else, sin embargo
+en muchos casos es más conveniente utilizar el operador ternario. [Definición:
+El operador ternario evalúa una condición; si la condición es verdadera,
+devuelve cierto valor, caso contrario devuelve un valor diferente.]
 
 ##### El operador ternario #####
 
@@ -274,11 +289,15 @@ A veces se desea establecer el valor de una variable dependiendo de cierta condi
 // caso contrario, establecer a foo igual a 0
 var foo = bar ? 1 : 0;
 
-El operador ternario puede ser utilizado sin devolver un valor a la variable, sin embargo este uso generalmente es desaprobado.
+El operador ternario puede ser utilizado sin devolver un valor a la variable,
+sin embargo este uso generalmente es desaprobado.
 
 Declaración switch
 
-En lugar de utilizar una serie de declaraciones if/else/else if/else, a veces puede ser útil la utilización de la declaración switch. [Definición: La declaración Switch evalúa el valor de una variable o expresión, y ejecuta diferentes bloques de código dependiendo de ese valor.]
+En lugar de utilizar una serie de declaraciones if/else/else if/else, a veces
+puede ser útil la utilización de la declaración switch. [Definición: La
+declaración Switch evalúa el valor de una variable o expresión, y ejecuta
+diferentes bloques de código dependiendo de ese valor.]
 
 Una declaración switch
 
@@ -294,8 +313,11 @@ switch (foo) {
     break;
 }
 
-Las declaraciones switch son poco utilizadas en JavaScript, debido a que el mismo comportamiento es posible obtenerlo creando un
-objeto, el cual posee más potencial ya que es posible reutilizarlo, usarlo para realizar pruebas, etc. Por ejemplo:
+Las declaraciones switch son poco utilizadas en JavaScript, debido a que el
+mismo comportamiento es posible obtenerlo creando un objeto, el cual posee más
+potencial ya que es posible reutilizarlo, usarlo para realizar pruebas, etc.
+
+Por ejemplo:
 
 var stuffToDo = {
     'bar' : function() {
@@ -321,29 +343,36 @@ if (stuffToDo[foo]) {
 ##### Bucles #####
 ##################
 
-Los bucles (en inglés loops) permiten ejecutar un bloque de código un determinado número de veces.
+Los bucles (en inglés loops) permiten ejecutar un bloque de código un
+determinado número de veces.
 
 // muestra en la consola 'intento 0', 'intento 1', ..., 'intento 4'
 for (var i=0; i<5; i++) {
     console.log('intento ' + i);
 }
 
-Note que en el ejemplo se utiliza la palabra var antes de la variable i, esto hace que dicha variable quede
-dentro del "alcance" (en inglés *scope) del bucle. Más adelante en este capítulo se examinará en profundidad
-el concepto dealcance.*
+Note que en el ejemplo se utiliza la palabra var antes de la variable i, esto
+hace que dicha variable quede dentro del "alcance" (en inglés scope) del bucle.
+Más adelante en este capítulo se examinará en profundidad el concepto
+de alcance.
 
 ##### Bucles utilizando for #####
 
-Un bucle utilizando for se compone de cuatro estados y posee la siguiente estructura:
+Un bucle utilizando for se compone de cuatro estados y posee la siguiente
+estructura:
 
-for ([expresiónInicial]; [condición]; [incrementoDeLaExpresión])
-    [cuerpo]
+for ([expresiónInicial]; [condición]; [incrementoDeLaExpresión]) [cuerpo]
 
-El estado expresiónInicial es ejecutado una sola vez, antes que el bucle comience. Éste otorga la oportunidad de preparar o declarar variables.
+El estado expresiónInicial es ejecutado una sola vez, antes que el bucle
+comience. Éste otorga la oportunidad de preparar o declarar variables.
 
-El estado condición es ejecutado antes de cada repetición, y retorna un valor que decide si el bucle debe continuar ejecutándose o no. Si el estado condicional evalúa un valor falso el bucle se detiene.
+El estado condición es ejecutado antes de cada repetición, y retorna un valor
+que decide si el bucle debe continuar ejecutándose o no. Si el estado
+condicional evalúa un valor falso el bucle se detiene.
 
-El estado incrementoDeLaExpresión es ejecutado al final de cada repetición y otorga la oportunidad de cambiar el estado de importantes variables. Por lo general, este estado implica la incrementación o decrementación de un contador.
+El estado incrementoDeLaExpresión es ejecutado al final de cada repetición y
+otorga la oportunidad de cambiar el estado de importantes variables. Por lo
+general, este estado implica la incrementación o decrementación de un contador.
 
 El cuerpo es el código a ejecutar en cada repetición del bucle.
 
@@ -549,11 +578,16 @@ var mySplit = myString.split('');  // [ 'h', 'e', 'l', 'l', 'o' ]
 ##### Objetos #####
 ###################
 
-Los objetos son elementos que pueden contener cero o más conjuntos de pares de nombres claves y valores asociados a dicho objeto. Los nombres claves pueden ser cualquier palabra o número válido. El valor puede ser cualquier tipo de valor: un número, una cadena, un array, una función, incluso otro objeto.
+Los objetos son elementos que pueden contener cero o más conjuntos de pares de
+nombres claves y valores asociados a dicho objeto. Los nombres claves pueden ser
+cualquier palabra o número válido. El valor puede ser cualquier tipo de valor:
+un número, una cadena, un array, una función, incluso otro objeto.
 
-[Definición: Cuando uno de los valores de un objeto es una función, ésta es nombrada como un método del objeto.] De lo contrario, se los llama propiedades.
+[Definición: Cuando uno de los valores de un objeto es una función, ésta es
+nombrada como un método del objeto.] De lo contrario, se los llama propiedades.
 
-Curiosamente, en JavaScript, casi todo es un objeto — arrays, funciones, números, incluso cadenas — y todos poseen propiedades y métodos.
+Curiosamente, en JavaScript, casi todo es un objeto - arrays, funciones,
+números, incluso cadenas — y todos poseen propiedades y métodos.
 
 Creación de un "objeto literal"
 
@@ -572,7 +606,9 @@ console.log(myObject.myName);
 
 Nota:
 
-Notar que cuando se crean objetos literales, el nombre de la propiedad puede ser cualquier identificador JavaScript, una cadena de caracteres (encerrada entre comillas) o un número:
+Notar que cuando se crean objetos literales, el nombre de la propiedad puede ser
+cualquier identificador JavaScript, una cadena de caracteres (encerrada entre
+comillas) o un número:
 
 var myObject = {
   validIdentifier: 123,
@@ -584,8 +620,9 @@ var myObject = {
 ##### Funciones #####
 #####################
 
-Las funciones contienen bloques de código que se ejecutaran repetidamente. A las mismas se le pueden
-pasar argumentos, y opcionalmente la función puede devolver un valor.
+Las funciones contienen bloques de código que se ejecutaran repetidamente. A las
+mismas se le pueden pasar argumentos, y opcionalmente la función puede devolver
+un valor.
 
 Las funciones pueden ser creadas de varias formas:
 
@@ -597,7 +634,9 @@ Declaración de una función nombrada
 
 var foo = function() { /* hacer algo */ }
 
-Es preferible el método de función nombrada debido a algunas profundas razones técnicas. Igualmente, es probable encontrar a los dos métodos cuando se revise código JavaScript.
+Es preferible el método de función nombrada debido a algunas profundas razones
+técnicas. Igualmente, es probable encontrar a los dos métodos cuando se revise
+código JavaScript.
 
 Utilización de funciones
 
@@ -633,7 +672,11 @@ greeting();  // se muestra en la consola 'Hello, Rebecca'
 
 Funciones anónimas autoejecutables
 
-Un patrón común en JavaScript son las funciones anónimas autoejecutables. Este patrón consiste en crear una expresión de función e inmediatamente ejecutarla. El mismo es muy útil para casos en que no se desea intervenir espacios de nombres globales, debido a que ninguna variable declarada dentro de la función es visible desde afuera.
+Un patrón común en JavaScript son las funciones anónimas autoejecutables. Este
+patrón consiste en crear una expresión de función e inmediatamente ejecutarla.
+El mismo es muy útil para casos en que no se desea intervenir espacios de
+nombres globales, debido a que ninguna variable declarada dentro de la función
+es visible desde afuera.
 
 Función anónima autoejecutable
 
@@ -644,7 +687,9 @@ console.log(foo);   // indefinido (undefined)
 
 Funciones como argumentos
 
-En JavaScript, las funciones son ciudadanos de primera clase — pueden ser asignadas a variables o pasadas a otras funciones como argumentos. En jQuery, pasar funciones como argumentos es una práctica muy común.
+En JavaScript, las funciones son ciudadanos de primera clase — pueden ser
+asignadas a variables o pasadas a otras funciones como argumentos. En jQuery,
+pasar funciones como argumentos es una práctica muy común.
 
 Pasar una función anónima como un argumento
 
@@ -5260,12 +5305,24 @@ canal HTTP, como peticiones y respuestas. También provee un método global fetc
 que proporciona una forma fácil y lógica de obtener recursos de
 forma asíncrona por la red.
 
-
-
-
-
-
-
 Fuentes:
 
 -https://developer.mozilla.org/es/docs/Web/API/Fetch_API/Utilizando_Fetch
+
+-----
+
+Convierta un número en una cadena, redondeando el número para mantener solo con
+dos decimales
+
+<!DOCTYPE html>
+<html>
+<body>
+<script>
+var num = 5.56789;
+var n = num.toFixed(2);
+document.write(num);
+document.write("<br />");
+document.write(n);
+</script>
+</body>
+</html>
