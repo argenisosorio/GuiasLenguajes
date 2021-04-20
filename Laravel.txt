@@ -1228,6 +1228,12 @@ Route::get('/miruta','MiController@miFuncion');
 Para Laravel 8:
 Route::get('/miruta','App\Http\Controllers\MiController@miFuncion');
 
+ó
+
+use App\Http\Controllers\MiController;
+
+Route::get('/miruta',[MiController::class, 'miFuncion']);
+
 2) Creamos MiController.php en mysite7/app/Http/Controllers/ y debe contener lo
 siquiente:
 
