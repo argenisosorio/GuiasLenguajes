@@ -440,6 +440,15 @@ idioma.
 -public: Carpeta pública desde dónde se inicia el proceso de ejecución de una
 aplicación Laravel.
 
+El punto de entrada para todas las solicitudes a una aplicación de Laravel es el
+archivo public/index.php. Todas las solicitudes son dirigidas a este archivo por
+la configuración de su servidor web (Apache / Nginx). El archivo index.php no
+contiene mucho código. Más bien, es un punto de partida para cargar el resto del
+marco.
+
+El archivo index.php carga la definición de autocargador generada por Composer y
+luego recupera una instancia de la aplicación Laravel desde bootstrap/app.php.
+
 -routes: El directorio de rutas contiene todas las definiciones de ruta para su
 aplicación.  De forma predeterminada, se incluyen varios archivos de ruta con
 Laravel: web.php, api.php, console.php y channels.php.
@@ -1146,6 +1155,53 @@ hacerlo a cada rato, debes usar composer install para instalar tu nuevo paquete
 sin actualizar las versiones de tus otros paquetes. Esto sería mucho más seguro
 y evitamos fallas por actualizar nuevos paquetes y dependencias.
 
+==================================
+Métodos disponibles para las rutas
+==================================
+
+Route::get($uri, $callback);
+Route::post($uri, $callback);
+Route::put($uri, $callback);
+Route::patch($uri, $callback);
+Route::delete($uri, $callback);
+Route::options($uri, $callback);
+
+A veces, es posible que deba registrar una ruta que responda a varios métodos
+HTTP. Puede hacerlo utilizando el método match. O incluso puede registrar una
+ruta que responda a todos los métodos HTTP utilizando el método any:
+
+Route::match(['get', 'post'], '/', function () {
+    //
+});
+
+Route::any('/', function () {
+    //
+});
+
+===============
+Protección CSRF
+===============
+
+Recuerde, cualquier formulario HTML que apunte a rutas POST, PUT, PATCH o
+DELETE que estén definidas en el archivo de rutas web debe incluir un campo de
+token CSRF. De lo contrario, la solicitud será rechazada.
+
+<form method="POST" action="/profile">
+    @csrf
+    ...
+</form>
+
+===============
+Redirigir rutas
+===============
+
+Si está definiendo una ruta que redirige a otro URI, puede usar el método
+Route::redirect. Este método proporciona un atajo conveniente para que no tenga
+que definir una ruta completa o un controlador para realizar una redirección
+simple:
+
+Route::redirect('/here', '/there');
+
 ===========================================
 Agregar una nueva ruta para mostrar mensaje
 ===========================================
@@ -1154,6 +1210,12 @@ En mysite/router/web.php agregamos lo siguiente:
 
 Route::get('/hola', function () {
     echo "Hola!!!";
+});
+
+ó
+
+Route::get('/greeting', function () {
+    return 'Hello!!!';
 });
 
 Ahora visitamos http://127.0.0.1:8000/hola y veremos "Hola!!!".
