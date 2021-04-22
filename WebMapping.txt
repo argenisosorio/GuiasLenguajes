@@ -1,0 +1,345 @@
+========================
+Guía de WebMapping by dM
+========================
+
+=======================================
+Sistema de información geográfica (SIG)
+=======================================
+
+Un sistema de información geográfica (SIG), también habitualmente citado como
+GIS por las siglas de su nombre en inglés Geographical Information System, es un
+conjunto de herramientas que integra y relaciona diversos componentes que
+permiten la organización, almacenamiento, manipulación, análisis y modelización
+de grandes cantidades de datos procedentes del mundo real que están vinculados a
+una referencia espacial, facilitando la incorporación de aspectos
+sociales-culturales, económicos y ambientales que conducen a la toma de
+decisiones de una manera más eficaz.
+
+En el sentido más estricto, es cualquier sistema de información capaz de
+integrar, almacenar, editar, analizar, compartir y mostrar la información
+geográficamente referenciada. En un sentido más genérico, los SIG son
+herramientas que permiten a los usuarios crear consultas interactivas, analizar
+la información espacial, editar datos, mapas y presentar los resultados de todas
+estas operaciones.
+
+La tecnología de los SIG puede ser utilizada para investigaciones científicas,
+la gestión de los recursos, la gestión de activos, la arqueología, la evaluación
+del impacto ambiental, la planificación urbana, la cartografía, la sociología,
+la geografía histórica, el marketing, la logística por nombrar unos pocos. Por
+ejemplo, un SIG podría permitir a los grupos de emergencia calcular fácilmente
+los tiempos de respuesta en caso de un desastre natural, o encontrar los
+humedales que necesitan protección contra la contaminación, o pueden ser
+utilizados por una empresa para ubicar un nuevo negocio y aprovechar las
+ventajas de una zona de mercado con escasa competencia.
+
+Funcionamiento de un SIG
+========================
+
+Un SIG puede mostrar la información en capas temáticas para realizar análisis
+multicriterio complejos.
+
+Un SIG puede mostrar la información en capas temáticas para realizar análisis
+multicriterio complejos.
+
+El SIG funciona como una base de datos con información geográfica
+(datos alfanuméricos) que se encuentra asociada por un identificador común a los
+objetos gráficos de los mapas digitales. De esta forma, señalando un objeto se
+conocen sus atributos e, inversamente, preguntando por un registro de la base de
+datos se puede saber su localización en la cartografía.
+
+SIG proporciona, para cada tipo de organización basada en ubicación, una
+plataforma para actualizar datos geográficos sin perder tiempo visitando el
+sitio y actualizar la base de datos manualmente. SIG cuando se interpreta con
+otras soluciones integradas tales como SAP1​ y Wolfram Language  permite crear
+potente sistemas de soporte a decisiones a nivel corporativo.
+
+La razón fundamental para utilizar un SIG (GIS en inglés) es la gestión de
+información espacial. El sistema permite separar la información en diferentes
+capas temáticas y las almacena independientemente, permitiendo trabajar con
+ellas de manera rápida y sencilla, facilitando al profesional la posibilidad de
+relacionar la información existente a través de la topología geoespacial de los
+objetos, con el fin de generar otra nueva que no podríamos obtener de otra
+forma.
+
+Las principales cuestiones que puede resolver un sistema de información
+geográfica, ordenadas de menor a mayor complejidad, son:
+
+-Localización: preguntar por las características de un lugar concreto.
+
+-Condición: el cumplimiento o no de unas condiciones impuestas al sistema. Se
+busca un determinado lugar que reúna ciertas condiciones.
+
+-Tendencia: comparación entre situaciones temporales o espaciales distintas de
+alguna característica. Permite conocer la variación de algunas características a
+través de un determinado periodo.
+
+-Rutas: cálculo de rutas óptimas entre dos o más puntos.
+
+-Pautas: detección de pautas espaciales. Busca determinar en una zona
+específica, las relaciones que pudieran existir entre dos o más variables.
+
+-Modelos: generación de modelos a partir de fenómenos o actuaciones simuladas.
+Si un sistema planteado se somete a determinadas modificaciones de sus variables
+cómo queda definido el nuevo sistema, cuánto ha cambiado, etc.
+
+Por ser tan versátiles, el campo de aplicación de los sistemas de información
+geográfica es muy amplio, pudiendo utilizarse en la mayoría de las actividades
+con un componente espacial. La profunda revolución que han provocado las nuevas
+tecnologías ha incidido de manera decisiva en su evolución.
+
+La creación de datos
+====================
+
+La teledetección es una de las principales fuentes de datos para los SIG.
+
+Las modernas tecnologías SIG trabajan con información digital, para la cual
+existen varios métodos utilizados en la creación de datos digitales. El método
+más utilizado es la digitalización, donde a partir de un mapa impreso o con
+información tomada en campo se transfiere a un medio digital por el empleo de un
+programa de Diseño Asistido por Ordenador (DAO o CAD) con capacidades de
+georreferenciación.
+
+Dada la amplia disponibilidad de imágenes orto-rectificadas (tanto de satélite y
+como aéreas), la digitalización por esta vía se está convirtiendo en la
+principal fuente de extracción de datos geográficos. Esta forma de
+digitalización implica la búsqueda de datos geográficos directamente en las
+imágenes aéreas en lugar del método tradicional de la localización de formas
+geográficas sobre un tablero de digitalización.
+
+La representación de los datos
+==============================
+
+Los datos SIG representan los objetos del mundo real (carreteras, el uso del
+suelo, altitudes). Los objetos del mundo real se pueden dividir en dos
+abstracciones: objetos discretos (una casa) y continuos (cantidad de lluvia
+caída, una elevación). Existen dos formas de almacenar los datos en un SIG:
+raster y vectorial.
+
+Los SIG que se centran en el manejo de datos en formato vectorial son más
+populares en el mercado. No obstante, los SIG raster son muy utilizados en
+estudios que requieran la generación de capas continuas, necesarias en
+fenómenos no discretos; también en estudios medioambientales donde no se
+requiere una excesiva precisión espacial (contaminación atmosférica,
+distribución de temperaturas, localización de especies marinas, análisis
+geológicos, etc.).
+
+Raster
+======
+
+Un tipo de datos raster es, en esencia, cualquier tipo de imagen digital
+representada en mallas. El modelo de SIG raster o de retícula se centra en las
+propiedades del espacio más que en la precisión de la localización. Divide el
+espacio en celdas regulares donde cada una de ellas representa un único valor.
+Se trata de un modelo de datos muy adecuado para la representación de variables
+continuas en el espacio.
+
+Cualquiera que esté familiarizado con la fotografía digital reconoce el píxel
+como la unidad menor de información de una imagen. Una combinación de estos
+píxeles creará una imagen, a distinción del uso común de gráficos vectoriales
+escalables que son la base del modelo vectorial. Si bien una imagen digital se
+refiere a la salida como una representación de la realidad, en una fotografía o
+el arte transferidos a la computadora, el tipo de datos raster reflejará una
+abstracción de la realidad. Las fotografías aéreas son una forma de datos raster
+utilizada comúnmente con un solo propósito: mostrar una imagen detallada de un
+mapa base sobre la que se realizarán labores de digitalización. Otros conjuntos
+de datos raster podrán contener información referente a las elevaciones del
+terreno (un Modelo Digital del Terreno), o de la reflexión de la luz de una
+particular longitud de onda (por ejemplo las obtenidas por el satélite LandSat),
+entre otros.
+
+Los datos raster se compone de filas y columnas de celdas, cada celda almacena
+un valor único. Los datos raster pueden ser imágenes (imágenes raster), con un
+valor de color en cada celda (o píxel). Otros valores registrados para cada
+celda puede ser un valor discreto, como el uso del suelo, valores continuos,
+como temperaturas, o un valor nulo si no se dispone de datos. Si bien una trama
+de celdas almacena un valor único, estas pueden ampliarse mediante el uso de las
+bandas del raster para representar los colores RGB (rojo, verde, azul), o una
+tabla extendida de atributos con una fila para cada valor único de células. La
+resolución del conjunto de datos raster es el ancho de la celda en unidades
+sobre el terreno.
+
+Los datos raster se almacenan en diferentes formatos, desde un archivo estándar
+basado en la estructura de TIFF, JPEG, etc. a grandes objetos binarios (BLOB),
+los datos almacenados directamente en Sistema de gestión de base de datos. El
+almacenamiento en bases de datos, cuando se indexan, por lo general permiten una
+rápida recuperación de los datos raster, pero a costa de requerir el
+almacenamiento de millones registros con un importante tamaño de memoria. En un
+modelo raster cuanto mayores sean las dimensiones de las celdas menor es la
+precisión o detalle (resolución) de la representación del espacio geográfico.
+
+Vectorial
+=========
+
+En un SIG, las características geográficas se expresan con frecuencia como
+vectores, manteniendo las características geométricas de las figuras.
+
+Representación de curvas de nivel sobre una superficie tridimensional generada
+por una red irregular de triángulos TIN.
+
+En los datos vectoriales, el interés de las representaciones se centra en la
+precisión de la localización de los elementos geográficos sobre el espacio y
+donde los fenómenos a representar son discretos, es decir, de límites definidos.
+Cada una de estas geometrías está vinculada a una fila en una base de datos que
+describe sus atributos. Por ejemplo, una base de datos que describe los lagos
+puede contener datos sobre la batimetría de estos, la calidad del agua o el
+nivel de contaminación. Esta información puede ser utilizada para crear un mapa
+que describa un atributo particular contenido en la base de datos. Los lagos
+pueden tener un rango de colores en función del nivel de contaminación. Además,
+las diferentes geometrías de los elementos también pueden ser comparadas. Así,
+por ejemplo, el SIG puede ser usado para identificar aquellos pozos (geometría
+de puntos) que están en torno a 2 kilómetros de un lago (geometría de polígonos)
+y que tienen un alto nivel de contaminación.
+
+Los elementos vectoriales pueden crearse respetando una integridad territorial a
+través de la aplicación de unas normas topológicas tales como que "los polígonos
+no deben superponerse". Los datos vectoriales se pueden utilizar para
+representar variaciones continuas de fenómenos. Las líneas de contorno y las
+redes irregulares de triángulos (TIN) se utilizan para representar la altitud u
+otros valores en continua evolución. Los TIN son registros de valores en un
+punto localizado, que están conectados por líneas para formar una malla
+irregular de triángulos. La cara de los triángulos representan, por ejemplo, la
+superficie del terreno.
+
+Para modelar digitalmente las entidades del mundo real se utilizan tres
+elementos geométricos: el punto, la línea y el polígono.
+
+Puntos
+======
+
+Los puntos se utilizan para las entidades geográficas que mejor pueden ser
+expresadas por un único punto de referencia. En otras palabras: la simple
+ubicación. Por ejemplo, las localizaciones de los pozos, picos de elevaciones o
+puntos de interés. Los puntos transmiten la menor cantidad de información de
+estos tipos de archivo y no son posibles las mediciones. También se pueden
+utilizar para representar zonas a una escala pequeña. Por ejemplo, las ciudades
+en un mapa del mundo estarán representadas por puntos en lugar de polígonos.
+
+Líneas o polilíneas
+===================
+
+Las líneas unidimensionales o polilíneas son usadas para rasgos lineales como
+ríos, caminos, ferrocarriles, rastros, líneas topográficas o curvas de nivel. De
+igual forma que en las entidades puntuales, en pequeñas escalas pueden ser
+utilizados para representar polígonos. En los elementos lineales puede medirse
+la distancia.
+
+Polígonos
+=========
+
+Los polígonos bidimensionales se utilizan para representar elementos geográficos
+que cubren un área particular de la superficie de la tierra. Estas entidades
+pueden representar lagos, límites de parques naturales, edificios, provincias, o
+los usos del suelo, por ejemplo. Los polígonos transmiten la mayor cantidad de
+información en archivos con datos vectoriales y en ellos se pueden medir el
+perímetro y el área.
+
+=================
+ArcGIS - Software
+=================
+
+ArcGIS es el nombre de un conjunto de productos de software en el campo de los
+Sistemas de Información Geográfica o SIG.
+
+¿Qué es una geodatabase?
+========================
+
+En su nivel más básico, una geodatabase de ArcGIS es una colección de datasets
+geográficos de varios tipos contenida en una carpeta de sistema de archivos
+común, una base de datos de Microsoft Access o una base de datos relacional
+multiusuario DBMS (por ejemplo Oracle, Microsoft SQL Server, PostgreSQL,
+Informix o IBM DB2). Las geodatabases tienen diversos tamaños, distinto número
+de usuarios, pueden ir desde pequeñas bases de datos de un solo usuario
+generadas en archivos hasta geodatabases de grupos de trabajo más grandes,
+departamentos o geodatabases corporativas a las que acceden muchos usuarios.
+
+=======
+GeoJSON
+=======
+
+GeoJSON  es un formato estándar abierto diseñado para representar elementos
+geográficos sencillos, junto con sus atributos no espaciales, basado en
+JavaScript Object Notation. El formato es ampliamente utilizado en aplicaciones
+de cartografía en entornos web al permitir el intercambio de datos de manera
+rápida, ligera y sencilla.
+
+La gramática del formato está basada en el estándar WKT del Open Geospatial
+Consortium, con unas geometrías que pueden ser de tipo punto (direcciones,
+ubicaciones, puntos de interés, etc.), líneas (calles, carreteras, fronteras,
+etc.), polígonos (países, provincias, parcelas catastrales, etc.) y colecciones
+de estos tipos. GeoJSON usa un sistema de referencia de coordenadas geográficas,
+WGS84 y unidades en grados decimales.
+
+El formato GeoJSON difiere de otros estándares SIG en que no está desarrollado y
+mantenido por una organización oficial, sino que es mantenido por una comunidad
+de desarrolladores en Internet.5
+
+Una evolución de este formato es TopoJSON, una extensión de GeoJSON que codifica
+topología geoespacial y que proporciona ficheros de menor tamaño que GeoJson.
+
+=========
+Shapefile
+=========
+
+El formato ESRI Shapefile (SHP) es un formato de archivo informático propietario
+de datos espaciales desarrollado por la compañía ESRI, quien crea y comercializa
+software para Sistemas de Información Geográfica como Arc/Info o ArcGIS.
+Originalmente se creó para la utilización con su producto ArcView GIS, pero
+actualmente se ha convertido en formato estándar de facto para el intercambio de
+información geográfica entre Sistemas de Información Geográfica por la
+importancia que los productos ESRI tienen en el mercado SIG y por estar muy bien
+documentado.
+
+Un shapefile es un formato vectorial de almacenamiento digital donde se guarda
+la localización de los elementos geográficos y los atributos asociados a ellos.
+No obstante carece de capacidad para almacenar información topológica. Es un
+formato multiarchivo, es decir está generado por varios ficheros informáticos.
+El número mínimo requerido es de tres y tienen las extensiones siguientes:
+
+.shp - es el archivo que almacena las entidades geométricas de los objetos.
+
+.shx - es el archivo que almacena el índice de las entidades geométricas.
+
+.dbf - es la base de datos, en formato dBASE, donde se almacena la información
+de los atributos de los objetos.
+
+Además de estos tres archivos requeridos, opcionalmente se pueden utilizar otros
+para mejorar el funcionamiento en las operaciones de consulta a la base de
+datos, información sobre la proyección cartográfica, o almacenamiento de
+metadatos. Estos archivos son:
+
+.prj - Es el archivo que guarda la información referida al sistema de
+coordenadas en formato WKT.
+
+.sbn y .sbx - Almacena el índice espacial de las entidades.
+
+.fbn y .fbx - Almacena el índice espacial de las entidades para los shapefiles
+que son inalterables (solo lectura).
+
+.ain y .aih - Almacena el índice de atributo de los campos activos en una tabla
+o el tema de la tabla de atributos.
+
+.xml - Almacena los metadatos del shapefile.
+
+============
+La geomática
+============
+
+La geomática, también ingeniería geomática y tecnología geoespacial, es la
+ciencia que se ocupa de la gestión de información geográfica mediante la
+utilización de tecnologías de la información y la comunicación.
+
+==============
+Curva de nivel
+==============
+
+Una curva de nivel es aquella línea que en un mapa une todos los puntos que
+tienen igualdad de condiciones, normalmente altitud sobre el nivel del mar o
+profundidad. Las curvas de nivel suelen imprimirse en los mapas en color siena
+para el terreno y en azul para los glaciares y las profundidades marinas.
+
+=======
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Sistema_de_informaci%C3%B3n_geogr%C3%A1fica
+-https://es.wikipedia.org/wiki/GeoJSON
