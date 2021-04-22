@@ -1,35 +1,54 @@
 # Guías y Códigos de...
 
-- C
-- QT
-- Xen
-- C++
-- PHP
-- Ruby
-- Ionic
-- SCSS
-- Nginx
-- Uwsgi
-- HTML
-- HAML
-- Vue.Js
-- Jquery
-- Apache
-- MySQL
-- Docker
-- Django
-- Python
-- Laravel
-- JavaScript
-- AngularJS
-- Markdown
-- WordPress
-- Git/GitHub
-- Bash Script
-- PostgreSQL
-- Ruby on Rails
-- Windows Bash script
-- Mezzanine CMS basado en Django
-- Manual del Administrador de Debian 8
-- Empaquetamiento en GNU/Linux Debian
-- Comandos de GNU/Linux y muchos más para practicar y aprender.
+Qt
+xml
+Vue
+npm
+PHP
+GTK
+Git
+html
+haml
+Java
+Ajax
+Ruby
+SCSS
+Uwsgi
+MySQL
+Nginx
+Ionic
+Apache
+Python
+GitLab
+Django
+NodeJS
+Docker
+Jquery
+htmlErb
+MariaDB
+Android
+Laravel
+Leaflet
+C++andC
+Tornado
+Chamilo
+Cordova
+Composer
+MarkDown
+Wordpress
+AngularJS
+WebMapping
+PostgreSQL
+JavaScript
+BashScript
+Xen-monitor
+RubyOnRails
+Windows_bash
+Mezzanine_CMS
+Bases-de-datos
+DjangoRestFramework
+Reparar_Discos_Duros
+Seguridad_informacion
+Compilacion_Paquetes_Debian
+Sistemas-Información-y-Web
+Comandos de GNU/Linux y muchos más para practicar y aprender...
