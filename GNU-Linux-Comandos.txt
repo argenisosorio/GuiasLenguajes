@@ -2305,6 +2305,96 @@ x.gob.ve.crt ***Este es el certificado final***
 x.gob.ve.csr
 x.gob.ve.key
 
+======================================================================
+Generar un certificado electrónico autofirmado en formato PKCS#12 .p12
+======================================================================
+
+El certificado en formato PKCS#12 es un archivo de almacén de clave que incluye
+certificado(s), y clave privada(s) cifradas por una contraseña (frase de paso)
+elegida por el usuario. El certificado autofirmado no es emitido por alguna
+autoridad o proveedor de servicio de certificado, si no que puede ser construido
+y avalado por una misma persona.
+
+1) Instalación de la librería OPENSSL.
+
+$ sudo aptitude install openssl
+
+2) Crear una clave privada y pública RSA. El RSA es un algoritmo criptográfico
+para la generación de claves utilizadas en firmas electrónicas. Para generar las
+claves RSA se ejecuta el siguiente comando:
+
+$ openssl genrsa -out localhost.key
+
+La ejecución del comando anterior genera la clave privada y la almacena en un
+archivo llamado localhost.key en el directorio donde se ejecutó el comando
+(verificar la existencia del archivo).
+
+3) Crear un certificado autofirmado con el estándar x509. El estándar X509
+esencialmente se usa para la verificación de emisión de certificado dentro de la
+jerarquía de autoridades certificantes. Para este ejemplo no se requiere
+verificar que autoridades lo emitieron porque es un certificado autofirmado,
+pero se necesita que dicho certificado este bajo ese estándar.
+
+Para crear este certificado se ejecuta el siguiente comando:
+
+$ openssl req -new -x509 -days 1825 -key localhost.key -out localhost.crt
+
+Donde se indica que genere un nuevo certificado (openssl req -new) con los
+siguientes parámetros:
+
+-Estándar: ( -x509 )
+
+-Días de duración del certificado:( -days 1825 )
+
+-Clave privada, nombre del archivo donde esta almacenado: ( -key localhost.key )
+
+-Nombre del archivo donde se almacenara el certificado:( -out localhost.crt )
+
+Al ejecutar el comando se solicita la información que contendrá el certificado:
+
+-Country Name (2 letter code) [AU]:
+-State or Province Name (full name) [Some-State]:
+-Locality Name (eg, city):
+-Organization Name (eg, company) [Internet Widgits Pty Ltd]:
+-Organizational Unit Name (eg, section):
+-Common Name (e.g. server FQDN or YOUR name):
+-Email Address:
+
+La ejecución del comando anterior genera el certificado asociado a la clave
+indicada y con información ingresada al momento de su generación.
+
+El certificado se guarda en el archivo con el nombre localhost.crt en el
+directorio donde se ejecutó el comando (verificar la existencia del archivo).
+
+4) Crear un certificado en formato PKCS#12: Como ya se tiene la clave privada y
+el certificado asociado a dicha clave (generada en las secciones anteriores), se
+procede a generar un certificado en formato PKCS#12 ejecutando el siguiente
+comando:
+
+$ openssl pkcs12 -export -inkey localhost.key -in localhost.crt -out localhost.p12
+
+Donde se le indica que exporte ( -export ) los siguientes parámetros:
+
+-La clave privada ( -inkey localhost.key )
+-Certificado autofirmado ( -in localhost.crt ) asociado a la clave privada
+-Nombre del archivo donde se almacena el certificado ( -out localhost.p12 )
+
+La ejecución del comando anterior solicita que ingresa una contraseña (frase de
+paso), luego se genera el certificado en formato PKCS#12 y se guarda en el
+archivo con el nombre localhost.p12 el directorio donde ejecuto el comando
+(verificar la existencia del archivo).
+
+Con todos estos pasos ya se dispone de un certificado autofirmado en formato
+PKCS#12 almacenado en el archivo localhost.p12. Al hacer doble clic sobre el
+archivo localhost.p12 se levanta una ventana solicitando la contraseña o frase
+de paso para poder acceder a la información. Al ingresar la contraseña o frase
+de paso mostrara toda la información referente a dicho certificado.
+
+Fuentes
+=======
+
+Curso en línea de Firma electrónica con Murachí de CENDITEL.
+
 =====
 rsync
 =====
