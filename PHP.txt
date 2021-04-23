@@ -2,6 +2,14 @@
 Guía de Guía PHP by dM
 ======================
 
+====
+Nota
+====
+
+Usaremos $ para describir los comandos que se usaran con usuario regular.
+
+Usaremos # para describir los comandos que se usaran con superusuario.
+
 =======================================
 Instalar php 7.4 en GNU/Linux Debian 10
 =======================================
@@ -42,7 +50,9 @@ $ php -v
 
 -----
 
+============================================
 Paquetes de PHP para usar con mysql y apache
+============================================
 
 # aptitude install php7.0-gd php7.0-mysql libapache2-mod-php7.0 php7.0-mbstring
 
@@ -54,75 +64,46 @@ $ sudo apt remove php7.2*
 
 $ sudo apt-get purge php7.2*
 
-###############################################
-########## Instalar y configurar PHP ##########
-###############################################
+============================
+Probar la instalación de PHP
+============================
 
-// Para usar con mysql
-# apt-get install php5 php5-gd php5-mysql
+Para probar que tu servicio esta trabajando puedes crear un pequeño archivo y
+verlo en tu navegador.
 
-// Para usar con postgresql
-# apt-get install php5 php5-gd php5-pgsql
+Para hacer esto vamos a crear un archivo en la ruta /var/www/html/:
 
--Este cuando se va a usar apache: libapache2-mod-php5
+$ nano /var/www/html/testphp.php
 
-// Una vez que se hayan descargado e instalado los paquetes de PHP, solo tienes que reiniciar el
-servidor Apache para que el servicio esté disponible. Para hacerlo solo tienes que teclear los siguientes comandos:
-
-/etc/init.d/apache2 restart
-
-// Para probar que tu servicio esta trabajando puedes crear un pequeño archivo y verlo en tu navegador.
-// Para hacer esto puedes teclear los siguientes comandos:
-
-nano /var/www/testphp.php
-
-// agrega las lineas siguientes
+Agrega las lineas siguientes
 
 <?php
 // Muestra toda la información, por defecto INFO_ALL
 phpinfo();
 ?>
 
-Para ver este archivo abre tu navegador web y teclea la IP de tu servidor seguido del archivo que acabas de crear, por ejemplo:
+Para ver este archivo abre tu navegador web y teclea la IP de tu servidor
+seguido del archivo que acabas de crear, por ejemplo:
 
-http://127.0.0.1/testphp.php // Si aparece la pagina azul pastel de PHP se instalo correctamente.
+http://127.0.0.1/testphp.php
 
-<!-- Comentarios en HTML -->
-
-<!doctype html>
-<html lang="en">
-    <head>
-        <title>XXX</title>
-        <meta charset="UTF-8">
-        <script src="jquery-1.9.1.js" type="text/javascript"></script>
-        <link rel="stylesheet" href="styles.css" type="text/css"/>
-    </head>
-<body>
-</body>
-</html>
+Si aparece la pagina azul pastel de PHP donde muestra detalles de la versión,
+etc, entonces se instalo correctamente.
 
 ----------
 
-<!doctype html>
-<html lang="en">
-    <head>
-        <title>XXX</title>
-        <meta charset="UTF-8">
-    </head>
-<body>
-<!-- Uso de lenguaje php usanto la etiqueta script -->
-<script language="php">
-    echo ("XXXXXXXXX");
-</script>
-</body>
-</html>
-
 <!-- Bloque de código php -->
+
 <?php # Comienzo del código php
+
 echo "xxxxx"; # Contenido del bloque
+
 ?> <!-- Final del código php -->
 
+-----
+
 <?php
+
 // Comentarios de línea en PHP
 
 # Comentarios de una línea en PHP
@@ -131,36 +112,47 @@ echo "xxxxx"; # Contenido del bloque
 Comentario de varias
 líneas, igual a C++
 */
+
 ?>
 
-<?php // Inicio del bloque php
+=========
+Variables
+=========
 
-##################################
-##### Operadores aritméticos #####
-##################################
+Guardar valores en las variables
 
-$a + $b //Suma las dos variables.
-$a - $b //Resta las dos variables.
-$a * $b //Multiplicación de las variables.
-$a / $b //División entre las dos variables.
-$a % $b //Módulo Resto de la división de $a entre $b -->
+$nombre="Olivier";
 
-#####################################
-##### Operadores de comparación #####
-#####################################
+$apellido="Dacourt";
 
-$a == $b //Igualdad Devuelve true si $a y $b son iguales.
-$a === $b //Identidad Verdadero si son iguales y del mismo tipo.
-$a != $b //Distinto True si son distintos.
-$a <> $b //Distinto True si son distintos.
-$a < $b //Menor que Cierto si $a es menor que $b
-$a > $b //Mayor que Cierto si $a es mayor que $b
-$a <= $b //Menor o igual Correcto si $a es menor o igual que $b
-$a >= $b //Mayor o igual Correcto si $a es mayor o igual que $b -->
+$edad=24;
 
-####################################
-##### Operadores de asignación #####
-####################################
+======================
+Operadores aritméticos
+======================
+
+$a + $b Suma las dos variables.
+$a - $b Resta las dos variables.
+$a * $b Multiplicación de las variables.
+$a / $b División entre las dos variables.
+$a % $b Módulo Resto de la división de $a entre $b
+
+=========================
+Operadores de comparación
+=========================
+
+$a == $b Igualdad Devuelve true si $a y $b son iguales.
+$a === $b Identidad Verdadero si son iguales y del mismo tipo.
+$a != $b Distinto True si son distintos.
+$a <> $b Distinto True si son distintos.
+$a < $b Menor que Cierto si $a es menor que $b
+$a > $b Mayor que Cierto si $a es mayor que $b
+$a <= $b Menor o igual Correcto si $a es menor o igual que $b
+$a >= $b Mayor o igual Correcto si $a es mayor o igual que $b
+
+========================
+Operadores de asignación
+========================
 
 $a++ Incremento $a = $a +1
 $a~ Decremento $a = $a -1
@@ -176,11 +168,11 @@ $a |= $b O $a = $a | $b
 $a A= $b O exclusiva $a = $a A $b
 $a .= $b Concatenación $a = $a . $b
 $a >>= $b Desplazamiento a la derecha $a = $a >> $b
-$a <<= $b Desplazamiento a la izquierda $a = $a << $b -->
+$a <<= $b Desplazamiento a la izquierda $a = $a << $b
 
-############################
-##### Tipos de valores #####
-############################
+================
+Tipos de valores
+================
 
 $bool = TRUE; // un valor booleano
 $str = "foo"; // una cadena
@@ -188,70 +180,87 @@ $int = 12; // un entero
 echo gettype($bool); // imprime "boolean"
 echo gettype($str); // imprime "string"
 
-#####################
-##### Variables #####
-#####################
+-----
 
-##### Guardar valores en las variables #####
+PHP nota la diferencia entre mayúsculas y minúsculas en la declaración de
+variables.
 
-$nombre="Olivier";
-$apellido="Dacourt";
-$edad=24;
-
-#-----
-
-// php nota la diferencia entre mayúsculas y minúsculas en la declaración de variables
 $var = "Bob";
+
 $Var = "Joe";
-echo "$var, $Var"; // outputs "Bob, Joe"
 
-#-----
+echo "$var, $Var";outputs "Bob, Joe"
 
-// Declaraciones válidas e inválidas
+-----
+
+Declaraciones válidas e inválidas:
+
 $4site = 'not yet'; // invalid; starts with a number
+
 $_4site = 'not yet'; // valid; starts with an underscore
+
 $tÃƒÂ¤yte = 'mansikka'; // valid; 'ÃƒÂ¤' is ASCII 228 (Extendido)
 
-################
-##### echo #####
-################
+====
+echo
+====
 
-# Sirve para imprimir por pantalla
-echo '$nombre <br /> $apellido '; // Las '' simples, permiten imprimir el contenido literal de caracteres que esté entre las comillas
-echo "El autor de esta página es: "; //Las "" dobles, permiten incluir variables para imprimirlas junto al texto
-echo ("$nombre $apellido de $edad años"); // Usando la forma echo() original de la función;
+Sirve para imprimir por pantalla
+
+Las '' simples, permiten imprimir el contenido literal de caracteres que esté
+entre las comillas.
+
+echo '$nombre <br /> $apellido ';
+
+-----
+
+Las "" dobles, permiten incluir variables para imprimirlas junto al texto.
+
+echo "El autor de esta página es: ";
+
+-----
+
+Usando la forma echo() original de la función;
+
+echo ("$nombre $apellido de $edad años");
+
 echo ("xxxx <br /> xxxxxxx");
 
-#-----
+-----
 
 $a=2;
 $b=3;
-echo $a + $b; //Imprime 5
+echo $a + $b; // Imprime 5
 
-#-----
+-----
 
 $a=2;
 $b="3";
-echo $a + $b; //Imprime 5
+echo $a + $b; // Imprime 5
 
-#-----
+-----
 
 $a=2;
 $b="3a";
 echo $a + $b; //Imprime 5
 
-#-----
+-----
 
 $a=2;
 $b="a3";
 echo $a + $b; //Imprime 2
 
-##### Variables predefinidas #####
+======================
+Variables predefinidas
+======================
 
-// PHP proporciona una gran cantidad de variables predefinidas a cualquier script que se ejecute.
-// Algunas son:
+PHP proporciona una gran cantidad de variables predefinidas a cualquier script
+que se ejecute.
 
-$GLOBALS // Contiene una referencia a cada variable disponible en el espectro de las variables del script.
+Algunas son:
+
+$GLOBALS // Contiene una referencia a cada variable disponible en el espectro de
+las variables del script.
 
 $_GET // Variables proporcionadas al script por medio de HTTP GET.
 
@@ -261,25 +270,25 @@ $_COOKIE // Variables proporcionadas al script por medio de HTTP cookies.
 
 $_SESSION // Variables registradas en la sesión del script.
 
-###########################
-##### Suma de Enteros #####
-###########################
+===============
+Suma de enteros
+===============
 
 $cifra1=7;
 $cifra2=8;
 $suma=$cifra1+$cifra2;
 echo "La suma de $cifra1 y de $cifra2 es igual a: $suma";
 
-####################################
-##### Concatenación de cadenas #####
-####################################
+========================
+Concatenación de cadenas
+========================
 
-$cadenal = "Hola ";
+$cadena1 = "Hola ";
 $cadena2 = "Mundo";
-$cadenal = $cadenal . $cadena2;
-echo $cadenal;
+$cadena = $cadena1 . $cadena2;
+echo $cadena;
 
-#-----
+-----
 
 $cadenal = "Troya es ";
 $cadena2 = "madre de todos, ";
@@ -289,20 +298,25 @@ echo $supercadena;
 echo "<br />";
 echo $cadenal . $cadena2 . $cadena3;
 
-##### Sintáxis para múltiples líneas #####
+==============================
+Sintáxis para múltiples líneas
+==============================
+
+Existe en PHP una forma más de introducir cadenas, aparte de las comillas, muy
+recomendable para largos textos o un considerable conjunto de etiquetas HTML. La
+sintaxis es muy sencilla y comienza con el operador (<<<) seguido de una
+etiqueta que indica el principio del texto. Después de esto podemos escribir un
+conjunto de caracteres muy numerosos y, para finalizar, la etiqueta de fin.
 
 $texto = <<<INICIO
-Existe en PHP una forma más de introducir cadenas, aparte de las comillas,
-muy recomendable para largos textos o un considerable conjunto de
-etiquetas HTML. La sintaxis es muy sencilla y comienza con el operador
-(<<<) seguido de una etiqueta que indica el principio del texto. Después
-de esto podemos escribir un conjunto de caracteres muy numerosos y, para
-finalizar, la etiqueta de fin. El ejemplo muestra cómo almacenar un formulario
-en una variable:
+sssssssssss, sssssssssss, dsdasd da das asd ds
+sssssssssss, sssssssssss, dsdasd da das asd ds
+sssssssssss, sssssssssss, dsdasd da das asd ds
+sssssssssss, sssssssssss, dsdasd da das asd ds
 INICIO;
 echo $texto;
 
-#-----
+-----
 
 $texto = <<<INICIO
 <h1>xxxx<h1>
@@ -313,9 +327,9 @@ $texto = <<<INICIO
 INICIO;
 echo $texto;
 
-###################
-##### if else #####
-###################
+=======
+if else
+=======
 
 $a=15;
 $b=10;
@@ -326,7 +340,7 @@ else {
     echo ("Falso $a es menor que $b <p>");
 }
 
-#-----
+-----
 
 $dia=5;
 if ($dia == 1) {
@@ -349,7 +363,7 @@ else {if ($dia == 5) {
 }
 }
 
-#-----
+-----
 
 $day=1;
 if ($day == 1) {
@@ -364,7 +378,7 @@ if ($day == 1) {
     echo "El día es Viernes";
 }
 
-#-----
+-----
 
 $num=2;
 $num2=4;
@@ -386,54 +400,60 @@ if($num3 > $num2) {
     }
 }
 
-######################
-##### Constantes #####
-######################
+==========
+Constantes
+==========
 
-/*
-Una constante es un identificador para expresar un valor simple. Como el nombre sugiere, este
-valor no puede variar durante la ejecución del script.
+Una constante es un identificador para expresar un valor simple. Como el nombre
+sugiere, este valor no puede variar durante la ejecución del script.
 
-El nombre de una constante sigue las mismas reglas que cualquier etiqueta en PHP. Un nombre de
-constante válido empieza con una letra o un caracter de subrayado, seguido por cualquier
-número deletras, números, o subrayados
+El nombre de una constante sigue las mismas reglas que cualquier etiqueta en
+PHP. Un nombre de constante válido empieza con una letra o un caracter de
+subrayado, seguido por cualquier número deletras, números, o subrayados.
 
-Se puede definir una constante usando la función define(). Una vez definida, no puede ser
-modificada ni eliminada.
+Se puede definir una constante usando la función define(). Una vez definida, no
+puede ser modificada ni eliminada.
 
-Solo se puede definir como constantes valores escalares (boolean, integer, float y string).
+Solo se puede definir como constantes valores escalares (boolean, integer, float
+y string).
 
-Para obtener el valor de una constante solo es necesario especificar su nombre. A diferencia de las
-variables, no se tiene que especificar el prefijo $.
+Para obtener el valor de una constante solo es necesario especificar su nombre.
+A diferencia de las variables, no se tiene que especificar el prefijo $.
 
 Las contantes y las variables (globales) se encuentran en un espacio de nombres
 distinto. Esto implica que por ejemplo TRUE y $TRUE son diferentes.
 
-Las contantes solo pueden ser definidas usando la función define(), nunca por simple
+Las contantes solo pueden ser definidas usando la función define(), nunca por
+simple
 asignación
-*/
 
 define("CONSTANT", "Hello world.");
 echo CONSTANT; // outputs "Hello world."
 echo Constant; // outputs "Constant" and issues a notice.
 
-#-----
+-----
 
-define ("CONSTANTE","Contenido_constante"); // Definimos primero la constante y su contenido
-echo CONSTANTE; // Hay que destacar que el signo de $ no hace falta ponerlo
+Definimos primero la constante y su contenido:
 
-#-----
-
-// Agregando un texto largo y etiquetas html
-define ("CONSTANTE","El lenguaje SQL permite la comunicación con el sistema gestor de base de datos. Fue desarrollado<br>
-sobre un prototipo de gestor de b.d.d relacionales denominados system r<br>
-Diseñado por IBM desarrollado en los años 70, alrededor del 1979 oracle corp. Presento la primera<br>
-implementación comercial de SQL.<br>");
+define ("CONSTANTE","Contenido_constante");
 echo CONSTANTE;
 
-##################
-##### switch #####
-##################
+Hay que destacar que el signo de $ no hace falta ponerlo.
+
+-----
+
+Agregando un texto largo y etiquetas html
+
+define ("CONSTANTE","El lenguaje SQL permite la comunicación con el sistema
+gestor de base de datos. Fue desarrollado<br> sobre un prototipo de gestor de
+b.d.d relacionales denominados system r<br> Diseñado por IBM desarrollado en los
+años 70, alrededor del 1979 oracle corp. Presento la primera<br> implementación
+comercial de SQL.<br>");
+echo CONSTANTE;
+
+======
+switch
+======
 
 $dia = 7 ;
 switch ($dia) {
@@ -462,16 +482,16 @@ switch ($dia) {
     echo "El día de la semana es incorrecto";
 }
 
-###############
-##### for #####
-###############
+===
+for
+===
 
 #Imprimir los números del 1 al 19
 for ($x = 1; $x < 20; $x++) {
     echo "$x<br>";
 }
 
-#-----
+-----
 
 #Imprimir los números del 1 al 9
 for ($x = 1; $x < 20; $x++) {
@@ -483,9 +503,9 @@ for ($x = 1; $x < 20; $x++) {
     }
 }
 
-#################
-##### while #####
-#################
+=====
+while
+=====
 
 #Imprimir los números del 1 al 10
 $num=1;
@@ -494,9 +514,9 @@ while ($num <= 10) {
     $num++;
 }
 
-#####################
-##### Funciones #####
-#####################
+=========
+Funciones
+=========
 
 function miFuncion() {
     $a = 6; // Declaración de variable
@@ -506,7 +526,9 @@ function miFuncion() {
 }
 miFuncion(); // Llamado de la función
 
-##### Variables globales y locales #####
+============================
+Variables globales y locales
+============================
 
 $a = 6; // Variable global
 $b = 12; // Variable global
@@ -518,7 +540,7 @@ function miFuncion() {
 }
 miFuncion();
 
-#-----
+-----
 
 $a = 5; // Variable global
 $b = 10; // Variable global
@@ -528,15 +550,17 @@ function miFuncion() {
 }
 miFuncion();
 
-##### Parámetros en una función #####
+=========================
+Parámetros en una función
+=========================
 
-# Pasando valores por parámetros a una función
+# Pasando valores por parámetros a una función:
 function miFuncion($x) {
     echo $x;
 }
 miFuncion(5);
 
-#-----
+-----
 
 # Pasando valores por parámetros a una función
 function miFuncion($a,$b) {
@@ -545,13 +569,9 @@ function miFuncion($a,$b) {
 }
 miFuncion(3,9);
 
-##### Consultar todas las variables predefinidas con phpinfo() #####
-
-phpinfo();
-
-###################################################
-##### Argumentos por defecto de las funciones #####
-###################################################
+=======================================
+Argumentos por defecto de las funciones
+=======================================
 
 function capitales($Pais,$Capital = "Madrid",$habitantes = "muchos") {
     return ("La capital de $Pais es $Capital y tiene $habitantes habitantes.<br>") ;
@@ -560,7 +580,9 @@ echo capitales("España");
 echo capitales("Portugal","Lisboa");
 echo capitales("Francia","Paris","muchísimos");
 
-##### Funciones matemáticas #####
+=====================
+Funciones matemáticas
+=====================
 
 echo sqrt(9); // Raíz cuadrada de 9 es 3
 echo "<br />";
@@ -568,9 +590,10 @@ echo rand(1,20); // Número aleatorio entre 1 y 20
 echo "<br />";
 echo pi(); // Número pi
 
-##### Obtener fecha actual del sistema #####
+================================
+Obtener fecha actual del sistema
+================================
 
-/*
 a Imprime "am" o "pm" 
 A "AM" o "PM"
 h La hora en formato (01-12).
@@ -588,7 +611,6 @@ Y Año con 4 dígitos (2004).
 y Año con 2 dígitos (04).
 z Día del año (0 a 365).
 t Número de días que tiene el mes actual.
-*/
 
 echo date ("d");
 echo "/";
@@ -596,12 +618,14 @@ echo date ("m");
 echo "/";
 echo date ("Y");
 
-#----
+-----
 
 echo "Fecha actual: " . date("d-m-Y") . "<br>";
 echo "Día del año: " . date("z") . "<br>";
 
-##### Comparación de cadenas #####
+======================
+Comparación de cadenas
+======================
 
 $cadenal = "Prueba";
 $cadena2 = "Prueba";
@@ -609,7 +633,7 @@ if (strcmp($cadenal,$cadena2) == 0) {
     echo "Las dos cadenas son iguales";
 }
 
-#----
+-----
 
 $cadenal = "Prueba";
 $cadena2 = "prueba";
@@ -617,30 +641,34 @@ if (strcasecmp($cadenal,$cadena2) == 0) { # strcasecmp no hace distinción entre
     echo "Las dos cadenas son iguales";
 }
 
-##### Sustitución de cadenas #####
+======================
+Sustitución de cadenas
+======================
 
 $cadena = "Esta cadena tiene muchas letras";
 $cadena = str_replace("Esta","Este",$cadena);
 echo str_replace("cadena","conjunto",$cadena);
 
-################
-#### array #####
-################
+=====
+array
+=====
 
-// Un array puede ser creado por la construcción de lenguaje array(). Ésta toma un cierto número de arejas clave => valor separadas con coma.
+Un array puede ser creado por la construcción de lenguaje array(). Ésta toma un
+cierto número de parejas clave => valor separadas con coma.
 
 $matriz = array("foo" => "bar", 12 => true);
-echo $matriz["foo"]; // Imprime bar
-echo $matriz[12]; // Imprime 1
+echo $matriz["foo"]; // Imprime bar.
+echo $matriz[12]; // Imprime 1.
 
-#-----
+-----
 
 $arreglo = array(5,1,4,2,3);
 print_r($arreglo); // print_r() Función que permite imprimir matrices o arreglos
 
-#-----
+-----
 
-# Declaración de un arreglo, imprimir el contenido del arreglo, por posición
+Declaración de un arreglo, imprimir el contenido del arreglo, por posición
+
 $arreglo = array(5,1,4,2,3);
 echo $arreglo[0]."<br />";
 echo $arreglo[1]."<br />";
@@ -648,17 +676,19 @@ echo $arreglo[2]."<br />";
 echo $arreglo[3]."<br />";
 echo $arreglo[4]."<br />";
 
-#-----
+-----
 
-# Recorrer e imprimir el contenido de un arreglo
-$arreglo = array(5,1,4,2,3) ;
+Recorrer e imprimir el contenido de un arreglo
+
+$arreglo = array(5,1,4,2,3);
 for ($x = 0; $x <= 4; $x++) {
     echo $arreglo[$x];
 }
 
-#-----
+-----
 
-// Array como mapa de propiedades
+Array como mapa de propiedades
+
 $mapa = array('version' => 5,
               'SO' => 'Linux',
               'idioma' => 'Español',
@@ -666,26 +696,23 @@ $mapa = array('version' => 5,
               );
 print_r($mapa);
 
-#-----
+-----
 
-// foreach() para recorrer matrices o arrays
+foreach() para recorrer matrices o arrays
+
 $colores = array('rojo', 'azul', 'verde', 'amarillo');
 foreach ($colores as $color) {
 echo "$color <br />";
 }
 
-?> <!-- Final del código php -->
-
-############################
-##### Clases y Objetos #####
-############################
-
---- Objetos --- 
+=======
+Objetos
+=======
 
 Inicialización de Objetos
 
-Para inicializar un objeto, use la sentencia new, lo que
-instancia el objeto a una variable.
+Para inicializar un objeto, use la sentencia new, lo que instancia el objeto a
+una variable.
 
 <?php
 class saludo {
@@ -701,9 +728,12 @@ $objeto->saludar(); // Llamando al método de la clase.
 $objeto->saludar2();
 ?>
 
---- Clases ---
+======
+Clases
+======
 
-Una clase es una colección de variables y de funciones que acceden a esas variables.
+Una clase es una colección de variables y de funciones que acceden a esas
+variables.
 
 <?php
 class saludo {
@@ -732,18 +762,6 @@ $object = new Calculadora;
 $object->sumar(10,6);
 $object->restar(10,6);
 ?>
-
-############################
-##### xampp en windows #####
-############################
-
-Los proyectos se copian en -->  xampp/htdocs/
-
-Panel de administracion de xampp --> http://127.0.0.1/xampp/
-
-En el navegador para ver los proyectos --> 127.0.0.1/name_project
-
-Dashboard del PhpMyAdmin --> http://127.0.0.1/phpmyadmin/
 
 ----------
 
@@ -1078,3 +1096,15 @@ Include /etc/phpmyadmin/apache.conf
 xxx mysql, apache etc... restart
 
 /etc/init.d/xxx restart
+
+================
+xampp en windows
+================
+
+Los proyectos se copian en -->  xampp/htdocs/
+
+Panel de administracion de xampp --> http://127.0.0.1/xampp/
+
+En el navegador para ver los proyectos --> 127.0.0.1/name_project
+
+Dashboard del PhpMyAdmin --> http://127.0.0.1/phpmyadmin/
