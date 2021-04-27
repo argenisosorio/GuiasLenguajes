@@ -1450,3 +1450,127 @@ registrar todas las solicitudes entrantes en su aplicación. Hay varios
 middleware incluidos en el marco de Laravel, incluido el middleware para la
 autenticación y la protección CSRF. Todos estos middleware se encuentran en el
 directorio app/Http/Middleware.
+
+===============================
+Migraciones de la base de datos
+===============================
+
+Las migraciones son como un control de versiones para su base de datos, lo que
+le permite a su equipo definir y compartir la definición del esquema de la base
+de datos de la aplicación. Si alguna vez ha tenido que decirle a un compañero de
+equipo que agregue manualmente una columna a su esquema de base de datos local
+después de extraer sus cambios desde el control de fuente, se ha enfrentado al
+problema que resuelven las migraciones de base de datos.
+
+La fachada (facade) del esquema de Laravel proporciona soporte independiente de
+la base de datos para crear y manipular tablas en todos los sistemas de base de
+datos compatibles con Laravel. Normalmente, las migraciones utilizarán esta
+fachada para crear y modificar tablas y columnas de bases de datos.
+
+Generando migraciones
+=====================
+
+Puede utilizar el comando make:migration de Artisan para generar una migración
+de base de datos. La nueva migración se colocará en su directorio
+database/migraciones. Cada nombre de archivo de migración contiene una marca de
+tiempo que permite a Laravel determinar el orden de las migraciones:
+
+$ php artisan make:migration create_flights_table
+
+Laravel usará el nombre de la migración para intentar adivinar el nombre de la
+tabla y si la migración creará una nueva tabla o no. Si Laravel puede determinar
+el nombre de la tabla a partir del nombre de la migración, Laravel completará
+previamente el archivo de migración generado con la tabla especificada. De lo
+contrario, simplemente puede especificar la tabla en el archivo de migraciónm
+anualmente.
+
+Si desea especificar una ruta personalizada para la migración generada, puede
+usar la opción --path al ejecutar el comando make:migration. La ruta dada debe
+ser relativa a la ruta base de su aplicación.
+
+Ejemplo
+=======
+
+Agregar el campo "type" a la tabla por defecto User de Laravel. Esta
+modificación se realiza manualmente sobre el archivo.
+
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreateUsersTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('users', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->enum('type',['member','admin'])->default('member');
+            $table->rememberToken();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('users');
+    }
+}
+
+-----
+
+Generar una nueva migración y crear una tabla llamada categories
+
+$ php artisan make:migration add_categories_table --create=categories
+
+Esto nos crea una estructura de migración básica, a la cual le agregamos el
+campo "name" de tipo sring y con un máximo de caracteres de 60, esta
+modificación se realiza manualmente sobre el archivo.
+
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class AddCategoriesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('categories', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name', 60);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('categories');
+    }
+}
