@@ -1413,3 +1413,40 @@ $ npm install
 $ npm run dev
 
 $ php artisan migrate
+
+======================
+Nombres para las rutas
+======================
+
+Las rutas con nombre permiten la generación conveniente de URL o
+redireccionamientos para rutas específicas. Puede especificar un nombre para una
+ruta encadenando el método de nombre en la definición de ruta:
+
+Route::get('/user/profile', function () {
+    //
+})->name('profile');
+
+También puede especificar nombres de ruta para las acciones del controlador:
+
+Route::get(
+    '/user/profile',
+    [UserProfileController::class, 'show']
+)->name('profile');
+
+==========
+Middleware
+==========
+
+El middleware proporciona un mecanismo conveniente para inspeccionar y filtrar
+las solicitudes HTTP que ingresan a su aplicación.  Por ejemplo, Laravel incluye
+un middleware que verifica que el usuario de su aplicación esté autenticado. Si
+el usuario no está autenticado, el middleware redirigirá al usuario a la
+pantalla de inicio de sesión de su aplicación.  Sin embargo, si el usuario está
+autenticado, el middleware permitirá que la solicitud continúe en la aplicación.
+
+Se puede escribir middleware adicional para realizar una variedad de tareas
+además de la autenticación. Por ejemplo, un middleware de registro puede
+registrar todas las solicitudes entrantes en su aplicación. Hay varios
+middleware incluidos en el marco de Laravel, incluido el middleware para la
+autenticación y la protección CSRF. Todos estos middleware se encuentran en el
+directorio app/Http/Middleware.
