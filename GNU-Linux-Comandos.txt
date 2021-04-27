@@ -6039,6 +6039,76 @@ sudo apt-get update
 
 sudo apt-get install sublime-text
 
+Instalar Package Control
+========================
+
+1) Abrir consola de comando sde sublime con:
+
+ctrl+shift+p
+
+2) Escribir
+
+Install Package Control
+
+3) Presionar enter y listo
+
+Instalando Themes y ColorSchemes
+================================
+
+Para instalar un theme tenemos que saber el nombre de este, para eso tienes que
+navegar entre el listado de themes y buscar el que mas te guste.
+
+Lista de themes: https://packagecontrol.io/browse/labels/theme
+
+Una vez hayas identificado el que te ha gustado tienes que descargarlo para ello
+nos vamos a Sublime Text y presionamos:
+
+Ctrl + Shift + P
+
+Esto nos abrirá una ventana en la que escribiremos:
+
+install
+
+Y seleccionaremos la opción que dice:
+
+Package Control: Install Package
+
+Presionamos Enter una vez mas y ahora tendremos un listado con todos los
+plugins, themes y colorschemes de sublime text. Basta con buscar el que queremos
+y seleccionarlo y darle enter.
+
+Tema recomendado
+================
+
+-A File Icon
+
+-Spacefunk
+
+Buscarlos e instalarlos con las directrices anteriores:
+
+-A File Icon: Se activa desde las Preferences
+
+-Spacefunk: Para activar el theme tenemos que ir a:
+
+Precerencias > Settigs - User
+
+Esto nos abrirá un documento con algunas lineas de código, modificamos a:
+
+Preferences.sublime-settings - User, y nos debe quedar así:
+
+{
+	"color_scheme": "Packages/Color Scheme - Default/Monokai.sublime-color-scheme",
+	"font_size": 11,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	//"theme": "Default.sublime-theme"
+	"theme": "Spacefunk (Blue Monday).sublime-theme"
+}
+
+Guardamos y reiniciamos SublimeText.
+
 =================
 Programa progress
 =================
