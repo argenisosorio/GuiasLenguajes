@@ -1745,3 +1745,12 @@ class AddTagsTable extends Migration
         Schema::dropIfExists('tags');
     }
 }
+
+===============
+Crear un modelo
+===============
+
+El nombre de los modelos debe ír como el nombre de la tabla pero en singular,
+si tengo una tabla Categories mi modelo se debe llamar Category.
+
+$ php artisan make:model Category
