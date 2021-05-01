@@ -84,8 +84,14 @@ proyecto, gracias a las funciones que provee podremos realizar complejas
 consultas y peticiones de base de datos sin escribir una sola línea de código
 SQL.
 
-¿Qué es un blade en laravel?
-============================
+Viene incluido con Laravel y proporciona una implementación de ActiveRecord
+hermosa y simple para trabajar con su base de datos. Cada tabla de la base de
+datos tiene un "Modelo" correspondiente que se utiliza para interactuar con esa
+tabla. Los modelos le permiten consultar datos en sus tablas, así como insertar
+nuevos registros en la tabla.
+
+¿Qué es blade en laravel?
+=========================
 
 Blade es un motor de plantillas simple y a la vez poderoso proporcionado por
 Laravel. A diferencia de otros motores de plantillas populares de PHP, Blade no
@@ -1470,7 +1476,7 @@ fachada para crear y modificar tablas y columnas de bases de datos.
 Generando migraciones
 =====================
 
-Puede utilizar el comando make:migration de Artisan para generar una migración
+Puede utilizar el comando make:migration de artisan para generar una migración
 de base de datos. La nueva migración se colocará en su directorio
 database/migraciones. Cada nombre de archivo de migración contiene una marca de
 tiempo que permite a Laravel determinar el orden de las migraciones:
@@ -1478,11 +1484,10 @@ tiempo que permite a Laravel determinar el orden de las migraciones:
 $ php artisan make:migration create_flights_table
 
 Laravel usará el nombre de la migración para intentar adivinar el nombre de la
-tabla y si la migración creará una nueva tabla o no. Si Laravel puede determinar
-el nombre de la tabla a partir del nombre de la migración, Laravel completará
-previamente el archivo de migración generado con la tabla especificada. De lo
-contrario, simplemente puede especificar la tabla en el archivo de migraciónm
-anualmente.
+tabla. Si Laravel puede determinar el nombre de la tabla a partir del nombre de
+la migración, Laravel completará previamente el archivo de migración generado
+con la tabla especificada. De lo contrario, simplemente puede especificar la
+tabla en el archivo de migración anualmente.
 
 Si desea especificar una ruta personalizada para la migración generada, puede
 usar la opción --path al ejecutar el comando make:migration. La ruta dada debe
@@ -1539,8 +1544,11 @@ Generar una nueva migración y crear una tabla llamada categories
 $ php artisan make:migration add_categories_table --create=categories
 
 Esto nos crea una estructura de migración básica, a la cual le agregamos el
-campo "name" de tipo sring y con un máximo de caracteres de 60, esta
+campo "name" de tipo string y con un máximo de caracteres de 60, esta
 modificación se realiza manualmente sobre el archivo.
+
+Al crearla la migracion con --create=categories nos agrega campos por defecto en
+la función up() y down() así como el método Schema.
 
 <?php
 
@@ -1572,5 +1580,168 @@ class AddCategoriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('categories');
+    }
+}
+
+Al crearla la migracion sin --create=categories nos crea la estrucuta de la
+función up() y down() vacías.
+
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class AddCategoriesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        //
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        //
+    }
+}
+
+==============================================
+Restricciones de Foreign Key o lláves foráneas
+==============================================
+
+Laravel también proporciona soporte para crear restricciones de clave foránea,
+que se utilizan para forzar la integridad referencial a nivel de la base de
+datos. Por ejemplo, definamos una columna user_id en la tabla de publicaciones
+que hace referencia a la columna id en una tabla de usuarios:
+
+Schema::table('posts', function (Blueprint $table) {
+    $table->unsignedBigInteger('user_id');
+
+    $table->foreign('user_id')->references('id')->on('users');
+});
+
+También puede especificar la acción deseada para las propiedades "on delete" y
+"on update" de la restricción:
+
+$table->foreign('user_id')
+      ->references('id')->on('users')
+      ->onDelete('cascade');
+
+Para eliminar una clave foránea, puede utilizar el método dropForeign. Las
+restricciones de clave externa utilizan la misma convención de nomenclatura que
+los índices. Entonces, concatenamos el nombre de la tabla y las columnas en la
+restricción y luego agregaremos el sufijo "_foreign":
+
+$table->dropForeign('posts_user_id_foreign');
+
+O bien, puede pasar un valor de matriz que utilizará automáticamente el nombre
+de restricción convencional al soltar:
+
+$table->dropForeign(['user_id']);
+
+Puede habilitar o deshabilitar las restricciones de clave externa dentro de sus
+migraciones mediante los siguientes métodos:
+
+Schema::enableForeignKeyConstraints();
+
+Schema::disableForeignKeyConstraints();
+
+Ejemplos de asignar relaciones entre tablas
+===========================================
+
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class AddArticlesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('articles', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('title');
+            $table->text('content');
+            /* Asignando las relaciones de los Artículos con las categorías y
+            los usuarios */
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('category_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('articles');
+    }
+}
+
+
+Ejemplo de relaciones Many to Many o muchos a muchos
+====================================================
+
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class AddTagsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('tags', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->timestamps();
+        });
+        /* Ejemplo de una relación muchos a muchos Many To Many
+        para Articles $ Tags */
+        Schema::create('article_tag', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedInteger('article_id');
+            $table->unsignedInteger('tag_id');
+            $table->foreign('article_id')->references('id')->on('articles');
+            $table->foreign('tag_id')->references('id')->on('tags');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('tags');
     }
 }
