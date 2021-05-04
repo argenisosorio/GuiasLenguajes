@@ -1108,3 +1108,115 @@ Panel de administracion de xampp --> http://127.0.0.1/xampp/
 En el navegador para ver los proyectos --> 127.0.0.1/name_project
 
 Dashboard del PhpMyAdmin --> http://127.0.0.1/phpmyadmin/
+
+================
+Funciones de PHP
+================
+
+======
+list()
+======
+
+Asignar variables como si fueran un array, se utiliza para asignar una lista de
+variables en una sola operación.
+
+Ejemplo:
+
+<?php
+
+$info = array('café', 'marrón', 'cafeína');
+
+// Enumerar todas las variables
+list($bebida, $color, $energía) = $info;
+echo "El $bebida es $color y la $energía lo hace especial. <br>";
+
+// Enumerar algunas de ellas
+list($bebida, , $energía) = $info;
+echo "El $bebida tiene $energía. <br>";
+
+// U omitir solo la tercera
+list( , , $energía) = $info;
+echo "Necesito $energía! <br>";
+
+// list() no funciona con cadenas
+list($bar) = "abcde";
+var_dump($bar); // NULL
+?>
+
+=========
+explode()
+=========
+
+Divide un string en varios string. Devuelve un array de string, siendo cada uno
+un substring del parámetro string formado por la división realizada por los
+delimitadores indicados en el parámetro delimiter.
+
+Ejemplo:
+
+<?php
+// Ejemplo 1, el delimitador es " ".
+$pizza  = "porción1 porción2 porción3 porción4 porción5 porción6";
+$porciones = explode(" ", $pizza);
+echo $porciones[0]; // porción1
+echo $porciones[1]; // porción2
+echo "<br><br>";
+
+// Ejemplo 2, el delimitador es ":"
+$datos = "foo:*:1023:1000:/home/foo:/bin/sh";
+list($user, $pass, $uid, $gid, $gecos, $home, $shell) = explode(":", $datos);
+echo $user;
+echo "<br>";
+echo $pass;
+echo "<br>";
+echo $uid;
+echo "<br>";
+echo $gid;
+echo "<br>";
+echo $gecos;
+echo "<br>";
+echo $home;
+echo "<br>";
+echo $shell;
+?>
+
+=========
+ucfirst()
+=========
+
+Convierte el primer caracter de una cadena a mayúsculas. Devuelve una cadena con
+el primer caracter str en máyusculas, si el caracter es alfabético.
+
+Nótese que 'alfabético' se determina por la localización actual.
+
+Ejemplo:
+
+<?php
+$foo = 'hello world!';
+$foo = ucfirst($foo);
+echo $foo; // Hello world!
+echo "<br>";
+
+$bar = 'HELLO WORLD!';
+$bar = ucfirst($bar);
+echo $bar; // HELLO WORLD!
+?>
+
+============
+strtolower()
+============
+
+Convierte un string a minúsculas. Devuelve un string con todos los caracteres
+alfabéticos convertidos a minúsculas.
+
+Ejemplo:
+
+<?php
+$foo = 'hello world!';
+$foo = strtolower($foo);
+echo $foo; // hello world!
+echo "<br>";
+
+$bar = 'HELLO WORLD!';
+$bar = strtolower($bar);
+echo $bar; // hello world!
+?>

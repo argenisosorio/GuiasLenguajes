@@ -68,12 +68,27 @@ Características
 -Sistema de ruteo, también RESTful
 -Blade, Motor de plantillas
 -Peticiones Fluent
--Eloquent ORM7
+-Eloquent ORM
 -Basado en Composer
 -Soporte para el caché
 -Soporte para MVC
 -Usa componentes de Symfony
 -Adopta las especificaciones PSR-212​ y PSR-4
+
+
+¿Qué es un ORM (Object Relational Mapping)?
+===========================================
+
+Un ORM es un modelo de programación que permite mapear las estructuras de una
+base de datos relacional (SQL Server, Oracle, MySQL, etc.), en adelante RDBMS
+(Relational Database Management System), sobre una estructura lógica de
+entidades con el objeto de simplificar y acelerar el desarrollo de nuestras
+aplicaciones.
+
+Las estructuras de la base de datos relacional quedan vinculadas con las
+entidades lógicas o base de datos virtual definida en el ORM, de tal modo que
+las acciones CRUD (Create, Read, Update, Delete) a ejecutar sobre la base de
+datos física se realizan de forma indirecta por medio del ORM.
 
 ¿Qué es el eloquent?
 ====================
@@ -1754,3 +1769,5 @@ El nombre de los modelos debe ír como el nombre de la tabla pero en singular,
 si tengo una tabla Categories mi modelo se debe llamar Category.
 
 $ php artisan make:model Category
+
+Al crear un modelo, se crea el archivo Category.php en /app/Category.php

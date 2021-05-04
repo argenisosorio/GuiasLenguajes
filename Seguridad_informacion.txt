@@ -180,3 +180,187 @@ Firma Electrónica
 Es un método criptográfico que asocia la identidad de una persona o de un equipo
 informático al mensaje o documento. En Función del tipo de firma, se puede,
 además, asegurar la integridad del documento o mensaje.
+
+=============
+Autenticación
+=============
+
+La autenticación o autentificación1​es el acto o proceso de confirmar que algo (o
+alguien) es quien dice ser. A la parte que se identifica se le llama probador. A
+la parte que verifica la identidad se la llama verificador. Es habitual que el
+probador sea un usuario que quiere acceder a ciertos recursos y el verificador
+sea un sistema que protege el acceso a dichos recursos y tiene que verificar que
+el que accede sea un usuario que tiene permisos para acceder a esos recursos.
+Para poder tener autenticación es necesaria, como condición previa, la
+existencia de identidades biunívocamente identificadas de tal forma que se
+permita su identificación.
+
+Definiciones
+============
+
+Autenticación, autentificación(palabra preferida por la RAE2​) o mejor dicho
+acreditación, en términos de seguridad de redes de datos, se puede considerar
+uno de los tres pasos fundamentales (AAA). Cada uno de ellos es, de forma
+ordenada:
+
+Autenticación. En la seguridad de ordenador, la autenticación es el proceso de
+intento de verificar la identidad digital del remitente de una comunicación como
+una petición para conectarse. El remitente siendo autenticado puede ser una
+persona que usa un ordenador, un ordenador por sí mismo o un programa del
+ordenador. En un web de confianza, "autenticación" es un modo de asegurar que
+los usuarios son quien ellos dicen que ellos son - que el usuario que intenta
+realizar funciones en un sistema está autorizado para hacerlo.
+
+Autorización. Proceso por el cual la red de datos autoriza al usuario
+identificado a acceder a determinados recursos de la misma.
+
+Auditoría. Mediante la cual la red o sistemas asociados registran todos y cada
+uno de los accesos a los recursos que realiza el usuario autorizados o no.
+
+El problema de la autorización a menudo, es idéntico a la de autenticación;
+muchos protocolos de seguridad extensamente adoptados estándar, regulaciones
+obligatorias, y hasta estatutos están basados en esta asunción. Sin embargo, el
+uso más exacto describe la autenticación como el proceso de verificar la
+identidad de una persona, mientras la autorización es el proceso de verificación
+que una persona conocida tiene la autoridad para realizar una cierta operación.
+La autenticación, por lo tanto, debe preceder la autorización. Para distinguir
+la autenticación de la autorización de término estrechamente relacionada,
+existen unas notaciones de taquigrafía que son: A1 para la autenticación y A2
+para la autorización que de vez en cuando son usadas,también existen los
+términos AuthN y AuthZ que son usados en algunas comunidades.
+
+Tipos de autenticación
+======================
+
+Los métodos de autenticación están en función de lo que utilizan para la
+verificación y estos se dividen en tres categorías:
+
+-Sistemas basados en algo conocido. Ejemplo, un password (Unix) o passphrase (PGP).
+
+-Sistemas basados en algo poseído. Ejemplo, una tarjeta de identidad, una
+tarjeta inteligente(smartcard), dispositivo usb tipo epass token, Tarjeta de
+coordenadas, smartcard o dongle criptográfico.
+
+-Sistemas basados en una característica física delante usuario o un acto
+involuntario del mismo: Ejemplo, verificación de voz, de escritura, de huellas,
+de patrones oculares.
+
+Características de autenticación
+================================
+
+Cualquier sistema de identificación ha de poseer unas determinadas
+características para ser viable:
+
+Ha de ser fiable con una probabilidad muy elevada (podemos hablar de tasas de
+fallo de en los sistemas menos seguros)....
+
+Económicamente factible para la organización (si su precio es superior al valor
+de lo que se intenta proteger, tenemos un sistema incorrecto).
+
+Soportar con éxito cierto tipo de ataques.
+
+Ser aceptable para los usuarios, que serán al fin y al cabo quienes lo utilicen.
+
+Respuesta inmediata, directa, inteligente, sencilla, ante cada situación.
+
+Mecanismo de autenticación
+==========================
+
+Para autenticar es necesario establecer un protocolo de comunicación entre las
+partes de forma que la parte verificadora (normalmente) prueba verificar que la
+parte que se identifica (normalmente un usuario) efectivamente es quien dice que
+es. En general el proceso de autenticación consta de los siguientes pasos:
+
+El probador solicita acceso a un sistema.
+
+El verificador solicita al usuario que se autentique.
+
+El probador aporta las credenciales que le identifican y permiten verificar la
+autenticidad de la identificación.
+
+El verificador valida según sus reglas si las credenciales aportadas son
+suficientes para dar acceso al usuario o no.
+
+Control de acceso
+=================
+
+Un ejemplo familiar es el control de acceso. Un sistema informático supuesto
+para ser utilizado solamente por aquellos autorizados, debe procurar detectar y
+excluir el desautorizado. El acceso a él por lo tanto es controlado generalmente
+insistiendo en un procedimiento de la autentificación para establecer con un
+cierto grado establecido de confianza la identidad del usuario, por lo tanto
+concediendo esos privilegios como puede ser autorizado a esa identidad. Los
+ejemplos comunes del control de acceso que implican la autenticación incluyen:
+
+Retirar de dinero de un cajero automático.
+
+Control de un computador remoto sin Internet.
+
+Uso de un sistema de banca por Internet.
+
+Para intentar probar la identidad de un sujeto u objeto posible aplicar una o
+más pruebas que, si se aprueban, se han declarado previamente para ser
+suficientes proceder. El problema es determinarse qué pruebas son suficientes, y
+muchos tales son inadecuadas. Han sido muchos casos de tales pruebas que son
+engañadas con éxito; tienen por su falta demostrada, ineludible, ser
+inadecuadas. Mucha gente continúa mirando las pruebas -- y la decisión para
+mirar éxito en pasar -como aceptable, y para culpar su falta en “descuido” o
+“incompetencia” de parte de alguien. El problema es que la prueba fue supuesta
+para trabajar en la práctica -- no bajo condiciones ideales de ningún descuido o
+incompetencia-y no. Es la prueba que ha fallado en tales casos. Considerar la
+caja muy común de un correo electrónico de la confirmación al cual deba ser
+contestado para activar una cuenta en línea de una cierta clase. Puesto que el
+correo electrónico se puede arreglar fácilmente para ir a o para venir de
+direcciones falsas y untraceable, este es justo sobre la menos autenticación
+robusta posible. El éxito en pasar esta prueba significa poco, sin consideración
+alguna hacia sloppiness o incompetencia.
+
+Autenticación por multifactor
+=============================
+
+Los factores de la autenticación para los seres humanos se clasifican,
+generalmente, en cuatro casos:
+
+Algo que el usuario es (ejemplo, la huella digital o el patrón retiniano), la
+secuencia de ADN (hay definiciones clasificadas de cuál es suficiente), el
+patrón de la voz (otra vez varias definiciones), el reconocimiento de la firma,
+las señales bio-eléctricas únicas producidas por el cuerpo vivo, u otro
+identificador biométrico).
+
+Algo que el usuario tiene (ejemplo, tarjeta de la identificación, símbolo de la
+seguridad, símbolo del software o teléfono celular)
+
+Algo que el usuario sabe (ejemplo, una contraseña, una frase o un número de
+identificación personal (el PIN) del paso).
+
+Algo que el usuario hace (ejemplo, reconocimiento de voz, firma, o el paso).
+
+y
+
+Autenticación mediante dos factores "algo que tengo" la llave + "algo que sé" un
+número de PIN (token criptográfico)
+
+Autenticación triple factor "algo que tengo" el dispositivo criptográfico +
+"algo que sé" una clave de autenticación tipo PIN (al token criptográfico) +
+"quién soy" la huella dactilar que me permite autenticarme al dispositivo de forma unívoca.
+
+Una combinación de métodos se utiliza a veces, ejemplo, una tarjeta de banco y
+un PIN, en este caso se utiliza el término “autenticación de dos factores”.
+Históricamente, las huellas digitales se han utilizado como el método más
+autoritario de autenticación, pero procesos legales recientes en los EE. UU. y a
+otra parte han levantado dudas fundamentales sobre fiabilidad de la huella
+digital. Otros métodos biométricos son prometedores (las exploraciones
+retinianas y de la huella digital son un ejemplo), pero han demostrado ser
+fácilmente engañados en la práctica. En un contexto de los datos de la
+computadora, se han desarrollado protocolos de desafío-respuesta que permiten el
+acceso si el que se quiere autenticar responde correctamente a un desafío
+propuesto por el verificador. Hay protocolos desafío-respuesta basados en
+algoritmos criptográficos llamándose protocolos criptográficos de
+desafío-respuesta. La seguridad de los protocolos criptográficos de
+desafío-respuesta se basa en la seguridad de los algoritmos criptográficos que
+usa.
+
+Fuente
+======
+
+-https://es.wikipedia.org/wiki/Autenticaci%C3%B3n
