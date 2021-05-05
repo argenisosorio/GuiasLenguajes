@@ -828,6 +828,8 @@ php artisan route:list -c
 
 -----
 
+Restablecer y volver a ejecutar todas las migraciones
+
 $ php artisan migrate:refresh
 
 -----
@@ -836,6 +838,20 @@ Omite los métodos down o los rollbacks eliminando todas las tablas para luego
 ejecutar los métodos up.
 
 $ php artisan migrate:fresh
+
+-----
+
+Actualice la base de datos y ejecute todas las semillas de la base de datos.
+
+$ php artisan migrate:refresh --seed
+
+-----
+
+Quitar todas las tablas, migrar y cargar la base de datos con las semillas
+
+$ php migrate artisan: fresh
+
+$ php artisan migrate: fresh --seed
 
 -----
 
@@ -1630,6 +1646,34 @@ class AddCategoriesTable extends Migration
     }
 }
 
+===========================
+Estructura de una migración
+===========================
+
+Una clase de migración contiene dos métodos: up y down. El método up se usa para
+agregar nuevas tablas, columnas o índices a su base de datos, mientras que el
+método down debe revertir las operaciones realizadas por el método up.
+
+=======================
+Rolling Back Migrations
+=======================
+
+Para revertir la última operación de migración, puede utilizar el comando
+rollback. Este comando revierte el último "lote" de migraciones, que puede
+incluir varios archivos de migración:
+
+$ php artisan migrate:rollback
+
+Puede revertir un número limitado de migraciones proporcionando la opción al
+comando de reversión.  Por ejemplo, el siguiente comando revertirá las últimas
+cinco migraciones:
+
+$ php artisan migrate:rollback --step=5
+
+El comando migrate:reset revertirá todas las migraciones de su aplicación:
+
+$ php artisan migrate:reset
+
 ==============================================
 Restricciones de Foreign Key o lláves foráneas
 ==============================================
@@ -1771,3 +1815,183 @@ si tengo una tabla Categories mi modelo se debe llamar Category.
 $ php artisan make:model Category
 
 Al crear un modelo, se crea el archivo Category.php en /app/Category.php
+
+Campos $fillable
+================
+
+Son los campos permitidos para mostrar los objetos json y suelen ser los mismos
+campos definidos en las migraciones:
+
+Ejemplo:
+
+**Migración**
+
+<?php
+
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class AddArticlesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('articles', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('title');
+            $table->text('content');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('articles');
+    }
+}
+
+**Modelo**
+
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Article extends Model
+{
+    protected $table = "articles";
+    protected $fillable = ['title','content','user_id','category_id'];
+}
+
+======
+Tinker
+======
+
+Tinker es un poderoso REPL (Read - Eval - Print - Loop) para Laravel
+
+REPL son programas que están a la espera de que se les escriba comandos para ser
+ejecutados continuamente, de ahí el nombre de
+lectura - evaluación - impresión - bucle.
+
+Este paquete se instala por defecto en Laravel.
+
+Es una línea de comando que permite hacer pruebas, para acceder a ella tipeamos:
+
+$ php artisan tinker
+
+y si accedimos correctamente nos muestra:
+
+Psy Shell v0.9.12 (PHP 7.4.15 — cli) by Justin Hileman
+>>>
+
+Ahora, como prueba, vamos a crear una varible y vamos guardar un arreglo dentro
+de ella que contenga datos relacionados al modelo User.php
+
+Crear un nuevo usuario
+======================
+
+>>> $user = ['name'=>'Carlos Portrait','email'=>'cportrait@mail.com','password'=>bcrypt('123456')]
+
+Le damos enter y nos muestra nuestro arreglo:
+
+=> [
+     "name" => "Carlos Portrait",
+     "email" => "cportrait@mail.com",
+     "password" => "$2y$10$2VueR70ZHixDULSxIqZM8uCDbmT1rImpZsirYLzKNpRi7UdBTcaxG",
+   ]
+>>>
+
+bcrypt() es una función para encriptar contraseñas y es usada por defecto en
+Laravel.
+
+Ahora vamos a intentar guardar esos datos de nuestra varible dentro de la tabla
+users de la base de datos:
+
+Llamamos al namespace \App\User y luego usamos la función create() que le vamos
+a pasar como parametro nuestra variable $user creada en el paso anterior:
+
+>>> \App\User::create($user);
+
+=> App\User {#3940
+     name: "Carlos Portrait",
+     email: "cportrait@mail.com",
+     updated_at: "2021-05-04 16:51:15",
+     created_at: "2021-05-04 16:51:15",
+     id: 1,
+   }
+>>>
+
+ó directamente le pasamos los datos en la función
+
+$user = User::create(['name'=>'José Prieto','email'=>'jprieto@mail.com','password'=>bcrypt('123456')]);
+
+Con esto el dato quedó guardado en la tabla users de la base de datos.
+
+Consultar todos los usuarios
+============================
+
+>>> $users = \App\User::all();
+
+Le damos enter:
+
+=> Illuminate\Database\Eloquent\Collection {#3875
+     all: [
+       App\User {#4084
+         id: 1,
+         name: "Carlos Portrait",
+         email: "cportrait@mail.com",
+         email_verified_at: null,
+         type: "member",
+         created_at: "2021-05-04 16:51:15",
+         updated_at: "2021-05-04 16:51:15",
+       },
+     ],
+   }
+>>>
+
+Consultar un registro específico por su clave foránea o id
+===========================================================
+
+>>> $user = User::find(1);
+
+Lanzar una excepción si una búsqueda no tiene resultado
+=======================================================
+
+A veces, es posible que desee lanzar una excepción si no se encuentra un modelo.
+Para hacer esto, puede usar el método firstOrFail()
+
+>>> $model = User::findOrFail(3);
+
+Illuminate/Database/Eloquent/ModelNotFoundException with message 'No query results for model [App/User] 3'
+
+Actualización un dato de un objeto guardado
+===========================================
+
+Para actualizar un modelo, puede recuperarlo, cambiar un atributo y usar el
+método save:
+
+>>> $user = User::find(1);
+
+>>> $user->email = 'john@foo.com';
+
+>>> $user->save();
+
+Borrar un registro guardado
+===========================
+
+Se usa la función delete() sobre el resultado de la búsqueda:
+
+>>> $user = User::find(1);
+
+>>> $user->delete();
