@@ -2070,9 +2070,84 @@ Crear una etiqueta con el ejemplo del blog
 
 >>> $tag = new App\Tag();
 
->>> $tag->name='Noticias';
+>>> $tag->name='Sucesos';
 
 >>> $tag->save();
+
+>>> $tags = \App\Tag::all();
+
+Consultar cada valor de un objeto guardado
+==========================================
+
+>>> $article = App\Article::find(1);
+
+=> App\Article {#4098
+     id: 1,
+     title: "Noticia de última hora",
+     content: "Contenido de la noticia",
+     user_id: 1,
+     category_id: 1,
+     created_at: "2021-05-06 02:03:07",
+     updated_at: "2021-05-06 02:03:07",
+   }
+
+>>> $article
+
+=> App\Article {#4098
+     id: 1,
+     title: "Noticia de última hora",
+     content: "Contenido de la noticia",
+     user_id: 1,
+     category_id: 1,
+     created_at: "2021-05-06 02:03:07",
+     updated_at: "2021-05-06 02:03:07",
+   }
+
+>>> $article->id
+
+=> 1
+
+>>> $article->title
+
+=> "Noticia de última hora"
+
+>>> $article->tags
+
+=> Illuminate\Database\Eloquent\Collection {#3161
+     all: [],
+   }
+
+Luego de consultar los tags si volvemos a ejecutar $article nos sale el arreglo
+de los tags:
+
+>>> $article
+
+=> App\Article {#3160
+     id: 1,
+     title: "Noticia de última hora",
+     content: "Contenido de la noticia",
+     user_id: 1,
+     category_id: 1,
+     created_at: "2021-05-06 02:03:07",
+     updated_at: "2021-05-06 02:03:07",
+     tags: Illuminate\Database\Eloquent\Collection {#3161
+       all: [],
+     },
+   }
+>>>
+
+Ejemplo de crear un objeto cuando la relación es muchos a muchos
+================================================================
+
+Para establecer una relación de muchos a muchos entre registros guardados se
+usa la función attach().
+
+En el siguiente ejemplo vamos a relacionar el tag con id=1 al artículo
+consultado.
+
+>>> $article->tags()->attach(1);
+
+Se puede comprobar el registro guardado consultando la tabla article_tag.
 
 =========================
 Relaciones en los modelos
