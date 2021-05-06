@@ -916,11 +916,163 @@ clase DatabaseSeeder para usted. Desde esta clase, puede utilizar el método de
 llamada para ejecutar otras clases semilla, lo que le permite controlar el orden
 de siembra.
 
------
+Aplicar un seeder específico
+============================
 
 Se puede aplicar un seeder de maner individual con el siguiente comando:
 
 $ php artisan db:seed --class NombreDelSeeder
+
+Crear un seeder
+===============
+
+$ php artisan make:seeder CategoriesSeeder
+
+Esto nos creará un archivo en la carpeta database/seeds/ que tendrá el nombre
+que le demos en el comando.
+
+Así se ve CategoriesSeeder.php
+
+<?php
+
+use Illuminate\Database\Seeder;
+
+class CategoriesSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        //
+    }
+}
+
+Con esto ya tenemos el archivo pero no es todo lo que necesitamos para poder
+trabajar con datos autogenerados, para ello usaremos un componente llamado Faker
+el cual se encargará de generar estos datos, Faker viene instalado por defeto
+en Laravel.
+
+Vamos al archivo CategoriesSeeder y dentro podremos observer que se encuentra
+una función llamada run() que es donde nosotros vamos a usar Faker para poblar
+la base de datos o la tabla específica, ahora bien antes de todo debemos agregar
+la clase de Faker a nuestro Seeder, para esto agregamos al inicio del archivo la
+linea:
+
+use Faker\Factory as Faker;
+
+Quedaría el archivo así:
+
+<?php
+
+use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
+
+class CategoriesSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        //
+    }
+}
+
+Ahora crearemos una variable llamada $faker que nos servira para poblar la base
+de datos, ahora bien usando la clase DB, si bien dentro del ejemplo queremos
+crear 50 categorías vamos a crear un for para que ejecute nuestro código de
+inserción 50 veces y el componente de Faker en cada pasada cambiará los valores
+del registro que se va a agregar, quedando de esta forma:
+
+$faker = Faker::create();
+for ($i=0; $i < 50; $i++) {
+    \DB::table('categories')->insert(array(
+           'name' => $faker->firstNameFemale,
+           'created_at' => date('Y-m-d H:m:s'),
+           'updated_at' => date('Y-m-d H:m:s')
+    ));
+}
+
+Creamos nuestro objeto Faker, el cual puede generar información falsa para
+nuestra base de datos y ahora usamos la clase DB el método table para llamar la
+tabla donde se va a insertar la información y se le concatena el método insert()
+el cual recibe por parametro un arreglo clave => valor con los campos de la tabla.
+
+Faker tiene muchas variedades de datos, los cuales podemos consultar en su
+Repositorio de Github así como su uso básico.
+
+En este ejemplo usamos una propiedad que se llama firstNameFemale para darle
+nombre a las categorías y la propiedad.
+
+y si lo agregamos al ejemplo queda así:
+
+<?php
+
+use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
+
+class CategoriesSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $faker = Faker::create();
+        for ($i=0; $i < 50; $i++) {
+            \DB::table('categories')->insert(array(
+                   'name' => $faker->firstNameFemale,
+                   'created_at' => date('Y-m-d H:m:s'),
+                   'updated_at' => date('Y-m-d H:m:s')
+            ));
+        }
+    }
+}
+
+Y ahora lo que sigue es abrir un archivo llamado DatabaseSeeder.php, en este
+archivo se mandan a llamar todos los seeders en el orden que los necesitemos, en
+este archivo se agregará la linea:
+
+$this->call('PastelesSeeder');
+
+Quedano así:
+
+<?php
+
+use Illuminate\Database\Seeder;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        // $this->call(UsersTableSeeder::class);
+        $this->call('CategoriesSeeder');
+    }
+}
+
+Ahora para ejecutar el los seeders:
+
+$ php artisan db:seed
+
+Solo resta revisar los datos guardados en la tabla para comprobar que haya
+funcionado.
+
+Se pueden consultar las demás opciones disponibles de Faker para generar
+diferentes tipos de datos desde:
+
+https://github.com/fzaninotto/Faker#basic-usage
 
 =============================================
 Descargue y cargue bases de datos rápidamente
