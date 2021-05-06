@@ -1528,7 +1528,7 @@ Ejemplo
 =======
 
 Agregar el campo "type" a la tabla por defecto User de Laravel. Esta
-modificación se realiza manualmente sobre el archivo.
+modificación se realiza manualmente sobre el archivo User.php.
 
 <?php
 
@@ -1938,6 +1938,11 @@ $user = User::create(['name'=>'José Prieto','email'=>'jprieto@mail.com','passwo
 
 Con esto el dato quedó guardado en la tabla users de la base de datos.
 
+Si queremos consultar el valor de una variable creada lo hacemos de la siguiente
+manera:
+
+>>> $user
+
 Consultar todos los usuarios
 ============================
 
@@ -1965,6 +1970,10 @@ Consultar un registro específico por su clave foránea o id
 
 >>> $user = User::find(1);
 
+Otro ejemplo:
+
+>>> $article = App\Article::find(1);
+
 Lanzar una excepción si una búsqueda no tiene resultado
 =======================================================
 
@@ -1983,6 +1992,10 @@ método save:
 
 >>> $user = User::find(1);
 
+ó
+
+$tag = App\Tag::find(1);
+
 >>> $user->email = 'john@foo.com';
 
 >>> $user->save();
@@ -1995,3 +2008,409 @@ Se usa la función delete() sobre el resultado de la búsqueda:
 >>> $user = User::find(1);
 
 >>> $user->delete();
+
+Crear una categoría con el ejemplo del blog
+===========================================
+
+Desde la consola de Tinker creamos una variable y le decimos que vamos a crear
+un nuevo registro y en el modelo que le indiquemos:
+
+>>> $category = new App\Category();
+
+Ahora, una Categoría contiene un campo nombre, entonces vamos a crear una nueva
+categoría "Noticias":
+
+>>> $category->name='Noticias';
+
+Resultado:
+
+=> "Noticias"
+
+Ahora guardamos la operación que estamos realizando con:
+
+>>> $category->save();
+
+Resultado:
+
+=> true
+
+Ahora vamos a consultar la lista de categorías guardadas a ver si se guardo
+de verdad la categoría noticias:
+
+>>> $categories = \App\Category::all();
+
+=> Illuminate\Database\Eloquent\Collection {#3155
+     all: [
+       App\Category {#3162
+         id: 1,
+         name: "Noticias",
+         created_at: "2021-05-05 16:08:02",
+         updated_at: "2021-05-05 16:08:02",
+       },
+     ],
+   }
+
+Crear un artículo con el ejemplo del blog
+=========================================
+
+>>> $article = new App\Article();
+
+>>> $article->title='Noticia de última hora';
+
+>>> $article->content='Contenido de la noticia';
+
+>>> $article->category_id=1;
+
+>>> $article->user_id=1;
+
+>>> $article->save();
+
+Crear una etiqueta con el ejemplo del blog
+==========================================
+
+>>> $tag = new App\Tag();
+
+>>> $tag->name='Noticias';
+
+>>> $tag->save();
+
+=========================
+Relaciones en los modelos
+=========================
+
+Por supuesto, las tablas de su base de datos probablemente estén relacionadas
+entre sí. Por ejemplo, una publicación de blog puede tener muchos comentarios o
+un pedido puede estar relacionado con el usuario que lo realizó. Eloquent
+facilita la gestión y el trabajo con estas relaciones.
+
+Laravel admite muchos tipos de relaciones:
+
+-One To One (Uno a uno) su función es hasOne().
+
+-One To Many (Uno a muchos) su función es hasMany() y la inversa es belongsTo().
+
+-Many To Many (Muchos a muchos) su función es belongsToMany() y la inversa es
+belongsToMany().
+
+-Has Many Through (Tiene muchos) su función es hasManyThrough().
+
+-Polymorphic Relations (Relaciones polimórficas)
+
+-Many To Many Polymorphic Relations (Relaciones polimórficas de muchos a muchos)
+
+-----
+
+Ejemplo de relación One To Many (Uno a muchos):
+
+Una categoría puede tener muchos artículos, entonces en el modelo Category.php
+debemos crear una función pública que lleve por nombre el nombre de la tabla a
+la cual se va a relacionar y en plural "articles".
+
+En el return se usa la función hasMany y se le pasa la clase con la cuál se va a
+establecer la relación App\Article.
+
+public function articles()
+{
+    return $this->hasMany('App\Article');
+}
+
+Ejemplo plasmado en Category.php:
+
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Category extends Model
+{
+    protected $table = "categories";
+    protected $fillable = ['name'];
+
+    public function articles()
+    {
+        return $this->hasMany('App\Article');
+    }
+}
+
+Con esto ya estaría plasmada la relación por parte de las Categorías, pero se
+requiere también hacerlo del lado inverso, es decir ahora hay que editar el
+modelo Article.php
+
+Creamos una función pública con el nombre de tabla a la cual se va a relacionar
+pero en singular "category()" ya que recordemos que un artículo solo va a
+pertenecer a una sola categoría.
+
+En el return se usa la función belongsToo y se le pasa la clase con la cuál se
+va a establecer la relación App\Category.
+
+Ejemplo en Article.php
+
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Article extends Model
+{
+    protected $table = "articles";
+    protected $fillable = ['title','content','user_id','category_id'];
+
+    public function category()
+    {
+        return $this->belongsToo('App\Category');
+    }
+}
+
+También en este ejemplo vamor a relacionar los usuarios con los artículos.
+
+Un usuario puede escribir varios artículos, y un artículo solo puede estar
+relacionado con un solo usuario, entonces vamos a editar User.php agregando una
+función pública articles() en plural como ya hemos comentado
+
+public function articles()
+{
+    return $this->hasMany('App\Article');
+}
+
+El ejemplo completo de User.php sería:
+
+<?php
+
+namespace App;
+
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class User extends Authenticatable
+{
+    use Notifiable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'email', 'password',
+    ];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+    public function articles()
+    {
+        return $this->hasMany('App\Article');
+    }
+}
+
+Ahora hay que hacer la relación inversa, por lo que vamos a editar Article.php
+y agregamos la función user():
+
+public function user()
+{
+    return $this->belongsToo('App\User');
+}
+
+Ejemplo completo:
+
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Article extends Model
+{
+    protected $table = "articles";
+    protected $fillable = ['title','content','user_id','category_id'];
+
+    public function category()
+    {
+        return $this->belongsToo('App\Category');
+    }
+
+    public function user()
+    {
+        return $this->belongsToo('App\User');
+    }
+}
+
+Ahora, siguiendo con el ejemplo del blog, vamos a estableder una relación entre
+las imágenes y los artículos, un artículo puede contener varias imágenes por lo
+cual la relación es hasMany, entonces, vamos a Article.php y agregamos una
+función publica images()
+
+public function images()
+{
+    return $this->hasMany('App\Image');
+}
+
+Ejemplo completo en Article.php
+
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Article extends Model
+{
+    protected $table = "articles";
+    protected $fillable = ['title','content','user_id','category_id'];
+
+    public function category()
+    {
+        return $this->belongsToo('App\Category');
+    }
+
+    public function user()
+    {
+        return $this->belongsToo('App\User');
+    }
+
+    public function images()
+    {
+        return $this->hasMany('App\Image');
+    }
+}
+
+De igual forma hay que establecer la relación inversa en Image.php creando la
+función pública article() en singular ya que las imágenes van relacionadas a un
+solo artículo.
+
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Image extends Model
+{
+    protected $table = "images";
+    protected $fillable = ['name','article_id'];
+
+    public function article()
+    {
+        return $this->belongsTo('App\Article');
+    }
+}
+
+Ejemplo de relación Many to Many o muchos a muchos
+==================================================
+
+Un artículo puede tener muchas etiquetas, por lo cuál la función que se crea se
+referencia en plural, en Article.php.
+
+y en el return se usaría la función belongsToMany()
+
+public function tags()
+{
+    return $this->belongsToMany('App\Tag');
+}
+
+Ejemplo completo de Article.php:
+
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Article extends Model
+{
+    protected $table = "articles";
+    protected $fillable = ['title','content','user_id','category_id'];
+
+    public function category()
+    {
+        return $this->belongsToo('App\Category');
+    }
+
+    public function user()
+    {
+        return $this->belongsToo('App\User');
+    }
+
+    public function images()
+    {
+        return $this->hasMany('App\Image');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany('App\Tag');
+    }
+}
+
+Ahora hay que declarar la relación en Tag.php, se declara la función pública
+articles() en plural ya que una etiqueta puede ser usada en muchos artículos.
+
+Ejemplo completo de Tag.php
+
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Tag extends Model
+{
+    protected $table = "tags";
+    protected $fillable = ['name'];
+
+    public function articles()
+    {
+        return $this->belongsToMany('App\Article');
+    }
+}
+
+======================================
+Creando un crud con Laravel desde cero
+======================================
+
+1) Crear el proyecto:
+
+$ composer create-project --prefer-dist laravel/laravel laravel-5-crud "5.8.*"
+
+2) Crear la base de datos y configurarla en el .env
+
+3) Crear una migración con la tabla a la que le aplicaremos el crud:
+
+$ php artisan make:migration add_students_table --create=students
+
+4) Editar la migración agregando los campos que llevará la tabla.
+
+5) Ejecutar la migración de la base de datos.
+
+$ php artisan migrate
+
+Esto nos crea las tablas (students, students_id_seq) en la base de datos,
+chequear si esto se realizo correctamente.
+
+6) Crear un modelo, debe tener el mismo nombre que la migración pero en plural:
+
+$ php artisan make:model Student
+
+7) Editar el modelo creado agregando el nombre de la table en la base de datos
+y los campos fillables.
+
+8) Usar la consola de tinker para probar si se guardan registros correctamente
+en la base de datos.
