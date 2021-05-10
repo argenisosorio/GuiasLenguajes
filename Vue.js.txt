@@ -17,9 +17,6 @@ lado, Vue también es perfectamente capaz de soportar aplicaciones sofisticadas
 de una sola página (en inglés single-page-application o SPA) cuando se utiliza
 en combinación con herramientas modernas y librerías compatibles.
 
-Si eres un desarrollador de frontend con experiencia y quieres saber como Vue
-se compara con otras bibliotecas/frameworks, revisa esta comparación.
-
 =========
 Empezando
 =========
@@ -34,7 +31,8 @@ JSFiddle. Siéntete libre de abrilo en otra pestaña y revisarlo a medida que
 avanzamos con ejemlos básicos. Si no, puedes crear un archivo .html e incluir
 Vue con:
 
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- development version, includes helpful console warnings -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 
 La página de instalación provee más opciones para instalar Vue. Nota que no
 recomendamos a los principiantes comenzar con vue-cli, especialmente si no estás
@@ -44,7 +42,7 @@ familiarizado con las herramientas de trabajo basadas en Node.js.
 Renderizado declarativo
 =======================
 
-En el corazón de Vue.js se encuentra un sistema que nos permite renderizar
+En el núcleo de Vue.js se encuentra un sistema que nos permite renderizar
 declarativamente datos en el DOM utilizando una sintaxis de plantillas directa:
 
 <div id="app">
@@ -57,3 +55,27 @@ var app = new Vue({
     message: 'Hello Vue!'
   }
 })
+
+El ejemplo completo sería:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    {{ message }}
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue!'
+      }
+    })
+  </script>
+</body>
+</html>
