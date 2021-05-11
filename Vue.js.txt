@@ -17,6 +17,46 @@ lado, Vue también es perfectamente capaz de soportar aplicaciones sofisticadas
 de una sola página (en inglés single-page-application o SPA) cuando se utiliza
 en combinación con herramientas modernas y librerías compatibles.
 
+Vue combina buenas prácticas de Angular y de React.
+
+================================
+Progresividad de Vue y sus capas
+================================
+
+La progresividad de Vue se ve a través de varias capas:
+
+-La capa más básica es el render declarativo, render significa dibuajr elementos
+en la pantalla del navegador y declarativo significa que la sintaxis es muy
+fácil de entender.
+
+-La siguiente capa sería el sistema de componentes, aquí ya se está hablando de
+piezas de interfaz como por ejemplo la tarjeta de un producto, un menú de
+navegación, un formulario, esos ya son componentes, piezas de la interfaz que se
+pueden combinar para crear toda tu aplicación.
+
+-La siguiente capa es el enrutamiento en el cliente, es decir tener diferentes
+direcciones en tu aplicación, por ejemplo el inicio, el login, etc. Ya tu vas
+creando tus diferentes URL para las diferentes vistas de tu aplicación, para las
+paginas internas.
+
+-La siguiente capa es el manejo de estado a gran escala, el estado es el
+conjunto de datos en un momento específico de la aplicación, el ejemplo más
+sencillo es un usuario que no ha agregado un producto a un carrito de compra
+por ejemplo, ese es el estado, en el momento que un usuario agrega un producto
+al carrito el estado cambia, porque ahora el carrito ahora tiene un producto
+con un precio y un total, entonces si el usuario cambia de página porque está
+viendo otros productos, ese carrito debe mantenerse con ese producto, con ese
+precio sin importar por donde se mueva el usuario, ese es el estado y lo podemos
+manejar con Vue.
+
+-La siguiente es Build system, Vue te permite empaquetar un proyecto para
+mandarlo a producción de diferentes maneras.
+
+-La última capa es la de Persistencia de datos entre cliente y servidor es decir
+poder tener datos que se mantienen en una aplicación.
+
+Las capas van creciendo creciendo y esa es la progesividad de las aplicaciones.
+
 =========
 Empezando
 =========
@@ -26,17 +66,36 @@ eres totalmente nuevo en el desarrollo de frontend, puede no ser la mejor idea
 empezar a utilizar un framework - ¡aprende los conceptos básicos y luego regresa
 aquí! La experiencia previa con otros frameworks ayuda, pero no es obligatoria.
 
-La manera más sencilla de probar Vue.js es usando el ejemplo “hola mundo” en
-JSFiddle. Siéntete libre de abrilo en otra pestaña y revisarlo a medida que
-avanzamos con ejemlos básicos. Si no, puedes crear un archivo .html e incluir
-Vue con:
+===========
+Instalación
+===========
+
+Inclusión Directa con <script>
+==============================
+
+La manera más sencilla de probar Vue.js es usando el ejemplo “hola mundo” creado
+un archivo .html e incluir Vue con un llamado a un enlace CDN:
 
 <!-- development version, includes helpful console warnings -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 
-La página de instalación provee más opciones para instalar Vue. Nota que no
-recomendamos a los principiantes comenzar con vue-cli, especialmente si no estás
-familiarizado con las herramientas de trabajo basadas en Node.js.
+NPM
+===
+
+NPM es el método de instalación recomendado para construir aplicaciones a gran
+escala con Vue. Este combina perfectamente con empaquetadores de módulos, tales
+como Webpack o Browserify. Vue también ofrece herramientas para la creación de
+componentes de un solo archivo (en inglés Single-File Components).
+
+# latest stable
+
+$ npm install vue
+
+Cuando use Vue, le recomendamos que también instale Vue Devtools en su navegador
+lo que le permite inspeccionar y depurar sus aplicaciones de Vue de una manera
+más amigable:
+
+https://github.com/vuejs/vue-devtools#vue-devtools
 
 =======================
 Renderizado declarativo
@@ -45,22 +104,26 @@ Renderizado declarativo
 En el núcleo de Vue.js se encuentra un sistema que nos permite renderizar
 declarativamente datos en el DOM utilizando una sintaxis de plantillas directa:
 
-<div id="app">
-  {{ message }}
-</div>
+El siguiente es un código html, bastante sencillo, posee una línea para llamar a
+Vue en nuestra página web <script src="https://unpkg.com/vue"></script> no
+significa que lo estemos instalando, también tenemos un "div" con el "id" = a
+"app" que usaremos como punto de montaje y luego tenemos un pequeño script donde
+instanciamos Vue con "new Vue" y le pasamos un objeto con el atributo "el"
+donde ponemos el selector o referencia a "#app" del punto de montaje declarado
+primero, de esta manera estamos diciento que esta instancia de Vue estará
+conectada con ese punto de montaje, así se unen, luego tenemos el atributo data
+se podrá imprimir luego en el html, etnonces como tengo la propiedad "message"
+significa que voy a imprimir el contenido en "{{ message }}".
 
-var app = new Vue({
-  el: '#app',
-  data: {
-    message: 'Hello Vue!'
-  }
-})
+Dentro de esa instancia de Vue ya se podrían poner eventos, poner alguna lógica
+pero es javascript convencional.
 
-El ejemplo completo sería:
+El ejemplo sería:
 
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
   <title>My first Vue app</title>
   <script src="https://unpkg.com/vue"></script>
 </head>
@@ -79,3 +142,267 @@ El ejemplo completo sería:
   </script>
 </body>
 </html>
+
+Esto nos muestra el mensaje Hello Vue! en el navegador.
+
+=================
+Directivas de Vue
+=================
+
+Son como una herencia que toma Vue de Angular 1 y son atributos en el html o el
+template que insertan lógica de manera sencilla, siempre empiezan con "v-".
+
+Ejemplos:
+
+v-for: Lo que hace es recorrer una lista de elementos, es un ciclo for.
+
+v-on: Que lo que hace es escuchar un evento.
+
+v-bind: Que encadena datos.
+
+v-if: Un condicional.
+
+v-else: El else de esa condicional.
+
+v-show: Para mostrar u ocultar elementos.
+
+Y existen más directivas en Vue...
+
+Ejemplo de v-for
+================
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="name in names">
+        {{ name }}
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        names: ["José","Pedro","Juan","María"]
+      }
+    })
+  </script>
+</body>
+</html>
+
+Ejemplo con 2 puntos de montaje:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="list1">
+    <ul>
+      <li v-for="name in names">
+        {{ name }}
+      </li>
+    </ul>
+  </div>
+
+  <br />
+
+  <div id="list2">
+    <ul>
+      <li v-for="color in colors">
+        {{ color }}
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    var list1 = new Vue({
+      el: '#list1',
+      data: {
+        names: ["José","Pedro","Juan","María"]
+      }
+    })
+
+    var list2 = new Vue({
+      el: '#list2',
+      data: {
+        colors: ["Blue","Orange","Red","Green"]
+      }
+    })
+  </script>
+</body>
+</html>
+
+===============================
+Cómo crear un componente en Vue
+===============================
+
+Vue tiene un API para crear Componentes. No sigue el estándar de la W3C de los
+WebComponents, pero el estilo es muy similar y puedes utilizar templates para
+ello.
+
+En éste tutorial vamos a crear un pequeño componente reutilizable que muestra la
+información de una película: Su título y una imagen.
+
+Para ello, creamos un fichero index.html que contendrá el elemento raíz #app
+dónde colocaremos nuestra aplicación de Vue, el script con la librería y otro
+script más dónde tendremos nuestro código:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Componentes con Vue.js</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
+
+A continuación creamos un fichero app.js al mismo nivel que index.html para que
+el enlace del <script> funcione correctamente.
+
+Aquí vamos a crear el componente <movie-card> e instanciar la aplicación de Vue.
+
+Primero debemos crear el componente para que el código se interprete
+correctamente. Si instanciamos antes la app de Vue y luego el componente
+tendremos errores porque Vue no lo reconocerá.
+
+Para crear un componente tenemos que usar la función Vue.component que recibe un
+string con el nombre de nuestro componente, que será el nombre que tendrá el
+elemento en el DOM, y un objeto de configuración que contendrá el nombre de las
+props, el template, datos, métodos, etc...
+
+Para crear un componente movie-card escribimos lo siguiente:
+
+Vue.component('movie-card', {
+  props: ['image', 'title'],
+  template: `
+    <div>
+      <img width="100" v-bind:src="image" v-bind:alt="title"/>
+      <h2>{{ title }}</h2>
+    </div>
+  `,
+})
+
+El componente recibirá como propiedades una image y un title, y su aspecto en el
+DOM será el de un <div> que contiene un elemento <img> que mostrará la imagen y
+otro h2 que mostrará el título de la película.
+
+Para ver el componente en acción, podemos hacer varias cosas. Como primera
+opción, podemos insertar el componente <movie-card> en el HTML dentro del
+<div id="app"> dónde tenemos instanciado Vue.
+
+Para instanciar Vue, en el código de app.js justo debajo del componente que
+acabamos de crear, escribimos lo siguiente:
+
+new Vue({
+    el: '#app'
+})
+
+Y así en index.html podemos escribir lo siguiente:
+
+<div id="app">
+  <movie-card
+    title="Regreso al Futuro"
+    image="http://es.web.img3.acsta.net/pictures/14/04/03/13/45/034916.jpg">
+  </movie-card>
+</div>
+
+Esto nos mostraría la imagen junto al título de la película en el navegador.
+Pero si queremos mostrar varias <movie-card> cuyos datos obtengamos a través de
+un API externo u otro servicio, sólo con esto no se podría.
+
+Utilizando un v-for en este ejemplo
+===================================
+
+En la instancia de Vue, utilizaremos la propiedad data para emplear un array de
+objetos con la información de varias películas.
+
+El objeto movies contiene objetos con atributos title y image.
+
+new Vue({
+  el: '#app',
+  data: {
+    movies: [
+      { title: 'Regreso al Futuro', image: 'http://es.web.img3.acsta.net/pictures/14/04/03/13/45/034916.jpg' },
+      { title: 'Matrix', image: 'http://t0.gstatic.com/images?q=tbn:ANd9GcQq3pIz-aKgkmYX1dJ-EL-AlHSPcOO7wdqRIJ5gJy9qNinXpmle' },
+      { title: 'Interestellar', image: 'http://t1.gstatic.com/images?q=tbn:ANd9GcRf61mker2o4KH3CbVE7Zw5B1-VogMH8LfZHEaq3UdCMLxARZAB' }
+    ]
+  }
+})
+
+De esta forma podemos acceder a estos datos dentro de Vue, y lo siguiente que
+tenemos que hacer es pintarlos.
+
+Para ello, tendríamos que iterar por todos los elementos de éste array y pintar
+un componente <movie-card> por cada uno de ellos.
+
+Eso lo vamos a conseguir con la directiva v-for que hace precisamente eso, y
+sería tan sencillo como lo siguiente en el fichero index.html:
+
+<div id="app">
+  <movie-card v-for="(movie, index) in movies"
+    v-bind:key="index"
+    v-bind:title="movie.title"
+    v-bind:image="movie.image">
+  </movie-card>
+</div>
+
+Cada elemento se va a llamar "movie" y tiene un "index" representa la posición
+en el array del elemento que estamos mostrando en ese momento.
+
+"movie.title" va a hacer referencia a la propiedad title dentro del objeto, al
+igual que "movie.image"
+
+El atributo "key" se agrega para que haya más eficiencia al momento de
+renderizar los elementos.
+
+Si se quiere, en lugar de escribir esto en el HTML, podemos utilizar la
+propiedad template de Vue en el código JavaScript y dejar el index.html
+únicamente con el <div id='app'> sin nada en su interior, ya se encargará Vue de
+insertarlo:
+
+new Vue({
+  el: '#app',
+  data: {
+    movies: [
+      { title: 'Regreso al Futuro', image: 'http://es.web.img3.acsta.net/pictures/14/04/03/13/45/034916.jpg' },
+      { title: 'Matrix', image: 'http://t0.gstatic.com/images?q=tbn:ANd9GcQq3pIz-aKgkmYX1dJ-EL-AlHSPcOO7wdqRIJ5gJy9qNinXpmle' },
+      { title: 'Interestellar', image: 'http://t1.gstatic.com/images?q=tbn:ANd9GcRf61mker2o4KH3CbVE7Zw5B1-VogMH8LfZHEaq3UdCMLxARZAB' }
+    ]
+  },
+  template: `
+    <div>
+      <movie-card v-for="(movie, index) in movies"
+        v-bind:key="index"
+        v-bind:title="movie.title"
+        v-bind:image="movie.image">
+      </movie-card>
+    </div>
+  `
+})
+
+Esta es la forma que tiene Vue de crear componentes, que por supuesto no es la
+única, pero que para algo sencillo nos puede servir sin necesidad de más
+herramientas.
+
+Fuente
+======
+
+-https://github.com/carlosazaustre/carlosazaustre.es/blob/master/content/posts//desarrollo-basado-en-componentes-con-vue-js/index.mdx

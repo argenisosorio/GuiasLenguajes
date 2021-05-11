@@ -555,9 +555,9 @@ CREATE TABLE parroquia (
     codigo_municipio varchar REFERENCES municipio
 );
 
-################################################################
-##### Cambiar codificación de una base de datos (encoding) #####
-################################################################
+====================================================
+Cambiar codificación de una base de datos (encoding)
+====================================================
 
 postgres# update pg_database set encoding = pg_char_to_encoding('UTF8') where datname = 'database_name';
 
@@ -577,3 +577,32 @@ servidor: No existe el fichero o el directorio
 Se debe reiniciar el servicio de postgresql
 
 # service postgresql restart
+
+=======
+PostGIS
+=======
+
+PostGIS es un módulo para Postgresql.
+
+PostGIS convierte al sistema de administración de bases de datos PostgreSQL en
+una base de datos espacial mediante la adición de tres características: tipos de
+datos espaciales, índices espaciales y funciones que operan sobre ellos. Debido
+a que está construido sobre PostgreSQL, PostGIS hereda automáticamente las
+características de las bases de datos empresariales, así como los estándares
+abiertos que implementan un Sistema de Información Geográfica dentro del motor
+de base de datos.
+
+Ha sido desarrollado por la empresa canadiense Refraction Research,
+especializada en productos "Open Source" entre los que habría que citar a Udig.
+PostGIS es hoy en día un producto veterano que ha demostrado versión a versión
+su eficiencia. En relación con otros productos, PostGIS ha demostrado ser muy
+superior a la extensión geográfica de la nueva versión de MySQL, y a juicio de
+muchos, es muy similar a la versión geográfica de la base de datos Oracle.
+
+Un aspecto que debemos tener en cuenta es que PostGIS ha sido certificado en
+2006 por el Open Geospatial Consortium (OGC) lo que garantiza la
+interoperabilidad con otros sistemas también interoperables. PostGIS almacena la
+información geográfica en una columna del tipo GEOMETRY, que es diferente del
+homónimo "GEOMETRY" utilizado por PostgreSQL, donde se pueden almacenar la
+geometría en formato WKB (Well-Known Binary), aunque hasta la versión 1.0 se
+utilizaba la forma WKT (Well-Known Text).
