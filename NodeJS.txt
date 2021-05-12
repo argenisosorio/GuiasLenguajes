@@ -85,3 +85,125 @@ Eliminar NodeJS del sistema
 # apt-get --purge remove node
 
 # apt-get --purge remove nodejs
+
+=======================
+El archivo package.json
+=======================
+
+Es el responsable de almacenar el nombre de las dependencias de node instaladas
+catalogándolas principalmente en dos tipos: dependencias de desarrollo y
+dependencias de la aplicación.
+
+Al mirar dentro de este archivo, si bien hay algunas cosas que podemos reconocer
+de manera inmediata, hay algunos valores y textos que es muy probable que no
+sepamos que significan ni como llegaron ahí.
+
+¿Qué es el package.json?
+========================
+
+De cierta forma, podemos considerar este package.json como un manifiesto de
+nuestro proyecto.
+
+Históricamente, Node ha trabajado con una herramienta para administrar paquetes
+llamada npm. Esta herramienta, que normalmente se instala junto con Node, tiene
+dos roles fundamentales:
+
+-Manejar la publicación de un proyecto al registro público de npm (para que
+otros puedan descargarlo y utilizarlo como dependencia en sus propios proyectos).
+
+-Administrar las dependencias de tu proyecto.
+
+Para esto, guarda un registro en un archivo llamado, justamente, package.json.
+
+Dentro de este archivo se definen y manejan características como:
+
+-Nombre de tu proyecto.
+-Versión.
+-Dependencias.
+-Repositorio.
+-Autores.
+-Licencia.
+
+A través de este archivo, finalmente, se puede garantizar la integridad del
+proyecto. Es decir, podemos asegurar que quienes tengan una copia del mismo,
+podrán acceder a las mismas propiedades y sincronizar entre múltiples partes
+cada vez que decidan hacer un cambio. De cierta forma, podemos considerar este
+package.json como un manifiesto de nuestro proyecto.
+
+Por ejemplo, consideremos el siguiente escenario:
+
+Dos personas están trabajando en el mismo proyecto, con copias independientes en
+cada uno de sus equipos. El primero de ellos determina que para completar la
+nueva funcionalidad, va a necesitar implementar una nueva librería al proyecto.
+
+Antiguamente, sin manejo de dependencias, era necesario hacer una de dos cosas:
+
+-Incluir la librería (1 o múltiples archivo(s)) manualmente en el directorio del
+proyecto, potencialmente aumentando el peso del proyecto de manera considerable.
+
+-No incluir la librería, pero comunicarle a cada persona que obtuviera una copia
+del mismo que antes de trabajar en el proyecto necesitaría instalar esta nueva
+dependencia (buena forma de hacer nuevos amigos, poco óptimo en términos de
+tiempo).
+
+Con el uso de administradores de dependencias, ya estos pasos no son necesarios.
+Ahora cada persona que decida obtener una copia del proyecto, desde ahora al
+final de los tiempos, puede instalar todas y cada una de las dependencias que
+tengamos declaradas en este “manifiesto” sin la necesidad de incluir una copia
+de éstas en ningún otro lado más que ahí.
+
+Cabe mencionar que si bien muchas características del package.json parecieran
+ser específicas para proyectos publicados en el registro de npm (como librerías)
+también aplican para proyectos cuya finalidad no es ser publicados en ningún
+registro (como por ejemplo aplicaciones Web o móviles, juegos y otros), pero que
+si se benefician de las utilidades relacionadas a la administración de
+dependencias.
+
+¿Cómo crearlo?
+==============
+
+Antes de crear un package.json, hay solo una regla a tener en consideración: El
+archivo debe ser un JSON de formato válido (no puede ser un objeto literal de JS
+exportado desde un archivo), con todas las especificaciones que esto implica
+(por ejemplo, cada key debe tener comillas dobles, solo ciertos valores son
+válidos, etc.)
+
+Para crearlo, hay 2 formas: hacerlo de forma manual o hacerlo de forma
+automática:
+
+===================================
+Creando un package.json manualmente
+===================================
+
+Si bien es recomendable usar alguno de los asistentes para crear el archivo de
+forma automática, en caso de que necesitemos hacerlo de forma manual, es solo
+cosa de crear un archivo llamado package.json en la raíz del proyecto e incluir,
+como mínimo, la siguiente información:
+
+name.
+version.
+
+=======================================
+Creando un package.json automáticamente
+=======================================
+
+Es la forma más rápida de hacerlo, ya que tanto npm como yarn incluyen un
+asistente que nos permite crear un package.json con un solo comando:
+
+$ npm init
+
+El asistente nos hará algunas preguntas para definir la información del proyecto
+(nombre, version, archivo de entrada, licencia y repositorio entre otros).
+
+Fuente
+======
+
+-https://medium.com/noders/t%C3%BA-yo-y-package-json-9553929fb2e3
+
+====
+Yarn
+====
+
+Es una herramienta de administración de paquetes para Node llamada. Su
+funcionamiento, al menos en cuanto al uso del package.json, es prácticamente
+igual.
