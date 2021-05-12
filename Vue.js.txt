@@ -244,6 +244,44 @@ Ejemplo con 2 puntos de montaje:
 </body>
 </html>
 
+=========================
+Anatomía de un componente
+=========================
+
+Un componente contiene 3 partes principales:
+
+-template.
+-script.
+-style.
+
+<template>
+// Aquí va el código HTML
+</template>
+
+<script>
+// Aquí va el código Javascript
+</script>
+
+<style>
+// Aquí va el código CSS
+</style>
+
+=================================
+Tipos de Web Components en Vue.js
+=================================
+
+Vue cuenta con dos tipos de componentes:
+
+-Componentes Locales: son archivos con extensión .vue que el navegador por sí
+solo no puede comprender y por ende es necesario del uso de herramientas como
+Web Pack. Son bastante útiles para una aplicación web escalable por su sencillez
+de mantenimiento.
+
+-Componentes Globales: No necesitan archivos con extensión .vue, pueden ser
+accedidos desde cualquier parte del código pero no se aconseja su uso en
+aplicaciones web grandes por razones de mantenimiento. Son los más sencillos de
+aprender.
+
 ===============================
 Cómo crear un componente en Vue
 ===============================
@@ -286,7 +324,7 @@ tendremos errores porque Vue no lo reconocerá.
 Para crear un componente tenemos que usar la función Vue.component que recibe un
 string con el nombre de nuestro componente, que será el nombre que tendrá el
 elemento en el DOM, y un objeto de configuración que contendrá el nombre de las
-props, el template, datos, métodos, etc...
+props (Propiedades que recibe), el template, datos, métodos, etc...
 
 Para crear un componente movie-card escribimos lo siguiente:
 
@@ -402,7 +440,11 @@ Esta es la forma que tiene Vue de crear componentes, que por supuesto no es la
 única, pero que para algo sencillo nos puede servir sin necesidad de más
 herramientas.
 
-Fuente
+Fuentes
 ======
 
 -https://github.com/carlosazaustre/carlosazaustre.es/blob/master/content/posts//desarrollo-basado-en-componentes-con-vue-js/index.mdx
+
+-https://medium.com/techwomenc/crea-tu-primer-componente-single-file-con-vue-js-8802381311
+
+-https://dev.to/duxtech/crea-tu-primer-componente-con-vue-js-para-dummies-2n4c

@@ -81,6 +81,97 @@ El archivo package.json es el responsable de almacenar el nombre de las
 dependencias instaladas catalogándolas principalmente en dos tipos: dependencias
 de desarrollo y dependencias de la aplicación.
 
+===============
+Comandos de npm
+===============
+
+Con este comando las aplicaciones compilarán todos los paquetes o modulos que se
+encuentrn instalados y unificará los archivos en generalmente 2 que se
+especifíquen como app.js y app.css por ejemplo.
+
+$ npm run dev
+
+-----
+
+Con este comando las aplicaciones compilarán todos los paquetes que se
+encuentren instalados y unificará los archivos en generalmente 2 que se
+especifíquen como app.js y app.css por ejemplo.
+
+$ npm run prod
+
+====================================
+Diferencias entre run dev y run prod
+====================================
+
+run dev: Compilar para desarrollo, los archivos resultantes mantienen el código
+fuente desminificados. Las herramientas usadas en el navegador identifican los
+objetos y componentes para poder depurar el código.
+
+run prod -> compilar para producción, los archivos resultantes estan
+minificados. Las herramientas de desarrollo usadas en el navegador no pueden
+acceder a los componentes u objetos por lo que es complicado poder interactuar
+con ellos a través del navegador.
+
+================
+El paquete serve
+================
+
+Suponiendo que le gustaría servir un sitio estático, una aplicación de una sola
+página o simplemente un archivo estático (sin importar si está en su dispositivo
+o en la red local), este paquete es la opción correcta para usted.
+
+1) Instalación, -g para que se instale de manera global:
+
+$ sudo npm install serve -g
+
+2) Correr el servidor:
+
+$ serve .
+
+Te debe mostrar algo como:
+
+   ┌─────────────────────────────────────────────────┐
+   │                                                 │
+   │   Serving!                                      │
+   │                                                 │
+   │   - Local:            http://localhost:5000     │
+   │   - On Your Network:  http://172.16.0.41:5000   │
+   │                                                 │
+   │   Copied local address to clipboard!            │
+   │                                                 │
+   └─────────────────────────────────────────────────┘
+
+3) Consultar la URL http://localhost:5000 para verificar que la página está
+siendo servida.
+
+=============================
+El paquete webpack-dev-server
+=============================
+
+En esencia, webpack es un paquete de módulos estáticos para aplicaciones
+JavaScript modernas. Cuando webpack procesa su aplicación, crea internamente un
+gráfico de dependencia que mapea cada módulo que su proyecto necesita y genera
+uno o más paquetes.
+
+=======
+Modulos
+=======
+
+En la programación modular, los desarrolladores dividen los programas en partes
+discretas de funcionalidad llamadas módulo.
+
+Cada módulo tiene una superficie más pequeña que un programa completo, lo que
+hace que la verificación, la depuración y las pruebas sean triviales. Los
+módulos bien escritos proporcionan abstracciones sólidas y límites de
+encapsulación, de modo que cada módulo tiene un diseño coherente y un propósito
+claro dentro de la aplicación general.
+
+Node.js ha admitido la programación modular casi desde sus inicios. En la web,
+sin embargo, el soporte para módulos ha tardado en llegar.  Existen varias
+herramientas que admiten JavaScript modular en la web, con una variedad de
+beneficios y limitaciones.  webpack se basa en las lecciones aprendidas de estos
+sistemas y aplica el concepto de módulos a cualquier archivo de su proyecto.
+
 =======
 Fuentes
 =======
