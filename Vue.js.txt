@@ -298,16 +298,14 @@ dónde colocaremos nuestra aplicación de Vue, el script con la librería y otro
 script más dónde tendremos nuestro código:
 
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Componentes con Vue.js</title>
+  <meta charset="utf-8">
+  <title>My first Vue component</title>
+  <script src="https://unpkg.com/vue"></script>
 </head>
 <body>
   <div id="app"></div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.2/vue.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
@@ -350,17 +348,25 @@ Para instanciar Vue, en el código de app.js justo debajo del componente que
 acabamos de crear, escribimos lo siguiente:
 
 new Vue({
-    el: '#app'
+  el: '#app'
 })
 
 Y así en index.html podemos escribir lo siguiente:
 
-<div id="app">
-  <movie-card
-    title="Regreso al Futuro"
-    image="http://es.web.img3.acsta.net/pictures/14/04/03/13/45/034916.jpg">
-  </movie-card>
-</div>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue component</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    <movie-card title="Regreso al Futuro" image="http://es.web.img3.acsta.net/pictures/14/04/03/13/45/034916.jpg"></movie-card>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
 
 Esto nos mostraría la imagen junto al título de la película en el navegador.
 Pero si queremos mostrar varias <movie-card> cuyos datos obtengamos a través de
@@ -411,10 +417,67 @@ igual que "movie.image"
 El atributo "key" se agrega para que haya más eficiencia al momento de
 renderizar los elementos.
 
-Si se quiere, en lugar de escribir esto en el HTML, podemos utilizar la
-propiedad template de Vue en el código JavaScript y dejar el index.html
-únicamente con el <div id='app'> sin nada en su interior, ya se encargará Vue de
-insertarlo:
+Ejemplo completo:
+
+app.js
+
+Vue.component('movie-card', {
+  props: ['image', 'title'],
+  template: `
+    <div>
+      <img width="100" v-bind:src="image" v-bind:alt="title"/>
+      <h2>{{ title }}</h2>
+    </div>
+  `,
+})
+
+new Vue({
+  el: '#app',
+  data: {
+    movies: [
+      { title: 'Regreso al Futuro', image: 'http://es.web.img3.acsta.net/pictures/14/04/03/13/45/034916.jpg' },
+      { title: 'Matrix', image: 'http://t0.gstatic.com/images?q=tbn:ANd9GcQq3pIz-aKgkmYX1dJ-EL-AlHSPcOO7wdqRIJ5gJy9qNinXpmle' },
+      { title: 'Interestellar', image: 'http://t1.gstatic.com/images?q=tbn:ANd9GcRf61mker2o4KH3CbVE7Zw5B1-VogMH8LfZHEaq3UdCMLxARZAB' }
+    ]
+  }
+})
+
+index.html
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue component</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    <movie-card v-for="(movie, index) in movies"
+      v-bind:key="index"
+      v-bind:title="movie.title"
+      v-bind:image="movie.image">
+    </movie-card>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
+
+-----
+
+Si se quiere, en lugar de escribir esto en el HTML:
+
+<div id="app">
+  <movie-card v-for="(movie, index) in movies"
+    v-bind:key="index"
+    v-bind:title="movie.title"
+    v-bind:image="movie.image">
+  </movie-card>
+</div>
+
+Podemos utilizar la propiedad template de Vue en el código JavaScript y dejar el
+index.html únicamente con el <div id='app'> sin nada en su interior, ya se
+encargará Vue de insertarlo:
 
 new Vue({
   el: '#app',
