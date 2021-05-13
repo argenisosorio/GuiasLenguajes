@@ -304,10 +304,20 @@ Reiniciar la maquina en Debian 10.
 
 # systemctl reboot
 
+-----
+
 Detectar las resoluciones de pantalla disponibles del sistema así como los hz
 correspondientes, la que tenga (*) es la que está siendo usada.
 
 $ xrandr
+
+-----
+
+Obtener la resolución de la pantalla o pantallas.
+
+$ xrandr | grep '*'
+
+-----
 
 Ver las dependencias de una librería o ejecutable, en este caso del ejecutable
 de python.
