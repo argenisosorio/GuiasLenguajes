@@ -158,13 +158,16 @@ v-for: Lo que hace es recorrer una lista de elementos, es un ciclo for.
 
 v-on: Que lo que hace es escuchar un evento.
 
-v-bind: Que encadena datos.
+v-bind: Que encadena datos, es decir que establece comunicación con los datos
+que haya en el componente asociado.
 
 v-if: Un condicional.
 
 v-else: El else de esa condicional.
 
 v-show: Para mostrar u ocultar elementos.
+
+v-model: Permite enlazar un elemento con alguna propiedad de un estado.
 
 Y existen más directivas en Vue...
 
@@ -503,6 +506,145 @@ Esta es la forma que tiene Vue de crear componentes, que por supuesto no es la
 única, pero que para algo sencillo nos puede servir sin necesidad de más
 herramientas.
 
+=================================
+Otro ejemplo de primer componente
+=================================
+
+Comenzamos creando nuestro archivo index.html con una estructura básica con el
+llamado a Vuejs desde un cdn y tambien creamos un div con el id app que es
+donde mostraremos los datos del componente que crearemos luego:
+
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Component vue example</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+  </body>
+</html>
+
+Ahora, crearemos un archivo js, app.js por ejemplo, que es donde empezaremos a
+crear nuestra instancia de vue:
+
+Primero declaramos a "app" con "const", o "var", luego a "new Vue" que de
+contener un objeto de configuración
+
+const app = new Vue ()
+
+Este objeto va a tener una propiedad llamada "el" donde vamos a ubicar que es
+elemento del DOM o del html es donde queremos que funcione vuejs.
+
+const app = new Vue ({
+  el: '#app'
+})
+
+Con lo anterior declaramos que queremos dentro del div "app" del dom será donde
+va a estar nuestra aplicación vue.
+
+Para poderle pasar datos a esa plantilla html se usa la sintaxsis mustache o de
+doble llames {{ }} que insertaremos dentrto del "div app"
+
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Component vue example</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      {{ message }}
+    </div>
+  </body>
+</html>
+
+Esta variable {{ message }} en el html la podemos llamar en nuestra aplicación
+vue con una comunicación o vinculación "double data binding" que permite que si
+el contenido de la variable en el DOM cambia, este a su vez también cambie en el
+controlador que sería nuestro componente y si hay algún cambio en el controlador
+también se vea reflejado en la vista o el DOM.
+
+double data binding
+===================
+
+Este concepto heredado de Angular nos permite transmitir las propiedades de los
+Component al DOM (la vista) para por ejemplo cambiar el color del fondo de la
+página de blanco a negro. Y también necesitamos que los eventos de la vista sean
+comunicados al Component, por ejemplo, para implementar un botón con el cual
+mostrar / ocultar las imágenes de la lista de productos.
+
+Para poder indicar en el controlador los datos que queremos que estén
+comunicados con la vista usaremos la propiedad "data" que será un objeto, y
+"data" va a contener todas las variables y datos que queramos que se comuniquen.
+
+Dentro de data tendremos una propiedad que se llama "message" y que contendrá
+una cadena con nuestro mensaje que vamos a mostrar en el DOM.
+
+const app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue!'
+  }
+})
+
+Si abrimos index.html con nuestro navegador veremos el mensaje.
+
+Ahora, vamos a hacer un poco más complejo nuestro ejemplo. Es común que nuestras
+variables de los componentes que queremos que se comuniquen con la vista no sean
+de tipo texto solamente sino que estén por ejemplo dentro de una etiqueta html
+como el atributo de un enlace href que queremos que sea variable, dinámico y
+cambie o por ejemplo una imagen que queremos que cambie con los datos que
+mandamos desde el controlador.
+
+Para seguir este ejemplo vamos a declarar otra propiedad dentro de "data" que
+será "image" que contentra una "url" que apunta a una imagen de la web.
+
+const app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue!'
+    image: 'http://t1.gstatic.com/images?q=tbn:ANd9GcRf61mker2o4KH3CbVE7Zw5B1-VogMH8LfZHEaq3UdCMLxARZAB'
+  }
+})
+
+Ahora, como podemos mostrar esta imagen en el DOM?
+
+Dentro de "div app" que es donde está funcionando nuestra aplicación vue vamos a
+incluir un elemento "img" con su atributo "src" pero lo escribiremos usando la
+directiva de vue v-bind que nos permite encadenar datos, es decir que establece
+comunicación con los datos que haya en el componente asociado.
+
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Component vue example</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      {{ message }}
+      <img v-bind:src="image">
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
+
+Si abrimos index.html con nuestro navegador veremos el mensaje y la imegen.
+
+Hay una sintaxis más abreviada, y es que cuando se trata de atributos pordemos
+ahorrarnos de escribir v-bind:src="image" y con solo :src="image" debe
+funcionar.
+
 =======
 Vue CLI
 =======
@@ -607,7 +749,7 @@ Al crear un proyecto con Vue CLI nos queda esta estructura:
 
     /components
 
-    App.vue: Aplicación principal.
+    App.vue: Aplicación principal o componente de orden superior.
 
     main.js: Configuración principal e inicial. Donde se importa Vue y se hace
     la configuración base.
