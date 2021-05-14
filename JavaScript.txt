@@ -90,9 +90,9 @@ console.log(miPais.length); //Usá console.log para mostrar el largo de la varia
 
 console.log(miPais.substring(0,3)); //Usá console.log para mostrar las tres primeras letras de miPais
 
--------------------------------------
-
-##### Sintaxis básica #####
+===============
+Sintaxis básica
+===============
 
 Declaración simple de variable:
 
@@ -113,11 +113,9 @@ var foo = function() {
     console.log('hello');
 };
 
--------------------------------------
-
-######################
-##### Operadores #####
-######################
+==========
+Operadores
+==========
 
 Los operadores básicos permiten manipular valores.
 
@@ -5324,5 +5322,207 @@ document.write(num);
 document.write("<br />");
 document.write(n);
 </script>
+</body>
+</html>
+
+==============
+El objeto this
+==============
+
+El JavaScript esta palabra clave se refiere al objeto al que pertenece.
+
+En este ejemplo, "this" representa el objeto persona, porque el objeto persona
+pertenece al método fullName.
+
+<!DOCTYPE html>
+<html>
+<body>
+<p id="demo"></p>
+
+<script>
+// Create an object:
+var person = {
+  firstName: "John",
+  lastName : "Doe",
+  id     : 5566,
+  fullName : function() {
+    return this.firstName + " " + this.lastName;
+  }
+};
+
+// Display data from the object:
+document.getElementById("demo").innerHTML = person.fullName();
+</script>
+
+</body>
+</html>
+
+this en un método
+=================
+
+En un método de objeto, this se refiere al "dueño" del método.
+
+En el ejemplo de la parte superior de esta página, esto se refiere al objeto
+persona.
+
+El objeto person es el dueño del método fullName.
+
+this solo
+=========
+
+Cuando se usa solo, el propietario es el objeto Global, por lo que se refiere al
+objeto Global.
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>The JavaScript <i>this</i> Keyword</h2>
+
+<p>In this example, <b>this</b> refers to the window Object:</p>
+
+<p id="demo"></p>
+
+<script>
+var x = this;
+document.getElementById("demo").innerHTML = x;
+</script>
+
+</body>
+</html>
+
+this en una función (Por defecto)
+=================================
+
+En una función de JavaScript, el propietario de la función es el enlace
+predeterminado para esto.
+
+Entonces, en una función, esto se refiere al objeto global [object Window].
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>The JavaScript <i>this</i> Keyword</h2>
+
+<p>In this example, <b>this</b> represents the object that "owns" myFunction:</p>
+
+<p id="demo"></p>
+
+<script>
+document.getElementById("demo").innerHTML = myFunction();
+function myFunction() {
+  return this;
+}
+</script>
+
+</body>
+</html>
+
+
+This en una función (estricta)
+==============================
+
+El modo estricto de JavaScript no permite el enlace predeterminado.
+
+Entonces, cuando se usa en una función, en modo estricto, esto no está definido.
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>The JavaScript <i>this</i> Keyword</h2>
+
+<p>In a function, by default, <b>this</b> refers to the Global object.</p>
+<p>In strict mode, <b>this</b> is <b>undefined</b>, because strict mode does not allow default binding:</p>
+
+<p id="demo"></p>
+
+<script>
+"use strict";
+document.getElementById("demo").innerHTML = myFunction();
+function myFunction() {
+  return this;
+}
+</script>
+
+</body>
+</html>
+
+This en los controladores de eventos
+
+En los controladores de eventos HTML, esto se refiere al elemento HTML que
+recibió el evento:
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>The JavaScript <i>this</i> Keyword</h2>
+
+<button onclick="this.style.display='none'">Click to Remove Me!</button>
+
+</body>
+</html>
+
+En el siguiente ejemplo, al llamar a person1.fullName con person2 como
+argumento, esto se referirá a person2, incluso si es un método de person1:
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>The JavaScript <i>this</i> Keyword</h2>
+<p>In this example <strong>this</strong> refers to person2, even if it is a method of person1:</p>
+
+<p id="demo"></p>
+
+<script>
+var person1 = {
+  fullName: function() {
+    return this.firstName + " " + this.lastName;
+  }
+}
+var person2 = {
+  firstName:"John",
+  lastName: "Doe",
+}
+var x = person1.fullName.call(person2);
+document.getElementById("demo").innerHTML = x;
+</script>
+
+</body>
+</html>
+
+====================
+HTML5 Tag <template>
+====================
+
+Utilice <template> para guardar algún contenido que se ocultará cuando se cargue
+la página. Utilice JavaScript para mostrarlo:
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>The template Element</h1>
+
+<p>Click the button below to display the hidden content from the template element.</p>
+
+<button onclick="showContent()">Show hidden content</button>
+
+<template>
+  <h2>Flower</h2>
+  <img src="img_white_flower.jpg" width="214" height="204">
+</template>
+
+<script>
+function showContent() {
+  var temp = document.getElementsByTagName("template")[0];
+  var clon = temp.content.cloneNode(true);
+  document.body.appendChild(clon);
+}
+</script>
+
 </body>
 </html>

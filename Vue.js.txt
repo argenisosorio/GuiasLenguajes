@@ -645,6 +645,303 @@ Hay una sintaxis más abreviada, y es que cuando se trata de atributos pordemos
 ahorrarnos de escribir v-bind:src="image" y con solo :src="image" debe
 funcionar.
 
+Ahora vamos a ver un ejemplo de uso de directivas para poder mostrar/ocultar
+elementos del DOM, dependiendo de un valor, con v-if que es un simple if
+de toda la vida.
+
+Dentro de "div app" vamos a agregar otro "div" y el contenido que tenemos
+actualmente lo vamos a meter dentro de este nuevo "div" al cual también le
+incluiremos la directiva "v-if" y una variable que será "show".
+
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Component vue example</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div v-if v-if="show">
+        {{ message }}
+        <img v-bind:src="image" width="150">
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
+
+Ahora, también hay que agregar esa variable "show" a nuestroy componente y
+tendra un valor, false o true:
+
+const app = new Vue({
+  el: '#app',
+  data: {
+    show: true,
+    message: 'Hello Vue!',
+    image: 'http://t1.gstatic.com/images?q=tbn:ANd9GcRf61mker2o4KH3CbVE7Zw5B1-VogMH8LfZHEaq3UdCMLxARZAB'
+  }
+})
+
+Si abrimos index.html con nuestro navegador veremos el mensaje y la imegen o no,
+dependindo del valor que tenga la variable show en el componente.
+
+La gracia de estas directivas es dotar de dinamismo a las aplicaciones web.
+Por lo tanto ese show no deberíamos tenerlo puesta así a mano sino que queremos
+que esa variable cambie a través de algo, pues ese algo serían los métodos y
+para poder trabajar con ellos y llamarlos es necesario tener eventos.
+
+En el siguiente ejemplo veremos como con un botón podemos cambiar este valor de
+"show" y mostrar u ocultar el contenido dependiendo de la acción del usuario.
+
+Para eso vamos a crear un button en el html, este botón va a tener un evento de
+click y con ese evento vamos a lanzar un método o una función, para lanzar el
+evento, sería con la directiva "v-on" y el evento "click", en este caso
+podríamos lanzar cualquier evento de del mouse o del mouse, como pasar por
+encima de x elemento, o hacer click, o pulsar una tecla del teclado, etc.
+
+Cuando este evento de click suceda, va a llamar a una función que llamaremos
+"toggleShow".
+
+De igual manera, en este caso con las directivas para eventos hay una sintaxis
+más abreviada, v-on:click="" puede abreviarse a @click="".
+
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Component vue example</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div v-if="show">
+        {{ message }}
+        <img v-bind:src="image" width="150">
+      </div>
+      <button v-on:click="toggleShow()">Show/Hide</button>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
+
+Ahora tenemos que añadir nuestra función "toggleShow" en nuestro componente, así
+como tenemos el objeto data, donde tenemos ordenadas todas las variables
+asociadas a la vista, ahora debemos añadir una nueva propiedad que se llama
+"methods" y es donde van a ir todas las funciones que nosotros queramos usar.
+
+Dentro de "methods" declaramos a "toggleShow" y esta función lo que va a hacer
+es cambiar el valor de show por el contrario del que tenga en ese momento.
+
+Para poder referenciar los datos dentro de los métodos tenemos que hacer uso del
+objeto "this" de javascript para referencial a "show" con this.show y le
+indicaremos que sea justo lo contrario de lo que ya tuviese como valor, eso lo
+haremos con this.show = !this.show.
+
+const app = new Vue({
+  el: '#app',
+  data: {
+    show: true,
+    message: 'Hello Vue!',
+    image: 'http://t1.gstatic.com/images?q=tbn:ANd9GcRf61mker2o4KH3CbVE7Zw5B1-VogMH8LfZHEaq3UdCMLxARZAB'
+  },
+  methods: {
+    toggleShow: function () {
+      this.show = !this.show
+    }
+  }
+})
+
+Si abrimos index.html con nuestro navegador y todo está bien veremos el mensaje,
+la imegen y el botón, y al darle click ocultara y mostrar el elemento contenido
+dentro del div.
+
+De igual manera, todo este contenido que hemos puesto dentro de nuestro
+"div app" podemos tenerlo dentro de nuestro código js, eso se haría con la
+propiedad "template" el cual le podemos pasar un string, entonces copiamos todo
+el contenido que tiene "div app" y lo pegamos en "template" en nuestro
+componente, pero hay un detalle importante y es que todo lo que va devolver
+"template" debe estar englobado en un único elemento, en un "div" por lo que
+debemos agregar un "div" padre dentro de template, esto si es que no lo tiene
+que es nuestro caso.
+
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Component vue example</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
+
+y
+
+const app = new Vue({
+  el: '#app',
+  template: `
+    <div>
+      <div v-if="show">
+        {{ message }}
+        <img v-bind:src="image" width="150">
+      </div>
+      <button @click="toggleShow()">Show/Hide</button>
+    </div>
+  `,
+  data: {
+    show: true,
+    message: 'Hello Vue!',
+    image: 'http://t1.gstatic.com/images?q=tbn:ANd9GcRf61mker2o4KH3CbVE7Zw5B1-VogMH8LfZHEaq3UdCMLxARZAB'
+  },
+  methods: {
+    toggleShow: function () {
+      this.show = !this.show
+    }
+  }
+})
+
+Si abrimos index.html con nuestro navegador y todo está bien veremos el mensaje,
+la imegen y el botón, y al darle click ocultara y mostrar el elemento contenido
+dentro del div tal cual como antes de probar la propiedad template.
+
+Si no te gusta incrustar el html dentro del javascript, se puede sacar fuera
+usando el tag "template" de html5 al cual le daremos un "id" para referenciarlo
+en el componente, tal que:
+
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Component vue example</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <template id="example">
+      <div>
+        <div v-if="show">
+          {{ message }}
+          <img v-bind:src="image" width="150">
+        </div>
+        <button @click="toggleShow()">Show/Hide</button>
+      </div>
+    </template>
+    <script src="app.js"></script>
+  </body>
+</html>
+
+y
+
+const app = new Vue({
+  el: '#app',
+  template: '#example',
+  data: {
+    show: true,
+    message: 'Hello Vue!',
+    image: 'http://t1.gstatic.com/images?q=tbn:ANd9GcRf61mker2o4KH3CbVE7Zw5B1-VogMH8LfZHEaq3UdCMLxARZAB'
+  },
+  methods: {
+    toggleShow: function () {
+      this.show = !this.show
+    }
+  }
+})
+
+Si abrimos index.html con nuestro navegador y todo está bien veremos el mensaje,
+la imegen y el botón, y al darle click ocultara y mostrar el elemento contenido
+dentro del div tal cual como antes de probar la propiedad template y
+referenciarlo en el componente.
+
+Ahora vamos a ver un ejemplo de como podemos poder recorrer un listado de
+objetos de un arreglo para mostrar esos datos.
+
+Entonces, en nuestro componente, vamos a agregar una nueva propiedad que sería
+"courses" que sería un array de objetos, y cada objeto contiene dos propiedades
+que serían "name" y "url"y queremos mostrarlos en el HTML como una lista y que
+cada elemento sea un enlace, entonces dentro de template creamos una lista en
+html "ul" y "li" a la cual le vamos agregar la directiva "v-for" que lo que hace
+es recorrer una lista de elementos, es un ciclo for. e imprimiremos el name de
+cada elemnto que recorramos, tal que:
+
+<ul>
+  <li v-for="course in courses">
+    {{ course.name}}
+  </li>
+</ul>
+
+Para hacer más elegante y más eficiente este código podemos usar el "index" que
+proporciona cada elemento dentro del array ademá de agregar una etiqueta de
+enlace a cada elemento de la lista y también agregamos un "v-bind" para el
+"href" para que esté comunicado con la data del controlador o componente.
+
+El ejemplo completo quedaría así:
+
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Component vue example</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="app.js"></script>
+  </body>
+</html>
+
+y
+
+const app = new Vue({
+  el: '#app',
+  template: `
+    <div>
+
+      <ul>
+        <li v-for="(course, index) in courses" v-bind:key="index">
+          <a v-bind:href="course.url"> {{ course.name }} </a>
+        </li>
+      </ul>
+
+      <div v-if="show">
+        {{ message }}
+        <img v-bind:src="image" width="150">
+      </div>
+      <button @click="toggleShow()">Show/Hide</button>
+
+    </div>
+  `,
+  data: {
+    courses: [
+      { name: "PHP", url: 'https://www.youtube.com/1' },
+      { name: "Python", url: 'https://www.youtube.com/2' },
+      { name: "JavaScript", url: 'https://www.youtube.com/3' },
+    ],
+    show: true,
+    message: 'Hello Vue!',
+    image: 'http://t1.gstatic.com/images?q=tbn:ANd9GcRf61mker2o4KH3CbVE7Zw5B1-VogMH8LfZHEaq3UdCMLxARZAB'
+  },
+  methods: {
+    toggleShow: function () {
+      this.show = !this.show
+    }
+  }
+})
+
 =======
 Vue CLI
 =======
