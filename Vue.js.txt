@@ -392,7 +392,7 @@ new Vue({
 })
 
 De esta forma podemos acceder a estos datos dentro de Vue, y lo siguiente que
-tenemos que hacer es pintarlos.
+tenemos que hacer es pintarlos en el html.
 
 Para ello, tendríamos que iterar por todos los elementos de éste array y pintar
 un componente <movie-card> por cada uno de ellos.
@@ -542,8 +542,141 @@ Crear un proyecto de vue
 
 $ vue create name_project
 
+Luedo de darle crear nos va a mostrar los presets, que son un tipo de
+configuración base que puedes ajustar a las necesidades del proyecto que se está
+creando.
+
+Se le pedirá que elija un ajuste preestablecido. Puede elegir el ajuste
+preestablecido o predeterminado que viene con una configuración básica de Babel
++ ESLint, o seleccionar "Seleccionar funciones manualmente" para elegir las
+funciones que necesita.
+
+-Babel es un compilador de JavaScript.
+
+-ESLint es una herramienta de análisis de código estático para identificar
+patrones problemáticos encontrados en el código JavaScript.
+
+La configuración predeterminada es excelente para crear rápidamente un prototipo
+de un nuevo proyecto, mientras que la configuración manual proporciona más
+opciones que probablemente sean necesarias para proyectos más orientados a la
+producción.
+
+Si opta por seleccionar funciones manualmente, al final de las indicaciones
+también tiene la opción de guardar sus selecciones como un ajuste preestablecido
+para poder reutilizarlas en el futuro.
+
+El comando vue create tiene varias opciones y puede explorarlas todas
+ejecutando:
+
+$ vue create --help
+
+Usage: create [options] <app-name>
+
+create a new project powered by vue-cli-service
+
+Options:
+
+  -p, --preset <presetName>       Skip prompts and use saved or remote preset
+  -d, --default                   Skip prompts and use default preset
+  -i, --inlinePreset <json>       Skip prompts and use inline JSON string as preset
+  -m, --packageManager <command>  Use specified npm client when installing dependencies
+  -r, --registry <url>            Use specified npm registry when installing dependencies
+  -g, --git [message|false]       Force / skip git initialization, optionally specify initial commit message
+  -n, --no-git                    Skip git initialization
+  -f, --force                     Overwrite target directory if it exists
+  -c, --clone                     Use git clone when fetching remote preset
+  -x, --proxy                     Use specified proxy when creating project
+  -b, --bare                      Scaffold project without beginner instructions
+  -h, --help                      Output usage information
+
+Usando la GUI
+=============
+
+También puede crear y administrar proyectos usando una interfaz gráfica con el
+comando
+
+$ vue ui
+
+El comando anterior abrirá una ventana del navegador con una GUI que lo guiará a
+través del proceso de creación del proyecto.
+
+Al crear un proyecto con Vue CLI nos queda esta estructura:
+
+-src/
+    /assets: Donde puedo colocar mis imágenes, fuentes de texto, etc.
+
+    /components
+
+    App.vue: Aplicación principal.
+
+    main.js: Configuración principal e inicial. Donde se importa Vue y se hace
+    la configuración base.
+
+-babel.config.js
+
+-node_modules
+
+-package.json
+
+-package-lock.json
+
+-public
+
+-README.md
+
+Correr la aplicación desde un servidor de desarrollo de node
+============================================================
+
+$ npm run serve
+
+App running at:
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.1.102:8080/
+
+Correr la aplicación desde un servidor de desarrollo de vue
+===========================================================
+
+1) Instralar el paquete requerido:
+
+$ npm i -g @vue/cli-service-global
+
+2) Ejecutar el comando sobre el archivo principal del proyecto:
+
+$ vue serve App.vue
+
+App running at:
+  - Local:   http://localhost:8080/
+  - Network: http://192.168.1.102:8080/
+
+============================================
+.gitignore de un proyecto creado con Vue CLI
+============================================
+
+.DS_Store
+node_modules
+/dist
+
+# local env files
+.env.local
+.env.*.local
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
 Fuentes
-======
+=======
 
 -https://github.com/carlosazaustre/carlosazaustre.es/blob/master/content/posts//desarrollo-basado-en-componentes-con-vue-js/index.mdx
 

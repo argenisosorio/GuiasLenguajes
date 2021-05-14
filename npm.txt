@@ -81,6 +81,30 @@ El archivo package.json es el responsable de almacenar el nombre de las
 dependencias instaladas catalogándolas principalmente en dos tipos: dependencias
 de desarrollo y dependencias de la aplicación.
 
+=================================
+Actualización de paquetes locales
+=================================
+
+Acceder al directorio del proyecto y luego ejecutar:
+
+$ npm update
+
+================================================
+Actualización de paquetes instalados globalmente
+================================================
+
+1) Se debe actualizar la versión de npm
+
+$ npm install npm@latest -g
+
+2) Actualizar un paquete específico
+
+$ npm update -g package_name
+
+3) Actualización de todos los paquetes instalados globalmente:
+
+$ npm update -g
+
 ===============
 Comandos de npm
 ===============
