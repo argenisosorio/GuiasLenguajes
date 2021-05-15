@@ -1,0 +1,350 @@
+===================
+Guía de React by dM
+===================
+
+
+Introducción
+============
+
+React es una biblioteca Javascript de código abierto diseñada para crear
+interfaces de usuario con el objetivo de facilitar el desarrollo de aplicaciones
+en una sola página. Es mantenido por Facebook y la comunidad de software libre.
+En el proyecto hay más de mil desarrolladores libres.
+
+Declarativo
+===========
+
+React te ayuda a crear interfaces de usuario interactivas de forma sencilla.
+Diseña vistas simples para cada estado en tu aplicación, y React se encargará de
+actualizar y renderizar de manera eficiente los componentes correctos cuando los
+datos cambien.
+
+Las vistas declarativas hacen que tu código sea más predecible, por lo tanto,
+fácil de depurar.
+
+Basado en componentes
+=====================
+
+Crea componentes encapsulados que manejen su propio estado, y conviértelos en
+interfaces de usuario complejas.
+
+Ya que la lógica de los componentes está escrita en JavaScript y no en
+plantillas, puedes pasar datos de forma sencilla a través de tu aplicación y
+mantener el estado fuera del DOM.
+
+Aprende una vez, escríbelo donde sea
+====================================
+
+En React no dejamos fuera al resto de tus herramientas tecnológicas, así que
+podrás desarrollar nuevas características sin necesidad de volver a escribir el
+código existente.
+
+React puede también renderizar desde el servidor usando Node, así como
+potencializar aplicaciones móviles usando React Native.
+
+Agrega React en un minuto a una página web
+==========================================
+
+En esta sección, vamos a mostrarte como agregar un componente de React a una
+página HTML existente. Puedes seguir los pasos en tu sitio web, o crear un nuevo
+archivo HTML para practicar.
+
+Paso 1: Agrega un contenedor del DOM al HTML
+
+Para iniciar, abre la página HTML que deseas editar. Agrega una etiqueta <div>
+vacía para marcar el lugar donde deseas visualizar algo con React. Por ejemplo:
+
+<div id="like_button_container"></div>
+
+A este <div> le agregamos un atributo HTML id que es único. Esto nos permitirá
+encontrarlo desde el código Javascript más adelante y visualizar un componente
+de React adentro de este.
+
+Paso 2: Agrega las etiquetas de script
+
+Lo siguiente es agregar tres etiquetas <script> a la página HTML justo antes de
+cerrar la etiqueta </body>:
+
+  <!-- Cargar React. -->
+  <!-- Nota: cuando se despliegue, reemplazar "development.js" con "production.min.js". -->
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <!-- Cargamos nuestro componente de React. -->
+  <script src="like_button.js"></script>
+</body>
+
+Las primeras dos etiquetas cargan React. La tercera carga tu código del
+componente.
+
+Paso 3: Crea un componente de React
+
+Crea un archivo llamado like_button.js en el mismo lugar donde tienes tu archivo
+HTML y le agregas lo siguiente
+
+'use strict';
+
+const e = React.createElement;
+
+class LikeButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { liked: false };
+  }
+
+  render() {
+    if (this.state.liked) {
+      return 'You liked this.';
+    }
+
+    return e(
+      'button',
+      { onClick: () => this.setState({ liked: true }) },
+      'Like'
+    );
+  }
+}
+
+const domContainer = document.querySelector('#like_button_container');
+ReactDOM.render(e(LikeButton), domContainer);
+
+Estas dos líneas de código finales encuentran el <div> que agregamos en nuestro
+HTML en el primer paso y muestran el componente de React para nuestro botón de
+“Like” dentro del mismo.
+
+¡Eso es todo!
+
+No hay un cuarto paso. Ya agregaste tu primer componente de React a tu sitio
+web.
+
+El ejemplo completo sería:
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Add React in One Minute</title>
+  </head>
+  <body>
+
+    <h2>Add React in One Minute</h2>
+    <p>This page demonstrates using React with no build tooling.</p>
+    <p>React is loaded as a script tag.</p>
+
+    <!-- We will put our React component inside this div. -->
+    <div id="like_button_container"></div>
+
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- Load our React component. -->
+    <script src="like_button.js"></script>
+
+  </body>
+</html>
+
+y
+
+'use strict';
+
+const e = React.createElement;
+
+class LikeButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { liked: false };
+  }
+
+  render() {
+    if (this.state.liked) {
+      return 'You liked this.';
+    }
+
+    return e(
+      'button',
+      { onClick: () => this.setState({ liked: true }) },
+      'Like'
+    );
+  }
+}
+
+const domContainer = document.querySelector('#like_button_container');
+ReactDOM.render(e(LikeButton), domContainer);
+
+Si consultamos index.html con el navegador y todo está correcto, debemos ver un
+botón que al darle click cambiara a un texto sin recargar la página.
+
+===========
+Instalación
+===========
+
+1) Comprovar que tenemos node instalado:
+
+$ node -v
+
+2) Usar el siguiente comando para crear nuestra primera aplicación:
+
+$ npx create-react-app my-app
+
+npx lo que permite es instalar un modulo de npm forma global pero temporal, es
+decir, lo va a descargar, lo va a instalar y luego lo va a borrar para que no
+se quede ocupando espacio en disco. Es una herramienta de ejecución de paquetes
+que viene con npm 5.2+.
+
+Create React App no se encarga de la lógica de backend o de bases de datos; tan
+solo crea un flujo de construcción para frontend, de manera que lo puedes usar
+con cualquier backend. Para ello internamente usa Babel y webpack, pero no
+necesitas saber nada de estas herramientas para usar Create React App.
+
+-Babel es un compilador de JavaScript.
+
+-webpack es un paquete de módulos de JavaScript de código abierto. Está hecho
+principalmente para JavaScript, pero puede transformar activos de front-end como
+HTML, CSS e imágenes si se incluyen los loaders correspondientes.  webpack toma
+módulos con dependencias y genera archivos estáticos que representan esos
+módulos.
+
+Luego de crear la aplicación e instalar las dependencias, la consola nos
+responde con los siguientes comandos que podemos ejecutar
+
+Iniciar el servidor de desarrollo.
+
+$ npm start
+
+-----
+
+Agrupa la aplicación en archivos estáticos para producción. 
+
+$ npm run build
+
+-----
+
+Iniciar pruebas de la aplicación
+
+$ npm test
+
+-----
+
+Elimina esta herramienta y copia las dependencias de compilación, los archivos
+de configuración y los scripts en el directorio de la aplicación. Si haces esto,
+¡no podrás volver!
+
+$ npm run eject
+
+======================================
+Probar la instalación de la aplicación
+======================================
+
+Iniciar el servidor de desarrollo.
+
+$ npm start
+
+You can now view my-app in the browser.
+
+  Local:            http://localhost:3000
+  On Your Network:  http://192.168.1.102:3000
+
+Note that the development build is not optimized.
+To create a production build, use npm run build.
+
+Nos levanta el servidor en la dirección localhost:3000 y si la visitamos nos
+debe salir el logo de react y el mensaje:
+
+Edit src/App.js and save to reload.
+
+Lo cual nos indica que editando ese archivo cambiaremos el contenido de la
+página principal.
+
+=========================
+Estructura de un proyecto
+=========================
+
+node_modules
+
+package.json
+
+package-lock.json
+
+public:
+    favicon.ico
+    index.html
+    logo192.png
+    logo512.png
+    manifest.json
+    robots.txt
+
+README.md
+
+src
+    App.css
+    App.js
+    App.test.js
+    index.css
+    index.js
+    logo.svg
+    reportWebVitals.js
+    setupTests.js
+
+index.html que es la plantilla de la single web aplication, contiene un div con
+el id root, que es el que vamos a usar para insertar todo el código que vamos a
+generar con React.
+
+================
+Primera práctica
+================
+
+Eliminamos todo el contenido de la carpeta src, luego creamos un fichero
+index.js y le agregamos lo siguiente:
+
+Importamos react y react-dom que ya están instalados, solo hay que llamarlos
+para usarlos.
+
+-----
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+-----
+
+Al disponer de ellas ya podemos usar jsx, que es un lenguaje que en primera
+instancia puede parecer que es html, pero no lo es, es JavaScript.
+
+Presentando JSX
+===============
+
+Considera la declaración de esta variable:
+
+const element = <h1>Hello, world!</h1>;
+
+Esta curiosa sintaxis de etiquetas no es ni un string ni HTML.
+
+Se llama JSX, y es una extensión de la sintaxis de JavaScript. Recomendamos
+usarlo con React para describir cómo debería ser la interfaz de usuario. JSX
+puede recordarte a un lenguaje de plantillas, pero viene con todo el poder de
+JavaScript.
+
+JSX produce “elementos” de React. Exploraremos como renderizarlos en el DOM en
+la siguiente sección. A continuación puedes encontrar lo básico de JSX que será
+necesario para empezar.
+
+Continuando con el ejemplo, ahora, en index.js usaremos ReactDOM.render, el
+método render que nos permite renderizar en el html todos los componentes que
+hagamos.
+
+Vamos a renderizar un div que diga Hola mundo!, además de este div, render
+recibe otra propiedad o elemento que es el div o el elemento al que queremos
+embeberlo, que seria id root.
+
+Quedando así index.js:
+
+-----
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+ReactDOM.render(<div>Hola mundo!</div>, document.getElementById('root'));
+
+-----
+
+Si corremos el servidor y visitamos la url nos debería mostra nuestro
+Hola mundo!
