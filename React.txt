@@ -2,7 +2,6 @@
 Guía de React by dM
 ===================
 
-
 Introducción
 ============
 
@@ -346,5 +345,354 @@ ReactDOM.render(<div>Hola mundo!</div>, document.getElementById('root'));
 
 -----
 
-Si corremos el servidor y visitamos la url nos debería mostra nuestro
-Hola mundo!
+Si corremos el servidor y visitamos la url nos debería mostrar nuestro
+Hola mundo!.
+
+Lo siguiente sera crear un componente que contenga la aplicación. El index.js
+se deja con el React DOM y el render y otras propiedades más avanzadas y se
+crea un componente aparte llamado App.
+
+Entonces vamos a crear un nuevo componente que va a ser App.jsx, puede llamarse
+App.js pero con jsx indicamos que es un componente de React.
+
+En este archivo creado vamos a importar a react y vamos a exportar una función
+App que va a devolver un código fuente.
+
+Ahora nos vamos al index.js y vamos a importar a App y en el reder, en vez de
+pasarle el hola mundo le vamos a pasar nuestro componente.
+
+-----
+
+App.jsx
+
+import React from 'react'
+
+export function App() {
+  return <div>Hola mundo!!!</div>;
+}
+
+-----
+
+y index.js
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { App } from ./App;
+
+ReactDOM.render(< App />, document.getElementById('root'));
+
+-----
+
+Como se ve < App /> luce como un elemento html con la diferencia de que al ser
+un componente creado por nosotros, la primera letra siempre será en mayúscula
+para que tanto como Reac como nosotros lo reconozcan como un componente.
+
+Continuando con el ejemplo, ahora nuestra aplicación será un "To Do List" o una
+app que permita agregar o eliminar tareas por hacer.
+
+Ahora, vamos a crear una carpeta "components" en src.
+
+Ahora vamos a crear un archivo TodoList.jsx dentro de la carpeta "components"
+y también vamos a crear otro que sea TodoItem.jsx y así podremos ver como se van
+pasando propiedades entre unos y otros, como van escuchando eventos y como se
+pueden ir creando componentes con component.
+
+Entonces nos vamos a TodoList.jsx y vamos a importar a react y a declararar una
+función "TodoList" que nos va a devolver una lista de elementos que vamos a
+iterar, entonces TodoList() va a recibir unas propiedades, entre ellas un array
+de todos, entonces en el return de la función podemos llamar a ese argumento
+"todos" a traves de código javascript dentro de jsc solamente con las {}.
+por lo que agregamos esos elementos dentro del return.
+
+TodoList.jsx
+
+-----
+
+import React from 'react';
+
+export function TodoList ({ todos }) {
+  return (
+    <ul>
+    { todos.map((todo) => (
+      <li>Tarea</li>
+    ))}
+    </ul>
+  )
+}
+
+-----
+
+Ahora vamos a App.jsx y vamos a importar el componente TodoList y luego
+modificamos la función App() para que nos retorne los objetos de de TodoList
+
+import React from "react";
+import { TodoList } from "./components/TodoList";
+
+export function App() {
+  return <TodoList todos={[
+    { id: 1, task: "Tarea 1", completed: false}
+  ]}/>;
+}
+
+Si vemos el navegador nos debe aparecer la lista "Tarea".
+
+Ahora en App.jsx vamos a importar a useState que os va a permirir que nuestros
+componentes tengan estado, el estado es una propiedad que hace que cada vez que
+eso que guardamos en el estado, cambie, se renderice de nuevo el componente,
+entonces si vamos insetando nuevas tareas estamos insertando nuevos elementeos
+en el array, lo estamos modificando, el estado escucha esos cambios y forza el
+re renderizado que hace que se puedan ver en el DOM.
+
+import React, { useState } from "react";
+import { TodoList } from "./components/TodoList";
+
+export function App() {
+  const [todos, setTodos] = useState([
+    { id: 1, task: "Tarea 1", completed: false},
+  ])
+  return <TodoList todos={todos} />;
+}
+
+Ahora, ese ese mismo componente vamos a agregar elementos que nos permitan
+insertar nuevas tareas y unos botones que nos ayuden a eso.
+
+import React, { useState } from "react";
+import { TodoList } from "./components/TodoList";
+
+export function App() {
+  const [todos, setTodos] = useState([
+    { id: 1, task: "Tarea 1", completed: false},
+  ])
+  return (
+    <div>
+      <TodoList todos={todos} />
+      <input type="text" placeholder="Nueva tarea" />
+    </div>
+  );
+}
+
+Como se observa estos componentes están dentro de un "div" padre que permite
+que se rendericen correctamente, pero a la hora de maquetar o de usar el css
+estos divs extras se pueden volver tediosos, por eso se usa Fragment que
+no se pintara en el html pero si permite que se rendericen correctamente los
+elementos en el DOM.
+
+import React, { Fragment, useState } from "react";
+import { TodoList } from "./components/TodoList";
+
+export function App() {
+  const [todos, setTodos] = useState([
+    { id: 1, task: "Tarea 1", completed: false},
+  ])
+  return (
+    <Fragment>
+      <TodoList todos={todos} />
+      <input type="text" placegholder="Nueva tarea" />
+    </Fragment>
+  );
+}
+
+Ahora luego de ese input vamos a agregar un botón que sea el de añadir y otro el
+de eliminar.
+
+import React, { Fragment, useState } from "react";
+import { TodoList } from "./components/TodoList";
+
+export function App() {
+  const [todos, setTodos] = useState([
+    { id: 1, task: "Tarea 1", completed: false},
+  ])
+  return (
+    <Fragment>
+      <TodoList todos={todos} />
+      <input type="text" placeholder="Nueva tarea" />
+      <button>AÑADIR</button>
+      <button>ELIMINAR</button>
+    </Fragment>
+  );
+}
+
+Ahora volvemos a TodoList.jsx y eliminamos el "li" que teníamos
+
+import React from 'react';
+
+export function TodoList ({ todos }) {
+  return (
+    <ul>
+    { todos.map((todo) => (
+    ))}
+    </ul>
+  )
+}
+
+Ahora vamos a TodoItem.jsx y agregamos:
+
+import React from 'react';
+
+export function TodoItem ({}) {
+  return (
+    <li></li>
+  )
+}
+
+Esto función retorna un "li" porque su padre es TodoList que contiene el "ul" de
+la lista.
+
+Hasta los momentos nuestros archivos van así:
+
+App.jsx
+
+import React, { Fragment, useState } from "react";
+import { TodoList } from "./components/TodoList";
+
+export function App() {
+  const [todos, setTodos] = useState([
+    { id: 1, task: "Tarea 1", completed: false},
+  ])
+  return (
+    <Fragment>
+      <TodoList todos={todos} />
+      <input type="text" placeholder="Nueva tarea" />
+      <button>AÑADIR</button>
+      <button>ELIMINAR</button>
+    </Fragment>
+  );
+}
+
+TodoList.jsx
+
+import React from 'react';
+import { TodoItem } from "./TodoItem";
+
+export function TodoList ({ todos }) {
+  return (
+    <ul>
+    { todos.map((todo) => (
+      <TodoItem todo={ todo } />
+    ))}
+    </ul>
+  )
+}
+
+TodoItem.jsx
+
+import React from 'react';
+
+export function TodoItem ({ todo }) {
+  const { id, task, complete } = todo
+  return (
+    <li>{ task }</li>
+  )
+}
+
+Ahora a los botones les vamos a agregar el evento "onClick" y al input text
+le vamos a agregar la propiedad "ref" para poder referenciarlo, de esta manera
+React identifica el componente al que estamos haciendo uso. Además de agregar
+otras cosas que veremos cuando muestre el ejemplo, también es necesario instalar
+un nuevo paquete llamada uuid que genera ids de forma aleatoria con:
+
+$ npm add uuid
+
+Esto agrega ese paquete a la lista de paquetes y además lo intala, esto se
+agrega para no trabajar de forma manual los id en el ejemplo.
+
+Ejemplo completo súper complejo:
+
+App.jsx
+
+import React, { Fragment, useState, useRef, useEffect } from "react";
+import { v4 as uuidv4 } from 'uuid';
+import { TodoList } from "./components/TodoList";
+
+const KEY = 'todoApp.todos';
+
+export function App() {
+  const [todos, setTodos] = useState([
+    { id: 1, task: "Tarea 1", completed: false},
+  ])
+
+  const todoTaskRef = useRef();
+
+  useEffect(() => {
+    const storedTodos = JSON.parse(localStorage.getItem(KEY));
+    if (storedTodos) {
+      setTodos(storedTodos);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(KEY, JSON.stringify(todos));
+  }, [todos]);
+
+  const toggleTodo = (id) => {
+    const newTodos = [...todos];
+    const todo = newTodos.find((todo) => todo.id === id);
+    todo.completed = !todo.completed;
+    setTodos(newTodos);
+  };
+
+  const handleTodoAdd = () => {
+    const task = todoTaskRef.current.value;
+    if (task === '') return;
+
+    setTodos((prevTodos) => {
+      return [...prevTodos, {id: uuidv4(), task, completed: false}];
+    });
+
+  todoTaskRef.current.value = null; // Reset input later add task.
+
+  };
+
+  const handleClearAll = () => {
+    const newTodos = todos.filter((todo) => !todo.completed );
+    setTodos(newTodos);
+  }
+
+  return (
+    <Fragment>
+      <TodoList todos={todos} toggleTodo={toggleTodo} />
+      <input ref={todoTaskRef} type="text" placeholder="Nueva tarea" />
+      <button onClick={handleTodoAdd}>AÑADIR</button>
+      <button onClick={handleClearAll}>ELIMINAR</button>
+      <div>Te quedan {todos.filter((todo) => !todo.completed).length} tareas por terminar</div>
+    </Fragment>
+  );
+}
+
+-----
+
+TodoList.jsx
+
+import React from 'react';
+import { TodoItem } from "./TodoItem";
+
+export function TodoList ({ todos, toggleTodo }) {
+  return (
+    <ul>
+    { todos.map((todo) => (
+      <TodoItem key={todo.id} todo={todo} toggleTodo={toggleTodo} />
+    ))}
+    </ul>
+  )
+}
+
+-----
+
+TodoItem.jsx
+
+import React from 'react';
+
+export function TodoItem ({ todo, toggleTodo }) {
+  const { id, task, completed } = todo;
+
+  const handleTodoClick = () => {
+    toggleTodo(id);
+  };
+
+  return (
+    <li>
+      <input type="checkbox" checked={completed} onChange={handleTodoClick} />
+      {task}
+    </li>
+  );
+}
