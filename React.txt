@@ -41,8 +41,45 @@ código existente.
 React puede también renderizar desde el servidor usando Node, así como
 potencializar aplicaciones móviles usando React Native.
 
-Agrega React en un minuto a una página web
-==========================================
+==============================
+Hello world en una página html
+==============================
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello world!</title>
+    <!-- Load React. -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+<body>
+  <div id="root"></div>
+  <div id="box"></div>
+  <script type="text/babel">
+  ReactDOM.render(
+    <h1>Hello React!</h1>,
+    document.getElementById('box')
+  );
+
+  // Another example
+
+  class Hello extends React.Component {
+    render() {
+      return <h1>Hello World!</h1>
+    }
+  }
+  ReactDOM.render(<Hello />, document.getElementById('root'))
+
+  </script>
+</body>
+</html>
+
+===============================
+Ejemplo de llamar un componente
+===============================
 
 En esta sección, vamos a mostrarte como agregar un componente de React a una
 página HTML existente. Puedes seguir los pasos en tu sitio web, o crear un nuevo
@@ -696,3 +733,30 @@ export function TodoItem ({ todo, toggleTodo }) {
     </li>
   );
 }
+
+===================================
+Llamar un archivo css en un pryecto
+===================================
+
+Creamos un archivo css, como main.css por ejemplo:
+
+-----
+
+body {
+  background-color: gray;
+}
+
+-----
+
+y lo llamamos dede index.js tal que:
+
+-----
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { App } from "./App";
+import './main.css';
+
+ReactDOM.render(< App />, document.getElementById('root'));
+
+-----

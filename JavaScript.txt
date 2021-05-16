@@ -5526,3 +5526,51 @@ function showContent() {
 
 </body>
 </html>
+
+================
+JavaScript Const
+================
+
+Las variables definidas con const se comportan como las variables let, excepto
+que no se pueden reasignar:
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript const</h2>
+
+<p>You cannot change a primitive value.</p>
+
+<p id="demo"></p>
+
+<script>
+try {
+  const PI = 3.141592653589793;
+  PI = 3.14;
+}
+catch (err) {
+  document.getElementById("demo").innerHTML = err;
+}
+</script>
+
+</body>
+</html>
+
+A las variables const de JavaScript se les debe asignar un valor cuando se
+declaran:
+
+---
+
+Incorrect
+
+const PI;
+PI = 3.14159265359;
+
+---
+
+Correct
+
+const PI = 3.14159265359;
+
+---
