@@ -41,6 +41,13 @@ código existente.
 React puede también renderizar desde el servidor usando Node, así como
 potencializar aplicaciones móviles usando React Native.
 
+Componentes
+===========
+
+Los componentes permiten separar la interfaz de usuario en piezas independientes
+reutilizables y pensar en cada pieza de forma aislada. Esta página proporciona
+una introducción a la idea de los componentes.
+
 ==============================
 Hello world en una página html
 ==============================
@@ -759,4 +766,233 @@ import './main.css';
 
 ReactDOM.render(< App />, document.getElementById('root'));
 
+================
+Ejemplo de props
+================
+
+Conceptualmente, los componentes son como las funciones de JavaScript. Aceptan
+entradas arbitrarias (llamadas “props”) y devuelven a React elementos que
+describen lo que debe aparecer en la pantalla.
+
+Componentes funcionales y de clase
+==================================
+
+La forma más sencilla de definir un componente es escribir una función de
+JavaScript:
+
+Welcome.jsx
+
+import React from 'react'
+
+export function Welcome(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+
+Esta función es un componente de React válido porque acepta un solo argumento de
+objeto “props” (que proviene de propiedades) con datos y devuelve un elemento de
+React. Llamamos a dichos componentes “funcionales” porque literalmente son
+funciones JavaScript.
+
+Renderizando un componente con props
+====================================
+
+index.js
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Welcome } from "./Welcome";
+
+const element = <Welcome name="Sara" />;
+ReactDOM.render(element, document.getElementById('welcome')
+);
+
 -----
+
+o directamente:
+
+-----
+
+index.js
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Welcome } from "./Welcome";
+
+ReactDOM.render(<Welcome name="Sara" />, document.getElementById('welcome')
+);
+
+-----
+
+Si revisamos el navegador debemos ver un:
+
+Hello, Sara
+
+Renderizando dos componente con props
+=====================================
+
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <title>React App</title>
+  </head>
+  <body>
+    <h1>
+      Hello my name is <span id="name"></span> and my last name is <span id="last_name"></span>
+    </h1>
+  </body>
+</html>
+
+-----
+
+index.js
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Name } from "./components/Name";
+import { Last_name } from "./components/Last_name";
+import './css/main.css';
+
+ReactDOM.render(<Name name="Sarah" />, document.getElementById('name'));
+ReactDOM.render(<Last_name last_name="Connor" />, document.getElementById('last_name'));
+
+-----
+
+Name.jsx
+
+import React from 'react'
+
+export function Name(props) {
+  return <span>{props.name}</span>;
+}
+
+-----
+
+Last_name.jsx
+
+import React from 'react'
+
+export function Last_name(props) {
+  return <span>{props.last_name}</span>;
+}
+
+-----
+
+Si revisamos el navegador debemos ver un:
+
+
+Hello my name is Sarah and my last name is Connor
+
+Otro ejemplo más avanzado con props
+===================================
+
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <title>React App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+
+-----
+
+index.js
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { App } from "./components/App";
+import { Table } from "./components/Table";
+import './css/main.css';
+
+const comment = {
+  date: new Date(),
+  text: 'I hope you enjoy learning React!',
+  author: {
+    name: 'Oliver Bierhoff',
+    avatarUrl: 'https://placekitten.com/g/64/64',
+  },
+};
+
+ReactDOM.render(
+  <App
+    date={comment.date}
+    text={comment.text}
+    author={comment.author}
+  />,
+  document.getElementById('root')
+);
+
+-----
+
+App.jsx
+
+import React from 'react'
+
+function formatDate(date) {
+  return date.toLocaleDateString();
+}
+
+export function Example(props) {
+  return (
+    <div>
+      <div>
+        <img src={props.author.avatarUrl} alt={props.author.name} />
+        <div>
+          -Name: {props.author.name}
+        </div>
+      </div>
+      <div>
+        -Comment: {props.text}
+      </div>
+      <div>
+        -Date: {formatDate(props.date)}
+      </div>
+    </div>
+  );
+}
+
+Composición de componentes
+==========================
+
+Los componentes pueden referirse a otros componentes en su salida. Esto nos
+permite utilizar la misma abstracción de componente para cualquier nivel de
+detalle. Un botón, un cuadro de diálogo, un formulario, una pantalla: en
+aplicaciones de React, todos son expresados comúnmente como componentes.
+
+Por ejemplo, podemos crear un componente App que renderiza Name muchas veces:
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Name } from "./components/Name";
+import './css/main.css';
+
+function App() {
+  return (
+    <div>
+      <Name name="Sara" />
+      <Name name="Cahal" />
+      <Name name="Edite" />
+     </div>
+  );
+}
+
+ReactDOM.render(<App />, document.getElementById('name'));

@@ -4016,3 +4016,13 @@ Embeber un documento PDF dentro de un HTML, para previsualizarlo:
     </iframe>
   </body>
 </html>
+
+==============================================================================
+Cambiar el número de registros que se ven en la tabla de datatable por defecto
+==============================================================================
+
+En /static/datatables/js/jquery.dataTables.min.js cambiar iDisplayLength:10 por
+iDisplayLength:50 por ejemplo. Esa variable sale 2 veces, el cambio debe ser en
+la primera que se declara nada más.
+
+Ejemplo del cambio: https://github.com/argenisosorio/seguimiento_siniif/commit/39da50e039460b9c985a39d0b77c6cb40a5cb9b1
