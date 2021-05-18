@@ -75,7 +75,6 @@ Características
 -Usa componentes de Symfony
 -Adopta las especificaciones PSR-212​ y PSR-4
 
-
 ¿Qué es un ORM (Object Relational Mapping)?
 ===========================================
 
@@ -471,7 +470,7 @@ El archivo index.php carga la definición de autocargador generada por Composer 
 luego recupera una instancia de la aplicación Laravel desde bootstrap/app.php.
 
 -routes: El directorio de rutas contiene todas las definiciones de ruta para su
-aplicación.  De forma predeterminada, se incluyen varios archivos de ruta con
+aplicación. De forma predeterminada, se incluyen varios archivos de ruta con
 Laravel: web.php, api.php, console.php y channels.php.
 
 -routes/web.php: Contiene rutas que RouteServiceProvider coloca en el grupo de
@@ -515,6 +514,8 @@ Actualizar proyectos de Laravel luego de un pull
 $ composer install
 
 $ npm install
+
+$ npm run dev
 
 $ composer dumpautoload
 
@@ -583,19 +584,16 @@ DB_PASSWORD=contrasena_base_de_datos
 Configurar Laravel con sqlite
 =============================
 
-Instalar el paquete de sqlite para php.
+1) Instalar el paquete de sqlite para php, dependiendo de la versión de php que
+tengamos instalada.
 
 # apt install php7.3-sqlite3
 
------
-
-Crear un archivo database.sqlite en la ruta my_project/database.
+2) Crear un archivo database.sqlite en la ruta my_project/database.
 
 my_project/database$ touch database.sqlite
 
------
-
-Configurar el fichero .env, debemos poner la ruta absoluta de la db.
+3) Configurar el fichero .env, debemos poner la ruta absoluta de la db.
 
 DB_CONNECTION=sqlite
 APP_URL=http://127.0.0.1
@@ -604,15 +602,11 @@ DB_DATABASE=/home/user/my_project/database/database.sqlite
 DB_USERNAME=homestead
 DB_PASSWORD=secret
 
------
-
-Una vez configurada el gestor de base de datos, realizamos las migraciones.
+4) Una vez configurada el gestor de base de datos, realizamos las migraciones.
 
 $ php artisan migrate
 
------
-
-Levantar el servidor de desarrollo.
+5) Levantar el servidor de desarrollo.
 
 $ php artisan serve
 
@@ -824,7 +818,7 @@ php artisan route:list
 
 Mismo que el anterior pero más compacta la información.
 
-php artisan route:list -c
+$ php artisan route:list -c
 
 -----
 
@@ -877,17 +871,6 @@ resources/js y resources/sass a los archivos app.js y app.css respectivamente.
 
 $ npm run prod
 
------
-
-npm run dev combina todos sus componentes de Vue y otros archivos JavaScript en
-un archivo combinado compatible con el navegador.
-
-npm run watch hace lo mismo, pero luego permanece activo y "observa" las
-actualizaciones de sus archivos .vue y .js. Si detecta un cambio, reconstruirá
-el archivo compatible con el navegador para que pueda actualizar la página. 
-
-$ npm run watch
-
 Diferencias entre run dev y run prod
 ====================================
 
@@ -899,6 +882,17 @@ run prod -> compilar para producción, los archivos resultantes estan
 minificados. Las herramientas de desarrollo usadas en el navegador no pueden
 acceder a los componentes u objetos por lo que es complicado poder interactuar
 con ellos a través del navegador.
+
+-----
+
+npm run dev combina todos sus componentes de Vue y otros archivos JavaScript en
+un archivo combinado compatible con el navegador.
+
+npm run watch hace lo mismo, pero luego permanece activo y "observa" las
+actualizaciones de sus archivos .vue y .js. Si detecta un cambio, reconstruirá
+el archivo compatible con el navegador para que pueda actualizar la página.
+
+$ npm run watch
 
 ===============
 Seed y Seeders
@@ -1115,39 +1109,14 @@ Listar todas las snapshots
 
 $ php artisan snapshot:list
 
-========================================
-Script en bash para proyectos ya creados
-========================================
-
-#!/bin/bash
-
-composer install
-
-composer dumpautoload
-
-npm install
-
-php artisan migrate:fresh
-
-echo " --- Regeneradas las tablas de la base de datos ---"
-
-php artisan migrate
-
-echo " --- Realizadas migraciones a la base de datos ---"
-
-php artisan db:seed
-
-echo "--- Guardados datos en la base de datos ---"
-
-echo "--- Listo!!! ---"
-
 ====================================
 Estructura de un proyecto en Laravel
 ====================================
 
 Nota: Probado en Laravel 5
 
-Todos los proyectos nuevos en Laravel 5.1 tienen la siguiente estructura de directorios:
+Todos los proyectos nuevos en Laravel 5.1 tienen la siguiente estructura de
+directorios:
 
 app/
 bootstrap/
@@ -1458,7 +1427,80 @@ hacerlo a cada rato, debes usar composer install para instalar tu nuevo paquete
 sin actualizar las versiones de tus otros paquetes. Esto sería mucho más seguro
 y evitamos fallas por actualizar nuevos paquetes y dependencias.
 
-==================================
+===============================================================
+Añadir/Agregar e instalar nuevos paquetes en nuestra aplicación
+===============================================================
+
+Con este comando el paquete se agreagará a composer.json y composer.lock y se
+instalara.
+
+$ composer require laravel/my-package
+
+====================
+Desinstalar paquetes
+====================
+
+Para desinstalar un paquete simplemente ejecuta el comando, este comando admite
+las mismas opciones del comando composer require.
+
+$ composer remove my-package
+
+===================
+Actualizar paquetes
+===================
+
+Podemos hacerlo de la siguiente forma:
+
+Puedes actualizar todos los paquetes que se encuentran en composer.json
+
+$ composer update
+
+-----
+
+Puedes actualizar únicamente uno o varios paquetes separándolos por espacios
+
+$ composer update doctrine/dbal laravel/framework
+
+----
+
+$ Puedes actualizar todos los paquetes de un proveedor (‘vendor’) usando un
+asterisco
+
+$ composer update doctrine/*
+
+===============
+Rutas o Routing
+===============
+
+Las rutas son las encargadas de llamar a una acción que puede estar en un
+controlador, redirigirnos a otra página web o podría ejecutar una función.
+
+Las rutas de Laravel más básicas aceptan un URI y un Closure, proporcionando un
+método muy simple y expresivo para definir rutas:
+
+Route::get('foo', function () {
+    return 'Hello World';
+});
+
+Los archivos de ruta predeterminados
+====================================
+
+Todas las rutas de Laravel se definen en el directorio /routes. Estos archivos
+son cargados automáticamente por el framework. El archivo routes/web.php define
+las rutas que son para su interfaz web. A estas rutas se les asigna el grupo de
+middleware web, que proporciona características como el estado de la sesión y la
+protección CSRF. Las rutas en las routes/api.php no tienen estado y se les
+asigna el grupo de middleware api.
+
+Para la mayoría de las aplicaciones, comenzará por definir rutas en su archivo
+routes/web.php. Se puede acceder a las rutas definidas en routes/web.php
+ingresando la URL de la ruta definida en su navegador.
+
+Por ejemplo, puede acceder a la siguiente ruta navegando a
+http://your-app.test/user en su navegador. La ruta sería:
+
+Route::get('/user', 'UserController@index');
+
 Métodos disponibles para las rutas
 ==================================
 
@@ -1481,7 +1523,6 @@ Route::any('/', function () {
     //
 });
 
-===============
 Protección CSRF
 ===============
 
@@ -1494,7 +1535,6 @@ token CSRF. De lo contrario, la solicitud será rechazada.
     ...
 </form>
 
-===============
 Redirigir rutas
 ===============
 
@@ -1504,6 +1544,328 @@ que definir una ruta completa o un controlador para realizar una redirección
 simple:
 
 Route::redirect('/here', '/there');
+
+View Routes
+===========
+
+Si su ruta solo necesita devolver una vista, puede usar el método Route::view.
+
+Al igual que el método de redireccionamiento, este método proporciona un acceso
+directo simple para que no tenga que definir una ruta completa o un controlador.
+
+El método de vista acepta un URI como primer argumento y un nombre de vista como
+segundo argumento. Además, puede proporcionar una matriz de datos para pasar a
+la vista como un tercer argumento opcional:
+
+Route::view('/welcome', 'welcome');
+
+Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
+
+=======================
+Parametros de las rutas
+=======================
+
+A veces, necesitará capturar segmentos del URI dentro de su ruta. Por ejemplo,
+es posible que deba capturar la identificación de un usuario de la URL.
+Puede hacerlo definiendo parámetros de ruta:
+
+Route::get('user/{id}', function ($id) {
+    return 'User '.$id;
+});
+
+Puede definir tantos parámetros de ruta como requiera su ruta:
+
+Route::get('posts/{post}/comments/{comment}', function ($postId, $commentId) {
+    //
+});
+
+Los parámetros de ruta siempre están encerrados entre llaves {} y deben constar
+de caracteres alfabéticos y no pueden contener un carácter -.
+
+En lugar de utilizar el carácter -, utilice un guión bajo (_). Los parámetros de
+ruta se inyectan en callbacks / controladores de ruta según su orden; los
+nombres de los argumentos de callbacks / controlador no importan.
+
+Parámetros opcionales
+=====================
+
+Ocasionalmente, es posible que deba especificar un parámetro de ruta, pero haga
+que la presencia de ese parámetro de ruta sea opcional. Puede hacerlo colocando
+un ? marcador después del nombre del parámetro. Asegúrese de darle a la variable
+correspondiente de la ruta un valor predeterminado:
+
+Route::get('user/{name?}', function ($name = null) {
+    return $name;
+});
+
+Route::get('user/{name?}', function ($name = 'John') {
+    return $name;
+});
+
+Restricciones de expresiones regulares
+======================================
+
+Puede restringir el formato de los parámetros de su ruta utilizando el método
+where en una instancia de ruta. El método where acepta el nombre del parámetro
+y una expresión regular que define cómo se debe restringir el parámetro:
+
+Route::get('user/{name}', function ($name) {
+    //
+})->where('name', '[A-Za-z]+');
+
+Route::get('user/{id}', function ($id) {
+    //
+})->where('id', '[0-9]+');
+
+Route::get('user/{id}/{name}', function ($id, $name) {
+    //
+})->where(['id' => '[0-9]+', 'name' => '[a-z]+']);
+
+Restricciones globales
+======================
+
+Si desea que un parámetro de ruta esté siempre limitado por una expresión
+regular determinada, puede usar el método de patrón.  Debe definir estos
+patrones en el método de arranque de su RouteServiceProvider:
+
+/**
+ * Define your route model bindings, pattern filters, etc.
+ *
+ * @return void
+ */
+public function boot()
+{
+    Route::pattern('id', '[0-9]+');
+
+    parent::boot();
+}
+
+Una vez que se ha definido el patrón, se aplica automáticamente a todas las
+rutas usando ese nombre de parámetro:
+
+Route::get('user/{id}', function ($id) {
+    // Only executed if {id} is numeric...
+});
+
+Rutas nombradas
+===============
+
+Las rutas con nombre permiten la generación conveniente de URL o
+redireccionamientos para rutas específicas. Puede especificar un nombre para una
+ruta encadenando el método de nombre en la definición de ruta:
+
+Route::get('user/profile', function () {
+    //
+})->name('profile');
+
+También puede especificar nombres de ruta para las acciones del controlador:
+
+Route::get('user/profile', 'UserProfileController@show')->name('profile');
+
+Generación de URL para rutas con nombre
+=======================================
+
+Una vez que haya asignado un nombre a una ruta determinada, puede usar el
+nombre de la ruta al generar URL o redireccionamientos a través de la
+función de ruta global:
+
+// Generating URLs...
+$url = route('profile');
+
+// Generating Redirects...
+return redirect()->route('profile');
+
+Si la ruta nombrada define parámetros, puede pasar los parámetros como segundo
+argumento a la función de ruta. Los parámetros dados se insertarán
+automáticamente en la URL en sus posiciones correctas:
+
+Route::get('user/{id}/profile', function ($id) {
+    //
+})->name('profile');
+
+$url = route('profile', ['id' => 1]);
+
+Grupos de rutas
+===============
+
+Los grupos de rutas le permiten compartir atributos de ruta, como middleware o
+espacios de nombres, en una gran cantidad de rutas sin necesidad de definir esos
+atributos en cada ruta individual. Los atributos compartidos se especifican en
+un formato de matriz como primer parámetro del método Route::group.
+
+Los grupos anidados intentan "fusionar" atributos de forma inteligente con su
+grupo principal. Middleware y where condiciones se combinan mientras se agregan
+nombres, espacios de nombres y prefijos. Los delimitadores de espacio de nombres
+y las barras inclinadas en los prefijos de URI se agregan automáticamente cuando
+corresponde.
+
+Middleware
+==========
+
+Para asignar middleware a todas las rutas dentro de un grupo, puede utilizar el
+método de middleware antes de definir el grupo. El middleware se ejecuta en el
+orden en el que se enumeran en la matriz:
+
+Route::middleware(['first', 'second'])->group(function () {
+    Route::get('/', function () {
+        // Uses first & second Middleware
+    });
+
+    Route::get('user/profile', function () {
+        // Uses first & second Middleware
+    });
+});
+
+Namespaces
+==========
+
+Otro caso de uso común para los grupos de rutas es asignar el mismo namespace
+a un grupo de controladores usando el método del espacio de nombres:
+
+Route::namespace('Admin')->group(function () {
+    // Controllers Within The "App\Http\Controllers\Admin" Namespace
+});
+
+Recuerde, de forma predeterminada, RouteServiceProvider incluye sus archivos de
+ruta dentro un grupo de namespace, lo que le permite registrar rutas de
+controlador sin especificar el prefijo completo del namespace
+App\Http\Controllers. Por lo tanto, solo necesita especificar la parte del
+namespace que viene después del namespace base App\Http\Controllers.
+
+Rutas de sub dominios
+=====================
+
+Los grupos de rutas también se pueden usar para manejar el enrutamiento de
+subdominios. A los subdominios se les pueden asignar parámetros de ruta al igual
+que los URI de ruta, lo que le permite capturar una parte del subdominio para
+usar en su ruta o controlador. El subdominio se puede especificar llamando al
+método de dominio antes de definir el grupo:
+
+Route::domain('{account}.myapp.com')->group(function () {
+    Route::get('user/{id}', function ($account, $id) {
+        //
+    });
+});
+
+Prefijos de rutas
+=================
+
+El método de prefijo puede usarse para prefijar cada ruta en el grupo con un URI
+dado.  Por ejemplo, es posible que desee prefijar todos los URI de ruta dentro
+del grupo con admin:
+
+Route::prefix('admin')->group(function () {
+    Route::get('users', function () {
+        // Matches The "/admin/users" URL
+    });
+});
+
+Prefijos de nombre de ruta
+==========================
+
+El método del nombre se puede utilizar para prefijar cada nombre de ruta en el
+grupo con una cadena determinada. Por ejemplo, es posible que desee agregar el
+prefijo admin a todos los nombres de las rutas agrupadas. La cadena dada tiene
+el prefijo del nombre de la ruta exactamente como se especifica, por lo que nos
+aseguraremos de proporcionar el final . carácter en el prefijo:
+
+Route::name('admin.')->group(function () {
+    Route::get('users', function () {
+        // Route assigned name "admin.users"...
+    })->name('users');
+});
+
+Enlace de modelo de ruta
+========================
+
+Al inyectar un ID de modelo a una ruta o acción de controlador, a menudo
+consultará para recuperar el modelo que corresponde a ese ID. El enlace del
+modelo de ruta de Laravel proporciona una forma conveniente de inyectar
+automáticamente las instancias del modelo directamente en sus rutas. Por
+ejemplo, en lugar de inyectar la ID de un usuario, puede inyectar toda la
+instancia del modelo de usuario que coincida con la ID dada.
+
+Enlace implícito
+================
+
+Laravel resuelve automáticamente los modelos Eloquent definidos en rutas o
+acciones de controlador cuyos nombres de variables con sugerencias de tipo
+coinciden con el nombre de un segmento de ruta. Por ejemplo:
+
+Route::get('api/users/{user}', function (App\User $user) {
+    return $user->email;
+});
+
+Dado que la variable $ user está insinuada como el modelo App\User Eloquent y el
+nombre de la variable coincide con el segmento de URI de {usuario}, Laravel
+inyectará automáticamente la instancia del modelo que tiene una ID que coincide
+con el valor correspondiente del URI de solicitud. Si no se encuentra una
+instancia de modelo coincidente en la base de datos, se generará automáticamente
+una respuesta HTTP 404.
+
+Fallback Routes o Rutas de respaldo
+===================================
+
+Con el método Route::fallback, puede definir una ruta que se ejecutará cuando
+ninguna otra ruta coincida con la solicitud entrante. Normalmente, las
+solicitudes no gestionadas generarán automáticamente una página "404" a través
+del controlador de excepciones de su aplicación. Sin embargo, dado que puede
+definir la ruta alternativa dentro de su archivo routes/web.php, todo el
+middleware del grupo de middleware web se aplicará a la ruta. Puede agregar
+middleware adicional a esta ruta según sea necesario:
+
+Route::fallback(function () {
+    //
+});
+
+Limitación de tasa
+==================
+
+Laravel incluye un middleware para limitar el acceso a las rutas dentro de su
+aplicación. Para comenzar, asigne el middleware del throttle a una ruta o grupo
+de rutas. El middleware throttle acepta dos parámetros que determinan la
+cantidad máxima de solicitudes que se pueden realizar en una cantidad
+determinada de minutos. Por ejemplo, especifiquemos que un usuario autenticado
+puede acceder al siguiente grupo de rutas 60 veces por minuto:
+
+Route::middleware('auth:api', 'throttle:60,1')->group(function () {
+    Route::get('/user', function () {
+        //
+    });
+});
+
+Método de formulario suplantación
+=================================
+
+Los formularios HTML no admiten acciones PUT, PATCH o DELETE. Por lo tanto, al
+definir rutas PUT, PATCH o DELETE a las que se llama desde un formulario HTML,
+deberá agregar un campo _method oculto al formulario. El valor enviado con el
+campo _method se utilizará como método de solicitud HTTP:
+
+<form action="/foo/bar" method="POST">
+    <input type="hidden" name="_method" value="PUT">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+</form>
+
+Puede usar la directiva @method Blade para generar la entrada _method:
+
+<form action="/foo/bar" method="POST">
+    @method('PUT')
+    @csrf
+</form>
+
+Verbos HTTP
+===========
+
+Estos verbos realizan las siguientes acciones:
+
+GET: recupera recursos.
+
+POST: crea un recurso.
+
+PUT/PATCH: modifica un recurso.
+
+DELETE: elimina un recurso.
 
 ===========================================
 Agregar una nueva ruta para mostrar mensaje
@@ -1522,6 +1884,23 @@ Route::get('/greeting', function () {
 });
 
 Ahora visitamos http://127.0.0.1:8000/hola y veremos "Hola!!!".
+
+Otro ejemplo:
+
+En este ejmplo le vamos a pasar el valor desde la url al parámetro de la función
+que lo está esperando, osea "name".
+
+Route::get('articles/{name}', function ($name) {
+    echo "El nombre que has colocado es: ".$name;
+});
+
+Si visitamos:
+
+http://127.0.0.1:8000/articles/carlos
+
+En el navegador veríamos
+
+El nombre que has colocado es: carlos
 
 ====================================
 Crear una ruta y una vista sencillas
@@ -2208,8 +2587,8 @@ manera:
 
 >>> $user
 
-Consultar todos los usuarios
-============================
+Consultar todos los usuarios o todos los registros de cualquier tabla
+=====================================================================
 
 >>> $users = \App\User::all();
 
@@ -2229,6 +2608,10 @@ Le damos enter:
      ],
    }
 >>>
+
+ó
+
+>>> $categories = \App\Category::all();
 
 Consultar un registro específico por su clave foránea o id
 ===========================================================
@@ -2438,9 +2821,8 @@ belongsToMany().
 
 -Many To Many Polymorphic Relations (Relaciones polimórficas de muchos a muchos)
 
------
-
-Ejemplo de relación One To Many (Uno a muchos):
+Ejemplo de relación One To Many (Uno a muchos)
+==============================================
 
 Una categoría puede tener muchos artículos, entonces en el modelo Category.php
 debemos crear una función pública que lleve por nombre el nombre de la tabla a
@@ -2812,3 +3194,29 @@ y los campos fillables.
 
 8) Usar la consola de tinker para probar si se guardan registros correctamente
 en la base de datos.
+
+========================================
+Script en bash para proyectos ya creados
+========================================
+
+#!/bin/bash
+
+composer install
+
+composer dumpautoload
+
+npm install
+
+php artisan migrate:fresh
+
+echo " --- Regeneradas las tablas de la base de datos ---"
+
+php artisan migrate
+
+echo " --- Realizadas migraciones a la base de datos ---"
+
+php artisan db:seed
+
+echo "--- Guardados datos en la base de datos ---"
+
+echo "--- Listo!!! ---"
