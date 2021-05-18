@@ -370,6 +370,20 @@ JSX produce “elementos” de React. Exploraremos como renderizarlos en el DOM 
 la siguiente sección. A continuación puedes encontrar lo básico de JSX que será
 necesario para empezar.
 
+¿Como puedo escribir comentarios en JSX?
+========================================
+
+<div>
+  {/* El comentario va aquí */}
+  Hello, {name}!
+</div>
+
+<div>
+  {/* ¡También funciona
+  para comentarios multilínea! */}
+  Hello, {name}!
+</div>
+
 Continuando con el ejemplo, ahora, en index.js usaremos ReactDOM.render, el
 método render que nos permite renderizar en el html todos los componentes que
 hagamos.
@@ -610,7 +624,6 @@ export function Last_name(props) {
 
 Si revisamos el navegador debemos ver un:
 
-
 Hello my name is Sarah and my last name is Connor
 
 Otro ejemplo más avanzado con props
@@ -691,6 +704,24 @@ export function Example(props) {
     </div>
   );
 }
+
+Otrto ejemplo, pasando datos a un enlace html
+=============================================
+
+export function Example(props) {
+  return (
+    <a href={props.url}>
+      {props.text}
+    </a>
+  );
+}
+
+ReactDOM.render(
+  <Example url="https://www.youtube.com/" text="YouTube" />,
+  document.getElementById('example')
+  <Example url="https://www.twitter.com/" text="Twitter" />,
+  document.getElementById('example2')
+);
 
 Composición de componentes
 ==========================
@@ -866,3 +897,450 @@ se llame la función.
 Esto no es un comportamiento especifico de React; esto hace parte de como operan
 las funciones JavaScript. Generalmente, si refieres un método sin usar ()
 después de este, tal como onClick={this.handleClick}, deberías ligar ese método.
+
+=======================
+Renderizado condicional
+=======================
+
+En React, puedes crear distintos componentes que encapsulan el comportamiento
+que necesitas. Entonces, puedes renderizar solamente algunos de ellos,
+dependiendo del estado de tu aplicación.
+
+El renderizado condicional en React funciona de la misma forma que lo hacen las
+condiciones en JavaScript. Usa operadores de JavaScript como if o el operador
+condicional para crear elementos representando el estado actual, y deja que
+React actualice la interfaz de usuario para emparejarlos.
+
+Considera estos dos componentes:
+
+function UserGreeting(props) {
+  return <h1>Welcome back!</h1>;
+}
+
+function GuestGreeting(props) {
+  return <h1>Please sign up.</h1>;
+}
+
+Vamos a crear un componente Greeting que muestra cualquiera de estos componentes
+dependiendo si el usuario ha iniciado sesión:
+
+export function Greeting(props) {
+  const isLoggedIn = props.isLoggedIn;
+  if (isLoggedIn) {
+    return <UserGreeting />;
+  }
+  return <GuestGreeting />;
+}
+
+ReactDOM.render(
+  // Intentar cambiando isLoggedIn={true}:
+  <Greeting isLoggedIn={false} />,
+  document.getElementById('root')
+);
+
+======================
+Variables de elementos
+======================
+
+Puedes usar variables para almacenar elementos. Esto puede ayudarte para
+renderizar condicionalmente una parte del componente mientras el resto del
+resultado no cambia.
+
+Considera estos dos componentes nuevos que representan botones de cierre e
+inicio de sesión:
+
+function LoginButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Login
+    </button>
+  );
+}
+
+function LogoutButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Logout
+    </button>
+  );
+}
+
+En el siguiente ejemplo, crearemos un componente con estado llamado
+LoginControl.
+
+El componente va a renderizar <LoginButton /> o <LogoutButton /> dependiendo de
+su estado actual. También va a renderizar un <Greeting /> del ejemplo anterior:
+
+export class LoginControl extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.handleLogoutClick = this.handleLogoutClick.bind(this);
+    this.state = {isLoggedIn: false};
+  }
+
+  handleLoginClick() {
+    this.setState({isLoggedIn: true});
+  }
+
+  handleLogoutClick() {
+    this.setState({isLoggedIn: false});
+  }
+
+  render() {
+    const isLoggedIn = this.state.isLoggedIn;
+    let button;
+
+    if (isLoggedIn) {
+      button = <LogoutButton onClick={this.handleLogoutClick} />;
+    } else {
+      button = <LoginButton onClick={this.handleLoginClick} />;
+    }
+
+    return (
+      <div>
+        <Greeting isLoggedIn={isLoggedIn} />
+        {button}
+      </div>
+    );
+  }
+}
+
+function UserGreeting(props) {
+  return <h1>Welcome back!</h1>;
+}
+
+function GuestGreeting(props) {
+  return <h1>Please sign up.</h1>;
+}
+
+function Greeting(props) {
+  const isLoggedIn = props.isLoggedIn;
+  if (isLoggedIn) {
+    return <UserGreeting />;
+  }
+  return <GuestGreeting />;
+}
+
+function LoginButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Login
+    </button>
+  );
+}
+
+function LogoutButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Logout
+    </button>
+  );
+}
+
+======================================
+If en una línea con operador lógico &&
+======================================
+
+Si bien declarar una variable y usar una sentencia if es una buena forma de
+renderizar condicionalmente un componente, a veces podrías querer usar una
+sintaxis más corta. Hay algunas formas de hacer condiciones en una línea en JSX,
+explicadas a continuación.
+
+Puedes incluir expresiones en JSX envolviéndolas en llaves. Esto incluye el
+operador lógico && de JavaScript. Puede ser útil para incluir condicionalmente
+un elemento:
+
+-----
+
+import React from 'react'
+
+export function Mailbox(props) {
+  const unreadMessages = props.unreadMessages;
+  return (
+    <div>
+      <h1>Hello!</h1>
+      {unreadMessages.length > 0 &&
+        <h2>
+          You have {unreadMessages.length} unread messages.
+        </h2>
+      }
+    </div>
+  );
+}
+
+const messages = ['React', 'Re: React', 'Re:Re: React'];
+ReactDOM.render(
+  <Mailbox unreadMessages={messages} />,
+  document.getElementById('root')
+);
+
+-----
+
+Si revisamos el navegador veremos: You have 3 unread messages.
+
+Esto funciona porque en JavaScript, true && expresión siempre evalúa a
+expresión, y false && expresión siempre evalúa a false.
+
+=============================================
+If-Else en una línea con operador condicional
+=============================================
+
+Otro método para el renderizado condicional de elementos en una línea es usar el
+operador condicional condición ? true : false de JavaScript.
+
+En el siguiente ejemplo, lo usaremos para renderizar de forma condicional un
+pequeño bloque de texto.
+
+render() {
+  const isLoggedIn = this.state.isLoggedIn;
+  return (
+    <div>
+      The user is <b>{isLoggedIn ? 'currently' : 'not'}</b> logged in.    </div>
+  );
+}
+
+También puede usarse para expresiones más grandes, aunque es menos obvio lo que
+está pasando:
+
+render() {
+  const isLoggedIn = this.state.isLoggedIn;
+  return (
+    <div>
+      {isLoggedIn        ? <LogoutButton onClick={this.handleLogoutClick} />
+        : <LoginButton onClick={this.handleLoginClick} />      }
+    </div>  );
+}
+
+Al igual que en JavaScript, depende de ti elegir un estilo apropiado en base a
+lo que tu y tu equipo consideran más legible. Recuerda también que cuando las
+condiciones se vuelven demasiado complejas, puede ser un buen momento para
+extraer un componente.
+
+=====================================
+Evitar que el componente se renderice
+=====================================
+
+En casos excepcionales, es posible que desees que un componente se oculte a sí
+mismo aunque haya sido renderizado por otro componente. Para hacer esto,
+devuelve null en lugar del resultado de renderizado.
+
+En el siguiente ejemplo, el <WarningBanner /> se renderiza dependiendo del valor
+del prop llamado warn. Si el valor del prop es false, entonces el componente no
+se renderiza:
+
+import React from 'react'
+
+function WarningBanner(props) {
+  if (!props.warn) {
+    return null;
+  }
+  return (
+    <div className="warning">
+      Warning!
+    </div>
+  );
+}
+
+export class Example extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {showWarning: true};
+    this.handleToggleClick = this.handleToggleClick.bind(this);
+  }
+  handleToggleClick() {
+    this.setState(state => ({
+      showWarning: !state.showWarning
+    }));
+  }
+  render() {
+    return (
+      <div>
+        <WarningBanner warn={this.state.showWarning} />
+        <button onClick={this.handleToggleClick}>
+          {this.state.showWarning ? 'Hide' : 'Show'}
+        </button>
+      </div>
+    );
+  }
+}
+
+=============
+Listas y keys
+=============
+
+Primero, vamos a revisar como transformas listas en Javascript.
+
+Dado el código de abajo, usamos la función map() para tomar un array de numbers
+y duplicar sus valores. Asignamos el nuevo array devuelto por map() a la
+variable doubled y la mostramos:
+
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map((number) => number * 2);console.log(doubled);
+
+Este código muestra [2, 4, 6, 8, 10] a la consola.
+
+En React, transformar arrays en listas de elementos es casi idéntico.
+Renderizado de Múltiples Componentes
+
+Puedes hacer colecciones de elementos e incluirlos en JSX usando llaves {}.
+
+Debajo, recorreremos el array numbers usando la función map() de Javascript.
+Devolvemos un elemento <li> por cada ítem . Finalmente, asignamos el array de
+elementos resultante a listItems:
+
+const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((number) =>  <li>{number}</li>);
+
+Incluimos entero el array listItems dentro de un elemento <ul>, y lo renderizamos al DOM:
+
+ReactDOM.render(
+  <ul>{listItems}</ul>,  document.getElementById('root')
+);
+
+Ejemplo:
+
+const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((numbers) =>
+  <li>{numbers}</li>
+);
+
+ReactDOM.render(
+  <ul>{listItems}</ul>,
+  document.getElementById('root')
+);
+
+Este código muestra una lista de números entre 1 y 5.
+
+===========
+Formularios
+===========
+
+Los elementos de formularios en HTML funcionan un poco diferente a otros
+elementos del DOM en React, debido a que los elementos de formularios conservan
+naturalmente algún estado interno. Por ejemplo, este formulario solamente en
+HTML, acepta un solo nombre.
+
+<form>
+  <label>
+    Name:
+    <input type="text" name="name" />
+  </label>
+  <input type="submit" value="Submit" />
+</form>
+
+Este formulario tiene el comportamiento predeterminado en HTML que consiste en
+navegar a una nueva página cuando el usuario envía el formulario. Si deseas este
+comportamiento en React, simplemente ya funciona así. Pero en la mayoría de
+casos, es conveniente tener una función en Javascript que se encargue del envío
+del formulario, y que tenga acceso a los datos que el usuario introdujo en el
+formulario. La forma predeterminada para conseguir esto es una técnica llamada
+“componentes controlados”.
+
+Componentes controlados
+=======================
+
+En HTML, los elementos de formularios como los <input>, <textarea> y el <select>
+normalmente mantienen sus propios estados y los actualizan de acuerdo a la
+interacción del usuario. En React, el estado mutable es mantenido normalmente en
+la propiedad estado de los componentes, y solo se actualiza con setState().
+
+Podemos combinar ambos haciendo que el estado de React sea la “única fuente de
+la verdad”. De esta manera, los componentes React que rendericen un formulario
+también controlan lo que pasa en ese formulario con las subsecuentes entradas
+del usuario. Un campo de un formulario cuyos valores son controlados por React
+de esta forma es denominado “componente controlado”.
+
+Por ejemplo, si queremos hacer que el ejemplo anterior muestre el nombre que
+esta siendo suministrado, podemos escribir el formulario como un componente
+controlado:
+
+class NameForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: ''};
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event) {    this.setState({value: event.target.value});  }
+  handleSubmit(event) {
+    alert('A name was submitted: ' + this.state.value);
+    event.preventDefault();
+  }
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Name:
+          <input type="text" value={this.state.value} onChange={this.handleChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+    );
+  }
+}
+
+Ya que el atributo value es agregado en nuestro elemento del formulario, el
+valor mostrado siempre será el de this.state.value, haciendo que el estado de
+React sea la fuente de la verdad. Ya que handleChange corre cada vez que una
+tecla es oprimida para actualizar el estado de React, el valor mostrado será
+actualizado mientras que el usuario escribe.
+
+Con un componente controlado, el valor del input siempre está dirigido por el
+estado de React. Si bien esto significa que tendrás que escribir un poco más de
+código, ahora podrás pasar también el valor a otros elementos de la interfaz de
+usuario, o reiniciarlo desde otros manejadores de eventos.
+
+============
+Estilo y CSS
+============
+
+¿Cómo agrego clases CSS a los componentes?
+
+Pasa una string como la prop className:
+
+render() {
+  return <span className="menu navigation-menu">Menu</span>
+}
+
+Es común que las clases CSS dependan de las props o del estado del componente:
+
+render() {
+  let className = 'menu';
+  if (this.props.isActive) {
+    className += ' menu-active';
+  }
+  return <span className={className}>Menu</span>
+}
+
+===============================
+Agregar bootstrap a un proyecto
+===============================
+
+1) Agregar e instalar el paquete de bootstrap.
+
+$ npm add bootstrap
+
+2) Importar los estilos de bootrap:
+
+{/* La siguiente línea se puede incluir en su archivo src/index.js o App.js */}
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+3) Una vez agregado ya puede usar las clases de bootstap en sus componentes:
+
+<div className="container">
+</div>
+
+Alternativamente, si está utilizando SASS en su aplicación, puede agregarlo como
+se muestra a continuación:
+
+App.scss
+
+@import "~bootstrap/scss/bootstrap";
+
+App.js
+
+import './App.scss';
