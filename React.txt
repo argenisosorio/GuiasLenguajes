@@ -431,315 +431,37 @@ Como se ve < App /> luce como un elemento html con la diferencia de que al ser
 un componente creado por nosotros, la primera letra siempre será en mayúscula
 para que tanto como Reac como nosotros lo reconozcan como un componente.
 
-Continuando con el ejemplo, ahora nuestra aplicación será un "To Do List" o una
-app que permita agregar o eliminar tareas por hacer.
+JSX representa objetos
+======================
 
-Ahora, vamos a crear una carpeta "components" en src.
+Babel compila JSX a llamadas de React.createElement().
 
-Ahora vamos a crear un archivo TodoList.jsx dentro de la carpeta "components"
-y también vamos a crear otro que sea TodoItem.jsx y así podremos ver como se van
-pasando propiedades entre unos y otros, como van escuchando eventos y como se
-pueden ir creando componentes con component.
+Estos dos ejemplos son idénticos:
 
-Entonces nos vamos a TodoList.jsx y vamos a importar a react y a declararar una
-función "TodoList" que nos va a devolver una lista de elementos que vamos a
-iterar, entonces TodoList() va a recibir unas propiedades, entre ellas un array
-de todos, entonces en el return de la función podemos llamar a ese argumento
-"todos" a traves de código javascript dentro de jsc solamente con las {}.
-por lo que agregamos esos elementos dentro del return.
+const element = (
+  <h1 className="greeting">
+    Hello, world!
+  </h1>
+);
 
-TodoList.jsx
+const element = React.createElement(
+  'h1',
+  {className: 'greeting'},
+  'Hello, world!'
+);
 
------
+React.createElement() realiza algunas comprobaciones para ayudarte a escribir código libre de errores, pero, en esencia crea un objeto como este:
 
-import React from 'react';
-
-export function TodoList ({ todos }) {
-  return (
-    <ul>
-    { todos.map((todo) => (
-      <li>Tarea</li>
-    ))}
-    </ul>
-  )
-}
-
------
-
-Ahora vamos a App.jsx y vamos a importar el componente TodoList y luego
-modificamos la función App() para que nos retorne los objetos de de TodoList
-
-import React from "react";
-import { TodoList } from "./components/TodoList";
-
-export function App() {
-  return <TodoList todos={[
-    { id: 1, task: "Tarea 1", completed: false}
-  ]}/>;
-}
-
-Si vemos el navegador nos debe aparecer la lista "Tarea".
-
-Ahora en App.jsx vamos a importar a useState que os va a permirir que nuestros
-componentes tengan estado, el estado es una propiedad que hace que cada vez que
-eso que guardamos en el estado, cambie, se renderice de nuevo el componente,
-entonces si vamos insetando nuevas tareas estamos insertando nuevos elementeos
-en el array, lo estamos modificando, el estado escucha esos cambios y forza el
-re renderizado que hace que se puedan ver en el DOM.
-
-import React, { useState } from "react";
-import { TodoList } from "./components/TodoList";
-
-export function App() {
-  const [todos, setTodos] = useState([
-    { id: 1, task: "Tarea 1", completed: false},
-  ])
-  return <TodoList todos={todos} />;
-}
-
-Ahora, ese ese mismo componente vamos a agregar elementos que nos permitan
-insertar nuevas tareas y unos botones que nos ayuden a eso.
-
-import React, { useState } from "react";
-import { TodoList } from "./components/TodoList";
-
-export function App() {
-  const [todos, setTodos] = useState([
-    { id: 1, task: "Tarea 1", completed: false},
-  ])
-  return (
-    <div>
-      <TodoList todos={todos} />
-      <input type="text" placeholder="Nueva tarea" />
-    </div>
-  );
-}
-
-Como se observa estos componentes están dentro de un "div" padre que permite
-que se rendericen correctamente, pero a la hora de maquetar o de usar el css
-estos divs extras se pueden volver tediosos, por eso se usa Fragment que
-no se pintara en el html pero si permite que se rendericen correctamente los
-elementos en el DOM.
-
-import React, { Fragment, useState } from "react";
-import { TodoList } from "./components/TodoList";
-
-export function App() {
-  const [todos, setTodos] = useState([
-    { id: 1, task: "Tarea 1", completed: false},
-  ])
-  return (
-    <Fragment>
-      <TodoList todos={todos} />
-      <input type="text" placegholder="Nueva tarea" />
-    </Fragment>
-  );
-}
-
-Ahora luego de ese input vamos a agregar un botón que sea el de añadir y otro el
-de eliminar.
-
-import React, { Fragment, useState } from "react";
-import { TodoList } from "./components/TodoList";
-
-export function App() {
-  const [todos, setTodos] = useState([
-    { id: 1, task: "Tarea 1", completed: false},
-  ])
-  return (
-    <Fragment>
-      <TodoList todos={todos} />
-      <input type="text" placeholder="Nueva tarea" />
-      <button>AÑADIR</button>
-      <button>ELIMINAR</button>
-    </Fragment>
-  );
-}
-
-Ahora volvemos a TodoList.jsx y eliminamos el "li" que teníamos
-
-import React from 'react';
-
-export function TodoList ({ todos }) {
-  return (
-    <ul>
-    { todos.map((todo) => (
-    ))}
-    </ul>
-  )
-}
-
-Ahora vamos a TodoItem.jsx y agregamos:
-
-import React from 'react';
-
-export function TodoItem ({}) {
-  return (
-    <li></li>
-  )
-}
-
-Esto función retorna un "li" porque su padre es TodoList que contiene el "ul" de
-la lista.
-
-Hasta los momentos nuestros archivos van así:
-
-App.jsx
-
-import React, { Fragment, useState } from "react";
-import { TodoList } from "./components/TodoList";
-
-export function App() {
-  const [todos, setTodos] = useState([
-    { id: 1, task: "Tarea 1", completed: false},
-  ])
-  return (
-    <Fragment>
-      <TodoList todos={todos} />
-      <input type="text" placeholder="Nueva tarea" />
-      <button>AÑADIR</button>
-      <button>ELIMINAR</button>
-    </Fragment>
-  );
-}
-
-TodoList.jsx
-
-import React from 'react';
-import { TodoItem } from "./TodoItem";
-
-export function TodoList ({ todos }) {
-  return (
-    <ul>
-    { todos.map((todo) => (
-      <TodoItem todo={ todo } />
-    ))}
-    </ul>
-  )
-}
-
-TodoItem.jsx
-
-import React from 'react';
-
-export function TodoItem ({ todo }) {
-  const { id, task, complete } = todo
-  return (
-    <li>{ task }</li>
-  )
-}
-
-Ahora a los botones les vamos a agregar el evento "onClick" y al input text
-le vamos a agregar la propiedad "ref" para poder referenciarlo, de esta manera
-React identifica el componente al que estamos haciendo uso. Además de agregar
-otras cosas que veremos cuando muestre el ejemplo, también es necesario instalar
-un nuevo paquete llamada uuid que genera ids de forma aleatoria con:
-
-$ npm add uuid
-
-Esto agrega ese paquete a la lista de paquetes y además lo intala, esto se
-agrega para no trabajar de forma manual los id en el ejemplo.
-
-Ejemplo completo súper complejo:
-
-App.jsx
-
-import React, { Fragment, useState, useRef, useEffect } from "react";
-import { v4 as uuidv4 } from 'uuid';
-import { TodoList } from "./components/TodoList";
-
-const KEY = 'todoApp.todos';
-
-export function App() {
-  const [todos, setTodos] = useState([
-    { id: 1, task: "Tarea 1", completed: false},
-  ])
-
-  const todoTaskRef = useRef();
-
-  useEffect(() => {
-    const storedTodos = JSON.parse(localStorage.getItem(KEY));
-    if (storedTodos) {
-      setTodos(storedTodos);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem(KEY, JSON.stringify(todos));
-  }, [todos]);
-
-  const toggleTodo = (id) => {
-    const newTodos = [...todos];
-    const todo = newTodos.find((todo) => todo.id === id);
-    todo.completed = !todo.completed;
-    setTodos(newTodos);
-  };
-
-  const handleTodoAdd = () => {
-    const task = todoTaskRef.current.value;
-    if (task === '') return;
-
-    setTodos((prevTodos) => {
-      return [...prevTodos, {id: uuidv4(), task, completed: false}];
-    });
-
-  todoTaskRef.current.value = null; // Reset input later add task.
-
-  };
-
-  const handleClearAll = () => {
-    const newTodos = todos.filter((todo) => !todo.completed );
-    setTodos(newTodos);
+// Nota: Esta estructura está simplificada
+const element = {
+  type: 'h1',
+  props: {
+    className: 'greeting',
+    children: 'Hello, world!'
   }
+};
 
-  return (
-    <Fragment>
-      <TodoList todos={todos} toggleTodo={toggleTodo} />
-      <input ref={todoTaskRef} type="text" placeholder="Nueva tarea" />
-      <button onClick={handleTodoAdd}>AÑADIR</button>
-      <button onClick={handleClearAll}>ELIMINAR</button>
-      <div>Te quedan {todos.filter((todo) => !todo.completed).length} tareas por terminar</div>
-    </Fragment>
-  );
-}
-
------
-
-TodoList.jsx
-
-import React from 'react';
-import { TodoItem } from "./TodoItem";
-
-export function TodoList ({ todos, toggleTodo }) {
-  return (
-    <ul>
-    { todos.map((todo) => (
-      <TodoItem key={todo.id} todo={todo} toggleTodo={toggleTodo} />
-    ))}
-    </ul>
-  )
-}
-
------
-
-TodoItem.jsx
-
-import React from 'react';
-
-export function TodoItem ({ todo, toggleTodo }) {
-  const { id, task, completed } = todo;
-
-  const handleTodoClick = () => {
-    toggleTodo(id);
-  };
-
-  return (
-    <li>
-      <input type="checkbox" checked={completed} onChange={handleTodoClick} />
-      {task}
-    </li>
-  );
-}
+Estos objetos son llamados “Elementos de React”. Puedes pensar en ellos como descripciones de lo que quieres ver en pantalla. React lee estos objetos y los usa para construir el DOM y mantenerlo actualizado.
 
 ===================================
 Llamar un archivo css en un pryecto
@@ -996,3 +718,151 @@ function App() {
 }
 
 ReactDOM.render(<App />, document.getElementById('name'));
+
+====================================
+Actualizando el elemento renderizado
+====================================
+
+Los elementos de React son inmutables. Una vez creas un elemento, no puedes
+cambiar sus hijos o atributos. Un elemento es como un fotograma solitario en una
+película: este representa la interfaz de usuario en cierto punto en el tiempo.
+
+Con nuestro conocimiento hasta este punto, la única manera de actualizar la
+interfaz de usuario es creando un nuevo elemento, y pasarlo a ReactDOM.render().
+
+Considera este ejemplo de un reloj en marcha:
+
+function tick() {
+  const element = (
+    <div>
+      <h1>Hello, world!</h1>
+      <h2>It is {new Date().toLocaleTimeString()}.</h2>
+    </div>
+  );
+  ReactDOM.render(element, document.getElementById('root'));}
+
+setInterval(tick, 1000);
+
+Si vemos el navegador deberíamos ver:
+
+It is 7:36:31 p. m..
+
+=================
+Manejando eventos
+=================
+
+Manejar eventos en elementos de React es muy similar a manejar eventos con
+elementos del DOM. Hay algunas diferencias de sintaxis:
+
+Los eventos de React se nombran usando camelCase, en vez de minúsculas.
+
+Con JSX pasas una función como el manejador del evento, en vez de un string.
+
+Por ejemplo, el HTML:
+
+<button onclick="activateLasers()">
+  Activate Lasers
+</button>
+
+En React es algo diferente:
+
+<button onClick={activateLasers}>
+  Activate Lasers
+</button>
+
+Otra diferencia es que en React no puedes retornar false para prevenir el
+comportamiento por defecto. Debes, explícitamente, llamar preventDefault. Por
+ejemplo, en un HTML plano, para prevenir el comportamiento por defecto de un
+enlace de abrir una nueva página, puedes escribir:
+
+<a href="#" onclick="console.log('The link was clicked.'); return false">
+  Click me
+</a>
+
+En cambio en React, esto podría ser:
+
+function ActionLink() {
+  function handleClick(e) {
+    e.preventDefault();
+    alert('The link was clicked.');
+  }
+  return (
+    <a href="#" onClick={handleClick}>
+      Click me
+    </a>
+  );
+}
+
+========================
+Exportando un componente
+========================
+
+Para exportar un componente se puede hacer de la siguiente manera para funciones
+y clases:
+
+export function Example() {
+  return (
+  );
+}
+
+ó
+
+export class Example extends React.Component {
+  render() {
+    return (
+    );
+  }
+}
+
+========================================================
+Ejemplo con un Toggle para cambiar el estado de un botón
+========================================================
+
+Cuando estás utilizando React, generalmente no necesitas llamar addEventListener
+para agregar escuchadores de eventos a un elemento del DOM después de que este
+es creado. En cambio, solo debes proveer un manejador de eventos cuando el
+elemento se renderiza inicialmente.
+
+Cuando defines un componente usando una clase de ES6, un patrón muy común es que
+los manejadores de eventos sean un método de la clase. Por ejemplo, este
+componente Toggle renderiza un botón que permite al usuario cambiar el estado
+entre “ENCENDIDO” y “APAGADO”:
+
+class Toggle extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {isToggleOn: true};
+
+    // Este enlace es necesario para hacer que `this` funcione en el callback.
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    // Se usa this.setState() para programar actualizaciones al estado local del
+    // componente.
+    this.setState(state => ({
+    isToggleOn: !state.isToggleOn
+    }));
+  }
+  render() {
+    return (
+      <button onClick={this.handleClick}>
+        {this.state.isToggleOn ? 'ON' : 'OFF'}
+      </button>
+    );
+  }
+}
+
+ReactDOM.render(
+  <Toggle />,
+  document.getElementById('root')
+);
+
+Tienes que tener mucho cuidado en cuanto al significado de this en los callbacks
+de JSX. En JavaScript, los métodos de clase no están ligados por defecto. Si
+olvidas ligar this.handleClick y lo pasas a onClick, this será undefined cuando
+se llame la función.
+
+Esto no es un comportamiento especifico de React; esto hace parte de como operan
+las funciones JavaScript. Generalmente, si refieres un método sin usar ()
+después de este, tal como onClick={this.handleClick}, deberías ligar ese método.
