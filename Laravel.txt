@@ -1949,6 +1949,24 @@ Si vicitamos http://127.0.0.1:8000/articles/view/casa veremos:
 
 casa
 
+==============
+Vistas o views
+==============
+
+Las vistas contienen el HTML proporcionado por su aplicación y separan la lógica
+de su controlador/aplicación de su lógica de presentación. Las vistas se
+almacenan en el directorio resources/views.
+
+Una vista simple podría verse así:
+
+<!-- View stored in resources/views/greeting.blade.php -->
+
+<html>
+    <body>
+        <h1>Hello</h1>
+    </body>
+</html>
+
 ====================================
 Crear una ruta y una vista sencillas
 ====================================
@@ -1961,6 +1979,9 @@ En mysite/router/web.php agregamos lo siguiente:
 Route::get('/hola', function () {
     return view('HolaMundo');
 });
+
+Como puede ver, el primer argumento pasado al asistente de vista corresponde al
+nombre del archivo de vista en el directorio resources/views.
 
 Crear una vista
 ===============
@@ -1981,9 +2002,97 @@ En mysite/resources/views/ creamos HolaMundo.blade.php
 
 Ahora visitamos http://127.0.0.1:8000/hola y veremos "Hola!!!".
 
-==============
-Contrtoladores
-==============
+-----
+
+Las vistas también pueden estar anidadas dentro de los subdirectorios del
+directorio resources/views. La notación de "puntos" se puede utilizar para hacer
+referencia a vistas anidadas. Por ejemplo, si su vista está almacenada en
+resources/views/admin/profile.blade.php, puede hacer referencia a ella así:
+
+Route::get('/admin', function () {
+    return view('admin.profile');
+});
+
+ó
+
+Route::get('/admin', function () {
+    return view('admin.profile',[]);
+});
+
+Pasar datos a las vistas
+========================
+
+Se pueden pasar datos a la vista guardandolos en un arreglo en las rutas:
+
+-----
+
+web.php
+
+Route::get('/', function () {
+    return view('greeting', ['name' => 'James']);
+});
+
+Como puede ver, el primer argumento pasado al helper de la vista corresponde al
+nombre del archivo de vista en el directorio resources/views. El segundo
+argumento es una matriz de datos que deben estar disponibles para la vista. En
+este caso, estamos pasando la variable de nombre, que se muestra en la vista
+utilizando la sintaxis Blade.
+
+-----
+
+greeting.blade.php
+
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <title>Laravel</title>
+    </head>
+    <body>
+        <h1>Hello, {{ $name }}</h1>
+    </body>
+</html>
+
+-----
+
+Otro ejemplo:
+
+return view('greetings', ['name' => 'Victoria']);
+
+Al pasar información de esta manera, los datos deben ser una matriz con pares
+clave/valor. Dentro de su vista, puede acceder a cada valor usando su clave
+correspondiente, como <?php echo $key; ?>. Como alternativa a pasar una matriz
+completa de datos a la función helper de la vista, puede usar el método with
+para agregar datos individuales a la vista:
+
+return view('greeting')->with('name', 'Victoria');
+
+-----
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Laravel</title>
+    </head>
+    <body>
+        <h1>Hello, {{ $name }}</h1>
+        <br />
+        <?php echo $name; ?>
+    </body>
+</html>
+
+¿Qué es blade en laravel?
+=========================
+
+Blade es un motor de plantillas simple y a la vez poderoso proporcionado por
+Laravel. A diferencia de otros motores de plantillas populares de PHP, Blade no
+te impide utilizar código PHP plano en tus vistas.
+
+=============
+Controladores
+=============
 
 Crear un controlador desde la línea de comandos
 ===============================================
@@ -2434,12 +2543,468 @@ class TestController extends Controller
     public function delete($id) {
         $user = User::find($id);
         $user->delete();
+        //User::destroy($id);
         dd($user);
     }
 }
 
 Al visitar http://127.0.0.1:8000/delete/1 nos debe eliminar el registro en la
 base de datos que tenga el id igual a 1.
+
+También podriamos destruir el registro directamente con el modelo si tenemos su
+ID:
+
+User::destroy($id);
+
+==============================================
+Pasar valores a las vista desde el controlador
+==============================================
+
+Route::get('article',[TestController::class, 'article']);
+
+-----
+
+class TestController extends Controller
+{
+    public function article() {
+        $article = "Some content";
+        return view('article', ['data'=>$article]);
+    }
+}
+
+-----
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Article</title>
+    </head>
+    <body>
+        <p>Article</p>
+        <?php echo $data; ?>
+    </body>
+</html>
+
+Si visitamos
+
+http://127.0.0.1:8000/article veremos:
+
+"Some content"
+
+================================================================
+Pasar valores a las vista desde el controlador mediante un query
+================================================================
+
+Route::get('article/{id}',[TestController::class, 'article']);
+
+-----
+
+class TestController extends Controller
+{
+    public function article($id) {
+        $article = Article::find($id);
+        return view('article', ['data'=>$article]);
+    }
+}
+
+-----
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Article</title>
+    </head>
+    <body>
+        <p>Article</p>
+        <!-- Se pueden consultar los datos así -->
+        <?php echo $data; ?>
+        <br />
+        <!-- O acceder a los datos del arreglo article -->
+        <?php echo $data->title; ?>
+    </body>
+</html>
+
+Si visitamos http://127.0.0.1:8000/article/1 veremos, siempre y cuando haya
+datos en la base de datos:
+
+Article
+{"id":1,"title":"Noticia de \u00faltima hora","content":"Contenido de la noticia","user_id":1,"category_id":1,"created_at":"2021-05-06 03:25:24","updated_at":"2021-05-06 03:25:24"}
+Noticia de última hora
+
+=====
+Blade
+=====
+
+Blade es el motor de plantillas simple pero poderoso provisto con Laravel. A
+diferencia de otros motores de plantillas PHP populares, Blade no le impide usar
+código PHP simple en sus vistas. De hecho, todas las vistas de Blade se compilan
+en código PHP simple y se almacenan en caché hasta que se modifican, lo que
+significa que Blade agrega esencialmente cero gastos generales a su aplicación.
+
+Los archivos de vista Blade usan la extensión de archivo .blade.php y
+generalmente se almacenan en el directorio de resources/views.
+
+¿Qué es blade en laravel?
+=========================
+
+Blade es un motor de plantillas simple y a la vez poderoso proporcionado por
+Laravel. A diferencia de otros motores de plantillas populares de PHP, Blade no
+te impide utilizar código PHP plano en tus vistas.
+
+Usando blade en la vista
+========================
+
+Ejemplo:
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Article</title>
+    </head>
+    <body>
+        <p>Article</p>
+        <!-- Imprimiendo valores con blade -->
+        {{ $article->title }}
+    </body>
+</html>
+
+==================
+Ciclo for en blade
+==================
+
+@for ($i=0; $i<=5; $i++)
+  {{ $i }}
+@endfor
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Article</title>
+    </head>
+    <body>
+        @for ($i=0; $i<=5; $i++)
+          {{ $i }}
+        @endfor
+    </body>
+</html>
+
+Nos imprime.
+
+0 1 2 3 4 5
+
+===========
+if en blade
+===========
+
+@if (1 == 1)
+  {{ "Es igual a 1" }}
+@endif
+
+=========================
+if, elseif, else en blade
+=========================
+
+<?php $records=[1,2,3] ?>
+@if (count($records) === 1)
+    I have one record!
+@elseif (count($records) > 1)
+    I have multiple records!
+@else
+    I don't have any records!
+@endif
+
+================
+foreach en blade
+================
+
+<?php $numbers=[1,2,3,4,5] ?>
+
+@foreach ($numbers as $number)
+  {{ $number }}
+@endforeach
+
+Otro ejemplo:
+
+Como tags es una arreglo, debemos recorrerlo:
+
+Accedmos a los tags asociados a article y los mostramos.
+
+@foreach ($article->tags as $tag)
+  {{ $tag->name }}
+@endforeach
+
+-----
+
+@foreach ($users as $user)
+    <p>This is user {{ $user->id }}</p>
+@endforeach
+
+================
+forelse en blade
+================
+
+@forelse ($users as $user)
+    <li>{{ $user->name }}</li>
+@empty
+    <p>No users</p>
+@endforelse
+
+=====================
+Comentarios en blade
+=====================
+
+Blade también le permite definir comentarios en sus vistas.  Sin embargo, a
+diferencia de los comentarios HTML, los comentarios Blade no se incluyen en el
+HTML devuelto por su aplicación:
+
+{{-- This comment will not be present in the rendered HTML --}}
+
+===============================
+Herencia de plantilla con Blade
+===============================
+
+Dos de los principales beneficios de utilizar Blade son la herencia de
+plantillas y las secciones. Para empezar, echemos un vistazo a un ejemplo
+sencillo.
+
+base.blade.php
+
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>
+            @section('title')
+                Base
+            @show
+        </title>
+        @show
+    </head>
+    <body>
+        @section('header')
+            <h1>This is the master header.</h1>
+        @show
+
+        @section('content')
+            <p>This is the master content.</p>
+        @show
+
+        @section('footer')
+            <h3>This is the master footer.</h3>
+        @show
+    </body>
+</html>
+
+Como puede ver, este archivo base contiene un marcado HTML típico. Sin embargo,
+tome nota de las directiva @section. La directiva @section, como su nombre lo
+indica, define una sección de contenido
+
+Ahora que hemos definido un diseño base para nuestra aplicación, definamos una
+página secundaria que herede el diseño.
+
+Al definir una vista secundaria, utilice la directiva Blade @extends para
+especificar qué diseño debe "heredar" la vista secundaria. Las vistas que
+extienden un diseño Blade pueden inyectar contenido en las secciones del diseño
+utilizando las directivas @section.
+
+child.blade.php
+
+@extends('base')
+
+@section('title')
+    Article
+@endsection
+
+@section('header')
+    <h1>This is the child header secction</h1>
+@endsection
+
+@section('content')
+    <p>This is the child content secction</p>
+@endsection
+
+@section('footer')
+@endsection
+
+-----
+
+Si se agrega en la vista child alguna sección, el contenido será mostrado en
+detrimento de la sección master de la vista base.
+
+===========================
+Directivas de autenticación
+===========================
+
+Las directivas @auth y @guest pueden usarse para determinar rápidamente si el
+usuario actual está autenticado o es un invitado:
+
+@auth
+    // The user is authenticated...
+@endauth
+
+@guest
+    // The user is not authenticated...
+@endguest
+
+Si es necesario, puede especificar la protección de autenticación que se debe
+verificar al usar las directivas @auth y @guest:
+
+@auth('admin')
+    // The user is authenticated...
+@endauth
+
+@guest('admin')
+    // The user is not authenticated...
+@endguest
+
+Include en blade
+================
+
+Include sirve para incluir los contenidos de otras vistas dentro de una sección:
+
+Ejemplo:
+
+Creamos list.blade.php
+
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+</ul>
+
+y la podemos incluir dentro del bloque content de la vista child:
+
+@extends('base')
+
+@section('title')
+    Article
+@endsection
+
+@section('header')
+    <h1>This is the child header secction</h1>
+@endsection
+
+@section('content')
+   @include('list')
+@endsection
+
+@section('footer')
+@endsection
+
+Si revisamos la vista en el navegador veremos la lista incluída en el bloque
+content.
+
+La directiva @yield
+===================
+
+La directiva @yield se usa para mostrar el contenido de una sección determinada.
+
+En base:
+
+<title>App Name - @yield('title')</title>
+
+En child:
+
+@section('title', 'Page Title')
+
+Si visitamos a child con el navegador veremos en title
+
+App Name - Page title
+
+-----
+
+Mostrar datos en la vista, otros ejemplos
+=========================================
+
+Siguiendo el ejemplo del blog, en article.blade.php tenemos:
+
+<h1>{{ $article->title }}</h1>
+<br />
+<p>{{ $article->content }}</p>
+<br />
+Author: {{ $article->user->name }}
+<br />
+Category: {{ $article->category->name }}
+
+De esta manera accedemos a los datos de la tabla articles y todos lode datos de
+sus tablas asociadas.
+
+Llamar un css a una plantilla blade
+===================================
+
+Los archivos CSS se pueden guardar en cualquier lugar pero Laravel por defecto
+crea la carpeta CSS en public/css en icluso crea un app.css
+
+Con solo incluír en la plantilla:
+
+<link rel="stylesheet" type="text/css" href="/css/app.css">
+
+ya tenemos acceso a esos estilos.
+
+Aunque se recomienda usando ladirectiva asset:
+
+<link rel="stylesheet" type="text/css" href="{{ asset('css/app.css') }}">
+
+asset lo que hace es situarse en la carpeta public y navegar por las carpetas
+que le indiquemos hasta conseguir el archivo definido, en este caso app.css.
+
+==========
+Campo CSRF
+==========
+
+Siempre que defina un formulario HTML en su aplicación, debe incluir un campo de
+token CSRF oculto en el formulario para que el middleware de protección CSRF
+pueda validar la solicitud. Puede usar la directiva @csrf Blade para generar el
+campo de token:
+
+<form method="POST" action="/profile">
+    @csrf
+
+    ...
+</form>
+
+============
+Campo método
+============
+
+Dado que los formularios HTML no pueden realizar solicitudes PUT, PATCH o
+DELETE, deberá agregar un campo _method oculto para falsificar estos verbos
+HTTP.
+
+La directiva @method Blade puede crear este campo por usted:
+
+<form action="/foo/bar" method="POST">
+    @method('PUT')
+
+    ...
+</form>
+
+=====================
+Validacion de errores
+=====================
+
+La directiva @error puede usarse para verificar rápidamente si existen mensajes
+de error de validación para un atributo dado. Dentro de una directiva @error,
+puede hacer eco de la variable $ message para mostrar el mensaje de error:
+
+<!-- /resources/views/post/create.blade.php -->
+
+<label for="title">Post Title</label>
+
+<input id="title" type="text" class="@error('title') is-invalid @enderror">
+
+@error('title')
+    <div class="alert alert-danger">{{ $message }}</div>
+@enderror
 
 ===========================================================================
 Consultar la versión de Laravel y de PHP directamente en una plantilla html
