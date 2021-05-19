@@ -1583,7 +1583,7 @@ Los parámetros de ruta siempre están encerrados entre llaves {} y deben consta
 de caracteres alfabéticos y no pueden contener un carácter -.
 
 En lugar de utilizar el carácter -, utilice un guión bajo (_). Los parámetros de
-ruta se inyectan en callbacks / controladores de ruta según su orden; los
+ruta se inyectan en callbacks/controladores de ruta según su orden; los
 nombres de los argumentos de callbacks / controlador no importan.
 
 Parámetros opcionales
@@ -1751,7 +1751,7 @@ Prefijos de rutas
 =================
 
 El método de prefijo puede usarse para prefijar cada ruta en el grupo con un URI
-dado.  Por ejemplo, es posible que desee prefijar todos los URI de ruta dentro
+dado. Por ejemplo, es posible que desee prefijar todos los URI de ruta dentro
 del grupo con admin:
 
 Route::prefix('admin')->group(function () {
@@ -1898,9 +1898,56 @@ Si visitamos:
 
 http://127.0.0.1:8000/articles/carlos
 
-En el navegador veríamos
+En el navegador veríamos:
 
 El nombre que has colocado es: carlos
+
+Ejemplo de una ruta con parámetro opcional
+==========================================
+
+Agregamos un ? luego de {name y en el parámetro de la función también podemos
+colocar una cadena por defecto que se mostrará si no se coloca parámetro en la
+url.
+
+Route::get('articles/{name?}', function ($name = "No colocó nombre") {
+    echo "El nombre que has colocado es: ".$name;
+});
+
+Si visitamos http://127.0.0.1:8000/articles/ veremos:
+
+El nombre que has colocado es: No colocó nombre
+
+Ejemplo de un prefijo para unas rutas
+=====================================
+
+Tenemos la ruta "articles" y dentro contiene un grupo de rutas:
+
+Route::prefix('articles')->group(function () {
+    /*Route::get('view/{article?}', function ($article = "Vacío" ) {
+        echo $article;
+    });*/
+    Route::get('view', function () {
+        echo "view";
+    });
+    Route::get('view2', function () {
+        echo "view2";
+    });
+});
+
+Accecibles desde http://127.0.0.1:8000/articles/view y
+http://127.0.0.1:8000/articles/view2
+
+Otro ejemplo pero recibiendo parámetro:
+
+Route::prefix('articles')->group(function () {
+    Route::get('view/{article?}', function ($article = "Vacío" ) {
+        echo $article;
+    });
+});
+
+Si vicitamos http://127.0.0.1:8000/articles/view/casa veremos:
+
+casa
 
 ====================================
 Crear una ruta y una vista sencillas
@@ -1934,7 +1981,10 @@ En mysite/resources/views/ creamos HolaMundo.blade.php
 
 Ahora visitamos http://127.0.0.1:8000/hola y veremos "Hola!!!".
 
-===============================================
+==============
+Contrtoladores
+==============
+
 Crear un controlador desde la línea de comandos
 ===============================================
 
@@ -1958,9 +2008,9 @@ class HolaMundo extends Controller
     //
 }
 
-==================================================
-Crear una ruta un controlado y una vista sencillas
-==================================================
+===================================================
+Crear una ruta un controlador y una vista sencillas
+===================================================
 
 Funciona hasta Laravel 7, con el 8 no funciona de esta manera a menos que se
 especifique la ruta donde está el controlador.
@@ -2017,6 +2067,379 @@ Fuentes
 =======
 
 -http://blogger1889.blogspot.com/2017/07/hola-mundo-con-laravel.html
+
+============================================================================
+Crear una ruta que reciba parámetro y un controlador que reciba el parámetro
+y muestre por pantalla el valor recibido.
+============================================================================
+
+web.php
+
+use App\Http\Controllers\MyController;
+
+Route::get('myroute/{id}',[MyController::class, 'myFuncition']);
+
+-----
+
+MyController.php
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class MyController extends Controller
+{
+    public function myFuncition($id) {
+        dd($id);
+    }
+}
+
+-----
+
+Si visitamos http://127.0.0.1:8000/myroute/1 debemos ver:
+
+"1"
+
+============
+Función dd()
+============
+
+Es como un var dump, es un helper de Laravel.
+
+===============================================
+Consultar la base de datos desde un controlador
+===============================================
+
+web.php
+
+use App\Http\Controllers\TestController;
+
+Route::get('view/{id}',[TestController::class, 'view']);
+
+-----
+
+TestController.php
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Article;
+
+class TestController extends Controller
+{
+    public function view($id) {
+        $article = Article::find($id);
+        dd($article);
+    }
+}
+
+Si vamos al navegador y visitamos http://127.0.0.1:8000/view/1 veremos algo
+como:
+
+App\Article {#213 ▼
+  #table: "articles"
+  #fillable: array:4 [▶]
+  #connection: "pgsql"
+  #primaryKey: "id"
+  #keyType: "int"
+  +incrementing: true
+  #with: []
+  #withCount: []
+  #perPage: 15
+  +exists: true
+  +wasRecentlyCreated: false
+  #attributes: array:7 [▶]
+  #original: array:7 [▶]
+  #changes: []
+  #casts: []
+  #dates: []
+  #dateFormat: null
+  #appends: []
+  #dispatchesEvents: []
+  #observables: []
+  #relations: []
+  #touches: []
+  +timestamps: true
+  #hidden: []
+  #visible: []
+  #guarded: array:1 [▶]
+}
+
+Esto es porque ya tenemos una tabla Article que tiene guardados datos en la base
+de datos.
+
+====================================================================
+Consutlar los datos relacionados a un artículo, desde el controlador
+====================================================================
+
+TestController.php
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Article;
+
+class TestController extends Controller
+{
+    public function view($id) {
+        $article = Article::find($id);
+        $article->category;
+        $article->user;
+        $article->tag;
+        dd($article);
+    }
+}
+
+Si visitamos http://127.0.0.1:8000/view/1 veremos:
+
+App\Article {#213 ▼
+  #table: "articles"
+  #fillable: array:4 [▶]
+  #connection: "pgsql"
+  #primaryKey: "id"
+  #keyType: "int"
+  +incrementing: true
+  #with: []
+  #withCount: []
+  #perPage: 15
+  +exists: true
+  +wasRecentlyCreated: false
+  #attributes: array:7 [▶]
+  #original: array:7 [▶]
+  #changes: []
+  #casts: []
+  #dates: []
+  #dateFormat: null
+  #appends: []
+  #dispatchesEvents: []
+  #observables: []
+  #relations: array:2 [▶]
+  #touches: []
+  +timestamps: true
+  #hidden: []
+  #visible: []
+  #guarded: array:1 [▶]
+}
+
+Donde "#relations: array:2 [▶]" se despliega al darle click:
+
+#relations: array:2 [▼
+  "category" => App\Category {#214 ▶}
+  "user" => App\User {#889 ▶}
+]
+
+y estos 2 ítems a su vez se pueden desplegar para ver los demás datos asociados.
+
+==========================================================
+Crear un registro en la base de datos desde un controlador
+==========================================================
+
+En este ejemplo vamos a crear un usuario en la base de datos.
+
+-----
+
+Routes.php
+
+<?php
+
+use App\Http\Controllers\TestController;
+
+Route::get('create',[TestController::class, 'create']);
+
+-----
+
+TestController.php
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Article;
+use App\User;
+
+class TestController extends Controller
+{
+    public function create() {
+        $user = new User;
+        $user->name='Argenis';
+        $user->email='aosorio@mail.com';
+        $user->password=bcrypt('123456');
+        $user->save();
+    }
+}
+
+Al visitar http://127.0.0.1:8000/create/ nos debe crear el registro en la base
+de datos.
+
+===============================================================
+Actualizar un registro en la base de datos desde un controlador
+===============================================================
+
+En este ejemplo vamos a actualizar el email de un usuario registrado en la base
+de datos cuyo id sea 1.
+
+-----
+
+Routes.php
+
+<?php
+
+use App\Http\Controllers\TestController;
+
+Route::get('update',[TestController::class, 'update']);
+
+-----
+
+TestController.php
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\User;
+
+class TestController extends Controller
+{
+    public function update() {
+        $user = User::find(1);
+        $user->email='another@mail.com';
+        $user->save();
+        dd($user);
+    }
+}
+
+Al visitar http://127.0.0.1:8000/update/ nos debe actualizar el email del
+registro con id igual a 1 en la base de datos.
+
+===============================================================================
+Actualizar un registro en la base de datos desde un controlador pasandole el id
+===============================================================================
+
+En este ejemplo vamos a actualizar el email de un usuario registrado en la base
+pasando el id desde la url.
+
+-----
+
+Routes.php
+
+<?php
+
+use App\Http\Controllers\TestController;
+
+Route::get('update/{id}',[TestController::class, 'update']);
+
+-----
+
+TestController.php
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\User;
+
+class TestController extends Controller
+{
+    public function update($id) {
+        $user = User::find($id);
+        $user->email='xxx@mail.com';
+        $user->save();
+        dd($user);
+    }
+}
+
+Al visitar http://127.0.0.1:8000/update/1 nos debe actualizar el el email del
+registro en la base de datos que tenga el id igual a 1.
+
+=============================================================
+Eliminar un registro en la base de datos desde un controlador
+=============================================================
+
+En este ejemplo vamos a eliminar un usuario registrado en la base de datos cuyo
+id sea 1.
+
+-----
+
+Routes.php
+
+<?php
+
+use App\Http\Controllers\TestController;
+
+Route::get('delete',[TestController::class, 'delete']);
+
+-----
+
+TestController.php
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\User;
+
+class TestController extends Controller
+{
+    public function delete() {
+        $user = User::find(4);
+        $user->delete();
+        dd($user);
+    }
+}
+
+Al visitar http://127.0.0.1:8000/delete/ nos debe eliminar el registro en la
+base de datos con el id igual a 4.
+
+=============================================================================
+Eliminar un registro en la base de datos desde un controlador pasándole el id
+por la url como parámetro
+=============================================================================
+
+En este ejemplo vamos a eliminar un usuario registrado en la base de datos cuyo
+id sera el que le pasemos por la url como parámetro.
+
+-----
+
+Routes.php
+
+<?php
+
+use App\Http\Controllers\TestController;
+
+Route::get('delete/{id}',[TestController::class, 'delete']);
+
+-----
+
+TestController.php
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\User;
+
+class TestController extends Controller
+{
+    public function delete($id) {
+        $user = User::find($id);
+        $user->delete();
+        dd($user);
+    }
+}
+
+Al visitar http://127.0.0.1:8000/delete/1 nos debe eliminar el registro en la
+base de datos que tenga el id igual a 1.
 
 ===========================================================================
 Consultar la versión de Laravel y de PHP directamente en una plantilla html
@@ -3194,6 +3617,9 @@ y los campos fillables.
 
 8) Usar la consola de tinker para probar si se guardan registros correctamente
 en la base de datos.
+
+9) Probar una consulta básica a los datos de la base de datos desde un
+controlador.
 
 ========================================
 Script en bash para proyectos ya creados
