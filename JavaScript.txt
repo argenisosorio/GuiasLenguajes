@@ -5610,3 +5610,125 @@ Sintaxis
 ========
 
 target.addEventListener(tipo, listener[, useCapture]);
+
+Funciones Flecha
+
+Una expresión de función flecha es una alternativa compacta a una expresión de
+función tradicional, pero es limitada y no se puede utilizar en todas las
+situaciones.
+
+Diferencias y limitaciones:
+
+No tiene sus propios enlaces a this o super y no se debe usar como métodos.
+
+No tiene argumentos o palabras clave new.target.
+
+No apta para los métodos call, apply y bind, que generalmente se basan en
+establecer un ámbito o alcance
+
+No se puede utilizar como constructor.
+
+No se puede utilizar yield dentro de su cuerpo.
+
+Comparación de funciones tradicionales con funciones flecha
+===========================================================
+
+Observa, paso a paso, la descomposición de una "función tradicional" hasta la
+"función flecha" más simple:
+
+Nota: Cada paso a lo largo del camino es una "función flecha" válida
+
+// Función tradicional
+function (a){
+  return a + 100;
+}
+
+// Desglose de la función flecha
+
+// 1. Elimina la palabra "function" y coloca la flecha entre el argumento y el corchete de apertura.
+(a) => {
+  return a + 100;
+}
+
+// 2. Quita los corchetes del cuerpo y la palabra "return" - el return está implícito.
+(a) => a + 100;
+
+// 3. Suprime los paréntesis de los argumentos
+a => a + 100;
+
+Por ejemplo, si tienes varios argumentos o ningún argumento, deberás volver a
+introducir paréntesis alrededor de los argumentos:
+
+// Función tradicional
+function (a, b){
+  return a + b + 100;
+}
+
+// Función flecha
+(a, b) => a + b + 100;
+
+// Función tradicional (sin argumentos)
+let a = 4;
+let b = 2;
+function (){
+  return a + b + 100;
+}
+
+// Función flecha (sin argumentos)
+let a = 4;
+let b = 2;
+() => a + b + 100;
+
+Del mismo modo, si el cuerpo requiere líneas de procesamiento adicionales,
+deberás volver a introducir los corchetes Más el "return" (las funciones flecha
+no adivinan mágicamente qué o cuándo quieres "volver"):
+
+// Función tradicional
+function (a, b){
+  let chuck = 42;
+  return a + b + chuck;
+}
+
+// Función flecha
+(a, b) => {
+  let chuck = 42;
+  return a + b + chuck;
+}
+
+
+
+// Función tradicional
+function bob (a){
+  return a + 100;
+}
+
+// Función flecha
+let bob = a => a + 100;
+
+===
+let
+===
+
+La instrucción let declara una variable de alcance local con ámbito de
+bloque(block scope), la cual, opcionalmente, puede ser inicializada con algún
+valor.
+
+let var1 [= valor1] [, var2 [= valor2]] [, ..., varN [= valorN]];
+
+=====
+super
+=====
+
+La palabra clave super es usada para acceder y llamar funciones del padre de un
+objeto.
+
+Las expresiones super.prop y super[expr] son válidas en cualquier definición de
+método tanto para clases como para objetos literales (en-US).
+
+Sintaxis:
+
+// llama al método constructor del objeto padre.
+super([arguments]);
+
+// llama cualquier otro método del objeto padre.
+super.functionOnParent([arguments]);

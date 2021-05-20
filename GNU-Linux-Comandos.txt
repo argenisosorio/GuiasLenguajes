@@ -6986,9 +6986,9 @@ Configuración manual y definitiva
 
 https://1.1.1.1/es/
 
-==============
-PortableSigner
-==============
+==========================================
+Firmar electrónicamente con PortableSigner
+==========================================
 
 Es un programa de firma (con certificados X.509) para archivos PDF. Es
 independiente de la plataforma ya que se puede ejecutar GNU/Linux, Windows y
@@ -7034,3 +7034,200 @@ Portable Document Format (PDF) digital signatures tool.
 Para verificar la firma de un archivo se ejecuta el siguiente comando:
 
 $ pdfsig mi-archivo-firmado.pdf
+
+======================================================================
+Pŕactica del Curso en línea del uso de Murachí para firmar y verificar
+documentos PDF
+======================================================================
+
+Este tutorial no lo he probado aún pero debería funcionar.
+
+PORTABLESIGNER es una aplicación de firmar (con certificado X.509) para archivos
+PDF desarrollado en lenguaje JAVA. En esta sección realizaremos la firma
+electrónica de documento PDF usando la aplicación PORTABLESIGNER y un
+certificado digital en formato PKCS#12. Para desarrollar esta tarea se requiere
+disponer del certificado electrónico en formato PKCS#12.
+
+Para realizar esta actividad es necesario que realizamos los siguientes pasos:
+
+Instalar el servidor APACHE2
+
+Descargar el zip de la aplicación PORTABLESIGNER
+
+Instalar OPENJDK (JAVA .6 or 1.7)
+
+Instalar PHP7
+
+Crear un formulario HTML que permita obtener del sistema de archivo de tu
+computador un archivo PDF, un archivo correspondiente al certificado digital en
+formato PKCS#12.
+
+Crear los scripts necesarios que permitan realizar el proceso de firma
+electrónica de usando la aplicación PORTABLESIGNER Y para ello, es
+importante seguir las siguientes instrucciones:
+
+1. Crear el ambiente de prueba para realizar el ejercicio
+
+Se procede a instalar los paquetes APACHE2, JAVA y PHP
+
+$ sudo aptitude install openjdk-8-jre apache2 php7.3
+Descargar en el servidor Apache la aplicación PORTABLESIGNER y moverlo al servidor WEB APACHE
+
+$ wget https://sourceforge.net/projects/portablesigner/files/portablesigner/2.0-Release/PortableSigner-Generic-2.0.38c0573.zip
+
+Se crea el directorio del ambiente de trabajo
+
+$ sudo mkdir /var/www/html/murachi/
+
+$ sudo mv PortableSigner-Generic-2.0.38c0573.zip /var/www/html/murachi/.
+
+Del comando anterior se descarga la aplicación en el archivo PortableSigner-Generic-2.0.38c0573.zip. Para descomprimir el archivo zip debe tener instalado en su computadora el paquete Unzip. De no tener el paquete Unzip instalado se procede a instalar con el comando
+
+$ sudo aptitude install unzip
+
+Luego se procede a descomprimir el archivo PortableSigner-Generic-2.0.38c0573.zip en el servidor web Apache con el comando
+
+$ cd /var/www/html/murachi/
+
+$ sudo unzip PortableSigner-Generic-2.0.38c0573.zip
+
+Al descomprimir debe poseer los directorios lib/, linux/ y el archivo ejecutable PortableSigner.jar
+
+2. Crear la pagina básica y el script necesarios para realizar la firmar electrónica usando la aplicación PORTABLESIGNER
+
+La aplicación PORTABLESIGNER se ejecuta por consola y para la misma se requiere tener:
+
+El archivo PDF a firmar
+El certificado electrónico en formato PKCS#12 con su contraseña o frase de paso (generado en la sección Contenido 1).
+El objetivo de este ejercicio es invocar un script en PHP desde un formulario HTML que ejecute por comando la aplicación PORTABLESIGNER.
+
+En primer lugar, realizaremos el formulario que permita enviar el archivo PDF a firmar y cargar el certificado electrónico en formato PKCS#12 junto a la contraseña o frase de paso del certificado. Para este ejercicio se creará el formulario en un archivo con el nombre de index.php
+
+Características del formulario HTML
+
+Control: Botón de envío (Submit button)
+
+Atributos: Función en php que gestione los parámetros del formulario (Action)
+
+Código del formulario index.php
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Firma electrónica</title>
+</head>
+<body>
+
+<h1> Firmando un archivo PDF con PortableSigner </h1>
+<form action="run_script.php" method="POST" enctype="multipart/form-data">
+  <fieldset>
+    <legend>PDF</legend>
+    <label for="pdf">Seleccione su PDF</label>
+    <input id="pdf" type="file" name="pdf" accept=".pdf" required tabindex="1">
+  </fieldset>
+  <fieldset>
+    <legend>Certificado</legend>
+    <label for="pkcs12">Seleccione su certificado PKCS12 (.p12)</label>
+    <input id="pkcs12" type="file" name="pkcs12" accept=".p12" required tabindex="2">
+  </fieldset>
+  <fieldset>
+    <legend>Clave</legend>
+    <label for="password">Clave del certificado</label>
+    <input id="password" type="password" name="password" required tabindex="3" />
+  </fieldset>
+  <p>
+    <input name="submit" type="submit" value="Upload Files">
+  </p>
+</form>
+</body>
+</html>
+
+En la action del formulario invoca a la función run_script.php. Este script en
+PHP debe gestionar los archivos enviados en el formulario y gestionar el proceso
+de firmar electrónica ejecutando por consola la aplicación PortableSigner.jar
+
+Pasos a realizar en el script run_script.php:
+
+-Manejo del nombre y ruta del archivo a firmar Ruta del certificado PKCS#12
+-Ruta del archivo firmado
+-Ejecutar por consola el proceso de firma usando la aplicación PORTABLESIGNER
+-Eliminar tanto el archivo a firmar como el certificado PKCS#12 enviado por el
+formulario
+
+Código del script run_script
+
+<?php
+
+/**
+* ValidateFiles
+* valida de archivos subidos
+* @param temp (ruta del archivo temporal)
+* @param route (ruta relativa del archivo subido)
+* @return bool
+*
+* @author Angelo Osorio (@engelpain)
+* @licence CENDITEL 2.0
+*/
+
+function ValidateFiles($temp, $route) {
+    move_uploaded_file($temp, $route) or die("Error al intentar subir el archivo." . $route);
+}
+
+// Datetime
+$datetime = date_timestamp_get(date_create()); // nombre que tendrán los archivos temporales cargados
+
+// Frase de paso del p12
+$passphase = $_POST["password"]; // Contraseña o frase de paso cifrada
+
+// PDF
+$route_pdf = './tmp/' . $datetime . '.pdf'; // ruta donde se alojará el archivo firmado
+$pdf = $_FILES['pdf']['tmp_name']; // ruta temporal del archivo a firmar subido
+
+// PKCS12
+$route_pkcs12 = './tmp/' . $datetime . '.p12'; // Ruta donde se alojará el archivo PKCS#12
+$pkcs12 = $_FILES['pkcs12']['tmp_name']; // ruta temporal del archivo PKCS#12 subido
+print_r(ValidateFiles($pdf, $route_pdf));
+print_r(ValidateFiles($pkcs12, $route_pkcs12));
+
+// Ejecución del script que conecta con el API de PortableSigner
+$callPortable = "java -jar ./PortableSigner.jar -n";
+$run_shell = shell_exec("$callPortable -t $route_pdf -o ./tmp/$datetime-signed.pdf -s $route_pkcs12 -p $passphase");
+$run = ($run_shell) ? false : true;
+
+if ($run) {
+//Eliminación del archivo a firmar y del archivo PKCS12
+    echo '<a href="./tmp/'.$datetime.'-signed.pdf"> Download PDF signed</a>';
+    // Se borran los archivos de tmp
+    unlink($route_pdf) or die("No se pudo eliminar el pdf");
+    unlink($route_pkcs12) or die("No se pudo eliminar el p12");
+} else {
+    echo "PortableSigner no se ejecutó correctamente.";
+}
+
+Como podemos observar en el código del script run_script.php se almacenan los
+archivos gestionados para el proceso de firma en un directorio con el nombre de
+tmp/, en este sentido procedemos a crear dicho directorio dentro de la carpeta
+murachi creada anteriormente y le asignamos los permiso necesarios para que
+pueda ser utilizado.
+
+$ mkdir tmp
+
+$ sudo chown -R www-data:www-data /var/www/html/murachi/*
+
+$ sudo chmod 777 /var/www/html/murachi/*
+
+Hasta este momento se debe tener en el servidor de Apache dentro de la carpeta
+murachi el archivo index.php, run_script.php, el ejecutable PortableSigner.jar y
+el directorio tmp/. Verifique que sea así y que se encuentra en la ruta
+indicada.
+
+Por último, se ejecuta en el navegador /localhost/murachi/index.php, se carga el
+archivo PDF a firmar, el certificado en formato PKCS#12 junto con su contraseña
+o frase paso y se procede a hacer clic en el botón enviar y el resultado sera un
+enlace (Download PDF signed) para descargar el archivo firmado.
+
+Para verificar la firma electrónica del archivo firmado en esta sección puede
+ingresar al portal de MURACHÍ (https://murachi.cenditel.gob.ve/) sección
+Verificar (viñeta Verificar) y enviar el archivo firmado.

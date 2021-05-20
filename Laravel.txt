@@ -1427,14 +1427,49 @@ hacerlo a cada rato, debes usar composer install para instalar tu nuevo paquete
 sin actualizar las versiones de tus otros paquetes. Esto sería mucho más seguro
 y evitamos fallas por actualizar nuevos paquetes y dependencias.
 
-===============================================================
-Añadir/Agregar e instalar nuevos paquetes en nuestra aplicación
-===============================================================
+============================================================================
+Añadir/Agregar e instalar nuevos paquetes en nuestra aplicación vía composer
+============================================================================
 
 Con este comando el paquete se agreagará a composer.json y composer.lock y se
 instalara.
 
 $ composer require laravel/my-package
+
+Según parece, cada paquete de laravel tiene la terminación del comando de
+instalación un poco diferente, por ejemplo:
+
+Así se agrega e instala Laravel Breeze:
+
+$ composer require laravel/breeze --dev
+
+y así, se agrega e instala Laravel Collective:
+
+$ composer require laravelcollective/html
+
+La segunda forma de instalar paquetes es de manera manual, editando el paquete
+composer.json.
+
+Tal que:
+
+En la sección require de composer.json agregar el paquete
+
+"require": {
+    "laravelcollective/html": "5.1.*"
+}
+
+y luego ejecutar update para que instale el paquete:
+
+$ composer update
+
+Agregar e instalar una version específica del paquete
+=====================================================
+
+$ composer require xxx/package:version
+
+Ejemplo:
+
+$ composer require laravelcollective/html:5.8
 
 ====================
 Desinstalar paquetes
@@ -2117,9 +2152,9 @@ class HolaMundo extends Controller
     //
 }
 
-===================================================
-Crear una ruta un controlador y una vista sencillas
-===================================================
+====================================================
+Crear una ruta, un controlador y una vista sencillas
+====================================================
 
 Funciona hasta Laravel 7, con el 8 no funciona de esta manera a menos que se
 especifique la ruta donde está el controlador.
@@ -2556,9 +2591,9 @@ ID:
 
 User::destroy($id);
 
-==============================================
-Pasar valores a las vista desde el controlador
-==============================================
+===============================================
+Pasar valores a las vistas desde el controlador
+===============================================
 
 Route::get('article',[TestController::class, 'article']);
 
@@ -2785,22 +2820,22 @@ base.blade.php
         <title>
             @section('title')
                 Base
-            @show
+            @endesection
         </title>
-        @show
+        @endesection
     </head>
     <body>
         @section('header')
             <h1>This is the master header.</h1>
-        @show
+        @endesection
 
         @section('content')
             <p>This is the master content.</p>
-        @show
+        @endesection
 
         @section('footer')
             <h3>This is the master footer.</h3>
-        @show
+        @endesection
     </body>
 </html>
 
@@ -2903,10 +2938,21 @@ y la podemos incluir dentro del bloque content de la vista child:
 Si revisamos la vista en el navegador veremos la lista incluída en el bloque
 content.
 
+Partials en blade
+=================
+
+Es una carpeta que se crea en las views donde se pueden almacenar secciones del
+código que compone la plantilla, pero esta carpeta pueden ser diferentes
+carpetas y las podemos llamar de muchas maneras.
+
 La directiva @yield
 ===================
 
 La directiva @yield se usa para mostrar el contenido de una sección determinada.
+
+En otras palabras, los yields básicamente lo que hacen es crear secciones desde
+nuestra plantilla, para luego rellenarlas desde la vista donde estén siendo
+usadas.
 
 En base:
 
@@ -2914,14 +2960,60 @@ En base:
 
 En child:
 
+@section('title')
+  Index
+@endsection
+
+ó
+
 @section('title', 'Page Title')
+
+La sección se llama title porque así le pusimos al yield.
 
 Si visitamos a child con el navegador veremos en title
 
 App Name - Page title
 
+Otro ejemplo:
+
+@yield se trae todas las propiedades de la etiqueta en que esté declarada
+incluyendo la etiqueta misma
+
+En base:
+
+<h1 class="title">@yield('TitlePost')</h1>
+
+En child:
+
+@section('TitlePost')
+Some text...
+@endsection
+
+Esto se traduce en el código fuente del child en el navegador en:
+
+<h1 class="title">Some text...</h1>
+
 -----
 
+Pasando un segundo parámetro a yield, pondremos una cadena por defecto
+
+Base:
+
+<title>@yield('title', 'Default')</title>
+
+Child:
+
+@section('title', 'Index')
+
+Se traduce en:
+
+<title>Index</title>
+
+Si se deja @section('title') mostrará:
+
+<title>Default</title>
+
+=========================================
 Mostrar datos en la vista, otros ejemplos
 =========================================
 
@@ -3005,6 +3097,27 @@ puede hacer eco de la variable $ message para mostrar el mensaje de error:
 @error('title')
     <div class="alert alert-danger">{{ $message }}</div>
 @enderror
+
+=================================
+Integrar Bootstrap en un proyecto
+=================================
+
+1) Descargar los archivos necesarios para usar Bootstrap (css, js, jquery).
+
+2) Crer una carpeta bootstrap en my-app/public/
+
+3) Pegar adentro las carpetas css y js de Bootstrap y también la de Jquery.
+
+4) Crear una plantilla que será la plantilla base y llamar a bootstrap con
+lo necesario, ejemplo:
+
+<!-- Bootstrap core CSS-->
+<link rel="stylesheet" type="text/css" href="{{ asset ('bootstrap/css/bootstrap.min.css') }}">
+
+<!-- Bootstrap core JavaScript-->
+<script src="{{ asset ('bootstrap/js/jquery/jquery-3.3.1.slim.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('bootstrap/js/popper.min.js') }}" type="text/javascript"></script>
+<script src="{{ asset ('bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
 
 ===========================================================================
 Consultar la versión de Laravel y de PHP directamente en una plantilla html
@@ -4150,6 +4263,42 @@ Ver los datos del artículo:
    }
 >>>
 
+============================================
+Service Providers o Proveedores de servicios
+============================================
+
+Los proveedores de servicios son el lugar central de todas las aplicaciones de
+arranque de Laravel. Su propia aplicación, así como todos los servicios
+centrales de Laravel, se arrancan a través de proveedores de servicios.
+
+Pero, ¿qué queremos decir con "bootstrapped"?  En general, nos referimos al
+registro de cosas, incluido el registro de enlaces de contenedores de servicios,
+detectores de eventos, middleware e incluso rutas.  Los proveedores de servicios
+son el lugar central para configurar su aplicación.
+
+Si abre el archivo config / app.php incluido con Laravel, verá una matriz de
+proveedores. Estas son todas las clases de proveedores de servicios que se
+cargarán para su aplicación. De forma predeterminada, un conjunto de proveedores
+de servicios centrales de Laravel se enumeran en esta matriz. Estos proveedores
+arrancan los componentes centrales de Laravel, como el mailer, la cola, la caché
+y otros.  Muchos de estos proveedores son proveedores "diferidos", lo que
+significa que no se cargarán en cada solicitud, sino solo cuando los servicios
+que brindan sean realmente necesarios.
+
+Escribiendo un proveedor de servicio
+====================================
+
+Todos los proveedores de servicios amplían la clase
+Illuminate\Support\ServiceProvider.  La mayoría de los proveedores de servicios
+contienen un registro y un método de inicio.  Dentro del método de registro,
+solo debe vincular cosas en el contenedor de servicios.  Nunca debe intentar
+registrar ningún detector de eventos, rutas o cualquier otra función dentro del
+método de registro.
+
+Artisan CLI puede generar un nuevo proveedor a través del comando make:provider
+
+$ php artisan make:provider RiakServiceProvider
+
 ======================================
 Creando un crud con Laravel desde cero
 ======================================
@@ -4183,7 +4332,11 @@ y los campos fillables.
 8) Usar la consola de tinker para probar si se guardan registros correctamente
 en la base de datos.
 
-9) Probar una consulta básica a los datos de la base de datos desde un
+9) Crear un una ruta, un controlador y una vista para el CRUD.
+
+$ php artisan make:controller Student
+
+10) Probar una consulta básica a los datos de la base de datos desde un
 controlador.
 
 ========================================
