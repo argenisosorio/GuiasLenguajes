@@ -2678,14 +2678,17 @@ Noticia de última hora
 Rutas, Controladores y Vistas para un CRUD sencillo
 ===================================================
 
-List
-====
+List de CRUD
+============
 
 Listar todos los registros guardaros:
 
------
+Vamos a crear en nuestro archivo de rutas un grupo de rutas asociadas a cada uno
+de los metodos (index, create, store, show, edit, update, delete), esto se hace
+con una ruta de tipo Resource o recurso, modificando el archivo routes agregando
+el siguiente codigo:
 
-Route::get('/list',[StudentController::class, 'list']);
+Route::resource('students', 'StudentController');
 
 -----
 
@@ -2695,16 +2698,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Student;
+use App\Http\Requests\StudentRequest;
 
 class StudentController extends Controller
 {
-    public function list() {
+    public function index()
+    {
         $students = Student::get();
-        return view('student')->with('students', $students);
+        return view('students.index')->with('students', $students);
     }
 }
 
 -----
+
+resources/views/students/index.blade.php
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -2714,7 +2721,7 @@ class StudentController extends Controller
     <title>Students</title>
   </head>
   <body>
-    <p>Hello students!</p>
+    <p>Students</p>
     @foreach ($students as $student)
       <p>
         -First name: {{ $student->first_name }}
@@ -2729,34 +2736,54 @@ class StudentController extends Controller
 
 También podemos agregar una tabla html:
 
-<table border="1px" cellspacing="0px" style="width:100%;">
-  <thead>
-    <tr>
-      <th class="text-center">ID</th>
-      <th class="text-center">First name</th>
-      <th class="text-center">Last name</th>
-      <th class="text-center">Identification number</th>
-    </tr>
-  </thead>
-  <tbody>
-  @foreach ($students as $student)
-  <tr>
-    <td class="text-center">{{ $student->id }}</td>
-    <td class="text-center">{{ $student->first_name }}</td>
-    <td class="text-center">{{ $student->last_name }}</td>
-    <td class="text-center">{{ $student->identification_number }}</td>
-  </tr>
-  @endforeach
-  </tbody>
-</table>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Students</title>
+  </head>
+  <body>
+    <p>List of students</p>
+    <table border="1px" cellspacing="0px" style="width:100%;">
+      <thead>
+        <tr>
+          <th class="text-center">ID</th>
+          <th class="text-center">First name</th>
+          <th class="text-center">Last name</th>
+          <th class="text-center">Identification number</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      @foreach ($students as $student)
+      <tr>
+        <td class="text-center">{{ $student->id }}</td>
+        <td class="text-center">{{ $student->first_name }}</td>
+        <td class="text-center">{{ $student->last_name }}</td>
+        <td class="text-center">{{ $student->identification_number }}</td>
+        <td>
+        </td>
+      </tr>
+      @endforeach
+      </tbody>
+    </table>
+  </body>
+</html>
 
-Create
-======
+Create del CRUD
+===============
 
-Route::get('/create',[StudentController::class, 'create']);
-Route::post('','StudentController@store')->name('students.store');
+Método store - Funcion de almacenamiento
+========================================
 
------
+Este metodo es donde despues de haber entrado a create se reciben los datos y se
+guardan en la base de datos, para poder recibir la informacion en este ejemplo
+vamos a usar la clase Request que significa peticion y es una clase que Laravel
+agrega por nosotros cuando creamos el controlador, vamos a pasar por parametro
+la peticion en el metodo definiendo que es una variable de la clase Request y
+despues de eso podemos recuperar por el nombre del campo del formulario(atributo
+name) la informacion enviada, entonces el metodo quedaria de la siguiente forma:
 
 <?php
 
@@ -2768,9 +2795,10 @@ use App\Http\Requests\StudentRequest;
 
 class StudentController extends Controller
 {
-    public function list() {
+    public function index()
+    {
         $students = Student::get();
-        return view('students.list')->with('students', $students);
+        return view('students.index')->with('students', $students);
     }
 
     public function create()
@@ -2778,11 +2806,11 @@ class StudentController extends Controller
         return view('students.create');
     }
 
-    public function store(StudentRequest $request)
+    public function store(Request $request)
     {
         $student = new Student($request->all());
         $student->save();
-        return redirect()->route('list');
+        return redirect()->route('students.index');
     }
 }
 
@@ -2803,43 +2831,6 @@ abstract class Request extends FormRequest
 
 -----
 
-app/Http/Requests/StudentRequest.php
-
-<?php
-
-namespace App\Http\Requests;
-
-use App\Http\Requests\Request;
-
-class StudentRequest extends Request
-{
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
-    {
-        return [
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'identification_number' => 'required',
-        ];
-    }
-}
-
------
-
 resources/views/students/create.blade.php
 
 <!DOCTYPE html>
@@ -2847,7 +2838,7 @@ resources/views/students/create.blade.php
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Students</title>
+    <title>Create</title>
   </head>
   <body>
     <p>Create student</p>
@@ -2871,6 +2862,535 @@ resources/views/students/create.blade.php
         {!! Form::submit('Save') !!}
       </div>
     {!! Form::close() !!}
+  </body>
+</html>
+
+Para poder acceder a a create agregamos en la vista de index el siguiente enlace
+
+<a href="{{ route('students.create') }}">NEW</a>
+
+tal que:
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Students</title>
+  </head>
+  <body>
+    <p>List of students</p>
+    <a href="{{ route('students.create') }}">NEW</a>
+    <table border="1px" cellspacing="0px" style="width:100%;">
+      <thead>
+        <tr>
+          <th class="text-center">ID</th>
+          <th class="text-center">First name</th>
+          <th class="text-center">Last name</th>
+          <th class="text-center">Identification number</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      @foreach ($students as $student)
+      <tr>
+        <td class="text-center">{{ $student->id }}</td>
+        <td class="text-center">{{ $student->first_name }}</td>
+        <td class="text-center">{{ $student->last_name }}</td>
+        <td class="text-center">{{ $student->identification_number }}</td>
+        <td>
+        </td>
+      </tr>
+      @endforeach
+      </tbody>
+    </table>
+  </body>
+</html>
+
+create.blade.php también puede contener un formulario normal sin hacer uso de
+Laravel Collective
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create student</title>
+  </head>
+  <body>
+    <h1>Create student</h1>
+    <form action="{{ route('students.store') }}" method="POST">@csrf
+      <div>
+        <label>First name</label>
+        <input type="text" name="first_name">
+      </div>
+      <div>
+        <label>Last name</label>
+        <input type="text" name="last_name">
+      </div>
+      <div>
+        <label>Identification number</label>
+        <input type="text" name="identification_number">
+      </div>
+      <button type="submit" >SAVE</button>
+    </form>
+  </body>
+</html>
+
+Update de CRUD
+==============
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Student;
+//use App\Http\Requests\StudentRequest;
+
+class StudentController extends Controller
+{
+    /*
+    |--------------------------------------------------------------------------
+    | LIST
+    |--------------------------------------------------------------------------
+    */
+    public function index()
+    {
+        $students = Student::get();
+        return view('students.index')->with('students', $students);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE
+    |--------------------------------------------------------------------------
+    */
+    public function create()
+    {
+        return view('students.create');
+    }
+
+    public function store(Request $request)
+    {
+        $student = new Student($request->all());
+        $student->save();
+        return redirect()->route('students.index');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE
+    |--------------------------------------------------------------------------
+    */
+    public function edit($id)
+    {
+        $student = Student::find($id);
+        return view('students.edit')->with('student',$student);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $student = Student::find($id);
+        $student->first_name = $request->input('first_name');
+        $student->last_name = $request->input('last_name');
+        $student->identification_number = $request->input('identification_number');
+        $student->save();
+        return redirect()->route('students.index');
+    }
+}
+
+-----
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Update</title>
+  </head>
+  <body>
+    <p>Update student</p>
+    {!! Form::model($student, ['route' => ['students.update', $student], 'method' => 'PUT']) !!}
+      <div class="form-group">
+        {!! Form::label('first_name', 'First name') !!}
+        {!! Form::text('first_name', null) !!}
+      </div>
+
+      <div class="form-group">
+        {!! Form::label('last_name', 'Last name') !!}
+        {!! Form::text('last_name', null) !!}
+      </div>
+
+      <div class="form-group">
+        {!! Form::label('identification_number', 'Identification number') !!}
+        {!! Form::text('identification_number', null) !!}
+      </div>
+
+      <div class="form-group">
+        {!! Form::submit('Save') !!}
+      </div>
+    {!! Form::close() !!}
+  </body>
+</html>
+
+Mensaje cuando se guarda un formulario
+======================================
+
+Por ejemplo en el caso del formulario create y edit, cuando guardemos, podemos
+enviar un mensaje a la vista con:
+
+->with('info','Student was created!');
+
+->with('info','Student data was updated');
+
+Tal que:
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Student;
+//use App\Http\Requests\StudentRequest;
+
+class StudentController extends Controller
+{
+    /*
+    |--------------------------------------------------------------------------
+    | LIST
+    |--------------------------------------------------------------------------
+    */
+    public function index()
+    {
+        $students = Student::get();
+        return view('students.index')->with('students', $students);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE
+    |--------------------------------------------------------------------------
+    */
+    public function create()
+    {
+        return view('students.create');
+    }
+
+    public function store(Request $request)
+    {
+        $student = new Student($request->all());
+        $student->save();
+        return redirect()->route('students.index')->with('info','Student was created!');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE
+    |--------------------------------------------------------------------------
+    */
+    public function edit($id)
+    {
+        $student = Student::find($id);
+        return view('students.edit')->with('student',$student);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $student = Student::find($id);
+        $student->first_name = $request->input('first_name');
+        $student->last_name = $request->input('last_name');
+        $student->identification_number = $request->input('identification_number');
+        $student->save();
+        return redirect()->route('students.index')->with('info','Student data was updated!');
+    }
+}
+
+Y agregamos en index que es la que va a recibir el mensaje lo sigueinte:
+
+@if(Session::has('info'))
+  {{ Session::get('info') }}
+@endif
+
+Tal que:
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Students</title>
+  </head>
+  <body>
+    @if(Session::has('info'))
+      Message: {{ Session::get('info') }}
+    @endif
+    <p>List of students</p>
+    <a href="{{ route('students.create') }}">NEW</a>
+    <table border="1px" cellspacing="0px" style="width:100%;">
+      <thead>
+        <tr>
+          <th class="text-center">ID</th>
+          <th class="text-center">First name</th>
+          <th class="text-center">Last name</th>
+          <th class="text-center">Identification number</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      @foreach ($students as $student)
+      <tr>
+        <td class="text-center">{{ $student->id }}</td>
+        <td class="text-center">{{ $student->first_name }}</td>
+        <td class="text-center">{{ $student->last_name }}</td>
+        <td class="text-center">{{ $student->identification_number }}</td>
+        <td>
+          <a href="{{ route('students.edit', $student->id) }}">UPDATE</a>
+        </td>
+      </tr>
+      @endforeach
+      </tbody>
+    </table>
+  </body>
+</html>
+
+Show del CRUD
+=============
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Student;
+//use App\Http\Requests\StudentRequest;
+
+class StudentController extends Controller
+{
+    /*
+    |--------------------------------------------------------------------------
+    | LIST
+    |--------------------------------------------------------------------------
+    */
+    public function index()
+    {
+        $students = Student::get();
+        return view('students.index')->with('students', $students);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE
+    |--------------------------------------------------------------------------
+    */
+    public function create()
+    {
+        return view('students.create');
+    }
+
+    public function store(Request $request)
+    {
+        $student = new Student($request->all());
+        $student->save();
+        return redirect()->route('students.index')->with('info','Student was created!');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE
+    |--------------------------------------------------------------------------
+    */
+    public function edit($id)
+    {
+        $student = Student::find($id);
+        return view('students.edit')->with('student',$student);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $student = Student::find($id);
+        $student->first_name = $request->input('first_name');
+        $student->last_name = $request->input('last_name');
+        $student->identification_number = $request->input('identification_number');
+        $student->save();
+        return redirect()->route('students.index')->with('info','Student data was updated!');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SHOW
+    |--------------------------------------------------------------------------
+    */
+    public function show($id)
+    {
+        $student = Student::find($id);
+        return view('students.show', compact('student'));
+    }
+}
+
+-----
+
+show.blade.php
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Show</title>
+  </head>
+  <body>
+    <p>Show student</p>
+    <p>
+      First name: {{ $student->first_name }}
+    </p>
+    <p>
+      Last name: {{ $student->last_name }}
+    </p>
+    <p>
+      Identification number: {{ $student->identification_number }}
+    </p>
+  </body>
+</html>
+
+Delete del CRUD
+===============
+
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Student;
+//use App\Http\Requests\StudentRequest;
+
+class StudentController extends Controller
+{
+    /*
+    |--------------------------------------------------------------------------
+    | LIST
+    |--------------------------------------------------------------------------
+    */
+    public function index()
+    {
+        $students = Student::get();
+        return view('students.index')->with('students', $students);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE
+    |--------------------------------------------------------------------------
+    */
+    public function create()
+    {
+        return view('students.create');
+    }
+
+    public function store(Request $request)
+    {
+        $student = new Student($request->all());
+        $student->save();
+        return redirect()->route('students.index')->with('info','Student was created!');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE
+    |--------------------------------------------------------------------------
+    */
+    public function edit($id)
+    {
+        $student = Student::find($id);
+        return view('students.edit')->with('student',$student);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $student = Student::find($id);
+        $student->first_name = $request->input('first_name');
+        $student->last_name = $request->input('last_name');
+        $student->identification_number = $request->input('identification_number');
+        $student->save();
+        return redirect()->route('students.index')->with('info','Student data was updated!');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SHOW
+    |--------------------------------------------------------------------------
+    */
+    public function show($id)
+    {
+        $student = Student::find($id);
+        return view('students.show', compact('student'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | DELETE
+    |--------------------------------------------------------------------------
+    */
+    public function destroy($id)
+    {
+        $student = Student::find($id);
+        $student->delete();
+        return redirect()->route('students.index')->with('info','Student data was deleted!');
+    }
+}
+
+-----
+
+Agregado formualario para eliminar desde la columna actions
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Students</title>
+  </head>
+  <body>
+    @if(Session::has('info'))
+      Message: {{ Session::get('info') }}
+    @endif
+    <p>List of students</p>
+    <a href="{{ route('students.create') }}">
+      <button>NEW</button>
+    </a>
+    <table border="1px" cellspacing="0px" style="width:100%;">
+      <thead>
+        <tr>
+          <th class="text-center">ID</th>
+          <th class="text-center">First name</th>
+          <th class="text-center">Last name</th>
+          <th class="text-center">Identification number</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      @foreach ($students as $student)
+      <tr>
+        <td class="text-center">{{ $student->id }}</td>
+        <td class="text-center">{{ $student->first_name }}</td>
+        <td class="text-center">{{ $student->last_name }}</td>
+        <td class="text-center">{{ $student->identification_number }}</td>
+        <td>
+          <a href="{{ route('students.edit', $student->id) }}">
+            <button>UPDATE</button>
+          </a>
+          <a href="{{ route('students.show', $student->id) }}">
+            <button>SHOW</button>
+          </a>
+          <form action="{{ route('students.destroy',$student->id) }}" method="POST">@csrf
+              @method('DELETE')
+              <button type="submit">DELETE</button>
+          </form>
+        </td>
+      </tr>
+      @endforeach
+      </tbody>
+    </table>
   </body>
 </html>
 
@@ -4543,9 +5063,10 @@ $ php artisan make:controller Student
 10) Probar una consulta básica a los datos de la base de datos desde un
 controlador.
 
-11) Crear las funciones de list, create, store, update y delete en el
-controlador que corresponda y crear la carpeta app/Http/Requests/ y el archivo
-Request.php y StudenRequest.php.
+11) Crear la ruta Route::resource('students','StudentController');
+
+12) Escribir las funciones index, create, store, show, edit, update, delete en
+el controlador.
 
 ==================
 Laravel Collective
@@ -4582,28 +5103,56 @@ Finalmente, agregue dos alias de clase a la matriz de alias de config/app.php:
     //
 {{ Form::close() }}
 
-========================================
-Script en bash para proyectos ya creados
-========================================
+================================
+Aceptar datos vacíos en un campo
+================================
 
-#!/bin/bash
+Se usa el método nullable() en las migraciones, tal que:
 
-composer install
+public function up()
+{
+    Schema::create('students', function (Blueprint $table) {
+        $table->bigIncrements('id');
+        $table->string('first_name', 60)->nullable();
+        $table->string('last_name', 60)->nullable();
+        $table->string('identification_number', 60)->nullable();
+        $table->timestamps();
+    });
+}
 
-composer dumpautoload
+Con eso ya deja guardar un campo vacío.
 
-npm install
+============================
+Capturar errores en la vista
+============================
 
-php artisan migrate:fresh
+En el controlador validamos que los campos del formulario sean requeridos:
 
-echo " --- Regeneradas las tablas de la base de datos ---"
+public function store(Request $request)
+{
+    $request->validate([
+        'first_name' => 'required',
+        'last_name' => 'required',
+        'identification_number' => 'required',
+    ]);
 
-php artisan migrate
+    $student = new Student($request->all());
+    $student->save();
+    return redirect()->route('students.index')->with('info','Student was created!');
+}
 
-echo " --- Realizadas migraciones a la base de datos ---"
+En la vista:
 
-php artisan db:seed
+@if(count($errors))
+  <ul>
+    @foreach($errors->all() as $error)
+      <li>{{ $error }}</li>
+    @endforeach
+  </ul>
+@endif
 
-echo "--- Guardados datos en la base de datos ---"
+Si guardamos el formulario con los campos vacíos nos dirá:
 
-echo "--- Listo!!! ---"
+The first name field is required.
+The last name field is required.
+The identification number field is required.
