@@ -1580,8 +1580,8 @@ simple:
 
 Route::redirect('/here', '/there');
 
-View Routes
-===========
+Rutas de vista o View Routes
+============================
 
 Si su ruta solo necesita devolver una vista, puede usar el método Route::view.
 
@@ -1596,7 +1596,6 @@ Route::view('/welcome', 'welcome');
 
 Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
 
-=======================
 Parametros de las rutas
 =======================
 
@@ -1906,6 +1905,33 @@ PUT/PATCH: modifica un recurso.
 
 DELETE: elimina un recurso.
 
+Partial Resource Routes
+
+Rutas de recursos o resource Routes
+===================================
+
+Al declarar una ruta de recursos, puede especificar un subconjunto de acciones
+que el controlador debe manejar en lugar del conjunto completo de acciones
+predeterminadas:
+
+Route::resource('photos', PhotoController::class)->only([
+    'index', 'show'
+]);
+
+Route::resource('photos', PhotoController::class)->except([
+    'create', 'store', 'update', 'destroy'
+]);
+
+Rutas de recursos de API
+========================
+
+Al declarar rutas de recursos que serán consumidas por las API, normalmente
+querrá excluir rutas que presenten plantillas HTML como crear y editar. Por
+conveniencia, puede utilizar el método apiResource para excluir automáticamente
+estas dos rutas:
+
+Route::apiResource('photos', PhotoController::class);
+
 ===========================================
 Agregar una nueva ruta para mostrar mensaje
 ===========================================
@@ -2136,7 +2162,7 @@ Controladores
 Crear un controlador desde la línea de comandos
 ===============================================
 
-Existe varias formas de crear  tu controlador, una es creándolo manualmente y
+Existe varias formas de crear tu controlador, una es creándolo manualmente y
 otra desde la línea de comando, personalmente prefiero este último método, es
 cuestión de gustos. El comando a utilizar será la siguiente:
 
@@ -2255,6 +2281,11 @@ Función dd()
 ============
 
 Es como un var dump, es un helper de Laravel.
+
+Podemos usar dd() cuando necesitemos que el sistema nos devuelva algo para
+probar:
+
+dd("Mensajes de prueba");
 
 ===============================================
 Consultar la base de datos desde un controlador
@@ -3034,6 +3065,19 @@ class StudentController extends Controller
   </body>
 </html>
 
+===================================================
+Filtrar los datos de una consulta en el controlador
+===================================================
+
+En este ejmplo vamos a ordenar los reqistros por el ID pero de manera
+descendente y también solo vamos a mostrar 3 registros.
+
+public function index()
+{
+    $users = User::orderBy('id', 'DESC')->paginate(3);
+    return view('users.index')->with('users', $users);
+}
+
 Mensaje cuando se guarda un formulario
 ======================================
 
@@ -3393,6 +3437,23 @@ Agregado formualario para eliminar desde la columna actions
     </table>
   </body>
 </html>
+
+===========================
+CRUD de usuarios de Laravel
+===========================
+
+1) Creamos una ruta de recursos:
+
+Route::resource('users','UserController');
+
+2) Creamos un controlador:
+
+$ php artisan make:controller UserController
+
+3) Editar el controlador creado y agregar las funciones index, create, store,
+edit, update, show, destroy correspondientes.
+
+4) Crear las vistas correspondientes a cada función del controlador.
 
 =====
 Blade
@@ -3803,24 +3864,6 @@ La directiva @method Blade puede crear este campo por usted:
 
     ...
 </form>
-
-=====================
-Validacion de errores
-=====================
-
-La directiva @error puede usarse para verificar rápidamente si existen mensajes
-de error de validación para un atributo dado. Dentro de una directiva @error,
-puede hacer eco de la variable $ message para mostrar el mensaje de error:
-
-<!-- /resources/views/post/create.blade.php -->
-
-<label for="title">Post Title</label>
-
-<input id="title" type="text" class="@error('title') is-invalid @enderror">
-
-@error('title')
-    <div class="alert alert-danger">{{ $message }}</div>
-@enderror
 
 =================================
 Integrar Bootstrap en un proyecto
@@ -5103,6 +5146,35 @@ Finalmente, agregue dos alias de clase a la matriz de alias de config/app.php:
     //
 {{ Form::close() }}
 
+Campo select
+============
+
+echo Form::select('size', ['L' => 'Large', 'S' => 'Small']);
+
+Generating A Drop-Down List With Selected Default
+
+Campo select con valor default
+==============================
+
+echo Form::select('size', ['L' => 'Large', 'S' => 'Small'], 'S');
+
+Diferencias en la sintaxis del paquete
+======================================
+
+{!!  !!} equivale a <?php ?> y este no se muestra en el HTML.
+
+{{ }} equivale a <?php echo ""; ?> y este si se muestra en el HTML.
+
+Ejemplos:
+
+{!! Form::open() !!}
+{!! Form::close() !!}
+
+Nos renderiza en el código fuente html:
+
+<form method="POST" action="http://127.0.0.1:8000/students/create" accept-charset="UTF-8"><input name="_token" type="hidden" value="xxxxxxxxxxxxxxx">
+</form>
+
 ================================
 Aceptar datos vacíos en un campo
 ================================
@@ -5122,9 +5194,13 @@ public function up()
 
 Con eso ya deja guardar un campo vacío.
 
-============================
-Capturar errores en la vista
-============================
+====================================================
+Validacion de errores y capturar errores en la vista
+====================================================
+
+La directiva @error puede usarse para verificar rápidamente si existen mensajes
+de error de validación para un atributo dado. Dentro de una directiva @error,
+puede hacer eco de la variable $ message para mostrar el mensaje de error:
 
 En el controlador validamos que los campos del formulario sean requeridos:
 
@@ -5141,7 +5217,7 @@ public function store(Request $request)
     return redirect()->route('students.index')->with('info','Student was created!');
 }
 
-En la vista:
+En la vista capturamos y recorremos todos los erroes que se activen:
 
 @if(count($errors))
   <ul>
@@ -5151,8 +5227,155 @@ En la vista:
   </ul>
 @endif
 
+ó
+
+@if ($errors->any())
+  <p>Por favor corrige los siguientes errores</p>
+  <ul>
+    @foreach ($errors->all() as $error)
+      <li>{{ $error }}</li>
+    @endforeach
+  </ul>
+@endif
+
+Con el método any() preguntamos si hay algún error en la vista. A través del
+método all() obtenemos todos los errores.
+
 Si guardamos el formulario con los campos vacíos nos dirá:
 
 The first name field is required.
 The last name field is required.
 The identification number field is required.
+
+Si queremos capturar cada error individualmente sera con:
+
+@error('first_name')
+  {{ $message }}
+@enderror
+
+@error('last_name')
+  {{ $message }}
+@enderror
+
+Otras validaciones
+==================
+
+Validar que el campo sea requerido y tenga como mínimo 3 caracteres:
+
+'first_name' => 'required|min:3',
+
+The first name must be at least 3 characters.
+
+-----
+
+Nota cómo separamos cada regla de validación con una barra horizontal |.
+
+Además si la regla requiere un argumento lo especificamos con :. Múltiples
+argumentos se separan con ,. También podemos usar la sintaxis de arreglo:
+
+$request->validate([
+    'title' => ['required', 'min:3', 'unique:notes'],
+]);
+
+Incluso algunas reglas más complejas se pueden especificar a través de métodos o
+una combinación de cadenas y métodos dentro de un arreglo:
+
+use Illuminate\Validation\Rule;
+
+$request->validate([
+    'title' => ['required', 'max:200', Rule::unique('notes')],
+]);
+
+-----
+
+Validar que el campo sea tipo email.
+
+'email' => 'required|email|unique:clients',
+
+The last name must be a valid email address.
+
+-----
+
+'email' => 'required|email|unique:clients',
+
+Quiere decir que el email es requerido y sera único dentro de la tabla clients
+
+-----
+
+'register' => 'required_if:type,empresa'
+
+En este caso el campo register solo es requerido cuando se haya seleccionado
+‘empresa’ en el campo anterior dado que type es de tipo select, pero también
+puede aplicar a un campo de texto:
+
+'last_name' => 'required_if:first_name,pedro',
+
+El campo de apellido es obligatorio cuando el nombre es pedro.
+
+Mensajes personalizados para las validaciones
+=============================================
+
+Se agrega en un arreglo en la función validate, tal que:
+
+,[
+  'first_name.required' => 'El nombre es obligatorio',
+  'last_name.required' => 'El apellido es obligatorio',
+]);
+
+Ejemplo:
+
+public function store(Request $request)
+{
+    $request->validate([
+        'first_name' => 'required',
+        'last_name' => 'required',
+        'identification_number' => 'required',
+    ], [
+        'first_name.required' => 'El nombre es obligatorio',
+        'last_name.required' => 'El apellido es obligatorio',
+    ]);
+
+    $student = new Student($request->all());
+    $student->save();
+    return redirect()->route('students.index')->with('info','Student was created!');
+}
+
+Otro ejemplo:
+
+$this->validate($request, [
+      'active'      => 'boolean',
+      'username'    => 'required|unique:users,username|alpha|max:25',
+      'full_name'   => 'required',
+      'email'       => 'required|email|max:255|unique:users',
+      'password'    => 'required|confirmed|min:8|max:30',
+      'permissions' => 'array|min:1',
+      'roles'       => 'array|min:1',
+      'country'     => 'required',
+      'state'       => 'required',
+      'city'        => 'required',
+      'area_code'   => 'nullable|string'
+], [
+      'username.unique'    => 'El nombre de usuario ya esta registro.',
+      'username.max'       => 'El nombre de usuario no debe ser mayor a 25 caracteres.',
+      'username.alpha'     => 'El nombre de usuario no debe contener caracteres especiales o espacios.',
+      'full_name.required' => 'El nombre completo es obligatorio.',
+      'email.email'        => 'El correo electrónico no es valido.',
+      'country.required'   => 'El campo pais es obligatorio.',
+      'state.required'     => 'El campo estado es obligatorio.',
+      'city.required'      => 'El campo ciudad es obligatorio.',
+      'permissions.min'    => 'El usuario debe tener almenos un permiso.',
+      'roles.min'          => 'El usuario debe tener almenos un rol.',
+]);
+
+Más validaciones en la documentación oficial:
+
+https://laravel.com/docs/8.x/validation#rule-max
+
+====================
+La función compact()
+====================
+
+La función compact se usa ampliamente en Laravel, no confunda esto con una
+función de Laravel porque no lo es, esta es una función PHP. Entonces with() le
+permite pasar variables a una vista y compact() crea una matriz a partir de
+variables existentes que se le dan como argumentos de cadena.
