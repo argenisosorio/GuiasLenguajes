@@ -3074,7 +3074,8 @@ descendente y también solo vamos a mostrar 3 registros.
 
 public function index()
 {
-    $users = User::orderBy('id', 'DESC')->paginate(3);
+    $users = User::orderBy('id', 'ASC')->paginate(3);
+    //$users = User::orderBy('id', 'DESC')->paginate(3);
     return view('users.index')->with('users', $users);
 }
 
@@ -3426,9 +3427,10 @@ Agregado formualario para eliminar desde la columna actions
           <a href="{{ route('students.show', $student->id) }}">
             <button>SHOW</button>
           </a>
-          <form action="{{ route('students.destroy',$student->id) }}" method="POST">@csrf
-              @method('DELETE')
-              <button type="submit">DELETE</button>
+          <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" onclick="return confirm('Are you sure you want to delete the record? ');">DELETE</button>
           </form>
         </td>
       </tr>
@@ -3539,6 +3541,31 @@ if, elseif, else en blade
     I have multiple records!
 @else
     I don't have any records!
+@endif
+
+Ejemplos prácticos:
+
+@if ($student->id == 1)
+  El ID del user es igual a 1
+@endif
+
+-----
+
+@if ($student->id == 1)
+    El ID del user es igual a 1
+@elseif ($student->id == 2)
+    El ID del user es igual a 2
+@else
+    El ID del user es diferente de 1 y de 2.
+@endif
+
+-----
+
+@if ($student->id == 1)
+    <button>1</button>
+@elseif ($student->id == 2)
+    <button>2</button>
+@else
 @endif
 
 ================
@@ -5379,3 +5406,8 @@ La función compact se usa ampliamente en Laravel, no confunda esto con una
 función de Laravel porque no lo es, esta es una función PHP. Entonces with() le
 permite pasar variables a una vista y compact() crea una matriz a partir de
 variables existentes que se le dan como argumentos de cadena.
+
+Ejemplo:
+
+$user = User::all();
+return view('index', compact('user'));
