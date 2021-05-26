@@ -4255,6 +4255,11 @@ Schema::enableForeignKeyConstraints();
 
 Schema::disableForeignKeyConstraints();
 
+Ejemplo de campo tipo integer para coumnas de tipo entero
+=========================================================
+
+$table->integer('votes');
+
 Ejemplos de asignar relaciones entre tablas
 ===========================================
 
@@ -4361,7 +4366,7 @@ Campos $fillable
 Son los campos permitidos para mostrar los objetos json y suelen ser los mismos
 campos definidos en las migraciones:
 
-Ejemplo:
+Ejemplo de un modelo de Artículo que se relaciona con categorías:
 
 **Migración**
 
@@ -4412,6 +4417,10 @@ class Article extends Model
     protected $table = "articles";
     protected $fillable = ['title','content','user_id','category_id'];
 }
+
+Luego, se ejecutan las migraciones para ver que todo esté bien:
+
+$ php artisan migrate
 
 ======
 Tinker
@@ -5411,3 +5420,87 @@ Ejemplo:
 
 $user = User::all();
 return view('index', compact('user'));
+
+================================================
+Ejemplo de relación entre categorías y artículos
+================================================
+
+Una categoría puede tener varios artículos asociados, pero un artículo solo
+puede estar asociado a una categoría, por lo tanto la relación
+
+1) Generar una nueva migración y crear una tabla llamada categories:
+
+$ php artisan make:migration add_categories_table --create=categories
+
+2) Editar la migración y agregar los campos necesarios.
+
+3) Generar una nueva migración y crear una tabla llamada articles:
+
+$ php artisan make:migration add_articles_table --create=articles
+
+4) Editar la migración y agregar los campos necesarios, incluyendo los campos
+para las foreign keys.
+
+5) Crear un modelo para las categorías:
+
+$ php artisan make:model Category
+
+6) Editar el modelo creado agregando los campos fillables y la función que
+establece la relacion con los artículos.
+
+7) Crear un modelo para los artículos:
+
+$ php artisan make:model Article
+
+8) Editar el modelo creado agregando los campos fillables inlcuyendo el campo
+que relaciona el artículo con una categoría y la función que establece la
+relacion con la categoría.
+
+Para comprobar que las relaciones estén bien, se recomienda probar desde Tinker:
+
+Crear categorías desde la consola de Tinker
+===========================================
+
+$category = new App\Category();
+
+$category->name='Noticias';
+
+$category->save();
+
+$categories = \App\Category::all();
+
+Crear artículos desde la consola de Tinker
+==========================================
+
+$article = new App\Article();
+
+$article->title='Noticia de última hora';
+
+$article->content='Contenido de la noticia';
+
+$article->category_id=1;
+
+$article->save();
+
+$articles = \App\Article::all();
+
+Ejemplo completo en:
+
+-https://github.com/argenisosorio/laravel-5-crud/tree/relationships
+
+=================
+El método pluck()
+=================
+
+El método pluck recupera todos los valores de una clave determinada:
+
+$collection = collect([
+    ['product_id' => 'prod-100', 'name' => 'Desk'],
+    ['product_id' => 'prod-200', 'name' => 'Chair'],
+]);
+
+$plucked = $collection->pluck('name');
+
+$plucked->all();
+
+// ['Desk', 'Chair']
