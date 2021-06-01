@@ -253,6 +253,13 @@ $ echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /
 
 $ sudo apt-get update
 
+Si da problema con la firma, volver a ejecutar:
+
+$ sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+--2019-03-18 21:28:18--  https://packages.sury.org/php/apt.gpg
+
+y probar de nuevo el update.
+
 ==================================
 Instalación de paquetes necesarios
 ==================================
