@@ -3631,31 +3631,23 @@ sencillo.
 
 base.blade.php
 
-<!DOCTYPE html>
-<html lang="">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>
-            @section('title')
-                Base
-            @endesection
-        </title>
-        @endesection
-    </head>
-    <body>
-        @section('header')
-            <h1>This is the master header.</h1>
-        @endesection
+<html>
+  <head>
+    <title>App Name - @yield('title')</title>
+  </head>
+  <body>
+    @section('header')
+      aaaaaaaaaaaa
+    @show
 
-        @section('content')
-            <p>This is the master content.</p>
-        @endesection
+    @section('content')
+      11111111111
+    @show
 
-        @section('footer')
-            <h3>This is the master footer.</h3>
-        @endesection
-    </body>
+    @section('footer')
+      11111111111
+    @show
+  </body>
 </html>
 
 Como puede ver, este archivo base contiene un marcado HTML típico. Sin embargo,
@@ -3674,25 +3666,29 @@ child.blade.php
 
 @extends('base')
 
-@section('title')
-    Article
-@endsection
+@section('title', 'xxxxxxxx')
 
 @section('header')
-    <h1>This is the child header secction</h1>
+  <p>header, header, header</p>
 @endsection
 
 @section('content')
-    <p>This is the child content secction</p>
+  @parent
+  <p>content, content, content</p>
 @endsection
 
 @section('footer')
+  <p>footer, footer, footer</p>
 @endsection
 
 -----
 
 Si se agrega en la vista child alguna sección, el contenido será mostrado en
 detrimento de la sección master de la vista base.
+
+En este ejemplo, la sección content utiliza la directiva @parent para agregar
+(en lugar de sobrescribir) contenido a la seccion content. La directiva @parent
+será reemplazada por el contenido del diseño cuando se renderice la vista.
 
 ===========================
 Directivas de autenticación
@@ -3748,7 +3744,7 @@ y la podemos incluir dentro del bloque content de la vista child:
 @endsection
 
 @section('content')
-   @include('list')
+    @include('list')
 @endsection
 
 @section('footer')
