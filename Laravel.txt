@@ -3899,6 +3899,9 @@ La directiva @method Blade puede crear este campo por usted:
 Integrar Bootstrap en un proyecto
 =================================
 
+Los archivos CSS se pueden guardar en cualquier lugar pero Laravel por defecto
+crea la carpeta CSS en public/css en icluso crea un app.css
+
 1) Descargar los archivos necesarios para usar Bootstrap (css, js, jquery).
 
 2) Crer una carpeta bootstrap en my-app/public/
@@ -3915,6 +3918,9 @@ lo necesario, ejemplo:
 <script src="{{ asset ('bootstrap/js/jquery/jquery-3.3.1.slim.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset ('bootstrap/js/popper.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset ('bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+
+asset lo que hace es situarse en la carpeta public y navegar por las carpetas
+que le indiquemos hasta conseguir el archivo definido, en este caso app.css.
 
 ===========================================================================
 Consultar la versión de Laravel y de PHP directamente en una plantilla html
