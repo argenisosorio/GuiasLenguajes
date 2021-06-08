@@ -3922,6 +3922,45 @@ lo necesario, ejemplo:
 asset lo que hace es situarse en la carpeta public y navegar por las carpetas
 que le indiquemos hasta conseguir el archivo definido, en este caso app.css.
 
+En Laravel 5.8.x
+================
+
+Bootstrap viene incluído en esta versión de Laravel, por lo que hay hay que
+ejecutar la compilación de los paquetes de node con:
+
+$ npm run dev
+
+Esto generara una modificación de los archivos:
+
+public/css/app.css
+public/js/app.js
+
+Por lo cual solo resta hacer el llamado de los archivos en la plantilla base,
+ejemplo:
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@yield('title')</title>
+    <!-- Bootstrap core CSS-->
+    <link rel="stylesheet" type="text/css" href="{{ asset ('css/app.css') }}">
+    <!-- Bootstrap core JavaScript-->
+    <script src="{{ asset ('js/app.js') }}" type="text/javascript"></script>
+  </head>
+  <body>
+    <script>
+    $(document).ready(function(){
+      alert("¡Hola esto es una alerta!");
+    });
+    </script>
+    @section('content')
+      Base content...
+    @show
+  </body>
+</html>
+
 ===========================================================================
 Consultar la versión de Laravel y de PHP directamente en una plantilla html
 ===========================================================================
@@ -4357,6 +4396,16 @@ class AddTagsTable extends Migration
         Schema::dropIfExists('tags');
     }
 }
+
+Método softDeletes()
+====================
+
+El método softDeletes agrega una columna equivalente a nullable deleted_at
+TIMESTAMP con una precisión opcional (dígitos totales). Esta columna está
+destinada a almacenar la marca de tiempo deleted_at necesaria para la
+funcionalidad de "eliminación suave" de Eloquent:
+
+$table->softDeletes($column = 'deleted_at', $precision = 0);
 
 ===============
 Crear un modelo
@@ -5513,3 +5562,11 @@ $plucked = $collection->pluck('name');
 $plucked->all();
 
 // ['Desk', 'Chair']
+
+====================================
+Actualizar lista de paquetes de node
+====================================
+
+Este comando actualizará todos los paquetes listados a la última versión.
+
+$ npm update

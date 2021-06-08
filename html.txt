@@ -4032,3 +4032,35 @@ Link html a mailto
 ==================
 
 <a href="mailto:elcorreoquequieres@correo.com">Aquí el texto que quieras</a>
+
+==============================
+¿Cómo usar preload y prefetch?
+==============================
+
+Para usarlos debes declararlos usando etiquetas link tan pronto abras el head de
+u sitio. Debes usar tres atributos principalmente:
+
+-rel defines si usar preload o prefetch
+-href la ruta del recurso
+-as el tipo del recurso
+
+Así, por ejemplo quiere hacer preload de los estilos de tu sitio debes hacer:
+
+<html>
+  <head>
+    <link rel="preload" href="/static/styles.css" as="styles">
+    <link rel="preload" href="app.js" as="script">
+    <link rel="stylesheet" href="/static/styles.css">
+  </head>
+  <body>
+    <script src="app.js"></script>
+  </body>
+</html>
+
+Esta forma de manejar los assets la usan proyecto como Next.js o Gatsby.js
+consiguiendo muy buenos resultados de hasta 300ms menos de carga.
+
+Fuente
+======
+
+-https://yeisondaza.com/optimizar-sitio-web-preload-prefech
