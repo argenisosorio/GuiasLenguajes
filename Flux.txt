@@ -1,0 +1,130 @@
+==================
+Guía de Flux by dM
+==================
+
+Como suele pasar en el desarrollo Front-End de los últimos años, existe un gran
+número de librerías, frameworks y herramientas que si uno no está más o menos
+pendiente y al día, resulte abrumador.
+
+Arquitectura Flux
+=================
+
+Flux es una arquitectura para el manejo y el flujo de los datos en una
+aplicación web, particularmente en el Front-End. Fue ideada por Facebook y vendría a sustituir el patrón MVC (o MVVM).
+
+El patrón MVC para el Front-End empezó a ser necesario cuando las aplicaciones
+web empezaron a hacerse más grandes y con librerías como jQuery o el propio
+Vanilla JavaScript se hacían difíciles de manejar. Por eso nacieron frameworks
+como Backbone, Ember y/o Angular.
+
+Todos ellos siguen una arquitectura Modelo-Vista-Controlador, o algo parecido
+(MVVM, MV*). Haciendo más sencillo el manejo de datos en aplicaciones web con
+cierto grado de complejidad.
+
+Flux nació desde Facebook por un problema que se les presentaba al tener una comunicación bidireccional entre los modelos y los controladores, haciéndoles muy difícil
+poder depurar y rastrear errores.
+
+Flux propone una arquitectura en la que el flujo de datos es unidireccional. Los
+datos viajan desde la vista por medio de acciones y llegan a un Store desde el
+cual se actualizará la vista de nuevo.
+
+Teniendo un único camino, y un sitio donde se almacena el estado de la
+aplicación, es más sencillo depurar errores y saber que está pasando en cada
+momento.
+
+Como digo, Flux es un patrón de diseño o forma de "arquitecturar" una aplicación
+web, en concreto la forma en la que se manejan los datos o estado de la
+aplicación (datos de un usuario, datos recogidos a partir de un API REST o
+webservice, etc...) No se trata de una librería ni framework.
+
+Al igual que un patrón MVC está formado por un Modelo, una Vista y un
+Controlador, en Flux tenemos distintos actores:
+
+Vista
+=====
+
+La vista serían los componentes web, ya sean construidos nativamente, con
+Polymer, con Angular, React, etc...
+
+Store
+=====
+
+La Store sería lo más parecido al modelo de la aplicación. Guarda los
+datos/estado de la aplicación y en Flux puede haber varias (Luego veremos que en
+algunas implementaciones sólo hay un único store).
+
+No hay métodos en la Store que permitan modificar los datos en ella, eso se hace
+a través de dispatchers y acciones.
+
+Acciones
+========
+
+Un acción es simplemente un objeto JavaScript que indica una intención de
+realizar algo y que lleva datos asociados si es necesario. Por ejemplo si
+tenemos una aplicación tipo Carrito de la compra, y añadimos un item al carrito,
+la acción que representaría esto sería:
+
+{
+    type: 'ADD_ITEM',
+    item: item
+}
+
+Dispatcher
+==========
+
+Las acciones como la anterior son enviadas a un dispatcher que se encarga de
+dispararla o propagarla hasta la Store.
+
+La vista es la que se encarga de enviar las acciones al dispatcher.
+
+Un dispatcher no es más que un mediador entre la Store o Stores y las acciones.
+Sirve para desacoplar la Store de la vista, ya que así no es necesario conocer
+que Store maneja una acción concreta.
+
+En Resumen, el patrón FLUX sigue el siguiente recorrido:
+
+-La vista, mediante un evento envía una acción con la intención de realizar un
+cambio en el estado.
+
+-La acción contiene el tipo y los datos (si los hubiere) y es enviada al
+dispatcher.
+
+-El dispatcher propaga la acción al Store y se procesa en orden de llegada.
+
+-El Store recibe la acción y dependiendo del tipo recibido, actualiza el estado
+y notifica a las vistas de ese cambio.
+
+-La vista recibe la notificación y se actualiza con los cambios.
+
+Todo en un único sentido.
+
+Implementaciones de Flux
+========================
+
+Existen numerosas implementaciones de este patrón de desarrollo en JavaScript.
+Muchas de ellas ya no están mantenidas y poco a poco una de ellas se ha ido
+posicionando como referencia.
+
+Posiblemente te suenen librerías como:
+
+Reflux
+McFly
+Marty.js
+Delorean
+Fluxxor
+Lux.js
+Fluxible
+Omniscent
+Redux
+
+Redux
+=====
+
+Hoy por hoy la más utilizada y que prácticamente se ha convertido en un estándar
+es Redux, creada por Dan Abramov (Actualmente dentro del equipo de React.js)
+
+Es una librería muy pequeña (apenas 2Kb de tamaño) con muy pocos métodos que
+implementa el patrón Flux con algunas modificaciones que la hacen más sencilla
+de manejar. Es agnóstica al framework o librería que utilices para tus
+desarrollos, ya que es únicamente JavaScript por lo que puedes utilizarla junto
+a Angular, con Polymer y con React.

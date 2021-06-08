@@ -43,10 +43,10 @@ paginas internas.
 conjunto de datos en un momento específico de la aplicación, el ejemplo más
 sencillo es un usuario que no ha agregado un producto a un carrito de compra
 por ejemplo, ese es el estado, en el momento que un usuario agrega un producto
-al carrito el estado cambia, porque ahora el carrito ahora tiene un producto
-con un precio y un total, entonces si el usuario cambia de página porque está
-viendo otros productos, ese carrito debe mantenerse con ese producto, con ese
-precio sin importar por donde se mueva el usuario, ese es el estado y lo podemos
+al carrito el estado cambia, porque ahora el carrito tiene un producto con un
+precio y un total, entonces si el usuario cambia de página porque está viendo
+otros productos, ese carrito debe mantenerse con ese producto, con ese precio
+sin importar por donde se mueva el usuario, ese es el estado y lo podemos
 manejar con Vue.
 
 -La siguiente es Build system, Vue te permite empaquetar un proyecto para
@@ -86,8 +86,6 @@ NPM es el método de instalación recomendado para construir aplicaciones a gran
 escala con Vue. Este combina perfectamente con empaquetadores de módulos, tales
 como Webpack o Browserify. Vue también ofrece herramientas para la creación de
 componentes de un solo archivo (en inglés Single-File Components).
-
-# latest stable
 
 $ npm install vue
 
@@ -171,6 +169,21 @@ v-model: Permite enlazar un elemento con alguna propiedad de un estado.
 
 Y existen más directivas en Vue...
 
+Ejemplo
+=======
+
+Si queremos que un elemento responda a un evento click, por ejemplo, debemos
+utilizar la directiva v-on:click o de la forma reducida @click seguida del
+metodo manejador asociado:
+
+<button @click="miMetodo()">Haz Click</button>
+
+Al contrario de React, donde utilizamos el método render() del componente,
+sintaxis JSX para definir la vista y mezclamos cierta lógica al permitirnos
+utilizar JavaScript. En Vue, al igual que Angular, tenemos separado Vista de
+Controlador utilizando puro HTML + directivas para la vista y JavaScript para la
+lógica.
+
 Ejemplo de v-for
 ================
 
@@ -251,22 +264,33 @@ Ejemplo con 2 puntos de montaje:
 Anatomía de un componente
 =========================
 
+El equipo de Vue y de Webpack han creado una plantilla que con la extensión de
+fichero .vue podemos tener nuestro HTML, CSS y código JavaScript en un único
+archivo.
+
+Ésto es muy poderoso porque unimos 2 mundos. En React tenemos todo en un mismo
+fichero, pero implica que personas del equipo de diseño y/o maquetacion
+necesitaran saber React y JSX para poder añadir estilos y diseñar el layout de
+las vistas.
+
 Un componente contiene 3 partes principales:
 
 -template.
 -script.
 -style.
 
+En Vue puedes crear un fichero .vue de la siguiente forma
+
 <template>
 // Aquí va el código HTML
 </template>
 
 <script>
-// Aquí va el código Javascript
+// Aquí va el código Javascript, puedes usar Babel, TypeScript,...)
 </script>
 
 <style>
-// Aquí va el código CSS
+// Aquí va el código CSS, puedes usar stylus, Sass, Less, etc...
 </style>
 
 =================================
@@ -673,8 +697,8 @@ incluiremos la directiva "v-if" y una variable que será "show".
   </body>
 </html>
 
-Ahora, también hay que agregar esa variable "show" a nuestroy componente y
-tendra un valor, false o true:
+Ahora, también hay que agregar esa variable "show" a nuestro componente y tendra
+un valor, false o true:
 
 const app = new Vue({
   el: '#app',
@@ -734,6 +758,26 @@ como tenemos el objeto data, donde tenemos ordenadas todas las variables
 asociadas a la vista, ahora debemos añadir una nueva propiedad que se llama
 "methods" y es donde van a ir todas las funciones que nosotros queramos usar.
 
+Methods y Data
+==============
+
+Los datos o modelos del componente están dentro de un objeto data, y las
+funciones o métodos que creamos los colocamos en un objeto methods.
+
+Aquí se abandona la idea o sintaxis de clases de ES6 como se venía utilizando en
+React con React.Component por una esctructura de objetos similar al método
+createClass de las primeras versiones de React.
+
+Parece un paso atrás, pero tal y cómo funciona Vue, parece una forma muy
+correcta de uso.
+
+Ejemplo:
+
+Vue.component('mi-component', {
+    data: {},
+    methods: {}
+})
+
 Dentro de "methods" declaramos a "toggleShow" y esta función lo que va a hacer
 es cambiar el valor de show por el contrario del que tenga en ese momento.
 
@@ -769,6 +813,8 @@ componente, pero hay un detalle importante y es que todo lo que va devolver
 debemos agregar un "div" padre dentro de template, esto si es que no lo tiene
 que es nuestro caso.
 
+En index.html
+
 <!DOCTYPE html>
 <html lang="">
   <head>
@@ -785,7 +831,7 @@ que es nuestro caso.
   </body>
 </html>
 
-y
+y en app.js
 
 const app = new Vue({
   el: '#app',
@@ -1124,3 +1170,114 @@ Fuentes
 -https://dev.to/duxtech/crea-tu-primer-componente-con-vue-js-para-dummies-2n4c
 
 -https://cli.vuejs.org/guide/installation.html
+
+=================
+Scoped CSS en Vue
+=================
+
+Cuando una etiqueta <style> tiene el atributo de scoped, su CSS se aplicará solo
+a los elementos del componente actual. Esto es similar a la encapsulación de
+estilo que se encuentra en Shadow DOM. Viene con algunas advertencias, pero no
+requiere ningún polyfills.
+
+===========================
+Vue: Single File Components
+===========================
+
+Con Vue podemos crear componentes de múltiples formas.
+
+Existe una solución que junto con Webpack y un módulo (vue-loader) nos permite
+tener en un único fichero la vista (template), el diseño (css) y la lógica
+(javascript). Estos ficheros tienen una extensión .vue y tienen la siguiente
+forma:
+
+<template>
+// Aquí va el código HTML
+</template>
+
+<script>
+// Aquí va el código Javascript, puedes usar Babel, TypeScript,...)
+</script>
+
+<style>
+// Aquí va el código CSS, puedes usar stylus, Sass, Less, etc...
+</style>
+
+Lo bueno de éste fichero, es que al no ser un fichero final de producción, es un
+fichero de desarrollo que luego Webpack interpreta y extrae las diferentes
+partes a sus ficheros correspondientes, nos da mucha versatilidad, por ejemplo:
+
+Si preferimos utilizar Pug/Jade para el marcado en lugar de HTML convencional,
+podemos hacerlo porque Webpack leerá el fichero y gracias a los "loaders"
+transpilará el código al resultado final.
+
+De igual manera, si prefieres utilizar TypeScript o CoffeeScript para el código
+JavaScript, también es posible, al igual que el estilo, puedes utilizar
+cualquier preprocesador que quieras: Less, Stylus, Sass, SCSS, PostCSS,...
+
+Lo único que tienes que hacer es indicar en cada tag que tipo estás utilizando
+con el atributo lang. Por ejemplo:
+
+<template lang="pug">
+  ...
+</template>
+
+<script lang="ts">
+</script>
+
+<style lang="scss">
+</style>
+
+Esto lo hace muy versátil y práctico para equipos de trabajo dónde haya personas
+dedicadas al diseño y maquetación, y otras personas encargadas del código. De
+esta manera, la persona dedicada al CSS puede utilizar el preprocesador que
+prefiera, el desarrollador utilizar TypeScript si lo prefiere, etc...
+
+para el ejemplo creamos MovieCard.vue
+
+<template>
+  <div>
+    <img width="100" v-bind:src="image" v-bind:alt="title"/>
+    <h2>{{ title }}</h2>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'movie-card',
+    props: {
+        image: String,
+        title: String
+    }
+  }
+</script>
+
+<style scoped>
+  h2 {
+    font-size: 18pt;
+  }
+</style>
+
+Descripción del código
+======================
+
+-Lo que hay en "template" es lo que vamos a representar en el html.
+
+-"name" en el script, es el nombre del componente y con ese nombre lo vamos a
+llamar desde index.html
+
+-Dentro del script también se pueden llamar a otros componentes, y estos deben
+ser importados para poder se usados con la variable "components", ejemplo:
+
+<script>
+import ImageMovie from './ImageMovie.vue'
+  export default {
+    name: 'movie-card',
+    components: {
+    }
+    props: {
+      image: String,
+      title: String
+    }
+  }
+</script>
