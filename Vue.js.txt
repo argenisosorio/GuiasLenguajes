@@ -260,6 +260,165 @@ Ejemplo con 2 puntos de montaje:
 </body>
 </html>
 
+Otro ejemplo:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="(show, index) in tvshows" v-bind:key="index">
+        {{ show.name }} ({{ show.seasons }} temporadas)
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        tvshows: [
+          { name: 'Serie 1', seasons: 3 },
+          { name: 'Serie 2', seasons: 5 },
+          { name: 'Serie 3', seasons: 2 },
+        ]
+      }
+    })
+  </script>
+</body>
+</html>
+
+========================
+Ejemplo de v-if y v-else
+========================
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <div v-if="show">
+        <li v-for="(show, index) in tvshows" v-bind:key="index">
+          {{ show.name }} ({{ show.seasons }} temporadas)
+        </li>
+      </div>
+      <div v-else>
+        No data
+      </div>
+    </ul>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        show: false,
+        tvshows: [
+          { name: 'Serie 1', seasons: 3 },
+          { name: 'Serie 2', seasons: 5 },
+          { name: 'Serie 3', seasons: 2 },
+        ]
+      }
+    })
+  </script>
+</body>
+</html>
+
+===============
+Ejemplo de v-on
+===============
+
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Component vue example</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      const app = new Vue({
+        el: '#app',
+        template: `
+          <div>
+            <!--button v-on:click="showAlert()">Push me</button-->
+            <button @click="showAlert()">Push me</button>
+          </div>
+        `,
+        data: {
+        },
+        methods: {
+          showAlert: function () {
+            alert("Hello!");
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
+
+Ejemplo de eventos y propiedades
+================================
+
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Component vue example</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+    const app = new Vue({
+      el: '#app',
+      template: `
+        <div>
+
+          <div v-if="show">
+            <ul>
+              <li v-for="(course, index) in courses" v-bind:key="index">
+                <a v-bind:href="course.url"> {{ course.name }} </a>
+              </li>
+            </ul>
+          </div>
+          <button @click="toggleShow()">Show/Hide</button>
+
+        </div>
+      `,
+      data: {
+        show: true,
+        courses: [
+          { name: "PHP", url: 'https://www.youtube.com/1' },
+          { name: "Python", url: 'https://www.youtube.com/2' },
+          { name: "JavaScript", url: 'https://www.youtube.com/3' },
+        ],
+      },
+      methods: {
+        toggleShow: function () {
+          this.show = !this.show
+        }
+      }
+    })
+    </script>
+  </body>
+</html>
+
 =========================
 Anatomía de un componente
 =========================
@@ -688,7 +847,7 @@ incluiremos la directiva "v-if" y una variable que será "show".
   </head>
   <body>
     <div id="app">
-      <div v-if v-if="show">
+      <div v-if="show">
         {{ message }}
         <img v-bind:src="image" width="150">
       </div>
