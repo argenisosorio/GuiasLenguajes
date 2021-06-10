@@ -165,7 +165,9 @@ v-else: El else de esa condicional.
 
 v-show: Para mostrar u ocultar elementos.
 
-v-model: Permite enlazar un elemento con alguna propiedad de un estado.
+v-model: Permite enlazar un elemento con alguna propiedad de un estado. Permite
+la vinculación bidireccional entre los datos del dom y el estado de la
+aplicación.
 
 Y existen más directivas en Vue...
 
@@ -183,6 +185,71 @@ sintaxis JSX para definir la vista y mezclamos cierta lógica al permitirnos
 utilizar JavaScript. En Vue, al igual que Angular, tenemos separado Vista de
 Controlador utilizando puro HTML + directivas para la vista y JavaScript para la
 lógica.
+
+Ejemplo:
+
+<!DOCTYPE html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Component vue example</title>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      const app = new Vue({
+        el: '#app',
+        template: `
+          <div>
+            <!--button v-on:click="showAlert()">Push me</button-->
+            <button @click="showAlert()">Push me</button>
+          </div>
+        `,
+        data: {
+        },
+        methods: {
+          showAlert: function () {
+            alert("Hello!");
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
+
+Otro ejemplo:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue component</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <p>{{ message }}</p>
+  <button v-on:click="reverseMessage">Reverse Message</button>
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    message: 'Hello Vue.js!'
+  },
+  methods: {
+    reverseMessage: function () {
+      this.message = this.message.split('').reverse().join('')
+    }
+  }
+})
+</script>
+</body>
+</html>
 
 Ejemplo de v-for
 ================
@@ -208,6 +275,41 @@ Ejemplo de v-for
       el: '#app',
       data: {
         names: ["José","Pedro","Juan","María"]
+      }
+    })
+  </script>
+</body>
+</html>
+
+Otro ejemplo:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="name in names">
+        {{ name }}
+      </li>
+    </ul>
+    <ul>
+      <li v-for="dog in dogs">
+        {{ dog }}
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        names: ["José","Pedro","Juan","María"],
+        dogs: ["Alfie","Solomons"]
       }
     })
   </script>
@@ -322,7 +424,8 @@ Ejemplo de v-if y v-else
     var app = new Vue({
       el: '#app',
       data: {
-        show: false,
+        //show: false,
+        show: true,
         tvshows: [
           { name: 'Serie 1', seasons: 3 },
           { name: 'Serie 2', seasons: 5 },
@@ -334,44 +437,8 @@ Ejemplo de v-if y v-else
 </body>
 </html>
 
-===============
-Ejemplo de v-on
-===============
-
-<!DOCTYPE html>
-<html lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Component vue example</title>
-    <script src="https://unpkg.com/vue"></script>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script>
-      const app = new Vue({
-        el: '#app',
-        template: `
-          <div>
-            <!--button v-on:click="showAlert()">Push me</button-->
-            <button @click="showAlert()">Push me</button>
-          </div>
-        `,
-        data: {
-        },
-        methods: {
-          showAlert: function () {
-            alert("Hello!");
-          }
-        }
-      })
-    </script>
-  </body>
-</html>
-
-Ejemplo de eventos y propiedades
-================================
+Ejemplo de eventos
+==================
 
 <!DOCTYPE html>
 <html lang="">
@@ -417,6 +484,36 @@ Ejemplo de eventos y propiedades
     })
     </script>
   </body>
+</html>
+
+Ejemplo de v-model
+==================
+
+<!--
+Vue también proporciona la directiva v-model que hace que la vinculación bidireccional entre los datos del formulario y el estado de la aplicación sea muy sencilla.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue component</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app-6">
+  <p>{{ message }}</p>
+  <input v-model="message">
+</div>
+
+<script>
+var app6 = new Vue({
+  el: '#app-6',
+  data: {
+    message: 'Hello Vue!'
+  }
+})
+</script>
+</body>
 </html>
 
 =========================
@@ -516,7 +613,7 @@ Vue.component('movie-card', {
   props: ['image', 'title'],
   template: `
     <div>
-      <img width="100" v-bind:src="image" v-bind:alt="title"/>
+      <img width="100" v-bind:src="image" />
       <h2>{{ title }}</h2>
     </div>
   `,
@@ -665,6 +762,18 @@ Podemos utilizar la propiedad template de Vue en el código JavaScript y dejar e
 index.html únicamente con el <div id='app'> sin nada en su interior, ya se
 encargará Vue de insertarlo:
 
+app.js
+
+Vue.component('movie-card', {
+  props: ['image', 'title'],
+  template: `
+    <div>
+      <img width="100" v-bind:src="image" />
+      <h2>{{ title }}</h2>
+    </div>
+  `,
+})
+
 new Vue({
   el: '#app',
   data: {
@@ -685,11 +794,28 @@ new Vue({
   `
 })
 
+index.html
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue component</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    <movie-card></movie-card>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
+
 Esta es la forma que tiene Vue de crear componentes, que por supuesto no es la
 única, pero que para algo sencillo nos puede servir sin necesidad de más
 herramientas.
 
-=================================
+
 Otro ejemplo de primer componente
 =================================
 
@@ -1146,6 +1272,135 @@ const app = new Vue({
     }
   }
 })
+
+Otro ejemplo:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue component</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+    <!-- Crea una instancia del componente paragraphs -->
+    <paragraphs></paragraphs>
+</div>
+
+<script>
+// Define un nuevo componente llamado paragraphs
+Vue.component('paragraphs', {
+  template: `
+  <div>
+    <p>This is a paragraphs</p>
+  <div>
+  `
+})
+new Vue({
+  el: '#app'
+})
+</script>
+</body>
+</html>
+
+Otro ejemplo:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue component</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <ul>
+    <vegetables-list
+      v-for="vegetal in vegetablesList"
+      v-bind:prop="vegetal">
+    </vegetables-list>
+  </ul>
+</div>
+
+<script>
+Vue.component('vegetables-list', {
+  props: ['prop'],
+  template: '<li>{{ prop.name }}</li>'
+})
+
+var app7 = new Vue({
+  el: '#app',
+  data: {
+    vegetablesList: [
+      { name: 'Vegetables' },
+      { name: 'Cheese' },
+      { name: 'Karrot' }
+    ]
+  }
+})
+</script>
+</body>
+</html>
+
+Otro ejemplo:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue component</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <app-header></app-header>
+  <ul>
+    <app-content
+      v-for="item in bookList"
+      v-bind:prop="item">
+    </app-content>
+  </ul>
+  <app-footer></app-footer>
+</div>
+
+<script>
+Vue.component('app-header', {
+  template: `
+  <div>
+    <h1>Header</h1>
+  <div>
+  `
+})
+
+Vue.component('app-content', {
+  props: ['prop'],
+  template: `
+    <li>{{ prop.title }}</li>
+  `
+})
+
+Vue.component('app-footer', {
+  template: `
+  <div>
+    <h4>Footer</h4>
+  <div>
+  `
+})
+
+var app7 = new Vue({
+  el: '#app',
+  data: {
+    bookList: [
+      { title: 'Il cimpendium malefican' },
+      { title: 'Free demololatrie' },
+      { title: 'The nine gate' }
+    ]
+  }
+})
+</script>
+</body>
+</html>
 
 =======
 Vue CLI
