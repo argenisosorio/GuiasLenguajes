@@ -1,0 +1,109 @@
+====================
+Guía de ESLINT by dM
+====================
+
+Qué es ESLINT, para qué sirve y cómo utilizarlo
+===============================================
+
+A medida que desarrollamos en JavaScript de manera profesional nos encontramos
+con el problema de aplicar las buenas prácticas a través de todos nuestros
+proyectos y de todo el equipo de trabajo. Es por esto que existen herramientas
+como ESLINT para Javascript el cuál no ayudará estandarizando el desarrollado a
+través de nuesrtos proyectos.
+
+ESLINT es un linter para JavaScript. Un Linter no es más que una herramienta que
+nos ayuda a cumplir las buenas prácticas de codificación y de estilos en un
+lenguaje de programación. ESLINT, es uno de los linters más populares para
+JavaScript. Pero cómo sabemos cuáles son las buenas prácticas en un lenguaje de
+programación ?, bueno para esto existen los presets, que son un conjunto de
+reglas establecidas como buenas prácticas.
+
+Instalación
+===========
+
+Lo primero que debemos hacer es instalar ESLINT mediante npm.
+
+$ npm i --save-dev eslint
+
+Después de esto podemos instalar un preset y en este tutorial utilizaremos
+Standard JS. Puedes revisar el conjunto de reglas aplicadas por Standard JS en
+aquí.
+
+$ npm install standard --save-dev
+
+Para configurar ESLINT basta agregar un archivo llamado .eslintrc en la carpeta
+raíz de tu proyecto con el siguiente contenido:
+
+{
+  "extends": "standard"
+}
+
+Uso
+===
+
+Para ver a eslint en funcionamiento vamos a crear el archivo man.js con el
+siguiente contenido.
+
+window.onload = function() {
+   document.querySelector("body").innerHTML = '<h1>Hello World!</h1>'
+}
+
+const upper =function( text) {
+return text.toUpperCase();
+}
+
+Una vez hecho esto podemos ejecutar el comando de eslint para verificar el
+archivo main.js.
+
+$ npx eslint main.js --fix-dry-run
+
+Obtendremos una salida como la siguiente:
+
+/home/user/www/eslint-project/main.js
+  5:7  error  'upper' is assigned a value but never used  no-unused-vars
+
+✖ 1 problem (1 error, 0 warnings)
+
+Sin embargo, aún no estamos utilizando las funcionalidades de Standard JS. Para
+esto debemos utilizar el siguiente comando:
+
+$ npx standard main.js --fix-dry-run
+
+Obtendremos una salida como la siguiente:
+
+standard: Use JavaScript Standard Style (https://standardjs.com)
+standard: Run `standard --fix` to automatically fix some problems.
+  /path/main.js:1:25: Missing space before function parentheses.
+  /path/main.js:2:1: Expected indentation of 2 spaces but found 3.
+  /path/main.js:2:27: Strings must use singlequote.
+  /path/main.js:5:7: 'upper' is assigned a value but never used.
+  /path/main.js:5:13: Operator '=' must be spaced.
+  /path/main.js:5:22: Missing space before function parentheses.
+  /path/main.js:5:23: There should be no space after this paren.
+  /path/main.js:6:1: Expected indentation of 2 spaces but found 0.
+  /path/main.js:6:26: Extra semicolon.
+
+Para que eslint haga las correcciones pertienes sobre los archivos debemos
+cambiar el comando --fix-dry-run por --fix:
+
+$ npx standard main.js --fix
+
+Nuestro archivo quedará así:
+
+window.onload = function () {
+  document.querySelector('body').innerHTML = '<h1>Hello World!</h1>'
+}
+
+const upper = function (text) {
+  return text.toUpperCase()
+}
+
+En este artículo aprendiste qué es ESLINT y cómo utilizarlo mediante comandos en
+tu proyecto. Sin embargo ESLINT puede utilizarse también integrado con Webpack
+de una manera mucho más estándar. Te invito a revisar los siguientes enlaces
+para llevar esto a cabo.
+
+Fuente
+======
+
+-https://blog.pleets.org/article/qu%C3%A9-es-eslint-en-javascript

@@ -143,6 +143,33 @@ El ejemplo sería:
 
 Esto nos muestra el mensaje Hello Vue! en el navegador.
 
+=====================
+Hola mundo en Vuejs 3
+=====================
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+  <div id="app">
+    {{ message }}
+  </div>
+
+  <script>
+    var app = Vue.createApp({
+      data() {
+        return {
+          message: "Hello World!"
+        };
+      }
+    }).mount("#app");
+  </script>
+</body>
+</html>
+
 =================
 Directivas de Vue
 =================
@@ -220,7 +247,8 @@ Ejemplo:
   </body>
 </html>
 
-Otro ejemplo:
+Otro ejemplo
+============
 
 <!DOCTYPE html>
 <html>
@@ -281,7 +309,8 @@ Ejemplo de v-for
 </body>
 </html>
 
-Otro ejemplo:
+Otro ejemplo
+============
 
 <!DOCTYPE html>
 <html>
@@ -316,7 +345,8 @@ Otro ejemplo:
 </body>
 </html>
 
-Ejemplo con 2 puntos de montaje:
+Ejemplo con 2 puntos de montaje
+===============================
 
 <!DOCTYPE html>
 <html>
@@ -362,7 +392,8 @@ Ejemplo con 2 puntos de montaje:
 </body>
 </html>
 
-Otro ejemplo:
+Otro ejemplo
+============
 
 <!DOCTYPE html>
 <html>
@@ -814,7 +845,6 @@ index.html
 Esta es la forma que tiene Vue de crear componentes, que por supuesto no es la
 única, pero que para algo sencillo nos puede servir sin necesidad de más
 herramientas.
-
 
 Otro ejemplo de primer componente
 =================================
@@ -1273,7 +1303,8 @@ const app = new Vue({
   }
 })
 
-Otro ejemplo:
+Otro ejemplo
+============
 
 <!DOCTYPE html>
 <html>
@@ -1304,7 +1335,8 @@ new Vue({
 </body>
 </html>
 
-Otro ejemplo:
+Otro ejemplo
+============
 
 <!DOCTYPE html>
 <html>
@@ -1343,7 +1375,8 @@ var app7 = new Vue({
 </body>
 </html>
 
-Otro ejemplo:
+Otro ejemplo
+============
 
 <!DOCTYPE html>
 <html>
@@ -1398,6 +1431,44 @@ var app7 = new Vue({
     ]
   }
 })
+</script>
+</body>
+</html>
+
+Otro ejemplo
+============
+
+<!--
+La variable active, que representa qué elemento
+del menú está actualmente seleccionado.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue example</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="nav">
+  <a href="#" v-on:click="makeActive('home')">Home</a>
+  <a href="#" v-on:click="makeActive('projects')">Projects</a>
+  <a href="#" v-on:click="makeActive('services')">Services</a>
+  <a href="#" v-on:click="makeActive('contact')">Contact</a>
+  <p>You chose <b>{{ active }}</b></p>
+</div>
+<script>
+var demo = new Vue({
+  el: '#nav',
+  data: {
+    active: 'home'
+  },
+  methods: {
+    makeActive: function(item){
+      this.active = item;
+    }
+  }
+});
 </script>
 </body>
 </html>
@@ -1522,6 +1593,46 @@ Al crear un proyecto con Vue CLI nos queda esta estructura:
 -public
 
 -README.md
+
+Estructura de aplicación en proyectos Vue.js
+============================================
+
+/node_modules: Es la carpeta vendor de nuestro proyecto. Aquí se almacenarán
+todos los paquetes que necesita nuestro proyecto para funcionar.
+
+/public: En esta carpeta estarán los archivos públicos de la aplicación. Aquí
+también estará el punto de entrada el cuál es el archivo index.html.
+
+/public/index.html: Es el archivo de acceso principal de la aplicación.
+
+/src: Aquí estará todo el código de la aplicación en Vue.js, es decir,
+componentes principalmente.
+
+/src/components: Contiene todos los componentes creados en Vue.js.
+
+/src/App.vue: Es el componente principal de la aplicación. Este componente
+llamará a todos los demás componentes creados en la carpeta components.
+
+main.js: Es el archivo principal o punto de entrada JS de la aplicación. Aquí se
+importan las librerías que hayamos instalado en la aplicación y se incia la
+instancia principal de Vue.
+
+package.json: Este archivo indica las dependencias de nuestro proyecto, los
+comandos disponibles y otras configuraciones.
+
+babel.config.js: Es la configuración de Babel. Básicamente indica como se va a
+transpilar el código moderno a código más antiguo que entienda todos los
+navegadores.
+
+.gitignore: Indica que archivos omitir para el sistema de gestión de versiones.
+
+Lo más importante de esta estructura es entender en dónde se deben crear los
+nuevos componentes de Vue y cómo integrarlos a nuestra aplicación.
+
+Fuente
+======
+
+-https://blog.pleets.org/article/estructura-de-directorios-en-vuejs
 
 Correr la aplicación desde un servidor de desarrollo de node
 ============================================================
@@ -1695,3 +1806,91 @@ import ImageMovie from './ImageMovie.vue'
     }
   }
 </script>
+
+Llamar un componente dentro de otro
+===================================
+
+Supongamos que tenemos SiteNav.vue
+
+<template>
+  <ul class="nav">
+    <li class="nav-item" v-for="item in items" :key="item">
+      <a class="nav-link" href="#">{{ item }}</a>
+    </li>
+  </ul>
+</template>
+
+<script>
+export default {
+  props: {
+    items: {
+      type: Array,
+      required: true,
+    },
+  },
+};
+</script>
+
+<style scoped>
+ul > li {
+  border: solid 1px silver;
+  margin-left: 2px;
+  background: rgb(240, 240, 240);
+}
+</style>
+
+Para utilizar el componente creado anteriormente dentro de otro componente basta
+importarlo mediante un import y cargarlo al componente padre. Observemos por
+ejemplo como el siguente componente carga SiteNav.
+
+<template>
+  <div id="app">
+    <site-nav :items="nav"></site-nav>
+  </div>
+</template>
+
+<script>
+import SiteNav from "./components/SiteNav";
+
+export default {
+  name: "App",
+  components: {
+    SiteNav,
+  },
+  data() {
+    return {
+      nav: ["Home", "Products", "About Us"],
+    };
+  },
+};
+</script>
+
+============================================================================
+Ejemplo de un componente para exportar con webpack en un proyecto de Laravel
+============================================================================
+
+En resources/js/app.js:
+
+Vue.component(
+  'name-component',
+  () => import('./components/NameComponent.vue')
+);
+
+En resources/js/components/NameComponent.vue:
+
+<template>
+    sssss
+</template>
+
+<script>
+export default {
+  data () {
+  },
+  props :{
+  },
+}
+</script>
+
+resources/views/index.blade.php
+
+<name-component></name-component>
