@@ -196,6 +196,14 @@ v-model: Permite enlazar un elemento con alguna propiedad de un estado. Permite
 la vinculación bidireccional entre los datos del dom y el estado de la
 aplicación.
 
+v-text: Esta directiva permite hacer un trabajo similar a la interpolación de
+texto con la diferencia que la interpolación puede ser usada para renderizar un
+fragmento del texto de un elemento, la directiva v-text renderizará todo el
+contenido.
+
+v-html: Esta directiva permite imprimer código html en el elemento en cuestión.
+Es el equivalente al innerHTML de JavaScript.
+
 Y existen más directivas en Vue...
 
 Ejemplo de la directiva v-on
@@ -521,7 +529,9 @@ Ejemplo de v-model
 ==================
 
 <!--
-Vue también proporciona la directiva v-model que hace que la vinculación bidireccional entre los datos del formulario y el estado de la aplicación sea muy sencilla.
+Vue también proporciona la directiva v-model que hace que la vinculación
+bidireccional entre los datos del formulario y el estado de la aplicación sea
+muy sencilla.
 -->
 <!DOCTYPE html>
 <html>
@@ -546,6 +556,224 @@ var app6 = new Vue({
 </script>
 </body>
 </html>
+
+Otro ejemplo
+============
+
+<!-- Sumar dos números con evento click -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  Type the first number:
+  <input type="number" v-model.number="n1">
+  <br />
+  Type the second number:
+  <input type="number" v-model.number="n2">
+  <br />
+  <button v-on:click="sum = n1 + n2">Sum</button>
+  <br />
+  The sum is: {{ sum }}
+</div>
+
+<script>
+var vue = new Vue({
+ el: "#app",
+ data: {
+   n1: 0,
+   n2: 0,
+   sum: 0
+ }
+});
+</script>
+</body>
+</html>
+
+Otro ejemplo usando métodos
+===========================
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+ Type the first number:
+ <input type="number" v-model.number="n1"><br />
+ Type the second number:
+ <input type="number" v-model.number="n2"><br />
+ <button v-on:click="sum">Sum</button><br />
+ The sum is: {{ ans }}
+</div>
+
+<script>
+var vue = new Vue({
+ el: "#app",
+ data: {
+   n1: 0,
+   n2: 0,
+   ans: 0
+ },
+ methods: {
+  sum: function() {
+    this.ans = this.n1 + this.n2;
+  }
+ }
+});
+</script>
+</body>
+</html>
+
+Otro ejemplo de métodos con parámetros
+======================================
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+ Type the first number:
+ <input type="number" v-model.number="n1"><br />
+ Type the second number:
+ <input type="number" v-model.number="n2"><br />
+ <button v-on:click="sum(n1,n2)">Sum</button><br />
+ The sum is: {{ ans }}
+</div>
+
+<script>
+var vue = new Vue({
+ el: "#app",
+ data: {
+   n1: 0,
+   n2: 0,
+   ans: 0
+ },
+ methods: {
+   sum: function(a, b) {
+     this.ans = a + b;
+   }
+ }
+});
+</script>
+</body>
+</html>
+
+Ejemplo de v-show
+=================
+
+Esta directiva es utilizada para mostrar de manera condicional un elemento HTML.
+Su uso es muy similar a la directiva v-if puesto que acepta una expresión y toma
+su valor booleano para determinar si se muestra o no dicho elemento.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+ Product X
+ <br />
+ <input type="number" v-model.number="items">
+ <br />
+ <p v-show="hasItems()">
+   You order has {{ items }} items
+ </p>
+</div>
+
+<script>
+var app = new Vue({
+  el: "#app",
+  data: {
+    items: 0
+  },
+  methods: {
+    hasItems: function() {
+      return this.items > 0;
+    }
+  }
+});
+</script>
+</body>
+</html>
+
+Ejemplo de v-text
+=================
+
+Esta directiva permite hacer un trabajo similar a la interpolación de texto con
+la diferencia que la interpolación puede ser usada para renderizar un fragmento
+del texto de un elemento, la directiva v-text renderizará todo el contenido.
+Vemos un ejemplo.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <p>Hello {{ message }}</p>
+  <p v-text="greeting"></p>
+</div>
+<script type="text/javascript">
+var app = new Vue({
+  el: "#app",
+  data: {
+    message: "World",
+    greeting: "Hello World"
+  }
+});
+</script>
+</body>
+</html>
+
+Ejemplo de v-html
+=================
+
+Esta directiva permite imprimer código html en el elemento en cuestión. Es el
+equivalente al innerHTML de JavaScript. Veamos un ejemplo.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <p v-html="greeting"></p>
+</div>
+<script type="text/javascript">
+var app = new Vue({
+  el: "#app",
+  data: {
+    greeting: "<h1>Hello World</h1>"
+  }
+});
+</script>
+</body>
+</html>
+
+Esta directiva delegará la impresión del HTML al navegador sin realizar algún
+renderizado a priori, es decir, no se puede utilizar directivas de Vue en el
+código HTML que se desea imprimir.
 
 =========================
 Anatomía de un componente
@@ -1894,3 +2122,146 @@ export default {
 resources/views/index.blade.php
 
 <name-component></name-component>
+
+======================================
+Instalar Bootstrap en proyectos Vue.js
+======================================
+
+Lo primero que debes hacer es agregar Bootstrap y Popper al proyecto.
+
+$ npm i --save bootstrap
+
+$ npm i --save jquery popper.js
+
+Después de esto basta simplemente importar bootstrap de la siguiente manera en
+el archivo main.js.
+
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+si recién creaste tu proyecto en Vue tu archivo main.js lucirá muy similar al
+sighuiente.
+
+import Vue from "vue";
+import App from "./App.vue";
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+Vue.config.productionTip = false;
+
+new Vue({
+  render: (h) => h(App),
+}).$mount("#app");
+
+Una vez hecho esto ya podrás empezar a utilizar bootstrap en tus componentes.
+
+Fuente
+======
+
+-https://blog.pleets.org/article/instalar-bootstrap-en-proyecto-vuejs
+
+==================================
+Paso de parámetros a un componente
+==================================
+
+En el escript:
+
+Vue.component('x-button', {
+  props: ['url', 'text'],
+  template: `
+    <a :href="url" class="btn btn-primary">
+      {{ text }}
+    </a>
+  `
+});
+
+var vue = new Vue({
+  el: "#app",
+});
+
+En el index.html
+
+<div id="app" class="m-3">
+  <x-button
+    text="Go"
+    url="https://www.google.com">
+  </x-button>
+</div>
+
+================
+Clases dinámicas
+================
+
+Supogamos que queremos mostrar en rojo la facturación menor o igual a 100 USD y
+en verde la facturación por encima de 100 USD. Para esto, podemos utilizar el
+shortcut la directiva v-bind para colocar un objeto en el atributo array y
+decidir si se aplica cada clase:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<style type="text/css">
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+</style>
+
+<ul id="app">
+  <li
+    v-bind:class="{ red: price <= 100, green: price > 100 }"
+    v-for="(price, date) in sales">
+    {{ date }} - ${{ price }}
+  </li>
+</ul>
+
+<script>
+var vue = new Vue({
+  el: "#app",
+  data: {
+    sales: {
+      '2020-01-01': 100,
+      '2020-01-02': 200,
+      '2020-01-03': 300
+    }
+  }
+});
+</script>
+</body>
+</html>
+
+=================
+Sintaxis de array
+=================
+
+Si bien es posible pasar un objeto en el atributo class, también es posible
+pasar un array de clases a agregar. Veamos un ejemplo simple en donde adjuntamos
+un par de clases a un botón.
+
+<button :class="['btn', 'btn-success']">Submit</button>
+
+Esto es exactamente igual a hacer lo siguiente:
+
+<button class="btn btn-primary">Submit</button>
+
+A simple vista parece no tener mucha utilidad, el verdadero poder de esta
+sintaxis consiste en que puedes combinarlo con la sintaxis de objeto. Entonces
+puede ser útil que debas verificar si realmente necesitas la clase btn-success
+en un botón o necesitas btn-danger. Dicho esto, podríamos tener algo como lo
+siguiente:
+
+<button
+  :class="['btn', isError ? 'btn-danger' : 'btn-success']"
+  @click="isError = !isError">
+  Submit
+</button>
+
+Al dar clic en el botón cada vez cambiará de clase según el valor de isError.
+Puedes ver este ejemplo corriendo en codepen.
