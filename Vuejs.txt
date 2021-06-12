@@ -181,16 +181,17 @@ Ejemplos:
 
 v-for: Lo que hace es recorrer una lista de elementos, es un ciclo for.
 
-v-on: Que lo que hace es escuchar un evento.
+v-on: Que lo que hace es escuchar un evento, nativo o creado por el usuario.
 
-v-bind: Que encadena datos, es decir que establece comunicación con los datos
-que haya en el componente asociado.
+v-bind: Vincula un atributo HTML a un valor que tengamos en nuestro modelo.
+Encadena datos, es decir que establece comunicación con los datos que haya en el
+componente asociado.
 
-v-if: Un condicional.
+v-if: Un condicional que inyecta un elemento al DOM según la condición.
 
 v-else: El else de esa condicional.
 
-v-show: Para mostrar u ocultar elementos.
+v-show: Para mostrar u ocultar elementos usando la propiedad display de CSS.
 
 v-model: Permite enlazar un elemento con alguna propiedad de un estado. Permite
 la vinculación bidireccional entre los datos del dom y el estado de la
@@ -1697,6 +1698,44 @@ var demo = new Vue({
     }
   }
 });
+</script>
+</body>
+</html>
+
+Otro ejemplo
+============
+
+<!--
+Al darle click al texto aparece un campo que permite
+editar el texto y salir de la edición con un click.
+-->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue example</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="main">
+  <div v-on:click.stop v-if="show_input">
+    <input type="text" v-model="text_content" />
+  </div>
+  <p v-on:click.stop="toggleTooltip">{{text_content}}</p>
+</div>
+<script>
+var demo = new Vue({
+  el: '#main',
+  data: {
+    show_input: false,
+    text_content: 'Click and edit me'
+  },
+  methods: {
+    toggleTooltip: function(){
+      this.show_input = !this.show_input;
+    }
+  }
+})
 </script>
 </body>
 </html>
