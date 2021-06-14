@@ -626,3 +626,22 @@ $ sudo apt-get update
 # Install the latest version of PostgreSQL.
 
 $ sudo apt-get -y install postgresql
+
+=================
+La expresión LIKE
+=================
+
+LIKE devuelve verdadero si la cadena coincide con el patrón proporcionado.
+(Como se esperaba, la expresión NOT LIKE devuelve falso si LIKE devuelve
+verdadero, y viceversa.
+
+Si el patrón no contiene signos de porcentaje o guiones bajos, entonces el
+patrón solo representa la cadena en sí; en ese caso LIKE actúa como el operador
+igual.
+
+Algunos ejemplos:
+
+'abc' LIKE 'abc'    true
+'abc' LIKE 'a%'     true
+'abc' LIKE '_b_'    true
+'abc' LIKE 'c'      false

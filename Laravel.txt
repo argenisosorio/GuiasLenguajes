@@ -5570,3 +5570,13 @@ Actualizar lista de paquetes de node
 Este comando actualizará todos los paquetes listados a la última versión.
 
 $ npm update
+
+
+Si está utilizando Postgres, la palabra clave ILIKE se puede usar en lugar de
+LIKE para que la coincidencia no distinga entre mayúsculas y minúsculas de
+acuerdo con la configuración regional activa. Esto no está en el estándar SQL
+pero es una extensión de PostgreSQL.
+
+Ejemplo:
+
+User::where('name, 'ILIKE', $search)->get();
