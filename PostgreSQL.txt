@@ -117,86 +117,238 @@ Para ver los roles existentes (usuarios)
 
 -----
 
-# \l // Ver las bases de datos creadas
+Ver las bases de datos creadas
+
+# \l
+
+-----
 
 # \s // Ver el historial de comandos usados en postgres
 
 Ctrl + l // Limpiar la consola de postgres
 
-# SELECT CURRENT_DATE; // Muestra la fecha del sistema, para ver el formato de fecha de postgres.
+-----
 
-# CREATE USER nombre_usuario; // Crear usuario sin password, es mejor asignarle el pass
+Muestra la fecha del sistema, para ver el formato de fecha de postgres.
 
-# CREATE USER nombre_usuario PASSWORD 'p@s5w0rd'; //Crear usuario y asignarle el password
+# SELECT CURRENT_DATE;
 
-# ALTER USER usuario WITH PASSWORD 'nueva_password'; //Asignarle o cambiarle el password a un usuario, debe estar creado
+-----
 
-# DROP USER nombre_usuario; // Borrar un usuario
+Crear usuario sin password, es mejor asignarle el pass
 
-# CREATE DATABASE nombre_db; // Crear una base de datos
+# CREATE USER nombre_usuario;
 
-# CREATE DATABASE new_db WITH TEMPLATE original_db OWNER db_user; // Crear una copia de una database existente;
+-----
 
-# DROP DATABASE nombre_db; // Borrar una base de datos
+Crear usuario y asignarle el password
 
-# CREATE DATABASE nombre_BaseDatosprueba OWNER nombre_usuario; // Creando una base de datos, debe estar creado el usuario
+# CREATE USER nombre_usuario PASSWORD 'p@s5w0rd';
 
-# \c name_db; // Conectarse a la base de datos creada
+-----
 
-# \c postgres; // Conectarse de nuevo a la db postgres con el usuario postgres 
+Asignarle o cambiarle el password a un usuario, debe estar creado
 
-name_db=# CREATE TABLE nombre_tabla (nombre varchar(20),edad int); //Creacion de una tabla con un campo varchar de tamaño 20 y un campo para enteros
+# ALTER USER usuario WITH PASSWORD 'nueva_password';
 
-name_db=# \d // Para ver la lista de relaciones de la db, se debe estar conectado a la db, se pueden ver las tablas
+-----
 
-namedb=# \d nombre_tabla // Para ver la descripción (nombre de columnas, tipo de datos de una tabla, etc.
+Borrar un usuario
 
-namedb=# INSERT INTO nombre_tabla (nombre_campo, ..., nombre_campo) values (valor_campo, ..., valor_campo); //Insertar datos en la tabla
+# DROP USER nombre_usuario;
 
-Ejemplo:
-namedb=# INSERT INTO usuario (nombre, nacionalidad, cedula) values ('vladimirov','V',12345678); //Insertar datos en la una tabla, las cadenas
-se expresan entre ('').
+-----
 
-namedb=# INSERT INTO usuarios VALUES ('mariana','V',12345678); // Insertar datos, no se pueden dejar campos vacios.
+Crear una base de datos
 
-namedb=# SELECT nombre_campo FROM nombre_tabla; // Hacer una consulta a los datos de un campo especifico.
+# CREATE DATABASE nombre_db;
 
-namedb=# SELECT nombre_campo,nombre_campo2 FROM nombre_tabla; // Hacer una consulta a los datos de varios campos especificos, separados por ",".
+-----
 
-namedb=# SELECT * FROM nombre_tabla; // Hacer una consulta de los datos de la tabla, (*) Significa que lea todas las columnas de la tabla.
+Crear una copia de una database existente
 
-namedb=# select * from nombre_tabla limit n; // Hacer una consulta a los registros de una tabla especificando el número de registros
-a consultar donde n es un entero, ejemplo 5.
+# CREATE DATABASE new_db WITH TEMPLATE original_db OWNER db_user;
 
-namedb=# SELECT * FROM name_table ORDER BY id; // Consultar todos los registros de una tabla pero ordenándolos ascendentemente en referencia a un campo (id) en este caso.
+-----
 
-namedb=# SELECT * FROM name_table ORDER BY id ASC; // Consultar los registros de una tabla ordenandolos de manera ascendente en referencia a un campo específico.
+Borrar una base de datos
 
-namedb=# SELECT * FROM name_table ORDER BY id DESC; // Consultar los registros de una tabla ordenandolos de manera descendente en referencia a un campo específico.
+# DROP DATABASE nombre_db;
 
-namedb=# SELECT * FROM nombre_tabla WHERE nombre_campo='valor'; // Hacer una consulta de los datos de una tabla cuando coincida con el parametro establecido, cadena
+-----
 
-namedb=# SELECT * FROM nombre_tabla WHERE nombre_campo=3; // Hacer una consulta de los datos de una tabla cuando coincida con el parametro establecido, entero
+Creando una base de datos, debe estar creado el usuario
 
-name_db=# SELECT * FROM name_table WHERE id >= 5; // Consultar los datos de una tabla que sean mayores o iguales que.
+# CREATE DATABASE nombre_BaseDatosprueba OWNER nombre_usuario;
 
-db_name=# select id from table where id>=25 order by id ASC; // Ordenar ascendente los registros mayores que.
+----
 
-db_name=# select id from table WHERE id IN ( 25, 27 ); // Listar los registros de una tabla que esten en el rango de 25 y 27.
+Conectarse a la base de datos creada
 
-db_name=# select id from table WHERE id NOT IN ( 25, 27 ); // Listar los registros de una tabla exepto los que sean iguales a 25 y 27.
+# \c name_db;
 
-db_name=# select * from table WHERE id BETWEEN 2 and 5; // Listar los registro de una tabla cuyo valor del id esté entre 2 y 5 incluyéndo los mismos.
+-----
 
-db_name=# SELECT * FROM table WHERE name LIKE 'Pa%'; // Listar todos los registros cuyo name inicie con la porción de cadena 'Pa'.
+Conectarse de nuevo a la db postgres con el usuario postgres 
 
-db_name=# SELECT name FROM table WHERE name LIKE 'Pa%'; // Listar todos los registros cuyo name inicie con la porción de cadena 'Pa'.
+# \c postgres;
 
-db_name=# select id as identificador,title as título from table_noticia; Hacemos una consulta a una tabla, pero usamos la palabra AS para crer un alias para los nombres de los campos, muy util para generar consultas personalizadas y crear un .csv para hacer una migración de datos, por ejemplo.
+-----
 
-postgres=# GRANT ALL PRIVILEGES ON DATABASE nombre_BaseDatos TO nombre_usuario; // Al crear un usuario podemos darle permisos a una base de datos existente.
+Creacion de una tabla con un campo varchar de tamaño 20 y un campo para enteros.
 
-postgres=# ALTER ROLE name_user WITH SUPERUSER; // Cambiar los permisos de un usuario;
+name_db=# CREATE TABLE nombre_tabla (nombre varchar(20),edad int);
+
+-----
+
+Para ver la lista de relaciones de la db, se debe estar conectado a la db, se
+pueden ver las tablas
+
+name_db=# \d
+
+-----
+
+Para ver la descripción (nombre de columnas, tipo de datos de una tabla, etc.
+
+namedb=# \d nombre_tabla
+
+-----
+
+Insertar datos en la tabla
+
+namedb=# INSERT INTO nombre_tabla (nombre_campo, ..., nombre_campo) values (valor_campo, ..., valor_campo);
+
+Ejemplo de Insertar datos en una tabla, las cadenas se expresan entre ('').:
+
+namedb=# INSERT INTO usuario (nombre, nacionalidad, cedula) values ('vladimirov','V',12345678);
+
+-----
+
+Insertar datos, no se pueden dejar campos vacios.
+
+namedb=# INSERT INTO usuarios VALUES ('mariana','V',12345678);
+
+-----
+
+Hacer una consulta a los datos de un campo especifico.
+
+namedb=# SELECT nombre_campo FROM nombre_tabla;
+
+-----
+
+Hacer una consulta a los datos de varios campos especificos, separados por ",".
+
+namedb=# SELECT nombre_campo,nombre_campo2 FROM nombre_tabla;
+
+-----
+
+Hacer una consulta de los datos de la tabla, (*) Significa que lea todas las
+columnas de la tabla.
+
+namedb=# SELECT * FROM nombre_tabla;
+
+-----
+
+Hacer una consulta a los registros de una tabla especificando el número de
+registros a consultar donde n es un entero, ejemplo 5.
+
+namedb=# select * from nombre_tabla limit n;
+
+Consultar todos los registros de una tabla pero ordenándolos ascendentemente en
+referencia a un campo (id) en este caso.
+
+namedb=# SELECT * FROM name_table ORDER BY id;
+
+-----
+
+Consultar los registros de una tabla ordenandolos de manera ascendente en
+referencia a un campo específico.
+
+namedb=# SELECT * FROM name_table ORDER BY id ASC;
+
+-----
+
+Consultar los registros de una tabla ordenandolos de manera descendente en
+referencia a un campo específico.
+
+namedb=# SELECT * FROM name_table ORDER BY id DESC;
+
+-----
+
+Hacer una consulta de los datos de una tabla cuando coincida con el parametro
+establecido, cadena
+
+namedb=# SELECT * FROM nombre_tabla WHERE nombre_campo='valor';
+
+-----
+
+Hacer una consulta de los datos de una tabla cuando coincida con el parametro
+establecido, entero
+
+namedb=# SELECT * FROM nombre_tabla WHERE nombre_campo=3;
+
+-----
+
+Consultar los datos de una tabla que sean mayores o iguales que.
+
+name_db=# SELECT * FROM name_table WHERE id >= 5;
+
+-----
+
+Ordenar ascendente los registros mayores que.
+
+db_name=# select id from table where id>=25 order by id ASC;
+
+-----
+
+Listar los registros de una tabla que esten en el rango de 25 y 27.
+
+db_name=# select id from table WHERE id IN ( 25, 27 );
+
+-----
+
+Listar los registros de una tabla exepto los que sean iguales a 25 y 27.
+
+db_name=# select id from table WHERE id NOT IN ( 25, 27 );
+
+-----
+
+Listar los registro de una tabla cuyo valor del id esté entre 2 y 5 incluyéndo
+los mismos.
+
+db_name=# select * from table WHERE id BETWEEN 2 and 5;
+
+-----
+
+Listar todos los registros cuyo name inicie con la porción de cadena 'Pa'.
+
+db_name=# SELECT * FROM table WHERE name LIKE 'Pa%';
+
+-----
+
+Listar todos los registros cuyo name inicie con la porción de cadena 'Pa'.
+
+db_name=# SELECT name FROM table WHERE name LIKE 'Pa%';
+
+-----
+
+Hacemos una consulta a una tabla, pero usamos la palabra AS para crer un alias
+para los nombres de los campos, muy util para generar consultas personalizadas y
+crear un .csv para hacer una migración de datos, por ejemplo.
+
+db_name=# select id as identificador,title as título from table_noticia;
+
+------
+
+Al crear un usuario podemos darle permisos a una base de datos existente.
+
+postgres=# GRANT ALL PRIVILEGES ON DATABASE nombre_BaseDatos TO nombre_usuario;
+
+-----
+
+Cambiar los permisos de un usuario;
+
+postgres=# ALTER ROLE name_user WITH SUPERUSER;
 
 where option can be:
 
@@ -210,66 +362,133 @@ where option can be:
     | [ ENCRYPTED | UNENCRYPTED ] PASSWORD 'password'
     | VALID UNTIL 'timestamp'
 
----
+-----
 
-nombredb=# DELETE FROM nombre_tabla; // Eliminar los registros de una tabla 
+Eliminar los registros de una tabla
 
-namedb=# DELETE FROM table_name WHERE condition; // Borrar los datos de la columna de una tabla cuando se cumpla
-una condicion.
+nombredb=# DELETE FROM nombre_tabla;
 
-nombredb=# DELETE FROM nombre_tabla WHERE nombre_campo='xxx'; // Eliminar los registros de un campo especifico
-Ejemplo:
-nombredb=# DELETE FROM usuario WHERE nombre='vladimirov'; // En este ejemplo eliminaremos los registros de una tabla usuarios
-pero solo de los campos cuyo nombre sea igual a (vladimirov), por ello se usa la clausula WHERE.
+-----
 
-nombredb=# TRUNCATE TABLE nombre_table; // Vaciar los registros de una tabla, (elimina todos los registros de la tabla)
-y vuelve a crear la tabla con la misma estructura.
+Borrar los datos de la columna de una tabla cuando se cumpla una condicion.
 
-// La diferencia con "delete" es la velocidad, es más rápido "truncate table" que "delete" (se nota cuando la cantidad
-de registros es muy grande) ya que éste borra los registros uno a uno.
+namedb=# DELETE FROM table_name WHERE condition;
 
-nombredb=# DROP TABLE nombre_tabla // Elimina una tabla asi como sus registros.
+-----
 
-nombredb=# ALTER TABLE nombre_tabla ADD nombre_campo tipo_campo; //Agregar un nuevo campo a una tabla.
-Ejemplo:
-prueba=# ALTER TABLE usuarios ADD cedula int; //En la base de datos prueba, agregamos a la tabla usuarios un nuevo campo
-cedula de tipo entero.
+Eliminar los registros de un campo especifico
 
-nombredb=# ALTER TABLE nombre_tabla RENAME nombre_campo TO nuevo_nombre_campo; //Cambiar o renombrar el nombre de un campo creado.
-
-nombredb=# ALTER TABLE nombre_tabla DROP COLUMN nombre_columna; // Para eliminar un campo o una columna de una tabla.
-
-nombredb=# ALTER TABLE nombre_tabla DROP COLUMN nombre_columna CASCADE; // Para eliminar un campo o una columna de una tabla en cascada.
-
-nombredb=# ALTER TABLE nombre_tabla ALTER COLUMN nombre_campo TYPE tipo_campo; // Modificar el tipo de dato de una columna.
-
-nombredb=# UPDATE nombre_tabla SET nombre_campo='xxx' WHERE nombre_campo='xxxx'; // Modificar el registro de un campo
+nombredb=# DELETE FROM nombre_tabla WHERE nombre_campo='xxx';
 
 Ejemplo:
 
-Prueba=# UPDATE usuarios SET nombre='Vitaly' WHERE cedula='12345678'; // En la base de datos prueba, vamos a actualizar un registro
-de la tabla usuarios que corresponde a la columna o campo nombre, el registro que se modificara sera el que corresponda con el parametro 
-pasado con WHERE, sera el parametro de busqueda en la columna, pero puede ser el id por ejemplo.
+En este ejemplo eliminaremos los registros de una tabla usuarios pero solo de
+los campos cuyo nombre sea igual a (vladimirov), por ello se usa la clausula
+WHERE.
 
-# ALTER DATABASE name RENAME TO new_name // Cambiar el nombre de la database
+nombredb=# DELETE FROM usuario WHERE nombre='vladimirov';
 
-# ALTER DATABASE name OWNER TO new_owner // Cambiar el dueño de la database
+-----
 
-##### Creando columna de autoincremento #####
+Vaciar los registros de una tabla, (elimina todos los registros de la tabla) y
+vuelve a crear la tabla con la misma estructura.
 
-Para crear una columna de autoincremento, ideal para la columna (id) se usa el tipo de dato (serial)
+nombredb=# TRUNCATE TABLE nombre_table;
+
+La diferencia con "delete" es la velocidad, es más rápido "truncate table" que
+"delete" (se nota cuando la cantidad de registros es muy grande) ya que éste
+borra los registros uno a uno.
+
+-----
+
+Elimina una tabla asi como sus registros.
+
+nombredb=# DROP TABLE nombre_tabla
+
+-----
+
+Agregar un nuevo campo a una tabla.
+
+nombredb=# ALTER TABLE nombre_tabla ADD nombre_campo tipo_campo;
+
+-----
+En la base de datos prueba, agregamos a la tabla usuarios un nuevo campo cedula de tipo entero.
+prueba=# ALTER TABLE usuarios ADD cedula int;
+
+-----
+
+Cambiar o renombrar el nombre de un campo creado.
+
+nombredb=# ALTER TABLE nombre_tabla RENAME nombre_campo TO nuevo_nombre_campo;
+
+-----
+
+Para eliminar un campo o una columna de una tabla.
+
+nombredb=# ALTER TABLE nombre_tabla DROP COLUMN nombre_columna;
+
+-----
+
+Para eliminar un campo o una columna de una tabla en cascada.
+
+nombredb=# ALTER TABLE nombre_tabla DROP COLUMN nombre_columna CASCADE;
+
+-----
+
+Modificar el tipo de dato de una columna.
+
+nombredb=# ALTER TABLE nombre_tabla ALTER COLUMN nombre_campo TYPE tipo_campo;
+
+-----
+
+Modificar el registro de un campo
+
+nombredb=# UPDATE nombre_tabla SET nombre_campo='xxx' WHERE nombre_campo='xxxx';
 
 Ejemplo:
-nombredb=# CREATE TABLE usuarios (id serial, nombre varchar(20)); //Creamos una tabla usuarios con dos campos,
-id que sera (serial) y otro campo nombre de tamaño 20, el campo serial toma el valor por defecto de (1) al momento de
-comenzar a introducir registros en los campos. 
+
+En la base de datos prueba, vamos a actualizar un registro de la tabla usuarios
+que corresponde a la columna o campo nombre, el registro que se modificara sera
+el que corresponda con el parametro pasado con WHERE, sera el parametro de
+busqueda en la columna, pero puede ser el id por ejemplo.
+
+Prueba=# UPDATE usuarios SET nombre='Vitaly' WHERE cedula='12345678';
+
+------
+
+Cambiar el nombre de la database
+
+# ALTER DATABASE name RENAME TO new_name
+
+------
+
+Cambiar el dueño de la database
+
+# ALTER DATABASE name OWNER TO new_owner
+
+-----
+
+Creando columna de autoincremento #####
+
+Para crear una columna de autoincremento, ideal para la columna (id) se usa el
+tipo de dato (serial)
+
+Ejemplo:
+ 
+Creamos una tabla usuarios con dos campos, id que sera (serial) y otro campo
+nombre de tamaño 20, el campo serial toma el valor por defecto de (1) al momento
+de comenzar a introducir registros en los campos.
+
+nombredb=# CREATE TABLE usuarios (id serial, nombre varchar(20));
 
 Ejemplo:
 prueba=# INSERT INTO usuarios (nombre) VALUES ('Kristina');
 prueba=# INSERT INTO usuarios (nombre) VALUES ('Khalifa');
-// Introducimos los registros 'Kristina' y 'Khalifa' en la columna nombre, como vemos
-no hace falta introducir el valor de la columna (id) puesto que lo toma automaticamente autoincrementando en
-relacion al anterior registro. Si observamos la tabla se vería asi:
+
+Introducimos los registros 'Kristina' y 'Khalifa' en la columna nombre, como
+vemos no hace falta introducir el valor de la columna (id) puesto que lo toma
+automaticamente autoincrementando en relacion al anterior registro. Si
+observamos la tabla se vería asi:
 
 prueba=# SELECT * FROM usuarios;
  id | nombre     
@@ -645,3 +864,72 @@ Algunos ejemplos:
 'abc' LIKE 'a%'     true
 'abc' LIKE '_b_'    true
 'abc' LIKE 'c'      false
+
+==========================
+Los esquemas en postgresql
+==========================
+
+Los esquemas son como "agrupaciones" de tablas. Por ejemplo podrías tener un
+sistema multicompañía, y en una misma base de datos pero con diferentes esquemas
+mantener la infomación. Por ejemplo compania1.clientes y compañia2.clientes
+
+Las tablas clientes tendrían la misma estructura y el mismo nombre pero
+almacenadas en esquemas diferentes.
+
+====================================
+¿Cómo otorgar acceso a los usuarios?
+====================================
+
+Aquí hay algunas declaraciones comunes para otorgar acceso a un usuario de
+PostgreSQL:
+
+1) Otorgue CONNECT a la base de datos:
+
+GRANT CONNECT ON DATABASE database_name TO username;
+
+2) Otorgar USAGE en el esquema:
+
+GRANT USAGE ON SCHEMA schema_name TO username;
+
+3) Otorgar en todas las tablas para declaraciones DML: SELECT, INSERT, UPDATE,
+DELETE:
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA schema_name TO username;
+
+4) Otorgue todos los privilegios en todas las tablas del esquema:
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA schema_name TO username;
+
+5) Otorgue todos los privilegios en todas las secuencias del esquema:
+
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA schema_name TO username;
+
+6) Otorgue todos los privilegios en la base de datos:
+
+GRANT ALL PRIVILEGES ON DATABASE database_name TO username;
+
+7) Otorgue permiso para crear una base de datos :
+
+ALTER USER username CREATEDB;
+
+8.Convierta un usuario en superusuario :
+
+ALTER USER myuser WITH SUPERUSER;
+
+9) Eliminar el estado de superusuario :
+
+ALTER USER username WITH NOSUPERUSER;
+
+Esas declaraciones anteriores solo afectan las tablas existentes actuales
+
+Para aplicar a tablas recién creadas, debe usar alter default Por ejemplo:
+
+ALTER DEFAULT PRIVILEGES
+FOR USER username
+IN SCHEMA schema_name
+GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO username;
+
+Fuente
+======
+
+https://tableplus.com/blog/2018/04/postgresql-how-to-grant-access-to-users.html
