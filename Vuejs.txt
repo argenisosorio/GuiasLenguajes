@@ -207,6 +207,66 @@ Es el equivalente al innerHTML de JavaScript.
 
 Y existen más directivas en Vue...
 
+Ejemplo de la directiva v-bind
+==============================
+
+Enlace de atributos
+===================
+
+El enlace de atributos (attribute binding) es una característica de Vue que
+permite enlazar atributos de elementos HTML con el valor de una propiedad.
+
+La forma para generar la imagen de manera dinámica, o más bien, enlazarla desde
+la data de Vue no es igual a la forma de imprimir un mensaje común con
+interpolación como es el caso de la variable message. Para esto, Vue nos
+proporciona la directiva v-bind. La sintaxis para esto sería la siguiente:
+
+v-bind:attribute="property"
+
+En donde attribute es el atributo del elemento HTML y property es la propiedad
+en Vue.js. De acuerdo a esto, la forma de enlazar el atributo src de la imagen
+con Vue sería de la siguiente manera.
+
+En este punto, generalizando un poco la sintaxis en realidad permitiría no solo
+colocar el valor de una propiedad en el contexto sino toda una expresión.
+
+v-bind:attribute="expression"
+
+Finalmente, Vue.js nos facilita un poco la vida agregando un shorthand para esta
+directiva de la siguiente manera.
+
+:attribute="expression"
+
+-----
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue example</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <img v-bind:src="image" width="80" /> {{ $message }}
+</div>
+<script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Vue.js',
+    image: 'https://blog.pleets.org/img/articles/vuejs-icon.png'
+  }
+});
+</script>
+</body>
+</html>
+
+Fuente
+======
+
+https://blog.pleets.org/article/enlace-de-atributos-en-vuejs
+
 Ejemplo de la directiva v-on
 ============================
 
@@ -561,6 +621,57 @@ var app6 = new Vue({
 Otro ejemplo
 ============
 
+=====================================
+Enlace de datos doble o bidireccional
+=====================================
+
+Veremos cómo realizar un enlace doble de datos, el cuál nos permitirá actualizar
+propiedades desde el HTML hacia Vue y viceversa.
+
+Lo primero que hay que notar, es que este tipo de enlace funciona en los
+elementos de formulario input, textarea y select. Antes de entrar en detalle en
+cada uno de ellos veamos la directiva que hace posible el enlace bidirecciona.
+
+v-model="property"
+
+La directiva v-model permite realizar un enlace doble de datos. La sintaxis es
+intuitita por si misma, simplemente basta asignar la propiedad del modelo a la
+directiva.
+
+Siempre que cambie el valor de la propiedad en la instancia de Vue se
+actualizará el valor del input. De manera análoga, cada vez que cambie el valor
+del input, se actualizará el valor de la propiedad en la instancia de Vue.
+
+------
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue example</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <input type="text" v-model="firstName" />
+  <p>
+    Your first name is {{ firstName }}
+  </p>
+</div>
+<script>
+var app = new Vue({
+  el: '#app',
+  data: {
+    firstName: 'Steve'
+  }
+});
+</script>
+</body>
+</html>
+
+Otro ejemplo
+============
+
 <!-- Sumar dos números con evento click -->
 <!DOCTYPE html>
 <html>
@@ -666,6 +777,181 @@ var vue = new Vue({
      this.ans = a + b;
    }
  }
+});
+</script>
+</body>
+</html>
+
+Otro ejemplo
+============
+
+Una de las cosas interesantes de los enlaces de Vue, es que nos permite enlazar
+los valores con respecto a una propiedad. Sí, eso ya lo hemos dicho antes pero
+tal vez no hayas visto algunas de las posibilidades que esto conlleva. Cuando
+realizas una selección de elementos mutuamente excluyentes utilizamos un input
+de tipo radio. Para indicar que se trata del mismo contexto se coloca el valor
+del mismo atributo name para todos. En Vue, no hace falta realizar esto ya que
+con la directiva se obtiene el mismo efecto.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue example</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <input type="radio" v-model="profile" value="admin" />
+  <label>Admin</label><br />
+  <input type="radio" v-model="profile" value="guest" />
+  <label>Guest</label><br />
+  <p>
+    Your profile is {{ profile }}
+  </p>
+</div>
+<script>
+var app = new Vue({
+  el: "#app",
+  data: {
+    profile: 'admin'
+  }
+});
+</script>
+</body>
+</html>
+
+Otro ejemplo
+============
+
+El siguiente ejemplo muestra una selección múltiple en donde un usuario debe
+escoger cero o más intereses.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue example</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <input type="checkbox" v-model="feeds" value="technology" />
+  <label>Technology</label><br />
+  <input type="checkbox" v-model="feeds" value="traveling" />
+  <label>Traveling</label><br />
+  <input type="checkbox" v-model="feeds" value="swimming" />
+  <label>Swimming</label><br />
+  <p>
+    Interests: {{ feeds }}
+  </p>
+</div>
+<script>
+var app = new Vue({
+  el: "#app",
+  data: {
+    feeds: ["technology"]
+  }
+});
+</script>
+</body>
+</html>
+
+Otro ejemplo
+============
+
+El siguiente ejemplo muestra un input de tipo checkbox sin el atributo value
+inicial.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue example</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <label>Enabled</label>
+  <input type="checkbox" v-model="enabled" />
+  <p>
+    User is {{ enabled ? 'enabled' : 'disabled' }}
+  </p>
+</div>
+<script>
+var app = new Vue({
+  el: "#app",
+  data: {
+    enabled: true
+  }
+});
+</script>
+</body>
+</html>
+
+Otro ejemplo
+============
+
+Siempre que cambie el valor de la propiedad en la instancia de Vue se
+actualizará el valor del textarea. De manera análoga, cada vez que cambie el
+texto en el textarea, se actualizará el valor de la propiedad en la instancia de
+Vue.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue example</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <textarea v-model="content"></textarea>
+  <pre>{{ content }}</pre>
+</div>
+<script>
+var app = new Vue({
+  el: "#app",
+  data: {
+    content: "Hello\nWorld"
+  }
+});
+</script>
+</body>
+</html>
+
+Otro ejemplo
+============
+
+En el caso de los elementos select la directiva debe colocarse como atributo en
+dicho elemento y no en los ítems que pudiese tener. Veamos el siguiente ejemplo.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue example</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <label>How many years did you take at college?</label>
+  <br />
+  <select v-model="years">
+    <option value="1">one</option>
+    <option value="2">two</option>
+    <option value="3">three</option>
+    <option value="4">four</option>
+    <option value="5">five</option>
+  </select>
+  <p>You took {{ years }} years.</p>
+</div>
+<script>
+var app = new Vue({
+  el: "#app",
+  data: {
+    years: 3
+  }
 });
 </script>
 </body>
