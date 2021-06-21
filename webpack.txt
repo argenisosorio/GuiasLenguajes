@@ -34,146 +34,596 @@ tu equipo y con el siguiente comando tendrás Webpack instalado de forma global
 en tu equipo (También puedes instalarlo a nivel de proyecto y correrlo con NPM
 scripts).
 
------
-
+=================================
 Instalar webpack de manera global
+=================================
 
-$ npm install -g webpack
+Como sugerencia, puedes instalar Webpack de manera global, así estará disponible
+en cualquier lugar de tu terminal, aunque luego puedes también deberías instalar
+de manera local en el proyecto Webpack para que quede guardado como dependencia
+de desarrollo en el package.json y para disponer de la versión adecuada para
+cada proyecto.
+
+$ npm install -g webpack webpack-cli
 
 -----
 
-El comando más sencillo para realizar un bundle de tus archivos JavaScript es el
-siguiente:
+Ver ya ayuda de webpack para saber que comandos y opciónes hay disponibles.
 
-$ webpack ./index.js ./build/app.js
+$ webpack --help
 
-Este comando lo que hace es leer tu fichero index.js que sería el principal de
-tu aplicación e importar todos los módulos que estén definidos y crear el
-fichero de "producción" app.js en la carpeta build.
+-----
 
-Por supuesto esto se puede complicar mucho más. En lugar de escribir todo como
-comandos, podemos tener un fichero webpack.config.js donde escribamos toda la
-configuración que necesitemos.
+Comprobar la versión instalada de webpack
 
-Webpack permite que trabajemos con cualquier tipo de archivo (CSS,
-preprocesadores CSS, preprocesadores de JavaScript, imágenes, etc...) Con
-indicarle que loader debe utilizar e instalarlo, nos es suficiente.
+$ webpack --version
+webpack 5.39.1
+webpack-cli 4.7.2
 
-Gracias a esto podemos por ejemplo preprocesar el código JSX de nuestros
-componentes de React facilmente. Veamos que fichero de configuración de Webpack
-debemos escribir para ello y a continuación te explico cada línea:
+================================================
+Instalar Webpack de manera local, en el proyecto
+================================================
 
-// webpack.config.js
+============================
+Conceptos básicos de Webpack
+============================
+
+-Punto de entrada (Entry point): Indica el punto donde Webpack comenzará a
+analizar el código de tu aplicación para producir los correspondientes paquetes.
+
+-Punto de salida (Output): Indica dónde se va a producir la salida de Webpack,
+es decir, dónde se van a colocar los paquetes generados, ya sea código de los
+bundles Javascript, CSS, etc.
+
+-Cargadores (Loaders): Son los sistemas que permiten a Webpack convertir otros
+tipos de archivos, aparte de Javascript, o los transpiladores que se necesite
+aplicar. En resumen, todo aquello que tenga que realizar modificaciones en la
+aplicación se cargará con su correspondiente loader.
+
+-Plugins: Los cargadores permiten realizar transformaciones y los plugins
+amplían el rango de funcionalidad a muchas otras tareas que Webpack puede llegar
+a desarrollar. Por ejemplo optimizar el código de los paquetes, gestionar y
+optimizar imágenes y otros "assets", inyectar variables o código en los archivos
+de la aplicación.
+
+=======================================
+Punto de inicio y salida predeterminado
+=======================================
+
+Si no proveemos a Webpack de archivo de configuración webpack.config.js entiende
+que el punto de inicio predeterminado para Javascript es /src/index.js. Él
+comenzará a leer todo nuestro Javascript a partir de este archivo, produciendo
+un bundle (paquete) con todo el Javascript necesario.
+
+Además Webpack también tiene un punto de salida predeterminado, que es para
+Javascript el archivo dist/main.js. Dentro de dicho fichero colocará el bundle
+con todo nuestro Javascript.
+
+=========================
+Ejemplo de uso de webpack
+=========================
+
+Recuerda que para usar Webpack necesitas iniciar tu proyecto con npm y luego
+instalar el propio Webpack, como dependencia de desarrollo, en local. Esto lo
+consigues ejecutando los siguientes comandos de terminal, desde el directorio
+raíz de tu proyecto.
+
+$ mkdir prueba
+
+$ cd prueba
+
+$ npm init
+
+Este comando nos pedirá una serie de datos acerca de nuestro proyecto, los
+cuales dejaremos por defecto dando enter cada vez y una vez finalizado creará el
+archivo package.json que debe quedar así:
+
+{
+  "name": "webpack-example-3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+
+El archivo package.json es el responsable de almacenar el nombre de las
+dependencias instaladas catalogándolas principalmente en dos tipos: dependencias
+de desarrollo y dependencias de la aplicación.
+
+Lo siguiente será instalar unas librerías de desarrollo que van a permitir usar
+webpack con el siguiente comando:
+
+$ npm i -D webpack webpack-cli webpack-dev-server babel-loader babel-cli
+
+webpack: Para tener funcionando webpack.
+
+webpack-dev-server: Para crear un servidor de desarrollo desde el fichero de
+configuración.
+
+-D: Configurara las dependencias como de desarrollo.
+
+babel-loader: Es un  loader o cargador que es el que permite pues dependiendo
+del tipo de archivo que estemos utilizando, cargar, entender y hacer las
+compilaciones necesarias de los archivos del proyecto. En este caso se usara
+Babel ya que en el ejemplo se usara ecmascript 6.
+
+-babel-cli: Instala el núcleo de babel que es un compilador de JavaScript.
+
+Al final ded la instalación del comando, nos quedara creada una carpeta
+node_modules que es donde se guardan los paquetes de node instalados y nuestro
+package.json quedará así:
+
+{
+  "name": "prueba",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.39.1",
+    "webpack-cli": "^4.7.2"
+  }
+}
+
+Ahora vamos a crear un fichero con nombre webpack.config.js en la raíz del
+directorio.
+
+Este fichero va a ser el que va a tomar webpack para ver que funcionaes y que
+configuraciones debe ejecutar.
+
+El contenido de nuestro fichero sería:
+
+// Con la primera línea estamos trayendo un módulo llamado "path" que forma parte
+// de NodeJS, que nos sirve para trabajar con archivos y rutas de directorios. Los
+// módulos en NodeJS sirven para ordenar el código. Cada archivo Javascript es un
+// módulo, que puede importar código de otros módulos y exportar código de este
+// módulo hacia afuera. Require es la sentencia que se usa para importar un módulo
+// y 'path' es el nombre del módulo que deseamos importar. Dicho módulo se almacena
+// en una constante llamada "path".
+const path = require('path');
+// Con "module.exports" estamos exportando hacia afuera código Javascript. Todo
+el código que esté dentro de exports se podrá usar fuera del archivo/módulo que
+estamos programando.
 module.exports = {
+  context: __dirname,
+  // Este es el punto de entrada de la aplicación y le indicamos cual es la ruta
+  // al archivo principal.
+  entry: {
+    app: ['./src/index.js']
+  },
+  // Acá indicamos cual será el fichero ya generado luego de la compilación.
+  output: {
+    // Indicamos la carpeta destino.
+    // __dirname equivale en NodeJS al directorio del disco duro donde está
+    // situado nuestro módulo, en el que estamos programando.
+    path: path.resolve(__dirname, 'src'),
+    // El nombre que va a tener el fichero destino con el código empaquetado.
+    filename: 'bundle.js',
+    // Directorio publico del archivo.
+    publicPath: '/src/'
+  },
+  // Indicamos que tipos de ficheros son los que tendrá en cuenta webpack.
   resolve: {
     extensions: ['', '.js', '.jsx']
   },
-  context: __dirname,
-  entry: {
-    app: ['./index.jsx']
-  },
-  output: {
-    path: './build',
-    filename: 'app.js',
-    publicPath: '/build/
-  },
+  // Rules indica que transformaciones o compilaciones queremos que haga.
   module: {
-    loaders: [
+    rules: [
       {
+        // Indicamos con una expresión regular que tenga en cuenta los .js y .jsx
         test: /(\.js|.jsx)$/,
-        loader: 'babel',
-        query: {
-          presets: ['es2015', 'stage-2', 'react']
-        }
+        // y le aplique el loader babel.
+        loader: 'babel-loader',
+        exclude: '/node_modules/',
       }
     ]
   }
 }
 
-El fichero exporta un objeto JavaScript con las siguientes configuraciones:
+y sin comentarios, en limpio sería:
 
-resolve: {
-  extensions: ['', '.js', '.jsx']
-},
-context: __dirname
-
-Con esto le indicamos a webpack que se fije en los ficheros con extensión .js y
-.jsx desde el directorio en el que se encuentra el fichero webpack.config.js
-hacia dentro. El resto los va ignorar en el proceso de bundling.
-
-entry: {
-  app: ['./index.jsx']
-},
-
-Aquí le indicamos que el punto de entrada desde el que debe empezar a leer y
-realizar el proceso es el fichero index.jsx
-
-output: {
-  path: './build',
-  filename: 'app.js',
-  publicPath: '/build/
-},
-
-Con ésta configuración le estamos indicando donde ha de situarse el fichero de
-salida, y será en la carpeta build con el nombre app.js. Si lo servimos desde un
-servidor de desarrollo, la ruta pública será /build.
-
-module: {
-  loaders: [
-    {
-      test: /(\.js|.jsx)$/,
-      loader: 'babel',
-      query: {
-        presets: ['es2015', 'stage-2', 'react']
+const path = require('path');
+module.exports = {
+  context: __dirname,
+  entry: {
+    app: ['./src/index.js']
+  },
+  output: {
+    path: path.resolve(__dirname, 'src'),
+    filename: 'bundle.js',
+    publicPath: '/src/'
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
+  module: {
+    rules: [
+      {
+        test: /(\.js|.jsx)$/,
+        loader: 'babel-loader',
+        exclude: '/node_modules/',
       }
-    }
-  ]
+    ]
+  }
 }
 
-Llegamos a la parte más interesante, los loaders. Aquí en el objeto loaders
-podemos incluir tantos como queramos, dependiendo del tipo de archivo que
-queramos modificar. Podemos tener un loader para ficheros JavaScript y JSX como
-el ejemplo, podemos tener otro para ficheros de estilos y montar el CSS, podemos
-tener otro para imágenes, etc...
+Ahora vamos a editar package.json y vamos a definir un npm scripts como build
+que se ejecutaría con el comando npm run build:
 
-En este caso le estamos indicando con la expresión regular /(\.js|.jsx)$/ que a
-todos los ficheros con extensión .js y/o .jsx les pase el loader de Babel, que
-instalaremos con el paquete de npm babel-loader. Además le añadimos unas
-opciones de configuración a Babel con el objeto query. Le indicamos que utilice
-el preset de es2015 para transpilar la sintaxis de JavaScript que aún no
-soporten los browsers a la versión que si soportan, también el preset stage-2
-que nos permite utilizar algunas cosas de la próxima versión de ECMAScript7, y
-por último el preset react que permite el preprocesamiento de JSX a JavaScript.
+"build": "webpack --watch --color"
 
-Para poder utilizar estos presets debemos instalar los siguientes paquetes desde NPM:
+Este comando llama a webpack, con --watch le decimos que vigile los cambios en
+vivo que haya en la aplicación y con --color se ve mas bonito en la consola la
+salida y permite compilar o empaquetizar nuestra aplicación, teniendo en cuanta
+todo lo que hemos puesto en la configuración.
 
-$ npm install --save-dev babel-cli
+El fichero quedaría así:
 
-$ npm install --save-dev babel-preset-es2015
-
-$ npm install --save-dev babel-preset-stage-2
-
-$ npm install --save-dev babel-preset-react
-
-con esto, si corremos el comando webpack en nuestra terminal, tendremos el
-fichero final en pocos segundos. Si creamos un npm script con el comando:
-
-"scripts": {
-  "build": "webpack --watch --colors"
+{
+  "name": "prueba",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --watch --color"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^8.2.2",
+    "webpack": "^5.39.1",
+    "webpack-cli": "^4.7.2"
+  }
 }
 
-Al correr npm run build tendremos ejecutando webpack en modo watch lo que
-significa que a cada cambio que hagamos en nuestro código, webpack creará el
-bundle de nuevo pero de una manera más rápida que por ejemplo con Browserify o
-Gulp ya que lo mantiene en memoria. Y con el flag --colors vemos de una manera
-más gráfica el resultado en la consola:
+Ahora creamos el directorio "src" y dentro creamos a index.js que contrendra el
+código js de nuestra aplicación básica, ejemplo:
 
-> webpack --watch --colors
+alert("Hello world 1!");
+alert("Hello world 2!");
+alert("Hello world 3!");
+alert("Hello world 4!");
 
-Hash: 29e741b4cf44e481459f
-Version: webpack 1.13.2
-Time: 7316ms
- Asset    Size  Chunks             Chunk Names
-app.js  751 kB       0  [emitted]  app
-   [0] multi app 28 bytes {0} [built]
-    + 172 hidden modules
+Y también crearemos a bundle.js que será el paquete donde nuestro código de
+index.js será comprimido. las rutas a estos archivos ya fueron configuradas en
+webpack.config.js, este se creara por defecto también, no hace falta crearlo.
+
+Luego de realizar todo nuestro directorio debería quedar así
+
+/prueba
+  /src
+    bundle.js
+    index.js
+  /node_modules
+  package.json
+  package-lock.json
+  webpack.config.js
+
+Ahora si podemos ejecutar el comando build que configuramos en package.json
+
+$ npm run build
+
+Esto nos muestra por pantalla:
+
+> prueba@1.0.0 build
+> webpack --watch --color
+
+asset bundle.js 96 bytes [compared for emit] [minimized] (name: app)
+./src/index.js 99 bytes [built] [code generated]
+
+webpack 5.39.1 compiled with 1 warning in 1231 ms
+
+Y listo, esto quiere decir que nuestro código fue empaquetado correctamente en
+bundle.js, si revisamos el fichero veremos:
+
+alert("Hello world 1!"),alert("Hello world 2!"),alert("Hello world 3!"),alert("Hello world 4!");
+
+==============================
+Otro ejemplo de uso de webpack
+==============================
+
+En este ejemplo haremos un pequeño codigo que llama a otra librería de js,
+mediante la importación de modulos y también haremos el fichero de configuracíón
+de webpack para poder ver de manera rapida como se pueder tener un proyecto
+con webpack integrado.
+
+Lo primero de todo es crear un directorio llamado "webpack-example"
+
+Luego accedemos a este directorio y vamos a generar una estructura de proyecto
+con node con el siguiente comando
+
+$ npm init
+
+Este comando nos pedirá una serie de datos acerca de nuestro proyecto, los
+cuales dejaremos por defecto dando enter cada vez y una vez finalizado creará el
+archivo package.json que debe quedar así:
+
+{
+  "name": "webpack-example-3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
+
+El archivo package.json es el responsable de almacenar el nombre de las
+dependencias instaladas catalogándolas principalmente en dos tipos: dependencias
+de desarrollo y dependencias de la aplicación.
+
+Lo siguiente será instalar unas librerías de desarrollo que van a permitir usar
+webpack con el siguiente comando:
+
+$ npm i -D webpack webpack-cli webpack-dev-server babel-loader babel-cli babel-preset-es2015
+
+webpack: Para tener funcionando webpack.
+
+webpack-dev-server: Para crear un servidor de desarrollo desde el fichero de
+configuración.
+
+-D: Configurara las dependencias como de desarrollo.
+
+babel-loader: Es un  loader o cargador que es el que permite pues dependiendo
+del tipo de archivo que estemos utilizando, cargar, entender y hacer las
+compilaciones necesarias de los archivos del proyecto. En este caso se usara
+Babel ya que en el ejemplo se usara ecmascript 6.
+
+-babel-cli: Instala el núcleo de babel que es un compilador de JavaScript.
+
+babel-preset-es2015: Es un preset de babel que permite compatibilidad con los
+diferentes navegadores.
+
+Al final ded la instalación del comando, nos quedara creada una carpeta
+node_modules que es donde se guardan los paquetes de node instalados y nuestro
+pakhage.json quedará así:
+
+{
+  "name": "webpack-example-3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^8.2.2",
+    "babel-preset-es2015": "^6.24.1",
+    "webpack": "^5.39.1",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
+
+Ahora vamos a crear un fichero con nombre webpack.config.js en la raíz del
+directorio.
+
+Este fichero va a ser el que va a tomar webpack para ver que funcionaes y que
+configuraciones debe ejecutar.
+
+El contenido de nuestro fichero comentado sería:
+
+const path = require('path');
+// Este fichero exporta un modulo con la directiva module.exports que es un
+// objeto de js.
+module.exports = {
+  mode: 'development',
+  // Este es el punto de entrada de la aplicación y le indicamos cual es la ruta
+  // al archivo principal
+  context: __dirname,
+  entry: {
+    app: ['./src/index.js']
+  },
+  output: {
+    // Acá indicamos cual será el fichero ya generado luego de la compilación.
+    path: path.resolve(__dirname, 'build'),
+    // El nombre que va a tener el fichero destino.
+    filename: 'bundle.js',
+    // Directorio publico que llamaremos desde el html.
+    publicPath: '/build/'
+  },
+  resolve: {
+    // Indicamos que tipos de ficheros son los que tendrá en cuenta webpack.
+    extensions: ['', '.js', '.jsx']
+  },
+  // Como está instalado webpack-dev-server se puede crear una configuración
+  // para ejecutar el servidor de desarrollo.
+  devServer: {
+    contentBase: path.join(__dirname, 'build'),
+    compress: true,
+    port: 9000,
+  },
+  module: {
+    // Rules indica que transformaciones o compilaciones queremos que haga.
+    // Indicamos con una expresión regular que tenga en cuenta los .js y .jsx
+    // y le aplique el loader babel.
+    rules: [
+      {
+        // Indicamos con una expresión regular que tenga en cuenta los .js y .jsx
+        test: /(\.js|.jsx)$/,
+        // y le aplique el loader babel.
+        loader: 'babel-loader',
+        // Excluímos de la compilación la carpeta node_modules.
+        exclude: '/node_modules/',
+      }
+    ]
+  }
+}
+
+y en limpio sin comentarios sería:
+
+const path = require('path');
+module.exports = {
+  mode: 'development',
+  context: __dirname,
+  entry: {
+    app: ['./src/index.js']
+  },
+  output: {
+    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js',
+    publicPath: '/build/'
+  },
+  resolve: {
+    extensions: ['', '.js', '.jsx']
+  },
+  devServer: {
+    contentBase: path.join(__dirname, 'build'),
+    compress: true,
+    port: 9000,
+  },
+  module: {
+    rules: [
+      {
+        test: /(\.js|.jsx)$/,
+        loader: 'babel-loader',
+        exclude: '/node_modules/',
+      }
+    ]
+  }
+}
+
+Ahora vamos a editar package.json y vamos a definir unos npm scripts como build
+que se ejecutaría con el comando npm run build:
+
+"build": "webpack --watch --color",
+
+Este comando llama a webpack, con --watch le decimos que vigile los cambios en
+vivo que haya en la aplicación y con --color se ve mas bonito en la consola la
+salida y permite compilar o empaquetizar nuestra aplicación, teniendo en cuanta
+todo lo que hemos puesto en la configuración.
+
+Otro npm script es start que se ejecutaría con npm start
+
+"start": "webpack serve --open"
+
+Esto permite correr el servidor de desarrollo en http://localhost:9000/ según lo
+qeu se configuro en el objeto devServer en webpack.config.js.
+
+Con esto ya terminaría la edición de package.json que debería quedar así:
+
+{
+  "name": "webpack-example-3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --watch --color",
+    "start": "webpack-dev-server --progress --color"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^8.2.2",
+    "babel-preset-es2015": "^6.24.1",
+    "webpack": "^5.39.1",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "babel": "^6.23.0"
+  }
+}
+
+Ahora creamos una carpeta llamada "build" en la raíz del proyecto, que va a ser
+donde se va a generar nuestro fichero de salida de javascript.
+
+Ahora necesitamos un archivo .html para poder ver los resultados, para poder
+llamar el el cogigo que está empaquetado, entonces creamos un archivo index.html
+dentro de la carpeta build. En el body declaramos una etiqueta script que apunte
+al fichero que será generado que es bundle.js.
+
+Nuestro html quedaría así:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="/build/bundle.js"></script>
+</body>
+</html>
+
+Ahora vamos a crear una carpeta "src" en la raíz del proyecto y dentro vamos a
+crear un fichero index.js
+
+En este fichero usaremos ecmascript 6, declaramos la importación de un modulo
+llamado persona que aún no hemos creado y que estara en el fichero persona
+
+Luego declaramos una variable llamada carlos que va a ser un new Persona con
+nombre carlos, y por último hacemos uso de una función saluda.
+
+El index.js quearía así:
+
+import Persona from './persona'
+
+const carlos = new Persona('Carlos')
+carlos.saluda()
+
+Ahora vamos a crear a persona.js dentro de la carpetea "src" donde vamos a crear
+una clase que la vamos a exportar por defecto, el constructor va a recibir el
+nombre y va a tener un metodo saluda que va a mostrar un alert cuando se haga
+uso de el.
+
+El fichero quedaría así:
+
+export default class Persona {
+  constructor (nombre) {
+    this.nombre = nombre
+  }
+
+  saluda () {
+    alert(`Hola! Soy ${this.nombre}`)
+  }
+}
+
+Listo, ahora vamos a ejecutar el comando de compilación que agrupa la aplicación
+en archivos estáticos para producción.
+
+$ npm run build
+
+> webpack-example-3@1.0.0 build
+> webpack --watch --color
+
+asset bundle.js 4.25 KiB [compared for emit] (name: app)
+runtime modules 670 bytes 3 modules
+cacheable modules 231 bytes
+  ./src/index.js 87 bytes [built] [code generated]
+  ./src/persona.js 144 bytes [built] [code generated]
+webpack 5.39.1 compiled successfully in 1249 ms
+
+y luego:
+
+$ npm run start
+
+Esto nos abre el archivo index.html en el navegador, desde la url
+http://localhost:9000/ y veremos una alerta según declaramos en nuestro código.
+
+Fuentes
+=======
+
+-https://www.youtube.com/watch?v=2M5L_uz6GO0&t=160s
+-https://desarrolloweb.com/articulos/primeros-pasos-webpack.html
+-https://webpack.js.org/configuration/dev-server/
+-https://webpack.js.org/guides/development/
