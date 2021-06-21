@@ -5292,9 +5292,39 @@ try {
 }
 </script>
 
-#################
-##### Fetch #####
-#################
+=================
+Promise o Promesa
+=================
+
+Una Promesa es un proxy para un valor no necesariamente conocido en el momento
+que es creada la promesa. Permite asociar manejadores que actuarán
+asincrónicamente sobre un eventual valor en caso de éxito, o la razón de falla
+en caso de una falla. Esto permite que métodos asíncronos devuelvan valores como
+si fueran síncronos: en vez de inmediatamente retornar el valor final, el método
+asíncrono devuelve una promesa de suministrar el valor en algún momento en el
+futuro.
+
+Una Promesa se encuentra en uno de los siguientes estados:
+
+pendiente (pending): estado inicial, no cumplida o rechazada.
+
+cumplida (fulfilled): significa que la operación se completó satisfactoriamente.
+
+rechazada (rejected): significa que la operación falló.
+
+===========
+Método then
+===========
+
+El método then() retorna una Promesa. Recibe dos argumentos: funciones callback
+ para los casos de éxito y fallo de Promise.
+
+Ya que los métodos then y Promise.prototype.catch() devuelven promesas, pueden
+ser encadenados — una operación llamada composición.
+
+=============
+Función Fetch
+=============
 
 Esta es una tecnología experimental.
 
@@ -5303,9 +5333,59 @@ canal HTTP, como peticiones y respuestas. También provee un método global fetc
 que proporciona una forma fácil y lógica de obtener recursos de
 forma asíncrona por la red.
 
-Fuentes:
+Permite traer los resultados de otros sitios webs.
 
--https://developer.mozilla.org/es/docs/Web/API/Fetch_API/Utilizando_Fetch
+==================
+La expresión await
+==================
+
+La expresión await provoca que la ejecución de una función async sea pausada
+hasta que una Promise sea terminada o rechazada, y regresa a la ejecución de la
+función async después del término. Al regreso de la ejecución, el valor de la
+expresión await es la regresada por una promesa terminada.
+
+=================
+Función asíncrona
+=================
+
+async function los objetos creados con el constructor AsyncFunction son
+analizados gramaticalmente en el momento que la función es creada. Esto es menos
+eficiente que declarar una función asincrona con un async function expression y
+llamarla con eso en tu código , ya que las funciones están analizadas
+gramaticalmento junto al resto del código.
+
+Ejemplo de función asíncrona, promesa y fetch:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>xxxx</title>
+</head>
+<body>
+<script type="text/javascript">
+// async function es una función asíncrona, entonces esta función va a esperar
+// hasta que ocurra el proceso que contiene, es decir, hasta que se traiga los
+// datos de la url usando la palabra await, await le dice a la función que
+// espere hasta que los datos allá se hayan cargado.
+async function traerPais() {
+  // Esta función fetch nos permite traernos un json.
+  // await
+  const respuesta = await fetch("https://api.nationalize.io/?name=argenis")
+  // Con respuesta.json() convierto lo que me estoy trayendo de la url en json.
+  const nombre = respuesta.json();
+  return nombre;
+}
+
+function mostrarNombre(n) {
+  document.getElementById("mensaje").innerHTML = n.country[0].country_id;
+}
+
+traerPais().then(mostrarNombre);
+</script>
+<p id="mensaje"></p>
+</body>
+</html>
 
 -----
 
