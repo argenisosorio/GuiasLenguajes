@@ -6974,6 +6974,30 @@ Fuentes
 
 /home/aosorio/.config/gtk-3.0
 
+======================
+Instalar Opera browser
+======================
+
+$ sudo nano /etc/apt/sources.list
+
+Añadimos al final las líneas siguientes:
+
+# Repositorio para Opera browser
+deb http://deb.opera.com/opera-stable/ stable non-free
+
+Una vez editado y guardado el archivo, descargamos e instalamos la key para
+confiar en el repositorio añadido:
+
+$ wget -O - https://deb.opera.com/archive.key | sudo apt-key add -
+
+Antes de instalar, actualizamos los repositorios:
+
+$ sudo apt-get update
+
+y finalmente instalamos:
+
+$ sudo apt-get install opera-stable
+
 ===================
 Free-vpn para Opera
 ===================
