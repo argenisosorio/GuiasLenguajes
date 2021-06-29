@@ -4992,6 +4992,35 @@ https://addons.mozilla.org/es/firefox/addon/traduzir-paginas-web/
 Virtualbox
 ==========
 
+====================================================
+Instalación de Virtualbox 6 con el .run de la página
+====================================================
+
+Descargar el .run desde https://www.virtualbox.org/wiki/Linux_Downloads
+
+De la lista, descargar el que dice "All distributions (built on EL6 and
+therefore not requiring recent system libraries)"
+
+En este caso he descargado el VirtualBox-6.1.22-144080-Linux_amd64.run
+
+$ sudo apt install build-essential linux-headers-amd64
+
+$ sudo chmod +x VirtualBox*.run
+
+$ sudo ./VirtualBox*.run
+
+Los siguientes pasos no los ejecuté, ya que sirvió hasta el paso anterior.
+
+$ vboxversion=$(wget -qO - https://download.virtualbox.org/virtualbox/LATEST.TXT)
+
+$ wget "https://download.virtualbox.org/virtualbox/${vboxversion}/Oracle_VM_VirtualBox_Extension_Pack-${vboxversion}.vbox-extpack"
+
+$ sudo vboxmanage extpack install --replace Oracle_VM_VirtualBox_Extension_Pack-${vboxversion}.vbox-extpack
+
+$ sudo usermod -aG vboxusers [username]
+
+$ sudo reboot
+
 =======================================================
 Instalación de Virtualbox en GNU/Linux Debian 9 Stretch
 =======================================================

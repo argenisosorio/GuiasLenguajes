@@ -5261,23 +5261,28 @@ try {
 }
 </script>
 
-El bloque catch permite indicar el nombre del parámetro que se crea automáticamente al producirse
-una excepción. Este identificador de la variable sólo está definido dentro del bloque catch y se puede
-utilizar para obtener más información sobre la excepción producida.
+El bloque catch permite indicar el nombre del parámetro que se crea
+automáticamente al producirse una excepción. Este identificador de la variable
+sólo está definido dentro del bloque catch y se puede utilizar para obtener más
+información sobre la excepción producida.
 
-En este caso, al intentar dividir el número 5 por la variable a que no está definida, se produce una
-excepción que muestra el mensaje "ReferenceError: a is not defined" dentro del bloque catch:
+En este caso, al intentar dividir el número 5 por la variable a que no está
+definida, se produce una excepción que muestra el mensaje "ReferenceError: a is
+not defined" dentro del bloque catch:
 
-El funcionamiento del bloque finally no es tan sencillo como el bloque catch. Si se ejecuta cualquier
-parte del código que se encuentra dentro del bloque try, siempre se ejecuta el bloque finally, independientemente
-del resultado de la ejecución del bloque try.
+El funcionamiento del bloque finally no es tan sencillo como el bloque catch. Si
+se ejecuta cualquier parte del código que se encuentra dentro del bloque try,
+siempre se ejecuta el bloque finally, independientemente del resultado de la
+ejecución del bloque try.
 
-Si dentro del bloque try se ejecuta una instrucción de tipo return, continue o break, también se ejecuta el
-bloque finally antes de ejecutar cualquiera de esas instrucciones. Si se produce una excepción en el bloque
-try y están definidos los bloques catch y finally, en primer lugar se ejecuta el bloque catch y a
+Si dentro del bloque try se ejecuta una instrucción de tipo return, continue o
+break, también se ejecuta el bloque finally antes de ejecutar cualquiera de esas
+instrucciones. Si se produce una excepción en el bloque try y están definidos
+los bloques catch y finally, en primer lugar se ejecuta el bloque catch y a
 continuación el bloque finally.
 
-JavaScript también permite lanzar excepciones manualmente mediante la palabra reservada throw:
+JavaScript también permite lanzar excepciones manualmente mediante la palabra
+reservada throw:
 
 <script type="text/javascript">
 try {
@@ -5317,7 +5322,7 @@ Método then
 ===========
 
 El método then() retorna una Promesa. Recibe dos argumentos: funciones callback
- para los casos de éxito y fallo de Promise.
+para los casos de éxito y fallo de Promise.
 
 Ya que los métodos then y Promise.prototype.catch() devuelven promesas, pueden
 ser encadenados — una operación llamada composición.
@@ -5328,10 +5333,10 @@ Función Fetch
 
 Esta es una tecnología experimental.
 
-La API Fetch proporciona una interfaz JavaScript para acceder y manipular partes del
-canal HTTP, como peticiones y respuestas. También provee un método global fetch()
-que proporciona una forma fácil y lógica de obtener recursos de
-forma asíncrona por la red.
+La API Fetch proporciona una interfaz JavaScript para acceder y manipular partes
+del canal HTTP, como peticiones y respuestas. También provee un método global
+fetch() que proporciona una forma fácil y lógica de obtener recursos de forma
+asíncrona por la red.
 
 Permite traer los resultados de otros sitios webs.
 
@@ -5691,6 +5696,64 @@ Sintaxis
 
 target.addEventListener(tipo, listener[, useCapture]);
 
+=============================
+Función removeEventListener()
+=============================
+
+El método removeEventListener() elimina un controlador de eventos que se ha
+adjuntado con el método addEventListener ().
+
+Nota: Para eliminar los controladores de eventos, la función especificada con el método addEventListener() debe ser una función externa, como en el ejemplo
+anterior (myFunction).
+
+Funciones anónimas, como "element.removeEventListener (" evento ", función () {myScript});" no funcionara.
+
+Ejemplo
+=======
+
+Este elemento div tiene un controlador de eventos onmousemove que muestra un
+número aleatorio cada vez que mueve el mouse dentro de este campo naranja.
+
+Haga clic en el botón para eliminar el controlador de eventos de DIV.
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#myDIV {
+  background-color: coral;
+  border: 1px solid;
+  padding: 50px;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<div id="myDIV">This div element has an onmousemove event handler that displays a random number every time you move your mouse inside this orange field.
+  <p>Click the button to remove the DIV's event handler.</p>
+  <button onclick="removeHandler()" id="myBtn">Try it</button>
+</div>
+
+<p><strong>Note:</strong> The addEventListener() and removeEventListener() methods are not supported in Internet Explorer 8 and earlier versions.</p>
+
+<p id="demo"></p>
+
+<script>
+document.getElementById("myDIV").addEventListener("mousemove", myFunction);
+
+function myFunction() {
+  document.getElementById("demo").innerHTML = Math.random();
+}
+
+function removeHandler() {
+  document.getElementById("myDIV").removeEventListener("mousemove", myFunction);
+}
+</script>
+
+</body>
+</html>
+
 ================
 Funciones Flecha
 ================
@@ -5813,3 +5876,303 @@ super([arguments]);
 
 // llama cualquier otro método del objeto padre.
 super.functionOnParent([arguments]);
+
+==================================
+Diferencias entre let, var y const
+==================================
+
+La diferencia es el alcance de esa variable.
+
+-var: Puedo acceder a esa variable desde cualquier punto del código. Si defino
+la variable dentro de un if puedo acceder a ella fuera del if.
+
+-let: Su alcance está limitado al bloque dentro del cual la ponga, por ejemplo
+dentro de un if pero no fuera.
+
+-const: Es lo mismo que tener una variable solo que su contenido no es
+modificable, ya qu es una constante.
+
+=========================
+Qué es un template string
+=========================
+
+Es una cadena de texto en la cual puedo meter varios enters, puedo meter varias
+líneas de texto e incluso puedo interpolar variables dentro de la cadena para
+imprimirlas sin usar concatenación.
+
+Las plantillas de cadena, mejor conocidas como template strings,son una forma
+más fácil de crear:
+
+-Cadenas con variables dentro (interpolación).
+-Generar cadenas multilínea.
+-Ejecutar expresiones, funciones y etiquetados.
+
+Ejemplo:
+
+let saludo = `Hola soy un Template String`;
+
+console.log(saludo); //Imprime Hola soy un Template String
+
+//strings multilínea
+
+let mensaje = `No es quien seas en el interior,
+tus actos son los que te definen...
+Batman`;
+
+console.log(mensaje);
+
+/*
+Imprime
+No es quien seas en el interior,
+tus actos son los que te definen...
+Batman
+*/
+
+
+//variables en strings (interpolación)
+
+let nombre = 'Jonathan';
+
+console.log(`Hola ${nombre}`); //Imprime Hola Jonathan
+
+
+//ejecutar expresiones
+
+console.log(`Hola ${nombre}, tienes ${30 + 2} años`); //Imprime Hola Jonathan, tienes 32 años
+
+//ejecutar funciones
+
+let estaciones = ['Primavera', 'Verano', 'Otoño', 'Invierno'],
+  ol = `<ol>
+    ${
+      estaciones.map(function (estacion) {
+        return `<li>${estacion}</li>`;
+      }).join('')
+    }
+  </ol>`;
+
+console.log(ol);
+
+// Imprime <ol><li>Primavera</li><li>Verano</li><li>Otoño</li><li>Invierno</li></ol>
+
+
+//función de etiquetado
+
+const etiqueta = function (cadena, variable) {
+  console.log(cadena); //Imprime ["Hola ", "", raw: Array[2]]
+  console.log(variable); //Imprime Ulises
+  console.log(cadena[0] + variable); //Imprime Hola Ulises
+};
+
+
+let otroNombre = 'Ulises';
+
+etiqueta`Hola ${otroNombre}`;
+
+================
+Función Callback
+================
+
+Una función de callback es una función que se pasa a otra función como un
+argumento, que luego se invoca dentro de la función externa para completar algún
+tipo de rutina o acción.
+
+Ejemplo:
+
+function saludar(nombre) {
+  alert('Hola ' + nombre);
+}
+
+function procesarEntradaUsuario(callback) {
+  var nombre = prompt('Por favor ingresa tu nombre.');
+  callback(nombre);
+}
+
+procesarEntradaUsuario(saludar);
+
+Las funciones callback son ampliamente utilizadas en la programación con
+JavaScript. Puede tratarse, por ejemplo, de una función que se ejecuta al pulsar
+un botón o de algún contenido relacionado con una función setTimeout (), que
+provoca un retraso de tiempo.
+
+Un ejemplo simple de un callback en JavaScript sería un botón común y corriente:
+
+document.getElementById("Button1").addEventListener("click", function() {
+  alert("Se ha pulsado el botón");
+}, false);
+
+En este ejemplo, se utiliza un EventListener como callback que se activa cuando
+se produce un determinado evento; en este caso, hacer clic en el botón
+identificado como “Button1”. En cuanto se hace clic en el botón y se cumplen las
+condiciones para la función callback, esta se ejecuta y el terminal emite el
+mensaje “Se ha pulsado el botón”. Para garantizar la compatibilidad con
+versiones anteriores del navegador, en el ejemplo también se utiliza el
+parámetro “false”.
+
+===================================
+¿Qué es el DOM y BOM en JavaScript?
+===================================
+
+El DOM es el Documento Object Model, que se ocupa del documento, los elementos
+HTML en sí mismos, por ejemplo. document y todo el recorrido que harías en ella,
+eventos, etc.
+
+El BOM es el Browser Object Model, que se ocupa de los componentes del navegador
+aparte del documento, como history, location, navigator y screen (así como
+algunos otros que varían según el navegador).
+
+===============
+querySelector()
+===============
+
+El método querySelector() devuelve el primer elemento que coincide con un
+selector o selectores CSS especificados en el documento.
+
+<!DOCTYPE html>
+<html>
+<body>
+<p class="example">A paragraph with class="example".</p>
+<button onclick="myFunction()">Try it</button>
+<script>
+function myFunction() {
+  document.querySelector(".example").style.backgroundColor = "red";
+}
+</script>
+</body>
+</html>
+
+Otro ejemplo
+============
+
+<!DOCTYPE html>
+<html>
+<body>
+<p>This is a p element.</p>
+<p>This is also a p element.</p>
+<p>Click the button to add a background color to the first p element in the document.</p>
+<button onclick="myFunction()">Try it</button>
+<script>
+function myFunction() {
+  document.querySelector("p").style.backgroundColor = "red";
+}
+</script>
+</body>
+</html>
+
+Otro ejemplo
+============
+
+<!DOCTYPE html>
+<html>
+<body>
+<h2 class="example">A heading with class="example"</h2>
+<p class="example">A paragraph with class="example".</p>
+<p>Click the button to add a background color to the first p element in the document with class="example".</p>
+<button onclick="myFunction()">Try it</button>
+<script>
+function myFunction() {
+  document.querySelector("p.example").style.backgroundColor = "red";
+}
+</script>
+</body>
+</html>
+
+Otro ejemplo
+============
+
+<!DOCTYPE html>
+<html>
+<body>
+<p id="demo">This is a p element with id="demo".</p>
+<p>Click the button to change the text of the p element.</p>
+<button onclick="myFunction()">Try it</button>
+<script>
+function myFunction() {
+  document.querySelector("#demo").innerHTML = "Hello World!";
+}
+</script>
+</body>
+</html>
+
+========================
+getElementsByClassName()
+========================1
+
+El método getElementsByClassName () devuelve una colección de todos los
+elementos del documento con el nombre de clase especificado, como un objeto HTMLCollection.
+
+El objeto HTMLCollection representa una colección de nodos.
+Se puede acceder a los nodos mediante números de índice.
+El índice comienza en 0.
+
+Ejemplo
+=======
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+div {
+  border: 1px solid black;
+  margin: 5px;
+}
+</style>
+</head>
+<body>
+
+<div class="example">
+  <p>P element in first div with class="example". Div's index is 0.</p>
+</div>
+
+<div class="example color">
+  <p>P element in first div with class="example color". Div's index is 0.</p>
+</div>
+
+<div class="example color">
+  <p>P element in second div with class="example color". Div's index is 1.</p>
+</div>
+
+<p>Click the button to change the background color of the first div element with the classes "example" and "color".</p>
+
+<button onclick="myFunction()">Try it</button>
+
+<p><strong>Note:</strong> The getElementsByClassName() method is not supported in Internet Explorer 8 and earlier versions.</p>
+
+<script>
+function myFunction() {
+  var x = document.getElementsByClassName("example color");
+  x[0].style.backgroundColor = "red";
+}
+</script>
+
+</body>
+</html>
+
+================
+JSON.stringify()
+================
+
+Un uso común de JSON es intercambiar datos hacia / desde un servidor web.
+
+Al enviar datos a un servidor web, los datos deben ser una cadena.
+
+Convierta un objeto JavaScript en una cadena con JSON.stringify().
+
+Ejemplo
+=======
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Create a JSON string from a JavaScript object.</h2>
+<p id="demo"></p>
+
+<script>
+const obj = {name: "John", age: 30, city: "New York"};
+const myJSON = JSON.stringify(obj);
+document.getElementById("demo").innerHTML = myJSON;
+</script>
+
+</body>
+</html>
