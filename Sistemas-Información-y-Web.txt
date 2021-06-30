@@ -744,3 +744,86 @@ Fuentes
 =======
 
 -https://es.wikipedia.org/wiki/Single_Sign-On
+
+========================
+Introducción a Pipelines
+========================
+
+Un Pipelin0e de CI/CD es el componente más fundamental del desarrollo de
+software automatizado. Si bien el término se ha utilizado para describir muchos
+aspectos diferentes de la informática, en gran parte de la industria de DevOps,
+usamos “Pipelines” para ilustrar las amplias aplicaciones de comportamientos y
+procesos involucrados en la integración continua (CI).
+
+CI es una estrategia de desarrollo de software que aumenta la velocidad de
+desarrollo al tiempo que garantiza que la calidad del código implementado no se
+vea comprometida. Mediante el uso de herramientas de CI, los desarrolladores
+envían código continuamente en pequeños incrementos, a veces varias veces al
+día, que luego se crea y prueba automáticamente antes de fusionarse con el
+repositorio compartido. Las canalizaciones de entrega de software modernas
+pueden crear, probar e implementar aplicaciones según las necesidades de su
+negocio.
+
+¿Qué es un Pipeline de CI/CD?
+=============================
+
+Un Pipeline de CI/CD es el conjunto completo de procesos que se ejecutan cuando
+activa el trabajo en sus proyectos. Las canalizaciones abarcan sus flujos de
+trabajo, que coordinan sus trabajos, y todo esto se define en el archivo de
+configuración de su proyecto.
+
+Integración continua (CI) frente a implementación continua (CD)
+===============================================================
+
+La integración continua automatiza la construcción y prueba de su software. La
+implementación continua es una extensión de esta automatización y permite que su
+software se implemente después de cada confirmación de código que pasa su
+conjunto de pruebas. Los equipos de desarrollo más exitosos implementan su
+software con frecuencia.
+
+Configurar un Pipeline de CI
+============================
+
+El ADN de la integración continua es la configuración. Las canalizaciones de CI
+son el nivel más alto de orquestación en un archivo de configuración.
+
+Flujos de trabajo de CI
+=======================
+
+Los flujos de trabajo le permiten ejecutar y solucionar problemas de trabajos
+por separado para que pueda ver las compilaciones fallidas en tiempo real. Si
+falla un trabajo en un flujo de trabajo, puede volver a ejecutar ese trabajo
+solo en lugar de volver a ejecutar todo el conjunto.
+
+Funciones de CI / CD con CircleCI
+=================================
+
+Algunas de las características que encontrará al crear código a través de
+Pipelines en CircleCI son el uso de múltiples clases de recursos, división de
+pruebas paralelas, orbes, trabajos matriciales, variables / contextos de entorno
+y aprobaciones.
+
+Clases de recursos: CircleCI ofrece una serie de clases de recursos que le
+permiten optimizar los recursos de CPU y RAM para cada trabajo.
+
+División de pruebas en paralelo: para reducir el tiempo, ejecute pruebas en
+paralelo distribuyéndolas en varios contenedores separados.
+
+Orbes: Los orbes son paquetes reutilizables de configuración YAML que condensan
+piezas repetidas de configuración en líneas únicas de código.
+
+Empleos de matriz: matriz de puestos de trabajo permite llevar a cabo un trabajo
+con parámetros múltiples veces con diferentes argumentos.
+
+Parámetros: las variables de canalización, las variables de entorno y los
+contextos son parámetros que permiten a los usuarios almacenar y reutilizar
+datos y proteger la información confidencial.
+
+Aprobaciones: los flujos de trabajo se pueden programar para esperar la
+aprobación manual de un trabajo antes de continuar. Cualquiera con acceso push a
+su repositorio puede aprobar el trabajo para continuar con el flujo de trabajo.
+
+Fuente
+======
+
+https://devopslatam.com/que-es-un-pipeline-de-ci-cd/
