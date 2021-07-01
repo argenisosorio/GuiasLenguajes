@@ -240,3 +240,29 @@ Type ".help" for more information.
 > console.log("Hello!");
 Hello!
 undefined
+
+4) Salir del CLI de NodeJS
+
+> .exit
+
+También con Ctrl + d.
+
+==================================
+Ejecutar un archivo .js con NodeJS
+==================================
+
+1) Crear a index.js y agregar lo siguiente:
+
+var greet = function(person, greeting) {
+    var text = greeting + ', ' + person;
+    return text;
+};
+console.log(greet('Rebecca','hello'));
+
+2) Ejecutar el archivo con:
+
+$ node index.js
+
+Salida:
+
+hello, Rebecca

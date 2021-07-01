@@ -2580,7 +2580,7 @@ un par de clases a un botón.
 
 Esto es exactamente igual a hacer lo siguiente:
 
-<button class="btn btn-primary">Submit</button>
+<button class="btn btn-success">Submit</button>
 
 A simple vista parece no tener mucha utilidad, el verdadero poder de esta
 sintaxis consiste en que puedes combinarlo con la sintaxis de objeto. Entonces
@@ -2595,4 +2595,177 @@ siguiente:
 </button>
 
 Al dar clic en el botón cada vez cambiará de clase según el valor de isError.
-Puedes ver este ejemplo corriendo en codepen.
+
+======================================================
+Ciclo de vida de Vue, created, mounted, destroyed, etc
+======================================================
+
+Los componentes, en todos los frameworks, tienen ciclo de vida, en otras
+palabras, los componentes, se crean, se cargan, se insertan en ls vista y se
+destruyen, y lo bueno de esto es que puedes ejecutar código en cada uno de estos
+estados.
+
+Vue tiene muchos métodos para distintos estados, explicare los mas habituales,
+los que acabarás usando siempre, ya que el resto se usan mucho menos.
+
+Por cierto, una limitación que tienen estos estados es que no puedes usar dentro
+arrow functions, no puedes hacer esto porque se pierde el contexto del this y ya
+no puedes acceder al data y a los métodos.
+
+BeforeCreate
+============
+
+En ese punto Vue todavía no ha cargado el componente, esto quiere decir que no
+puedes acceder a ninguna opción, ni método ni data del componente. Este
+lifecycle se suele usar para hacer comprobaciones antes de entrar en las rutas,
+por ejemplo, puedes comporbar que el usuario esté logueado antes de entrar en
+una ruta para que en caso de no estarlo se redirija a la del login.
+
+<script>
+export default {
+  beforeCreate() {
+    console.log('No se ha ejecutado nada todavía')
+  }
+}
+</script>
+
+Created
+=======
+
+Uno de los que más se usan. Se ejecuta después de beforeCreated. En ese punto
+Vue ya ha cargado todas las opciones del componente y por tanto ya existe la
+sección data y los métodos. Aquí puedes hacer llamadas a variables y puedes
+ejecutar métodos.
+
+La única pega es que en este punto Vue todavía no ha cargado la vista, no la ha
+renderizado y no puedes leer o modificar nada que afecte a ls vista porque
+todavía no existe. No puedes acceder al DOM de ese componente.
+
+Este método se suele usar para realizar las llamadas API REST, por ejemplo si
+queremos pintar un array con información que provenga del backend lo que se
+suele hacer es dentro del created hacer la llamada y almacenar el valor de
+retorno de una de las variables del data. Como Vue es reactivo, cuando la vista
+esté cargada se pintará el array.
+
+Veamos un ejemplo:
+
+<script>
+export default {
+  data: () => ({
+    info: null,
+  }),
+  created() {
+    this.info = "Componente cargado";
+  }
+};
+</script>
+
+Si te fijas lo que se hace es declarar un método created, usualmente debajo de
+los métodos al final del componente.
+
+Como vimos en los métodos, para acceder a las variables se utiliza el this, en
+este caso para poner un valor a una variable. También podemos llamar a métodos
+de la sección methods con el this e incluso podemos hacer uso de las propiedades
+*computadas.*
+
+Mounted
+=======
+
+A diferencia del created, en el mounted si que tenemos acceso al DOM, es decir,
+el computed se ejecuta exactamente cuando se termina de pintar la vista en la
+página web y por tanto desde aquí podemos hacer cambios en la vista.
+
+<template>
+  <a href="/link">link</a>
+</template>
+<script>
+export default {
+  data: () => ({
+    info: null,
+  }),
+  mounted() {
+    console.log(this.$el.querySelectorAll('a'));
+  }
+};
+</script>
+
+Si te fijas, para acceder a un elemento del DOM se puede hacer mediante la
+variable que crea Vue al renderizar el componente this.$el.
+
+Si te salta un error porque no existe el elemento, una forma de asegurarse de
+que Vue ya ha renderizado todos los elementos del DOM es usar la función
+nextTick de Vue.
+
+<template>
+  <a href="/link">link</a>
+</template>
+<script>
+export default {
+  data: () => ({
+    info: null,
+  }),
+  mounted() {
+    this.$nextTick(() => {
+      console.log(this.$el.querySelectorAll('a'));
+    });
+  }
+};
+</script>
+
+La función nextTick lo que hace es dejar pasar un pequeño intervalo de tiempo,
+el correspondiente a un tick.
+
+Updated
+=======
+
+Con este método hay que tener mucho cuidado. Se ejecuta cada vez que se produce
+un cambio en el componente y cambia algo de la vista. Se recomienda aquí no
+hacer muchos cambios en el data o en la vista y utilizar propiedades computadas
+o watchers.
+
+<script>
+export default {
+  data: () => ({
+    info: null,
+  }),
+  updated() {
+    console.log("Componente actualizado");
+  }
+};
+</script>
+
+Hay que tener cuidado porque puede que se ejecute más veces de las que en
+realidad queremos.
+
+Destroyed
+=========
+
+Como puedes suponer, el destroyed se ejecuta cuando eliminamos un componente,
+cuando ya no esta cargado. Esto puede pasar cuando cambias de vista o cuando o
+cuando se borra un componente del DOM porque ha sido ocultado con v-if.
+
+<script>
+export default {
+  data: () => ({
+    info: null,
+  }),
+  destroyed() {
+    console.log("Componente eliminado");
+  }
+};
+</script>
+
+Conclusiones
+============
+
+Al final los que más vas a usar son el método created y el mounted. Te
+recomiendo que hagas pruebas con tu cuenta con ellos ya que esta parte de Vue se
+usa mucho en todos los proyectos y tienes que entenderla bien.
+
+Existen muchos más métodos en el ciclo de un componente de Vue como el
+beforeMounted o el beforeUpdated.
+
+Fuente
+======
+
+-https://codingpotions.com/vue-ciclo-vida

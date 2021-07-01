@@ -339,7 +339,6 @@ if (stuffToDo[foo]) {
     stuffToDo['default']();
 }
 
-
 ======
 Bucles
 ======
@@ -575,9 +574,9 @@ var myArray = [ 'h', 'e', 'l', 'l', 'o' ];
 var myString = myArray.join('');   // 'hello'
 var mySplit = myString.split('');  // [ 'h', 'e', 'l', 'l', 'o' ]
 
-###################
-##### Objetos #####
-###################
+=======
+Objetos
+=======
 
 Los objetos son elementos que pueden contener cero o más conjuntos de pares de
 nombres claves y valores asociados a dicho objeto. Los nombres claves pueden ser
@@ -617,9 +616,9 @@ var myObject = {
   99999: 789
 };
 
-#####################
-##### Funciones #####
-#####################
+=========
+Funciones
+=========
 
 Las funciones contienen bloques de código que se ejecutaran repetidamente. A las
 mismas se le pueden pasar argumentos, y opcionalmente la función puede devolver
@@ -640,8 +639,28 @@ técnicas. Igualmente, es probable encontrar a los dos métodos cuando se revise
 código JavaScript.
 
 Utilización de funciones
+========================
 
-Una función simple
+Una función simple:
+
+function hello() {
+    alert("Hello!!!");
+};
+hello();
+
+Otro ejemplo, con parámetros:
+
+function sumar(a,b) {
+  var suma;
+  suma = a + b;
+  return suma;
+}
+// Variable que le asignamos la llamada de la funcion y parametros
+operacion = sumar(6,4);
+// Mostramos el resultado en una alerta
+alert(operacion);
+
+Otro ejemplo, con parámetros:
 
 var greet = function(person, greeting) {
     var text = greeting + ', ' + person;
@@ -672,6 +691,7 @@ var greeting = greet('Rebecca', 'Hello');
 greeting();  // se muestra en la consola 'Hello, Rebecca'
 
 Funciones anónimas autoejecutables
+==================================
 
 Un patrón común en JavaScript son las funciones anónimas autoejecutables. Este
 patrón consiste en crear una expresión de función e inmediatamente ejecutarla.
@@ -680,13 +700,15 @@ nombres globales, debido a que ninguna variable declarada dentro de la función
 es visible desde afuera.
 
 Función anónima autoejecutable
+==============================
 
 (function(){
     var foo = 'Hello world';
 })();
-console.log(foo);   // indefinido (undefined)
+console.log(foo);  // indefinido (undefined)
 
 Funciones como argumentos
+=========================
 
 En JavaScript, las funciones son ciudadanos de primera clase — pueden ser
 asignadas a variables o pasadas a otras funciones como argumentos. En jQuery,
@@ -699,9 +721,11 @@ var myFn = function(fn) {
     console.log(result);
 };
  
-myFn(function() { return 'hello world'; }); // muestra en la consola 'hello world'
+myFn(function() { return 'hello world'; });
+// muestra en la consola 'hello world'
 
 Pasar una función nombrada como un argumento
+============================================
 
 var myFn = function(fn) {
     var result = fn();
@@ -712,7 +736,8 @@ var myOtherFn = function() {
     return 'hello world';
 };
  
-myFn(myOtherFn);   // muestra en la consola 'hello world'
+myFn(myOtherFn);
+// muestra en la consola 'hello world'
 
 </script>
 
@@ -5705,9 +5730,10 @@ Función removeEventListener()
 =============================
 
 El método removeEventListener() elimina un controlador de eventos que se ha
-adjuntado con el método addEventListener ().
+adjuntado con el método addEventListener().
 
-Nota: Para eliminar los controladores de eventos, la función especificada con el método addEventListener() debe ser una función externa, como en el ejemplo
+Nota: Para eliminar los controladores de eventos, la función especificada con el
+método addEventListener() debe ser una función externa, como en el ejemplo
 anterior (myFunction).
 
 Funciones anónimas, como "element.removeEventListener (" evento ", función () {myScript});" no funcionara.
@@ -5758,9 +5784,9 @@ function removeHandler() {
 </body>
 </html>
 
-================
-Funciones Flecha
-================
+==================================
+Funciones Flecha o arrow functions
+==================================
 
 Una expresión de función flecha es una alternativa compacta a una expresión de
 función tradicional, pero es limitada y no se puede utilizar en todas las
@@ -6027,7 +6053,7 @@ procesarEntradaUsuario(saludar);
 
 Las funciones callback son ampliamente utilizadas en la programación con
 JavaScript. Puede tratarse, por ejemplo, de una función que se ejecuta al pulsar
-un botón o de algún contenido relacionado con una función setTimeout (), que
+un botón o de algún contenido relacionado con una función setTimeout(), que
 provoca un retraso de tiempo.
 
 Un ejemplo simple de un callback en JavaScript sería un botón común y corriente:
@@ -6211,3 +6237,282 @@ document.getElementById("demo").innerHTML = myJSON;
 
 </body>
 </html>
+
+==================================
+Cómo funciona Lambda en JavaScript
+==================================
+
+Una lambda es una function que se utiliza como dato.
+
+Una lambda es una function que se utiliza como dato. Como tal, se puede utilizar
+de la misma manera que cualquier otra expresión: como un parámetro para otra
+function, como el valor de retorno de una function, o en cualquier sitio donde
+se pueda utilizar una variable.
+
+Ejemplo:
+
+var sum = function sum() {
+  var result = 0;
+  [5, 5, 5].forEach(function addTo(number) { result += number; });
+  return result;
+};
+
+test('Lambdas.', function () {
+  equal(sum(), 15,
+    'result should be 15.');
+});
+
+La function addTo() pasada dentro de forEach() es un lambda. El método forEach()
+llama addTo() para cada número en el array.
+
+====================
+Función setTimeout()
+====================
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Click the button to wait 3 seconds, then alert "Hello".</p>
+
+<button onclick="myFunction()">Try it</button>
+
+<script>
+function myFunction() {
+  setTimeout(function(){ alert("Hello"); }, 3000);
+}
+</script>
+
+</body>
+</html>
+
+=========
+WebSocket
+=========
+
+El protocolo WebSocket, descrito en la especificación RFC 6455, brinda una forma
+de intercambiar datos entre el navegador y el servidor por medio de una conexión
+persistente. Los datos pueden ser pasados en ambas direcciones como paquetes
+“packets”, sin cortar la conexión y sin pedidos de HTTP “HTTP-requests”
+adicionales.
+
+WebSocket es especialmente bueno para servicios que requieren intercambio de
+información continua, por ejemplo juegos en línea, sistemas de negocios en
+tiempo real, entre otros.
+
+Un ejemplo simple:
+
+Para abrir una conexión websocket, necesitamos crearla new WebSocket usando el
+protocolo especial ws en la url:
+
+let socket = new WebSocket("ws://javascript.info");
+
+También hay una versión encriptada wss://. Equivale al HTTPS para los
+websockets.
+
+Una vez que el socket es creado, debemos escuchar los eventos que ocurren en él.
+Hay en total 4 eventos:
+
+open - conexión establecida,
+
+message - datos recibidos,
+
+error - error en websocket,
+
+close - conexión cerrada.
+
+…Y si queremos enviar algo, socket.send(data) lo hará.
+
+Aquí un ejemplo:
+
+<!DOCTYPE html>
+<script>
+"use strict";
+
+let socket = new WebSocket("wss://javascript.info/article/websocket/demo/hello");
+
+socket.onopen = function(e) {
+  alert("[open] Conexión establecida");
+  alert("Enviando al servidor");
+  socket.send("Mi nombre es John");
+};
+
+socket.onmessage = function(event) {
+  alert(`[message] Datos recibidos del servidor: ${event.data}`);
+};
+
+socket.onclose = function(event) {
+  if (event.wasClean) {
+    alert(`[close] Conexión cerrada limpiamente, código=${event.code} motivo=${event.reason}`);
+  } else {
+    // ej. El proceso del servidor se detuvo o la red está caída
+    // event.code es usualmente 1006 en este caso
+    alert('[close] La conexión se cayó');
+  }
+};
+
+socket.onerror = function(error) {
+  alert(`[error] ${error.message}`);
+};
+</script>
+
+Para propósitos de demostración, hay un pequeño servidor server.js, escrito en
+Node.js, ejecutándose para el ejemplo de arriba. Este responde con
+“Hello from server, John”, espera 5 segundos, y cierra la conexión.
+
+Entonces verás los eventos open → message → close.
+
+Eso es realmente todo, ya podemos conversar con WebSocket. Bastante simple.
+
+Abriendo un websocket
+=====================
+
+Cuando se crea new WebSocket(url), comienza la conexión de inmediato.
+
+Durante la conexión, el navegador (usando cabeceras “header”) le pregunta al
+servidor: “¿Soportas Websockets?” y si si el servidor responde “Sí”, la
+comunicación continúa en el protocolo WebSocket, que no es HTTP en absoluto.
+
+Aquí hay un ejemplo de cabeceras de navegador para una petición hecha por
+new WebSocket("wss://javascript.info/chat").
+
+GET /chat
+Host: javascript.info
+Origin: https://javascript.info
+Connection: Upgrade
+Upgrade: websocket
+Sec-WebSocket-Key: Iv8io/9s+lYFgZWcXczP8Q==
+Sec-WebSocket-Version: 13
+
+Descripción:
+
+Origin - La página de origen del cliente, ej. https://javascript.info. Los
+objetos WebSocket son cross-origin por naturaleza. No existen las cabeceras
+especiales ni otras limitaciones. De cualquier manera los servidores viejos son
+incapaces de manejar WebSocket, asi que no hay problemas de compatibilidad. Pero
+la cabecera Origin es importante, pues habilita al servidor decidir si permite o
+no la comunicación WebSocket con el sitio web.
+
+Connection: Upgrade - señaliza que el cliente quiere cambiar el protocolo.
+
+Upgrade: websocket - el protocolo requerido es “websocket”.
+
+Sec-WebSocket-Key - una clave de seguridad aleatoria generada por el navegador.
+
+Sec-WebSocket-Version - Versión del protocolo WebSocket, 13 es la actual.
+
+Nota: El intercambio WebSocket no puede ser emulado.
+
+No podemos usar XMLHttpRequest o fetch para hacer este tipo de peticiones HTTP,
+porque JavaScript no tiene permitido establecer esas cabeceras.
+
+Cierre de conexión
+==================
+
+Normalmente, cuando una parte quiere cerrar la conexión (servidor o navegador,
+ambos tienen el mismo derecho), envía un “frame de cierre de conexión” con un
+código numérico y un texto con el motivo.
+
+El método para eso es:
+
+socket.close([code], [reason]);
+
+code es un código especial de cierre de WebSocket (opcional)
+
+reason es un string que describe el motivo de cierre (opcional)
+
+Entonces el manejador del evento close de la otra parte obtiene el código y el
+motivo, por ejemplo:
+
+// la parte que hace el cierre:
+socket.close(1000, "Work complete");
+
+// la otra parte:
+socket.onclose = event => {
+  // event.code === 1000
+  // event.reason === "Work complete"
+  // event.wasClean === true (clean close)
+};
+
+Los códigos más comunes:
+
+1000 - cierre normal. Es el predeterminado (usado si no se proporciona code),
+
+1006 - no hay forma de establecerlo manualmente, indica que la conexión se
+perdió (no hay frame de cierre).
+
+Hay otros códigos como:
+
+1001 - una parte se va, por ejemplo el server se está apagando, o el navegador
+deja la página,
+
+1009 - el mensaje es demasiado grande para procesar,
+
+1011 - error inesperado en el servidor,
+
+…y así.
+
+Los códigos de WebSocket son como los de HTTP, pero diferentes. En particular,
+los menores a 1000 son reservados, habrá un error si tratamos de establecerlos.
+
+// en caso de conexión que se rompe
+socket.onclose = event => {
+  // event.code === 1006
+  // event.reason === ""
+  // event.wasClean === false (no hay un frame de cierre)
+};
+
+Estado de la conexión
+=====================
+
+Para obtener el estado (state) de la conexión, tenemos la propiedad
+socket.readyState con valores:
+
+0 - “CONNECTING”: la conexión aún no fue establecida,
+
+1 - “OPEN”: comunicando,
+
+2 - “CLOSING”: la conexión se está cerrando,
+
+3 - “CLOSED”: la conexión está cerrada.
+
+Resumen
+=======
+
+WebSocket es la forma moderna de tener conexiones persistentes entre navegador y
+servidor .
+
+-Los WebSockets no tienen limitaciones “cross-origin”.
+-Están muy bien soportados en los navegadores.
+-Pueden enviar y recibir datos string y binarios.
+
+La API es simple.
+
+Métodos:
+
+-socket.send(data),
+-socket.close([code], [reason]).
+
+Eventos:
+
+-open,
+-message,
+-error,
+-close.
+
+El WebSocket por sí mismo no incluye reconexión, autenticación ni otros
+mecanismos de alto nivel. Hay librerías cliente/servidor para eso, y también es
+posible implementar esas capacidades manualmente.
+
+A veces, para integrar WebSocket a un proyecto existente, se ejecuta un
+servidor WebSocket en paralelo con el servidor HTTP principal compartiendo la
+misma base de datos. Las peticiones a WebSocket usan wss://ws.site.com, un
+subdominio que se dirige al servidor de WebSocket mientras que https://site.com
+va al servidor HTTP principal.
+
+Seguro, otras formas de integración también son posibles.
+
+Fuente
+======
+
+https://es.javascript.info/websocket
