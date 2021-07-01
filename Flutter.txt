@@ -1,0 +1,93 @@
+=====================
+Guía de Flutter by dM
+=====================
+
+Flutter es un SDK para desarrollo de aplicaciones en Android y iOS creado por
+Google. Este SDK está desarrollado en el lenguaje Dart que también fue creado
+por Google y fue anunciado en 2011. Actualmente con Flutter puedes crear
+aplicaciones para plataforma y web también.
+
+Flutter tiene grandes ventajas con respecto a otras formas de desarrollar en
+móviles. Cuando desarrollas una aplicación para móviles de manera nativa por lo general tienes que lidiar con mantener dos repositorios de código, uno en
+Android y otro en iOS. Con Flutter puedes mantener una sola fuente de código y
+obtener prácticamente el mismo rendimiento que tendrías desarrollando
+directamente en cada plataforma.
+
+Desarrollar en Flutter es distinto que hacerlo con otras tecnologías como React Native, debido que Flutter no utiliza un bridge para la comunicación nativa.
+También es distinto a tecnologías como Ionic en donde se utiliza un web view
+para colocar en una app código HTML + CSS + JS (siendo esta última tecnología la
+de menos rendimiento).
+
+Widgets y estructura de árbol de Flutter
+========================================
+
+Uno de los conceptos fundamentales de Flutter es que está basado completamente
+en Widgets. Esto quiere decir que para crear un contenedor debes utilizar un
+widget, para crear un botón debes utilizar un widget, para crear un simple texto
+debes utilizar un widget y así sucesivamente.
+
+Entender los widgets, resulta para mí mucho más importante que empezar a
+codificar tu primer Hola Mundo, en especial si ya vienes con bases de
+programación de otros lenguajes. Vamos a ver algunos ejemplos de lo que te digo.
+
+En Flutter puedes crear un ícono utilizando el widget Icon.
+
+Icon(Icons.wifi_lock, color: Colors.lightBlue, size: 150);
+
+Como ves este widget recibe la constante del ícono, el color, el size y otras
+cosas que no hemos colocado por simplicidad. Ahora bien si queremos crear un
+ícono al cual se le pueda dar click para accionar un evento debemos utilizar el
+widget IconButton.
+
+IconButton(
+    icon: Icon(Icons.wifi_lock, color: Colors.lightBlue, size: 150),
+    onPressed: (){},
+);
+
+Ahora imagina que queremos darle un padding al widget del ícono. Si sabes CSS
+sabrás que el padding es el espacio de relleno de un contenedor. En este caso y
+como en todos deberemos utilizar un widget, particularmente el widget Padding.
+
+Padding(
+    padding: EdgeInsets.fromLTRB(170, 0, 0, 0),
+    child: IconButton(
+        icon: Icon(Icons.wifi_lock, color: Colors.lightBlue, size: 150),
+        onPressed: (){}
+    )
+)
+
+Todo esto nos lleva a un concepto interesante y es la estructura de árbol de la aplicación. Por lo general tendrás esta estructura ya que deberás encadenar
+widget tras widget. Supongamos ahora que queremos dar un background a nuestro
+widget. Para esto podemos utilizar el widget Container que vendría a ser como un
+elemento div en HTML. Es decir, un elemento genérico al cual le daremos un color
+de fondo.
+
+Container(
+  color: Colors.red,
+  child: Padding(
+      padding: EdgeInsets.fromLTRB(170, 0, 0, 0),
+      child: IconButton(
+          icon: Icon(Icons.wifi_lock, color: Colors.lightBlue),
+          onPressed: (){},
+          iconSize: 150
+      )
+  ),
+),
+
+A medida que tu interfaz de usuario se vuelva más compleja tendrás una mayor profundidad en la estructura de árbol de la aplicación. Observa también que la
+manera de pasar parámetros en los widgets es mediante clave y valor (key: value)
+en donde la key será casi siempre child para encadenar widgets y el valor será
+el widget en cuestión.
+
+Fuente
+======
+
+-https://blog.pleets.org/article/introducci%C3%B3n-a-flutter
+-https://blog.pleets.org/article/widgets-en-flutter
+
+===========
+Instalación
+===========
+
+Flutter requiere de una completa instalación de Android Studio para proveer las dependencias de la plataforma de Android. De cualquier manera, puede desarrollar
+sus apps de Flutter en diferentes editores.

@@ -3377,7 +3377,8 @@ Cantidad de caractéres: <input type="text" name="cantidad" id="cantidad">
 
 -------------------------------------
 
-<!-- Pedir código de seguridad para enviar el formulario, como si fuera un captcha -->
+<!-- Pedir código de seguridad para enviar el formulario, como si fuera un
+captcha -->
 <!DOCTYPE html>
 <html>
   <head>
@@ -5892,6 +5893,17 @@ la variable dentro de un if puedo acceder a ella fuera del if.
 -let: Su alcance está limitado al bloque dentro del cual la ponga, por ejemplo
 dentro de un if pero no fuera.
 
+Ejemplo:
+
+//ES6
+(function () {
+  if (true) {
+    let x = "hola mundo";
+  }
+  console.log(x);
+  //Da error, porque "x" ha sido definida dentro del "if"
+})();
+
 -const: Es lo mismo que tener una variable solo que su contenido no es
 modificable, ya qu es una constante.
 
@@ -5903,7 +5915,9 @@ Es una cadena de texto en la cual puedo meter varios enters, puedo meter varias
 líneas de texto e incluso puedo interpolar variables dentro de la cadena para
 imprimirlas sin usar concatenación.
 
-Las plantillas de cadena, mejor conocidas como template strings,son una forma
+Usan el caracter backtick (`).
+
+Las plantillas de cadena, mejor conocidas como template strings, son una forma
 más fácil de crear:
 
 -Cadenas con variables dentro (interpolación).
@@ -5931,19 +5945,23 @@ tus actos son los que te definen...
 Batman
 */
 
-
-//variables en strings (interpolación)
+// variables en strings (interpolación)
 
 let nombre = 'Jonathan';
 
 console.log(`Hola ${nombre}`); //Imprime Hola Jonathan
 
+//ES6
+let nombre1 = "JavaScript";
+let nombre2 = "awesome";
+console.log(`Sólo quiero decir que ${nombre1} is ${nombre2`);
+// Solo quiero decir que JavaScript is awesome
 
-//ejecutar expresiones
+// ejecutar expresiones
 
 console.log(`Hola ${nombre}, tienes ${30 + 2} años`); //Imprime Hola Jonathan, tienes 32 años
 
-//ejecutar funciones
+// ejecutar funciones
 
 let estaciones = ['Primavera', 'Verano', 'Otoño', 'Invierno'],
   ol = `<ol>
@@ -5958,7 +5976,6 @@ console.log(ol);
 
 // Imprime <ol><li>Primavera</li><li>Verano</li><li>Otoño</li><li>Invierno</li></ol>
 
-
 //función de etiquetado
 
 const etiqueta = function (cadena, variable) {
@@ -5967,10 +5984,25 @@ const etiqueta = function (cadena, variable) {
   console.log(cadena[0] + variable); //Imprime Hola Ulises
 };
 
-
 let otroNombre = 'Ulises';
 
 etiqueta`Hola ${otroNombre}`;
+
+También podemos tener String multilínea sin necesidad de concatenarlos con +.
+
+//ES5
+var saludo = "ola " +
+"que " +
+"ase ";
+
+//ES6
+var saludo = "ola
+que
+ase";
+
+console.log("hola
+que
+ase");
 
 ================
 Función Callback
