@@ -655,8 +655,10 @@ function sumar(a,b) {
   suma = a + b;
   return suma;
 }
+
 // Variable que le asignamos la llamada de la funcion y parametros
 operacion = sumar(6,4);
+
 // Mostramos el resultado en una alerta
 alert(operacion);
 
@@ -5421,7 +5423,9 @@ traerPais().then(mostrarNombre);
 </body>
 </html>
 
------
+=================
+Función toFixed()
+=================
 
 Convierta un número en una cadena, redondeando el número para mantener solo con
 dos decimales
@@ -6286,9 +6290,87 @@ function myFunction() {
 </body>
 </html>
 
-=========
-WebSocket
-=========
+========================
+¿Qué son los Websockets?
+========================
+
+Un poco de historia
+===================
+
+Para entender el beneficio que aportan los WebSockets es necesario recordar que
+hasta hace poco, crear aplicaciones web que se pudieran considerar realmente
+dinámicas era virtualmente imposible. La World Wide Web había sido diseñada
+originalmente para consultar información estática almacenada en archivos HTML.
+
+Navegar de una página a otra solo se podía hacer siguiendo ligas.
+Posteriormente, los desarrolladores empezaron a crear sitios web un poco más
+interactivos, mediante el uso de formas. La información proporcionada por el
+usuario se mandaba al servidor (a un CGI o a un servlet) y el servidor
+contestaba generando una nueva página dinámica. Eso sirvió para crear todo tipo
+de aplicaciones básicas, pero los desarrolladores no estaban satisfechos, porque
+el sistema seguía siendo muy ineficiente. El hecho de que cada vez que se
+tuviera que interactuar con el servidor hubiera que cargar de nuevo toda la
+página hacía que los usuarios percibieran que las aplicaciones web eran mucho
+más lentas que sus equivalentes nativas y bastante menos atractivas.
+
+Para resolver el problema, Microsoft ideó una solución. La empresa creó una
+nueva función JavaScript, XMLHttpRequest, la cual añadió a su navegador Internet
+Explorer. Esta función, aún muy utilizada actualmente, permite invocar un URL
+(pasando parámetros de forma opcional) y obtener un resultado del servidor, el
+cual se puede utilizar para actualizar la página (usando el DOM o Document
+Object-Model), sin necesidad de volver a cargarla. Mediante el uso de
+XMLHttpRequest, Microsoft pudo crear un cliente web (Outlook Web Access) para su
+sistema de correo que funcionaba de forma muy similar a Outlook sobre Windows.
+
+El éxito fue inmediato y los demás browsers no tardaron en adoptar esa función,
+que se volvió rápidamente estándar.
+
+Esta innovación creó toda una nueva generación de aplicaciones web que se
+conoció como AJAX (Asynchronous JavaScript and XML, un nombre pegadizo pero
+engañoso, porque en realidad no se necesita usar XML al invocar la función
+XMLHttpRequest). Las aplicaciones AJAX permitieron que las aplicaciones web se
+parecieran cada vez más a las aplicaciones nativas y lograron que cada vez
+pasemos más tiempo dentro del browser y que usemos menos aplicaciones nativas.
+De hecho, gracias a este fenómeno es cada vez más viable usar dispositivos que
+solo pueden ejecutar aplicaciones web, como lo demuestra el éxito de las
+Chromebooks de Google y la existencia de los teléfonos celulares basados en
+Firefox OS que solo pueden ejecutar aplicaciones basadas en tecnologías web.
+
+Sin embargo, a pesar de todas sus virtudes, la función XMLHttpRequest tiene una
+serie de limitantes importantes. La principal es que la interacción con el
+servidor debe iniciarse desde el cliente, ya sea por una interacción desde el
+interfaz gráfico (por ejemplo apretando un botón) o a través de un temporizador.
+Esto significa que si queremos actualizar las páginas conectadas a nuestro
+servidor como respuesta a un evento enviado por el servidor, simplemente no es
+posible hacerlo usando XMLHttpRequest. Por eso, cuando seguimos un evento
+deportivo por Internet, tenemos que estar recargando la página una y otra vez,
+para ver si ha cambiado el marcador. Ese sistema de estar poleando el servidor
+una y otra vez es sumamente ineficiente y la carga de peticiones que genera
+obliga a invertir mucho en infraestructura, un gasto que se podría evitar. Por
+eso era necesario buscar otra solución mucho más elegante.
+
+WebSockets
+==========
+
+Se trata de un concepto muy similar al de los sockets TCP/IP y que permite que
+una aplicación web establezca un canal de comunicación bi-direccional
+persistente entre la capa de presentación HTML en el browser y el servidor. Los
+WebSockets utilizan los puertos estándar de http y https (80 y 443
+respectivamente) y la especificación fue diseñada para evitar problemas causados
+por el uso de proxies y de firewalls. Es importante recalcar que aunque los
+WebSockets usan el puerto 80 al igual que HTTP, usan un protocolo de
+comunicación distinto, razón por la cual se usa ws:// en la URL en lugar de
+http://. También es posible encriptar la comunicación usando el protocolo
+wss://, el cual usará el puerto 443 (el mismo que HTTPS).
+
+En el cliente usaremos JavaScript para interactuar con los WebSockets en la
+página web y del lado del servidor se puede usar una variedad de lenguajes de
+programación, entre los cuales están JavaScript (usado tras bambalinas por
+Node-Red, la tecnología que usaremos en este ejercicio) o Java
+(a partir de JEE 7).
+
+Otros conceptos de WebSocket
+============================
 
 El protocolo WebSocket, descrito en la especificación RFC 6455, brinda una forma
 de intercambiar datos entre el navegador y el servidor por medio de una conexión
@@ -6512,7 +6594,8 @@ va al servidor HTTP principal.
 
 Seguro, otras formas de integración también son posibles.
 
-Fuente
-======
+Fuentes
+=======
 
-https://es.javascript.info/websocket
+-https://es.javascript.info/websocket
+-https://developer.ibm.com/es/technologies/web-development/articles/que-son-los-websockets/

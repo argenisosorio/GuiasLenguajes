@@ -191,7 +191,7 @@ v-on: Que lo que hace es escuchar un evento, nativo o creado por el usuario.
 
 v-bind: Vincula un atributo HTML a un valor que tengamos en nuestro modelo.
 Encadena datos, es decir que establece comunicación con los datos que haya en el
-componente asociado.
+componente asociado. Sirve para cualquier atributo, por ejemplo style.
 
 v-if: Un condicional que inyecta un elemento al DOM según la condición.
 
@@ -206,12 +206,61 @@ aplicación.
 v-text: Esta directiva permite hacer un trabajo similar a la interpolación de
 texto con la diferencia que la interpolación puede ser usada para renderizar un
 fragmento del texto de un elemento, la directiva v-text renderizará todo el
-contenido.
+contenido. Permite actualizar la propiedad textContent del elemento.
 
-v-html: Esta directiva permite imprimer código html en el elemento en cuestión.
+v-html: Esta directiva permite imprimir código html en el elemento en cuestión.
 Es el equivalente al innerHTML de JavaScript.
 
+v-pre: Le indica a Vue que no debe realizar ningún proceso de compilación en
+este elemento y cualquiera de sus hijos.
+
+v-once: Renderiza el elemento solo una vez. Si la expresión asociada al elemento
+cambia no se verá reflejada en el template.
+
 Y existen más directivas en Vue...
+
+===========================================
+Funciones de Javascript dentro del template
+===========================================
+
+Se pueden ejecutar expresiones javascript siempre y cuando sean de un solo
+statement y a algunas variables globales como: Math, Number, Date, Array,
+Object, Boolean, String, RegExp, Map, Set, JSON, Intl..
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue example</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="main">
+  <p>{{ name.toUpperCase() }}</p>
+  <p>{{ age >= 18 ? "Soy Mayor de Edad" : "Soy Menor de Edad" }}</p>
+  <p>
+    Mi sueldo es {{salary.toFixed(2)}}
+  </p>
+    <p>
+    La fecha es {{new Date().toDateString()}}
+  </p>
+  <p>
+    2 al cuadrado es {{Math.pow(2, 2)}}
+  </p>
+</div>
+<script>
+var demo = new Vue({
+  el: '#main',
+  data: {
+    age: 18,
+    lastname: "Horia",
+    name: "Susana",
+    salary: 250
+  }
+});
+</script>
+</body>
+</html>
 
 Ejemplo de la directiva v-bind
 ==============================
@@ -322,8 +371,35 @@ Ejemplo:
   </body>
 </html>
 
-Otro ejemplo
-============
+Otro ejemplo:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue example</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="main">
+  <button type="button" v-on:click="saludar">
+    Saludar
+  </button>
+</div>
+<script>
+var demo = new Vue({
+  el: '#main',
+  methods: {
+    saludar: function() {
+      alert("Hola");
+    }
+  }
+});
+</script>
+</body>
+</html>
+
+Otro ejemplo:
 
 <!DOCTYPE html>
 <html>
@@ -350,6 +426,105 @@ new Vue({
     }
   }
 })
+</script>
+</body>
+</html>
+
+Pasar parámetros a un método usando v-on
+========================================
+
+En el ejemplo anterior simplemente indicamos el nombre del método, pero
+imaginemos que queremos pasar algún parámetro desde nuestro template al método,
+tendríamos que enviar el parámetro tal como cuando invocamos un método en el
+javascript de toda la vida.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue component</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <button type="button" v-on:click="saludar('Eduardo')">
+    Saludar
+  </button>
+</div>
+<script>
+new Vue({
+  el: "#app",
+  methods: {
+    saludar: function(name) {
+      alert("Hola" + name);
+    }
+  }
+});
+</script>
+</body>
+</html>
+
+Otro ejemplo:
+
+<!-- Pasando parámetros en la función -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue component</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <button type="button" v-on:click="saludar('Eduardo','Perez')">
+    Saludar
+  </button>
+</div>
+<script>
+new Vue({
+  el: "#app",
+  methods: {
+    saludar: function(name, lastname) {
+      alert("Hola " + name + " " + lastname);
+    }
+  }
+});
+</script>
+</body>
+</html>
+
+Accediendo a data desde los métodos
+===================================
+
+Dentro de los métodos podemos acceder a cualquier variable definida en nuestro
+objeto data usando this más el nombre de la variable que deseamos usar.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue component</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <button type="button" v-on:click="showFullName">
+    Mostrar Nombre
+  </button>
+</div>
+<script>
+  new Vue({
+    el: "#app",
+    data: {
+      firstName: "Eduardo",
+      lastName: "P. Rivero"
+    },
+    methods: {
+      showFullName: function() {
+        alert(this.firstName + " " + this.lastName);
+      }
+    }
+  });
 </script>
 </body>
 </html>
@@ -1064,9 +1239,66 @@ var app = new Vue({
 </body>
 </html>
 
+Ejemplo de v-pre
+=================
+
 Esta directiva delegará la impresión del HTML al navegador sin realizar algún
 renderizado a priori, es decir, no se puede utilizar directivas de Vue en el
 código HTML que se desea imprimir.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <div v-pre>
+    <p v-if="false">Las directivas aca no tienen poder</p>
+    <div>
+      <p>{{preValue}}</p>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+var app = new Vue({
+  el: "#app",
+  data: {
+    preValue: "Este mensaje no se verá en el template"
+  }
+});
+</script>
+</body>
+</html>
+
+Ejemplo de v-once
+=================
+
+Renderiza el elemento solo una vez. Si la expresión asociada al elemento cambia
+no se verá reflejada en el template.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <p v-once>{{onceMessage}}</p>
+<script type="text/javascript">
+var app = new Vue({
+  el: "#app",
+  data: {
+    onceMessage: "Este mensaje nunca cambiará"
+  }
+});
+</script>
+</body>
+</html>
 
 =========================
 Anatomía de un componente
@@ -2424,6 +2656,140 @@ export default {
 };
 </script>
 
+Otro ejemplo
+============
+
+<template>
+  <div>
+    {{ message }}
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'App',
+  data() {
+    return {
+      message: 'Hello world!'
+    }
+  }
+}
+</script>
+
+<style>
+</style>
+
+Otro ejemplo
+============
+
+<template>
+  <div>
+    <ul>
+      <li v-for="(course, index) in courses" v-bind:key="index">
+        <a v-bind:href="course.url"> {{ course.name }} </a>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'App',
+  data() {
+    return {
+      courses: [
+        { name: "PHP", url: 'https://www.youtube.com/1' },
+        { name: "Python", url: 'https://www.youtube.com/2' },
+        { name: "Python", url: 'https://www.youtube.com/2' },
+      ]
+    }
+  }
+}
+</script>
+
+<style>
+</style>
+
+Otro ejemplo con llamada a otro componente
+==========================================
+
+<template>
+  <div>
+    <HelloWorld msg="Hello world component!"/>
+  </div>
+</template>
+
+<script>
+import HelloWorld from './components/HelloWorld.vue'
+
+export default {
+  name: 'App',
+  components: {
+    HelloWorld
+  }
+}
+</script>
+
+<style>
+</style>
+
+Componente que llamamos src/components/HelloWorld.vue
+
+<template>
+  <div>
+    <h1>{{ msg }}</h1>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'HelloWorld',
+  props: {
+    msg: String
+  }
+}
+</script>
+
+<style>
+</style>
+
+Otro ejemplo con llamada a 2 componentes
+========================================
+
+App.vue
+
+<template>
+  <div>
+    <AppHeader />
+    <AppFooter />
+  </div>
+</template>
+
+<script>
+import AppHeader from './components/AppHeader.vue'
+import AppFooter from './components/AppFooter.vue'
+
+export default {
+  name: 'App',
+  components: {
+    AppHeader,
+    AppFooter,
+  }
+}
+</script>
+
+components/AppHeader.vue
+
+<template>
+  <h1>Header</h1>
+</template>
+
+components/AppFooter.vue
+
+<template>
+  <h4>Footer</h4>
+</template>
+
 ============================================================================
 Ejemplo de un componente para exportar con webpack en un proyecto de Laravel
 ============================================================================
@@ -2769,3 +3135,45 @@ Fuente
 ======
 
 -https://codingpotions.com/vue-ciclo-vida
+
+Directivas Personalizadas
+=========================
+
+Además del conjunto predeterminado de directivas incluidas en el núcleo (v-model
+y v-show), Vue también le permite registrar sus propias directivas
+personalizadas. Note que en Vue 2.0, la forma primaria de reutilización y
+abstracción del código son los componentes; sin embargo, puede haber casos en
+los que necesite un acceso al bajo nivel al DOM en elementos simples, y aquí es
+donde las directivas personalizadas seguirían siendo útiles. Un ejemplo sería
+enfocarse en un elemento input.
+
+Cuando se carga la página, este elemento se enfoca (nota: el atributo nativo
+autofocus no funciona en Safari para dispositivos mobiles). Imaginen el input
+que debería estar enfocada ahora. Ahora vamos a construir la directiva que
+realiza esto:
+
+// Registra una directiva personalizada global llamada `v-focus`
+Vue.directive('focus', {
+  // Cuando el elemento enlazado se inserta en el DOM...
+  inserted: function (el) {
+    // Enfoca el elemento
+    el.focus()
+  }
+})
+
+Si desea registrar una directiva localmente en lugar de lo anterior, los
+componentes también aceptan una opción directives:
+
+directives: {
+  focus: {
+    // Definición de directiva
+    inserted: function (el) {
+      el.focus()
+    }
+  }
+}
+
+Luego, en un template, puede usar el nuevo atributo v-focus en cualquier
+elemento, como este:
+
+<input v-focus>
