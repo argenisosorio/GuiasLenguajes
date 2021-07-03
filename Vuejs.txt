@@ -2598,6 +2598,38 @@ import ImageMovie from './ImageMovie.vue'
   }
 </script>
 
+Otro ejemplo
+============
+
+SkeletonComponent.vue
+
+<template>
+<h1>{{ greeting }}</h1>
+</template>
+
+<script>
+export default {
+    name: 'SkeletonComponent',
+    data: function() {
+        return {
+            greeting: 'Hello'
+        };
+    },
+    props: [],
+    methods: {
+    },
+    created: function(){
+    }
+}
+</script>
+
+<style scoped>
+h1 {
+    font-size: 2em;
+    text-align: center;
+}
+</style>
+
 Llamar un componente dentro de otro
 ===================================
 
@@ -3177,3 +3209,68 @@ Luego, en un template, puede usar el nuevo atributo v-focus en cualquier
 elemento, como este:
 
 <input v-focus>
+
+======================
+Propiedades computadas
+======================
+
+Las expresiones en el template son muy convenientes, pero están diseñadas para
+operaciones simples. Poner demasiada lógica en sus templates puede hacerlos
+grandes, complejos y difíciles de mantener. Por ejemplo:
+
+<div id="example">
+  {{ message.split('').reverse().join('') }}
+</div>
+
+En este punto, el template ya no es simple y declarativo. Debe mirarlo por un
+segundo antes de darse cuenta de que muestra message al revés. El problema se
+agrava cuando desea incluir el mensaje invertido en su template más de una vez.
+
+Es por eso que para cualquier lógica compleja, deberia usar una propiedad
+computada.
+
+Ejemplo:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Vue example</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="example">
+  <p>Mensaje original: "{{ message }}"</p>
+  <p>Mensaje invertido computado: "{{ reversedMessage }}"</p>
+</div>
+<script>
+var vm = new Vue({
+  el: '#example',
+  data: {
+    message: 'Hola'
+  },
+  computed: {
+    // un getter computado
+    reversedMessage: function () {
+      // `this` apunta a la instancia vm
+      return this.message.split('').reverse().join('')
+    }
+  }
+})
+</script>
+</body>
+</html>
+
+Esto muestra en el navegador:
+
+Mensaje original: "Hola"
+
+Mensaje invertido computado: "aloH"
+
+Aquí hemos declarado una propiedad computada reversedMessage. La función que
+proporcionemos se utilizará como la función getter para la propiedad
+vm.reversedMessage:
+
+console.log(vm.reversedMessage) // => 'aloH'
+vm.message = 'Adios'
+console.log(vm.reversedMessage) // => 'soidA'

@@ -1,0 +1,141 @@
+=====================
+Guía de GraphQL by dM
+=====================
+
+GraphQL es un lenguaje de consulta y un tiempo de ejecución del servidor para
+las interfaces de programación de aplicaciones (API); su función es brindar a
+los clientes exactamente los datos que solicitan y nada más.
+
+Con GraphQL, las API son rápidas, flexibles y sencillas para los
+desarrolladores. Incluso se pueden implementar en un entorno de desarrollo
+integrado (IDE) conocido como GraphiQL. Como alternativa a REST, GraphQL permite
+que los desarrolladores creen consultas para extraer datos de varias fuentes en
+una sola llamada a la API.
+
+Además, GraphQL otorga a los encargados del mantenimiento de las API la
+flexibilidad para agregar campos o modificarlos, sin que esto afecte las
+consultas actuales. Los desarrolladores pueden diseñar las API con los métodos
+que prefieran, y la especificación de GraphQL garantizará que funcionen de forma
+predecible para los clientes.
+
+Esquemas, resoluciones y otros términos comunes de GraphQL
+==========================================================
+
+Los desarrolladores de API utilizan esta herramienta para crear un esquema que
+describa todos los datos posibles que los clientes pueden consultar a través del
+servicio.
+
+Un esquema de GraphQL está compuesto por tipos de objetos, que definen qué clase
+de objetos puede solicitar y cuáles son sus campos.
+
+A medida que ingresan las consultas, GraphQL las aprueba o rechaza en función
+del esquema, y luego ejecuta las validadas.
+
+El desarrollador de API adjunta cada campo de un esquema a una función llamada
+resolución. Durante la ejecución, se llama a la resolución para que genere el
+valor.
+
+Si bien GraphQL define y valida la sintaxis de las consultas a la API (descritas
+en el repositorio graphql-spec), deja la mayoría de las otras decisiones en
+manos del diseñador de la API. GraphQL no indica cómo almacenar los datos ni qué
+lenguaje de programación utilizar; los desarrolladores pueden optar por PHP
+(graphql-php), Scala (Sangria), Python (Graphene Python), Ruby (graphql-ruby),
+JavaScript (graphql.js) y muchos más. GraphQL no presenta requisitos de red,
+autorización ni paginación.
+
+Desde el punto de vista del cliente, las operaciones más comunes de GraphQL
+probablemente sean las consultas y las mutaciones. Si las consideramos desde el
+punto de vista del modelo CRUD (crear, leer, actualizar y eliminar), una
+consulta equivaldría a la operación leer. Las mutaciones se encargan de todas
+las demás (crear, actualizar y eliminar).
+
+Ventajas y desventajas de GraphQL en entornos empresariales
+===========================================================
+
+Si planea implementar GraphQL en un entorno empresarial o comercial, debe
+considerar tanto las ventajas como las desventajas.
+
+Ventajas
+========
+
+Un esquema de GraphQL establece una fuente única de información en una
+aplicación de GraphQL. Ofrece a la empresa una forma de unificar toda su API.
+
+Las llamadas a GraphQL se gestionan en un solo recorrido de ida y vuelta. Los
+clientes obtienen lo que solicitan sin que se genere una sobrecarga.
+
+Los tipos de datos bien definidos reducen los problemas de comunicación entre el
+cliente y el servidor.
+
+GraphQL es una herramienta introspectiva. Un cliente puede solicitar una lista
+de los tipos de datos disponibles. Esto es ideal para la generación automática
+de documentación.
+
+GraphQL permite que las API de las aplicaciones evolucionen sin afectar las
+consultas actuales.
+
+Muchas extensiones de GraphQL open source ofrecen características que no están
+disponibles con las API de REST.
+
+GraphQL no exige una arquitectura de aplicación específica. Puede incorporarse
+sobre una API de REST actual y funcionar con una herramienta de gestión de API
+también actual.
+
+Desventajas
+===========
+
+GraphQL presenta una curva de aprendizaje para desarrolladores que tienen
+experiencia con las API de REST.
+
+Además, delega gran parte del trabajo de las consultas de datos al servidor, lo
+cual representa una mayor complejidad para los desarrolladores de servidores.
+
+Según su implementación, GraphQL podría requerir estrategias de gestión de API
+diferentes a las API de REST, sobre todo si se tienen en cuenta los precios y
+los límites de frecuencia.
+
+El almacenamiento en caché es más complejo que con REST.
+
+Los encargados del mantenimiento de las API tienen la tarea adicional de
+escribir un esquema de GraphQL fácil de mantener.
+
+Ejemplos de consultas de GraphQL
+================================
+
+La mejor manera de comprender GraphQL es analizando algunos ejemplos de
+consultas y respuestas. Veamos tres ejemplos adaptados del sitio web del
+proyecto de GraphQL, graphql.org.
+
+En el primer ejemplo, se muestra cómo el cliente puede crear una consulta de
+GraphQL y solicitar a la API que devuelva ciertos campos específicos en el
+formato que usted indicó.
+
+{ me { name } }
+
+La API de GraphQL arrojará un resultado similar a este en formato JSON:
+
+{ "me": { "name": "Dorothy" } }
+
+El cliente también puede agregar argumentos como parte de la consulta de
+GraphQL, como se muestra en el siguiente ejemplo:
+
+{ human(id: "1000") { name location } }
+
+El resultado:
+
+{ "data": { "human": { "name": "Dorothy, "location": "Kansas" } } }
+
+A partir de aquí, el asunto se torna más interesante. GraphQL ofrece a los
+usuarios la posibilidad de definir fragmentos reutilizables y asignar variables.
+
+Imagínese que necesita solicitar una lista de ID y, luego, una serie de
+registros para cada ID. Con GraphQL, puede crear una consulta que extraiga todos
+los elementos que necesita con una sola llamada a la API.
+
+De esta manera, la siguiente consulta:
+
+query HeroComparison($first: Int = 3) { leftComparison: hero(location: KANSAS) { ...comparisonFields } rightComparison: hero(location: OZ) { ...comparisonFields } } fragment comparisonFields on Character { name friendsConnection(first: $first) { totalCount edges { node { name } } } }
+
+Podría generar este resultado:
+
+{ "data": { "leftComparison": { "name": "Dorothy", "friendsConnection": { "totalCount": 4, "edges": [ { "node": { "name": "Aunt Em" } }, { "node": { "name": "Uncle Henry" } }, { "node": { "name": "Toto" } } ] } }, "rightComparison": { "name": "Wizard", "friendsConnection": { "totalCount": 3, "edges": [ { "node": { "name": "Scarecrow" } }, { "node": { "name": "Tin Man" } }, { "node": { "name": "Lion" } } ] } } } }
