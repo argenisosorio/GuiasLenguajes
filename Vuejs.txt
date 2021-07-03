@@ -718,6 +718,43 @@ Ejemplo de v-if y v-else
 </body>
 </html>
 
+Otro ejemplo
+============
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>v-if y v-else</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+<main id="app">
+  <template v-if="!mensaje">
+    <!-- Este texto se mostrará si no existe un mensaje en el modelo -->
+    <h3>Escriba un mensaje</h3>
+    <p>Cualquier cosa será válida</p>
+  </template>
+  <template v-else>
+    <!-- Este texto se mostrará si existe un mensaje en el modelo -->
+    <h3>Ahora hay un mensaje</h3>
+    <p>Qué interesante</p>
+  </template>
+  <textarea cols="30" rows="10" v-model="mensaje"></textarea>
+  <br>
+  {{ $data.mensaje }}
+</main>
+<script>
+  var mostrarTextoCondicional = new Vue({
+    el: '#app',
+    data: {
+      mensaje: ''
+    }
+  })
+</script>
+</body>
+</html>
+
 Ejemplo de eventos
 ==================
 
@@ -3274,3 +3311,113 @@ vm.reversedMessage:
 console.log(vm.reversedMessage) // => 'aloH'
 vm.message = 'Adios'
 console.log(vm.reversedMessage) // => 'soidA'
+
+Ejemplo de ajax con axios y vuejs
+=================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ajax</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</head>
+<body>
+<div id="main" class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">First Name</th>
+              <th scope="col">Age</th>
+              <th scope="col">Picture</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="usuario in listaUsuarios">
+              <td v-text="usuario.name.first"></td>
+              <td v-text="usuario.dob.age"></td>
+              <td>
+                <img v-bind:src="usuario.picture.thumbnail" v-bind:alt="usuario.picture.thumbnail" class="rounded-circle" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!--div class="row">
+    <div class="col-12">
+      <h2>Json</h2>
+      <div class="jumbotron">
+        <pre> {{ $data }} </pre>
+      </div>
+    </div>
+  </div-->
+</div>
+<script>
+  var urlUsuarios = 'https://randomuser.me/api/?results=3';
+  var ajaxConVue = new Vue({
+    el: '#main',
+    data: {
+      listaUsuarios: []
+    },
+    created: function(){
+      this.consultarUsuarios();
+    },
+    methods: {
+      consultarUsuarios: function() {
+        axios.get(urlUsuarios).then(response => {
+          this.listaUsuarios = response.data.results
+        });
+      }
+    }
+  })
+</script>
+</body>
+</html>
+
+Ejemplo de Data binding
+=======================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Data Binding</title>
+  <script src="../js/vue.js"></script>
+</head>
+<body>
+
+  <div id="main">
+
+    <!-- Data binding como JS -->
+    {{ 1 + 2 }}
+
+    <!-- Data binding para modificar valores de atributos -->
+    <input type="text" v-bind:style="color" v-bind:value="valorDelInput" >
+
+    <!-- full syntax -->
+    <p v-bind:style="color"> Sintaxis larga </p>
+
+    <!-- shorthand -->
+    <p :style="color"> Sintaxis corta </p>
+
+  </div>
+
+  <script>
+    var binding = new Vue({
+      el: '#main',
+      data: {
+        valorDelInput: 'Texto de ejemplo',
+        color: 'color: #00f',
+      }
+    })
+  </script>
+
+</body>
+</html>
