@@ -726,7 +726,7 @@ Otro ejemplo
 <head>
   <meta charset="UTF-8">
   <title>v-if y v-else</title>
-  <script src="../js/vue.js"></script>
+  <script src="https://unpkg.com/vue"></script>
 </head>
 <body>
 <main id="app">
@@ -1213,6 +1213,38 @@ var app = new Vue({
   }
 });
 </script>
+</body>
+</html>
+
+Otro ejemplo
+============
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mostrar elementos condicionalmente</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+
+  <main id="mostrarElemento">
+    <!-- Input que apunta al modelo comprobarTexto, y lo llena en tiempo real -->
+    <input type="text" v-model="comprobarTexto"/>
+
+    <!-- La directiva v-show ocultará el elemento hasta que comprobar texto devuelva un valor -->
+    <input type="submit" v-show="comprobarTexto">
+  </main>
+
+  <script>
+    var enviarDatos = new Vue({
+      el: '#mostrarElemento',
+      data: {
+        comprobarTexto: ''
+      }
+    });
+  </script>
+
 </body>
 </html>
 
@@ -3389,7 +3421,7 @@ Ejemplo de Data binding
 <head>
   <meta charset="UTF-8">
   <title>Data Binding</title>
-  <script src="../js/vue.js"></script>
+  <script src="https://unpkg.com/vue"></script>
 </head>
 <body>
 
