@@ -5461,6 +5461,36 @@ $this->validate($request, [
       'roles.min'          => 'El usuario debe tener almenos un rol.',
 ]);
 
+Otro ejemplo:
+
+$this->validateRules = [
+    'name'      => ['required', 'max:200'],
+    'title'     => ['required', 'max:200'],
+    'date'      => ['required', 'max:200', 'date', 'before_or_equal:'.date('d-m-Y')],
+    'page'      => ['required', 'max:200', 'regex:/(^[0-9_-])/u'],
+    'url'       => ['required', 'max:200','url'],
+    'doi'       => ['nullable', 'max:200','url']
+];
+
+/** Define los mensajes de validación para las reglas del formulario */
+
+$this->messages = [
+    'name.required'   => 'El campo nombre del periódico es obligatorio.',
+    'name.max'        => 'El campo nombre del periódico no debe ser mayor de 200 carácteres.',
+    'title.required'  => 'El campo título es obligatorio.',
+    'title.max'       => 'El campo título no debe ser mayor de 200 carácteres.',
+    'date.required'   => 'El campo fecha de publicación es obligatorio.',
+    'date.max'        => 'El campo fecha de publicación no debe ser mayor de 200 carácteres.',
+    'page.required'   => 'El campo paginas es obligatorio.',
+    'page.max'        => 'El campo paginas no debe ser mayor de 200 caracteres.',
+    'page.regex'        => 'El formato del campo paginas es invalido, debe tener solo números y guiones. ',
+    'url.required'    => 'El campo url es obligatorio.',
+    'url.max'         => 'El campo url no debe ser mayor de 200 carácteres.',
+    'url.url'         => 'El campo url es inválido. Ejemplo válido: http://www.nombreDeDominio.com o https://www.nombreDeDominio.com.',
+    'doi.max'         => 'El campo doi no debe ser mayor de 200 carácteres.',
+    'doi.url'         => 'El campo doi es inválido. Ejemplo válido: http://www.nombreDeDominio.com o https://www.nombreDeDominio.com.',
+];
+
 Más validaciones en la documentación oficial:
 
 https://laravel.com/docs/8.x/validation#rule-max

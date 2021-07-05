@@ -5849,7 +5849,16 @@ temporalmente)
 
 Solución...
 
-$ sudo fuser -vki  /var/lib/dpkg/lock
+$ sudo fuser -vki /var/lib/dpkg/lock
+
+-----
+
+En Debian 11 Bullseye el problema puede ser:
+
+E: Could not get lock /var/lib/apt/lists/lock. It is held by process 1232 (packagekitd)
+N: Be aware that removing the lock file is not a solution and may break your system.
+
+# rm -f /var/lib/apt/lists/lock
 
 ======================================
 Programas recomendados para el Sistema
