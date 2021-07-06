@@ -1,0 +1,101 @@
+====================
+Guía de MkDocs by dM
+====================
+
+MkDocs es un generador de sitios estáticos rápido, simple y francamente
+magnífico que está orientado a la creación de documentación de proyectos.
+
+Los archivos de origen de la documentación se escriben en Markdown y se
+configuran con un solo archivo de configuración YAML.  Empiece por leer el
+tutorial introductorio y luego consulte la Guía del usuario para obtener más
+información.
+
+Instalación
+===========
+
+Nota:
+
+Usaremos $ para describir los comandos que se usaran con usuario regular.
+Usaremos # para describir los comandos que se usaran con superusuario. 
+
+-----
+
+MkDocs es compatible con las version 3.5 o superior.
+
+# sudo apt install python3.5 python3-pip python3.5-dev python3-setuptools curl
+
+Actualizar a su última versión ejecutando el siguiente comando:
+
+$ pip install --upgrade pip
+
+$ pip install mkdocs
+
+Chequear la versión luego de la instalación:
+
+$ mkdocs --version
+
+Instalación de Material-Mkdocs
+
+Material para MkDocs
+====================
+
+Es un tema para MkDocs, un generador de sitios estáticos orientado a la
+documentación (técnica) de proyectos.  Si está familiarizado con Python, puede
+instalar Material para MkDocs con pip, el administrador de paquetes de Python.
+
+Instalar la última versión estable de mkdocs-material  
+
+$ pip install mkdocs-material
+
+mkdocs-minify-plugin
+====================
+
+Es una extensión que minimiza HTML eliminando todos los espacios en blanco de la
+documentación generada.
+
+Instalación de mkdocs-minify-plugin
+
+$ pip install mkdocs-minify-plugin
+
+Comandos básicos de Mkdocs
+==========================
+
+Ejecute el siguiente comando para crear un nuevo proyecto de documentación:
+
+$ mkdocs new nombre_del_manual
+
+Ejecute el siguiente comando en el mismo directorio de su proyecto creado para
+iniciar el servidor:
+
+$ mkdocs serve
+
+Ingrese en la ruta http://127.0.0.1:8000/ de su navegador para ver la página
+inicial.
+
+Ejecute el siguiente comando en el mismo directorio de su proyecto para
+construir la documentación ya finalizada
+
+$ mkdocs build
+
+Esto le creara el directorio /site que contiene el index.html donde puede
+visulizar el manual desde el navegador web.
+
+Ver una lista de comandos disponibles:
+
+$ mkdocs --help
+
+$ mkdocs build --help
+
+Configurar el tema Material-Mkdocs
+==================================
+
+Para agregar el tema a un nuevo archivo de documentación basta con añadir las
+siguientes líneas al archivo .yml de configuración de la documentación.
+
+theme:
+    name: material
+
+Fuente
+======
+
+https://gitlab.com/roldandvg/kavac_cenditel/-/blob/master/modules/DigitalSignature/doc/README.md

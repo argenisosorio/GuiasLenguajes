@@ -2896,7 +2896,6 @@ maquinas y los servidores y hacer cambios asi como monitorear los procesos que
 esten ejecutando, especialmente en maquinas virtuales si varios proyectos corren
 en un mismo servidor.
 
-
 Otra forma usando el parámetro -l.
 
 $ ssh -l user 192.168.0.240
@@ -3167,7 +3166,9 @@ ForwardX11 yes
 Luego de este cambio, posiblemente sea necesario reiniciar el demonio ssh. La
 forma de hacer esto varía de acuerdo a cada distribución Linux.
 
-Lo más sencillo es reiniciar la máquina.
+$ sudo service ssh restart
+
+O lo más sencillo es reiniciar la máquina.
 
 2- En el escritorio local, loguearse al servidor a través de ssh utilizando el
 parámetro -X:
