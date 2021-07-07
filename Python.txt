@@ -29,19 +29,22 @@ If the implementation is hard to explain, it's a bad idea.
 If the implementation is easy to explain, it may be a good idea.
 Namespaces are one honking great idea -- let's do more of those!
 """
+========================
+Estándares de desarrollo
+========================
 
-####################################
-##### Estándares de Desarrollo #####
-####################################
+Los estándares de desarrollo constituyen las normas o patrones de referencia que
+se deben implementar en el desarrollo de aplicaciones de software. Entre los
+estándares de desarrollo más comunes se encuentran: normas de codificación,
+normas y esquemas de seguridad, estándares de interfaz u/s, entre otros.
 
-Los estándares de desarrollo constituyen las normas o patrones de referencia que se deben implementar en el desarrollo de
-aplicaciones de software. Entre los estándares de desarrollo más comunes se encuentran: normas de codificación, normas y
-esquemas de seguridad, estándares de interfaz u/s, entre otros.
+======================
+Normas de codificación
+======================
 
-##### Normas de Codificación #####
-
-Para el desarrollo de un sistema se pueden implementar algunos estándares básicos para su codificación, los cuales contemplan lo
-establecido en la PEP-8 --> https://www.python.org/dev/peps/pep-0008/
+Para el desarrollo de un sistema se pueden implementar algunos estándares
+básicos para su codificación, los cuales contemplan lo establecido en la PEP-8
+--> https://www.python.org/dev/peps/pep-0008/
 
 Algunos puntos importantes que encontramos en el PEP8 son los siguientes:
 
@@ -49,20 +52,27 @@ Algunos puntos importantes que encontramos en el PEP8 son los siguientes:
 
 -Las líneas no deberían sobrepasar los 79 caracteres.
 
--Use líneas en blanco para separar funciones y clases, también para grandes bloques de código dentro de funciones.
+-Use líneas en blanco para separar funciones y clases, también para grandes
+bloques de código dentro de funciones.
 
--Cuando sea posible, coloque los comentarios aparte del código de tal manera que en esa línea sólo haya comentarios.
+-Cuando sea posible, coloque los comentarios aparte del código de tal manera que
+en esa línea sólo haya comentarios.
 
 -Use cadenas de documentación (docstrings)
 
--Use espacios a los lados de los operadores y después de comas, pero no directamente dentro de constructos
-con paréntesis. Ej: a = f(1, 2) + g(3, 4)
+-Use espacios a los lados de los operadores y después de comas, pero no
+directamente dentro de constructos con paréntesis. Ej: a = f(1, 2) + g(3, 4).
 
--Nombre sus clases y funciones de forma consistente, como convención se utiliza CamelCase para las clases y
-minúsculas_con_guion_bajo para funciones y métodos. Siempre utilice self como el nombre para el primer argumento de un método.
+-Nombre sus clases y funciones de forma consistente, como convención se utiliza
+CamelCase para las clases y minúsculas_con_guion_bajo para funciones y métodos.
+Siempre utilice self como el nombre para el primer argumento de un método.
 
--No use codificaciones de caracteres lujosas si su código pretende ser utilizado en el ámbito internacional.
-Se prefiere que utilicen UTF-8. Tomar en cuenta el PEP-0263 colocando la directiva para codificación
+-No use codificaciones de caracteres lujosas si su código pretende ser utilizado
+en el ámbito internacional.
+
+Se prefiere que utilicen UTF-8. Tomar en cuenta el PEP-0263 colocando la
+directiva para codificación.
+
 UTF-8 (# -*- coding: utf-8 -*-) a los archivos .py
 
 ##### Estándares para la documentación del código fuente #####
@@ -1791,27 +1801,29 @@ Si queremos cambiar de version por defecto de python, entonces borramos /usr/bin
 import urllib
 urllib.urlretrieve ("http://192.168.12.82/x.zip", "x.zip")
 
-################################################
-########## Ambiente virtual en Python ##########
-################################################
+==========================
+Ambiente virtual en Python
+==========================
 
-Cuando se desarrollando software con Python, quizas se presente el problema de tener
-utilizar diferentes versiones de una mismo paquete en diferentes proyectos, ya sea el
-mismo Python o diferentes versiones de un Framework como Django por ejemplo, el
-problema a solucionar radica en como poder instalar las dos o mas versiones de la
-misma librería con el fin de poder desarrollar varios proyectos de forma simultánea.
+Cuando se desarrollando software con Python, quizas se presente el problema de
+tener utilizar diferentes versiones de una mismo paquete en diferentes
+proyectos, ya sea el mismo Python o diferentes versiones de un Framework como
+Django por ejemplo, el problema a solucionar radica en como poder instalar las
+dos o mas versiones de la misma librería con el fin de poder desarrollar varios
+proyectos de forma simultánea.
 
-La solución consiste en crear virtualenvs o entornos virtuales. Un entorno virtual de
-Python es un espacio completamente independiente de otros entornos virtuales y de los
-paquetes instalados globalmente en el sistema. Esto significa que es posible instalar la versión
-2.7 de Python en un entorno virtual y la versión 3.0 en otro diferente o de forma
-global sin problema alguno.
+La solución consiste en crear virtualenvs o entornos virtuales. Un entorno
+virtual de Python es un espacio completamente independiente de otros entornos
+virtuales y de los paquetes instalados globalmente en el sistema. Esto significa
+que es posible instalar la versión 2.7 de Python en un entorno virtual y la
+versión 3.0 en otro diferente o de forma global sin problema alguno.
 
-El porder tener diferentes entornos donde podemos instalar diferentes versiones de paquetes
-nos da la oportunidad de hacer un desarrollo simultaneo así como poder hacer pruebas si
-afectar a los paquetes del sistema global.
+El porder tener diferentes entornos donde podemos instalar diferentes versiones
+de paquetes nos da la oportunidad de hacer un desarrollo simultaneo así como
+poder hacer pruebas si afectar a los paquetes del sistema global.
 
-##### Instalación: #####
+Instalación
+===========
 
 Para crear un ambiente virtual instalamos lo siguiente:
 
@@ -1819,65 +1831,104 @@ Para crear un ambiente virtual instalamos lo siguiente:
 
 # aptitude install python-virtualenv virtualenvwrapper
 
-$ mkvirtualenv nombre_ambiente_virtual //  Con un usuario (diferente a root) cree un ambiente virtual para su proyecto.
+-----
 
-$ workon nombre_ambiente_virtual // Para acceder al nombre del ambiente virtual creado
+Crear un entorno virtual
 
-ejemplo: 
-user@debian:/home$ workon proyecto // Accedemos al entorno virtual creado
-(proyecto)user@debian:/home$ // Ya estamos en el entorno virtual creado, denotado por el nombre del entorno al inicio del prompt
+$ mkvirtualenv nombre_ambiente_virtual
 
-$ deactivate nombre_ambiente_virtual // Para salir del entorno virtaul, o simplemente deactivate
+-----
 
-$ lsvirtualenv // Para listar los entornos virtuales creados o disponibles.
+Para acceder al nombre del ambiente virtual creado:
 
-$ rmvirtualenv nombre_virtualenv // Remover o borrar un entorno virtual.
+$ workon nombre_ambiente_virtual
 
-// Los entornos virtuales se crean en el directorio /home/user/.virtualenvs
+Ejemplo:
+
+$ workon proyecto
+
+(proyecto)user@debian:/home$
+
+Ya estamos en el entorno virtual creado, denotado por el nombre del entorno al
+inicio del prompt.
+
+-----
+
+Para salir del entorno virtaul, o simplemente deactivate:
+
+$ deactivate nombre_ambiente_virtual
+
+-----
+
+Para listar los entornos virtuales creados o disponibles.
+
+$ lsvirtualenv
+
+-----
+
+Remover o borrar un entorno virtual.
+
+$ rmvirtualenv nombre_virtualenv
 
 ##### Tips #####
 
-En Debian GNU/Linux 8 (Jessie) a veces el comando mkvirtualenv no funciona por lo que hacemos lo siguiente:
+Los entornos virtuales se crean en el directorio /home/user/.virtualenvs
+
+-----
+
+En Debian GNU/Linux 8 (Jessie) a veces el comando mkvirtualenv no funciona por
+lo que hacemos lo siguiente:
 
 # apt-get install virtualenvwrapper
 
-$ vim .bashrc // Como usuario normal (NO ROOT), hay que agregar las variables con la ruta para virtualenv en el .bashrc, Agregar el siguiente contenido:
+Hay que agregar las variables con la ruta para virtualenv en el .bashrc,
+
+$ vim .bashrc
+
+Agregar el siguiente contenido:
 
 # to virtualenvwrapper
 export WORKON_HOME=$HOME/django
 source /etc/bash_completion.d/virtualenvwrapper
 
-luego:
+Luego:
 
 $ source .bachrc
 
-#############################
-##### Usando virtualenv #####
-#############################
+=================
+Usando virtualenv
+=================
 
-Installation: 
+Instación:
 
 # aptitude install python-virtualenv python-pip
 
--Crear un virtualenv:
+-----
+
+Crear un virtualenv:
 
 $ virtualenv mi_env
 
--Activar el virtualenv:
+-----
+
+Activar el virtualenv:
 
 $ source mi_env/bin/activate
 
--Instalar un paquete (p.ej. Django) en el virtualenv:
+-----
+
+Instalar un paquete (p.ej. Django) en el virtualenv:
 
 (mi_env)$ pip install django
 
--Trabajar en el proyecto.
+-----
 
--Salir del virtualenv:
+Salir del virtualenv:
 
 (mi_env)$ deactivate
 
-##### Usando Python 3 en virtualenvwrapper #####
+Usando Python 3 en virtualenvwrapper
+====================================
 
 # apt-get install python3.4 python3-pip python3.4-dev python3-setuptools
 
@@ -1889,78 +1940,130 @@ $ workon my_env
 
 (my_env)$
 
-#########################################
-##### Usando Python 3 en virtualenv #####
-#########################################
+Usando Python 2 y 3 en virtualenv
+=================================
+
+$ virtualenv -p python2 my_env
 
 $ virtualenv -p python3 my_env
 
-##### Borrar entorno virtual #####
+Borrar entorno virtual
+======================
 
-No hay comando para borrar un entorno virtual desde virtualenv, basta con cancelar o detener los procesos (servidores y servicios) usados por
-ese entorno y luego borrar el directorio.
+No hay comando para borrar un entorno virtual desde virtualenv, basta con
+cancelar o detener los procesos (servidores y servicios) usados por ese entorno
+y luego borrar el directorio.
 
 $ rm -rf myenv
 
-########################
-##### Paquetes pip #####
-########################
+Cambiar la versión por defecto de una versión de Python
+=======================================================
 
-// Para desarrollar software con rapidez y calidad, es imprescindible utilizar paquetes externos que ayuden
-con parte de la funcionalidad que se desea implementar. En el ambiente Python esto no es la excepción.
+En este caso, cambiando de 3.9 a 2.7.
 
-// Para solventar ésta necesidad, la comunidad Python ha puesto convenientemente a disposición de los desarrolladores
-un repositorio de paquetes de fácil acceso llamado PyPi. Solo es necesario ejecutar un comando en la terminal
-para poder instalar el paquete Python que necesitemos. Incluso es posible instalar paquetes que no se encuentren
-en el mencionado repositorio.
+$ virtualenv --python=/usr/bin/python2.7 mi_entorno_virtual
 
-// Para descargar paquetes del repositorio PyPi se pueden utilizar varias herramientas, pero en este caso se
-va a usar pip. Es necesario instalar esta herramienta en el sistema en caso de no estar disponible, antes
-de poder instalar un paquete Python.
+============
+Paquetes pip
+============
 
-// El comando pip equivale al apt-get de Debian pero para paquetes Python.
+Para desarrollar software con rapidez y calidad, es imprescindible utilizar
+paquetes externos que ayuden con parte de la funcionalidad que se desea
+implementar. En el ambiente Python esto no es la excepción.
 
-# aptitude install python-pip python-dev python-setuptools python3-pip // Instalamos pip y otros necesarios, com python3 para pip, necesario en algunos proyectos.
+Para solventar ésta necesidad, la comunidad Python ha puesto convenientemente a disposición de los desarrolladores un repositorio de paquetes de fácil acceso
+llamado PyPi. Solo es necesario ejecutar un comando en la terminal para poder
+instalar el paquete Python que necesitemos. Incluso es posible instalar paquetes
+que no se encuentren en el mencionado repositorio.
 
-// Una vez instalado ya podremos instalar paquetes de Python a traves de pip ejemplo:
+Para descargar paquetes del repositorio PyPi se pueden utilizar varias
+herramientas, pero en este caso se va a usar pip. Es necesario instalar esta
+herramienta en el sistema en caso de no estar disponible, antes de poder
+instalar un paquete Python.
 
-$ pip install django // Nos instalara la ultima version de Django disponible en los paquetes pi
+El comando pip equivale al apt-get de Debian pero para paquetes Python.
 
-$ pip install django==1.7 // Instalar una versión específica de algun paquete.
+Instalamos pip y otros necesarios, com python3 para pip, necesario en algunos
+proyectos.
 
-// Tambien es posible crear ficheros que contengan rutinas para automatizar la instalacion
-de varios paquetes ejemplo:
+# aptitude install python-pip python-dev python-setuptools python3-pip
+
+Una vez instalado ya podremos instalar paquetes de Python a traves de pip
+ejemplo:
+
+Nos instalara la ultima version de Django disponible en los paquetes pi
+
+$ pip install django
+
+Instalar una versión específica de algun paquete.
+
+$ pip install django==1.7
+
+Tambien es posible crear ficheros que contengan rutinas para automatizar la
+instalacion de varios paquetes ejemplo:
 
 Creamos un requirements.txt y dentro escribimos como ejemplo:
+
 django==1.5.12
 pillow==2.4.0
 Geraldo==0.4.17
 
-// Luego podemos ejecutar un pip install sobre el fichero e instalará lo que contenga:
+Luego podemos ejecutar un pip install sobre el fichero e instalará lo que
+contenga:
 
 $ pip install -r requirements.txt
 
-$ pip install -r requirements.txt --timeout 120 // Con este parametro le daremos mayor tiempo de respuesta al servidor, para conexiones lentas.
+-----
+
+Con este parametro le daremos mayor tiempo de respuesta al servidor, para
+conexiones lentas.
+
+$ pip install -r requirements.txt --timeout 120
 
 $ pip install --default-timeout=120 name_package
 
-// Dentro de los .virtualenvs, dentro de nuestro entorno virtual en
-lib/python2.7/site-packages podemos ver que se instalaron los paquetes de requirements.txt
-de no ser así hay que revisar el fichero o el nombre de los paquetes a instalar, etc.
+Dentro de los .virtualenvs, dentro de nuestro entorno virtual en lib/python2.7/site-packages podemos ver que se instalaron los paquetes de requirements.txt de
+no ser así hay que revisar el fichero o el nombre de los paquetes a instalar,
+etc.
 
-$ pip search nombre_paquete // Buscar un paquete.
+-----
 
-$ pip uninstall package // Desinstalar o remover un paquete.
+Buscar un paquete.
 
-$ pip show package // Para ver si un paquete está instalado, si es así, mostrará la version, y la ruta donde está instalado.
+$ pip search nombre_paquete
 
-$ pip install Package --upgrade // Para actualizar un paquete a su última versión.
+-----
 
-$ pip install --upgrade Package package==1.x.x // Actualizar un paquete a una versión específica.
+Desinstalar o remover un paquete.
 
-$ pip freeze // Listar los paquetes instalado y sus versiones exactas.
+$ pip uninstall package
 
-##### Error: ImportError: No module named packaging.version #####
+Para ver si un paquete está instalado, si es así, mostrará la version, y la ruta
+donde está instalado.
+
+$ pip show package
+
+-----
+
+Para actualizar un paquete a su última versión.
+
+$ pip install package --upgrade
+
+-----
+
+Actualizar un paquete a una versión específica:
+
+$ pip install --upgrade Package package==1.x.x
+
+-----
+
+Listar los paquetes instalado y sus versiones exactas.
+
+$ pip freeze
+
+=====================================================
+Error: ImportError: No module named packaging.version
+=====================================================
 
 Puede que alguna vez a pip le pique el trasero y no deje realizar acciones
 de búsqueda, actualización etc.. entonces moveremos unos ficheros:
