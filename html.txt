@@ -4096,3 +4096,60 @@ Sirve para hacer un autocompletado sin Javascript.
 
 </body>
 </html>
+
+-----
+
+Función para expandir y contraer todos los collapse de bootstrap
+
+<button onclick="expand()">Expandir todos</button>
+
+<script type="text/javascript">
+function expand() {
+  $(".collapse").collapse('toggle');
+}
+
+Ejemplo completo:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <h2>Collapsible Methods</h2>
+  <p>The toggle method toggles the collapsible content.</p>
+  <p>The show method shows the collapsible content.</p>
+  <p>The hide method hides the collapsible content.</p>
+  <button type="button" class="btn btn-primary">Toggle</button>
+  <button type="button" class="btn btn-success">Show</button>
+  <button type="button" class="btn btn-warning">Hide</button> 
+  <div class="collapse">
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </div>
+</div>
+<script>
+$(document).ready(function(){
+  $(".btn-primary").click(function(){
+    $(".collapse").collapse('toggle');
+  });
+  $(".btn-success").click(function(){
+    $(".collapse").collapse('show');
+  });
+  $(".btn-warning").click(function(){
+    $(".collapse").collapse('hide');
+  });
+});
+</script>
+</body>
+</html>
+
+Fuente
+======
+
+https://www.w3schools.com/bootstrap/bootstrap_ref_js_collapse.asp
