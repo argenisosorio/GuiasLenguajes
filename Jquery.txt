@@ -5725,3 +5725,56 @@ $('#code').click(function() {
   $('.modal').modal('show');
 });
 </script>
+
+----------
+
+Enviar formulario cuando un select form se actualiza usando Jquery:
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Usando jQuery</title>
+<script src="jquery/jquery-1.12.4.js"></script>
+</head>
+<body>
+<form action="" method="get">
+  <select name="id" id="marca">
+    <option value="">Choose</option>
+    <option value="Alfa Romeo">Alfa Romeo</option>
+    <option value="Cadillac">Cadillac</option>
+    <option value="Toyota">Toyota</option>
+  </select>
+  <button id='submit' name="submit">Enviar</button>
+</form>
+</body>
+<script>
+$(document).ready(function() {
+  $('#marca').on('change', function() {
+    $('#submit').click();
+  });
+});
+</script>
+</html>
+
+-----
+
+Enviar formulario cuando un select form se actualiza Usando solo Javascript:
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Usando Javascript</title>
+</head>
+<body>
+<form action="" method="get">
+  <select name="id" id="marca" onchange="this.form.submit()">
+    <option value="">Choose</option>
+    <option value="Alfa Romeo">Alfa Romeo</option>
+    <option value="Cadillac">Cadillac</option>
+    <option value="Toyota">Toyota</option>
+  </select>
+</form>
+</body>
+</html>
