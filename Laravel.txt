@@ -5633,3 +5633,119 @@ class ProjectController extends Controller
 Ejemplo de respuesta:
 
 {"projects":[{"id":3,"name":"Project 1","introduction":"xxxxxxx","created_at":"2021-06-02T16:57:08.000000Z","updated_at":"2021-06-21T02:47:16.000000Z"},{"id":5,"name":"Project 2","introduction":"yyyyyyyyyyyyy","created_at":"2021-06-02T16:57:15.000000Z","updated_at":"2021-06-21T02:47:27.000000Z"},{"id":6,"name":"Project 3","introduction":"zzzzzzzzzzz","created_at":"2021-06-02T16:57:19.000000Z","updated_at":"2021-06-21T02:47:36.000000Z"}]}
+
+==============================
+Construyendo un comando propio
+==============================
+
+Los comandos personalizados se colocarán en el directorio app/Console/Commands
+
+Para crear uno, cree una clase de comando con:
+
+php artisan make:command Greetings --command=greetings
+
+Esto creara el archivo Greetings.php en el directorio app/Console/Commands
+
+El archivo genrado con el comando se puede llamar como nosotros deseemos y el
+--comand= será para definir como usaremos nuestro comando en la consola.
+
+El contenido por defecto del archivo será:
+
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+
+class Greetings extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'greetings';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Command description';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
+    public function handle()
+    {
+        return 0;
+    }
+}
+
+
+La clase principal depende del nombre que hayamos usado en el comando de
+generación del archivo, ya el resto es agregar las instrucciones que queremos
+que se ejecuten cuando usemos nuestro comando.
+
+Ejemplo, vamos a agregar un Hello world en la función handle:
+
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+
+class Greetings extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'greetings';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Command description';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
+    public function handle()
+    {
+        print("\n Hello world!!! \n\n");
+
+        //return 0;
+    }
+}
+
+Para usar el comando creado ejecutamos:
+
+$ php artisan greetings
