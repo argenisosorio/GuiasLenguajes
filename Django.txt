@@ -7910,3 +7910,16 @@ En /static/datatables/js/jquery.dataTables.min.js cambiar iDisplayLength:10 por
 iDisplayLength:50 por ejemplo.
 
 Ejemplo del cambio: https://github.com/argenisosorio/seguimiento_siniif/commit/39da50e039460b9c985a39d0b77c6cb40a5cb9b1
+
+=========================================================
+Enviar formulario cuando se actualiza campo tipo checkbox
+=========================================================
+
+Con la función onchange de Javascript.
+
+En forms.py
+
+estatus = forms.BooleanField(label='Estatus',widget=CheckboxInput(attrs={
+    'class':'checkbox',
+    'onchange':'this.form.submit()'
+}), required = False)
