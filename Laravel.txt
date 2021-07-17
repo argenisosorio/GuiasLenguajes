@@ -5769,3 +5769,109 @@ $ php artisan websockets:serve
 Usando otro puerto:
 
 $ php artisan websockets:serve --port=3030
+
+=======================================
+Redirigir a inicio desde un controlador
+=======================================
+
+return redirect()->to('/');
+
+=========================
+Enviar correos en Laravel
+=========================
+
+Enviar mails desde un correo Gmail
+==================================
+
+1) Configurar la cuetna de Gmail para que permite el acceso a aplicaciones poco
+seguras desde https://myaccount.google.com/lesssecureapps
+
+2) Cuando ya está configurada la cuenta de correo solo tienes que decirle a
+Laravel qué datos usar para enviar mails a través de esta cuenta Gmail.
+
+En la carpeta config existe un archivo mail.php. Aquí se encuentran todas las
+variables asociadas al envío de mails.
+
+Dentro de este archivo de configuración, encontramos:
+
+'driver' => env('MAIL_DRIVER', 'smtp'),
+
+Esta línea le dice a Laravel que el driver que debes usar se encuentra definido
+dentro del archivo .env bajo el nombre MAIL_DRIVER. Pero, si no lo encuentras,
+usa smtp.
+
+De la misma forma podemos leer las siguientes líneas:
+
+'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+'port' => env('MAIL_PORT', 587),
+'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+'username' => env('MAIL_USERNAME'),
+'password' => env('MAIL_PASSWORD'),
+'timeout' => null,
+'auth_mode' => null,
+
+De esto último:
+
+-host y port se asocian con el servidor SMTP.
+
+-from determina a nombre de quién se envía el correo.
+
+-username y password son las credenciales de la cuenta Gmail.
+
+Por lo tanto, estos datos los vamos a poner dentro de nuestro archivo .env.
+
+¿Por qué en el archivo .env y no directamente en mail.php?
+
+Nos conviene definir estos valores en .env porque así podemos tener
+configuraciones distintas: por ejemplo, usar nuestro correo corporativo de Gmail
+en producción, pero usar el log de forma local para hacer pruebas.
+
+Además, las credenciales siempre deben definirse en el archivo .env, ya que este
+archivo no forma parte del código fuente (al usar GIT este archivo es ignorado,
+por lo que cada persona que tenga acceso al código, podrá usar la configuración
+que más le convenga).
+
+Ya para finalizar tenemos estos datos en nuestro .env:
+
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=micorreo@gmail.com
+MAIL_PASSWORD=miclave
+MAIL_ENCRYPTION=tls
+
+Estos, permitirán a nuestra app Laravel enviar mails a través del correo Gmail.
+
+Envío de mails
+==============
+
+1) Crear una ruta:
+
+Route::get('/sendmail',[ProjectController::class, 'contact']);
+
+2) Crear un controlador:
+
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Project;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+
+class ProjectController extends Controller
+{
+    public function contact(Request $request){
+        $subject = "Asunto del correo";
+        $for = "receiver@mail.gob.ve";
+        Mail::send('email',$request->all(), function($msj) use($subject,$for){
+            $msj->from("sender@gmail.com","Pepe el pruebas");
+            $msj->subject($subject);
+            $msj->to($for);
+        });
+        return redirect()->to('/');
+    }
+}
+
+Si navegamos a /sendmail debería envíar el correo pero aún no porque sigo
+probando.
