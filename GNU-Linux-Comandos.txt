@@ -6158,6 +6158,9 @@ también reconoce las funciones definidas en nuestro proyecto.
 -babel-sublime: Para mejorar la coloración de sintaxis de babel y .jsx.
 Syntax definitions for ES6 JavaScript with React JSX extensions.
 
+-JavaScript Completions: JavaScript Completions for sublime text. It helps you
+to write your scripts more quickly with hints and completions.
+
 -A File Icon.
 
 -Spacefunk.
@@ -7364,3 +7367,39 @@ $ /usr/bin/nautilus
 Alt + f2 y tipear y luego enter:
 
 /usr/bin/nautilus
+
+============
+Patch (Unix)
+============
+
+Patch es un comando de Unix que actualiza ficheros de texto de acuerdo a las
+instrucciones contenidas en un archivo separado, llamado archivo de parche. Este
+archivo (denominado patch) es un archivo de texto que consiste en una lista de
+las diferencias entre ficheros y se produce mediante la ejecución del comando
+diff comparando con el fichero original y actualizándolo con los argumentos de
+diff.
+
+El programa original fue escrito por Larry Wall (creador del lenguaje de
+programación Perl) en mayo de 1985. Una nueva versión del programa es parte del
+proyecto GNU y es mantenido por la FSF.
+
+Contexto de uso
+===============
+
+El comando se utiliza con frecuencia para la actualización del código fuente a
+una versión más reciente. Debido a esto es utilizado frecuentemente en sistemas
+de control de código fuente como CVS. El programa no solo es capaz de añadir
+texto como puede intuirse, también es capaz de eliminarlo.
+
+Ejemplo de uso
+==============
+
+Creación del fichero:
+
+$ diff -u oldFile newFile > mods.diff
+
+-----
+
+Aplicación del parche:
+
+$ patch < mods.diff
