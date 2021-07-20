@@ -5714,6 +5714,12 @@ $ xrandr --output LVDS-1 --brightness 0.7
 No uses nada por encima de 1.0. Puede convertir la pantalla en blanco completo y
 es posible que no veas claramente nada.
 
+============================================
+Activar pantalla HDMI cuando no es detectada
+============================================
+
+$ xrandr --setprovideroutputsource 1 0
+
 ======
 Fuente
 ======
@@ -6166,6 +6172,10 @@ to write your scripts more quickly with hints and completions.
 -VUEFormatter
 
 -vue-syntax-highlight
+
+-ReactIDE
+
+-Laravel Blade Highlighter
 
 -A File Icon.
 
@@ -7409,3 +7419,53 @@ $ diff -u oldFile newFile > mods.diff
 Aplicación del parche:
 
 $ patch < mods.diff
+
+================================================================
+Monitorear temperatura del CPU y otros componentes de la máquina
+================================================================
+
+$ sudo apt install lm-sensors
+
+$ sudo sensors-detect
+
+Luego darle yes a todo
+
+$ sensosrs
+
+Esto muestra algo como esto:
+
+HP_smm-virtual-0
+Adapter: Virtual device
+Processor Fan: 2876 RPM
+CPU:            +56.0°C
+Ambient:        +33.0°C
+SODIMM:         +43.0°C
+GPU:            +47.0°C
+
+nouveau-pci-0100
+Adapter: PCI adapter
+GPU core:         N/A  (min =  +0.85 V, max =  +1.03 V)
+temp1:            N/A  (high = +95.0°C, hyst =  +3.0°C)
+                       (crit = +105.0°C, hyst =  +5.0°C)
+
+                       (emerg = +135.0°C, hyst =  +5.0°C)
+acpitz-acpi-0
+Adapter: ACPI interface
+temp1:        +25.0°C  (crit = +107.0°C)
+
+coretemp-isa-0000
+Adapter: ISA adapter
+Package id 0:  +58.0°C  (high = +86.0°C, crit = +100.0°C)
+Core 0:        +58.0°C  (high = +86.0°C, crit = +100.0°C)
+Core 1:        +54.0°C  (high = +86.0°C, crit = +100.0°C)
+
+BAT0-acpi-0
+Adapter: ACPI interface
+in0:          12.34 V  
+curr1:         2.74 A 
+
+Donde notamos que nos dice la temperatura actual en grados centigrados, además
+de que nos indica cual valor sería lato y cual sería crítico.
+
+Para el procesador no dedbería pasar de los 70°C, en este ejemplo está en 58°C
+cada núcleo.
