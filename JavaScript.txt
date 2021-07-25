@@ -6996,3 +6996,30 @@ Enviar formulario cuando un select form se actualiza Usando solo Javascript:
 </form>
 </body>
 </html>
+
+===============================
+Operador condicional (ternario)
+===============================
+
+El operador condicional (ternario) es el único operador en JavaScript que tiene
+tres operandos.
+
+Este operador se usa con frecuencia como atajo para la instrucción if.
+
+Sintaxis
+========
+
+condición ? expr1 : expr2
+
+Parámetros:
+
+-condición: Una expresión que se evalúa como true o false.
+
+-expr1, expr2: Expresión con valores de algún tipo.
+
+Ejemplo;
+
+var age, voteable;
+age = 18;
+voteable = (age < 18) ? "Menor de edad" : "Mayor de edad";
+alert(voteable);

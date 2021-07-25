@@ -4253,7 +4253,7 @@ incluir varios archivos de migración:
 $ php artisan migrate:rollback
 
 Puede revertir un número limitado de migraciones proporcionando la opción al
-comando de reversión.  Por ejemplo, el siguiente comando revertirá las últimas
+comando de reversión. Por ejemplo, el siguiente comando revertirá las últimas
 cinco migraciones:
 
 $ php artisan migrate:rollback --step=5
@@ -5782,6 +5782,20 @@ Enviar correos en Laravel
 Enviar mails desde un correo Gmail
 ==================================
 
+Laravel está preconfigurado por defecto para poder conectarnos con cualquier
+proveedor que use el protocolo SMTP (Protocolo para transferencia simple de
+correo es un protocolo de red utilizado para el intercambio de mensajes de
+correo electrónico entre computadoras u otros dispositivos.) como Gmail por
+ejemplo.
+
+Además también está preparado para comunicarse con otros proveedores que no usan
+ese protocolo sino APIS como: Mailgun, Postmark, Amazon SES y sendmail. Aunque
+Laravel permite conectarse con cualquier proveedor de servicio de correo, claro
+está, haciendo las respectivas configuraciones adicionales.
+
+Probando envio de correo con cuenta Gmail
+=========================================
+
 1) Configurar la cuetna de Gmail para que permite el acceso a aplicaciones poco
 seguras desde https://myaccount.google.com/lesssecureapps
 
@@ -5797,7 +5811,7 @@ Dentro de este archivo de configuración, encontramos:
 
 Esta línea le dice a Laravel que el driver que debes usar se encuentra definido
 dentro del archivo .env bajo el nombre MAIL_DRIVER. Pero, si no lo encuentras,
-usa smtp.
+usa smtp por defecto.
 
 De la misma forma podemos leer las siguientes líneas:
 
@@ -5819,6 +5833,10 @@ De esto último:
 
 Por lo tanto, estos datos los vamos a poner dentro de nuestro archivo .env.
 
+Además también debemos configurar las varibles MAIL_FROM_ADDRESS y
+MAIL_FROM_NAME, ambas en el archivo .env, estas variables describen el email del
+remitente y el nombre
+
 ¿Por qué en el archivo .env y no directamente en mail.php?
 
 Nos conviene definir estos valores en .env porque así podemos tener
@@ -5838,17 +5856,200 @@ MAIL_PORT=587
 MAIL_USERNAME=micorreo@gmail.com
 MAIL_PASSWORD=miclave
 MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=micorreo@gmail.com
+MAIL_FROM_NAME="nombre_del_remitente"
 
 Estos, permitirán a nuestra app Laravel enviar mails a través del correo Gmail.
+
+Por defecto tenemos en MAIL_HOST configurado el valor smtp.mailtrap.io, lo que
+hace referencia a Mailtrap, que es un servidor SMTP falso para que su equipo de
+desarrollo pueda probar, ver y compartir correos electrónicos enviados desde los
+entornos de preproducción y probar con datos reales sin el riesgo de enviar spam
+a clientes reales. Lo que ofrece este servicio es poder interceptar los correos
+que se envíen desde la aplicación para poder ver como se ven si le llegaran a
+los clientes de la aplicación, básicamente es para evitar el espam cuando se
+prueba en un entorno de producción.
 
 Envío de mails
 ==============
 
+1) Al crear aplicaciones de Laravel, cada tipo de correo electrónico enviado por
+su aplicación se representa como una clase "mailable". Estas clases se almacenan
+en el directorio app/Mail. No se preocupe si no ve este directorio en su
+aplicación, ya que se generará cuando cree su primera clase mailable usando
+el comando:
+
+$ php artisan make:mail Prueba
+
+Esto nos creara el archivo Prueba.php en la ruta app/Mail/
+
+y su contenido por defecto es:
+
+-----
+
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class Prueba extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->view('view.name');
+    }
+}
+
+-----
+
+Ahora vamos a editar el archivo agregando la variable $subject dentro de la
+clase Padre, al igual que vamos a editar la vista en la cual vamos a tener el
+el contenido de nuestro correo, emails.index tal que:
+
+-----
+
+<?php
+
+namespace App\Mail;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailable;
+use Illuminate\Queue\SerializesModels;
+
+class Prueba extends Mailable
+{
+    use Queueable, SerializesModels;
+
+    public $subject = "Este es un mensaje";
+
+    /**
+     * Create a new message instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Build the message.
+     *
+     * @return $this
+     */
+    public function build()
+    {
+        return $this->view('emails.index');
+    }
+}
+
+-----
+
+emails.index no exite por lo cual vamos a la carpeta views y crearmos la carpeta
+emails, luegro dentro de email creamos una vista con nombre index.blade.php cuyo
+contenido puede ser:
+
+-----
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Prueba Email</title>
+  </head>
+  <body>
+    <h1>Título del correo</h1>
+    <p>Éste es el contenido del correo</p>
+  </body>
+</html>
+
+-----
+
+Ahora debemos ir al achivo de rutas y crearemos una nueva, tal que:
+
+Route::get('sendmail', function () {
+    $correo = new Prueba;
+    Mail::to('email-de-quien-recibida-el-mensaje@gmail.com')->send($correo);
+
+    return "Mensaje enviado";
+});
+
+Como vemos, debemos configurar el correo de quien recibirá el mensaje, además
+debemos usar algunas clases en la parte superior, tal que:
+
+use App\Mail\Prueba;
+use Illuminate\Support\Facades\Mail;
+
+Donde prueba fue el Maillable que creamos con el comando.
+
+Además agregamos un return "Mensaje enviado"; para saber que se envió el correo
+correctamente
+
+Nuestro archivo de rutas quedaría así:
+
+-----
+
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProjectController;
+use App\Mail\Prueba;
+use Illuminate\Support\Facades\Mail;
+
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('sendmail', function () {
+    $correo = new Prueba;
+    Mail::to('argenisosorio10@gmail.com')->send($correo);
+    return "Mensaje enviado";
+});
+
+-----
+
+Ya solo queda navegar hasta /sendmail y probar que se envió el correo
+correctamente
+
+Otra forma
+==========
+
+Esta vez, solo vamos a poner el contenido del ejemplo anterior de la ruta, pero
+en el controlador. Igual hay que crear el mailable con el comando, editar el
+archivo creado con el comando, crear la vista que será el contenido del correo y
+lo demás de los pasos anteriores, lo que varia es lo siguiente:
+
 1) Crear una ruta:
 
-Route::get('/sendmail',[ProjectController::class, 'contact']);
+Route::get('/sendmail',[MyController::class, 'sendmail']);
 
 2) Crear un controlador:
+
+-----
 
 <?php
 
@@ -5856,21 +6057,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use App\Mail\Prueba;
 use Illuminate\Support\Facades\Mail;
 
 class ProjectController extends Controller
 {
-    public function contact(Request $request){
-        $subject = "Asunto del correo";
-        $for = "receiver@mail.gob.ve";
-        Mail::send('email',$request->all(), function($msj) use($subject,$for){
-            $msj->from("sender@gmail.com","Pepe el pruebas");
-            $msj->subject($subject);
-            $msj->to($for);
-        });
-        return redirect()->to('/');
+    public function sendmail(Request $request){
+        $correo = new Prueba;
+        Mail::to('argenisosorio10@gmail.com')->send($correo);
+        return "Mensaje enviado";
     }
 }
 
-Si navegamos a /sendmail debería envíar el correo pero aún no porque sigo
-probando.
+-----
+
+Si navegamos a /sendmail debería envíar el correo.
