@@ -1344,3 +1344,53 @@ Esto imprime:
 
 Soy una línea de código
 Soy otra línea de código
+
+==================
+La función isset()
+==================
+
+Nos permite evaluar si una variable está definida o no.
+
+Ejemplo:
+
+$var1 = 'oscar';
+
+if ( isset($var1) ){
+
+    echo "La variable \$var1 está definida.<br />";
+} else {
+
+    echo "La variable \$var1 no está definida.<br />";
+}
+
+=====================
+Función array_merge()
+=====================
+
+Combina dos o más arrays
+
+Combina los elementos de uno o más arrays juntándolos de modo que los valores de
+uno se anexan al final del anterior. Retorna el array resultante.
+
+array_merge(array $array1, array $... = ?): array
+
+Ejemplo:
+
+$array1    = array(1, 2, 3);
+$array2    = array(4, 5, 6);
+$resultado = array_merge($array1, $array2);
+echo $resultado[0]."<br />";
+echo $resultado[1]."<br />";
+echo $resultado[2]."<br />";
+echo $resultado[3]."<br />";
+echo $resultado[4]."<br />";
+echo $resultado[5]."<br />";
+
+Resultado:
+
+1
+2
+3
+4
+5
+6
