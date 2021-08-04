@@ -6072,3 +6072,31 @@ class ProjectController extends Controller
 -----
 
 Si navegamos a /sendmail debería envíar el correo.
+
+=========================
+Campo select en una vista
+=========================
+
+En el controlador:
+
+use App\Models\User;
+
+/*
+|--------------------------------------------------------------------------
+| CREATE
+|--------------------------------------------------------------------------
+*/
+public function create()
+{
+    //$users = User::orderBy('name', 'ASC')->pluck('name', 'id');
+    $users = User::all();
+    return view('dashboards.create')->with('users', $users);
+}
+
+En la vista:
+
+<select name="user_id">
+  @foreach ($users as $user)
+    <option value="{{ $user->id }}">{{ $user->name }}</option>
+  @endforeach
+</select>
