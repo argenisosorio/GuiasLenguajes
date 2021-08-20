@@ -2682,6 +2682,8 @@ Generar un fichero json con los datos de los modelos de una aplicación:
 
 $ python manage.py dumpdata app_name > data.json
 
+-----
+
 Generar un fichero json con a partir de un modelo específico de la aplicación:
 
 $ python manage.py dumpdata app_name.model_name > data.json
@@ -2689,54 +2691,65 @@ $ python manage.py dumpdata app_name.model_name > data.json
 Esta generación por lo general es usada para crear un json con data inicial
 que puede ser cargada en la db si necesidad de hacer un volcado de datos.
 
-De esta manera podemos tener usuarios, permisos u otro tipo de data que seran cargados
-automáticamente a partir de un comando:
+De esta manera podemos tener usuarios, permisos u otro tipo de data que seran
+cargados automáticamente a partir de un comando.
+
+-----
+
+Cargar datos generados desde un .json:
 
 $ python manage.py loaddata initial_data.json
 
-Ejemplo:
+-----
 
-Generamos un proyecto en django, migramos y creamos un usuario administrador,
-ahora vamos a generar un fichero que tendra los datos del usuario creado, y
-haremos referencia al modelo que gestiona los usuarios.
+Gener un fichero .json con los datos de los usuarios del sistema:
 
 $ python manage.py dumpdata auth.user > auth_user.json
 
 En ese fichero json estan los datos de usuario que se creo
 
-Borramos la db, la volvemos a generar con migrate, como es obvio esta nueva db
-no tiene usuarios creados, entonces:
+-----
+
+Cargar en la base de datos los datos de los usuarios del sistema generados con
+anterioridad:
 
 $ python manage.py loaddata auth_user.json
 
 Installed 1 object(s) from 1 fixture(s) # Sera el mensaje si agregó el usuario
 con éxito
 
-Con esto ya estará disponible el usuario en la db con todos los demas datos que
-corresponden a ese modelo.
+Con esto ya estarán disponibles los usuario en la db con todos los demas datos
+que corresponden a ese modelo.
 
-Es posible hacer un dumpdata de todos los modelos en general, no especificando
-un modelo en particula
+-----
+
+Hacer un dumpdata de todos los modelos en general, no especificando un modelo en
+particular.
 
 $ python manage.py dumpdata > data.json
 
-##### Especificando app #####
+Especificando app
+=================
 
 $ python manage.py dumpdata app > app.json
 
-##### Especificando tabla #####
+Especificando tabla
+===================
 
 $ python manage.py dumpdata app.table > app_table.json
 
-##### Excluyendo modelos #####
+Excluyendo modelos
+==================
 
 $ python manage.py dumpdata --exclude auth.permission > db.json
 
-##### Indentando la data #####
+Indentando la data
+==================
 
 $ python manage.py dumpdata --indent 2 > data.json
 
-##### Dando formato al fichero #####
+Dando formato al fichero exportardo
+===================================
 
 $ python manage.py dumpdata auth.user --indent 2 --format xml > user.xml
 
