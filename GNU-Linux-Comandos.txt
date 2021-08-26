@@ -3128,7 +3128,7 @@ AllowUsers jose@192.168.0.25     (solo desde la IP indicada)
 AllowUsers jose@192.168.0.*       (Toda la red indicada)
 AllowUsers jose@*.desarrollo.com  maria@contabilidad.com    
 
-(aosorio desde cualquier equipo del dominio indicado, maria solo desde el equipo
+(jose desde cualquier equipo del dominio indicado, maria solo desde el equipo
 indicado)
 
 Como puede verse, bastan algunas cuantas directivas o variables bien
@@ -4036,7 +4036,7 @@ Si las claves no han sido importadas entonces mostrará lo siguiente:
 gpg: cifrado con clave RSA, ID XXXXXXXX
 gpg: descifrado fallido: clave secreta no disponible
 
-Si importamos nuestra llave/s privadas copiando /home/aosorio/.gnupg a una nueva
+Si importamos nuestra llave/s privadas copiando /home/user/.gnupg a una nueva
 máquina, si así fuera el caso, nos mostrará:
 
 Necesita una frase contraseña para desbloquear la clave secreta del usuario:
@@ -4454,7 +4454,7 @@ lineas en el archivo /etc/fstab o corriendo un script con esas sentencias.
 /proc      /home/user/jaulas/wheezy/proc/        auto     bind 0       0
 /dev       /home/user/jaulas/wheezy/dev/pts/     auto     bind 0       0
 /dev/pts   /home/user/jaulas/wheezy/dev/pts/     auto     bind 0       0
-/sys       /home/aosorio/jaulas/wheezy/sys/      auto     bind 0       0
+/sys       /home/user/jaulas/wheezy/sys/      auto     bind 0       0
 
 Descargamos los paquetes locales y locales-all y ejecutamos:
 
@@ -5363,6 +5363,34 @@ Ahora instalamos Google Chrome stable con:
 
 Si toda va bien, debería estar disponible en la sección internet de nuestro GNU/Linux Debian 8 o 9
 
+==================================================
+Instalar Google Chrome en GNU/Linux Debian 10 y 11
+==================================================
+
+Debes descargar el paquete de la siguiente URL:
+
+https://www.google.com/chrome/
+
+En este caso, descargué el de 64Bits
+
+Antes de instalar el paquete debes tener instalada el paquete wget, que es una
+dependencia que se debe cumplir para poder instalar Chrome, lo puedes hacer con
+este comando:
+
+$ sudo apt install wget libappindicator3-1
+
+De libappindicator, Instalas el que esté disponible, en mi caso el 3-0.
+
+Luego puedes instalar Google Chrome, mediante el comando:
+
+$ sudo dpkg -i google-chrome-stable_current_amd64.deb
+
+Luego lo lanzas con:
+
+$ google-chrome
+
+Listo!
+
 =======================================
 Instalar Chromium en GNU/Linux Debian 8
 =======================================
@@ -6006,7 +6034,7 @@ Entrar en la pc A, luego escribimos:
 
 Con esto veremos los dispositivos de red y su configuración, algo como esto
 
-aosorio@debian:~$ ip link
+user@debian:~$ ip link
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default
     link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 2: eth0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc pfifo_fast state DOWN mode DEFAULT group default qlen 1000
@@ -6747,7 +6775,7 @@ y lo cambiamos a
 
 /* Nuevo fondo para pantalla del login */
 #lockDialogGroup {
-  background: #2e3436 url(file:///home/aosorio/Imágenes/mi_nuevo_fondo.jpg);
+  background: #2e3436 url(file:///home/user/Imágenes/mi_nuevo_fondo.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -7051,7 +7079,7 @@ Fuentes
 
 -https://geekland.eu/mejorar-el-rendimiento-de-un-sistema-operativo-de-escritorio-linux/
 
-/home/aosorio/.config/gtk-3.0
+/home/user/.config/gtk-3.0
 
 ======================
 Instalar Opera browser
@@ -7510,3 +7538,39 @@ con teclas muertas, luego:
 Ñ = Alt + Shit + n
 
 á é í ó ú = Alt + vocal.
+
+====================================
+Instalar Counter-Strike en Debian 11
+====================================
+
+$ sudo apt-get install apt-transport-https
+
+$ sudo dpkg --add-architecture i386
+
+$ wget -nc https://dl.winehq.org/wine-builds/Release.key
+
+$ sudo apt-key add Release.key
+
+Add this on /etc/apt/sources.list save changes and update repos:
+deb https://dl.winehq.org/wine-builds/debian/ jessie main
+
+$ sudo apt-get update
+
+$ sudo apt-get install wine
+
+Instalar el juego:
+
+$ wine cs.exe
+
+Ejecutar el juego, hay que ir a:
+/home/user/.wine/dosdevices/c:/Games/Counter-Strike 1.6
+
+y luego
+
+$ wine Counter-Strike\ 1.6.exe
+
+ó
+
+$ wine /home/user/.wine/dosdevices/c:/Program Files (x86)/Counter-Strike 1.6
+
+Todo depende de donde se haya instalado el juego.
