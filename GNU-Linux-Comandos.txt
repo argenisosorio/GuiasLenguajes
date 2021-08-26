@@ -7574,3 +7574,20 @@ $ wine Counter-Strike\ 1.6.exe
 $ wine /home/user/.wine/dosdevices/c:/Program Files (x86)/Counter-Strike 1.6
 
 Todo depende de donde se haya instalado el juego.
+
+Instalar Zoom en debian 10/11
+=============================
+
+1) Descargue el archivo instalador DEB desde el Centro de descargas.
+
+https://zoom.us/download?os=linux
+
+2) Luego instalar las siguientes dependencias del SO:
+
+$ sudo apt install gdebi libxcb-xtest0
+
+3) Instalar el paquete descargado:
+
+# dpkg -i zoom_amd64.deb
+
+Listo!
