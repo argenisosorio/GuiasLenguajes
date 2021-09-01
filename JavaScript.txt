@@ -7023,3 +7023,285 @@ var age, voteable;
 age = 18;
 voteable = (age < 18) ? "Menor de edad" : "Mayor de edad";
 alert(voteable);
+
+=====
+Axios
+=====
+
+Axios es un cliente HTTP basado en promesas para node.js y el navegador. Puede
+ejecutarse en el navegador y en nodejs con la misma base de código.  En el lado
+del servidor, utiliza el módulo http nativo node.js, mientras que en el cliente
+(navegador) utiliza XMLHttpRequests.
+
+Instalación
+===========
+
+Para incluír e instalar Axios en nuestro proyecto ejecutamos:
+
+$ npm install axios
+
+Si no se está usando npm puedes incluirlo directamente desde el CDN agregando la
+siguiente etiqueta a tu HTML:
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+Importar Axios en un proyecto
+=============================
+
+Luego de instalar Axios con npm en nuestro proyecto debemos importarlo:
+
+import axios from 'axios';
+
+export default {
+    // ...
+}
+
+Si estás incluyendo Axios desde el CDN, ya sea que estés utilizando Vue.js o no,
+no necesitas utilizar el import.
+
+Ejemplos de uso
+===============
+
+Hecho esto, podemos utilizar Axios en nuestro proyecto. Vamos a comenzar
+realizando una sencilla solicitud GET:
+
+axios.get(url)
+.then(response => {
+  // Obtenemos los datos
+})
+.catch(e => {
+  // Capturamos los errores
+})
+
+Para realizar una solicitud GET llamamos al método get de Axios, pasando como
+parámetro la URL que deseamos solicitar. Luego de esto llamamos a los métodos
+then y catch, que se encargan de capturar la respuesta del servidor así como
+los errores, en caso de que llegue a ocurrir alguno.
+
+Supongamos que en la URL users tenemos un listado de usuarios que queremos
+obtener y almacenar dentro de un arreglo que previamente declaramos en data:
+
+axios.get('/users')
+.then(response => {
+  this.users = response.data;
+})
+.catch(e => {
+  // Podemos mostrar los errores en la consola
+  console.log(e);
+})
+
+Ejemplo
+=======
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+<body>
+<script type="text/javascript">
+axios.get('http://127.0.0.1/share/ajax/data.json')
+.then(function(response) {
+  alert("Success");
+})
+.catch(function(error) {
+  console.log(error);
+});
+</script>
+</body>
+</html>
+
+Con este código probamos que axios esté obteniendo la información de la url,
+que en este caso es un .json con el siguiente contenido:
+
+{
+  "firstName": "John",
+  "lastName": "Connor",
+  "age": 25
+}
+
+Si se ejecuta correctamente el ejemplo muestra un alert que indica que pudo
+acceder a la información de la url, de no poder acceder a la url que contiene el
+json muestra un error por la consola, algo como:
+
+Error: Request failed with status code 404.
+
+Para que este ejemplo se ejecute correctamente y no de errores por el
+intercambio de recursos de orígenes cruzados se debe ejecutar abrir el archivo
+servido por un servidor http como apache o nginx al igual que el .json del
+ejemplo: para este ejemplos las urls serían:
+
+http://127.0.0.1/share/ajax/inde.hml
+http://127.0.0.1/share/ajax/data.json
+
+Mostrando por consola el contenido de response
+==============================================
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+<body>
+<script type="text/javascript">
+axios.get('http://127.0.0.1/share/ajax/data.json')
+.then(function(response) {
+  console.log(response);
+})
+.catch(function(error) {
+  console.log(error);
+});
+</script>
+</body>
+</html>
+
+Otro ejemplo pero con función flecha
+====================================
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+<body>
+<script type="text/javascript">
+axios.get('http://127.0.0.1/share/ajax/data.json')
+.then(response => {
+  this.users = response.data;
+  alert("Success");
+})
+.catch(e => {
+  // Podemos mostrar los errores en la consola
+  console.log(e);
+})
+</script>
+</body>
+</html>
+
+-----
+
+También podemos pasar parámetros a la solicitud. Supongamos que queremos
+obtener un nombre en especifico:
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+<body>
+<script type="text/javascript">
+axios.get('https://api.nationalize.io/', {
+  params: {
+    name: 'carlos'
+  }
+})
+.then(response => {
+  this.user = response.data;
+  console.log(user.name);
+  console.log(user.country[0].country_id);
+}).catch(e => {
+  console.log(e);
+})
+</script>
+</body>
+</html>
+
+Los parámetros GET también pueden ser pasados directamente desde la URL:
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+<body>
+<script type="text/javascript">
+axios.get('https://api.nationalize.io/?name=pepe', {
+})
+.then(response => {
+  this.user = response.data;
+  console.log(user.name);
+  console.log(user.country[0].country_id);
+}).catch(e => {
+  console.log(e);
+})
+</script>
+</body>
+</html>
+
+-----
+
+Otro ejemplo de objeto con parámetros:
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  </head>
+<body>
+<script type="text/javascript">
+// Objeto con los datos
+userInfo = {
+  name: 'pepe',
+}
+// Solicitud GET
+axios.get('https://api.nationalize.io', {
+  // Asignamos el valor de userInfo a params
+  params: userInfo
+})
+.then(response => {
+  this.user = response.data;
+  console.log(user.name);
+  console.log(user.country[0].country_id);
+}).catch(e => {
+  console.log(e);
+})
+</script>
+</body>
+</html>
+
+Ejemplo de solicitud POST
+=========================
+
+Con Axios también podemos realizar solicitudes de tipo POST. Para ello, debemos
+usar el método post, pasando la URL y los datos que deseamos enviar al servidor.
+Supongamos que tenemos un método llamado sendUserData desde donde enviamos los
+datos de los usuarios:
+
+sendUserData: function () {
+  axios.post('/users', {
+    name: 'Moriarty',
+    enemy: 'Sherlock'
+  }).then(response => {
+    // Respuesta del servidor
+  }).catch(e => {
+    console.log(e);
+  });
+}
+
+Observa cómo de segundo parámetro en el método post pasamos un objeto con los
+datos que deseamos enviar al servidor.
+
+Axios soporta múltiples métodos para realizar diferentes solicitudes:
+
+axios.request()
+axios.get()
+axios.delete()
+axios.post()
+axios.put()
+
+Fuente
+======
+
+https://styde.net/solicitudes-http-con-axios/
