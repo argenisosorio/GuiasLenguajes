@@ -2849,13 +2849,13 @@ no este vacío -->
 
 -------------------------------------
 
-<!-- ################ -->
-<!-- ##### JSON ##### -->
-<!-- ################ -->
+JSON
+====
 
-JSON es una notación de objetos basada en JavaScript, utiliza una sintaxis que nos permite crear objetos de
-manera rapida y simple, estos objetos pueden ser utilizados de la manera que queramos y la notación se
-utiliza muy comúnmente para crear servicios REST, objetos, e incluso fue adoptada por algunas bases de
+JSON es una notación de objetos basada en JavaScript, utiliza una sintaxis que
+nos permite crear objetos de manera rapida y simple, estos objetos pueden ser
+utilizados de la manera que queramos y la notación se utiliza muy comúnmente
+para crear servicios REST, objetos, e incluso fue adoptada por algunas bases de
 datos como lo es MongoDB.
 
 Sintaxis de JSON
@@ -7225,7 +7225,10 @@ Los parámetros GET también pueden ser pasados directamente desde la URL:
   </head>
 <body>
 <script type="text/javascript">
-axios.get('https://api.nationalize.io/?name=pepe', {
+axios.get('https://api.nationalize.io/', {
+  params: {
+    name: 'carlos'
+  }
 })
 .then(response => {
   this.user = response.data;

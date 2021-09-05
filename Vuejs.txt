@@ -3638,3 +3638,350 @@ $ cd project-name
 $ npm run dev
 
 La aplicación se está ejecutando ahora en http://localhost:3000.
+
+==========================================
+Permitir punto y coma en javascript eslint
+==========================================
+
+Editar .eslintrc.js y agregar "extends": "standard" en la lista extends:
+
+
+extends: [
+    '@nuxtjs',
+    'plugin:nuxt/recommended',
+    "extends": "standard"
+  ],
+
+============
+Enrutamiento
+============
+
+Rutas Automáticas
+=================
+
+La mayoría de los sitios web tienen más de una página, por ejemplo, inicio,
+sobre nosotros, contacto, etc. Para mostrar estas páginas necesitamos un Router.
+Aquí es donde entra en acción vue-router. Cuando trabajas con una aplicación de
+Vue, tienes que crear un archivo de configuración (p.ej. router.js) y añadir
+todas las rutas manualmente. Nuxt.js genera automáticamente la configuración de
+vue-router por ti, basándose en los ficheros Vue que tengas en la carpeta pages.
+Lo que significa que ¡nunca más tendrás que escribir el archivo de configuración
+del enrutador! Nuxt.js también te da división de código por rutas de
+forma automática.
+
+En otras palabras, todo lo que tienes que hacer para generar rutas en tu
+aplicación es crear archivos .vue en la carpeta pages.
+
+Navegación
+==========
+
+Para ir de una página a otra en tu aplicación, debes usar el componente
+NuxtLink. Este componente está incluído en Nuxt.js y por lo tanto no tienes que
+importarlo como haces con otros componentes. Es similar a la etiqueta <a> de
+HTML, excepto que en lugar de usar un href="/about" usamos to="/about". Si has
+usado antes vue-router, puedes ver <NuxtLink> como un sustituto de <RouterLink>.
+
+Un simple enlace a la página index.vue de tu carpeta pages:
+
+<template>
+  <NuxtLink to="/">Home page</NuxtLink>
+</template>
+
+ó desde index ir a otras rutas:
+
+<template>
+  <NuxtLink to="/blog">Blog</NuxtLink>
+</template>
+
+Para todos los enlaces internos a las páginas de tu sitio web, usa <NuxtLink>.
+Si tienes enlaces externos a otros sitios web, usa la etiqueta <a>.
+
+Ejemplo:
+
+<template>
+  <main>
+    <h1>Home page</h1>
+    <NuxtLink to="/blog">
+      About (internal link that belongs to the Nuxt App)
+    </NuxtLink>
+    <a href="https://nuxtjs.org">External Link to another page</a>
+  </main>
+</template>
+
+Estructura del Directorio
+=========================
+
+La estructura por defecto de una aplicación Nuxt.js está pensada para ofrecer un
+buen punto de partida tanto para pequeñas como grandes aplicaciones. Eres libre
+de organizar tu aplicación como más te guste así como crear otros directorios
+según los vayas necesitando.
+
+===========
+Directorios
+===========
+
+El directorio pages
+===================
+
+El directorio pages contiene las vistas y las rutas de tu aplicación. Nuxt.js
+lee todos los archivos .vue que se encuentren dentro de este directorio y los
+usa para crear las rutas de la aplicación.
+
+El directorio components
+========================
+
+El directorio components es donde pones todos tus componentes de Vue.js que
+luego son importados a tus páginas.
+
+Con Nuxt.js, puedes crear tus componentes e importarlos automáticamente dentro
+de tus archivos .vue sin necesidad de referenciarlos manualmente en la
+sección script. Nuxt.js los escaneará e importará por ti de forma automática
+siempre que hayas configurado la propiedad components a true en el archivo de
+configuración nuxt.config.js.
+
+El directorio assets
+====================
+
+El directorio assets contiene tus recursos sin compilar, como estilos, imágenes
+o fuentes.
+
+El directorio static
+====================
+
+El directorio static se mapea directamente al servidor raíz y contiene archivos
+cuyos nombres deben mantenerse (p.ej. robots.txt) o probablemente no cambiarán
+(p.ej. el favicon).
+
+El archivo nuxt.config.js
+=========================
+
+El archivo nuxt.config.js es el único punto de configuración de Nuxt.js. Si
+quieres añadir módulos o sobreescribir la configuración por defecto, es aquí
+donde debes aplicar los cambios.
+
+El archivo  package.json
+========================
+
+El archivo package.json contiene todas las dependencias y scripts de tu
+aplicación.
+
+Vistas
+======
+
+La sección Vistas describe todo lo que necesitas saber para configurar los datos
+y las vistas para una ruta específica en tu aplicación Nuxt.js. Las vistas
+consisten de una plantilla de aplicación, un layout, y la página como tal.
+Además, puedes definir metadatos específicos para el <head> de cada pagina los
+cuales son importantes para el SEO (Optimización para Motores de Búsqueda).
+
+Páginas
+=======
+
+Cada componente de Página es un componente Vue pero Nuxt.js agrega atributos
+especiales y funciones para facilitar el desarrollo lo más posible.
+
+Ejemplo:
+
+<template>
+  <h1 class="red">Hello World</h1>
+</template>
+
+<script>
+  export default {
+    head() {
+      // Set Meta Tags for this Página
+    }
+    // ...
+  }
+</script>
+
+<style>
+  .red {
+    color: red;
+  }
+</style>
+
+Diseños (layouts)
+=================
+
+Los diseños son de gran ayuda cuando quieres cambiar el estilo de tu aplicación
+Nuxt.js. Por ejemplo, si desea incluir una barra lateral o tener diseños
+distintos para la versión móvil y la versión de escritorio.
+
+Diseño predeterminado
+=====================
+
+Puedes definir un diseño agregando un fichero default.vue dentro de la carpeta
+layouts. Este será usando para todas las páginas que no tenga otro diseño
+especificado. Lo único que debes incluir en el diseño es el componente <Nuxt />
+que genera el contenido de la página.
+
+layouts/default.vue
+
+<template>
+  <div>
+    Default text
+    <Nuxt />
+  </div>
+</template>
+
+Por tanto si vamos a index.vue en pages/index.vue
+
+<template>
+  <div>
+    <h1>Home</h1>
+  </div>
+</template>
+
+Veremos en el navegador:
+
+Default text
+Home
+
+Diseño personalizado
+====================
+
+Es posible crear layouts personalizados que contengan información para ser usada
+cuando se necesite, ejemplo el navbar de un sitio web.
+
+layouts/navbar.vue
+
+<template>
+  <div>
+    <NuxtLink to="/">Home</NuxtLink>
+    <NuxtLink to="/blog">Blog</NuxtLink>
+    <Nuxt />
+  </div>
+</template>
+
+Luego en index.vue o el template que se requiere debemos indicar que use ese
+layout creado, esto lo hacemos con un script:
+
+pages/index.vue
+
+<template>
+  <div>
+    <h1>Home</h1>
+  </div>
+</template>
+<script>
+export default {
+  layout: 'navbar'
+}
+</script>
+
+Nota: Para buen funcionamiento se debe eliminar layout/default.vue.
+
+====================================
+Agregar hojas de estilos .css a Nuxt
+====================================
+
+Crear la carpeta assets por ejemplo y dentro crear styles.css por ejemplo, y
+agregarle para probar:
+
+body {
+  background: red;
+}
+
+Luego editamos nuxt.config.js y agregamos lo siguiente:
+
+// Global CSS: https://go.nuxtjs.dev/config-css
+css: [
+  '@/assetsk/styles.css'
+],
+
+Compilamos y visitamos index.vue desde el navegador, debemos ver el fondo rojo.
+
+=========================================
+Incluir estilos de bootstrap desde la web
+=========================================
+
+Editamos nuxt.config.js y agregamos lo siguiente:
+
+{ rel: "stylesheet", href: "https://argenisosorio.github.io/bootstrap-5-index-template/static/bootstrap/css/bootstrap.min.css" }
+
+Donde el enlace corresponde a una hoja de estilos de bootstrap de internet, el
+archivo quedaría así:
+
+link: [
+  { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+  { rel: "stylesheet", href: "https://argenisosorio.github.io/bootstrap-5-index-template/static/bootstrap/css/bootstrap.min.css" }
+]
+
+Si compilamos y recargamos index deberíamos tener disponible los estilos de
+bootstrap de manera global.
+
+=========================================
+Incluir estilos de bootstrap desde assets
+=========================================
+
+Guardamos bootstrap.min.css dentro de assets/css/ por ejemplos
+
+Luego editamos el archivo nuxt.config.js, agregamos:
+
+css: [
+  '@/assets/css/bootstrap.min.css',
+],
+
+Para probar compilamos y navegamos a index.
+
+===================================
+Incluir un archivo js personalizado
+===================================
+
+En la carpeta static crear un directorio js por ejemplo, dentro incluír el
+archivo scripts.js por ejemplo y agregarlo lo siquiente para la prueba:
+
+document.write("Helooooooooooo!!");
+
+Ahora hay que editar el archivo nuxt.config.js, agregamos:
+
+link: [
+  { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+],
+script: [
+  { src: "js/script.js" }
+]
+
+Ahora, si compilamos y revisamos index debemos ver el texto escrito en la
+página.
+
+==========================
+Incluir jquery de internet
+==========================
+
+Editamos el archivo nuxt.config.js, agregamos:
+
+link: [
+  { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+],
+script: [
+  { src: "https://code.jquery.com/jquery-3.5.1.min.js" },
+  { src: "js/scripts.js" }
+]
+
+Como vemos, esto hará una petición a una página externa.
+
+Para probar podemos colocar una funcionalidad de Jquery desde scrips.js e
+index.vue.
+
+==============================
+Incluir jquery de manera local
+==============================
+
+Agregamos Jquery en static/, dentro de js/ por ejemplo, tal que:
+
+static/js/jquery-3.5.1.min.js
+
+Editamos el archivo nuxt.config.js, agregamos:
+
+link: [
+  { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+],
+script: [
+  { src: "js/jquery-3.5.1.min.js" },
+  { src: "js/script.js" }
+]
+
+Para probar podemos colocar una funcionalidad de Jquery desde scrips.js e
+index.vue.
