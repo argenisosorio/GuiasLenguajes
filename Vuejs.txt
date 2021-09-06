@@ -3645,11 +3645,10 @@ Permitir punto y coma en javascript eslint
 
 Editar .eslintrc.js y agregar "extends": "standard" en la lista extends:
 
-
 extends: [
     '@nuxtjs',
     'plugin:nuxt/recommended',
-    "extends": "standard"
+    'extends:standard'
   ],
 
 ============
@@ -3745,12 +3744,39 @@ El directorio assets
 El directorio assets contiene tus recursos sin compilar, como estilos, imágenes
 o fuentes.
 
+Incluír imágenes
+================
+
+Si deseas incluir algún recurso dentro del directorio de assets en los templates
+de vue puedes hacerlo usando ~/assets/tu_imagen.png con una barra antes de
+assets.
+
+<template>
+  <img src="~/assets/tu_imagen.png" />
+</template>
+
+Si necesitar referir algún recurso dentro de assets en tu css, puedes hacerlo
+asi: ~assets/tu_imagen.png (sin una barra antes de la palabra assets).
+
+background: url('~assets/banner.svg');
+
+Si deseas trabajar con imágenes dinámicas, tienes que usar require.
+
+<img :src="require(`~/assets/img/${imagen}.jpg`)" />
+
 El directorio static
 ====================
 
 El directorio static se mapea directamente al servidor raíz y contiene archivos
 cuyos nombres deben mantenerse (p.ej. robots.txt) o probablemente no cambiarán
 (p.ej. el favicon).
+
+En este directorio guardamos el favicon sea .ico o .png y luego lo configuramos
+en nuxt.config.js, tal que:
+
+link: [
+  { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
+]
 
 El archivo nuxt.config.js
 =========================
@@ -3919,6 +3945,13 @@ Guardamos bootstrap.min.css dentro de assets/css/ por ejemplos
 
 Luego editamos el archivo nuxt.config.js, agregamos:
 
+// Global CSS: https://go.nuxtjs.dev/config-css
+css: [
+  '~/assets/css/bootstrap.min.css',
+],
+
+ó
+
 css: [
   '@/assets/css/bootstrap.min.css',
 ],
@@ -3957,7 +3990,6 @@ link: [
 ],
 script: [
   { src: "https://code.jquery.com/jquery-3.5.1.min.js" },
-  { src: "js/scripts.js" }
 ]
 
 Como vemos, esto hará una petición a una página externa.
@@ -3985,3 +4017,13 @@ script: [
 
 Para probar podemos colocar una funcionalidad de Jquery desde scrips.js e
 index.vue.
+
+====================================================
+El error eslint error 'type' should be on a new line
+====================================================
+
+En .eslintrc.js agrgar:
+
+rules: {
+  "function-paren-newline": ["error", "never"]
+}
