@@ -3898,6 +3898,45 @@ export default {
 
 Nota: Para buen funcionamiento se debe eliminar layout/default.vue.
 
+Otro ejemplo para navbar y footer:
+
+layouts/navbar-footer.vue
+
+<template>
+  <div>
+    <NuxtLink to="/">Home</NuxtLink>
+    <NuxtLink to="/blog">Blog</NuxtLink>
+    <Nuxt />
+    <b>Social links...</b>
+  </div>
+</template>
+
+luego en pages/index.vue
+
+<template>
+  <div>
+    <h1>Home</h1>
+  </div>
+</template>
+<script>
+export default {
+  layout: 'navbar-footer'
+}
+</script>
+
+y luego en pages/blog.vue
+
+<template>
+  <div>
+    <h1>Blog</h1>
+  </div>
+</template>
+<script>
+export default {
+  layout: 'navbar-footer'
+}
+</script>
+
 ====================================
 Agregar hojas de estilos .css a Nuxt
 ====================================
@@ -4027,3 +4066,65 @@ En .eslintrc.js agrgar:
 rules: {
   "function-paren-newline": ["error", "never"]
 }
+
+=======================================================================
+El warning de eslint Expected new line break before and after html tags
+=======================================================================
+
+Esta advertencia dice que debe evitar las etiquetas de una sola línea.
+
+Por ejemplo, en lugar de:
+
+<nuxt-link to="/test">Another page</nuxt-link>
+
+Usa esto:
+
+<nuxt-link to="/test">
+  Another page
+</nuxt-link>
+
+==============================================
+Poner etiquetas meta en una página individual
+==============================================
+
+En este caso, en index.vue vamos a cambiar el título por defecto con el tag html.
+
+<template>
+  <h1>My first page </h1>
+</template>
+
+<script>
+export default {
+  head () {
+    return {
+      title: 'Home'
+    }
+  }
+}
+</script>
+
+Otro ejemplo:
+
+<template>
+  <h1>Welcome to My first Nuxt App</h1>
+</template>
+
+<script>
+export default {
+  head() {
+    return {
+      title: 'Home',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Website abut tutorials'
+        }
+      ],
+      htmlAttrs: {
+        lang: 'en'
+      }
+    };
+  }
+};
+</script>
