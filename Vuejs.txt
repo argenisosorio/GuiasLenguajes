@@ -3454,6 +3454,30 @@ Ejemplo de Data binding
 </body>
 </html>
 
+=================================
+Definir el tipo de cada propiedad
+=================================
+
+Las propiedades suelen ir listadas como un arreglo de cadenas de texto:
+
+props: ['title', 'likes', 'isPublished', 'commentIds', 'author']
+
+Sin embargo, por lo general, querrá que cada propiedad sea un tipo específico de
+valor. En estos casos, puede enumerar las propiedades como un objeto, donde los
+nombres y valores de las propiedades contienen los nombres y tipos de datos,
+respectivamente:
+
+props: {
+  title: String,
+  likes: Number,
+  isPublished: Boolean,
+  commentIds: Array,
+  author: Object
+}
+
+Esto no solo documenta su componente, sino que también advertirá a los usuarios
+en la consola de JavaScript del navegador si se está pasando el tipo incorrecto.
+
 ==============
 Qué es Nuxt.js
 ==============
@@ -3957,6 +3981,65 @@ css: [
 
 Compilamos y visitamos index.vue desde el navegador, debemos ver el fondo rojo.
 
+Fuentes externas
+================
+
+Puedes incluir recursos externos como scripts y fuentes agregandolos globalmente
+al archivo nuxt.config.js o localmente en el objeto o función head.
+
+Configuraciones Globales
+========================
+
+export default {
+  head: {
+    script: [
+      {
+        src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'
+      }
+    ],
+    link: [
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css?family=Roboto&display=swap'
+      }
+    ]
+  }
+}
+
+Configuraciones locales
+=======================
+
+<template>
+  <h1>About page with jQuery and Roboto font</h1>
+</template>
+
+<script>
+  export default {
+    head() {
+      return {
+        script: [
+          {
+            src:
+              'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'
+          }
+        ],
+        link: [
+          {
+            rel: 'stylesheet',
+            href: 'https://fonts.googleapis.com/css?family=Roboto&display=swap'
+          }
+        ]
+      }
+    }
+  }
+</script>
+
+<style scoped>
+  h1 {
+    font-family: Roboto, sans-serif;
+  }
+</style>
+
 =========================================
 Incluir estilos de bootstrap desde la web
 =========================================
@@ -4083,27 +4166,76 @@ Usa esto:
   Another page
 </nuxt-link>
 
-==============================================
-Poner etiquetas meta en una página individual
-==============================================
+====================
+Etiquetas Meta y SEO
+====================
 
-En este caso, en index.vue vamos a cambiar el título por defecto con el tag html.
+Nuxt.js te provee 3 formas diferentes para agregar metadatos a tu aplicación:
 
-<template>
-  <h1>My first page </h1>
-</template>
+-Globalmente usando el archivo nuxt.config.js
+-Localmente usando el head como un objeto
+-Localmente usando el head como una función para que tengas acceso a data y
+computed properties.
+
+Configuración Global
+====================
+
+Nuxt.js te permite definir todas las etiquetas por defecto <meta> para tu
+aplicación dentro del archivo nuxt.config.js usando la propiedad head. Esto es
+muy util para agregar un título predeterminado y una etiqueta de descripción
+para SEO o para configurar el viewport o para agregar el favicon.
+
+nuxt.config.js
+
+export default {
+  head: {
+    title: 'my website title',
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'my website description'
+      }
+    ],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+  }
+}
+
+Esto te dara el mismo título y descripción en cada página
+
+Configuración local
+===================
+
+También puedes agregar títulos y metas para cada página usando el método head
+dentro de tu script tag en cada página.
+
+pages/index.vue
 
 <script>
 export default {
-  head () {
-    return {
-      title: 'Home'
-    }
+  head: {
+    title: 'Home page',
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Home page description'
+      }
+    ],
   }
 }
 </script>
 
-Otro ejemplo:
+Usa head como un objeto para establecer un título y descripción solo para la
+página de inicio
+
+Otro ejemplo, agregando htmlAttrs y head como función.
+
+Usa head como una función para establecer un título y una descripción solo para
+la página de inicio. Usando una función tienes acceso a las propiedades data y
+computed properties.
 
 <template>
   <h1>Welcome to My first Nuxt App</h1>
@@ -4128,3 +4260,139 @@ export default {
   }
 };
 </script>
+
+Nuxt.js usa vue-meta para actualizar el head del documento y los atributos meta
+de tu aplicación.
+
+Ejemplo de paginas dentro de páginas
+====================================
+
+Supongamos que tenemos la ruta home, about y blog, y que dentro de blog
+estaran las publicaciones, post1, post2 y post 3, entonces, para que esas
+rutas se generen, debemos crear la carpeto blog dentro de pages, además, si
+queremos que /home tenga su respectiva página de inicio, debemos crear index.vue
+dentro de blog, la estructura quedaría así:
+
+pages/
+  index.vue
+  about.vue
+  blog/
+    index.vue
+    post1.vue
+    post2.vue
+    post3.vue
+
+============================================================================
+El error error Expected parentheses around arrow function argument having a
+body with curly braces arrow-parens
+============================================================================
+
+created () {
+  axios.get('https://jsonplaceholder.typicode.com/posts').then(response => {
+    this.listPosts = response.data
+  })
+}
+
+Solución, los paréntesis en response
+
+created () {
+  axios.get('https://jsonplaceholder.typicode.com/posts').then((response) => {
+    this.listPosts = response.data
+  })
+}
+
+==================================================
+Ejemplo básico de consultar data con axios en Nuxt
+==================================================
+
+Traeremos datos de https://jsonplaceholder.typicode.com/ en este caso los posts.
+
+<template>
+  <div>
+    <h1>Welcome</h1>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  data () {
+    return {
+      posts: []
+    }
+  },
+  async created () {
+    const resp = await axios.get('https://jsonplaceholder.typicode.com/posts')
+    console.log(resp)
+  }
+}
+</script>
+
+Si visitamos la página y examinamos la consola de js debemos ver el objeto con
+la información de los posts.
+
+Ahora vamos a pintar estos datos en el template usando v-for:
+
+<template>
+  <div>
+    <h1>Welcome</h1>
+    <table class="table" border="1px">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">TITLE</th>
+          <th scope="col">BODY</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(post, index) in posts" v-bind:key="index">
+          <td v-text="post.id"></td>
+          <td v-text="post.title"></td>
+          <td v-text="post.body"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  layout: 'navbar',
+  data () {
+    return {
+      posts: []
+    }
+  },
+  async created () {
+    const resp = await axios.get('https://jsonplaceholder.typicode.com/posts')
+    this.posts = resp.data
+  }
+}
+</script>
+
+====================================================
+El warninf vue Require self-closing on HTML elements
+====================================================
+
+<YourComponent></YourComponent>
+
+(self-closing) sería:
+
+<YourComponent/>
+
+Otro ejemplo:
+
+<tr v-for="(post, index) in posts" :key="index">
+  <td v-text="post.id"></td>
+  <td v-text="post.title"></td>
+  <td v-text="post.body"></td>
+</tr>
+
+cambiado por:
+
+<tr v-for="(post, index) in posts" :key="index">
+  <td v-text="post.id" />
+  <td v-text="post.title" />
+  <td v-text="post.body" />
+</tr>
