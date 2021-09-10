@@ -3478,6 +3478,61 @@ props: {
 Esto no solo documenta su componente, sino que también advertirá a los usuarios
 en la consola de JavaScript del navegador si se está pasando el tipo incorrecto.
 
+===============================================================================
+Enviar datos a través del formulario que sirven para autenticarse con ellos por
+ejemplo.
+===============================================================================
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Login example</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+<div id="app">
+  <form method="post" @submit.prevent="login">
+    <label class="label">Email</label>
+    <div class="control">
+      <input
+        v-model="email"
+        type="email"
+        name="email"
+      />
+    </div>
+    <label class="label">Password</label>
+    <div class="control">
+      <input
+        v-model="password"
+        type="password"
+        name="password"
+      />
+    </div>
+    <br>
+    <button type="submit" class="button">
+      Log In
+    </button>
+  </form>
+</div>
+<script type="text/javascript">
+var app = new Vue({
+  el: "#app",
+  data: {
+    email: '',
+    password: ''
+  },
+  methods: {
+    login () {
+      console.log(this.email)
+      console.log(this.password)
+    }
+  }
+});
+</script>
+</body>
+</html>
+
 ==============
 Qué es Nuxt.js
 ==============
@@ -4438,9 +4493,70 @@ export default {
 }
 </script>
 
-================================================
-warning Unexpected console statement  no-console
-================================================
+=======================================================================
+Ejemplo de solicitud post para autenticación con axios usando el submit
+=======================================================================
+
+<template>
+  <div class="container">
+    <h1>Login</h1>
+    <form method="post">
+      <label class="label">Email</label>
+      <div class="control">
+        <input v-model="email" type="email" name="email">
+      </div>
+      <label class="label">Password</label>
+      <div class="control">
+        <input v-model="password" type="password" name="password">
+      </div>
+      <div class="control">
+        <button type="button" @click.prevent="login()">
+          Log In
+        </button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  data () {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    login () {
+      const userData = {
+        email: this.email,
+        password: this.password
+      }
+      const header = {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          'Content-Language': 'en'
+        }
+      }
+      axios.post('https://project.com/api/login', userData, header)
+        .then((response) => {
+          console.log(response)
+          alert('Welcome')
+        })
+        .catch((error) => {
+          console.log(error)
+          alert('Access denied')
+        })
+    }
+  }
+}
+</script>
+
+===============================================
+warning Unexpected console statement no-console
+===============================================
 
 Para evitar el warning se puede usar alguno de estos comentarios de línea:
 
@@ -4473,3 +4589,62 @@ o agregar en .eslintrc.js la siguiente regla:
 rules: {
   'no-console': 'off'
 }
+
+==========================================================
+Ejemplo cargar un select con datos obtenidos de un endpoit
+==========================================================
+
+<template>
+  <div class="container">
+    <h1>Profile types</h1>
+    <form method="post">
+      <select name="campo_select">
+        <option
+          v-for="(x, index) in tipos"
+          v-bind:key="index"
+          :value="x.id">
+          {{ x.name }}
+        </option>
+      </select>
+      <button type="button" @click.prevent="send()">
+        Submit
+      </button>
+    </form>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  data () {
+    return {
+      tipos: [],
+      campo_select: ''
+    }
+  },
+  created () {
+    const userData = {
+      store: 'true'
+    }
+    const header = {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'Content-Language': 'en'
+      }
+    }
+    axios.post('https://admin.buyalltogether.tk/api/v1/list/profile/types', userData, header)
+      .then((response) => {
+        this.tipos = response.data.data
+      })
+      .catch((error) => {
+        alert(error)
+      })
+  },
+  methods: {
+    send () {
+      console.log(this.types)
+    }
+  }
+}
+</script>
