@@ -755,6 +755,45 @@ Otro ejemplo
 </body>
 </html>
 
+Otro ejemplo
+============
+
+Mostrar o no mostra algo dependiendo del valor del input select.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>v-if with input select value</title>
+  <script src="https://unpkg.com/vue"></script>
+</head>
+<body>
+  <div id="app">
+    <select v-model="carlist" name="carlist">
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="opel">Opel</option>
+      <option value="audi">Audi</option>
+    </select>
+    <div v-if="carlist === 'volvo'">
+      Data
+    </div>
+    <div v-else>
+      No data
+    </div>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        carlist: [],
+      }
+    })
+  </script>
+</body>
+</html>
+
 Ejemplo de eventos
 ==================
 
