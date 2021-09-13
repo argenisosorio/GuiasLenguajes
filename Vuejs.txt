@@ -3572,6 +3572,134 @@ var app = new Vue({
 </body>
 </html>
 
+=========================
+Validación de Formularios
+=========================
+
+Ejemplo Base
+
+La validación de formularios es soportada de forma nativa por el navegador. Sin
+embargo, diferentes navegadores manejarán las cosas de una manera que puede ser
+un poco complicada o tramposa. Incluso cuando la validación es soportada
+perfectamente, algunas veces habrá la necesidad de personalizar las mismas, por
+lo cual, una solución basada en Vue podrá ser más apropiada. Comencemos con un
+simple ejemplo.
+
+Dado un formulario con tres campos, haremos dos obligatorios. Veremos el HTML
+primero:
+
+<form
+  id="app"
+  @submit="checkForm"
+  action="https://vuejs.org/"
+  method="post"
+>
+
+  <p v-if="errors.length">
+    <b>Please correct the following error(s):</b>
+    <ul>
+      <li v-for="error in errors">{{ error }}</li>
+    </ul>
+  </p>
+
+  <p>
+    <label for="name">Nombre</label>
+    <input
+      id="name"
+      v-model="name"
+      type="text"
+      name="name"
+    >
+  </p>
+
+  <p>
+    <label for="age">Edad</label>
+    <input
+      id="age"
+      v-model="age"
+      type="number"
+      name="age"
+      min="0">
+  </p>
+
+  <p>
+    <label for="movie">Película favorita</label>
+    <select
+      id="movie"
+      v-model="movie"
+      name="movie"
+    >
+      <option>Star Wars</option>
+      <option>Vanilla Sky</option>
+      <option>Atomic Blonde</option>
+    </select>
+  </p>
+
+  <p>
+    <input
+      type="submit"
+      value="Enviar"
+    >
+  </p>
+
+</form>
+
+Comencemos desde el inicio. El tag <form> tiene un ID que usaremos para el
+componente Vue. Hay un botón de envío, del cual hablaremos en un momento y la
+action del formulario que es una URL temporal que apuntaría a algo real en un
+servidor (donde habrá una copia de la validación en el lado del servidor, por
+supuesto).
+
+Debajo del formulario, hay un párrafo que se mostrará o esconderá basado en el
+estado del error. Esto renderizará una lista de errores arriba del formulario.
+Además, note que la validación se lanza en el evento de envío del formulario, en
+vez de hacerlo cada vez que un campo es modificado.
+
+Lo último a notar es que cada uno de los tres campos tiene su correspondiente
+v-model, para conectar los mismos a los valores con los que trabajaremos en
+JavaScript. Ahora, veamos el ejemplo:
+
+const app = new Vue({
+  el: '#app',
+  data: {
+    errors: [],
+    name: null,
+    age: null,
+    movie: null
+  },
+  methods:{
+    checkForm: function (e) {
+      if (this.name && this.age) {
+        return true;
+      }
+
+      this.errors = [];
+
+      if (!this.name) {
+        this.errors.push('El nombre es obligatorio.');
+      }
+      if (!this.age) {
+        this.errors.push('La edad es obligatoria.');
+      }
+
+      e.preventDefault();
+    }
+  }
+})
+
+Bastante corto y simple. Definimos un arreglo que contendrá los errores e
+inicializamos los valores de los tres campos en null. La lógica del método
+checkFrom (recordando que corre al enviar el formulario) valida solamente el
+nombre y la edad, ya que la película es opcional. En caso que esten vacíos,
+chequeamos cada uno y definimos un error específico (para cada uno de ellos). Y
+es sólo eso. Puede probar el ejemplo abajo. No olvide que si los campos son
+válidos, usted será redirigido a una URL temporal vacía.
+
+Fuente
+======
+
+https://es.vuejs.org/v2/cookbook/form-validation.html#Ejemplo-Base
+
 ==============
 Qué es Nuxt.js
 ==============
