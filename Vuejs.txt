@@ -3700,6 +3700,109 @@ Fuente
 
 https://es.vuejs.org/v2/cookbook/form-validation.html#Ejemplo-Base
 
+===================================
+Almacenamiento del lado del cliente
+===================================
+
+El almacenamiento de datos de lado del cliente es una excelente forma de mejorar
+el rendimiento de una aplicación. Al almacenar los datos directamente en el
+navegador se evita tener que solicitar datos desde el servidor cada vez que el
+usuario lo necesita. Es especialmente útil para soportar navegación fuera de
+línea, pero también los usuarios que disponen de una conexión activa se pueden
+ver beneficiados por el almacenamiento local. El almacenamiento del lado del
+cliente se puede lograr de múltiples formas, por ejemplo cookies, Local Storage
+(técnicamente “Web Storage”), IndexedDB y WebSQL (un método discontinuado que no
+debería usarse en proyectos nuevos).
+
+El enfoque de esta “receta” es particularmente en Local Storage, el cual es el
+método más simple de almacenamiento. Local Storage usa un sistema de clave/valor
+para almacenar datos. Está limitado a solo almacenar datos simples, pero se
+puede lograr almacenar datos complejos si se desea implementar una forma de
+codificación y decodificación de objetos JSON. En general Local Storage es
+apropiado para almacenar pequeñas cantidades de datos, por ejemplo preferencias
+del usuario. En caso de necesitar almacenar datos de mayor volumen y más
+complejos se recomienda otras soluciones como IndexedDB.
+
+Comencemos con un ejemplo basado en un formulario simple:
+
+<div id="app">
+  Mi nombre es <input v-model="name">
+</div>
+
+Este ejemplo tiene un campo en un formulario ligado a Vue a través del valor
+name. A continuación se puede ver el JavaScript:
+
+const app = new Vue({
+  el: '#app',
+  data: {
+    name: ''
+  },
+  mounted() {
+    if (localStorage.name) {
+      this.name = localStorage.name;
+    }
+  },
+  watch: {
+    name(newName) {
+      localStorage.name = newName;
+    }
+  }
+});
+
+Si se enfoca en la parte del mounted y el watch se puede ver que en este caso se
+utiliza mounted para cargar el dato almacenado en localStorage. Luego se observa
+el valor de name y automáticamente cuando ocurren cambios estos se almacenan en
+la base datos.
+
+Ejemplo completo:
+
+<!--
+Ejemplo de Almacenamiento del lado del cliente
+con localStorage.
+
+Escriba algo en el formulario y luego recargue la página.
+Usted notará que el valor escrito anteriormente será mostrado
+automáticamente. No se olvide que el navegador provee
+las herramientas para desarrolladores, donde hay que pinchar
+en la almacenamiento almacenamiento y luego en almacenamiento
+local.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>localStorage</title>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</head>
+<body>
+<div id="main" class="container">
+  <div id="app">
+    Mi nombre es <input v-model="name">
+  </div>
+</div>
+<script>
+const app = new Vue({
+  el: '#app',
+  data: {
+    name: ''
+  },
+  mounted() {
+    if (localStorage.name) {
+      this.name = localStorage.name;
+    }
+  },
+  watch: {
+    name(newName) {
+      localStorage.name = newName;
+    }
+  }
+});
+</script>
+</body>
+</html>
+
 ==============
 Qué es Nuxt.js
 ==============
@@ -4815,3 +4918,24 @@ export default {
   }
 }
 </script>
+
+Obtener un token de un API y guardar el token el localStorage
+
+axios.post('https://myweb.com/api/login', userData, header)
+  .then((response) => {
+    this.token = response.data.token
+    console.log(this.token)
+    localStorage.setItem('token', this.token)
+    alert('Welcome')
+  })
+  .catch((error) => {
+    console.log(error)
+    alert('Access denied')
+  })
+
+  Esto debe haber creado la variable token en el almacenamiento local del
+  navegador, para comprobarlo vamos al inspector de elementos del navegador,
+  seleccionamos la pestaña de almacenamiento, allí hay varios tipos de
+  almacenamiento, entre ellos está uno que dice almacenamiento local, allí es
+  donde tiene el listado de variables de localStorage, debe estar la variable
+  token con su Value.
