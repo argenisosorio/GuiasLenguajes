@@ -3261,6 +3261,16 @@ export default {
 };
 </script>
 
+Watch
+======
+
+Vue proporciona una forma más genérica de observar y reaccionar a los cambios de
+datos en una instancia de Vue: Watch las propiedades. Cuando tiene algunos datos
+que deben cambiar en función de otros datos, es tentador hacer un uso excesivo
+de twatch, especialmente si proviene de un entorno AngularJS. Sin embargo, a
+menudo es una mejor idea utilizar una propiedad calculada en lugar de una
+devolución de llamada de watch imperativa.
+
 Conclusiones
 ============
 
@@ -4919,7 +4929,9 @@ export default {
 }
 </script>
 
+=============================================================
 Obtener un token de un API y guardar el token el localStorage
+=============================================================
 
 axios.post('https://myweb.com/api/login', userData, header)
   .then((response) => {
@@ -4933,9 +4945,173 @@ axios.post('https://myweb.com/api/login', userData, header)
     alert('Access denied')
   })
 
-  Esto debe haber creado la variable token en el almacenamiento local del
-  navegador, para comprobarlo vamos al inspector de elementos del navegador,
-  seleccionamos la pestaña de almacenamiento, allí hay varios tipos de
-  almacenamiento, entre ellos está uno que dice almacenamiento local, allí es
-  donde tiene el listado de variables de localStorage, debe estar la variable
-  token con su Value.
+Esto debe haber creado la variable token en el almacenamiento local del
+navegador, para comprobarlo vamos al inspector de elementos del navegador,
+seleccionamos la pestaña de almacenamiento, allí hay varios tipos de
+almacenamiento, entre ellos está uno que dice almacenamiento local, allí es
+donde tiene el listado de variables de localStorage, debe estar la variable
+token con su Value.
+
+==================================================
+Obtener detos de un API que requiere autenticación
+==================================================
+
+En este ejmplo el token está guardado en localStorage.
+
+<template>
+  <div class="container">
+    <h1>Currencies</h1>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  data () {
+    return {
+    }
+  },
+  head: {
+    title: 'Currencies'
+  },
+  mounted () {
+    if (localStorage.token) {
+      this.token = localStorage.token
+    }
+    const header = {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'Content-Language': 'en',
+        Authorization: 'Bearer ' + this.token
+      }
+    }
+    axios.get('https://admin.buyalltogether.tk/api/v1/list/currencies', header)
+      .then((response) => {
+        console.log(response)
+        alert('Success')
+      })
+      .catch((error) => {
+        console.log(error)
+        alert('Access denied')
+      })
+  }
+}
+</script>
+
+=================================
+Eliminar el token de localStorage
+=================================
+
+<template>
+  <div>
+    <Header />
+    <main id="content" role="main">
+      <!-- Slider Section -->
+      <div class="mb-5">
+        <div class="bg-img-hero" style="background-image: url(~/assets/img/1920X422/img1.jpg);">
+          <div class="container min-height-420 overflow-hidden">
+            <div
+              class=""
+              data-pagi-classes="text-center position-absolute right-0 bottom-0 left-0 justify-content-start mb-3 mb-md-4 offset-xl-3 pl-2 pb-1">
+              <div class="js-slide bg-img-hero-center">
+                <div class="row min-height-420 py-7 py-md-0">
+                  <div class="offset-xl-3 col-xl-4 col-6 mt-md-8">
+                    <h1>Log out</h1>
+                      <form method="post">
+                        <div>
+                          <button
+                            type="submit"
+                            @click.prevent="logout()"
+                            class="btn btn-block btn-sm btn-primary transition-3d-hover">
+                            Log out
+                          </button>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Slider Section -->
+    </main>
+    <Footer />
+    <Aside />
+    <GoOnTop />
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      token: []
+    }
+  },
+  head: {
+    title: 'Log out'
+  },
+  methods: {
+    logout () {
+      if (localStorage.token) {
+        localStorage.removeItem('token')
+      } else {
+        alert('No token exists')
+      }
+    }
+  }
+}
+</script>
+
+=========================================================
+Mostrar o no información si el token está en localStorage
+=========================================================
+
+<template>
+  <div>
+    <a href="/login" >
+      Log in
+    </a>
+    |
+    <a href="/logout">
+      Log out
+    </a>
+    <ul>
+      <div v-if="authenticated">
+        <li v-for="(show, index) in tvshows" v-bind:key="index">
+          {{ show.name }} ({{ show.seasons }} temporadas)
+        </li>
+      </div>
+      <div v-else>
+        Not authenticated
+      </div>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      authenticated: '',
+      tvshows: [
+        { name: 'Serie 1', seasons: 3 },
+        { name: 'Serie 2', seasons: 5 },
+        { name: 'Serie 3', seasons: 2 }
+      ]
+    }
+  },
+  head: {
+    title: 'Test'
+  },
+  mounted () {
+    if (localStorage.token) {
+      this.authenticated = true
+    } else {
+      this.authenticated = false
+    }
+  }
+}
+</script>
