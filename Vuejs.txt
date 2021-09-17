@@ -5115,3 +5115,67 @@ export default {
   }
 }
 </script>
+
+========================
+Despliegue de producción
+========================
+
+Nuxt.js le permite elegir entre implementaciones de servidor o estáticas.
+
+Despliegue en servidor
+======================
+
+Para implementar una aplicación SSR usamos target: 'server', donde server es el
+valor predeterminado.
+
+$ npm run build
+
+Nuxt.js creará un directorio .nuxt con todo dentro listo para ser implementado
+en el alojamiento de su servidor.
+
+Una vez que su aplicación está construida, puede usar el comando start para ver
+una versión de producción de su aplicación.
+
+$ npm run start
+
+Despliegue estático (renderizado previamente)
+=============================================
+
+Nuxt.js le ofrece la posibilidad de alojar su aplicación web en cualquier
+alojamiento estático.
+
+Para implementar un sitio generado estático, asegúrese de tener target: 'static'
+en su nuxt.config.js (para Nuxt> = 2.13).
+
+export default {
+  target: 'static'
+}
+
+Luego:
+
+$ npm run generate
+
+Nuxt.js creará un directorio dist/ con todo dentro listo para ser implementado
+en un servicio de alojamiento estático.
+
+A partir de Nuxt v2.13, hay un rastreador instalado que ahora rastreará las
+etiquetas de sus enlaces y generará sus rutas cuando use el comando nuxt
+generate basado en esos enlaces.
+
+===============================================
+Errores de consola al ejecutar npm run generate
+===============================================
+
+at createError (node_modules/axios/lib/core/createError.js:16:15)
+at settle (node_modules/axios/lib/core/settle.js:18:12)
+at IncomingMessage.handleStreamEnd (node_modules/axios/lib/adapters/http.js:201:11)
+at IncomingMessage.emit (events.js:202:15)
+at IncomingMessage.EventEmitter.emit (domain.js:481:20)
+at endReadableNT (_stream_readable.js:1132:12)
+at processTicksAndRejections (internal/process/next_tick.js:76:17)
+
+Los catch((error) deber retornar true, es una de las soluciones.
+
+.catch((error) => {
+  return true
+})
