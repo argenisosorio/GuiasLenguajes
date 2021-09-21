@@ -4454,6 +4454,17 @@ Como vemos, esto hará una petición a una página externa.
 Para probar podemos colocar una funcionalidad de Jquery desde scrips.js e
 index.vue.
 
+o en index.vue:
+
+<div>
+  <b>Letra A</b>
+  <script type="text/javascript">
+  $('b').click(function() {
+    alert("Está en negrita");
+  });
+  </script>
+</div>
+
 ==============================
 Incluir jquery de manera local
 ==============================
@@ -4474,6 +4485,17 @@ script: [
 
 Para probar podemos colocar una funcionalidad de Jquery desde scrips.js e
 index.vue.
+
+o en index.vue:
+
+<div>
+  <b>Letra A</b>
+  <script type="text/javascript">
+  $('b').click(function() {
+    alert("Está en negrita");
+  });
+  </script>
+</div>
 
 ====================================================
 El error eslint error 'type' should be on a new line

@@ -4218,3 +4218,37 @@ input::placeholder {
   font-size: 1.2em;
   font-style: italic;
 }
+
+===============
+Gradient en css
+===============
+
+background-image: linear-gradient(direction, color-stop1, color-stop2, ...);
+
+Ejemplo:
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+#grad1 {
+  height: 200px;
+  background-color: red; /* For browsers that do not support gradients */
+  background-image: linear-gradient(red, yellow);
+}
+</style>
+</head>
+<body>
+
+<h1>Linear Gradient - Top to Bottom</h1>
+<p>This linear gradient starts red at the top, transitioning to yellow at the bottom:</p>
+
+<div id="grad1"></div>
+
+</body>
+</html>
+
+Fuente
+======
+
+https://www.w3schools.com/css/css3_gradients.asp
