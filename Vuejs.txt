@@ -5201,3 +5201,112 @@ Los catch((error) deber retornar true, es una de las soluciones.
 .catch((error) => {
   return true
 })
+
+========
+Vuetable
+========
+
+1) Instalación:
+
+$ npm install vuetable-2@next --save
+
+2) Añadir lo siguiente en la vista:
+
+<template>
+  <vuetable
+    ref="vuetable"
+    api-url="https://vuetable.ratiw.net/api/users"
+    :fields="['name', 'email', 'birthdate']"
+  >
+  </vuetable>
+</template>
+
+<script>
+import Vuetable from 'vuetable-2'
+
+export default {
+  components: {
+    Vuetable
+  }
+}
+</script>
+
+Pasando los fields como props
+=============================
+
+<template>
+  <vuetable
+    ref="vuetable"
+    api-url="https://vuetable.ratiw.net/api/users"
+    :fields="fields"
+  >
+  </vuetable>
+</template>
+
+<script>
+import Vuetable from 'vuetable-2'
+
+export default {
+  components: {
+    Vuetable
+  },
+  data () {
+    return {
+      fields: [
+        'name', 'email', 'birthdate',
+      ]
+    }
+  }
+}
+</script>
+
+Cambiar el texto de las cabeceras de la tabla
+=============================================
+
+De forma predeterminada, vuetable usa el nombre del campo como título de
+columna en el encabezado de la tabla.  Pero podríamos cambiarlo fácilmente a lo
+que queramos.
+
+Veamos cómo podemos cambiar los títulos de las columnas relacionadas con la
+dirección.
+
+<template>
+  <vuetable ref="vuetable"
+    api-url="https://vuetable.ratiw.net/api/users"
+    :fields="fields"
+  ></vuetable>
+</template>
+
+<script>
+import Vuetable from 'vuetable-2'
+
+export default {
+  components: {
+    Vuetable
+  },
+  data () {
+    return {
+      fields: [
+        'name', 'email', 'birthdate',
+        {
+          name: 'address.line1',
+          title: 'Address 1'
+        },
+        {
+          name: 'address.line2',
+          title: 'Address 2'
+        },
+        {
+          name: 'address.zipcode',
+          title: 'Zipcode'
+        }
+      ]
+    }
+  }
+}
+</script>
+
+Fuente
+======
+
+https://cristijora.github.io/vuetable-2-tutorial/#/
