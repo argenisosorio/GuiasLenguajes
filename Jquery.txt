@@ -5689,27 +5689,61 @@ $(document).ready(function(){
 </body>
 </html>
 
-----------
+===================
+El método prepend()
+===================
 
-<!-- Funcion .prepend, Insert content, specified by the parameter, to the beginning
-of each element in the set of matched elements. -->
+Inserta el contenido especificado al principio de los elementos seleccionados.
+
+Ejemplo: Inserte contenido al principio de todos los elementos <p> o <ol>:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="jquery/jquery-1.12.4.js" type="text/javascript"></script>
+<script>
+$(document).ready(function(){
+  $("#btn1").click(function(){
+    $("p").prepend("<b>Prepended text</b>. ");
+  });
+  $("#btn2").click(function(){
+    $("ol").prepend("<li>Prepended item</li>");
+  });
+});
+</script>
+</head>
+<body>
+<p>This is a paragraph.</p>
+<p>This is another paragraph.</p>
+<ol>
+  <li>List item 1</li>
+  <li>List item 2</li>
+  <li>List item 3</li>
+</ol>
+<button id="btn1">Prepend text</button>
+<button id="btn2">Prepend list item</button>
+</body>
+</html>
+
+Otro ejemplo:
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
   <title>prepend demo</title>
   <style>
   p {
     background: yellow;
   }
   </style>
-  <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 </head>
 <body>
 <p>there, friend!</p>
 <p>amigo!</p>
 <script type="text/javascript">
-$( "p" ).prepend( "<b>Hello </b>" );
+$("p").prepend( "<b>Hello </b>" );
 </script>
 </body>
 </html>
