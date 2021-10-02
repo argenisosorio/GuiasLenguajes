@@ -1,0 +1,91 @@
+==========================
+Guía de Tailwind CSS by dM
+==========================
+
+Tailwind CSS es un framework CSS que permite un desarrollo ágil, basado en
+clases de utilidad que se pueden aplicar con facilidad en el código HTML y unos
+flujos de desarrollo que permiten optimizar mucho el peso del código CSS.
+
+=============================
+Ventajas de usar Tailwind CSS
+=============================
+
+1. Es altamente personalizable.
+2. Tiene patrones de utilidad comunes.
+3. Se puede optimizar usando PurgeCSS.
+4. Permite la creación de diseños complejos y responsive de forma libre.
+5. Facilita la interacción fluida con la comunidad.
+
+===================
+Instalar usando npm
+===================
+
+$ npm install tailwindcss
+
+Ahora creamos el archivo de configuración de TailwindCSS, que se llama
+"tailwind.config.js". Este archivo lo puedes crear a mano, pero es más cómodo
+hacerlo a través de la línea de comandos. Para ello, estando situados con el
+terminal en la raíz del proyecto, lanzamos el siguiente comando:
+
+$ npx tailwind init
+
+El archivo de configuración de Tailwind tendrá un código inicial como este:
+
+module.exports = {
+  purge: [],
+  darkMode: false, // or 'media' or 'class'
+  theme: {
+    extend: {},
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [],
+}
+
+==================
+Integrando via CDN
+==================
+
+<link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+
+========
+Ejemplos
+========
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  </head>
+<body>
+  <article class="mb-5 bg-teal-100 border border-gray-200 rounded shadow-md">
+    <img src="..." alt="..." class="rounded rounded-b-none">
+    <div class="p-3">
+      <h3 class="mb-1 text-xl font-bold">Los megalitos del Alentejo</h3>
+      <p class="mb-4">Acercarse al megalitismo más impactante de la Península Ibérica en el Alentejo</p>
+      <a class="bg-orange-600 text-white px-4 py-2 font-bold uppercase rounded-xl tracking-wider" href="#">Primary</a>
+    </div>
+  </article>
+</body>
+</html>
+
+-----
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  </head>
+<body>
+  <h1 class="text-3xl font-light text-center text-orange-600">Hola mundo!!</h1>
+  <p class="mt-4 text-xl italic text-center text-gray-800">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+  <div class="text-center mt-4">
+    <a href="#" class="bg-orange-600 text-white px-4 py-2 font-bold uppercase rounded-xl tracking-wider">Entrar</a>
+  </div>
+</body>
+</html>
