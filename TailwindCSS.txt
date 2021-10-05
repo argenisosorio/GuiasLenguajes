@@ -1,20 +1,62 @@
 ==========================
-Guía de Tailwind CSS by dM
+Guía de TailwindCSS by dM
 ==========================
 
-Tailwind CSS es un framework CSS que permite un desarrollo ágil, basado en
+TailwindCSS es un framework CSS que permite un desarrollo ágil, basado en
 clases de utilidad que se pueden aplicar con facilidad en el código HTML y unos
 flujos de desarrollo que permiten optimizar mucho el peso del código CSS.
 
-=============================
-Ventajas de usar Tailwind CSS
-=============================
+===============================================
+Ventajas y características de usar TailwindCSS
+===============================================
 
-1. Es altamente personalizable.
-2. Tiene patrones de utilidad comunes.
-3. Se puede optimizar usando PurgeCSS.
-4. Permite la creación de diseños complejos y responsive de forma libre.
-5. Facilita la interacción fluida con la comunidad.
+-Es altamente personalizable.
+
+-Tiene patrones de utilidad comunes.
+
+-Se puede optimizar usando PurgeCSS.
+
+-Permite la creación de diseños complejos y responsive de forma libre.
+
+-Facilita la interacción fluida con la comunidad.
+
+-A diferencia de Bootstrap, no está basado en componentes, sino en componentes
+de utilidad, o Utility first. Esto quiere decir, que en ligar de tener clases
+que incorporan múltiples estilos para crear componentes de interfaz gráfica,
+TailwindCSS propone clases atómicas, que aplican estilo muy específico para el
+elemento. Por ejemplo: Color de un texto, color de fondo de una sección,
+redondeo de bordes de un botón, sombreado, etc.
+
+-A diferenciade Bootstrap donde tienes por ejemplo un conjunto reducido de
+modelos de botones para poder utilizar, con TailwindCSS basado en las clases de
+utilidad puede hacer los botones que tu quieras.
+
+-Optimización: Generalmente se requiere aplicar todo el CSS de Bootstrap en un
+proyecto, es decir 160kb o más a un proyecto, con TailwindCSS optimizas, usando
+solamente el CSS que necesitas en tu proyecto el cual se compila para que pese
+aún menos.
+
+-Con Bootstrap tu CSS crece, ya que al final usas las clases y los componentes
+de Bootstrap pero terminas personalizando esas clases, y luchando con el
+Bootstrap para que tu estilos personalizados estén por encima de la reglas del
+framework. Con TailwindCSS no necesariamente crece, ya que aplicando las clases
+de utilidad puedes obtener todas las personalizaciones que necesites.
+
+-Desarrolla solamente en HTML: Con TailwindCSS no necesitas editar el HTML y el
+CSS a las vez, porque las clases Utility first te permiten definir el aspecto de
+manera precisa en un único lugar que es el HTML.
+
+===========
+Desventajas
+===========
+
+-Degradas  la separación de responsabilidades HTML / CSS.
+
+-Ensucias el HTML colocalndo demasiadas clases.
+
+-Repites demasiadas veces las mismas clases en el código HTML.
+
+-Pierdes la reusabilidad de los componentes.
 
 ===================
 Instalar usando npm

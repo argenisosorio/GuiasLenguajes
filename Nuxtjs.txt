@@ -1,0 +1,1501 @@
+====================
+Guía de Nuxtjs by dM
+====================
+
+==============
+Qué es Nuxt.js
+==============
+
+Nuxt.js es un framework que está basado en Vue.js y escrito en JavaScript.
+
+Es totalmente modular, de forma que podemos empezar con un paquete muy sencillo
+y, según nuestros requerimientos y nuestro proyecto vaya creciendo, podemos
+instalar las librerías o paquetes que necesitemos.
+
+Nuxt.js viene a solucionar un poco las configuraciones, que eran más tediosas,
+con Vue.js, ya que hace que este proceso sea realmente fácil y muy sencillo.
+
+Es OpenSource y dispone de una gran comunidad, en la cual podemos consultar o
+buscar información sobre problemas que hayamos tenido en nuestro código.
+
+¿Cuándo usar Nuxt.js en tus proyectos?
+======================================
+
+Debes usar Nuxt.js en tus proyectos, básicamente cuando sean:
+
+Proyectos que necesiten un prototipo rápido.
+
+Es muy útil para sacar una idea de negocio o hacer un test de manera bastante
+rápida.
+
+Proyectos que sean el medianos y grandes.
+
+Si nuestro proyecto va a tener desarrollo continuo y largo en el tiempo, es muy
+aconsejable utilizar este tipo de frameworks, ya que tiene un mantenimiento
+bastante más estable.
+
+Además, si en algún momento tenemos que cambiar a algún desarrollador o
+incorporar a una persona nueva a nuestro proyecto, la composición que tiene
+Nuxt.js es muy fácil de aprender, ya que la curva de aprendizaje es muy suave, y
+vamos a poder reutilizar los recursos apropiadamente.
+
+Proyectos que requieran de buena performance y buena indexación por buscadores.
+
+Nuxt.js facilita mucho la indexación por parte de los buscadores, gracias al
+server-side rendering, y este tipo de proyectos mejora mucho a nivel de
+performance.
+
+Instalación
+===========
+
+Crear un proyecto Nuxt.js desde cero sólo requiere un archivo y un directorio.
+
+En este ejemplo concreto, usaremos el terminal para crear los directorios y
+archivos, pero puedes crearlos usando tu editor de texto preferido:
+
+Para empezar:
+
+1) Crea un directorio vacío con el nombre de tu proyecto y accede a él:
+
+$ mkdir project-name
+
+$ cd project-name
+
+2) Después, crea un archivo llamado package.json:
+
+$ touch package.json
+
+3) Abre el archivo package.json en tu editor de código favorito y rellénalo con
+el siguiente JSON:
+
+package.json
+
+{
+  "name": "my-app",
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "start": "nuxt start"
+  }
+}
+
+Los scripts definen los comandos de Nuxt.js que serán lanzados con el comando
+npm run <command>.
+
+4) Instalar nuxt:
+
+Una vez creado el package.json, añade nuxt a tu proyecto vía npm o yarn como se
+muestra abajo:
+
+$ npm install nuxt
+
+Este comando añadirá nuxt como dependencia a tu proyecto y lo añadirá a tu
+package.json automáticamente. También se creará el directorio node_modules, en
+el cual se almacenarán todos los paquetes instalados y sus correspondientes
+dependencias.
+
+5) Inicia el proyecto:
+
+Ejecuta tu proyecto tecleando el siguiente comandos en tu terminal:
+
+$ npm run dev
+
+Esto nos deja la consola con:
+
+Listening on: http://localhost:3000/
+
+Visitamos la url para verificar que se cargue la página principal de la app.
+
+que muestra un mensaje: The Vue.js Framework
+
+Crea tu primera página
+======================
+
+Nuxt.js transforma cada archivo *.vue dentro del directorio pages en una ruta de
+nuestra aplicación.
+
+1) Crea el directorio pages en tu proyecto:
+
+$ mkdir pages
+
+2) Después, crea un archivo index.vue en el directorio pages:
+
+$ touch pages/index.vue
+
+Es importante que esta página se llame index.vue ya que será la página por
+defecto que Nuxt mostrará al abrir la aplicación. Es la página de inicio y, por
+lo tanto, debe llamarse index.
+
+3) Abre el archivo index.vue en tu editor y añade el siguiente contenido y
+guardas:
+
+<template>
+  <h1>Hello world!</h1>
+</template>
+
+4) Ejecuta tu proyecto tecleando el siguiente comandos en tu terminal:
+
+$ npm run dev
+
+Visitamos la url para verificar que se cargue el texto que pegamos en index.vue.
+
+Al ejecutar el comando dev se creará un directorio .nuxt. Esta carpeta debería
+ser ignorada por el control de versiones. Puedes ignorar archivos creando un
+.gitignore en el directorio raíz y añadiendo .nuxt.
+
+Ejemplo de archivo .gitignore en Nuxt
+=====================================
+
+# dependencies
+node_modules
+package-lock.json
+
+# logs
+npm-debug.log
+yarn-error.log
+
+# other
+.nuxt
+dist
+.vscode
+.idea
+newrelic_agent.log
+.DS_STORE
+.eslintrc
+
+# docs
+/docs
+
+# @nuxtjs/pwa
+sw.*
+
+========================================
+Crear un proyecto usando create-nuxt-app
+========================================
+
+$ npm init nuxt-app project-name
+
+Te hará algunas preguntas (nombre, opciones de Nuxt, UI framework, TypeScript,
+linter, testing framework, etc). Cuando las hayas respondido, instalará todas
+las dependencias. El siguiente paso es navegar a la carpeta del proyecto y
+arrancarlo:
+
+$ cd project-name
+
+$ npm run dev
+
+La aplicación se está ejecutando ahora en http://localhost:3000.
+
+==========================================
+Permitir punto y coma en javascript eslint
+==========================================
+
+Editar .eslintrc.js y agregar "extends": "standard" en la lista extends:
+
+extends: [
+    '@nuxtjs',
+    'plugin:nuxt/recommended',
+    'extends:standard'
+  ],
+
+============
+Enrutamiento
+============
+
+Rutas Automáticas
+=================
+
+La mayoría de los sitios web tienen más de una página, por ejemplo, inicio,
+sobre nosotros, contacto, etc. Para mostrar estas páginas necesitamos un Router.
+Aquí es donde entra en acción vue-router. Cuando trabajas con una aplicación de
+Vue, tienes que crear un archivo de configuración (p.ej. router.js) y añadir
+todas las rutas manualmente. Nuxt.js genera automáticamente la configuración de
+vue-router por ti, basándose en los ficheros Vue que tengas en la carpeta pages.
+Lo que significa que ¡nunca más tendrás que escribir el archivo de configuración
+del enrutador! Nuxt.js también te da división de código por rutas de
+forma automática.
+
+En otras palabras, todo lo que tienes que hacer para generar rutas en tu
+aplicación es crear archivos .vue en la carpeta pages.
+
+Navegación
+==========
+
+Para ir de una página a otra en tu aplicación, debes usar el componente
+NuxtLink. Este componente está incluído en Nuxt.js y por lo tanto no tienes que
+importarlo como haces con otros componentes. Es similar a la etiqueta <a> de
+HTML, excepto que en lugar de usar un href="/about" usamos to="/about". Si has
+usado antes vue-router, puedes ver <NuxtLink> como un sustituto de <RouterLink>.
+
+Un simple enlace a la página index.vue de tu carpeta pages:
+
+<template>
+  <NuxtLink to="/">Home page</NuxtLink>
+</template>
+
+ó desde index ir a otras rutas:
+
+<template>
+  <NuxtLink to="/blog">Blog</NuxtLink>
+</template>
+
+Para todos los enlaces internos a las páginas de tu sitio web, usa <NuxtLink>.
+Si tienes enlaces externos a otros sitios web, usa la etiqueta <a>.
+
+Ejemplo:
+
+<template>
+  <main>
+    <h1>Home page</h1>
+    <NuxtLink to="/blog">
+      About (internal link that belongs to the Nuxt App)
+    </NuxtLink>
+    <a href="https://nuxtjs.org">External Link to another page</a>
+  </main>
+</template>
+
+Estructura del Directorio
+=========================
+
+La estructura por defecto de una aplicación Nuxt.js está pensada para ofrecer un
+buen punto de partida tanto para pequeñas como grandes aplicaciones. Eres libre
+de organizar tu aplicación como más te guste así como crear otros directorios
+según los vayas necesitando.
+
+===========
+Directorios
+===========
+
+El directorio pages
+===================
+
+El directorio pages contiene las vistas y las rutas de tu aplicación. Nuxt.js
+lee todos los archivos .vue que se encuentren dentro de este directorio y los
+usa para crear las rutas de la aplicación.
+
+El directorio components
+========================
+
+El directorio components es donde pones todos tus componentes de Vue.js que
+luego son importados a tus páginas.
+
+Con Nuxt.js, puedes crear tus componentes e importarlos automáticamente dentro
+de tus archivos .vue sin necesidad de referenciarlos manualmente en la
+sección script. Nuxt.js los escaneará e importará por ti de forma automática
+siempre que hayas configurado la propiedad components a true en el archivo de
+configuración nuxt.config.js.
+
+El directorio assets
+====================
+
+El directorio assets contiene tus recursos sin compilar, como estilos, imágenes
+o fuentes.
+
+Incluír imágenes
+================
+
+Si deseas incluir algún recurso dentro del directorio de assets en los templates
+de vue puedes hacerlo usando ~/assets/tu_imagen.png con una barra antes de
+assets.
+
+<template>
+  <img src="~/assets/tu_imagen.png" />
+</template>
+
+Si necesitar referir algún recurso dentro de assets en tu css, puedes hacerlo
+asi: ~assets/tu_imagen.png (sin una barra antes de la palabra assets).
+
+background: url('~assets/banner.svg');
+
+Si deseas trabajar con imágenes dinámicas, tienes que usar require.
+
+<img :src="require(`~/assets/img/${imagen}.jpg`)" />
+
+El directorio static
+====================
+
+El directorio static se mapea directamente al servidor raíz y contiene archivos
+cuyos nombres deben mantenerse (p.ej. robots.txt) o probablemente no cambiarán
+(p.ej. el favicon).
+
+En este directorio guardamos el favicon sea .ico o .png y luego lo configuramos
+en nuxt.config.js, tal que:
+
+link: [
+  { rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }
+]
+
+El archivo nuxt.config.js
+=========================
+
+El archivo nuxt.config.js es el único punto de configuración de Nuxt.js. Si
+quieres añadir módulos o sobreescribir la configuración por defecto, es aquí
+donde debes aplicar los cambios.
+
+El archivo  package.json
+========================
+
+El archivo package.json contiene todas las dependencias y scripts de tu
+aplicación.
+
+Vistas
+======
+
+La sección Vistas describe todo lo que necesitas saber para configurar los datos
+y las vistas para una ruta específica en tu aplicación Nuxt.js. Las vistas
+consisten de una plantilla de aplicación, un layout, y la página como tal.
+Además, puedes definir metadatos específicos para el <head> de cada pagina los
+cuales son importantes para el SEO (Optimización para Motores de Búsqueda).
+
+Páginas
+=======
+
+Cada componente de Página es un componente Vue pero Nuxt.js agrega atributos
+especiales y funciones para facilitar el desarrollo lo más posible.
+
+Ejemplo:
+
+<template>
+  <h1 class="red">Hello World</h1>
+</template>
+
+<script>
+  export default {
+    head() {
+      // Set Meta Tags for this Página
+    }
+    // ...
+  }
+</script>
+
+<style>
+  .red {
+    color: red;
+  }
+</style>
+
+Diseños (layouts)
+=================
+
+Los diseños son de gran ayuda cuando quieres cambiar el estilo de tu aplicación
+Nuxt.js. Por ejemplo, si desea incluir una barra lateral o tener diseños
+distintos para la versión móvil y la versión de escritorio.
+
+Diseño predeterminado
+=====================
+
+Puedes definir un diseño agregando un fichero default.vue dentro de la carpeta
+layouts. Este será usando para todas las páginas que no tenga otro diseño
+especificado. Lo único que debes incluir en el diseño es el componente <Nuxt />
+que genera el contenido de la página.
+
+layouts/default.vue
+
+<template>
+  <div>
+    Default text
+    <Nuxt />
+  </div>
+</template>
+
+Por tanto si vamos a index.vue en pages/index.vue
+
+<template>
+  <div>
+    <h1>Home</h1>
+  </div>
+</template>
+
+Veremos en el navegador:
+
+Default text
+Home
+
+Diseño personalizado
+====================
+
+Es posible crear layouts personalizados que contengan información para ser usada
+cuando se necesite, ejemplo el navbar de un sitio web.
+
+layouts/navbar.vue
+
+<template>
+  <div>
+    <NuxtLink to="/">Home</NuxtLink>
+    <NuxtLink to="/blog">Blog</NuxtLink>
+    <Nuxt />
+  </div>
+</template>
+
+Luego en index.vue o el template que se requiere debemos indicar que use ese
+layout creado, esto lo hacemos con un script:
+
+pages/index.vue
+
+<template>
+  <div>
+    <h1>Home</h1>
+  </div>
+</template>
+<script>
+export default {
+  layout: 'navbar'
+}
+</script>
+
+Nota: Para buen funcionamiento se debe eliminar layout/default.vue.
+
+Otro ejemplo para navbar y footer:
+
+layouts/navbar-footer.vue
+
+<template>
+  <div>
+    <NuxtLink to="/">Home</NuxtLink>
+    <NuxtLink to="/blog">Blog</NuxtLink>
+    <Nuxt />
+    <b>Social links...</b>
+  </div>
+</template>
+
+luego en pages/index.vue
+
+<template>
+  <div>
+    <h1>Home</h1>
+  </div>
+</template>
+<script>
+export default {
+  layout: 'navbar-footer'
+}
+</script>
+
+y luego en pages/blog.vue
+
+<template>
+  <div>
+    <h1>Blog</h1>
+  </div>
+</template>
+<script>
+export default {
+  layout: 'navbar-footer'
+}
+</script>
+
+====================================
+Agregar hojas de estilos .css a Nuxt
+====================================
+
+Crear la carpeta assets por ejemplo y dentro crear styles.css por ejemplo, y
+agregarle para probar:
+
+body {
+  background: red;
+}
+
+Luego editamos nuxt.config.js y agregamos lo siguiente:
+
+// Global CSS: https://go.nuxtjs.dev/config-css
+css: [
+  '@/assetsk/styles.css'
+],
+
+Compilamos y visitamos index.vue desde el navegador, debemos ver el fondo rojo.
+
+Fuentes externas
+================
+
+Puedes incluir recursos externos como scripts y fuentes agregandolos globalmente
+al archivo nuxt.config.js o localmente en el objeto o función head.
+
+Configuraciones Globales
+========================
+
+export default {
+  head: {
+    script: [
+      {
+        src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'
+      }
+    ],
+    link: [
+      {
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css?family=Roboto&display=swap'
+      }
+    ]
+  }
+}
+
+Configuraciones locales
+=======================
+
+<template>
+  <h1>About page with jQuery and Roboto font</h1>
+</template>
+
+<script>
+  export default {
+    head() {
+      return {
+        script: [
+          {
+            src:
+              'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'
+          }
+        ],
+        link: [
+          {
+            rel: 'stylesheet',
+            href: 'https://fonts.googleapis.com/css?family=Roboto&display=swap'
+          }
+        ]
+      }
+    }
+  }
+</script>
+
+<style scoped>
+  h1 {
+    font-family: Roboto, sans-serif;
+  }
+</style>
+
+=========================================
+Incluir estilos de bootstrap desde la web
+=========================================
+
+Editamos nuxt.config.js y agregamos lo siguiente:
+
+{ rel: "stylesheet", href: "https://argenisosorio.github.io/bootstrap-5-index-template/static/bootstrap/css/bootstrap.min.css" }
+
+Donde el enlace corresponde a una hoja de estilos de bootstrap de internet, el
+archivo quedaría así:
+
+link: [
+  { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+  { rel: "stylesheet", href: "https://argenisosorio.github.io/bootstrap-5-index-template/static/bootstrap/css/bootstrap.min.css" }
+]
+
+Si compilamos y recargamos index deberíamos tener disponible los estilos de
+bootstrap de manera global.
+
+=========================================
+Incluir estilos de bootstrap desde assets
+=========================================
+
+Guardamos bootstrap.min.css dentro de assets/css/ por ejemplos
+
+Luego editamos el archivo nuxt.config.js, agregamos:
+
+// Global CSS: https://go.nuxtjs.dev/config-css
+css: [
+  '~/assets/css/bootstrap.min.css',
+],
+
+ó
+
+css: [
+  '@/assets/css/bootstrap.min.css',
+],
+
+Para probar compilamos y navegamos a index.
+
+===================================
+Incluir un archivo js personalizado
+===================================
+
+En la carpeta static crear un directorio js por ejemplo, dentro incluír el
+archivo scripts.js por ejemplo y agregarlo lo siquiente para la prueba:
+
+document.write("Helooooooooooo!!");
+
+Ahora hay que editar el archivo nuxt.config.js, agregamos:
+
+link: [
+  { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+],
+script: [
+  { src: "js/script.js" }
+]
+
+Ahora, si compilamos y revisamos index debemos ver el texto escrito en la
+página.
+
+==========================
+Incluir jquery de internet
+==========================
+
+Editamos el archivo nuxt.config.js, agregamos:
+
+link: [
+  { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+],
+script: [
+  { src: "https://code.jquery.com/jquery-3.5.1.min.js" },
+]
+
+Como vemos, esto hará una petición a una página externa.
+
+Para probar podemos colocar una funcionalidad de Jquery desde scrips.js e
+index.vue.
+
+o en index.vue:
+
+<div>
+  <b>Letra A</b>
+  <script type="text/javascript">
+  $('b').click(function() {
+    alert("Está en negrita");
+  });
+  </script>
+</div>
+
+==============================
+Incluir jquery de manera local
+==============================
+
+Agregamos Jquery en static/, dentro de js/ por ejemplo, tal que:
+
+static/js/jquery-3.5.1.min.js
+
+Editamos el archivo nuxt.config.js, agregamos:
+
+link: [
+  { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+],
+script: [
+  { src: "js/jquery-3.5.1.min.js" },
+  { src: "js/script.js" }
+]
+
+Para probar podemos colocar una funcionalidad de Jquery desde scrips.js e
+index.vue.
+
+o en index.vue:
+
+<div>
+  <b>Letra A</b>
+  <script type="text/javascript">
+  $('b').click(function() {
+    alert("Está en negrita");
+  });
+  </script>
+</div>
+
+====================================================
+El error eslint error 'type' should be on a new line
+====================================================
+
+En .eslintrc.js agrgar:
+
+rules: {
+  "function-paren-newline": ["error", "never"]
+}
+
+=======================================================================
+El warning de eslint Expected new line break before and after html tags
+=======================================================================
+
+Esta advertencia dice que debe evitar las etiquetas de una sola línea.
+
+Por ejemplo, en lugar de:
+
+<nuxt-link to="/test">Another page</nuxt-link>
+
+Usa esto:
+
+<nuxt-link to="/test">
+  Another page
+</nuxt-link>
+
+====================
+Etiquetas Meta y SEO
+====================
+
+Nuxt.js te provee 3 formas diferentes para agregar metadatos a tu aplicación:
+
+-Globalmente usando el archivo nuxt.config.js
+-Localmente usando el head como un objeto
+-Localmente usando el head como una función para que tengas acceso a data y
+computed properties.
+
+Configuración Global
+====================
+
+Nuxt.js te permite definir todas las etiquetas por defecto <meta> para tu
+aplicación dentro del archivo nuxt.config.js usando la propiedad head. Esto es
+muy util para agregar un título predeterminado y una etiqueta de descripción
+para SEO o para configurar el viewport o para agregar el favicon.
+
+nuxt.config.js
+
+export default {
+  head: {
+    title: 'my website title',
+    meta: [
+      { charset: 'utf-8' },
+      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'my website description'
+      }
+    ],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+  }
+}
+
+Esto te dara el mismo título y descripción en cada página
+
+Configuración local
+===================
+
+También puedes agregar títulos y metas para cada página usando el método head
+dentro de tu script tag en cada página.
+
+pages/index.vue
+
+<script>
+export default {
+  head: {
+    title: 'Home page',
+    meta: [
+      {
+        hid: 'description',
+        name: 'description',
+        content: 'Home page description'
+      }
+    ],
+  }
+}
+</script>
+
+Usa head como un objeto para establecer un título y descripción solo para la
+página de inicio
+
+Otro ejemplo, agregando htmlAttrs y head como función.
+
+Usa head como una función para establecer un título y una descripción solo para
+la página de inicio. Usando una función tienes acceso a las propiedades data y
+computed properties.
+
+<template>
+  <h1>Welcome to My first Nuxt App</h1>
+</template>
+
+<script>
+export default {
+  head() {
+    return {
+      title: 'Home',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'Website abut tutorials'
+        }
+      ],
+      htmlAttrs: {
+        lang: 'en'
+      }
+    };
+  }
+};
+</script>
+
+Nuxt.js usa vue-meta para actualizar el head del documento y los atributos meta
+de tu aplicación.
+
+Ejemplo de paginas dentro de páginas
+====================================
+
+Supongamos que tenemos la ruta home, about y blog, y que dentro de blog
+estaran las publicaciones, post1, post2 y post 3, entonces, para que esas
+rutas se generen, debemos crear la carpeto blog dentro de pages, además, si
+queremos que /home tenga su respectiva página de inicio, debemos crear index.vue
+dentro de blog, la estructura quedaría así:
+
+pages/
+  index.vue
+  about.vue
+  blog/
+    index.vue
+    post1.vue
+    post2.vue
+    post3.vue
+
+============================================================================
+El error error Expected parentheses around arrow function argument having a
+body with curly braces arrow-parens
+============================================================================
+
+created () {
+  axios.get('https://jsonplaceholder.typicode.com/posts').then(response => {
+    this.listPosts = response.data
+  })
+}
+
+Solución, los paréntesis en response
+
+created () {
+  axios.get('https://jsonplaceholder.typicode.com/posts').then((response) => {
+    this.listPosts = response.data
+  })
+}
+
+==================================================
+Ejemplo básico de consultar data con axios en Nuxt
+==================================================
+
+Traeremos datos de https://jsonplaceholder.typicode.com/ en este caso los posts.
+
+<template>
+  <div>
+    <h1>Welcome</h1>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  data () {
+    return {
+      posts: []
+    }
+  },
+  async created () {
+    const resp = await axios.get('https://jsonplaceholder.typicode.com/posts')
+    console.log(resp)
+  }
+}
+</script>
+
+Si visitamos la página y examinamos la consola de js debemos ver el objeto con
+la información de los posts.
+
+Ahora vamos a pintar estos datos en el template usando v-for:
+
+<template>
+  <div>
+    <h1>Welcome</h1>
+    <table class="table" border="1px">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">TITLE</th>
+          <th scope="col">BODY</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(post, index) in posts" v-bind:key="index">
+          <td v-text="post.id"></td>
+          <td v-text="post.title"></td>
+          <td v-text="post.body"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  layout: 'navbar',
+  data () {
+    return {
+      posts: []
+    }
+  },
+  async created () {
+    const resp = await axios.get('https://jsonplaceholder.typicode.com/posts')
+    this.posts = resp.data
+  }
+}
+</script>
+
+====================================================
+El warninf vue Require self-closing on HTML elements
+====================================================
+
+<YourComponent></YourComponent>
+
+(self-closing) sería:
+
+<YourComponent/>
+
+Otro ejemplo:
+
+<tr v-for="(post, index) in posts" :key="index">
+  <td v-text="post.id"></td>
+  <td v-text="post.title"></td>
+  <td v-text="post.body"></td>
+</tr>
+
+cambiado por:
+
+<tr v-for="(post, index) in posts" :key="index">
+  <td v-text="post.id" />
+  <td v-text="post.title" />
+  <td v-text="post.body" />
+</tr>
+
+======================================================
+Ejemplo de solicitud post para autenticación con axios
+======================================================
+
+<template>
+  <div>
+    <h1>Login</h1>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  data () {
+    return {
+    }
+  },
+  created () {
+    const userData = {
+      email: 'user@mail.com',
+      password: '12345678'
+    }
+    const header = {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'Content-Language': 'en'
+      }
+    }
+    axios.post('https://project.com/api/login', userData, header)
+      .then((response) => {
+        console.log(response)
+        alert('Success')
+      })
+      .catch((error) => {
+        alert(error)
+      })
+  }
+}
+</script>
+
+=======================================================================
+Ejemplo de solicitud post para autenticación con axios usando el submit
+=======================================================================
+
+<template>
+  <div class="container">
+    <h1>Login</h1>
+    <form method="post">
+      <label class="label">Email</label>
+      <div class="control">
+        <input v-model="email" type="email" name="email">
+      </div>
+      <label class="label">Password</label>
+      <div class="control">
+        <input v-model="password" type="password" name="password">
+      </div>
+      <div class="control">
+        <button type="button" @click.prevent="login()">
+          Log In
+        </button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  data () {
+    return {
+      email: '',
+      password: ''
+    }
+  },
+  methods: {
+    login () {
+      const userData = {
+        email: this.email,
+        password: this.password
+      }
+      const header = {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          'Content-Language': 'en'
+        }
+      }
+      axios.post('https://project.com/api/login', userData, header)
+        .then((response) => {
+          console.log(response)
+          alert('Welcome')
+        })
+        .catch((error) => {
+          console.log(error)
+          alert('Access denied')
+        })
+    }
+  }
+}
+</script>
+
+===============================================
+warning Unexpected console statement no-console
+===============================================
+
+Para evitar el warning se puede usar alguno de estos comentarios de línea:
+
+Desactivar el lint en la siguiente linea.
+
+// eslint-disable-next-line no-console
+
+ó
+
+Desactivar el lint en esta linea.
+
+// eslint-disable-line no-console
+
+Ejemplo:
+
+axios.post('https://admin.buyalltogether.tk/api/v1/login', userData, header)
+.then((response) => {
+  // eslint-disable-next-line no-console
+  console.log(response)
+  // eslint-disable-next-line no-console
+  console.log('Success')
+})
+.catch((error) => {
+  console.log(error) // eslint-disable-line no-console
+  console.log('Error') // eslint-disable-line no-console
+})
+
+o agregar en .eslintrc.js la siguiente regla:
+
+rules: {
+  'no-console': 'off'
+}
+
+==========================================================
+Ejemplo cargar un select con datos obtenidos de un endpoit
+==========================================================
+
+<template>
+  <div class="container">
+    <h1>Profile types</h1>
+    <form method="post">
+      <select name="campo_select">
+        <option
+          v-for="(x, index) in tipos"
+          v-bind:key="index"
+          :value="x.id">
+          {{ x.name }}
+        </option>
+      </select>
+      <button type="button" @click.prevent="send()">
+        Submit
+      </button>
+    </form>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  data () {
+    return {
+      tipos: [],
+      campo_select: ''
+    }
+  },
+  created () {
+    const userData = {
+      store: 'true'
+    }
+    const header = {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'Content-Language': 'en'
+      }
+    }
+    axios.post('https://admin.buyalltogether.tk/api/v1/list/profile/types', userData, header)
+      .then((response) => {
+        this.tipos = response.data.data
+      })
+      .catch((error) => {
+        alert(error)
+      })
+  },
+  methods: {
+    send () {
+      console.log(this.types)
+    }
+  }
+}
+</script>
+
+=============================================================
+Obtener un token de un API y guardar el token el localStorage
+=============================================================
+
+axios.post('https://myweb.com/api/login', userData, header)
+  .then((response) => {
+    this.token = response.data.token
+    console.log(this.token)
+    localStorage.setItem('token', this.token)
+    alert('Welcome')
+  })
+  .catch((error) => {
+    console.log(error)
+    alert('Access denied')
+  })
+
+Esto debe haber creado la variable token en el almacenamiento local del
+navegador, para comprobarlo vamos al inspector de elementos del navegador,
+seleccionamos la pestaña de almacenamiento, allí hay varios tipos de
+almacenamiento, entre ellos está uno que dice almacenamiento local, allí es
+donde tiene el listado de variables de localStorage, debe estar la variable
+token con su Value.
+
+==================================================
+Obtener detos de un API que requiere autenticación
+==================================================
+
+En este ejmplo el token está guardado en localStorage.
+
+<template>
+  <div class="container">
+    <h1>Currencies</h1>
+  </div>
+</template>
+
+<script>
+import axios from 'axios'
+export default {
+  data () {
+    return {
+    }
+  },
+  head: {
+    title: 'Currencies'
+  },
+  mounted () {
+    if (localStorage.token) {
+      this.token = localStorage.token
+    }
+    const header = {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'Content-Language': 'en',
+        Authorization: 'Bearer ' + this.token
+      }
+    }
+    axios.get('https://admin.buyalltogether.tk/api/v1/list/currencies', header)
+      .then((response) => {
+        console.log(response)
+        alert('Success')
+      })
+      .catch((error) => {
+        console.log(error)
+        alert('Access denied')
+      })
+  }
+}
+</script>
+
+=================================
+Eliminar el token de localStorage
+=================================
+
+<template>
+  <div>
+    <Header />
+    <main id="content" role="main">
+      <!-- Slider Section -->
+      <div class="mb-5">
+        <div class="bg-img-hero" style="background-image: url(~/assets/img/1920X422/img1.jpg);">
+          <div class="container min-height-420 overflow-hidden">
+            <div
+              class=""
+              data-pagi-classes="text-center position-absolute right-0 bottom-0 left-0 justify-content-start mb-3 mb-md-4 offset-xl-3 pl-2 pb-1">
+              <div class="js-slide bg-img-hero-center">
+                <div class="row min-height-420 py-7 py-md-0">
+                  <div class="offset-xl-3 col-xl-4 col-6 mt-md-8">
+                    <h1>Log out</h1>
+                      <form method="post">
+                        <div>
+                          <button
+                            type="submit"
+                            @click.prevent="logout()"
+                            class="btn btn-block btn-sm btn-primary transition-3d-hover">
+                            Log out
+                          </button>
+                        </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End Slider Section -->
+    </main>
+    <Footer />
+    <Aside />
+    <GoOnTop />
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      token: []
+    }
+  },
+  head: {
+    title: 'Log out'
+  },
+  methods: {
+    logout () {
+      if (localStorage.token) {
+        localStorage.removeItem('token')
+      } else {
+        alert('No token exists')
+      }
+    }
+  }
+}
+</script>
+
+=========================================================
+Mostrar o no información si el token está en localStorage
+=========================================================
+
+<template>
+  <div>
+    <a href="/login" >
+      Log in
+    </a>
+    |
+    <a href="/logout">
+      Log out
+    </a>
+    <ul>
+      <div v-if="authenticated">
+        <li v-for="(show, index) in tvshows" v-bind:key="index">
+          {{ show.name }} ({{ show.seasons }} temporadas)
+        </li>
+      </div>
+      <div v-else>
+        Not authenticated
+      </div>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      authenticated: '',
+      tvshows: [
+        { name: 'Serie 1', seasons: 3 },
+        { name: 'Serie 2', seasons: 5 },
+        { name: 'Serie 3', seasons: 2 }
+      ]
+    }
+  },
+  head: {
+    title: 'Test'
+  },
+  mounted () {
+    if (localStorage.token) {
+      this.authenticated = true
+    } else {
+      this.authenticated = false
+    }
+  }
+}
+</script>
+
+========================
+Despliegue de producción
+========================
+
+Nuxt.js le permite elegir entre implementaciones de servidor o estáticas.
+
+Despliegue en servidor
+======================
+
+Para implementar una aplicación SSR usamos target: 'server', donde server es el
+valor predeterminado.
+
+$ npm run build
+
+Nuxt.js creará un directorio .nuxt con todo dentro listo para ser implementado
+en el alojamiento de su servidor.
+
+Una vez que su aplicación está construida, puede usar el comando start para ver
+una versión de producción de su aplicación.
+
+$ npm run start
+
+Despliegue estático (renderizado previamente)
+=============================================
+
+Nuxt.js le ofrece la posibilidad de alojar su aplicación web en cualquier
+alojamiento estático.
+
+Para implementar un sitio generado estático, asegúrese de tener target: 'static'
+en su nuxt.config.js (para Nuxt> = 2.13).
+
+export default {
+  target: 'static'
+}
+
+Luego:
+
+$ npm run generate
+
+Nuxt.js creará un directorio dist/ con todo dentro listo para ser implementado
+en un servicio de alojamiento estático.
+
+A partir de Nuxt v2.13, hay un rastreador instalado que ahora rastreará las
+etiquetas de sus enlaces y generará sus rutas cuando use el comando nuxt
+generate basado en esos enlaces.
+
+===============================================
+Errores de consola al ejecutar npm run generate
+===============================================
+
+at createError (node_modules/axios/lib/core/createError.js:16:15)
+at settle (node_modules/axios/lib/core/settle.js:18:12)
+at IncomingMessage.handleStreamEnd (node_modules/axios/lib/adapters/http.js:201:11)
+at IncomingMessage.emit (events.js:202:15)
+at IncomingMessage.EventEmitter.emit (domain.js:481:20)
+at endReadableNT (_stream_readable.js:1132:12)
+at processTicksAndRejections (internal/process/next_tick.js:76:17)
+
+Los catch((error) deber retornar true, es una de las soluciones.
+
+.catch((error) => {
+  return true
+})
+
+========
+Vuetable
+========
+
+1) Instalación:
+
+$ npm install vuetable-2@next --save
+
+2) Añadir lo siguiente en la vista:
+
+<template>
+  <vuetable
+    ref="vuetable"
+    api-url="https://vuetable.ratiw.net/api/users"
+    :fields="['name', 'email', 'birthdate']"
+  >
+  </vuetable>
+</template>
+
+<script>
+import Vuetable from 'vuetable-2'
+
+export default {
+  components: {
+    Vuetable
+  }
+}
+</script>
+
+Pasando los fields como props
+=============================
+
+<template>
+  <vuetable
+    ref="vuetable"
+    api-url="https://vuetable.ratiw.net/api/users"
+    :fields="fields"
+  >
+  </vuetable>
+</template>
+
+<script>
+import Vuetable from 'vuetable-2'
+
+export default {
+  components: {
+    Vuetable
+  },
+  data () {
+    return {
+      fields: [
+        'name', 'email', 'birthdate',
+      ]
+    }
+  }
+}
+</script>
+
+Cambiar el texto de las cabeceras de la tabla
+=============================================
+
+De forma predeterminada, vuetable usa el nombre del campo como título de
+columna en el encabezado de la tabla.  Pero podríamos cambiarlo fácilmente a lo
+que queramos.
+
+Veamos cómo podemos cambiar los títulos de las columnas relacionadas con la
+dirección.
+
+<template>
+  <vuetable ref="vuetable"
+    api-url="https://vuetable.ratiw.net/api/users"
+    :fields="fields"
+  ></vuetable>
+</template>
+
+<script>
+import Vuetable from 'vuetable-2'
+
+export default {
+  components: {
+    Vuetable
+  },
+  data () {
+    return {
+      fields: [
+        'name', 'email', 'birthdate',
+        {
+          name: 'address.line1',
+          title: 'Address 1'
+        },
+        {
+          name: 'address.line2',
+          title: 'Address 2'
+        },
+        {
+          name: 'address.zipcode',
+          title: 'Zipcode'
+        }
+      ]
+    }
+  }
+}
+</script>
+
+Fuente
+======
+
+https://cristijora.github.io/vuetable-2-tutorial/#/
