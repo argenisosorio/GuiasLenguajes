@@ -81,6 +81,11 @@ El archivo package.json es el responsable de almacenar el nombre de las
 dependencias instaladas catalogándolas principalmente en dos tipos: dependencias
 de desarrollo y dependencias de la aplicación.
 
+$ npm init -y
+
+El -y es para que se salte el cuestionario inicial por completo, esto nos crea
+el archivo package.json.
+
 =================================
 Actualización de paquetes locales
 =================================
@@ -279,3 +284,13 @@ Actualizar la versión de npm
 ============================
 
 $ npm install -g npm
+
+=============================================
+Ejemplo de .gitignore para Proyecto de NodeJS
+=============================================
+
+node_modules
+build
+npm-debug.log
+.env
+.DS_Store

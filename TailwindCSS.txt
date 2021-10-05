@@ -50,7 +50,7 @@ manera precisa en un único lugar que es el HTML.
 Desventajas
 ===========
 
--Degradas  la separación de responsabilidades HTML / CSS.
+-Degradas la separación de responsabilidades HTML / CSS.
 
 -Ensucias el HTML colocalndo demasiadas clases.
 
@@ -58,35 +58,8 @@ Desventajas
 
 -Pierdes la reusabilidad de los componentes.
 
-===================
-Instalar usando npm
-===================
-
-$ npm install tailwindcss
-
-Ahora creamos el archivo de configuración de TailwindCSS, que se llama
-"tailwind.config.js". Este archivo lo puedes crear a mano, pero es más cómodo
-hacerlo a través de la línea de comandos. Para ello, estando situados con el
-terminal en la raíz del proyecto, lanzamos el siguiente comando:
-
-$ npx tailwind init
-
-El archivo de configuración de Tailwind tendrá un código inicial como este:
-
-module.exports = {
-  purge: [],
-  darkMode: false, // or 'media' or 'class'
-  theme: {
-    extend: {},
-  },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
-}
-
 ==================
-Integrando via CDN
+Integrarlo vía CDN
 ==================
 
 <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
@@ -108,7 +81,7 @@ Ejemplos
     <div class="p-3">
       <h3 class="mb-1 text-xl font-bold">Los megalitos del Alentejo</h3>
       <p class="mb-4">Acercarse al megalitismo más impactante de la Península Ibérica en el Alentejo</p>
-      <a class="bg-orange-600 text-white px-4 py-2 font-bold uppercase rounded-xl tracking-wider" href="#">Primary</a>
+      <a class="px-4 py-2 font-bold tracking-wider text-white uppercase bg-orange-600 rounded-xl" href="#">Primary</a>
     </div>
   </article>
 </body>
@@ -126,8 +99,158 @@ Ejemplos
 <body>
   <h1 class="text-3xl font-light text-center text-orange-600">Hola mundo!!</h1>
   <p class="mt-4 text-xl italic text-center text-gray-800">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
-  <div class="text-center mt-4">
-    <a href="#" class="bg-orange-600 text-white px-4 py-2 font-bold uppercase rounded-xl tracking-wider">Entrar</a>
+  <div class="mt-4 text-center">
+    <a href="#" class="px-4 py-2 font-bold tracking-wider text-white uppercase bg-orange-600 rounded-xl">Entrar</a>
   </div>
 </body>
 </html>
+
+========================================
+Nuevo proyecto con PostCSS y TailwindCSS
+========================================
+
+PostCSS es una herramienta frontend que permite hacer transformaciones en el
+código CSS mediante JavaScript.
+
+Dispone de infinidad de plugins para realizar todo tipo de transformaciones en
+el CSS.
+
+Instalación
+===========
+
+Inicializamos un proyecto de node con:
+
+$ npm init -y
+
+El -y es para que se salte el cuestionario inicial por completo, esto nos crea
+el archivo package.json.
+
+$ npm install -D postcss postcss-cli
+
+Luego podemos instalar autoprefixer, que lo que hace es crear los prefijos
+necesarios para que las características novedosas del css funcionen en todos
+los navegadores, ya no se tendrá que hacer a mano sino que autoprefixer lo hará
+automáticamente.
+
+$ npm install -D autoprefixer
+
+Configurar PostCSS
+==================
+
+Se debe crear un archivo llamado postcss.config.js en la raíz del proyecto y su
+contenido debe ser el siguiente:
+
+module.exports = {
+    plugins: [
+        require('autoprefixer')
+    ]
+}
+
+Con esto ya hemos requerido el plugin que se debe utilizar para lanzar los
+prefijos.
+
+Ejecutar PostCSS
+================
+
+Creamos los scripts de npm necesarios para ejecutar PostCSS, esto se hace
+moduficando el package.json, quedaría de la siguiente manera:
+
+"scripts": {
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "build": "postcss src/styles.css --output css/styles.css",
+  "watch": "postcss src/styles.css --output css/styles.css --watch"
+},
+
+El comando build lo que hace es compilar cuando se quiere llevar a producción,
+como vemos en el comando especificamos 2 rutas, una que es donde tenemos el css
+que vamos a compilar, y la otra es el directorio donde va a volcar el css
+compilado.
+
+Ahora creamos la carpeta src/ y dentro creamos el archivo styles.css
+
+Y el comando watch simplemente es para que es un proceso que está pendiente de
+cualquier cambio que haya en los archivos css y recompile los archivos
+automáticamente.
+
+Ahora vamos a incluír TailwindCSS:
+
+$ npm install tailwindcss
+
+Ahora creamos el archivo de configuración de TailwindCSS, que se llama
+"tailwind.config.js". Este archivo lo puedes crear a mano, pero es más cómodo
+hacerlo a través de la línea de comandos. Para ello, estando situados con el
+terminal en la raíz del proyecto, lanzamos el siguiente comando:
+
+$ npx tailwindcss init
+
+El archivo de configuración de TailwindCSS tendrá un código inicial como este:
+
+module.exports = {
+  purge: [],
+  darkMode: false, // or 'media' or 'class'
+  theme: {
+    extend: {},
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [],
+}
+
+Ahora hay que editar el archivo de configuración de PostCSS para que también
+requiera de TailwindCSS.
+
+module.exports = {
+    plugins: [
+        require('tailwindcss'),
+        require('autoprefixer')
+    ]
+}
+
+Debe hacerse en ese orden.
+
+Ahora agregamos TailwindCSS a nuestro CSS, esto lo haremos en el archivo CSS
+del proyecto, el que se procesa mediante PostCSS, tenemos que agregar las
+directivas de tailwind necesarias para que se generen las clases de utilidad.
+
+Estas serían:
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+Deben ir en este orden, las agregamos a src/styles.css.
+
+Ahora solo debemos probar que esté funcionando nuestro proyecto hasta aquí, esto
+lo harémos ejecutando:
+
+$ npm run build
+
+Esto nos debería crear el directorio css/ y el fichero styles.css que debe
+contener los estilos de TailwindCSS, unas 182.000 líneas aproximadamente.
+
+Ahora ya podemos empezar a practicar con los estilos de TailwindCSS.
+
+Creamos el fichero index.html y le agregamos el siguiente contenido:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1 class="text-3xl font-light text-center text-orange-600">Hola mundo!!</h1>
+    <p class="mt-4 text-xl italic text-center text-gray-800">Lorem ipsum dolor sit, amet consectetur adipisicing elit.</p>
+    <div class="mt-4 text-center">
+        <a href="#" class="px-4 py-2 font-bold tracking-wider text-white uppercase bg-orange-600 rounded-xl">Entrar</a>
+    </div>
+</body>
+</html>
+
+En este index.html ya estamos llamando a css/styles.css y agregamos ejemplos de
+h1, p, y div con clases de utilidad de ejemplo, ahora solo visitamos index.html
+y debemos apreciar los estilos de TailwindCSS.
