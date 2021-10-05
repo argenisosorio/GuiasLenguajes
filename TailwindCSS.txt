@@ -62,6 +62,8 @@ Sin embargo estas desventajas se pueden minimizar mucho usando la optimización
 que provee TailwindCSS y sus componentes hermanos. Llegan a ser prácticamente
 nulas las desventajas si se usan las reglas de optimización.
 
+Un ejemplo de esto sería usar PurgeCSS
+
 ==================
 Integrarlo vía CDN
 ==================
@@ -258,3 +260,18 @@ Creamos el fichero index.html y le agregamos el siguiente contenido:
 En este index.html ya estamos llamando a css/styles.css y agregamos ejemplos de
 h1, p, y div con clases de utilidad de ejemplo, ahora solo visitamos index.html
 y debemos apreciar los estilos de TailwindCSS.
+
+========
+PurgeCSS
+========
+
+Es una herramienta para eliminar CSS no utilizado.
+
+Cuando esté construyendo un sitio web, puede decidir usar un framework CSS como
+TailwindCSS, Bootstrap, MaterializeCSS, Foundation, etc. Pero solo usará un
+pequeño conjunto del framework, y se incluirán muchos estilos CSS no utilizados.
+
+Aquí es donde entra en juego PurgeCSS. PurgeCSS analiza su contenido y sus
+archivos CSS. Luego, hace coincidir los selectores utilizados en sus archivos
+con el de sus archivos de contenido. Elimina los selectores no utilizados de su
+CSS, lo que resulta en archivos CSS más pequeños.
