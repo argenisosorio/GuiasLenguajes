@@ -282,3 +282,27 @@ build
 npm-debug.log
 .env
 .DS_Store
+
+===========
+Live Server
+===========
+
+Este es un pequeño servidor de desarrollo con capacidad de recarga en vivo.
+
+Úselo para piratear sus archivos HTML/JavaScript/CSS, pero no para implementar
+el sitio final.
+
+No es necesario instalar ningún complemento del navegador ni agregar manualmente
+fragmentos de código a sus páginas para que funcione la función de recarga;
+
+Instalación
+===========
+
+$ npm install -g live-server
+
+Luego, dentro de la carpete del proyecto, donde exista index.html ejecutamos:
+
+$ live-server
+
+Esto nos permite servir nuestro sitio desde http://127.0.0.1:8080 lo visitamos
+en el navegar y listo, si actualizamos el código fuente se actualiza en vivo.
