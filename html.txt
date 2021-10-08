@@ -4270,6 +4270,80 @@ Otro ejemplo de un botón:
 </body>
 </html>
 
+Cambiando dirección:
+
+#grad {
+  background-image: linear-gradient(to right, red, yellow);
+}
+
+#grad {
+  background-image: linear-gradient(to bottom right, red, yellow);
+}
+
+Ejemplo de gradient en texto
+============================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+.text {
+  font-size: 72px;
+  background: -webkit-linear-gradient(left, #06629b, #01e496);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+</style>
+<body>
+  <div align="center">
+    <button>
+      <h1>
+        <span class="text">
+          Hello world!
+        </span>
+      </h1>
+    </button>
+  </div>
+</body>
+</html>
+
+Usando ángulos
+==============
+
+Si desea tener más control sobre la dirección del degradado, puede definir un
+ángulo, en lugar de las direcciones predefinidas (hacia abajo, hacia arriba,
+hacia la derecha, hacia la izquierda, hacia abajo a la derecha, etc.).
+
+Un valor de 0deg es equivalente a "to top".  Un valor de 90 grados es
+equivalente a "a la derecha".  Un valor de 180 grados equivale a "abajo".
+
+#grad {
+  background-image: linear-gradient(180deg, red, yellow);
+}
+
+Uso de múltiples colores
+========================
+
+#grad {
+  background-image: linear-gradient(red, yellow, green);
+}
+
+#grad {
+  background-image: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+}
+
+Usando transparencia
+====================
+
+#grad {
+  background-image: linear-gradient(to right, rgba(255,0,0,0), rgba(255,0,0,1));
+}
+
 Fuente
 ======
 
