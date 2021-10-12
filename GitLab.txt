@@ -6,7 +6,6 @@ Guía de GitLab by dM
 Como crear una GitLab Page
 ==========================
 
-
 GitLab te permite tener una página html en un entorno de producción, basado en
 algún repositorio que tengas en tu cuenta de usuario, este servicio solo permite
 el despliegue de páginas html y ficheros estáticos como hojas de estilo,
@@ -57,3 +56,22 @@ Guía de la wiki y markdown
 ==========================
 
 Url: https://gitlab.com/help/user/markdown#wiki-specific-markdown
+
+=================================================================
+Cómo recibir notificaciones del repositorio de GitLab en Telegram
+=================================================================
+
+1) Añadimos como participante del grupo a gitlab_bot
+
+2) Al agregarlo al grupo, llega un mensaje como este:
+
+Hi here! To setup notifications for this chat your GitLab project(repo), open
+Settings -> Web Hooks and add this URL:
+https://integram.org/gitlab/cQgO-Szntu4
+
+3) Nos vamos al repositorio de Gitlab, nos vamos a la parte cd Configuración >
+Webhooks y en el campo url pegamos la url que nos pasó el bot por el chat de
+telegram.
+
+4) Le damos click a Add webhook y listo, ya solo resta probar algún eventos
+para verificar que esté funcionando.
