@@ -247,7 +247,135 @@ consultas son únicas y tienen peculiaridades. Esta falta de normas significa qu
 es imposible cambiar simplemente de un proveedor a otro, por si no quedara
 satisfecho con el servicio.
 
+======================================
+Marcas y tipos de Bases de Datos NoSQL
+======================================
+
+Existe una amplia variedad de Bases de Datos NoSQL que podemos utilizar e
+implementar en nuestros proyectos. Todas ellas cumplen funciones especiales con
+un excelente rendimiento. Pero debemos analizar nuestros requerimientos y
+necesidades para saber escoger cual tomaremos en cuenta para nuestro proyecto.
+
+Conozcamos algunas de las BBDD NoSQL más reconocidas en la actualidad:
+
+MongoDB
+=======
+
+Desde las Bases de datos documentales una de las favorita de los desarrolladores
+en MongoDB de 10Gen. Sus inicios se remontan a finales de 2007, pero su
+liberación en licencia opensource fue en el año 2009. Este importante gestor de
+datos NoSQL almacena documentos en un formato muy parecido al JSON a alta
+velocidad.
+
+Construido en C++ tiene un rendimiento increíble que le permite ser muy flexible
+y potente. Es ideal para proyectos en los que se requiera alto nivel de
+escalabilidad. Tiene capacidad para recibir miles de lecturas por segundo sin
+pestañear. Múltiples gestores de contenido y juegos online se benefician de sus
+propiedades.
+
+Apache Cassandra
+================
+
+ApacheCassandra nace desde como un proyecto de google. Varios procesos han
+transcurrido desde esa época, hasta que en 2010 obtuvo su graduación como
+proyecto de alto nivel en ApacheIncubator.
+
+Es una base de datos de tipo clave-valor. Cassandra es una BBDD NoSQL, está
+diseñada para almacenar cantidades gigantescas de datos y realizar
+distribuciones a través de varios nodos. Esto permite que el almacenamiento de
+datos pueda estar repartido entre diversos servidores sin un solo punto de
+fallo. La gran mayoría de nosotros tiene una cercanía con esta base de datos ya
+que es una de las herramientas esenciales de Facebook.
+
+Redis
+=====
+
+Otro importante motor de base de datos de tipo calve-valor es Redis. Esta BBDD
+NoSQL de Código abierto es patrocinada y desarrollada por RedisLabs. Su diseño
+principal está basado en el almacenamiento de tablas de hashes aunque no es
+restrictiva sólo hacia este modelo. También tiene la posibilidad de ser
+utilizada como una BBDD persistente.
+
+Tipos de Bases de Datos NoSQL
+=============================
+
+Ya conocimos algunos nombres famosos de las Bases de Datos NoSQL, pero es
+importante destacar que existe una clasificación que debemos conocer para
+entender cómo estas BBDD están construidas y nos pueden ser de utilidad. Veamos
+cuales son las principales clasificaciones:
+
+Bases de datos documentales
+===========================
+
+Una base de datos documental u orientada a documentos, es un tipo de BBDD NoSQL
+que orienta su funcionamiento a datos alojados en documentos o tiendas de
+documentos. Estas bases de datos se utilizan para almacenar, recuperar y
+administrar datos semiestructurados.
+
+Las bases de datos documentales almacenan cada uno de los registros y los datos
+asociados en un solo documento. Cada documento contiene datos semiestructurados
+que pueden ser consultados con diferentes herramientas de análisis. Estas bases
+de datos ofrecen mucha flexibilidad, escritura rápida, y consultas rápidas
+gracias a su gran capacidad de indexación. Entre las BBDD documentales más
+reconocidas encontramos la ya conocida por nosotros a MongoDb, de 10gen, y
+CouchDB, de Apache.
+
+También gozan de un gran reconocimiento en el mundo de las Bases de datos NoSQL
+la RavenDB, de Hibernating Rhinos, BaseX, djondb, eXist, SimpleDB, de Amazon,
+IBM Lotus Domino y Terrastore.
+
+Bases de datos en orientadas a grafos
+=====================================
+
+Las bases de datos orientadas a grafos son excelentes herramientas para trabajar
+datos complejos. Estas BBDD nos permiten representar los datos en estructuras de
+grafos. Esto es de gran utilidad cuando los datos que vamos a procesar tienen
+altos niveles de interrelación. Estas versátiles bases de datos, nos permite
+ejecutar consultas y almacenamiento de datos de cualquier característica sin
+siquiera preocuparnos por el volumen de los datos.
+
+Gozan de un excepcional rendimiento para responder de forma eficiente al
+análisis y consulta de volúmenes gigantescos de datos. Ofrece también una
+diversidad de métodos analíticos y de consulta que la convierten en una de las
+opciones más flexibles en NoSQL. Es bastante frecuente conseguir la
+implementación de este modelo de BBDD en estructuras web de blogs. Twitter es
+uno de los casos más relevantes donde una BBDD de Grafos está relacionada.
+
+Las Bases de Datos orientadas a grafos también tiene otras funcionalidades que
+no te puedes perder. Entre las marcas más reconocidas está nuestra ya conocida
+Neo4j, pero esta no es la única. También están las conocidas HyperGraphDB,
+InfoGrid, AllegroGraph, InfiniteGraph, Sones y DEX/Sparksee.
+
+Bases de datos clave/valor
+==========================
+
+Las bases de datos clave valor son modelos no relacionales que utilizan un
+método simple de almacenamiento de datos. Este tipo de BBDD toma los datos como
+un conjunto de pares “clave-valor” en los que las claves cumplen funciones de
+identificadores únicos.
+
+Las claves o lo valores pueden ser cualquier tipo de datos. Pueden ser objetos
+simples o complejos. Estas BBDD son altamente divisibles y brindan grandes
+capacidades de escalabilidad horizontal.
+
+Estos modelos de BBDD son uno de los preferidos de los clientes NoSQL, porque
+son simples en cuanto a funcionalidad y brindan alto rendimiento a la hora de
+ejecutar las lecturas y escrituras de datos. Ya hemos dado algunos ejemplos de
+Bases de Datos Clave Valor como Cassandra y Redis, pero es obligatorio expandir
+la lista cuando tenemos importantes BBDD como BigTable de Google, Dynamo de
+Amazon, Project Voldemort de LinkedIn, OracleNoSQL y Riak.
+
+Bases de datos multivalor
+=========================
+
+Las bases de datos multivalor son sistemas interesantes que incorporan diferentes características multidimensionales  y NoSQL para la clasificación y  manejo de los datos. Estas BBDD comparten significativas similitudes con los modelos relacionales tradicionales. Ambos esquemas contienen tablas. Pero que esto no te engañe, las BBDD multivalor proporcionan un esquema de trabajo menos rígido.
+
+Además de proporcionar mayor flexibilidad, los datos almacenados acá pueden contener listas de valores. Esto quiere decir que cualquier dato almacenado puede tener diversos valores asignados.
+
+Estas bases de datos tienen un nivel de complejidad un poco más elevado debido a que incorporan reglas de normalización para su diseño. Entre las BBDD multivalor más conocidas podemos destacar Rocket D3 DBMS,  Rocket mvBase DBMS, Rocket U2 Universe, Rocket U2 Unidata, OpenQM,  Caché InterSystems, Reality, Jbase, OpenInsight, Extensible storage engine
+
 Fuentes
 =======
 
 -https://es.wikipedia.org/wiki/NoSQL
+-https://www.grapheverywhere.com/bases-de-datos-nosql-marcas-tipos-ventajas/
