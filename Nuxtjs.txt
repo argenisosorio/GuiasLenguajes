@@ -1499,3 +1499,39 @@ Fuente
 ======
 
 https://cristijora.github.io/vuetable-2-tutorial/#/
+
+============================================
+Directorio de complementos o carpeta plugins
+============================================
+
+El directorio de complementos contiene los complementos de Javascript que desea
+ejecutar antes de crear una instancia de la aplicación raíz Vue.js.
+
+Se usa este directorio para agregar complementos, si necesita inyectar funciones
+o constantes en su proyecto de manera global.
+
+1) Debe crear un directorio plugins/ en la raíz del pruyecto
+
+2) Crear un archivo test.js por ejemplo, que dentro contendra una función que
+será llamada de manera global.
+
+3) Agregar la ruta al complemento en nuxt.config.js, tal que:
+
+plugins: [
+  '~/plugins/test'
+],
+
+4) En plugins/test.js agregamos lo siguiente:
+
+function hello () {
+  console.log('Hello!')
+}
+hello()
+
+5) Listo, ahora cuando accedamos a alguna url del proyecto deberíamos ver ese
+mensaje por la consola.
+
+Fuente
+======
+
+https://nuxtjs.org/docs/directory-structure/plugins/

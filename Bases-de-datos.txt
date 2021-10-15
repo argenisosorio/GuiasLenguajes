@@ -368,11 +368,97 @@ Amazon, Project Voldemort de LinkedIn, OracleNoSQL y Riak.
 Bases de datos multivalor
 =========================
 
-Las bases de datos multivalor son sistemas interesantes que incorporan diferentes características multidimensionales  y NoSQL para la clasificación y  manejo de los datos. Estas BBDD comparten significativas similitudes con los modelos relacionales tradicionales. Ambos esquemas contienen tablas. Pero que esto no te engañe, las BBDD multivalor proporcionan un esquema de trabajo menos rígido.
+Las bases de datos multivalor son sistemas interesantes que incorporan
+diferentes características multidimensionales y NoSQL para la clasificación y
+manejo de los datos. Estas BBDD comparten significativas similitudes con los
+modelos relacionales tradicionales. Ambos esquemas contienen tablas. Pero que
+esto no te engañe, las BBDD multivalor proporcionan un esquema de trabajo menos
+rígido.
 
-Además de proporcionar mayor flexibilidad, los datos almacenados acá pueden contener listas de valores. Esto quiere decir que cualquier dato almacenado puede tener diversos valores asignados.
+Además de proporcionar mayor flexibilidad, los datos almacenados acá pueden
+contener listas de valores. Esto quiere decir que cualquier dato almacenado
+puede tener diversos valores asignados.
 
-Estas bases de datos tienen un nivel de complejidad un poco más elevado debido a que incorporan reglas de normalización para su diseño. Entre las BBDD multivalor más conocidas podemos destacar Rocket D3 DBMS,  Rocket mvBase DBMS, Rocket U2 Universe, Rocket U2 Unidata, OpenQM,  Caché InterSystems, Reality, Jbase, OpenInsight, Extensible storage engine
+Estas bases de datos tienen un nivel de complejidad un poco más elevado debido a
+que incorporan reglas de normalización para su diseño. Entre las BBDD multivalor
+más conocidas podemos destacar Rocket D3 DBMS, Rocket mvBase DBMS, Rocket U2
+Universe, Rocket U2 Unidata, OpenQM, Caché InterSystems, Reality, Jbase,
+OpenInsight, Extensible storage engine.
+
+Bases de datos tabulares
+========================
+
+Una BBDD tabular no es más que la estructuración de una BBDD en forma de tabla.
+
+Incorpora elementos en columnas y líneas. Cada una de las celdas genera
+intersecciones entre las columnas y las líneas. A estas intersecciones se le
+asignan una numeración única para establecer un orden eficiente de los datos.
+Están pensadas para grandes volúmenes de datos.
+
+Estas tienen la capacidad de almacenar gran cantidad de datos dispersos. Entre
+las principales DDBB de este estilo podemos conseguir a HBase de Apache que es
+utilizada para soportar el servicio de mensajería de Facebook, también a
+BigTable de Google y la versión abierta llamada LevelDB y a Hypertable.
+
+Bases de datos de Arrays
+========================
+
+Las Bases de datos arrays sirven para trabar colecciones de datos conocidas como
+raster data. Sitúan los datos en una cuadricula regular con más de dos
+dimensiones. Estas bases de datos se utilizan para representar simulaciones,
+sensores y datos estadísticos. Son capaces de manejar volúmenes de datos
+importantes ofreciendo una flexibilidad y escalabilidad.
+
+Estas bases de datos son consideradas una generación tecnológica emergente. De
+las bases de datos más destacadas que trabajan este modelo podemos mencionar a
+Oracle que ha profundizado sus trabajos en ella y SciDB, de Paradigm4.
+
+Ejemplos y casos de uso de Bases de datos NoSQL
+===============================================
+
+Como vemos las BBDD NoSQL gozan de múltiples funciones, marcas, tipos y
+ventajas. Ahora, es momento de poner más en contexto y mostrar algunos ejemplos
+de su implementación.
+
+A modo de ejemplo utilizaremos un JSON como el que conseguirás en mongoDB.
+
+Veamos:
+
+Supongamos que vamos a registrar diferentes personas en una colección
+perteneciente a una BBDD NoSQL con algunos campos especiales. Estos no
+necesariamente tienen que seguir un patrón específico como verás a continuación:
+
+{
+Nombre: «José»,
+Apellidos: «Pérez Campo»,
+Edad: 35,
+Aficiones: [«vino»,»libros»,»ciclismo»],
+Amigos: [
+{
+Nombre:»María»,
+Edad:22
+},
+{
+Nombre:»Luis»,
+Edad:28
+}
+]
+}
+
+Ahora bien, si queremos añadir a otros datos de otra persona con algunas
+características diferentes la podemos hacer sin mayor problema introduciendo lo
+siguiente:
+
+{  Nombre: "Luis",  
+   Estudios: "Marketing y Publicidad",  
+   Amigos:12
+}
+
+En un modelo relacional o SQL clásico esto sería imposible de hacer. Esta es una
+de las tantas ventajas de las que te hemos hablado.
+
+Esperamos que te sea de utilidad y te aventures a profundizar en el mundo de las
+BBDD.
 
 Fuentes
 =======
