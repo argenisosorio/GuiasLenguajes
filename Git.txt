@@ -108,6 +108,24 @@ $ git shortlog
 
 -----
 
+Genera un resumen condensado de información extendida del encabezado, como
+creaciones o eliminaciones de archivos ("nuevo" o "desaparecido", opcionalmente
+"+ l" si es un enlace simbólico) y cambios de modo ("+ x" o "-x" para agregar o
+eliminar bit ejecutable respectivamente) en diffstat. La información se coloca
+entre la parte del nombre del archivo y la parte del gráfico.  Implica --stat.
+
+$ git log --compact-summary
+
+-----
+
+Muestra solo los nombres y el estado de los archivos modificados. Al igual que
+--name-only, los nombres de los archivos a menudo se
+codifican en UTF-8.
+
+$ git log --name-status
+
+-----
+
 Lista todas las ramas locales.
 
 $ git branch
