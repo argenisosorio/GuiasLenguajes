@@ -3812,3 +3812,82 @@ const app = new Vue({
 </script>
 </body>
 </html>
+
+=============================
+Ejemplo básico de vue-table-2
+=============================
+
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head>
+  <!--script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17-beta.0/vue.js"></script-->
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://rawgit.com/matfish2/vue-tables-2/master/dist/vue-tables-2.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+<div style="padding: 20px;">
+  <h3 class="vue-title">Vue tables 2</h3>
+  <div id="app">
+  <v-client-table :columns="columns" :data="data" :options="options"></v-client-table>
+  </div>
+</div>
+<script type="text/javascript">
+Vue.use(VueTables.ClientTable);
+new Vue({
+  el: "#app",
+  data: {
+    columns: [
+      'id',
+      'name',
+      'email'
+    ],
+    data: getData(),
+    options: {
+      headings: {
+        id: 'id',
+        name: 'name',
+        email: 'email'
+      },
+      sortable: [
+        'id', 'name'
+      ],
+      texts: {
+        filterPlaceholder: 'filter...'
+      }
+    }
+  }
+});
+function getData() {
+  return [
+    {
+      'id': 1,
+      'name': 'sample1',
+      'email': 'sample1@example.com',
+      'group_name': 'Personnel Department'
+    },
+    {
+      'id': 2,
+      'name': 'sample2',
+      'email': 'sample2@example.com',
+      'group_name': 'Personnel Department'
+    },
+
+    {
+      'id': 3,
+      'name': 'sample3',
+      'email': 'sample3@example.com',
+      'group_name': 'Accounting department'
+    },
+    {
+      'id': 4,
+      'name': 'sample4',
+      'email': 'sample4@example.com',
+      'group_name': 'General Affairs Department'
+    }
+  ];
+}
+</script>
+</body>
+</html>
