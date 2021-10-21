@@ -1,0 +1,44 @@
+==================
+Guía de yarn by dM
+==================
+
+En este artículo veremos qué es Yarn y por qué deberías utilizarlo en 2021.
+
+¿Qué es Yarn?
+
+Yarn es un gestor de paquetes para tu código. Te permite usar y compartir código con otros desarrolladores de cualquier parte del mundo.
+
+Si vienes de npm,  que sepas que Yarn sustituye el workflow existente para el cliente de npm u otros gestores de paquetes sin dejar de ser compatible con el registro npm.
+
+Además, tal como npm, Yarn te permite utilizar las soluciones de otros desarrolladores para diferentes problemas, siempre con la idea de simplificar y facilitar el desarrollo de software, mejorando la productividad.
+¿Cuál fue la motivación de Yarn?
+
+Como vimos hace una semana, en Node las dependencias se colocan dentro de un directorio  llamado node_modules de tu proyecto. Lo que pasaba es que la estructura puede diferir del árbol de dependencias real, pues las dependencias duplicadas se fusionan.
+
+npm instala las dependencias de forma no determinista, y la carpeta node_modules podría ser diferente de una instalación a otra y causar errores de “funciona en mi máquina” difíciles de detectar.
+
+Por eso nació Yarn, un sistema que resuelve los problemas relacionados con el control de versiones usando archivos de bloqueo y un algoritmo de instalación determinista y confiable, asegurando  la misma estructura de archivos en node_modules en todas las máquinas.
+¿Cómo funciona Yarn?
+
+Puedes instalar yarn con npm. El objetivo de Yarn es hacer que las instalaciones sean mucho más rápidas y confiables. Además, gracias a las siguientes características se simplifica el flujo de trabajo:
+
+    Compatibilidad con los flujos de trabajo de npm. Admite la mezcla de registros.
+    Capacidad para restringir las licencias de los módulos instalados
+    API pública estable con el registro abstraído para el consumo a través de herramientas de complicación.
+    Salida CLI legible, y mínima.
+
+¿Vale la pena seguir utilizando Yarn en 2021?
+
+Desde la versión 5 de npm que el equipo de npm introdujo algunas características que hicieron acortar la brecha entre Yarn y npm, por ejemplo el “bloqueo de paquete” que permite la instalación de dependencias deterministas.
+
+Las versiones modernas de npm también almacenan en caché las dependencias instaladas, para acelerar la instalación. Sin embargo, entre otros, yarn sigue valiendo la pena por lo siguiente:
+
+    Resoluciones de versión fijadas. Para resolver problemas con versiones descontinuadas o poco actualizadas. Las “resoluciones” aseguran que todas las dependencias utilicen la misma versión de paquete específico.
+    Limpieza automática. Te permite eliminar automáticamente cualquier dependencia en el fichero .yarnclean después de instalar o agregar dependencias. Puede ser necesario para eliminar ficheros innecesarios para ejecutar los módulos que ocupan espacio adicional. Es una forma de reducir el tamaño de node_modules
+    Yarn 3.0. También conocido como Berry, la nueva versión del gestor de paquetes con nuevas mejoras (soporte para el campo exports, rendimiento, nuevos enlazadores de node_modules, Shell mejorado, Soporte a ESBuild, etc... ) significa una apuesta por el futuro y por volver a remodelar el ecosistema de Node.
+
+
+Fuente
+======
+
+-https://www.itdo.com/blog/javascript-que-es-yarn/
