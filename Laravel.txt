@@ -6116,3 +6116,161 @@ $ ps -ef | grep php
 Then kill the process
 
 $ kill -9 xxxxxxxx
+
+===================
+Instalar Laravel/ui
+===================
+
+Actualizar la versión de Laravel en el proyecto con:
+
+$ composer upodate
+
+Instale el paquete laravel/ui
+
+$ composer require laravel/ui
+
+Para chequear que esté correctamente instalado debemos chequear el archivo
+composer.json
+
+=====================================================
+Cómo configurar y usar Vue en su aplicación Laravel 8
+=====================================================
+
+En versiones anteriores de Laravel, Vue se configuraba automáticamente con cada
+nueva instalación. Sin embargo, en las versiones más recientes, debe
+configurarlo usted mismo.
+
+Afortunadamente, el paquete laravel/ui proporciona una manera fácil de
+configurar Vue en su aplicación Laravel.
+
+Siga los siguientes pasos para configurar Vue en su aplicación Laravel.
+
+1) Crear una nueva aplicación Laravel
+
+2) Instale el paquete laravel/ui con:
+
+$ composer require laravel/ui
+
+3) Instale el andamio Vue:
+
+El paquete laravel/ui tiene algunos comandos Artisan útiles que automáticamente
+distribuirán todo lo que necesita para comenzar.
+
+$ php artisan ui vue
+
+Notará que realiza algunos cambios en tu aplicación ya que se modificaron
+algunos archivos y se agregaron algunos directorios y archivos.
+
+4) Compile los archivos
+
+Finalmente, deberá instalar las dependencias recién agregadas y compilarlas.
+
+$ npm install && npm run dev
+
+$ npm install laravel-mix@latest
+
+$ npm install vue-loader --save-dev --legacy-peer-deps
+
+Nota: si está ejecutando esto por primera vez, es posible que Mix necesite
+instalar dependencias adicionales que se incorporarán automáticamente. Si ve un
+mensaje de error, simplemente ejecute npm run dev nuevamente.
+
+5) Incluya /js/app.js en su vista
+
+Su archivo app.js se compilará y guardará en public/js/app.js.  Como estamos
+usando Laravel Mix para compilarlo, podemos usar el método auxiliar mix() para
+generar la ruta correcta para nosotros. Se recomienda usar el ayudante mix()
+para que se use el nombre de archivo adecuado si está usando el control de
+versiones.
+
+<script src="{{ mix('/js/app.js') }}"></script>
+
+6) Agregue el elemento raíz Vue a su HTML
+
+Asegúrese de tener también un elemento raíz con una identificación de aplicación
+para su andamio HTML. De lo contrario, Vue no sabrá dónde montar los
+componentes.
+
+<div id="app">
+<example-component></example-component>
+</div>
+
+Registro de componentes de Vue de un solo archivo
+
+El paquete laravel/ui creará un nuevo directorio en resources/js/components.
+Aquí es donde puede agregar nuevos componentes de Vue. Notarás que el paquete
+laravel/ui agregó un archivo ExampleComponent.vue allí.
+
+Una vez que cree su archivo de componente, deberá registrarlo con Vue. En
+Laravel, puedes hacerlo en tu archivo app.js principal (resources/js/app.js).
+
+Notará que ExampleComponent ya está registrado.
+
+Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+Otra forma de llamar el componente:
+
+Vue.component('example-component', () => import('./components/ExampleComponent.vue'));
+
+Siéntase libre de crear subdirectorios en su directorio resources/js/components/
+para organizar sus archivos. Solo asegúrese de que la ruta en su método
+require() coincida con la estructura de su directorio.
+
+Vue.component('admin-login-component', require('./components/Admin/AdminLoginComponent.vue').default);\
+
+Listo, su vista debería quedar tal que así:
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+  <body>
+    <div id="app">
+      <example-component></example-component>
+    </div>
+    <script src="{{ mix('/js/app.js') }}"></script>
+  </body>
+</html>
+
+Con esto debería poder ver su componente desde el navegador.
+
+Fuente
+======
+
+https://diegooo.com/vue-como-configurar-y-usar-en-laravel-8/
+
+==========================================================
+El error Laravel Mix unknown option '--hide-modules' error
+==========================================================
+
+Update Laravel Mix
+
+$ npm install laravel-mix@latest
+
+Update Your NPM Scripts
+
+Before
+
+"scripts": {
+    "dev": "npm run development",
+    "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "npm run development -- --watch",
+    "watch-poll": "npm run watch -- --watch-poll",
+    "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "prod": "npm run production",
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+},
+
+After
+
+"scripts": {
+    "dev": "npm run development",
+    "development": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "prod": "npm run production",
+    "production": "mix --production"
+},

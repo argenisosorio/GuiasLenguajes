@@ -1927,6 +1927,12 @@ Comprimir directorios y su contenido.
 
 $ zip -r carpeta.zip nombre_carpeta
 
+===================================================================
+Proteger un archivo ZIP con contraseña mediante la línea de comando
+===================================================================
+
+$ zip -er nombre-archivo.zip carpeta-a-comprimir
+
 ===================
 Terminal Terminator
 ===================
@@ -7681,3 +7687,19 @@ settings.json donde debemos agregar los siguiente:
 ]
 
 Guardamos y debería salir la línea que marque los 80 caractéres.
+
+==============================================
+Evitar que VS code recopile información de uso
+==============================================
+
+A muchos nos incomoda el hecho de saber que se comparta información que creemos
+"privada", como el uso que le damos a ciertos programas, Visual Studio Code
+envía esa información de manera predeterminada, si deseas desactivarlo debes
+seguir los siguientes pasos:
+
+1) Ir a Archivo > Preferencias > Configuración
+
+2) En el recuadro de Buscar configuración ingresa telemetry y ponemos en off
+
+Con eso le pedimos a VSCode que deje de estar compartiendo información sobre su
+uso, lo que ellos llaman, Telemetria.
