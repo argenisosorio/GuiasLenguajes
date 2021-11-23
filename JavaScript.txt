@@ -342,16 +342,27 @@ Variables condicionales utilizando el operador ternario
 
 A veces se desea establecer el valor de una variable dependiendo de cierta
 condición. Para hacerlo se puede utilizar una declaración if/else, sin embargo
-en muchos casos es más conveniente utilizar el operador ternario. [Definición:
-El operador ternario evalúa una condición; si la condición es verdadera,
-devuelve cierto valor, caso contrario devuelve un valor diferente.]
+en muchos casos es más conveniente utilizar el operador ternario.
+
+Definición: El operador ternario evalúa una condición; si la condición es
+verdadera, devuelve cierto valor, caso contrario devuelve un valor diferente.
 
 El operador ternario
 ====================
 
-#stablecer a foo igual a 1 si bar es verdadero;
-Caso contrario, establecer a foo igual a 0
+Establecer foo igual a 1 si bar es verdadero, caso contrario, establecer a
+foo igual a 0.
+
 var foo = bar ? 1 : 0;
+
+Ejemplo:
+
+<script>
+  var bar=true;
+  // var bar=null;
+  var foo = bar ? 1 : 0;
+  console.log(foo);
+</script>
 
 El operador ternario puede ser utilizado sin devolver un valor a la variable,
 sin embargo este uso generalmente es desaprobado.
