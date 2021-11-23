@@ -342,16 +342,27 @@ Variables condicionales utilizando el operador ternario
 
 A veces se desea establecer el valor de una variable dependiendo de cierta
 condición. Para hacerlo se puede utilizar una declaración if/else, sin embargo
-en muchos casos es más conveniente utilizar el operador ternario. [Definición:
-El operador ternario evalúa una condición; si la condición es verdadera,
-devuelve cierto valor, caso contrario devuelve un valor diferente.]
+en muchos casos es más conveniente utilizar el operador ternario.
+
+Definición: El operador ternario evalúa una condición; si la condición es
+verdadera, devuelve cierto valor, caso contrario devuelve un valor diferente.
 
 El operador ternario
 ====================
 
-#stablecer a foo igual a 1 si bar es verdadero;
-Caso contrario, establecer a foo igual a 0
+Establecer foo igual a 1 si bar es verdadero, caso contrario, establecer a
+foo igual a 0.
+
 var foo = bar ? 1 : 0;
+
+Ejemplo:
+
+<script>
+  var bar=true;
+  // var bar=null;
+  var foo = bar ? 1 : 0;
+  console.log(foo);
+</script>
 
 El operador ternario puede ser utilizado sin devolver un valor a la variable,
 sin embargo este uso generalmente es desaprobado.
@@ -7573,3 +7584,62 @@ JavaScript Window Location
 
 El objeto window.location se puede utilizar para obtener la dirección de la
 página actual (URL) y para redirigir el navegador a una nueva página.
+
+=======
+typeof
+======
+
+El operador typeof se usa en cualquiera de los siguientes modos:
+
+typeof operando
+typeof (operando)
+
+El operador typeof devuelve una cadena que indica el tipo del operando sin
+evaluarlo. operando es la cadena, variable, palabra clave u objeto para el que
+se devolverá su tipo. Los paréntesis son opcionales.
+
+Suponga que define las siguientes variables:
+
+var miFuncion = new Function("5+2")
+var forma = "redonda"
+var tamano = 1
+var hoy = new Date()
+
+El operador typeof devuelve los siguientes resultados para estas variables
+
+typeof miFuncion === 'function'
+typeof forma === 'string'
+typeof tamano === 'number'
+typeof hoy === 'object'
+typeof noExiste === 'undefined'
+
+Para las palabras clave true y null, el operador typeof devuelve los siguientes resultados:
+
+typeof true === 'boolean'
+typeof null === 'object'
+
+Para un número o una cadena, el operador typeof devuelve los siguientes resultados:
+
+typeof 62 === 'number'
+typeof 'Hola mundo' === 'string'
+
+Para valores de propiedades, el operador typeof devuelve el tipo del valor que contiene la propiedad:
+
+typeof document.lastModified === 'string'
+typeof window.length === 'number'
+typeof Math.LN2 === 'number'
+
+Para métodos y funciones, el operador typeof devuelve los resultados siguientes:
+
+typeof blur === 'function'
+typeof eval === 'function'
+typeof parseInt === 'function'
+typeof shape.split === 'function'
+
+Para objetos predefinidos, el operador typeof devuelve los siguientes resultados:
+
+typeof Date === 'function'
+typeof Function === 'function'
+typeof Math === 'object'
+typeof Object === 'function'
+typeof String === 'function'
