@@ -6411,6 +6411,32 @@ $ php artisan migrate
 
 ¡Entonces wollah! acaba de cambiar el nombre de name a complete_name.
 
+Actualizar de atributos de columna en una nueva migración
+=========================================================
+
+1) Creamos una migración que indique que vamos a modificar un campo de la tabla
+users por ejemplo.
+
+$ php artisan make:migration update_field_to_users_table
+
+2) Modificamos la migración.
+
+El método change() le permite modificar el tipo y los atributos de las columnas
+existentes. Por ejemplo, es posible que desee aumentar el tamaño de una columna.
+Para ver el método change() en acción, aumentemos el tamaño de la columna nombre
+de 25 a 50. Para lograr esto, simplemente definimos el nuevo estado de la
+columna y luego llamamos al método change():
+
+Schema::table('users', function (Blueprint $table) {
+    $table->string('name', 50)->change();
+});
+
+También podríamos modificar una columna para que sea anulable:
+
+Schema::table('users', function (Blueprint $table) {
+    $table->string('name', 50)->nullable()->change();
+});
+
 Fuente
 ======
 
