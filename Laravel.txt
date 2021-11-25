@@ -6292,3 +6292,126 @@ Además, dada la filosofía de Laravel, de ofrecer todo un stack desacoplado de
 utilidades, esta herramienta se puede usar independientemente del framework. Es
 decir, está completamente integrada con Laravel, pero también la podríamos usar
 en cualquier otro proyecto que requiera el trabajo con Javascript y CSS.
+
+=============================================================
+Modificar tablas ya existentes con las migraciones de Laravel
+=============================================================
+
+Modificar una tabla
+===================
+
+Para agregar una columna a una tabla, modificamos la migración ya existente. En
+nuestro caso añadimos un campo profession con un limite de 100 caracteres a la
+tabla users:
+
+<?php
+//...
+Schema::create('users', function (Blueprint $table) {
+    $table->increments('id');
+    $table->string('name');
+    $table->string('email')->unique();
+    $table->string('profession', 100)->nullable(); // Agregamos una nueva columna
+    $table->string('password');
+    $table->rememberToken();
+    $table->timestamps();
+});
+
+Modificar un campo ya existente
+===============================
+
+Para modificar un campo ya existente, por ejemplo el limite de caracteres del
+campo profession, agregamos el nuevo valor en la migración:
+
+<?php
+//...
+Schema::create('users', function (Blueprint $table) {
+    // ...
+    $table->string('profession', 50)->nullable(); // Cambiamos el límite de 100 a 50
+    // ...
+});
+
+Modificar migraciones
+=====================
+
+Al realizar una modificación en la migración original tenemos el problema de que
+los comandos reset y refresh eliminaran el contenido de las tablas en la base de
+datos. Para evitar esto podemos (utilizando el comando make:migration) crear una
+nueva migración y agregar desde ahí las modificaciones que necesitamos:
+
+$ php artisan make:migration add_profession_to_users
+
+Es una buena practica que el nombre de la migración sea descriptivo y haga
+referencia a lo que vamos a hacer. En este caso add_profession_to_users indica
+que queremos agregar el campo profession a la tabla users.
+
+Dentro del método up() de la migración en lugar de usar el método create del
+facade Schema utilizaremos table y pasaremos como primer argumento el nombre de
+la tabla que queremos modificar:
+
+<?php
+//...
+Schema::table('users', (Blueprint $table)) {
+    $table->string('profession', 50)->nullable();
+});
+
+Dentro de la función indicamos el campo que queremos agregar.
+
+En el método down() especificamos la acción inversa, en este caso eliminar la
+columna que agregamos en el método up():
+
+<?php
+//...
+Schema::table('users', function (Blueprint $table) {
+    $table->dropColumn('profession');
+});
+
+Con el método dropColumn eliminamos de la tabla la columna especificada como
+argumento.
+
+Modificar el nombre de una columna existente
+============================================
+
+Creamos una migración que indique que vamos a modificar un campo de la tabla
+users por ejemplo.
+
+$ php artisan make:migration update_field_to_users_table
+
+Para cambiar el nombre de una columna, puede utilizar el método renameColumn
+proporcionado por el modelo del generador de esquemas.  Antes de cambiar el
+nombre de una columna, asegúrese de haber instalado la biblioteca doctrine/dbal
+a través del administrador de paquetes Composer:
+
+$ composer require doctrine/dbal
+
+Para que funcione con SQLITE se debe instalar una versión específica:
+
+$ composer require doctrine/dbal:2.13
+
+Luego agregamos lo siguiente en el método up() de la migración creada:
+
+Schema::table('users', function (Blueprint $table) {
+    $table->renameColumn('from', 'to');
+});
+
+El ejemplo real sería:
+
+Schema::table('users', function (Blueprint $table) {
+    $table->renameColumn('name', 'complete_name');
+});
+
+y en el método down() sería:
+
+Schema::table('users', function (Blueprint $table) {
+    $table->renameColumn('complete_name', 'name');
+});
+
+Luego:
+
+$ php artisan migrate
+
+¡Entonces wollah! acaba de cambiar el nombre de name a complete_name.
+
+Fuente
+======
+
+https://styde.net/modificar-tablas-ya-existentes-con-las-migraciones-de-laravel/
