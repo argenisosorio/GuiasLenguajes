@@ -347,6 +347,19 @@ en muchos casos es más conveniente utilizar el operador ternario.
 Definición: El operador ternario evalúa una condición; si la condición es
 verdadera, devuelve cierto valor, caso contrario devuelve un valor diferente.
 
+Este operador se usa con frecuencia como atajo para la instrucción if.
+
+Sintaxis
+========
+
+condición ? expr1 : expr2
+
+Parámetros:
+
+-condición: Una expresión que se evalúa como true o false.
+
+-expr1, expr2: Expresión con valores de algún tipo.
+
 El operador ternario
 ====================
 
@@ -366,6 +379,13 @@ Ejemplo:
 
 El operador ternario puede ser utilizado sin devolver un valor a la variable,
 sin embargo este uso generalmente es desaprobado.
+
+Otro ejemplo:
+
+var age, voteable;
+age = 18;
+voteable = (age < 18) ? "Menor de edad" : "Mayor de edad";
+alert(voteable);
 
 ==================
 Declaración switch
@@ -7067,33 +7087,6 @@ Enviar formulario cuando un select form se actualiza Usando solo Javascript:
 </form>
 </body>
 </html>
-
-===============================
-Operador condicional (ternario)
-===============================
-
-El operador condicional (ternario) es el único operador en JavaScript que tiene
-tres operandos.
-
-Este operador se usa con frecuencia como atajo para la instrucción if.
-
-Sintaxis
-========
-
-condición ? expr1 : expr2
-
-Parámetros:
-
--condición: Una expresión que se evalúa como true o false.
-
--expr1, expr2: Expresión con valores de algún tipo.
-
-Ejemplo;
-
-var age, voteable;
-age = 18;
-voteable = (age < 18) ? "Menor de edad" : "Mayor de edad";
-alert(voteable);
 
 =====
 Axios

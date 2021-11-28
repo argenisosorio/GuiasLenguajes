@@ -6368,6 +6368,10 @@ Schema::table('users', function (Blueprint $table) {
 Con el método dropColumn eliminamos de la tabla la columna especificada como
 argumento.
 
+Luego:
+
+$ php artisan migrate
+
 Modificar el nombre de una columna existente
 ============================================
 
@@ -6411,8 +6415,8 @@ $ php artisan migrate
 
 ¡Entonces wollah! acaba de cambiar el nombre de name a complete_name.
 
-Actualizar  atributos de columna en una nueva migración
-=======================================================
+Actualizar atributos de columna en una nueva migración
+======================================================
 
 1) Creamos una migración que indique que vamos a modificar un campo de la tabla
 users por ejemplo.
@@ -6441,3 +6445,42 @@ Fuente
 ======
 
 https://styde.net/modificar-tablas-ya-existentes-con-las-migraciones-de-laravel/
+
+===============================================
+Definir y usar el tipo de dato JSON en Eloquent
+===============================================
+
+En el archivo de migraciones se agrega un campo como el siguiente:
+
+$table->json('field_name');
+
+Y en su modelo, agrega el campo a la propiedad $ casts para indicarle a Eloquent
+que lo deserialice de JSON en una matriz PHP:
+
+class SomeModel extends Model
+{
+  protected $casts = [
+    'field_name' => 'array'
+  ];
+}
+
+Ejemplo:
+
+class GlobalData extends Model
+{
+    use HasFactory;
+
+    protected $table = 'global_data';
+    public $timestamps = true;
+
+    protected $fillable = [
+        'prefix',
+        'name',
+        'description',
+        'document_types',
+    ];
+
+    protected $casts = [
+        'document_types' => 'array',
+    ];
+}
