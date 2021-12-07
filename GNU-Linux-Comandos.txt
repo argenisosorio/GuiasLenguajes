@@ -686,6 +686,18 @@ salida del shell en el fichero x.txt que se creará.
 
 # sudo find / -type f -name /home/user/fichero.c>>/home/user/x.txt
 
+====================================================
+Comando para el mantenimiento de los logs de Debian
+====================================================
+
+# aptitude clean && aptitude autoclean && apt-get autoremove && apt autoremove && apt purge && apt remove
+
+# rm -f /var/log/*.old /var/log/*.gz /var/log/apt/* /var/log/auth* /var/log/daemon*
+
+# rm -f /var/log/debug* /var/log/dmesg* /var/log/dpkg* /var/log/kern*
+
+# rm -f /var/log/messages* /var/log/syslog* /var/log/user* /var/log/Xorg* /var/crash/*
+
 ===========================================
 Lectores/Editores de texto desde la consola
 ===========================================
