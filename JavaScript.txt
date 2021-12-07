@@ -5783,6 +5783,76 @@ Fuente
 
 https://lenguajejs.com/javascript/asincronia/promesas/
 
+==============
+Objeto Promise
+==============
+
+El objeto Promise (Promesa) es usado para computaciones asíncronas. Una promesa
+representa un valor que puede estar disponible ahora, en el futuro, o nunca.
+
+Sintaxis
+========
+
+new Promise( /* ejecutor */ function(resolve, reject) { ... } );
+
+Parámetros
+==========
+
+Una función con los argumentos resolve y reject. La función ejecutor es
+ejecutada inmediatamente por la implementación de la Promesa, pasándole las
+funciones resolve y reject (el ejecutor es llamado incluso antes de que el
+constructor de la Promesa devuelva el objeto creado). Las funciones resolve y
+reject, al ser llamadas, resuelven o rechazan la promesa, respectivamente.
+Normalmente el ejecutor inicia un trabajo asíncrono, y luego, una vez que es
+completado, llama a la función resolve para resolver la promesa o la rechaza si
+ha ocurrido un error.
+
+Si un error es lanzado en la función ejecutor, la promesa es rechazada y el
+valor de retorno del ejecutor es rechazado.
+
+Ejemplo:
+
+let miPrimeraPromise = new Promise((resolve, reject) => {
+  // Llamamos a resolve(...) cuando lo que estabamos haciendo finaliza con éxito, y reject(...) cuando falla.
+  // En este ejemplo, usamos setTimeout(...) para simular código asíncrono.
+  // En la vida real, probablemente uses algo como XHR o una API HTML5.
+  setTimeout(function(){
+    resolve("¡Éxito!"); // ¡Todo salió bien!
+  }, 5000);
+});
+
+miPrimeraPromise.then((successMessage) => {
+  // succesMessage es lo que sea que pasamos en la función resolve(...) de arriba.
+  // No tiene por qué ser un string, pero si solo es un mensaje de éxito, probablemente lo sea.
+  console.log("¡Sí! " + successMessage);
+});
+
+Otro ejemplo:
+
+const datos = [
+  {
+    id: 1,
+    title: 'Movie 1',
+    year: '2017',
+  },
+  {
+    id: 2,
+    title: 'Movie 2',
+    year: '2020',
+  }
+]
+const getDatos = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(datos);
+    }, 5000);
+  });
+}
+// Llamamos a getDatos y cuando se resuelva, con then que es una función
+// callback, recibirá como argumento lo que devuelva ese resolve de arriba, es
+// decir datos.
+getDatos().then((datos) => console.log(datos));
+
 ===========
 Método then
 ===========
@@ -5815,9 +5885,23 @@ hasta que una Promise sea terminada o rechazada, y regresa a la ejecución de la
 función async después del término. Al regreso de la ejecución, el valor de la
 expresión await es la regresada por una promesa terminada.
 
+================
+Función sincrona
+================
+
+Una función sincrona es una función que realiza una operación y devuelve un
+resultado o lo que tenga que realizar al instante, sin llamadas externas ni
+esperas ni nada.
+
 =================
 Función asíncrona
 =================
+
+Una función asíncrona es aquella que recibe información o datos desde otros
+procesos o servicios, como un API por ejemplo, entonces, cualquier petición o
+llamda que se haga a través de la red, tiene un tiempo de espera, un delay,
+que tarda en ejecutarse, puede ser milisegundos o segundos y hasta más, entonces
+eso produce la asincronía, que no es un proceso directo.
 
 async function los objetos creados con el constructor AsyncFunction son
 analizados gramaticalmente en el momento que la función es creada. Esto es menos
@@ -5855,6 +5939,49 @@ function mostrarNombre(n) {
 traerPais().then(mostrarNombre);
 </script>
 <p id="mensaje"></p>
+</body>
+</html>
+
+Otro ejémplo:
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+  </head>
+<body>
+<script type="text/javascript">
+const datos = [
+  {
+    id: 1,
+    title: 'Movie 1',
+    year: '2017',
+  },
+  {
+    id: 2,
+    title: 'Movie 2',
+    year: '2020',
+  }
+]
+
+const getDatos = () => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(datos);
+    }, 3000);
+  });
+}
+
+// await solo puede estar dentro de una función asíncrona.
+async function fetchingData () {
+  // datosFetched son los datos, entonces espera a tener esos datos y luego los
+  // mostramos con console.log.
+  const datosFetched = await getDatos();
+  console.log(datosFetched);
+}
+fetchingData();
+</script>
 </body>
 </html>
 
@@ -6318,6 +6445,34 @@ function bob (a){
 // Función flecha
 let bob = a => a + 100;
 
+Otro ejemplo:
+
+/* Array que contiene 2 objetos */
+const datos = [
+  {
+    id: 1,
+    title: 'Movie 1',
+    year: '2017',
+  },
+  {
+    id: 2,
+    title: 'Movie 2',
+    year: '2020',
+  }
+]
+
+/* Función corriente */
+var getDatos = function() {
+  console.log(datos);
+};
+getDatos();
+
+/* Función flecha */
+const getDatosA = () => {
+  return datos;
+}
+console.log(getDatosA());
+
 ===
 let
 ===
@@ -6707,6 +6862,11 @@ llama addTo() para cada número en el array.
 ====================
 Función setTimeout()
 ====================
+
+El método setTimeout() llama a una función o evalúa una expresión después de un
+número específico de milisegundos.
+
+Tip: 1000 ms = 1 second.
 
 <!DOCTYPE html>
 <html>
