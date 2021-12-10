@@ -4376,3 +4376,63 @@ Fuente
 ======
 
 -https://gradientbuttons.colorion.co/
+
+============================================
+¿Qué diferencia async y defer en JavaScript?
+============================================
+
+Los elementos <script> son unos de los recursos más comunes que bloquean el
+análisis y renderizado de un documento HTML. Cuando el navegador se encuentra
+con este tipo de recursos, detiene el análisis del documento, descarga el
+recurso, lo ejecuta y luego continua con el análisis del documento.
+
+Una de las primeras recomendaciones para evitar este bloqueo era colocar los
+elementos <script> al final del HTML, por ejemplo antes del </body> o de
+</html>. De esta forma, cuando el analizador se encontraba con los scripts, casi
+todo el documento ya se había analizado y renderizado. Pero era una solución
+lejos de ser ideal.
+
+Los atributos async y defer, introducidos en HTML5, ofrecen la flexibilidad
+necesaria para solucionar este problema sin forzarnos a colocar los scripts en
+un sitio concreto del documento, con ligeras pero importantes diferencias:
+
+1. <script> (normal): el análisis HTML se detiene, se descarga el archivo
+(si es un script externo), se ejecuta el script y después se reanuda el
+análisis HTML.
+
+2. <script async>: el script se descarga de forma asíncrona, es decir, sin
+detener el análisis HTML, pero una vez descargado, si se detiene para ejecutar
+el script. Tras la ejecución se reanuda el análisis HTML. Sigue existiendo un
+bloqueo en el renderizado pero menor que con el comportamiento normal. No se
+garantiza la ejecución de los scripts asíncronos en el mismo orden en el
+aparecen en el documento.
+
+3. <script defer>: el script se descarga de forma asíncrona, en paralelo con el
+análisis HTML, y además su ejecución es diferida hasta que termine el análisis
+HTML. No hay bloqueo en el renderizado HTML. La ejecución de todos los scripts
+diferidos se realiza en el mismo orden en el que aparecen en el documento.
+
+Nota: async y defer son atributos válidos solo para elementos <script> con un
+src establecido, es decir, para scripts externos o con data URIs. En el caso de
+scripts inline no tienen efecto y son analizados y ejecutados al llegar a ellos.
+
+¿Cuándo utilizar cada uno?
+==========================
+
+defer parece la mejor opción de forma general. Salvo que el script manipule o
+interaccione con el DOM antes de DOMContentLoaded ($( document ).ready en
+jQuery). También sería la mejor opción si el script tiene dependencias con otros
+scripts y es importante el orden en el que se ejecuta cada uno.
+
+async sería ideal para scripts que manipulan o interaccionan con el DOM antes de
+DOMContentLoaded y/o que no tienen dependencias con otros scripts.
+
+Seguir utilizando JS en su forma predeterminada sería la última opción. Si el
+script es pequeño, preferible inline, ya que el análisis HTML se detendría pero
+sería una interferencia muy pequeña en comparación con la solicitud y descarga
+del archivo.
+
+Fuente
+======
+
+https://cybmeta.com/diferencia-async-y-defer
