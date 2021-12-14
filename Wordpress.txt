@@ -143,7 +143,15 @@ Extraemos el contenido del fichero, nos debe quedar una carpeta llamada wordpres
 
 Acceder a la consola de mysql, nos pedirá la contraseña solamente.
 
-# mysql -p
+$ mysql -p
+
+ó
+
+$ mysql -u root -p
+
+ó
+
+$ sudo mysql -u root
 
 Dentro de la consola de MySQL creamos el usuario y la contraseña del sistema de
 wordpress:
@@ -165,16 +173,16 @@ Refrescamos el esquema de las tablas de MySQL.
 Renombramos el archivo de configuración por defecto de wp-config-sample.php a
 wp-config.php
 
-# mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+$ mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
 
 Editamos el fichero y agregamos la db_name, user y password que creamos en el
 paso anterior y guardamos.
 
-# vim /var/www/html/wordpress/wp-config.php
+$ vim /var/www/html/wordpress/wp-config.php
 
 Reiniciamos el servicio de apache para que todo ande calidad.
 
-# service apache2 restart
+$ sudo service apache2 restart
 
 Visitamos la url http://127.0.0.1/wordpress/
 

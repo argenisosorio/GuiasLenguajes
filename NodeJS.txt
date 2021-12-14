@@ -209,9 +209,41 @@ Es una herramienta de administración de paquetes para Node llamada. Su
 funcionamiento, al menos en cuanto al uso del package.json, es prácticamente
 igual.
 
+=============================
+Actualizar la versión de node
+=============================
+
+Nota: es posible que los comandos requieran sudo, depende de la distribución.
+
+1) Actualiza npp
+
+$ npm install -g npm
+
+2)  Limpiar cache
+
+En la mayoría de los casos, realizar esta acción no es necesaria, pero en muchos
+tutoriales lo recomiendan al hacer un actualización de este tipo.
+
+$ npm cache clean -f
+
+3) Actualizando Node
+
+Ya está todo preparado para actualizar node a su última versión estable. Una
+herramienta muy útil es n, este gestor de paquetes para node nos ofrece muchas
+opciones, no solo la actualización, por lo que es muy recomendable tenerlo a
+mano.
+
+$ npm install -g n
+
+4) Ahora procedemos a instalar la última versión estable de Node.Js.
+
+$ n stable
+
 ============================
 Actualizar la versión de npm
 ============================
+
+Nota: es posible que el comando requiera sudo, depende de la distribución.
 
 $ npm install -g npm
 
