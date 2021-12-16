@@ -6528,3 +6528,31 @@ $user = User::updateOrCreate(
     ['email' =>  request('email')],
     ['name' => request('name')]
 );
+
+Otro ejemplo:
+
+Se usa el mismo formulario de store para guardar un nuevo registro o actualizar
+uno guardado.
+
+/*
+|--------------------------------------------------------------------------
+| STORE
+|--------------------------------------------------------------------------
+*/
+public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required',
+        'introduction' => 'required',
+    ]);
+
+    $project = Project::updateOrCreate(
+    [
+        'name' =>  request('name')
+    ],
+    [
+        'introduction' => request('introduction')
+    ]
+    );
+    return redirect()->route('projects.index')->with('success', 'Project created successfully.');
+}
