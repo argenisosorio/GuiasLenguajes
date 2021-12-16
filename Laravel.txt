@@ -6484,3 +6484,47 @@ class GlobalData extends Model
         'document_types' => 'array',
     ];
 }
+
+===============================================================
+El error These credentials do not match our records en el login
+===============================================================
+
+Cuando se hace el nuevo registro, se debe encriptar la contraseña con el helper
+bcrypt o Hask, recuerdemos que el Auth de laravel para Autenticar usa Hash, y el
+requisito es que la contraseña este encriptada.
+
+Ejemplo:
+
+use Illuminate\Support\Facades\Hash;
+
+Hash::make($password)
+
+==============
+updateOrCreate
+==============
+
+El método updateOrCreate intenta encontrar un modelo que coincida con las
+restricciones pasadas como primer parámetro. Si se encuentra un modelo
+coincidente, actualizará la coincidencia con los atributos pasados ​​como segundo
+parámetro. Si no se encuentra ningún modelo coincidente, se creará un nuevo
+modelo con las restricciones pasadas como primer parámetro y los atributos
+pasados ​​como segundo parámetro.
+
+Puede refactorizar este fragmento de código:
+
+$user = User::where('email', request('email'))->first();
+if ($user !== null) {
+    $user->update(['name' => request('name')]);
+} else {
+    $user = User::create([
+      'email' => request('email'),
+      'name' => request('name'),
+    ]);
+}
+
+Para esto usando el updateOrCreatemétodo:
+
+$user = User::updateOrCreate(
+    ['email' =>  request('email')],
+    ['name' => request('name')]
+);
