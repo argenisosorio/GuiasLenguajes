@@ -84,7 +84,7 @@ Eliminar NodeJS del sistema
 
 # apt-get --purge remove node
 
-# apt-get --purge remove nodejs
+# apt-get purge --auto-remove nodejs
 
 =======================
 El archivo package.json
@@ -238,6 +238,10 @@ $ npm install -g n
 4) Ahora procedemos a instalar la última versión estable de Node.Js.
 
 $ n stable
+
+O una versión específica
+
+$ n 14.18.2
 
 ============================
 Actualizar la versión de npm

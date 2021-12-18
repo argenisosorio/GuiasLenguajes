@@ -6522,7 +6522,7 @@ if ($user !== null) {
     ]);
 }
 
-Para esto usando el updateOrCreatemétodo:
+Para esto usamos el método updateOrCreate:
 
 $user = User::updateOrCreate(
     ['email' =>  request('email')],
@@ -6556,3 +6556,293 @@ public function store(Request $request)
     );
     return redirect()->route('projects.index')->with('success', 'Project created successfully.');
 }
+
+========================================
+Guardar y actualizar campos de tipo json
+========================================
+
+Models
+======
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Project extends Model
+{
+    use HasFactory;
+
+    protected $table = 'projects';
+    public $timestamps = true;
+
+    protected $fillable = [
+        'name',
+        'introduction',
+        'meta'
+    ];
+
+    protected $casts = [
+        'meta' => 'array'
+    ];
+}
+
+Controller
+==========
+
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Project;
+use Illuminate\Http\Request;
+
+class ProjectController extends Controller
+{
+    /*
+    |--------------------------------------------------------------------------
+    | LIST
+    |--------------------------------------------------------------------------
+    */
+    public function index()
+    {
+        $projects = Project::get();
+        return view('projects.index', compact('projects'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE
+    |--------------------------------------------------------------------------
+    */
+    public function create()
+    {
+        return view('projects.create');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | STORE
+    |--------------------------------------------------------------------------
+    */
+    public function store(Request $request)
+    {
+        $data_meta = $request->only('member_name','member_dni');
+        $meta = json_encode($data_meta);
+        Project::create(
+            [
+                'name' => $request->name,
+                'introduction' => $request->introduction,
+                'meta' => $meta,
+            ]
+        );
+        return redirect()->route('projects.index')->with('success', 'Project created successfully.');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | EDIT
+    |--------------------------------------------------------------------------
+    */
+    public function edit(Project $project)
+    {
+        $meta = json_decode($project->meta);
+        return view('projects.edit', compact('project', 'meta'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE
+    |--------------------------------------------------------------------------
+    */
+    public function update(Request $request, Project $project)
+    {
+        $request->validate([
+            'name' => 'required',
+            'introduction' => 'required',
+            'member_name' => 'required',
+            'member_dni' => 'required',
+        ]);
+        $data_meta = $request->only('member_name','member_dni');
+        $meta = json_encode($data_meta);
+        $data = Project::find($project);
+        foreach ($data as $data_request) {
+            $data_request->name = $request->name;
+            $data_request->introduction = $request->introduction;
+            $data_request->meta = $meta;
+            $data_request->save();
+        }
+        return redirect()->route('projects.index')->with('success', 'Project updated successfully');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | SHOW
+    |--------------------------------------------------------------------------
+    */
+    public function show(Project $project)
+    {
+        return view('projects.show', compact('project'));
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | DELETE
+    |--------------------------------------------------------------------------
+    */
+    public function destroy(Project $project)
+    {
+        $project->delete();
+        return redirect()->route('projects.index')->with('success', 'Project deleted successfully');
+    }
+}
+
+Create
+======
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Create project</title>
+  </head>
+  <body>
+    <h1>Create project</h1>
+    @if(count($errors))
+      <ul>
+        @foreach($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    @endif
+    <form action="{{ route('projects.store') }}" method="POST">@csrf
+      <div>
+        <label>Name:</label>
+        <input type="text" name="name">
+      </div>
+      <br>
+      <div>
+        <label>Introduction:</label>
+        <input type="text" name="introduction">
+      </div>
+      <br>
+      <div>
+        <label>Members:</label>
+        <br>
+        Name
+        <input type="text" name="member_name">
+        <br>
+        DNI
+        <input type="text" name="member_dni">
+      </div>
+      <br>
+      <button type="submit" >SAVE</button>
+    </form>
+  </body>
+</html>
+
+edit
+====
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Update project</title>
+  </head>
+  <body>
+    <h1>Update project</h1>
+    @if(count($errors))
+      <ul>
+        @foreach($errors->all() as $error)
+          <li>{{ $error }}</li>
+        @endforeach
+      </ul>
+    @endif
+    <form action="{{ route('projects.update', $project->id) }}" method="POST"> @csrf @method('PUT')
+      <div>
+        <label>Name:</label>
+        <input type="text" name="name" value="{{ $project->name }}">
+      </div>
+      <br>
+      <div>
+        <label>Introduction:</label>
+        <input type="text" name="introduction" value="{{ $project->introduction }}">
+      </div>
+      <br>
+      <div>
+        <label>Members:</label>
+        <br>
+        Name
+        <input type="text" name="member_name" value="{{ $meta->member_name }}">
+        <br>
+        DNI
+        <input type="text" name="member_dni" value="{{ $meta->member_dni }}">
+      </div>
+      <br>
+      <button type="submit" >SAVE</button>
+      <br>
+    </form>
+  </body>
+</html>
+
+index
+=====
+
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>List of projects</title>
+  </head>
+  <body>
+    @if(Session::has('success'))
+      Message: {{ Session::get('success') }}
+    @endif
+    <h1>List of projects</h1>
+    <a href="{{ route('projects.create') }}">
+      <button>NEW</button>
+    </a>
+    <br />
+    <br />
+    <table border="1px" cellspacing="0px" style="width:100%;">
+      <thead>
+        <tr>
+          <th class="text-center">ID</th>
+          <th class="text-center">Name</th>
+          <th class="text-center">Introduction</th>
+          <th class="text-center">Members</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+      @foreach ($projects as $project)
+      <tr>
+        <td class="text-center">{{ $project->id }}</td>
+        <td class="text-center">{{ $project->name }}</td>
+        <td class="text-center">{{ $project->introduction }}</td>
+        <td class="text-center">{{ $project->meta }}</td>
+        <td>
+          <a href="{{ route('projects.edit', $project->id) }}">
+            <button>UPDATE</button>
+          </a>
+          <a href="{{ route('projects.show', $project->id) }}">
+            <button>SHOW</button>
+          </a>
+          <form action="{{ route('projects.destroy', $project->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" onclick="return confirm('Are you sure you want to delete the record? ');">DELETE</button>
+          </form>
+        </td>
+      </tr>
+      @endforeach
+      </tbody>
+    </table>
+  </body>
+</html>
