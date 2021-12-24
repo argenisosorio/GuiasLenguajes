@@ -5364,6 +5364,18 @@ The first name must be at least 3 characters.
 
 -----
 
+Validar que un número o la edad sea mayor que 18 años.
+
+$this->validate($request, [
+    'age' => ['required','gt:18'],
+],
+[
+    'age.required' => 'La edad es obligatoria',
+    'age.gt' => 'La edad debe ser mayor de 18 años',
+]);
+
+-----
+
 Nota cómo separamos cada regla de validación con una barra horizontal |.
 
 Además si la regla requiere un argumento lo especificamos con :. Múltiples
@@ -6846,3 +6858,17 @@ index
     </table>
   </body>
 </html>
+
+=====================================
+Guardar la fecha actual como datetime
+=====================================
+
+Use Carbon\Carbon;
+
+$student = Student::create([
+    'registered_at' => Carbon::now(),
+]);
+
+Esto guarda este formato:
+
+2021-12-24
