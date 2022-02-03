@@ -6872,3 +6872,32 @@ $student = Student::create([
 Esto guarda este formato:
 
 2021-12-24
+
+==================================================================
+Editar la plantilla que contiene el texto del email password reset
+==================================================================
+
+$ php artisan vendor:publish --tag=laravel-notifications
+
+Ese comando genero esto:
+
+Copied Directory
+[/vendor/laravel/framework/src/Illuminate/Notifications/resources/views] To
+[/resources/views/vendor/notifications]
+
+Publishing complete.
+
+Dentro está email.blade.php que es donde está el texto.
+
+Luego:
+
+$ php artisan vendor:publish --tag=laravel-mail
+
+Ese comando genero esto:
+
+Copied Directory [/vendor/laravel/framework/src/Illuminate/Mail/resources/views] To [/resources/views/vendor/mail]
+Publishing complete.
+
+Publishing complete.
+
+En los directorios generados están los templates que se deben modificar.
