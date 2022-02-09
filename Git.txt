@@ -1058,3 +1058,18 @@ Ejemplo de archivo config de git
 [branch "master"]
         remote = origin
         merge = refs/heads/master
+
+=========
+git blame
+=========
+
+El comando git blame es una utilidad de resolución de problemas versátil que
+cuenta con numerosas opciones de uso. A grandes rasgos, la función de git blame
+es visualizar los metadatos de autor adjuntos a líneas específicas confirmadas
+en un archivo. Esto sirve para examinar puntos específicos del historial de un
+archivo y poner en contexto quién fue el último autor que modificó la línea.
+Esto sirve para explorar el historial del código específico y responder
+preguntas sobre qué código se ha añadido a un repositorio, cómo se ha añadido y
+por qué.
+
+$ git blame ruta/al/archivo.xxx
