@@ -5020,6 +5020,19 @@ ubicaciones disponibles de esta vpn, haces clic en donde dice “best choice” 
 puedes escoger entre: Alemania, Canadá, Rusia, Países Bajos, Estados Unidos,
 Francia y Reino Unido para cambiar tu IP.
 
+=====================================
+Complemento web developer form filler
+=====================================
+
+Complete formularios en sitios web, guarde los datos del formulario con un click
+y rellene fácilmente los formularios con los datos guardados de nuevo con un
+click.
+
+Fuente
+======
+
+https://addons.mozilla.org/es/firefox/addon/web-dev-form-filler/
+
 ====================================================
 Instalación de Virtualbox 6 con el .run de la página
 ====================================================
@@ -7604,7 +7617,7 @@ $ wine /home/user/.wine/dosdevices/c:/Program Files (x86)/Counter-Strike 1.6
 
 Todo depende de donde se haya instalado el juego.
 
-Instalar Zoom en debian 10/11
+Instalar Zoom en Debian 10/11
 =============================
 
 1) Descargue el archivo instalador DEB desde el Centro de descargas.
@@ -7620,3 +7633,50 @@ $ sudo apt install gdebi libxcb-xtest0
 # dpkg -i zoom_amd64.deb
 
 Listo!
+
+===========================================
+Ejecutar comandos en segundo plano en Linux
+===========================================
+
+En algunas ocasiones puede ser necesario ejecutar un script en segundo plano; ya
+sea porque tarde mucho en finalizar o porque el programa tiene que ejecutarse de
+forma indefinida y al mismo tiempo se quieren analizar sus salidas/salidas en
+tiempo real, o cuando, en el caso de conexiones remotas, por el motivo que sea,
+se pueda producir una desconexión.
+
+1 posibilidad es usar &
+
+===========
+& + bg + fg
+===========
+
+Si añadimos un ampersand (&) al final de un comando o de un script que queramos
+ejecutar, este se ejecutará en segundo plano.
+
+$ ./my-shell-script.sh &
+[1] 10233
+
+Si ejecutamos un comando de la forma habitual (en primer plano o foreground) y,
+después de pasado un cierto tiempo, nos damos cuenta que hubiera sido mejor
+ejecutarlo en segundo plano o background, lo podemos hacer sin necesidad de
+tener que matar el proceso y volver a ejecutarlo de nuevo con el ampersand.
+Esto se hace presionando “CTRL+Z” para suspender la ejecución del comando
+actual, y después invocando el comando bg.
+
+$ ./my-shell-script.sh
+^Z
+[2]+  Detenido                my-shell-script.sh
+
+$ bg
+[2]+ my-shell-script.sh &
+
+Este proceso que acaba de pasar al segundo plano, también se puede volver al
+primer plano con el comando fg.
+
+$ fg 2
+my-shell-script.sh
+
+Fuente
+======
+
+https://medium.com/@calmarianet/3-formas-de-ejecutar-comandos-en-segundo-plano-en-linux-9dedb779ca7d
