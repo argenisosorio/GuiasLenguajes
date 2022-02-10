@@ -6393,7 +6393,7 @@ users por ejemplo.
 $ php artisan make:migration update_field_to_users_table
 
 Para cambiar el nombre de una columna, puede utilizar el método renameColumn
-proporcionado por el modelo del generador de esquemas.  Antes de cambiar el
+proporcionado por el modelo del generador de esquemas. Antes de cambiar el
 nombre de una columna, asegúrese de haber instalado la biblioteca doctrine/dbal
 a través del administrador de paquetes Composer:
 
@@ -6452,6 +6452,24 @@ También podríamos modificar una columna para que sea anulable:
 Schema::table('users', function (Blueprint $table) {
     $table->string('name', 50)->nullable()->change();
 });
+
+====================================
+Modificar una migración directamente
+====================================
+
+Si realizamos una modificación directamente en una migración, y ejecutamos
+php artisan migrate, debería detectar el cambio, pero a veces no lo toma, para
+resolver esto debemos borrar un registro de la tabla migrations, el registro
+tendra como texto el nombre de la migración creada, por lo cual, un ejemplo
+sería:
+
+my_db=# DELETE FROM migrations WHERE migration='2022_02_07_153244_add_new_fields_to_articles';
+
+Luego de esto ejecutamos:
+
+$ php artisan migrate
+
+Y se debería ejecutar de nuevo eso migración y ahí si aplicar los cambios.
 
 Fuente
 ======
@@ -6925,3 +6943,9 @@ en config/app.php 'locale' => 'es',
 Ejemplo de un es.json muy completo:
 
 https://github.com/Laravel-Lang/lang/blob/master/locales/es/es.json
+
+=================================
+Ejecutar una migración específica
+=================================
+
+$ php artisan migrate --path=/database/migrations/full_migration_file_name_migration.php
