@@ -1,0 +1,76 @@
+=====================
+Guía de Vuetify by dM
+=====================
+
+Vuetify es una biblioteca de interfaz de usuario de Vue con componentes de
+materiales bellamente hechos a mano. No se requieren habilidades de diseño: todo
+lo que necesita para crear aplicaciones increíbles está al alcance de su mano.
+
+===========
+Instalación
+===========
+
+Comience con Vuetify, se requeire de el framework Vue.js, el más popular del
+mundo para crear aplicaciones ricas en funciones y ultrarrápidas.
+
+Si aún no ha creado un nuevo proyecto Vue.js usando Vue CLI, puede hacerlo
+escribiendo:
+
+Chequear la versión de Vue CLI instalada:
+
+$ vue --version
+
+Si no está instalada, chequear la guía de Vuejs, si está instalada, prosiga.
+
+$ vue create my-app
+
+Navegue hasta el directorio creado
+
+$ cd my-app
+
+Ahora que tiene un proyecto instanciado, puede agregar el paquete Vuetify:
+
+$ vue add vuetify
+
+Correr la aplicación desde un servidor de desarrollo de node
+
+$ npm run serve
+
+La app correra desde http://localhost:8080/
+
+===========
+Uso con CDN
+===========
+
+Para probar el uso de Vuetify sin instalar una plantilla de Vue CLI, copie el
+código a continuación en su archivo index.html. Esto extraerá la última versión
+de Vue y Vuetify, lo que le permitirá comenzar a jugar con los componentes.
+También puedes usar el iniciador de Vuetify.
+
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div id="app">
+    <v-app>
+      <v-main>
+        <v-container>Hello world</v-container>
+      </v-main>
+    </v-app>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      vuetify: new Vuetify(),
+    })
+  </script>
+</body>
+</html>
