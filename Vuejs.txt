@@ -3896,6 +3896,42 @@ function getData() {
 </body>
 </html>
 
+=====
+Axios
+=====
+
+Axios es un cliente HTTP basado en promesas para node.js y el navegador. Puede
+ejecutarse en el navegador y en nodejs con la misma base de código.  En el lado
+del servidor, utiliza el módulo http nativo node.js, mientras que en el cliente
+(navegador) utiliza XMLHttpRequests.
+
+Instalación
+===========
+
+Para incluír e instalar Axios en nuestro proyecto ejecutamos:
+
+$ npm install axios
+
+Si no se está usando npm puedes incluirlo directamente desde el CDN agregando la
+siguiente etiqueta a tu HTML:
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+Importar Axios en un proyecto
+=============================
+
+Luego de instalar Axios con npm en nuestro proyecto debemos importarlo de la
+siquiente manera, probado en componente de Vue.js:
+
+import axios from 'axios';
+
+export default {
+    // ...
+}
+
+Si estás incluyendo Axios desde el CDN, ya sea que estés utilizando Vue.js o no,
+no necesitas utilizar el import.
+
 ==========
 Vue router
 ==========
@@ -3987,7 +4023,10 @@ const router = new VueRouter({
 
 export default router
 
------
+Fuente
+======
+
+https://codingpotions.com/vue-router
 
 Crear proyecto con Vue CLI + vue-router + Vuetify
 =================================================
