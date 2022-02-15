@@ -3895,3 +3895,139 @@ function getData() {
 </script>
 </body>
 </html>
+
+==========
+Vue router
+==========
+
+Vue, como muchos otros frameworks para el desarrollo web (Angular, React)
+también tiene un sistema para crear rutas.
+
+Vue permite crear páginas web SPA, es decir, el usuario tiene la sensación de
+que está navegando entre las páginas pero lo que de verdad ocurre es que Vue por
+debajo está cambiando el HTML al vuelo sin tener que recargar la página.
+
+Por ejemplo, si estás en la página principal de una aplicación SPA y navegas a
+la URL /users, Vue lo que hace es renderizar el componente asociado a esa ruta
+en la página web. Como ese componente ya lo tiene cargado el cambio entre
+páginas es inmediato.
+
+Para conseguir esto, el creador del Vue router ha desarrollado un conjunto de
+utilidades para crear rutas en Vue. En un fichero configuras las rutas que
+quieres crear y las asocias a componentes que se cargarán cuando el usuario
+navegue a la ruta.
+
+Crear proyecto con Vue CLI + vue-router
+=======================================
+
+Chequear la versión de Vue CLI instalada:
+
+$ vue --version
+
+Si no está instalada, chequear la guía de Vuejs, si está instalada, prosiga.
+
+$ vue create my-app
+
+Le pedirá que seleccione un entorno preestablecido, seleccionar el manual, luego
+le pedirá que seleccione las características necesarias para su proyecto, debe
+escoger las siguientes con espacio y luego enter en la primera:
+
+* Choose Vue version
+* Babel
+TypeScript
+Progressive Web App (PWA) Support
+* Router
+Vuex
+* CSS Pre-processors
+* Linter / Formatter
+Unit Testing
+E2E Testing
+
+Le seguirá pidiendo otras características pero ya ligadas a las selecciones
+principales.
+
+Una vez finalizado el proceso, navegue hasta el directorio creado
+
+$ cd my-app
+
+Correr la aplicación desde un servidor de desarrollo de node
+
+$ npm run serve
+
+La app correra desde http://localhost:8080/
+
+Si quieres añadir más rutas lo que tienes que hacer simplemente es añadir más
+objetos al array de rutas del archivo src/router/index.js que se acaba de crear:
+
+-----
+
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import Home from '../views/Home.vue'
+import Home from '../views/Login.vue'
+
+Vue.use(VueRouter)
+
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  }
+]
+
+const router = new VueRouter({
+  routes
+})
+
+export default router
+
+-----
+
+Crear proyecto con Vue CLI + vue-router + Vuetify
+=================================================
+
+Chequear la versión de Vue CLI instalada:
+
+$ vue --version
+
+Si no está instalada, chequear la guía de Vuejs, si está instalada, prosiga.
+
+$ vue create my-app
+
+Le pedirá que seleccione un entorno preestablecido, seleccionar el manual, luego
+le pedirá que seleccione las características necesarias para su proyecto, debe
+escoger las siguientes con espacio y luego enter en la primera:
+
+* Choose Vue version
+* Babel
+TypeScript
+Progressive Web App (PWA) Support
+* Router
+Vuex
+* CSS Pre-processors
+* Linter / Formatter
+Unit Testing
+E2E Testing
+
+Le seguirá pidiendo otras características pero ya ligadas a las selecciones
+principales.
+
+Una vez finalizado el proceso, navegue hasta el directorio creado
+
+$ cd my-app
+
+Ahora que tiene un proyecto instanciado, puede agregar el paquete Vuetify:
+
+$ vue add vuetify
+
+Correr la aplicación desde un servidor de desarrollo de node
+
+$ npm run serve
+
+La app correra desde http://localhost:8080/

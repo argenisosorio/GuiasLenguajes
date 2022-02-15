@@ -74,3 +74,47 @@ También puedes usar el iniciador de Vuetify.
   </script>
 </body>
 </html>
+
+=================================================
+Crear proyecto con Vue CLI + vue-router + Vuetify
+=================================================
+
+Chequear la versión de Vue CLI instalada:
+
+$ vue --version
+
+Si no está instalada, chequear la guía de Vuejs, si está instalada, prosiga.
+
+$ vue create my-app
+
+Le pedirá que seleccione un entorno preestablecido, seleccionar el manual, luego
+le pedirá que seleccione las características necesarias para su proyecto, debe
+escoger las siguientes con espacio y luego enter en la primera:
+
+* Choose Vue version
+* Babel
+TypeScript
+Progressive Web App (PWA) Support
+* Router
+Vuex
+* CSS Pre-processors
+* Linter / Formatter
+Unit Testing
+E2E Testing
+
+Le seguirá pidiendo otras características pero ya ligadas a las selecciones
+principales.
+
+Una vez finalizado el proceso, navegue hasta el directorio creado
+
+$ cd my-app
+
+Ahora que tiene un proyecto instanciado, puede agregar el paquete Vuetify:
+
+$ vue add vuetify
+
+Correr la aplicación desde un servidor de desarrollo de node
+
+$ npm run serve
+
+La app correra desde http://localhost:8080/
