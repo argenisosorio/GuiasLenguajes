@@ -2608,6 +2608,12 @@ a los elementos del componente actual. Esto es similar a la encapsulación de
 estilo que se encuentra en Shadow DOM. Viene con algunas advertencias, pero no
 requiere ningún polyfills.
 
+<style scoped>
+  h2 {
+    font-size: 18pt;
+  }
+</style>
+
 ===========================
 Vue: Single File Components
 ===========================
@@ -3932,6 +3938,55 @@ export default {
 Si estás incluyendo Axios desde el CDN, ya sea que estés utilizando Vue.js o no,
 no necesitas utilizar el import.
 
+========================================
+Cambiar el title de un componente de Vue
+========================================
+
+1) Instalar el paquete vue-meta.
+
+$ npm install vue-meta
+
+2) importar e instanciar el paquete instalado.
+
+// main.js
+
+import Vue from "vue";
+import App from "./App.vue";
+import VueMeta from 'vue-meta';
+
+Vue.use(VueMeta);
+new Vue({
+  render: h => h(App)
+}).$mount("#app");
+
+-----
+
+3) Agregar la propiedad document.title en el método created del componente.
+
+About.vue
+
+<template>
+  <div id="app">
+    <h1>This About Us Page</h1>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'About',
+    created () {
+      document.title = "About Us"
+    }
+  }
+</script>
+
+Listo, se debería ver el nuevo title del componente en la pestañá del navegador.
+
+Fuente
+======
+
+https://reactgo.com/vue-set-title/
+
 ==========
 Vue router
 ==========
@@ -4070,3 +4125,107 @@ Correr la aplicación desde un servidor de desarrollo de node
 $ npm run serve
 
 La app correra desde http://localhost:8080/
+
+===============================
+Mostrar imagen en un componente
+===============================
+
+1) Guardamos la imagen en /src/assets, ejemplo 1.png tal que /src/assets/1.png
+
+2) En el template del componente agregamos:
+
+<v-img
+  alt="XXX"
+  class=""
+  contain
+  :src="myImage"
+  transition="scale-transition"
+  width="50"
+/>
+
+y en el script:
+
+export default {
+  data () {
+    return {
+      myImage: require('@/assets/1.png')
+    }
+  },
+  .
+  .
+  .
+
+Con esto ya se debería ver la imagen en el componente.
+
+-----
+
+Otra manera es simplemente pasando la ruta en el atributo de v-img
+
+<v-img
+  alt="XXX"
+  class=""
+  contain
+  src="@/assets/logo-inversa.png"
+  transition="scale-transition"
+  width="50"
+/>
+
+=====================================================
+Cambiar el color de fondo de un componente de Vuetify
+=====================================================
+
+<v-app style="background-color: rgb(41, 31, 102);">
+  <v-main>
+    <router-view/>
+  </v-main>
+</v-app>
+
+===============================
+Centrar elementos, como botones
+===============================
+
+<v-layout justify-center>
+  <v-card-actions>
+    <v-btn primary>
+    <span>SignUp</span>
+    </v-btn>
+  </v-card-actions>
+</v-layout>
+
+==============================
+Campo de tipo texto redondeado
+==============================
+
+<v-text-field
+  label="Correo electrónico"
+  v-model="email"
+  type="email"
+  name="email"
+  aria-label="Correo electrónico"
+  filled
+  rounded
+  dense
+  required>
+</v-text-field>
+
+==================
+Dar color a enlace
+==================
+
+<v-layout justify-center>
+  <router-link
+    to="/password-reset"
+    style="color: #FFFFFF;">
+    OLVIDÉ MI CONTRASEÑA
+  </router-link>
+</v-layout>
+
+ó, con la clase nativa white--text
+
+<v-layout justify-center>
+  <router-link
+    to="/password-reset"
+    class="white--text">
+    OLVIDÉ MI CONTRASEÑA
+  </router-link>
+</v-layout>

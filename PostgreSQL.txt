@@ -587,7 +587,13 @@ postgres=# \i /home/user/dump.sql
 Conectado a la nueva db vacía, con el usuario y contraseña correctos, es decir,
 los originales, hacemos la restauración.
 
-name_db=# \i /home/user/dump.sql 
+name_db=# \i /home/user/dump.sql
+
+===============================================
+Restaurando datos de una tabla con archivo .sql
+===============================================
+
+$ psql -h localhost -U <username> -d <dbname> -1 -f <filename>.sql
 
 ===========================================
 Copiar datos de una tabla a un fichero .csv
