@@ -128,3 +128,106 @@ Usar iconos de material desing
 </v-icon>
 
 Lista de íconos que se pueden usar: https://materialdesignicons.com/
+
+===========================================================
+Cambiar el color de fondo de todos los componente de la app
+===========================================================
+
+// App.vue
+
+<template>
+  <v-app>
+    <v-main style="background-color: rgb(41, 31, 102);">
+      <router-view/>
+    </v-main>
+  </v-app>
+</template>
+
+ó
+
+<template>
+  <v-app>
+    <v-main class="red">
+      <router-view/>
+    </v-main>
+  </v-app>
+</template>
+
+=======================================
+Agregar colores personalizados a un div
+=======================================
+
+// vuetify.js
+
+import Vue from 'vue'
+import Vuetify from 'vuetify/lib/framework'
+import colors from 'vuetify/lib/util/colors'
+// import colors from 'vuetify/es5/util/colors'
+
+Vue.use(Vuetify)
+
+export default new Vuetify({
+  theme: {
+    themes: {
+      light: {
+        primary: colors.red.darken1,
+        colorPersonalizado: '#000000'
+      }
+    }
+  }
+})
+
+// mi_componente.vue
+
+<template>
+  <v-container>
+    <div class="colorPersonalizado">
+      <v-layout>
+        <router-link
+          to="/home"
+          Inicio
+        </router-link>
+      </v-layout>
+    </div>
+  </v-container>
+</template>
+
+==================================================
+Quitar la decoración de un enlace tipo router-link
+==================================================
+
+<router-link
+  to="/"
+  class="blue--text"
+  style="text-decoration: none; color: inherit;">
+  <b>Home</b>
+</router-link>
+
+===================
+Columnas en Vuetify
+===================
+
+// 2 Columnas
+
+<v-row class="text-center">
+  <v-col cols="6">
+    xxxxxxxxxxxx
+  </v-col>
+  <v-col cols="6">
+    xxxxxxxxxxxx
+  </v-col>
+</v-row>
+
+// 3 Columnas
+
+<v-row class="text-center">
+  <v-col cols="4">
+    xxxxxxxxxxxx
+  </v-col>
+  <v-col cols="4">
+    xxxxxxxxxxxx
+  </v-col>
+  <v-col cols="4">
+    xxxxxxxxxxxx
+  </v-col>
+</v-row>
