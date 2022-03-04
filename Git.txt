@@ -1079,3 +1079,31 @@ preguntas sobre qué código se ha añadido a un repositorio, cómo se ha añadi
 por qué.
 
 $ git blame ruta/al/archivo.xxx
+
+========================================================
+Git archive, Exportación del contenido de un repositorio
+========================================================
+
+Git archive nos permite exportar el contenido de nuestro proyecto empaquetándolo
+o comprimiéndolo en un solo fichero.
+
+Git archive no sólo nos permitirá exportar una rama deseada sino que también nos
+permite seleccionar que directorios o ficheros de esta queremos exportar. Pero
+recuerda hacer commit de los cambios o estos no serán exportados.
+
+Hay que tener en cuenta que cuando realizamos una exportación el directorio
+.git/ no será incluido.
+
+Formas de uso
+=============
+
+Para exportar una rama de nuestro proyecto en formato zip tecleamos el
+siguiente comando estando dentro del directorio de del proyecto, ojo, realizar
+esta prueba .
+
+$ git archive --format=zip master > project.zip
+
+Fuente
+======
+
+https://blog.artegrafico.net/git-archive-exportacion-del-contenido-de-un-repositorio

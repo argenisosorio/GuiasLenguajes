@@ -394,3 +394,21 @@ Ventana modal o dialog
     },
   }
 </script>
+
+=============
+npm run build
+=============
+
+Chequear que en el package.json este el comando build entre los scripts, de esa
+se puede usar el siguiente comando:
+
+$ npm run build
+
+Este comando permite exportar la aplicacion para un entorno de producción,
+genera la carpeta /dist que contiene todos los archivos necesarios para el
+despliegue en el servidor. Para probar que todo esté bien, pegue el contenido
+de la carpeta /dist en la carpeta www de su servidor http local y navegue hasta
+127.0.0.1/ para probar la app.
+
+Nota: Al exportar para producción la consola alerta y suguere cambios para
+mejorar la app en producción, se debe estar atento a ellos.
