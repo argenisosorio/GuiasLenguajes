@@ -7198,3 +7198,75 @@ Fuente
 ======
 
 https://laravel.com/docs/9.x/sanctum
+
+==========
+Laravel ui
+==========
+
+El paquete laravel ui proporciona los pasos simples para el andamiaje de
+autenticación. Es simple en la interfaz de usuario, fácil de instalar.
+
+1) Instalar Laravel UI
+
+Acceda al proyecto Laravel ya creado en la terminal y escriba el comando dado.
+
+$ composer require laravel/ui
+
+Nota: esto instalará la última versión de laravel ui, la cual no es compatible
+con Laravel 8.0.0 o menores, si se requiere para esa versión o menores puede
+especificar la versión a instalar con el comando:
+
+$ composer require laravel/ui "^3.0"
+
+2) Una vez que se ha instalado el paquete laravel/ui, debe instalar el scaffolding
+frontend usando el comando ui artisan:
+
+$ php artisan ui bootstrap --auth
+
+Esto realiza lo siguiente:
+
+Modificados:
+
+package.json
+resources/js/bootstrap.js
+routes/web.php
+webpack.mix.js
+
+Nuevos:
+
+app/Http/Controllers/Auth/
+app/Http/Controllers/HomeController.php
+resources/sass/
+resources/views/auth/
+resources/views/home.blade.php
+resources/views/layouts/
+
+3) Después de este comando, debe ejecutar el comando
+
+$ npm install && npm run dev
+
+Generará archivos compilados CSS y JS para el sistema de autenticación.
+
+Si da problemas, en este ejemplo se uso Laravel 8 y "sass-loader": "^7.1.0",
+modificar en el package.json y probar de nuevo el comando.
+
+4) Ejecutar migración
+
+A continuación, debemos ejecutar el comando de migración para generar tablas en
+la base de datos. Abra la terminal y ejecute este comando artesanal.
+
+$ php artisan migrate
+
+5) Prueba de aplicación
+
+Abra el proyecto en la terminal y escriba el comando para iniciar el servidor de
+desarrollo
+
+$ php artisan serve
+
+Urls:
+
+http://127.0.0.1:8000/
+http://127.0.0.1:8000/login
+http://127.0.0.1:8000/register
+http://127.0.0.1:8000/home
