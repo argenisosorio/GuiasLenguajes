@@ -491,10 +491,10 @@ solicitudes que ingresan a la aplicación a través de estas rutas deben
 autenticarse mediante tokens y no tendrán acceso al estado de la sesión.
 
 -routes/console.php: Es donde puedes definir todos tus comandos de consola
-basados ​​en el cierre. Cada cierre está vinculado a una instancia de comando, lo
+basados en el cierre. Cada cierre está vinculado a una instancia de comando, lo
 que permite un enfoque simple para interactuar con los métodos de I/O de cada
 comando. Aunque este archivo no define rutas HTTP, define puntos de entrada
-(rutas) basados ​​en la consola en su aplicación.
+(rutas) basados en la consola en su aplicación.
 
 -routes/channels.php: Es donde puede registrar todos los canales de transmisión
 de eventos que admite su aplicación.
@@ -1076,6 +1076,47 @@ Se pueden consultar las demás opciones disponibles de Faker para generar
 diferentes tipos de datos desde:
 
 https://github.com/fzaninotto/Faker#basic-usage
+
+===============================================
+Usar un seeder para generar usuarios aleatorios
+===============================================
+
+Laravel por defecto crea la tabla users en la base de datos.
+
+Para usare el Factory de los usuarios, no debemos generar ninguna acción, ya que
+este ya está creado, si queremos revisarlo, podemos revisar
+database/factories/UserFactory.php.
+
+En cuanto al seeder, lo único que se debe hacer es ir a
+database/seeders/DatabaseSeeder.php y quitar los comentarios de la línea que
+llama al factory del usuario, quedando así
+
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\User;
+
+class DatabaseSeeder extends Seeder
+{
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        User::factory(5)->create();
+    }
+}
+
+Correr el seeder
+
+$ php artisan db:seed
+
+Esto generará 5 usuarios con datos aleatorios en la tabla users de la base de
+datos.
 
 =============================================
 Descargue y cargue bases de datos rápidamente
@@ -6535,10 +6576,10 @@ updateOrCreate
 
 El método updateOrCreate intenta encontrar un modelo que coincida con las
 restricciones pasadas como primer parámetro. Si se encuentra un modelo
-coincidente, actualizará la coincidencia con los atributos pasados ​​como segundo
+coincidente, actualizará la coincidencia con los atributos pasados como segundo
 parámetro. Si no se encuentra ningún modelo coincidente, se creará un nuevo
 modelo con las restricciones pasadas como primer parámetro y los atributos
-pasados ​​como segundo parámetro.
+pasados como segundo parámetro.
 
 Puede refactorizar este fragmento de código:
 
@@ -6957,3 +6998,203 @@ ERROR in ./node_modules/bootstrap/dist/js/bootstrap.esm.js 6:0-41
 Este error da al ejecutar npm run dev, se soluciona ejecutando lo siguiente:
 
 $ npm i @popperjs/core
+
+===============
+Laravel Sanctum
+===============
+
+Laravel Sanctum proporciona un sistema de autenticación liviano para SPA
+(aplicaciones de una sola página), aplicaciones móviles y API simples basadas en
+token. Sanctum permite que cada usuario de su aplicación genere múltiples tokens
+de API para su cuenta. A estos tokens se les pueden otorgar habilidades/ámbitos
+que especifican qué acciones pueden realizar los tokens.
+
+Cómo funciona
+=============
+
+Laravel Sanctum existe para resolver dos problemas separados. Discutamos cada
+uno antes de profundizar en la biblioteca.
+
+API tokens
+==========
+
+Primero, Sanctum es un paquete simple que puede usar para emitir tokens API a
+sus usuarios sin la complicación de OAuth. Esta función está inspirada en GitHub
+y otras aplicaciones que emiten "tokens de acceso personal". Por ejemplo,
+imagine que la "configuración de la cuenta" de su aplicación tiene una pantalla
+en la que un usuario puede generar un token API para su cuenta. Puede usar
+Sanctum para generar y administrar esos tokens. Estos tokens suelen tener un
+tiempo de caducidad muy largo (años), pero el usuario puede revocarlos
+manualmente en cualquier momento.
+
+Laravel Sanctum ofrece esta función almacenando tokens de API de usuario en una
+sola tabla de base de datos y autenticando las solicitudes HTTP entrantes a
+través del encabezado de Autorización que debe contener un token de API válido.
+
+Autenticación SPA
+=================
+
+En segundo lugar, Sanctum existe para ofrecer una forma sencilla de autenticar
+aplicaciones de una sola página (SPA) que necesitan comunicarse con una API
+potenciada por Laravel. Estos SPA pueden existir en el mismo repositorio que su
+aplicación Laravel o pueden ser un repositorio completamente separado, como un
+SPA creado con Vue CLI o una aplicación Next.js.
+
+Para esta función, Sanctum no utiliza tokens de ningún tipo. En su lugar,
+Sanctum utiliza los servicios de autenticación de sesión basados en cookies
+integrados de Laravel. Por lo general, Sanctum utiliza la protección de
+autenticación web de Laravel para lograr esto. Esto proporciona los beneficios
+de la protección CSRF, la autenticación de sesión y protege contra la fuga de
+las credenciales de autenticación a través de XSS.
+
+Sanctum solo intentará autenticarse usando cookies cuando la solicitud entrante
+se origine desde su propia interfaz de SPA. Cuando Sanctum examina una solicitud
+HTTP entrante, primero buscará una cookie de autenticación y, si no hay ninguna
+presente, Sanctum luego examinará el encabezado de Autorización en busca de un
+token de API válido.
+
+Notas
+=====
+
+Está perfectamente bien usar Sanctum solo para la autenticación de token
+API o solo para la autenticación SPA.  El hecho de que use Sanctum no significa
+que deba usar las dos funciones que ofrece.
+
+Las versiones más recientes de Laravel ya incluyen Laravel Sanctum. Sin embargo,
+si el archivo composer.json de su aplicación no incluye laravel/sanctum, puede
+seguir las instrucciones de instalación a continuación.
+
+Instalación
+===========
+
+Puede instalar Laravel Sanctum a través del administrador de paquetes Composer:
+
+$ composer require laravel/sanctum
+
+A continuación, debe publicar los archivos de configuración y migración de
+Sanctum mediante el comando vendor:publish Artisan. El archivo de configuración
+de sanctum se colocará en el directorio de configuración de su aplicación:
+
+$ php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+
+Finalmente, debe ejecutar las migraciones de su base de datos. Sanctum creará
+una tabla de base de datos en la que almacenar tokens API:
+
+$ php artisan migrate
+
+A continuación, si planea utilizar Sanctum para autenticar un SPA, debe agregar
+el middleware de Sanctum a su grupo de middleware api dentro del archivo
+app/Http/Kernel.php de su aplicación:
+
+'api' => [
+    \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+    'throttle:api',
+    \Illuminate\Routing\Middleware\SubstituteBindings::class,
+],
+
+Authenticación con API Token
+============================
+
+No debe usar tokens de API para autenticar su propio SPA.  En su lugar, utilice
+las funciones de autenticación SPA integradas de Sanctum.
+
+Emisión de tokens de API
+========================
+
+Sanctum le permite emitir tokens de API/tokens de acceso personal que pueden
+usarse para autenticar solicitudes de API en su aplicación. Al realizar
+solicitudes con tokens de API, el token debe incluirse en el encabezado de
+autorización como un token de portador.
+
+Para comenzar a emitir tokens para los usuarios, su modelo de Usuario debe usar
+el rasgo Laravel\Sanctum\HasApiTokens:
+
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable
+{
+    use HasApiTokens, HasFactory, Notifiable;
+}
+
+Para emitir un token, puede usar el método createToken. El método createToken
+devuelve una instancia de Laravel\Sanctum\NewAccessToken. Los tokens de API se
+codifican mediante hash SHA-256 antes de almacenarse en su base de datos, pero
+puede acceder al valor de texto sin formato del token mediante la propiedad
+plainTextToken de la instancia NewAccessToken. Debe mostrar este valor al
+usuario inmediatamente después de que se haya creado el token:
+
+use Illuminate\Http\Request;
+
+Route::post('/tokens/create', function (Request $request) {
+    $token = $request->user()->createToken($request->token_name);
+
+    return ['token' => $token->plainTextToken];
+});
+
+Puede acceder a todos los tokens del usuario utilizando la relación de tokens
+Eloquent proporcionada por el rasgo HasApiTokens:
+
+foreach ($user->tokens as $token) {
+    //
+}
+
+Protegiendo Rutas
+=================
+
+Para proteger las rutas de modo que todas las solicitudes entrantes deban ser
+autenticadas, debe adjuntar la protección de autenticación de sanctum a sus
+rutas protegidas dentro de sus archivos de ruta routes/web.php y routes/api.php.
+
+Esta protección garantizará que las solicitudes entrantes se autentiquen como
+solicitudes con estado autenticadas por cookies o que contengan un encabezado de
+token de API válido si la solicitud es de un tercero.
+
+Es posible que se pregunte por qué le sugerimos que autentique las rutas dentro
+del archivo routes/web.php de su aplicación mediante el uso de sanctum guard.
+
+Recuerde, Sanctum primero intentará autenticar las solicitudes entrantes
+utilizando la cookie de autenticación de sesión típica de Laravel. Si esa
+cookie no está presente, Sanctum intentará autenticar la solicitud utilizando un
+token en el encabezado de Autorización de la solicitud. Además, la autenticación
+de todas las solicitudes con Sanctum garantiza que siempre podamos llamar al
+método tokenCan en la instancia de usuario actualmente autenticada:
+
+use Illuminate\Http\Request;
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+Otra definición
+===============
+
+Para proteger las rutas de modo que todas las solicitudes entrantes deban
+autenticarse, debe adjuntar la protección de autenticación sanctum a sus rutas
+API dentro de su archivo routes/api.php. Esta protección se asegurará de que las
+solicitudes entrantes se autentiquen como solicitudes autenticadas con estado de
+su SPA o contengan un encabezado de token API válido si la solicitud es de un
+tercero:
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+Removiendo tokens
+=================
+
+Puede "revocar" tokens eliminándolos de su base de datos usando la relación de
+tokens que proporciona el rasgo Laravel\Sanctum\HasApiTokens:
+
+// Revoke all tokens...
+$user->tokens()->delete();
+
+// Revoke the token that was used to authenticate the current request...
+$request->user()->currentAccessToken()->delete();
+
+// Revoke a specific token...
+$user->tokens()->where('id', $tokenId)->delete();
+
+Fuente
+======
+
+https://laravel.com/docs/9.x/sanctum
