@@ -395,6 +395,110 @@ Ventana modal o dialog
   }
 </script>
 
+===============================
+Mostrar imagen en un componente
+===============================
+
+1) Guardamos la imagen en /src/assets, ejemplo 1.png tal que /src/assets/1.png
+
+2) En el template del componente agregamos:
+
+<v-img
+  alt="XXX"
+  class=""
+  contain
+  :src="myImage"
+  transition="scale-transition"
+  width="50"
+/>
+
+y en el script:
+
+export default {
+  data () {
+    return {
+      myImage: require('@/assets/1.png')
+    }
+  },
+  .
+  .
+  .
+
+Con esto ya se debería ver la imagen en el componente.
+
+-----
+
+Otra manera es simplemente pasando la ruta en el atributo de v-img
+
+<v-img
+  alt="XXX"
+  class=""
+  contain
+  src="@/assets/logo-inversa.png"
+  transition="scale-transition"
+  width="50"
+/>
+
+=====================================================
+Cambiar el color de fondo de un componente de Vuetify
+=====================================================
+
+<v-app style="background-color: rgb(41, 31, 102);">
+  <v-main>
+    <router-view/>
+  </v-main>
+</v-app>
+
+===============================
+Centrar elementos, como botones
+===============================
+
+<v-layout justify-center>
+  <v-card-actions>
+    <v-btn primary>
+    <span>SignUp</span>
+    </v-btn>
+  </v-card-actions>
+</v-layout>
+
+==============================
+Campo de tipo texto redondeado
+==============================
+
+<v-text-field
+  label="Correo electrónico"
+  v-model="email"
+  type="email"
+  name="email"
+  aria-label="Correo electrónico"
+  filled
+  rounded
+  dense
+  required>
+</v-text-field>
+
+==================
+Dar color a enlace
+==================
+
+<v-layout justify-center>
+  <router-link
+    to="/password-reset"
+    style="color: #FFFFFF;">
+    OLVIDÉ MI CONTRASEÑA
+  </router-link>
+</v-layout>
+
+ó, con la clase nativa white--text
+
+<v-layout justify-center>
+  <router-link
+    to="/password-reset"
+    class="white--text">
+    OLVIDÉ MI CONTRASEÑA
+  </router-link>
+</v-layout>
+
 =============
 npm run build
 =============

@@ -7064,39 +7064,32 @@ Las versiones más recientes de Laravel ya incluyen Laravel Sanctum. Sin embargo
 si el archivo composer.json de su aplicación no incluye laravel/sanctum, puede
 seguir las instrucciones de instalación a continuación.
 
-Instalación
-===========
+1) Instalación
 
 Puede instalar Laravel Sanctum a través del administrador de paquetes Composer:
 
 $ composer require laravel/sanctum
 
-A continuación, debe publicar los archivos de configuración y migración de
+2) A continuación, debe publicar los archivos de configuración y migración de
 Sanctum mediante el comando vendor:publish Artisan. El archivo de configuración
-de sanctum se colocará en el directorio de configuración de su aplicación:
+de sanctum se colocará en el directorio /config de su aplicación:
 
 $ php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
 
-Finalmente, debe ejecutar las migraciones de su base de datos. Sanctum creará
+La salida del comando debe ser algo como esto:
+
+Copied Directory [/vendor/laravel/sanctum/database/migrations] To [/database/migrations]
+Copied File [/vendor/laravel/sanctum/config/sanctum.php] To [/config/sanctum.php]
+Publishing complete.
+
+Esto quiere decir que se creó la migración el archivo de configuración de
+sanctum y también la migración donde se van a almacenar los tokens que
+proporcione a los usuarios que inicien sesión o se registren en el sistema.
+
+3) Finalmente, debe ejecutar las migraciones de su base de datos. Sanctum creará
 una tabla de base de datos en la que almacenar tokens API:
 
 $ php artisan migrate
-
-A continuación, si planea utilizar Sanctum para autenticar un SPA, debe agregar
-el middleware de Sanctum a su grupo de middleware api dentro del archivo
-app/Http/Kernel.php de su aplicación:
-
-'api' => [
-    \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-    'throttle:api',
-    \Illuminate\Routing\Middleware\SubstituteBindings::class,
-],
-
-Authenticación con API Token
-============================
-
-No debe usar tokens de API para autenticar su propio SPA.  En su lugar, utilice
-las funciones de autenticación SPA integradas de Sanctum.
 
 Emisión de tokens de API
 ========================
@@ -7106,8 +7099,8 @@ usarse para autenticar solicitudes de API en su aplicación. Al realizar
 solicitudes con tokens de API, el token debe incluirse en el encabezado de
 autorización como un token de portador.
 
-Para comenzar a emitir tokens para los usuarios, su modelo de Usuario debe usar
-el rasgo Laravel\Sanctum\HasApiTokens:
+4) Para comenzar a emitir tokens para los usuarios, su modelo de Usuario debe
+usar el rasgo Laravel\Sanctum\HasApiTokens:
 
 use Laravel\Sanctum\HasApiTokens;
 
@@ -7116,27 +7109,300 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 }
 
-Para emitir un token, puede usar el método createToken. El método createToken
-devuelve una instancia de Laravel\Sanctum\NewAccessToken. Los tokens de API se
-codifican mediante hash SHA-256 antes de almacenarse en su base de datos, pero
-puede acceder al valor de texto sin formato del token mediante la propiedad
-plainTextToken de la instancia NewAccessToken. Debe mostrar este valor al
-usuario inmediatamente después de que se haya creado el token:
+Para esta práctica se crearan solo 3 endpoints, para registrar, para autenticar
+y un tercero para ubicar al usuario autenticado actualmente.
+
+5) Ahora hay que crear un nuevo controlador desde donde se van a crear los
+métodos para este ejemplo:
+
+$ php artisan make:controller AuthController
+
+Esto nos crea /app/Http/Controllers/AuthController.php
+
+Modificamos AuthController.php, agregamos el método register que permitira
+recibir solicitudes donde se envie la data de un usuario a ser registrado de tal
+manera que:
+
+<?php
+
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
-Route::post('/tokens/create', function (Request $request) {
-    $token = $request->user()->createToken($request->token_name);
+class AuthController extends Controller
+{
+    /*
+    |--------------------------------------------------------------------------
+    | Register, method that allows receiving data from a request, validating it
+    | and storing it in the users and tokens table, it returns a json response
+    | with the assigned token.
+    |--------------------------------------------------------------------------
+    */
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
 
-    return ['token' => $token->plainTextToken];
+        $user = User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password'])
+        ]);
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'Bearer'
+        ], 200);
+    }
+}
+
+y agregamos la ruta al controlador en routes/api.php
+
+<?php
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
 });
 
-Puede acceder a todos los tokens del usuario utilizando la relación de tokens
-Eloquent proporcionada por el rasgo HasApiTokens:
+Route::post('register', [AuthController::class, 'register']);
 
-foreach ($user->tokens as $token) {
-    //
+Ahora para probarla podemos hacer una solicitud http post a
+http://127.0.0.1:8000/api/register con axios, tal que:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Register example</title>
+  <script src="https://unpkg.com/vue@2"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+  <form method="post" @submit.prevent="register">
+    <label class="label">Name</label>
+    <div>
+      <input
+        v-model="name"
+        type="text"
+        name="name"
+      />
+    </div>
+    <label class="label">Email</label>
+    <div>
+      <input
+        v-model="email"
+        type="email"
+        name="email"
+      />
+    </div>
+    <label class="label">Password</label>
+    <div>
+      <input
+        v-model="password"
+        type="password"
+        name="password"
+      />
+    </div>
+    <br>
+    <button type="submit" class="button">
+      Register
+    </button>
+  </form>
+</div>
+<script type="text/javascript">
+var app = new Vue({
+  el: "#app",
+  data: {
+    name: '',
+    email: '',
+    password: ''
+  },
+  methods: {
+    register () {
+      const userData = {
+        name: this.name,
+        email: this.email,
+        password: this.password
+      }
+      const header = {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          'Content-Language': 'en'
+        }
+      }
+      axios.post('http://127.0.0.1:8000/api/register', userData, header)
+        .then((response) => {
+          console.log(response)
+          alert('Success')
+        })
+        .catch((error) => {
+          console.log(this.name)
+          console.log(error)
+          alert('Access denied')
+        })
+    }
+  }
+});
+</script>
+</body>
+</html>
+
+Al hacer el post debería responder un alert con Success y haber creado un nuevo
+usuario en la tabla users de la base de datos así como haber almacenado un token
+en la tabla personal_access_token.
+
+y la respuesta json debe ser:
+
+{
+	"access_token": "1|xxxxxxxxxxxxxx",
+	"token_type": "Bearer"
 }
+
+6) Ahora agregamos el método login que permitira recibir solicitudes donde se
+envie la data de un usuario a ser autenticado de tal manera que:
+
+use Illuminate\Support\Facades\Auth;
+
+/*
+|--------------------------------------------------------------------------
+| Login, method that receives data from a request, compares it with the data
+| stored in the database and returns a json response.
+|--------------------------------------------------------------------------
+*/
+public function login(Request $request)
+{
+  $attr = $request->validate([
+      'email' => 'required|string|email|max:255',
+      'password' => 'required|string|min:8',
+  ]);
+
+  if (!Auth::attempt($attr)) {
+      return response()->json([
+          'message' => 'The data is invalid',
+      ], 401);
+  }
+  else {
+      $user = User::where('email', $request['email'])->firstOrFail();
+
+      $token = $user->createToken('auth_token')->plainTextToken;
+
+      return response()->json([
+          'access_token' => $token,
+          'token_type' => 'Bearer'
+      ], 200);
+  }
+}
+
+y en el archivo de rutas api.php agregamos una nueva:
+
+Route::post('login', [AuthController::class, 'login']);
+
+De esta manera, ahora podemos probar, registrando un usuario primero y luego
+haciendo una solicitud post con datos para probar la autenticación, ejemplo:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Login example</title>
+  <script src="https://unpkg.com/vue@2"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div id="app">
+  <form method="post" @submit.prevent="login">
+    <label class="label">Email</label>
+    <div class="control">
+      <input
+        v-model="email"
+        type="email"
+        name="email"
+      />
+    </div>
+    <label class="label">Password</label>
+    <div class="control">
+      <input
+        v-model="password"
+        type="password"
+        name="password"
+      />
+    </div>
+    <br>
+    <button type="submit" class="button">
+      Log In
+    </button>
+  </form>
+</div>
+<script type="text/javascript">
+var app = new Vue({
+  el: "#app",
+  data: {
+    email: '',
+    password: ''
+  },
+  methods: {
+    login () {
+      const userData = {
+        email: this.email,
+        password: this.password
+      }
+      const header = {
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8',
+          'Access-Control-Allow-Origin': '*',
+          'Content-Language': 'en'
+        }
+      }
+      axios.post('http://127.0.0.1:8000/api/login', userData, header)
+        .then((response) => {
+          console.log(response)
+          alert('Success')
+        })
+        .catch((error) => {
+          console.log(error)
+          alert('Access denied')
+        })
+    }
+  }
+});
+</script>
+</body>
+</html>
+
+Al hacer el post debería responder con Success y haber creado un nuevo token en
+la tabla personal_access_token que indica que está autenticado.
+
+y la respuesta json debe ser:
+
+{
+	"access_token": "1|xxxxxxxxxxxxxx",
+	"token_type": "Bearer"
+}
+
+Fuente
+======
+
+-https://www.youtube.com/watch?v=n-J3zw4OWmI&t=509s
+-Ejemplo completo en: https://github.com/argenisosorio/laravel-8-sanctum-example
 
 Protegiendo Rutas
 =================
@@ -7178,21 +7444,6 @@ tercero:
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Removiendo tokens
-=================
-
-Puede "revocar" tokens eliminándolos de su base de datos usando la relación de
-tokens que proporciona el rasgo Laravel\Sanctum\HasApiTokens:
-
-// Revoke all tokens...
-$user->tokens()->delete();
-
-// Revoke the token that was used to authenticate the current request...
-$request->user()->currentAccessToken()->delete();
-
-// Revoke a specific token...
-$user->tokens()->where('id', $tokenId)->delete();
 
 Fuente
 ======
@@ -7270,3 +7521,8 @@ http://127.0.0.1:8000/
 http://127.0.0.1:8000/login
 http://127.0.0.1:8000/register
 http://127.0.0.1:8000/home
+
+Fuente
+======
+
+https://diegooo.com/laravel-ui-autenticacion-de-laravel-8/
