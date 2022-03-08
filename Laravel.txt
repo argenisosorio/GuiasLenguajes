@@ -1118,6 +1118,58 @@ $ php artisan db:seed
 Esto generará 5 usuarios con datos aleatorios en la tabla users de la base de
 datos.
 
+Crear un seeder para generar un o unos usuarios específicos
+===========================================================
+
+1) Crear el seeder con el siguiente comando:
+
+$ php artisan make:seeder UsersTableSeeder
+
+2) Editar el seeder creado, el archivo es /database/seeders/UsersSeeder.php
+
+3 Agregamos lo siguiente:
+
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
+
+class UsersSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        DB::table('users')->insert([
+            'name' => 'admin',
+            'email' => 'admin@mail.com',
+            'password' => bcrypt('123456'),
+        ]);
+        // DB::table('users')->insert([
+        //     'name' => 'user2',
+        //     'email' => 'user2@email.com',
+        //    'password' => bcrypt('password'),
+        // ]);
+    }
+}
+
+Como se aprecia, se puede agregar más de 1 usuario
+
+3) Ejecutamos el seeder con el siguiente comando:
+
+$ php artisan db:seed --class UsersSeeder
+
+O podemos agregarlo a /database/seeders/DatabaseSeeder.php para que se ejecute
+con los demás seeders a través del comando:
+
+$ php artisan db:seed
+
 =============================================
 Descargue y cargue bases de datos rápidamente
 =============================================
@@ -7443,6 +7495,12 @@ tercero:
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Otra forma, más usada:
+
+Route::group(['middleware' => ['auth:sanctum']], function() {
+    Route::resource('projects', ProjectController::class);
 });
 
 Fuente
