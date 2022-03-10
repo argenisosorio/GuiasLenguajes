@@ -7634,6 +7634,25 @@ $ sudo apt install gdebi libxcb-xtest0
 
 Listo!
 
+Si da este error
+================
+
+dpkg: problemas de dependencias impiden la configuración de zoom:
+ zoom depende de libgl1-mesa-glx; sin embargo:
+  El paquete `libgl1-mesa-glx' no está instalado.
+ zoom depende de libegl1-mesa; sin embargo:
+  El paquete `libegl1-mesa' no está instalado.
+
+Instale lo siguiente:
+
+$ sudo apt-get install libxcb-xtest0
+
+Luego de nuevo:
+
+# dpkg -i zoom_amd64.deb
+
+Listo!
+
 ===========================================
 Ejecutar comandos en segundo plano en Linux
 ===========================================
