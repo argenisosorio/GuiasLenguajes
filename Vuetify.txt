@@ -516,3 +516,108 @@ de la carpeta /dist en la carpeta www de su servidor http local y navegue hasta
 
 Nota: Al exportar para producción la consola alerta y suguere cambios para
 mejorar la app en producción, se debe estar atento a ellos.
+
+======================================================
+Pasar parametros con router-link para detail component
+======================================================
+
+En index.js tenemos el siguiente componente detail, al cual le vamos a pasar el
+id de un objeto como parametro a través de un tag router-link.
+
+{
+  path: '/store-detail/:id',
+  name: 'store-detail',
+  component: StoreDetail
+},
+
+Desde otro componente donde recibo el arreglo de objetos stores, lo recorro y
+obtengo el id con store.id, se lo paso como parámetro en :to al componente
+store-detail que lo va a recibir
+
+<router-link
+  :to="{ name:'store-detail', params:{ id: store.id }}"
+  style="text-decoration: none; color: inherit;"
+>
+  <h3 class="ma-0">{{ store.name }}</h3>
+</router-link>
+
+Ya en el componente StoreDetail.vue lo recibo e imprimo el valor recibido con
+{{ store.name }} en el template
+
+<script>
+import axios from 'axios'
+export default {
+  data: () => ({
+    store: [],
+    api_url: 'http://127.0.0.1:8000/'
+  }),
+  created () {
+    document.title = 'INVERSA - Tiendas'
+    console.log('params: ', this.$route.params.id)
+  },
+  methods: {
+  },
+  mounted () {
+    /*
+    * Establece los datos que van en la cabecera de la solicitud.
+    */
+    const header = {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        'Content-Language': 'en'
+      }
+    }
+    /*
+    * Obtiene los datos de las tiendas.
+    */
+    axios.get(this.api_url + 'api/stores/' + this.$route.params.id, header)
+      .then((response) => {
+        this.store = response.data.values
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+}
+</script>
+
+Otro ejemplo
+============
+
+//routes.js
+path: '/:data',
+name: 'Home',
+component: () => import('pages/YourPage.vue')
+
+//Passing parameters
+this.$router.push({
+      name: 'Home',
+      params: { data: yourData}
+    });
+
+//Receiving parameters in Home component
+created() {
+    console.log('Params: ', this.$route.params);
+}
+
+==============================
+Establecer una variable global
+==============================
+
+en main.js podemos establecer:
+
+Vue.prototype.$api_url = 'http://127.0.0.1:8000/'
+
+Luego ya en cualquier componente podemos llamarla
+
+/*
+* Obtiene los datos de las órdenes.
+*/
+axios.get(this.$api_url + 'api/orders', header)
+  .then((response) => {
+    this.orders = response.data
+  })
+  .catch((error) => {
+    console.log(error)
+  })

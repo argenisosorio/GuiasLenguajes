@@ -7367,6 +7367,8 @@ public function login(Request $request)
 
 y en el archivo de rutas api.php agregamos una nueva:
 
+use App\Http\Controllers\AuthController;
+
 Route::post('login', [AuthController::class, 'login']);
 
 De esta manera, ahora podemos probar, registrando un usuario primero y luego
