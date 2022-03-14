@@ -621,3 +621,45 @@ axios.get(this.$api_url + 'api/orders', header)
   .catch((error) => {
     console.log(error)
   })
+
+===========================================
+Pasar parámetros a un componente de Vuetify
+===========================================
+
+Componente al cual le vamos a pasar un valor: AppBar.vue, este componente
+lo vamos a renderizar dentro del componente Dashboard.vue.
+
+<template>
+  <div>
+    {{ toolbartitle }}
+  <div>
+</template>
+
+<script>
+export default {
+  name: 'AppBar',
+  props: ['toolbartitle'],
+  data: () => ({
+  })
+}
+</script>
+
+El otro componente en desde el cual pasamos el valor como parámetros
+Dashboard.vue
+
+<template>
+  <div>
+    <AppBar toolbartitle="Mi título" />
+  <div>
+</template>
+
+<script>
+import AppBar from '../components/AppBar'
+export default {
+  components: {
+    AppBar
+  },
+  data: () => ({
+  })
+}
+</script>
