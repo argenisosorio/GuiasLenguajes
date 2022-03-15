@@ -318,3 +318,34 @@ $ live-server
 
 Esto nos permite servir nuestro sitio desde http://127.0.0.1:8080 lo visitamos
 en el navegar y listo, si actualizamos el código fuente se actualiza en vivo.
+
+=============================
+¿Cómo borrar el caché de npm?
+=============================
+
+Para borrar un caché en npm, debemos ejecutar el comando en nuestra terminal:
+
+$ npm cache clean --force
+
+El comando de limpieza que se muestra arriba borra todos los datos presentes en
+su carpeta de caché. Para verificar si su caché se borra o no, debe usar el
+siguiente comando.
+
+$ npm cache verify
+
+Fuente
+======
+
+https://www.javatpoint.com/npm-clear-cache
+
+=========================
+El error de popperjs/core
+=========================
+
+Module not found: Error: Can't resolve '@popperjs/core'
+
+Este error da al ejecutar npm run dev, se soluciona ejecutando lo siguiente:
+
+$ npm i @popperjs/core
+
+$ npm run dev

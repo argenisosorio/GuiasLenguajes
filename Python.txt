@@ -1664,9 +1664,9 @@ r = requests.get('https://api.github.com', auth=(username, password))
 print r.status_code
 print r.headers['content-type']
 
-################################################
-##### Imprimir datetime de python y django #####
-################################################
+====================================
+Imprimir datetime de python y django
+====================================
 
 $ python
 >>> import datetime
@@ -1674,9 +1674,9 @@ $ python
 >>> print now
 2017-01-05 04:08:15.932157
 
-##############################################################
-##### Cambiar la forma en que se muestra la fecha y hora #####
-##############################################################
+==================================================
+Cambiar la forma en que se muestra la fecha y hora
+==================================================
 
 # -*- coding: utf-8 -*-
 from datetime import datetime
@@ -1688,9 +1688,9 @@ fecha_hora_otro_formato = fecha_hora.strftime("%d-%m-%Y %H:%M")
 print str(datetime.now())
 print str(fecha_hora_otro_formato)
 
-##################
-##### Base64 #####
-##################
+======
+Base64
+======
 
 '''
 -- ¿Qué es la codificación Base64?
@@ -2030,6 +2030,37 @@ Fuente
 
 https://linuxize.com/post/how-to-install-python-3-8-on-debian-10/
 
+==============
+Python 3.8-PIP
+==============
+
+A la par de instalar python 3.8 se debe instalar pip compatible con esa versión
+
+Vuelva a iniciar sesión en su entorno, luego descargue get-pip.py usando el
+comando wget.
+
+1- Descargue get-pip.py usando el comando wget:
+
+(my-env)$ wget https://bootstrap.pypa.io/get-pip.py
+
+2- A continuación, instale el archivo descargado.
+
+(my-env)$ python3.8 get-pip.py
+
+3- Una vez instalado, es una buena idea buscar actualizaciones.
+
+(my-env)$ python3.8 -m pip install --upgrade pip
+
+4- Ahora verifique la versión PIP 3.8 instalada:
+
+(my-env)$ pip3.8 --version
+pip 22.0.4 from /home/user/project.../lib/python3.8/site-packages/pip (python 3.8)
+
+Fuente
+======
+
+https://www.linuxcapable.com/how-to-install-python-3-8-on-debian-11-bullseye/
+
 ============
 Paquetes pip
 ============
@@ -2038,7 +2069,8 @@ Para desarrollar software con rapidez y calidad, es imprescindible utilizar
 paquetes externos que ayuden con parte de la funcionalidad que se desea
 implementar. En el ambiente Python esto no es la excepción.
 
-Para solventar ésta necesidad, la comunidad Python ha puesto convenientemente a disposición de los desarrolladores un repositorio de paquetes de fácil acceso
+Para solventar ésta necesidad, la comunidad Python ha puesto convenientemente a
+disposición de los desarrolladores un repositorio de paquetes de fácil acceso
 llamado PyPi. Solo es necesario ejecutar un comando en la terminal para poder
 instalar el paquete Python que necesitemos. Incluso es posible instalar paquetes
 que no se encuentren en el mencionado repositorio.
