@@ -939,3 +939,58 @@ Fuente
 ======
 
 https://tableplus.com/blog/2018/04/postgresql-how-to-grant-access-to-users.html
+
+======================
+Booleano en PostgreSQL
+======================
+
+Hay tres tipos de valores booleanos: VERDADERO, FALSO y NULO. Donde NULL
+significa desconocido.
+
+Booleano En SQL, puede usar VERDADERO y FALSO sin comillas, y también puede usar
+caracteres entre comillas que representan verdadero y falso, como: 'sí', 'no',
+'1', '0'.
+
+Ejemplo
+=======
+
+1. Construir una mesa
+
+CREATE TABLE test (
+  id  int,
+  coll boolean,
+  collName varchar(20)
+);
+
+2. Insertar datos
+
+insert into test values(1,TRUE,'TRUE');
+insert into test values(2,FALSE,'FALSE');
+
+insert into test values(3,true,'true');
+insert into test values(4,false,'false');
+
+insert into test values(5,'yes','''yes''');
+insert into test values(6,'no','''no''');
+
+insert into test values(7,'1','''1''');
+insert into test values(8,'0','''0''');
+
+3. Consultar datos
+
+# select * from test;
+
+|| id || coll || collNmae ||
+|| 1  || t    || TRUE ||
+|| 2  || f    || FALSE ||
+|| 3  || t    || true ||
+|| 4  || f    || false ||
+|| 5  || t    || 'yes' ||
+|| 6  || f    || 'no' ||
+|| 7  || t    || '1' ||
+|| 8  || f    || '0' ||
+
+Fuente
+======
+
+https://programmerclick.com/article/3772240389/
