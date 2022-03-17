@@ -994,3 +994,17 @@ Fuente
 ======
 
 https://programmerclick.com/article/3772240389/
+
+======================================================================
+Agregar repositorio de Postgresql para actualizar paquetes de Postgres
+======================================================================
+
+$ sudo apt -y install vim bash-completion wget
+
+$ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+
+$ echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
+
+$ sudo apt update
+
+Instalar lo que se necesite.
