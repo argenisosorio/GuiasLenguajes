@@ -4125,3 +4125,211 @@ Correr la aplicación desde un servidor de desarrollo de node
 $ npm run serve
 
 La app correra desde http://localhost:8080/
+
+====================================
+Uso de un spinner de carga o loading
+====================================
+
+Usaremos el paquete vue-loading-overlay para usarlo con Vue 2.
+
+1- Instalar el paquete:
+
+$ npm install vue-loading-overlay@^3.0
+
+Ejemplo de uso:
+
+<template>
+    <div class="vld-parent">
+        <loading v-model:active="isLoading"
+                 :can-cancel="true"
+                 :on-cancel="onCancel"
+                 :is-full-page="fullPage"/>
+
+        <label><input type="checkbox" v-model="fullPage">Full page?</label>
+        <button @click.prevent="doAjax">fetch Data</button>
+    </div>
+</template>
+
+<script>
+    import Loading from 'vue-loading-overlay';
+    import 'vue-loading-overlay/dist/vue-loading.css';
+
+    export default {
+        data() {
+            return {
+                isLoading: false,
+                fullPage: true
+            }
+        },
+        components: {
+            Loading
+        },
+        methods: {
+            doAjax() {
+                this.isLoading = true;
+                // simulate AJAX
+                setTimeout(() => {
+                    this.isLoading = false
+                }, 5000)
+            },
+            onCancel() {
+                console.log('User cancelled the loader.')
+            }
+        }
+    }
+</script>
+
+Ejemplo real
+============
+
+<template>
+    <div>
+        <loading
+            :active='isLoading'
+            :is-full-page="fullPage"
+            :loader='loader'
+        />
+        <div>
+            <h1>Project form</h1>
+            <label>Name</label>
+            <input id="name" v-model="name" type="text">
+            <br>
+            <label>Introduction</label>
+            <input id="introduction" v-model="introduction" type="text">
+            <br>
+            <button type="reset"  @click="reset()">RESET</button>
+            <button type="button" @click="saveRecord()">SAVE</button>
+        </div>
+        <hr>
+        <h1>List of projects</h1>
+        <table border="1px">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Introduction</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="project in projects">
+                    <td v-text="project.id"></td>
+                    <td v-text="project.name"></td>
+                    <td v-text="project.introduction"></td>
+                    <td>
+                        <button type="button" @click="loadDataField(project)">UPDATE</button>
+                        <button type="button" @click="deleteRecord(project)">DELETE</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</template>
+
+<script>
+import axios from 'axios';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+export default {
+    data () {
+        return {
+            id:"",
+            name:"",
+            introduction:"",
+            projects: [],
+            isLoading: true,
+            fullPage: true,
+            loader: 'spinner' // bars, dots
+        }
+    },
+    components: {
+        Loading
+    },
+    mounted () {
+        /*
+        * Request that gets the saved data.
+        */
+        axios.get('http://127.0.0.1:8000/projects-vue-list')
+        .then((response) => {
+            this.projects = response.data.projects
+            // this.isLoading = false;
+            // Method that extends the spinner to visualize it more
+            setTimeout(() => {
+                this.isLoading = false
+            }, 3000);
+        })
+        .catch((error) => {
+            console.log('error')
+        })
+    },
+    methods: {
+        /*
+        * Method to clean the form.
+        */
+        reset() {
+            const vm = this;
+            vm.name = "";
+            vm.introduction = "";
+            vm.id = "";
+        },
+        /*
+        * Method for saving new data and updating one record saved.
+        */
+        async saveRecord() {
+            const vm = this;
+            const projectId = (typeof(vm.id)!=="undefined" && vm.id) ? vm.id : '';
+            await axios({
+                method: (projectId) ? 'put' : 'post',
+                url: `http://127.0.0.1:8000/projects/${projectId}`,
+                data: {
+                    name: vm.name,
+                    introduction: vm.introduction
+                }
+            })
+            .then(response => {
+                location.href = '/projects'
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+        /*
+        * Method that allows you to delete a record.
+        */
+        deleteRecord (data) {
+            let project_id = data.id
+            if (confirm('Are you sure you want to delete the record?')) {
+                axios.delete('http://127.0.0.1:8000/projects/'+project_id
+                ).then(function (response) {
+                    // console.log('done')
+                    location.href = '/projects'
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+            }
+        },
+        /*
+        * Function that loads data into form fields.
+        */
+        loadDataField (data) {
+            let vm = this;
+            axios.get('http://127.0.0.1:8000/projects/'+data.id
+            )
+            .then(function (response) {
+                vm.name = data.name;
+                vm.introduction = data.introduction;
+                vm.id = data.id;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        },
+    }
+}
+</script>
+
+Ejemplo completo Laravel+Vue
+============================
+
+https://github.com/argenisosorio/laravel-8-vue-crud/tree/loading-overlay-example

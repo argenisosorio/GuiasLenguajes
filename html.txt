@@ -4435,4 +4435,53 @@ del archivo.
 Fuente
 ======
 
+=========================
+Spinner carga en HTML+CSS
+=========================
+
 https://cybmeta.com/diferencia-async-y-defer
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Spinner</title>
+    <meta charset="UTF-8">
+  </head>
+  <style>
+    p {
+      text-align: center;
+      font-weight: bold;
+      font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif;
+      margin-top: 50px;
+    }
+    /* Creamos el diseño del spinner */
+    .spinner {
+      border: 5px solid rgba(0, 0, 0, 0.3);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border-left-color: #7d47ff;
+      margin: 0 auto;
+      margin-top: 20px;
+      animation: spin 1s ease infinite;
+    }
+    /* Pasos de la animación con keyframes */
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+  <body>
+    <p>Spinner Preview</p>
+    <div class="spinner"></div>
+  </body>
+</html>
+
+Fuente
+======
+
+https://dev.to/dmx/spinner-facil-y-rapido-5bei

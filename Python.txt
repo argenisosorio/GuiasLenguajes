@@ -1900,9 +1900,13 @@ $ source .bachrc
 Usando virtualenv
 =================
 
-Instación:
+Instación en Debian 9:
 
-# aptitude install python-virtualenv python-pip
+$ sudo apt install python-virtualenv python-pip
+
+Instalación en Debian 11:
+
+$ sudo apt install python-pip-whl python3-pip virtualenv
 
 -----
 
@@ -1980,8 +1984,7 @@ Instalar Python 3.8 en Debian 11
 1. Comience instalando los paquetes necesarios para compilar el código fuente de
 Python:
 
-$ sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev
-libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev curl libbz2-dev
+$ sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev curl libbz2-dev
 
 2- Descargue el código fuente de la última versión desde la página de descarga
 de Python con wget o curl. Al momento de escribir este artículo, la última
