@@ -663,3 +663,37 @@ export default {
   })
 }
 </script>
+
+==============================
+Redirecionar a otro componente
+==============================
+
+Sirve por ejemplo para cambiar al componente Home luego del inicio de sesión
+
+this.$router.push({ name: 'Home' })
+
+Ejemplo
+=======
+
+login () {
+  const userData = {
+    email: this.email,
+    password: this.password
+  }
+  const header = {
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+      'Content-Language': 'en'
+    }
+  }
+  axios.post('http://127.0.0.1:8000/api/login', userData, header)
+    .then((response) => {
+      console.log(response)
+      this.$router.push({ name: 'Home' })
+    })
+    .catch((error) => {
+      console.log(error)
+      alert('Access denied')
+    })
+}
