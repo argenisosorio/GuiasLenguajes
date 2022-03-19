@@ -691,6 +691,18 @@ $ git diff
 
 -----
 
+Comparar diferencias entre la rama local y la del repositorio:
+
+$ git diff <remote-branch> <local-branch>
+
+$ git diff origin/develop develop
+
+Si solo quieres ver los fichero modificados usamos --stat:
+
+$ git diff origin/develop develop --stat
+
+-----
+
 Muestra la lista de ficheros modificados luego del último cambio.
 
 $ git diff --stat
