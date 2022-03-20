@@ -7599,3 +7599,134 @@ Fuente
 ======
 
 https://diegooo.com/laravel-ui-autenticacion-de-laravel-8/
+
+===============
+Laravel fortify
+===============
+
+Es un sistema de autenticación backend para Laravel "Agnostic frontend", es
+decir que no importa que tecnología se use en el frontend, ya se vuejs, react,
+angular.
+
+No provee ninguna vista con formularios ni nada, solo provee rutas y
+controladores necesarios para:
+
+-Iniciar sesión y cerrar sesión:
+-Registrar usuarios:
+-Restablecer contraseñas:
+-Verificar validéz del correo electrónico del usuario
+-Confirmación de contraseña
+-Actualizar los datos del usuario
+-Actualizar contraseña
+-Autenticación de 2 factores
+
+Los controladores de estas acciones están en:
+
+/vendor/laravel/fortify/src/Http/Controllers
+
+Todas estas caracteristaicas se puede habilitar o deshabilitar en el archivo de
+configuración de fortify config/fortify.php:
+
+'features' => [
+    Features::registration(),
+    Features::resetPasswords(),
+    Features::emailVerification(),
+    Features::updateProfileInformation(),
+    Features::updatePasswords(),
+    Features::twoFactorAuthentication([
+        'confirmPassword' => true,
+    ]),
+],
+
+Este archivo de configuración lo obtenemos al ejecutar:
+
+$ php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
+
+Además de eso nos va a generar otra serie de archivos que permitira personalizar
+las funcionalidades del paquete.
+
+Después de instalar Fortify, puede ejecutar el php artisan route:list para ver
+las rutas que tiene registradas Fortify.
+
+Dado que Fortify no proporciona su propia interfaz de usuario, debe combinarse
+con su propia interfaz de usuario que realiza solicitudes a las rutas que
+registra.
+
+No es necesario que use Fortify para usar las funciones de autenticación de
+Laravel. Siempre puede interactuar manualmente con los servicios de
+autenticación de Laravel siguiendo la documentación oficial disponible.
+
+Laravel Fortify esencialmente toma las rutas y los controladores de Laravel
+Breeze y los ofrece como un paquete que no incluye una interfaz de usuario. Esto
+le permite montar rápidamente la implementación de back-end de la capa de
+autenticación de su aplicación sin estar atado a ninguna opinión de front-end en
+particular.
+
+¿Cuándo debo usar Fortify?
+==========================
+
+Quizás se esté preguntando cuándo es apropiado usar Laravel Fortify. Primero, si
+está utilizando uno de los kits de inicio de aplicaciones como Laravel Breeze,
+no necesita instalar Laravel Fortify ya que todos los kits de inicio de
+aplicaciones de Laravel ya brindan una implementación de autenticación completa.
+
+Si no está utilizando un kit de inicio de aplicaciones y su aplicación necesita
+funciones de autenticación, tiene dos opciones: implementar manualmente las
+funciones de autenticación de su aplicación o usar Laravel Fortify para
+proporcionar la implementación de back-end de estas funciones.
+
+Si elige instalar Fortify, su interfaz de usuario realizará solicitudes a las
+rutas de autenticación de Fortify que se detallan en esta documentación para
+autenticar y registrar usuarios.
+
+Si elige interactuar manualmente con los servicios de autenticación de Laravel
+en lugar de usar Fortify, puede hacerlo siguiendo la documentación oficial
+disponible.
+
+Laravel Fortificar y Laravel Sanctum
+====================================
+
+Algunos desarrolladores se confunden con respecto a la diferencia entre Laravel
+Sanctum y Laravel Fortify. Debido a que los dos paquetes resuelven dos problemas
+diferentes pero relacionados, Laravel Fortify y Laravel Sanctum no son paquetes
+mutuamente excluyentes ni competidores.
+
+Laravel Sanctum solo se ocupa de administrar tokens de API y autenticar a los
+usuarios existentes mediante tokens o cookies de sesión. Sanctum no proporciona
+ninguna ruta que gestione el registro de usuarios, el restablecimiento de
+contraseñas, etc.
+
+Si está intentando construir manualmente la capa de autenticación para una
+aplicación que ofrece una API o sirve como back-end para una aplicación de una
+sola página (SPA), es muy posible que utilice Laravel Fortify (para registro de
+usuarios, restablecimiento de contraseña, etc.) y Laravel Sanctum
+(administración de tokens API, autenticación de sesión).
+
+Instalación
+===========
+
+Para comenzar, instale Fortify usando el administrador de paquetes de Composer:
+
+$ composer require laravel/fortify
+
+Luego, publique los recursos de Fortify usando el vendor:publishmando:
+
+$ php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
+
+Este comando publicará las acciones de Fortify en app/Actions, se creará si no
+existe. además, creara el FortifyServiceProvider, que es el archivo de
+configuración y todas las migraciones de bases de datos necesarias se publicarán.
+
+A continuación, debe migrar su base de datos:
+
+$ php artisan migrate
+
+El proveedor de servicios de Fortify
+
+El comando de publicación también creará
+app\Providers\FortifyServiceProviderclase. Debe asegurarse de que esta clase
+esté registrada en el arreglo providers de la aplicación, en el archivo
+config/app.php.
+
+El proveedor de servicios de Fortify registra las acciones que Fortify publicó
+e indica a Fortify que las use cuando Fortify ejecute sus respectivas tareas.
