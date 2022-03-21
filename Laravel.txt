@@ -1089,7 +1089,7 @@ Usar un seeder para generar usuarios aleatorios
 
 Laravel por defecto crea la tabla users en la base de datos.
 
-Para usare el Factory de los usuarios, no debemos generar ninguna acción, ya que
+Para usar el Factory de los usuarios, no debemos generar ninguna acción, ya que
 este ya está creado, si queremos revisarlo, podemos revisar
 database/factories/UserFactory.php.
 
@@ -7795,7 +7795,7 @@ inicio de aplicación.
 Toda la lógica de representación de la vista de autenticación se puede
 personalizar utilizando los métodos apropiados disponibles a través de la clase
 Laravel\Fortify\Fortify. Por lo general, debe llamar a este método desde el
-boot de su aplicación App\Providers\FortifyServiceProviderclase. Fortify se
+boot de su aplicación App\Providers\FortifyServiceProvider. Fortify se
 encargará de definir la ruta /login que devuelve esta vista.
 
 use Laravel\Fortify\Fortify;
@@ -8056,15 +8056,248 @@ Route::get('/dashboard', function () {
 })->middleware(['verified']);
 
 ===========================================================
-Instalando y configuranco fortify en un proyecto de Laravel
+Instalando y configurando fortify en un proyecto de Laravel
 ===========================================================
 
-1- Instalar fortify en su última versión:
+1- En un proyecto ya creado y limpio, chqueamos las rutas que trae el proyecto
+con:
+
+$ php artisan route:list -c
+
++----------+----------+----------------------------------------------+
+| Method   | URI      | Action                                       |
++----------+----------+----------------------------------------------+
+| GET|HEAD | /        | Closure                                      |
+| GET|HEAD | api/user | Closure                                      |
++----------+----------+----------------------------------------------+
+
+Veremos que nos muestra la ruta a la raíz (/) y la ruta (api/user) que nos
+devuelve el usuario autenticado.
+
+2- Instalar fortify en su última versión:
 
 $ composer require laravel/fortify
 
-1.1- Instalar una versión específica de fortify, para laravel 8 sería la 1.8:
+3.1- Instalar una versión específica de fortify, para laravel 8 sería la 1.8:
 
 $ composer require laravel/fortify 1.8
 
-2-xxxxxxxxxxxx
+3- Luego de realizar la instalación, chequeamos las rutas de nuevo y veremos
+todas las rutas que nos instala fortify por defecto:
+
+$ php artisan route:list -c
++----------+---------------------------------+---------------------------------------------------------------------------------+
+| Method   | URI                             | Action                                                                          |
++----------+---------------------------------+---------------------------------------------------------------------------------+
+| GET|HEAD | /                               | Closure                                                                         |
+| GET|HEAD | api/user                        | Closure                                                                         |
+| POST     | email/verification-notification | Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController@store  |
+| GET|HEAD | email/verify                    | Laravel\Fortify\Http\Controllers\EmailVerificationPromptController@__invoke     |
+| GET|HEAD | email/verify/{id}/{hash}        | Laravel\Fortify\Http\Controllers\VerifyEmailController@__invoke                 |
+| GET|HEAD | forgot-password                 | Laravel\Fortify\Http\Controllers\PasswordResetLinkController@create             |
+| POST     | forgot-password                 | Laravel\Fortify\Http\Controllers\PasswordResetLinkController@store              |
+| POST     | login                           | Laravel\Fortify\Http\Controllers\AuthenticatedSessionController@store           |
+| GET|HEAD | login                           | Laravel\Fortify\Http\Controllers\AuthenticatedSessionController@create          |
+| POST     | logout                          | Laravel\Fortify\Http\Controllers\AuthenticatedSessionController@destroy         |
+| POST     | register                        | Laravel\Fortify\Http\Controllers\RegisteredUserController@store                 |
+| GET|HEAD | register                        | Laravel\Fortify\Http\Controllers\RegisteredUserController@create                |
+| POST     | reset-password                  | Laravel\Fortify\Http\Controllers\NewPasswordController@store                    |
+| GET|HEAD | reset-password/{token}          | Laravel\Fortify\Http\Controllers\NewPasswordController@create                   |
+| POST     | two-factor-challenge            | Laravel\Fortify\Http\Controllers\TwoFactorAuthenticatedSessionController@store  |
+| GET|HEAD | two-factor-challenge            | Laravel\Fortify\Http\Controllers\TwoFactorAuthenticatedSessionController@create |
+| POST     | user/confirm-password           | Laravel\Fortify\Http\Controllers\ConfirmablePasswordController@store            |
+| GET|HEAD | user/confirm-password           | Laravel\Fortify\Http\Controllers\ConfirmablePasswordController@show             |
+| GET|HEAD | user/confirmed-password-status  | Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController@show         |
+| PUT      | user/password                   | Laravel\Fortify\Http\Controllers\PasswordController@update                      |
+| PUT      | user/profile-information        | Laravel\Fortify\Http\Controllers\ProfileInformationController@update            |
+| POST     | user/two-factor-authentication  | Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController@store        |
+| DELETE   | user/two-factor-authentication  | Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController@destroy      |
+| GET|HEAD | user/two-factor-qr-code         | Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController@show                 |
+| GET|HEAD | user/two-factor-recovery-codes  | Laravel\Fortify\Http\Controllers\RecoveryCodeController@index                   |
+| POST     | user/two-factor-recovery-codes  | Laravel\Fortify\Http\Controllers\RecoveryCodeController@store                   |
++----------+---------------------------------+---------------------------------------------------------------------------------+
+
+4- Publicar los archivos de configuración con el siguiente comando:
+
+$ php artisan vendor:publish --provider="Laravel\Fortify\FortifyServiceProvider"
+
+La salida deber ser esta:
+
+Copied File [/vendor/laravel/fortify/stubs/fortify.php] To [/config/fortify.php]
+Copied File [/vendor/laravel/fortify/stubs/CreateNewUser.php] To [/app/Actions/Fortify/CreateNewUser.php]
+Copied File [/vendor/laravel/fortify/stubs/FortifyServiceProvider.php] To [/app/Providers/FortifyServiceProvider.php]
+Copied File [/vendor/laravel/fortify/stubs/PasswordValidationRules.php] To [/app/Actions/Fortify/PasswordValidationRules.php]
+Copied File [/vendor/laravel/fortify/stubs/ResetUserPassword.php] To [/app/Actions/Fortify/ResetUserPassword.php]
+Copied File [/vendor/laravel/fortify/stubs/UpdateUserProfileInformation.php] To [/app/Actions/Fortify/UpdateUserProfileInformation.php]
+Copied File [/vendor/laravel/fortify/stubs/UpdateUserPassword.php] To [/app/Actions/Fortify/UpdateUserPassword.php]
+Copied Directory [/vendor/laravel/fortify/database/migrations] To [/database/migrations]
+Publishing complete.
+
+Podemos chequear los cambios con git status:
+
+$ git status
+Archivos sin seguimiento:
+  (usa "git add <archivo>..." para incluirlo a lo que se será confirmado)
+	app/Actions/
+	app/Providers/FortifyServiceProvider.php
+	config/fortify.php
+	database/migrations/2014_10_12_200000_add_two_factor_columns_to_users_table.php
+
+5- Ahora vamos a /config/app.php y agregamos a
+App\Providers\FortifyServiceProvider::class, en el arreglo 'providers' => []
+tal que:
+
+/*
+ * Application Service Providers...
+ */
+App\Providers\AppServiceProvider::class,
+App\Providers\AuthServiceProvider::class,
+// App\Providers\BroadcastServiceProvider::class,
+App\Providers\EventServiceProvider::class,
+App\Providers\RouteServiceProvider::class,
+App\Providers\FortifyServiceProvider::class,
+
+6- Revisemos el archivo de configuración config/fortify.php y repasemos sus
+variables:
+
+'guard' => 'web', // guard que va a utilizar fortify para autenticar usuarios.
+
+'passwords' => 'users', // Configuración de password que utilizará fortify para
+restablecer las contraseñas.
+
+'username' => 'email', // Nombre del campo username que fortify usara para
+autenticar el usuario.
+
+'email' => 'email', // Nombre del campo email que fortify usara para restablecer
+la contraseña.
+
+'home' => RouteServiceProvider::HOME, // Es la ruta a la que serán
+redireccionados los usuarios autenticados. es decir a la ruta home que está
+en app/Providers/RouteServiceProvider.php:
+
+public const HOME = '/home';
+
+'prefix' => '', // Es el prefijo que le podemos poner a las rutas de fortify,
+por ejemplo si ponemos api, las rutas de fortify serían así:
+
+$ php artisan route:list --columns=method,uri
++----------+------------------------------------+
+| Method   | URI                                |
++----------+------------------------------------+
+| GET|HEAD | /                                  |
+| POST     | api/forgot-password                |
+| GET|HEAD | api/forgot-password                |
+| POST     | api/login                          |
+
+'domain' => null, // Si lo dejamos en null, va a usar el valor por defecto que
+haya en la variable APP_URL del archivo .env.
+
+'middleware' => ['web'], // Define el middleware que se aplicará a las rutas de
+fortify.
+
+'views' => true, // Determinar si registrar o no las rutas que devuelven las
+vistas, si se va a usar fortify para una API se puede deshabilitar esa opción.
+
+'features' => [] // Son las características de fortify que podemos habilitar o
+deshabilitar según convenga.
+
+7- Ahora vamos a revisar el archivo app/Providers/FortifyServiceProvider.php
+
+En el método boot vemos 4 registros de acciones:
+
+Fortify::createUsersUsing(CreateNewUser::class);
+Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
+Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
+Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+
+La acción createUsersUsing se encuentra en app/Actions/Fortify/CreateNewUser.php
+Para crear un usuario se va a usar esa acción. Los mismo para las demás
+acciones, con la funcionalidad estandar.
+
+8- Revisamos migrations/2014_10_12_200000_add_two_factor_columns_to_users_table.php
+Donde vemos que agrega dos nuevos campos a la tabla users, correspondientes a la
+autenticación de 2 factores que se puede configurar para los usuarios.
+
+9- Al instalar fortify se habilitarán en la ruta / desde la interfaz, enlaces
+Log in y Register, antes no aparecían y ahora si porque en la vista genérica
+welcome están los condicionales @if (Route::has('login')) y @if
+(Route::has('register')) que verifican si está definida la ruta login o
+register.
+
+Si le damos click al login, nos muestra este error en el navegador web:
+
+Target [Laravel\Fortify\Contracts\LoginViewResponse] is not instantiable
+
+Esto quiere decir que o hay una vista creada que de una respuesta a esa petición.
+
+10- Vamos a crearla esa vista, vamos a /app/Providers/FortifyServiceProvider.php
+y en el método boot agregamos Fortify::loginView('login');, tal que:
+
+public function boot()
+{
+    Fortify::loginView('login');
+    Fortify::createUsersUsing(CreateNewUser::class);
+    Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
+    Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
+    Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
+
+    RateLimiter::for('login', function (Request $request) {
+        return Limit::perMinute(5)->by($request->email.$request->ip());
+    });
+
+    RateLimiter::for('two-factor', function (Request $request) {
+        return Limit::perMinute(5)->by($request->session()->get('login.id'));
+    });
+}
+
+Si le damos click al login, nos muestra este error en el navegador web:
+
+View [login] not found.
+
+Que es diferente al primer error que se nos mostraba al darle click, este nuevo
+error significa que no encuentra la vista login.
+
+Podemos crear una carpeta llamada auth para guardar esta vista, la ruta sería:
+
+/resources/views/auth y dentro creamos login.blade.php y es ahí donde vamos
+a crear el formulario del login. y en el método boot sería:
+
+Fortify::loginView('auth.login');
+
+Ahora si visitamos http://127.0.0.1:8000/login ya deberiamos ver nuestra vista
+vacía de login.blade.php.
+
+11- Agregamos lo siguiente a la vista login:
+
+<form action="{{ route('login') }}" method="POST">
+    @csrf
+    <label>
+        <input type="email" name="email" placeholder="email">
+        @error('email') <div>{{ $message }}</div> @enderror
+    </label>
+    <label>
+        <input type="password" name="password" placeholder="password">
+        @error('password') <div>{{ $message }}</div> @enderror
+    </label>
+    <input type="submit" value="Login">
+</form>
+
+Para poder probarlo debe haber un usuario registrado en la base de datos.
+Si nos autenticamos correctamente nos manda a /home que es lo que tenemos
+configurado en /app/Providers/RouteServiceProvider.php.
+
+Para probar y ver los datos del usuario autenticado simplemente creamos la ruta
+y la vista home o usamos la vista welcome y agregamos {{ auth()->user() }}
+al html, esto nos imprime algo como esto:
+
+{"id":1,"name":"admin","email":"admin@mail.com","email_verified_at":null,"created_at":null,"updated_at":null,"two_factor_secret":null,"two_factor_recovery_codes":null}
+
+Para cerrar sesión simplemente hay que crear un formulario que apunte a la ruta
+logout de fortify en alguna vista:
+
+<form action="{{ route('logout') }}" method="POST">
+    @csrf
+    <button>Logout</button>
+</form>
+
+Al darle click cierra la sesión.
