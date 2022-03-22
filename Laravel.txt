@@ -8301,3 +8301,92 @@ logout de fortify en alguna vista:
 </form>
 
 Al darle click cierra la sesión.
+
+==================================================
+Cómo usar el componente de traducciones de Laravel
+==================================================
+
+Laravel nos proporciona una manera fácil de traducir nuestras aplicaciones a
+diferentes idiomas. En este tutorial aprenderemos a trabajar con la
+internacionalización de nuestros proyecto con este framework.
+
+Las traducciones de un proyecto de Laravel se guardan en el directorio
+resources/lang/ donde se encontrará un directorio por cada idioma disponible por
+la aplicación, por defecto viene incluido el idioma inglés (directorio «en»).
+
+Laravel trae 4 archivos con traducciones para el idioma inglés de una
+aplicación: auth.php, pagination.php, passwords.php y validation.php, pero
+podemos agregar otros idiomas de una manera sencilla usando el repositorio de
+GitHub Laravel-lang > https://github.com/caouecs/Laravel-lang, en el cual se
+encuentra las traducciones de dichos archivos del framework en 50 idiomas. Para
+usarlo tan solo tenemos que descargar el archivo .zip del repositorio, copiar el
+directorio del idioma que nos interesa y pegarlo en el directorio
+resources/lang/ de nuestro proyecto.
+
+Cada archivo retorna un array con un conjunto de strings siguiendo el formato
+‘clave’  => ‘valor’ que traducen la aplicación. Por ejemplo, si quisiéramos
+crear un archivo llamado resources/lang/es/mesagges.php sería:
+
+<?php
+return [
+    welcome' => 'Bienvenido a nuestra aplicación '
+];
+
+Dicho archivo también lo deberíamos crear en los otros directorios de idiomas
+presentes en nuestra aplicación, en ingles sería resources/lang/en/mesagges.php:
+
+<?php
+return [
+    welcome' => 'Welcome to our application'
+];
+
+Configuración
+=============
+
+Para establecer el idioma por defecto de una aplicación debemos ir al archivo
+config/app.php y configurar la opción locale. Por ejemplo, para establecer el
+español como idioma por defecto:
+
+'locale' => 'es',
+// 'locale' => 'en',
+
+Es decir, el valor colocado debe coincidir con el nombre del directorio del
+idioma.
+
+También, Laravel proporciona la opción fallback_locale en la cual se establece
+el idioma a usar en caso que el idioma activo no tenga la traducción respectiva.
+
+Por ejemplo, habiendo establecido español como lenguaje predeterminado colocamos
+el inglés cuando no se obtenga la traducción en el idioma español:
+
+'fallback_locale' => 'en',
+
+Uso
+===
+
+Para trabajar con las traducciones hacemos uso del helper trans() que recibe
+como parámetro la clave utilizando la notación de puntos (dot notation), es
+decir, siguiendo la nomenclatura archivo.clave, donde archivo es el nombre del
+archivo y clave es el elemento que queremos traducir.
+
+Por ejemplo, si queremos traducir la palabra welcome al español, ponemos estas
+etiquetas en la plantilla de blade:
+
+{{ __('mesagges.welcome') }}
+
+@lang('mesagges.welcome')
+
+{{ trans('mesagges.welcome') }}
+
+Los resultados son:
+
+Bienvenido a nuestra aplicación
+
+Bienvenido a nuestra aplicación
+
+Bienvenido a nuestra aplicación
+
+Fuente
+======
+
+https://styde.net/como-usar-el-componente-de-traducciones-de-laravel/
