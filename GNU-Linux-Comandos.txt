@@ -4885,9 +4885,19 @@ deb http://www.deb-multimedia.org wheezy main
 
 #===== CENDITEL mirror - Debian GNU/Linux 11 (Bullseye) =====
 
+# Debian CENDITEL
 deb http://debian.cenditel/debian bullseye main contrib non-free
 deb http://debian.cenditel/debian bullseye-updates main contrib non-free
-deb http://debian.cenditel/debian-security bullseye/updates main contrib non-free
+deb http://debian.cenditel/debian bullseye-proposed-updates main contrib non-free
+deb http://debian.cenditel/debian-multimedia bullseye main non-free
+
+Para que no falle la firma del repositorio multimedia ejecute:
+
+$ wget http://www.deb-multimedia.org/pool/main/d/deb-multimedia-keyring/deb-multimedia-keyring_2016.8.1_all.deb
+
+Luego instale con dpkg
+
+# dpkg -i *.deb
 
 #===== CENDITEL mirror - Debian GNU/Linux 10 (Buster) =====
 
@@ -5007,9 +5017,21 @@ Poner el libreoffice en español de venezuela.
 
 -----
 
+adblock-plus para bloquear puplicidad.
+
+https://addons.mozilla.org/es/firefox/addon/adblock-plus/
+
+-----
+
 Complemento de Firefox para traducir las páginas a español con un click.
 
 https://addons.mozilla.org/es/firefox/addon/traduzir-paginas-web/
+
+-----
+
+Tema Hacker para firefox
+
+https://addons.mozilla.org/es/firefox/addon/hacker-animated/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=rating
 
 ===============================
 Touch VPN, una VPN para Firefox
@@ -5409,7 +5431,8 @@ Ahora instalamos Google Chrome stable con:
 
 # apt-get install google-chrome-stable
 
-Si toda va bien, debería estar disponible en la sección internet de nuestro GNU/Linux Debian 8 o 9
+Si toda va bien, debería estar disponible en la sección internet de nuestro
+GNU/Linux Debian 8 o 9
 
 ==================================================
 Instalar Google Chrome en GNU/Linux Debian 10 y 11
@@ -5940,33 +5963,6 @@ E: Could not get lock /var/lib/apt/lists/lock. It is held by process 1232 (packa
 N: Be aware that removing the lock file is not a solution and may break your system.
 
 # rm -f /var/lib/apt/lists/lock
-
-======================================
-Programas recomendados para el Sistema
-======================================
-
-terminator (Configurar, luego)
-vim (Configurarlo)
-
-.bashrc (Configurarlo, alias, etc...)
-alias ll='ls -l --color'
-alias buscar='grep --color -n -Ir'
-
-sudo (Configurar y Probar)
-aptitude (Probar)
-ssh (Configurar y Probar)
-git (Configurarlo, Probarlo)
-vlc player
-apache (Probar)
-postgresql (Probar)
-Virtual Box (Opcional)
-Paquete para dar formatos a unidades usb
-rsync
-meld
-audacity
-progress
-pavucontrol
-vscode o sublime
 
 ------
 
@@ -7706,3 +7702,33 @@ Fuente
 ======
 
 https://medium.com/@calmarianet/3-formas-de-ejecutar-comandos-en-segundo-plano-en-linux-9dedb779ca7d
+
+====================================================================
+Programas recomendados para el un sistema operativo recién instalado
+====================================================================
+
+terminator (Configurar, luego)
+vim (Configurarlo)
+
+.bashrc (Configurarlo, alias, etc...)
+alias ll='ls -l --color'
+alias buscar='grep --color -n -Ir'
+
+sudo (Configurar y Probar)
+aptitude (Probar)
+ssh (Configurar y Probar)
+git (Configurarlo, Probarlo)
+vlc player
+apache (Probar)
+postgresql (Probar)
+Virtual Box (Opcional)
+rsync
+meld
+alacarte
+audacity
+gnome-paint
+progress
+pavucontrol
+vscode o sublime
+firefox de la página oficial y crear lanzador al ejecutable
+Chrome
