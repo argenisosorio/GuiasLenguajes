@@ -1448,3 +1448,30 @@ var_dump(json_decode($jsonobj, true));
 Resultado:
 
 array(3) {["Peter"]=> int(35) ["Ben"]=> int(37) ["Joe"]=> int(43)}
+
+===================
+Barra invertida o \
+===================
+
+Si necesita usar \ por ejemplo en un explode, tal que
+
+$a = explode("\", $b);
+
+Esto va a fallar, la manera correcta es usar doble \, tal que
+
+$a = explode("\\", $b);
+
+$c = "\"; // Mal
+
+$c = "\\"; // Bien
+
+=================================
+Obtener el útimo ítem del arreglo
+=================================
+
+end(); Avanza el puntero interno del array hasta su último elemento y
+devuelve su valor.
+
+/* Obtenemos el último ítem del arreglo */
+$audit_auditable_type = explode("\\", $audit->auditable_type);
+$end_audit_auditable_type = end($audit_auditable_type);
