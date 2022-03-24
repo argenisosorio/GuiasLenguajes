@@ -7703,6 +7703,23 @@ Fuente
 
 https://medium.com/@calmarianet/3-formas-de-ejecutar-comandos-en-segundo-plano-en-linux-9dedb779ca7d
 
+===============================
+Colorear el prompt del terminal
+===============================
+
+Metemos esto en la consola y nos pinta el user y el nombre de la máquina:
+
+$ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\u\[\033[01;34m\]@\[\033[01;33m\]\h\[\033[00;33m\]:\[\033[01;34m\]\w\[\033[00m\]$ '
+
+Ver el link la fuente para ver los demás colores.
+
+Si lo metemos en el .bashrc ya colorea siempre la consola.
+
+Fuente
+======
+
+https://ubuntuperonista.blogspot.com/2014/01/como-cambio-los-colores-del-prompt-en.html
+
 ====================================================================
 Programas recomendados para el un sistema operativo recién instalado
 ====================================================================
@@ -7732,3 +7749,4 @@ pavucontrol
 vscode o sublime
 firefox de la página oficial y crear lanzador al ejecutable
 Chrome
+Inkscape

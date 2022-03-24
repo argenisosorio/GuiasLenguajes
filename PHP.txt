@@ -1475,3 +1475,46 @@ devuelve su valor.
 /* Obtenemos el último ítem del arreglo */
 $audit_auditable_type = explode("\\", $audit->auditable_type);
 $end_audit_auditable_type = end($audit_auditable_type);
+
+-----
+
+Guardar datos de formulario en archivo csv.
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Guardar datos de formulario en archivo csv</title>
+    <meta charset="UTF-8">
+  </head>
+<body>
+<form method="POST">
+  <label>Nombre:</label>
+  <input type="text" name="name">
+  <br /><br />
+  <label>Apellido:</label>
+  <input type="text" name="last_name">
+  <br /><br />
+  <label>Cédula:</label>
+  <input type="text" name="dni">
+  <br /><br />
+  <input type="submit" name="submit" value="Guardar">
+</form>
+<?php
+  // Recibimos los datos del formulario
+  $datos = array(
+    $_POST['name'],
+    $_POST['last_name'],
+    $_POST['dni']
+  );
+  /* Creamos y abrimos un archivo con el nombre 'data.csv' para escribir los
+  datos que recibimos del formulario */
+  $fp = fopen('data.csv', 'a');
+
+  // Escribimos los datos en el archivo 'data.csv'
+  fputcsv($fp, $datos);
+
+  // Después de terminar de escribir los datos, cerramos el archivo 'data.csv'
+  fclose($fp);
+?>
+</body>
+</html>
