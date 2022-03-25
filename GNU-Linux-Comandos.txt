@@ -7711,14 +7711,56 @@ Metemos esto en la consola y nos pinta el user y el nombre de la máquina:
 
 $ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\u\[\033[01;35m\]@\[\033[01;33m\]\h\[\033[00;33m\]:\[\033[01;34m\]\w\[\033[00m\]$ '
 
+ó esto:
+
+$ PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[01;34m\]@\[\033[01;33m\]\h\[\033[00;33m\]:\[\033[01;34m\]\w\[\033[00m\]$ '
+
 Ver el link la fuente para ver los demás colores.
 
 Si lo metemos en el .bashrc ya colorea siempre la consola.
 
-Fuente
-======
+Otras pruebas
+=============
 
-https://ubuntuperonista.blogspot.com/2014/01/como-cambio-los-colores-del-prompt-en.html
+Prompt por defecto
+
+$ PS1="\u@\h:\W\$ "
+
+Ahora, nuestro prompt quedará tal que así:
+
+:~$
+
+-----
+
+#Prompt con caracteres adicionales
+$ PS1="[\u@\h:\W]\$> "
+
+Ahora, nuestro prompt quedará tal que así:
+
+[usuario@hostname:~]$>
+
+-----
+
+Modificación sencilla de nombre de usuario y host:
+
+$ PS1="Hola@bienvenido> "
+
+Ahora, nuestro prompt quedará tal que así:
+
+Hola@bienvenido>
+
+-----
+
+Cambiar el color de fondo al nombre del host, el código a utilizar sería este:
+
+$ PS1="\u@\[\e[31;46m\]\h\[\e[m\] "
+
+Fuentes
+=======
+
+-https://ubuntuperonista.blogspot.com/2014/01/como-cambio-los-colores-del-prompt-en.html
+-https://www.zeppelinux.es/modificar-el-prompt-en-una-shell-bash/
+-https://ubunlog.com/prompt-ejemplos-personalizar-terminal/
 
 ====================================================================
 Programas recomendados para el un sistema operativo recién instalado
@@ -7730,6 +7772,7 @@ vim (Configurarlo)
 .bashrc (Configurarlo, alias, etc...)
 alias ll='ls -l --color'
 alias buscar='grep --color -n -Ir'
+Colorear el prompt del terminal
 
 sudo (Configurar y Probar)
 aptitude (Probar)
