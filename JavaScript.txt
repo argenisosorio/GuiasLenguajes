@@ -7857,3 +7857,23 @@ typeof Function === 'function'
 typeof Math === 'object'
 typeof Object === 'function'
 typeof String === 'function'
+
+===================
+Document.designMode
+===================
+
+Controla la posibilidad de editar un documento entero. Los valores válidos son
+"on" y "off". De acuerdo a las especificaciones, el valor predeterminado de esta
+propiedad es "off". Firefox sigue este estándar. El valor predeterminado de
+versiones anteriores de Chrome y IE es "inherit". En IE6-10, el valor se escribe
+con mayúscula.
+
+Uso
+===
+
+Abrir la consola de js del navegador y pegar lo siguiente y luego enter:
+
+document.designMode = 'on'
+
+Ya con eso se puede editar el texto de una página web directamente desde la
+interfaz.
