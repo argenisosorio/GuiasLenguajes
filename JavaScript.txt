@@ -7857,3 +7857,108 @@ typeof Function === 'function'
 typeof Math === 'object'
 typeof Object === 'function'
 typeof String === 'function'
+
+===============================
+Tres puntos (...) en JavaScript
+===============================
+
+Vamos a discutir una función introducida en ES6 que es el operador de extensión
+y el operador de descanso.
+
+Parámetros de descanso
+======================
+
+Con los parámetros de descanso, podemos reunir cualquier cantidad de argumentos
+en una matriz y hacer lo que queramos con ellos. Se han introducido parámetros
+de descanso para reducir el código repetitivo inducido por los argumentos.
+
+function myFunc(a, b, ...args) {
+ console.log(a); // 22
+ console.log(b); // 98
+ console.log(args); // [43, 3, 26]
+};
+myFunc(22, 98, 43, 3, 26);
+
+En el último parámetro de myFunc con el prefijo ... lo que hará que todos los
+argumentos restantes se coloquen dentro de la matriz de JavaScript.
+
+Los parámetros de descanso reúnen todos los argumentos restantes, por lo que no
+tiene sentido agregar parámetros de descanso antes del último parámetro. Rest
+parámetro debe ser el último parámetro formal.
+
+function myFunc(arg1, ...rest, arg2) {
+  // arg2 ?
+}
+
+Los parámetros restantes se pueden desestructurar (solo matrices), lo que
+significa que sus datos se pueden descomprimir en distintas variables.
+
+function myFunc(...[x, y, z]) {
+  return x * y* z;
+}
+
+myFunc(1)          // NaN
+myFunc(1, 2, 3)    // 6
+myFunc(1, 2, 3, 4) // 6 (fourth parameter is not destructured)
+
+Operadores de Propagación
+=========================
+
+El operador de propagación se usa para expandir elementos de un iterable (como
+una matriz) en lugares donde caben varios elementos.
+
+function myFunc(x, y, ...params) { // used rest operator here
+  console.log(x);
+  console.log(y);
+  console.log(params);
+}
+
+var inputs = ["a", "b", "c", "d", "e", "f"];
+myFunc(...inputs); // used spread operator here
+// "a"
+// "b"
+// ["c", "d", "e", "f"]
+
+Siempre ha habido una variedad de formas de combinar arreglos, pero el operador
+de distribución ofrece un nuevo método para combinar arreglos:
+
+const featured = ['Deep Dish', 'Pepperoni', 'Hawaiian'];
+const specialty = ['Meatzza', 'Spicy Mama', 'Margherita'];
+
+const pizzas = [...featured, 'veg pizza', ...specialty];
+
+console.log(pizzas); // 'Deep Dish', 'Pepperoni', 'Hawaiian', 'veg pizza',
+'Meatzza', 'Spicy Mama', 'Margherita'
+
+Con el operador de propagación, la clonación superficial (excluyendo el
+prototipo) o la fusión de objetos ahora es posible usando una sintaxis más corta
+que Object.assign().
+
+var obj1 = { foo: 'bar', x: 42 };
+var obj2 = { foo: 'baz', y: 13 };
+
+var clonedObj = { ...obj1 };
+// Object { foo: "bar", x: 42 }
+
+var mergedObj = { ...obj1, ...obj2 };
+// Object { foo: "baz", x: 42, y: 13 }
+
+Conclusión
+==========
+
+Cuando vemos tres puntos (...) en el código, son parámetros de descanso o el
+operador de propagación.
+
+Hay una manera fácil de distinguirlos:
+
+-Cuando tres puntos (...) están al final de los parámetros de la función, son
+"parámetros de descanso" y reúnen el resto de la lista de argumentos en una
+matriz.
+
+-Cuando aparecen tres puntos (...) en una llamada de función o similar, se
+denomina "operador de propagación" y expande una matriz en una lista.
+
+Fuente
+======
+
+https://dev.to/sagar/three-dots---in-javascript-26ci

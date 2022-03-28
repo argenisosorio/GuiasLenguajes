@@ -1356,10 +1356,8 @@ Ejemplo:
 $var1 = 'oscar';
 
 if ( isset($var1) ){
-
     echo "La variable \$var1 está definida.<br />";
 } else {
-
     echo "La variable \$var1 no está definida.<br />";
 }
 
@@ -1518,3 +1516,30 @@ Guardar datos de formulario en archivo csv.
 ?>
 </body>
 </html>
+
+===========================
+Qué es el operador ternario
+===========================
+
+El operador ternario es la forma corta de la sentencia if { ... } else { ... },
+por lo que en lugar de escribir el código del siguiente ejemplo:
+
+if ($condicion) {
+    $resultado = 'verdadero';
+} else {
+    $resultado = 'falso';
+}
+
+Podríamos usar el operador ternario de este modo:
+
+$resultado = $condicion ? 'verdadero' : 'falso';
+
+Si la variable $condicion se evalúa como true, el operando de la izquierda
+'verdadero' será asignado a la variable $resultado. Si por el contrario la
+variable $condicion se evalúa como false, se asignará el operando de la derecha
+'falso'.
+
+Fuente
+======
+
+https://www.neoguias.com/if-abreviado-en-php-el-operador-ternario/
