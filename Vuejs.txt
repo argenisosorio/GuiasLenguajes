@@ -4333,3 +4333,64 @@ Ejemplo completo Laravel+Vue
 ============================
 
 https://github.com/argenisosorio/laravel-8-vue-crud/tree/loading-overlay-example
+
+==============================================
+Establecer una variable global con archivo .en
+==============================================
+
+1- Crear un archivo .env en la raíz del proyecto
+
+2- El contenido del archivo puede ser:
+
+VUE_APP_API_URL=http://127.0.0.1:8000
+
+Donde VUE_APP_API_URL hace referencia a un backend endpoid por ejemplo,
+guardamos el archivo.
+
+3- Ahora ya podemos referencia esa variable desde cualquier lugar de la app, por
+ejemplo:
+
+console.log(process.env.VUE_APP_API_URL)
+
+=======================================================
+Cómo agregar fuentes fonts locales a una aplicación Vue
+=======================================================
+
+1- Cree una nueva carpeta llamada fonts dentro de la carpeta src o assets.
+
+2- Descarga tus fuentes favoritas y colócalas dentro de la carpeta de fonts,
+por ejemplo: MuseoSansRounded900.otf
+
+3- Abra su archivo App.vue e incluya la fuente haciendo referencia a la ruta:
+
+<style>
+  @font-face {
+    font-family: "MuseoSansRounded";
+    src: local("MuseoSansRounded"), url(assets/fonts/MuseoSansRounded900.otf) format("truetype");
+  }
+</style>
+
+4- Ahora, podemos usar esta fuente en toda nuestra aplicación de esta manera.
+
+App.vue o donde se necesite
+
+<style>
+  * {
+    font-family: "Merienda";
+    font-size: 20px;
+  }
+</>
+
+Agregar fuentes de Google
+=========================
+
+App.vue
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Merienda&display=swap');
+</style>
+
+Fuente
+======
+
+https://reactgo.com/add-fonts-vue-app/
