@@ -7987,3 +7987,49 @@ Fuente
 ======
 
 https://developer.mozilla.org/es/docs/Web/API/Document/designMode
+
+===============================================
+La diferencia entre Transpilación y Compilación
+===============================================
+
+El concepto de compilación es bien conocido por todo informático que se precie
+pero últimamente se oye hablar mucho también de un concepto relacionado, pero no
+equivalente, el concepto de transpilación. Veamos las diferencias.
+
+Compilación
+===========
+
+Es el proceso por el cual el código fuente de un programa escrito en un lenguaje
+de programación “A” se traduce a código fuente de un lenguaje de programación
+“B”.
+
+El caso más común es cuando el código origen está escrito en un lenguaje de
+programación de “alto nivel” (C, Java, PHP u otros lenguajes de tercera
+generación) y se traduce a código máquina que pueda ejecutar directamente el
+ordenador. Pero hay muchas otras posibilidades como pasar por una representación
+intermedia en bytecode como es el caso típico de Java.
+
+Transpilación
+=============
+
+La transpilación es un caso particular de la compilación. Es decir, todo
+transpilador es también un compilador pero al revés no es cierto, hay
+compiladores que no se pueden considerar transpiladores. ¿Y cuál es la
+característica que convierte un compilador en transpilador?: la relación entre
+los lenguajes origen y destino de la traducción.
+
+Me explico, si el compilador traduce código entre dos lenguajes que están al
+mismo nivel de abstracción entonces, estamos ante un transpilador. Si traduce
+código entre lenguajes de diferente nivel de abstracción (típicamente de más
+alto a más bajo nivel) entonces no lo es.
+
+Como ejemplo más claro, Una traducción de Java a Bytecode sería una
+compilación. Una traducción de TypeScript a JavaScript sería en cambio una
+transpilación ya que TypeScript no deja ser una variante de JavaScript (al qué
+añade un sistema de tipos opcional, de hecho todo programa JavaScript es ya de
+entrada un programa TypeScript válido.
+
+Fuente
+======
+
+https://ingenieriadesoftware.es/diferencia-transpilacion-compilacion/
