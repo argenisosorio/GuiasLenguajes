@@ -78,6 +78,77 @@ Verificar la versión instalada de nodejs
 
 $ nodejs -v
 
+=================================================
+Descargar e instalar el paquete nodejs usando nvm
+=================================================
+
+nvm es un administrador de versiones para node.js, diseñado para ser instalado
+por el usuario e invocado por shell. nvm funciona en cualquier shell compatible
+con POSIX (sh, dash, ksh, zsh, bash), en particular en estas plataformas: unix,
+macOS y Windows WSL.
+
+Se recomienda seguir la documentación disponible desde:
+https://linuxconfig.org/how-to-install-node-js-on-ubuntu-16-04-xenial-xerus-linux-server
+pero para este manual recomendamos los siguientes pasos:
+
+Procedimiento de instalación mediante el script nativo de node **nvm** el cual
+permite más control en cuanto a la versión de **node** y **npm** a ser
+instalada.
+
+Instalar los prerequisitos del S.O. mediante el siguiente comando:
+
+$ sudo apt install build-essential libssl-dev
+
+Descargar el script de instalación más reciente mediante **curl**, para ello
+se requiere ejecutar el comando:
+
+$ sudo curl -o- https://raw.githubusercontent.com/creationix/nvm/{version}/install.sh | bash
+
+Se debe sustituir la número de versión con la más reciente publicada la
+cual se puede encontrar [aquí](https://github.com/nvm-sh/nvm/releases), ejemplo:
+
+$ sudo curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+
+Lo siguiente es configurar el acceso del nuevo script **NVM** con el siguiente
+comando:
+
+$ . ~/.profile
+
+Esto permitira acceder al comando nvm desde cualquier ruta, una vez realizada
+la configuración, se procederá a verificar el listado de versiones de **node**
+disponibles en el repositorio para lo cual se require ejecutar el comando:
+
+$ nvm ls-remote | grep -i lts
+
+Esto debe mostrar un listado de versiones de node que correspondan
+a las versiones **LTS**, ejemplo:
+
+v10.15.3   (LTS: Dubnium)
+v10.16.0   (LTS: Dubnium)
+v10.16.1   (LTS: Dubnium)
+v10.16.2   (LTS: Dubnium)
+v10.16.3   (Latest LTS: Dubnium)
+
+Ahora procedemos a la instalación de la versión de node más actualizada para lo
+cual se ejecutará el comando:
+
+$ nvm install 10.16.3
+
+Una vez instalado NodeJS comprobamos la correcta instalación con el siguiente
+comando:
+
+$ node -v
+
+Los comandos anteriores nos instalaran NodeJS y también npm, por lo cual
+comprobamos su correcta instalación con el siguiente comando:
+
+$ npm -v
+
+Desinstalar una versión de node con nvm especificando la versión
+================================================================
+
+$ nvm uninstall 10.16.3
+
 ===========================
 Eliminar NodeJS del sistema
 ===========================
