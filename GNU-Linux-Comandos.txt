@@ -1030,6 +1030,15 @@ Driver de wifi en laptop
 
 # apt-get install firmware-linux firmware-linux-free firmware-linux-nonfree firmware-misc-nonfree
 
+=====================================
+Reiniciar la interfaz de red en Linux
+=====================================
+
+Luego de algun cambio en el archivo etc/network/interfaces se debe reiniciar
+el servicio networking con el siguiente comando:
+
+$ sudo systemctl restart networking
+
 ============================================================================
 Restaurar o reiniciar las conexiones de red del sistema - networking restart
 ============================================================================
