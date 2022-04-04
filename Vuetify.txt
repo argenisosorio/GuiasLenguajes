@@ -697,3 +697,35 @@ login () {
       alert('Access denied')
     })
 }
+
+==============
+Botón flotante
+==============
+
+<template>
+  <v-btn
+    v-show="!hidden"
+    color="blue"
+    dark
+    absolute
+    top
+    right
+    fab
+  >
+    <v-icon>mdi-cart</v-icon>
+  </v-btn>
+</template>
+
+<script>
+export default {
+  name: 'CreateOrderFloatingButton',
+  data: () => ({
+    hidden: false
+  })
+}
+</script>
+
+<style scoped>
+  .v-btn {
+  }
+</style>
