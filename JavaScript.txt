@@ -5931,6 +5931,52 @@ Fuente
 
 https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Promise/all
 
+Ejemplo completo
+================
+
+<!-- Método Promise.all, hace algo cuando todas las promesas hayan sido
+cumplidas  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ajax</title>
+  <script src="https://unpkg.com/vue@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</head>
+<body>
+<div id="main"></div>
+<script>
+  var ajaxConVue = new Vue({
+    el: '#main',
+    data: {
+    },
+    created: function(){
+      var p1 = axios.get('https://randomuser.me/api/?results=3')
+        .then(
+        response => {
+          console.log(response.data.results)
+        });
+      var p2 = axios.get('https://randomuser.me/api/?results=3')
+        .then(
+        response => {
+          console.log(response.data.results)
+        });
+      Promise.all([p1, p2])
+      .then(response => {
+        console.log('Cargó todo!')
+      })
+      .catch(e => {
+        console.log('Falló!')
+      });
+    },
+    methods: {
+    }
+  })
+</script>
+</body>
+</html>
+
 =============
 Función Fetch
 =============
