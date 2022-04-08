@@ -4563,3 +4563,62 @@ export default {
     }
 }
 </script>
+
+=================================================
+Filtrar registros de un v-for con un campo buscar
+=================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ajax</title>
+  <script src="https://unpkg.com/vue@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</head>
+<body>
+<div id="main">
+  <input v-model="searchQuery" />
+  <div class="row top20">
+    <div class="col-md-3" v-for="preset in filterItems(presets)" :key="preset.presetName">
+      <div class="template-block" :id="preset.id">
+        <h3>{{ preset.presetName }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var app = new Vue({
+    el: '#main',
+    data: {
+      searchQuery: '',
+      presets: [{
+        id: '2',
+        presetName: 'WooCommerce',
+        img: 'woocommerce.png'
+      }, {
+        id: '3',
+        presetName: 'Magento',
+        img: 'magento.png'
+      }, {
+        id: '1',
+        presetName: 'Custom',
+        img: 'custom.png'
+      }]
+    },
+    created: function(){
+      this.consultarUsuarios();
+    },
+    methods: {
+      filterItems: function(presets) {
+        var app = this;
+        return presets.filter(function(preset) {
+          let regex = new RegExp('(' + app.searchQuery + ')', 'i');
+          return preset.presetName.match(regex);
+        })
+      }
+    }
+  })
+</script>
+</body>
+</html>
