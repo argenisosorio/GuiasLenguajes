@@ -729,3 +729,114 @@ export default {
   .v-btn {
   }
 </style>
+
+===========================================
+Componente Date Picker - Selector de fechas
+===========================================
+
+<template>
+  <div>
+    <v-menu
+      ref="menu"
+      v-model="menu"
+      :close-on-content-click="false"
+      :return-value.sync="date"
+      transition="scale-transition"
+      offset-y
+      min-width="auto"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-text-field
+          v-model="date"
+          label="Fecha"
+          prepend-icon="mdi-calendar"
+          readonly
+          v-bind="attrs"
+          v-on="on"
+        ></v-text-field>
+      </template>
+      <v-date-picker
+        v-model="date"
+        no-title
+        scrollable
+      >
+        <v-spacer></v-spacer>
+        <v-btn
+          text
+          color="primary"
+          @click="menu = false"
+        >
+          Cancel
+        </v-btn>
+        <v-btn
+          text
+          color="primary"
+          @click="$refs.menu.save(date)"
+        >
+          OK
+        </v-btn>
+      </v-date-picker>
+    </v-menu>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'ComponentName',
+  data: () => ({
+    date: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+    menu: false
+  })
+}
+</script>
+
+<style scoped>
+</style>
+
+=========================================
+Componente Time Picker - Selector de hora
+=========================================
+
+<template>
+  <div>
+    <v-menu
+      ref="menu"
+      v-model="menu2"
+      :close-on-content-click="false"
+      :nudge-right="40"
+      :return-value.sync="time"
+      transition="scale-transition"
+      offset-y
+      max-width="290px"
+      min-width="290px"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-text-field
+          v-model="time"
+          label="Picker in menu"
+          prepend-icon="mdi-clock-time-four-outline"
+          readonly
+          v-bind="attrs"
+          v-on="on"
+        ></v-text-field>
+      </template>
+      <v-time-picker
+        v-if="menu2"
+        v-model="time"
+        full-width
+        @click:minute="$refs.menu.save(time)"
+      ></v-time-picker>
+    </v-menu>
+  </div>
+</template>
+
+<script>
+  export default {
+    data () {
+      return {
+        time: null,
+        menu2: false,
+      }
+    },
+  }
+</script>
