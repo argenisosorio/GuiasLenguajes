@@ -840,3 +840,19 @@ Componente Time Picker - Selector de hora
     },
   }
 </script>
+
+=================================================================
+Cómo usar correctamente el router-link con los botones de Vuetify
+=================================================================
+
+// router
+const routes = [
+  { path: '/panda', component: Panda }
+];
+
+// template
+<div id="app">
+  <v-app>
+     <v-btn to="/panda">Kung Fu</v-btn>
+  </v-app>
+</div>
