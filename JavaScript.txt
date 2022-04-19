@@ -8187,3 +8187,87 @@ El método Array.splice() agrega elementos al arreglo
 </script>
 </body>
 </html>
+
+====================
+toLocaleDateString()
+====================
+
+El método toLocaleDateString() devuelve una cadena con una representación
+sensible al idioma de la parte de la fecha especificada en la zona horaria del
+agente de usuario.
+
+Los argumentos locales y options permiten a las aplicaciones especificar el
+idioma cuyas convenciones de formato deben utilizarse y permiten personalizar el
+comportamiento de la función. En las implementaciones más antiguas, que ignoran
+los argumentos locales y options, la configuración regional utilizada y la forma
+de la cadena devuelta dependen totalmente de la implementación.
+
+const event = new Date(Date.UTC(2012, 11, 20, 3, 0, 0));
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+console.log(event.toLocaleDateString('de-DE', options));
+// expected output (varies according to local timezone): Donnerstag, 20. Dezember 2012
+
+console.log(event.toLocaleDateString(undefined, options));
+// expected output (varies according to local timezone and default locale): Thursday, December 20, 2012
+
+var date = new Date('2022-04-22T11:27:41.000000Z');
+dateD = date.toLocaleDateString('en-GB');
+// Obtiene 22/04/2022
+
+cs-CZ: 3. 9. 2021 17:56:58
+da-DK: 3.9.2021 17.56.58
+de-AT: 3.9.2021, 17:56:58
+de-CH: 3.9.2021, 17:56:58
+de-DE: 3.9.2021, 17:56:58
+el-GR: 3/9/2021, 5:56:58 μ.μ.
+en-AU: 03/09/2021, 5:56:58 pm
+en-CA: 2021-09-03, 5:56:58 p.m.
+en-GB: 03/09/2021, 17:56:58
+en-IE: 3/9/2021, 17:56:58
+en-IN: 3/9/2021, 5:56:58 pm
+en-NZ: 3/09/2021, 5:56:58 pm
+en-US: 9/3/2021, 5:56:58 PM
+en-ZA: 2021/09/03, 17:56:58
+es-AR: 3/9/2021 17:56:58
+es-CL: 03-09-2021 17:56:58
+es-CO: 3/9/2021, 5:56:58 p. m.
+es-ES: 3/9/2021 17:56:58
+es-MX: 3/9/2021 17:56:58
+es-US: 3/9/2021 5:56:58 p. m.
+fi-FI: 3.9.2021 klo 17.56.58
+fr-BE: 03/09/2021, 17:56:58
+fr-CA: 2021-09-03, 17 h 56 min 58 s
+fr-CH: 03.09.2021, 17:56:58
+fr-FR: 03/09/2021, 17:56:58
+he-IL: 3.9.2021, 17:56:58
+hi-IN: 3/9/2021, 5:56:58 pm
+hu-HU: 2021. 09. 03. 17:56:58
+id-ID: 3/9/2021 17.56.58
+it-CH: 3/9/2021, 17:56:58
+it-IT: 3/9/2021, 17:56:58
+ja-JP: 2021/9/3 17:56:58
+ko-KR: 2021. 9. 3. 오후 5:56:58
+nl-BE: 3/9/2021 17:56:58
+nl-NL: 3-9-2021 17:56:58
+no-NO: 3.9.2021, 17:56:58
+pl-PL: 3.09.2021, 17:56:58
+pt-BR: 03/09/2021 17:56:58
+pt-PT: 03/09/2021, 17:56:58
+ro-RO: 03.09.2021, 17:56:58
+ru-RU: 03.09.2021, 17:56:58
+sk-SK: 3. 9. 2021, 17:56:58
+sv-SE: 2021-09-03 17:56:58
+ta-IN: 3/9/2021, பிற்பகல் 5:56:58
+ta-LK: 3/9/2021, 17:56:58
+th-TH: 3/9/2564 17:56:58
+tr-TR: 03.09.2021 17:56:58
+zh-CN: 2021/9/3 下午5:56:58
+zh-HK: 3/9/2021 下午5:56:58
+zh-TW: 2021/9/3 下午5:56:58
+
+Fuente
+======
+
+-https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
+-https://stackoverflow.com/questions/27939773/tolocaledatestring-short-format
