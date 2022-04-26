@@ -4635,3 +4635,85 @@ Filtrar registros de un v-for con un campo buscar
 </script>
 </body>
 </html>
+
+=====================================
+Llamar 2 o más funciones con un click
+=====================================
+
+Agregar punto y coma; al final de las llamadas de función para que ambos
+funcionen.
+
+<input id="btn" type="button" value="click" onclick="pay(); cls();"/>
+
+===========================================================
+Acceder a los datos de un v-table o v-client-table con slot
+===========================================================
+
+<v-client-table :columns="columns" :data="records" :options="table_options">
+    <div slot="role" slot-scope="props">
+        {{ showRole(props.row.role) }}
+    </div>
+    <div slot="created_at" slot-scope="props">
+        {{ convertDate(props.row.created_at) }}
+    </div>
+    <div slot="id" slot-scope="props" class="text-center">
+        <button class="btn btn-outline-primary-dark" type="button" title="Ver registro"
+            @click="show_info('users', props.row.id)">
+            <i class="fa fa-eye"></i>
+        </button>
+        <button type="button" class="btn btn-outline-primary" title="Editar registro"
+            @click="getRecord('users-list', props.row.id)">
+            <i class="fa fa-edit"></i>
+        </button>
+        <button class="btn btn-outline-danger" type="button" title="Eliminar registro"
+            @click="deleteRecord(url, props.row.id)">
+            <i class="fas fa-trash"></i>
+        </button>
+    </div>
+</v-client-table>
+
+data() {
+    return {
+        records: [],
+        record: {
+            name: '',
+            surnames: '',
+            email: '',
+            password: '',
+            role: '',
+        },
+        columns: ['name', 'email', 'role', 'created_at', 'id'],
+    }
+},
+
+
+===============================================
+Desplácese hasta la parte superior de la página
+===============================================
+
+/**
+  * Método que lleva la pantalla al formulario
+  */
+scrollToTop() {
+  window.scrollTo(0,0);
+},
+
+====================================================
+Desplácese hasta una sección específica de la página
+====================================================
+
+Template:
+
+<div ref="porto"></div>
+
+<a class="porto-button" @click="scrollMeTo('porto')">Porto, Portugal</a>
+
+Script:
+
+methods: {
+  scrollMeTo(refName) {
+    var element = this.$refs[refName];
+    var top = element.offsetTop;
+    window.scrollTo(0, top);
+  }
+}

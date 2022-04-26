@@ -189,18 +189,56 @@ Visitamos la url http://127.0.0.1/wordpress/
 Con esto ya deberíamos ver nuestra interfáz de inicio de wordpress, donde
 llenaremos los campos del nombre del sitio, usuario, contraseña, correo, otros.
 
+=================================================
+Usando wordpress con servidor apache en Debian 11
+=================================================
+
+Actualizar los repositorios
+
+# apt-get update
+
+Instalar MariaDB
+
+# apt-get install mariadb-server
+
+Chequear la instalación con:
+
+$ mysql -V
+
+Nos logeamos en MariaDB using el usuario root de MariaDB, nos pedirá el
+password.
+
+$ sudo mysql -u root
+
 ==========================
 Poner wordpress en español
 ==========================
 
-Hay dos maneras de hacerlo, la primera es bajarse el wordpress en español
-directamente.
+Hay dos maneras de hacerlo.
 
-La otra es bajarse el paquete de lenguajes donde viene incluído el idioma
-español o copiarse la carpeta languajes al directorio
-/var/www/html/wordpress/wp-content/
+1) La primera es bajarse el wordpress en español directamente.
 
-El contenido de la carpeta languajes debería ser:
+2) La segunda es:
+
+Ir a https://translate.wordpress.org/projects/wp/dev
+
+Escoger el lenguaje, Spanish (Venezuela) por ejemplo, sería este:
+https://translate.wordpress.org/projects/wp/dev/es-ve/default/
+
+Bajar al final de la página
+
+Seleccionar exportar los archivos .po y .mo, al descargarlos obtendremos estos
+archivos: wp-dev-es-ve.mo y wp-dev-es-ve.po
+
+Ahora vamos a /var/www/html/wordpress/wp-content/ y creamos la carpeta languages
+si no existe y copiamos dentro los 2 archivos descargagos
+
+Ahora vamos al panel de Wordpress en Settings > General cambiamos el Site languajes
+a español.
+
+La manera manual sería:
+
+Luego de copiar los contenidos en la carpeta languajes quedaría así:
 
 /var/www/html/wordpress/wp-content/languages
   admin-es_ES.mo

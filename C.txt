@@ -1,0 +1,559 @@
+===============
+Guía de C by dM
+===============
+
+// Comentarios de Linea
+
+/*
+Comentarios de
+multiple Linea
+*/
+
+====
+Nota
+====
+
+Usaremos $ para describir los comandos que se usaran con usuario regular.
+
+Usaremos # para describir los comandos que se usaran con superusuario.
+
+==========================
+Instalacion del compilador
+==========================
+
+Es Necesario instalar el compilador para probar codigos de los programas
+
+# apt-get install build-essential
+
+======================
+Tipos de datos básicos
+======================
+
+C ofrece tres tipos de datos básicos:
+
+-Números enteros definidos con la palabra clave int.
+
+-Letras o caracteres definidos con la palabra clave char.
+
+-Números reales o en coma flotante definidos con las palabras claves float o
+double.
+
+==============
+Programas en C
+==============
+
+Los programas en C se guardan con la extension NombrePrograma.c
+
+Debe estar ubicado en el directorio del programa
+
+Para compilar el programa, -o para convertirlo en objeto.
+
+$ gcc programa.c -o programa
+
+Para correr el programa
+
+$ ./programa
+
+==========
+Ejercicios
+==========
+
+Imprimir Hola mundo por pantalla.
+
+#include <stdio.h>
+
+int main() {
+    printf("Hola mundo");
+    return 0;
+}
+
+-----
+
+Imprimir Hola mundo por pantalla, \n indica un salto de línea.
+
+#include <stdio.h>
+
+int main() {
+    printf("Hola mundo\n");
+    return 0;
+}
+
+-----
+
+Sumar dos números, el programa solicita los datos:
+
+#include <stdio.h>
+
+int main() {
+    int n1, n2, suma;
+    printf("\n Introduzca primer numero (entero): ");
+    scanf("%d", &n1 );
+    printf("\n Introduzca segundo numero (entero): ");
+    scanf("%d", &n2);
+    suma = n1 + n2;
+    printf("\n La suma es: %d", suma);
+    printf("\n");
+    return 0;
+}
+
+-----
+
+Multiplica dos números, el programa solicita los datos:
+
+#include <stdio.h>
+
+int main() {
+    int n1, n2, multiplicacion;
+    printf("\n Introduzca primer numero (entero): ");
+    scanf("%d", &n1 );
+    printf("\n Introduzca segundo numero (entero): ");
+    scanf("%d", &n2);
+    multiplicacion = n1 * n2;
+    printf("\n La multiplicación es: %d", multiplicacion);
+    printf("\n");
+    return 0;
+}
+
+-----
+
+Sumar 2 número pasando 2 valores por parámetros.
+
+#include <stdio.h>
+
+int suma(int a,int b) {
+    return (a+b);
+}
+int main () {
+    int a=10, b=15, resultado;
+    resultado = suma(a,b);
+    printf("%d", resultado);
+    printf("\n");
+}
+
+-----
+
+Sumar 2 número pasando 2 valores por parámetros solicitados por pantalla.
+
+#include <stdio.h>
+
+int suma(int a,int b) {
+    return (a+b);
+}
+int main () {
+    int a, b, resultado;
+    printf("\n Introduzca primer numero (entero): ");
+    scanf("%d", &a );
+    printf("\n Introduzca segundo numero (entero): ");
+    scanf("%d", &b );
+    resultado = suma(a,b);
+    printf("%d", resultado);
+    printf("\n");
+}
+
+-----
+
+Solicitar una cadena por pantalla e imprimirla por pantalla.
+
+#include <stdio.h>
+
+void main() {
+    char palabra[100];
+    printf("Introduzca una palabra: ");
+    scanf("%s", palabra);
+    printf(palabra);
+    printf("\n");
+}
+
+-----
+
+If y else sencillo, solicita la edad por pantalla.
+
+#include <stdio.h>
+
+int main(){
+    int edad;
+    printf("Escriba su edad: ");
+    scanf("%d", &edad);
+    if (edad >= 18){
+        printf("Ya puedes votar\n");
+    }
+    else {
+        printf("No puedes votar\n");
+    }
+}
+
+-----
+
+If y else anidados, solicita las edades por pantalla.
+
+#include <stdio.h>
+
+int main(){
+    int a,b;
+    printf("Pedro escriba su edad: ");
+    scanf("%d", &a);
+    printf("Juan Escriba su edad: ");
+    scanf("%d", &b);
+    if (a > b) {
+        printf("Pedro es mayor\n");
+    }
+    else {
+        if (a == b) {
+            printf("Pedro y Juan son iguales\n");
+        }
+        else {
+            if (a < b) {
+                printf("Juan es mayor\n");
+            }
+        }
+    }
+    return 0;
+}
+
+-----
+
+Convertir números enteros a letras.
+
+#include <stdio.h>
+
+int main() {
+    int numero;
+    printf("Introduzca un número entero (1-10): ");
+    scanf("%d", &numero);
+    if (numero >= 1 && numero <= 10)
+        switch ( numero )
+        {
+            case 1 : printf("uno\n");
+            break;
+            case 2 : printf("dos\n");
+            break;
+            case 3 : printf("tres\n");
+            break;
+            case 4 : printf("cuatro\n");
+            break;
+            case 5 : printf("cinco\n");
+            break;
+            case 6 : printf("seis\n");
+            break;
+            case 7 : printf("siete\n");
+            break;
+            case 8 : printf("ocho\n");
+            break;
+            case 9 : printf("nueve\n");
+            break;
+            case 10 : printf("diez\n");
+        }
+    else
+        printf("ERROR: El número debe ser >= 1 y <= 10.");
+    return 0;
+}
+
+-----
+
+Según la vocal que indroduza, mostrar un valor.
+
+#include<stdio.h>
+void main() {
+char vocal;
+    printf("Introduzca una vocal: ");
+    vocal=getchar();
+    switch(vocal) {
+        case 'a': puts("la vocal es a.");
+            break;
+        case 'e': puts("la vocal es e.");
+            break;
+        case 'i': puts("la vocal es i.");
+            break;
+        case 'o': puts("la vocal es o.");
+            break;
+        case 'u': puts("la vocal es u.");
+            break;
+        default: puts("Error");
+    }
+}
+
+-----
+
+Multiples casos, mostrar texto según el valor de la variable:
+
+#include <stdio.h>
+
+void main() {
+    char eleccion;
+    printf("Introduzca una letra: ");
+    eleccion=getchar();
+    switch (eleccion) {
+        case 'r':
+        case 'R':
+            printf("ROJO\n");
+            break;
+        case 'b':
+        case 'B':
+            printf("BLANCO\n");
+            break;
+        case 'a':
+        case 'A':
+            printf("AZUL\n");
+            break;
+    }
+}
+
+-----
+
+Comparación de cadenas con la función strcmp()
+
+#include <stdio.h>
+#include <string.h>
+
+void main(){
+    char valor[100];
+    printf( "De que color es el cielo?: " );
+    scanf( "%s", valor );
+    if (!strcmp( "azul", valor )) {
+        printf( "El resultado es correcto\n" );
+    } else {
+        printf( "El resultado incorrecto\n" );
+    }
+}
+
+-----
+
+Comparación de cadenas con la función strcmp(), convertir letras en números.
+
+#include <stdio.h>
+#include <string.h>
+
+void main() {
+    char num1[100];
+    printf("Introduzca un número en letras (Del 1 al 10): ");
+    scanf("%s", num1);
+    if (!strcmp("uno", num1)) {
+        printf("1\n");
+    }
+    else {
+        if (!strcmp("dos", num1)) {
+            printf("2\n");
+        }
+        else {
+            if (!strcmp("tres", num1)) {
+                printf("3\n");
+            }
+            else {
+                if (!strcmp("cuatro", num1)) {
+                    printf("4\n");
+                }
+                else {
+                    if (!strcmp("cinco", num1)) {
+                        printf("5\n");
+                    }
+                    else {
+                        if (!strcmp("seis", num1)) {
+                            printf("6\n");
+                        }
+                        else {
+                            if (!strcmp("siete", num1)) {
+                                printf("7\n");
+                            }
+                            else {
+                                if (!strcmp("ocho", num1)) {
+                                    printf("8\n");
+                                }
+                                else {
+                                    if (!strcmp("nueve", num1)) {
+                                        printf("9\n");
+                                    }
+                                    else {
+                                        if (!strcmp("diez", num1)) {
+                                            printf("10\n");
+                                        }
+                                        else {
+                                            printf("No existe\n");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+-----
+
+Reasignación de valores entre variables
+
+#include <stdio.h>
+
+int main() {
+    int a,b;
+    printf("Escriba el valor de a: ");
+    scanf("%d", &a);
+    b = a;
+    printf("El valor de b es: %d", b);
+    printf("\n");
+}
+
+-----
+
+Asignar una cadena como valor de una variable.
+
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char a[100];
+    strncpy(a, "+", 100);
+    printf(a);
+    printf("\n");
+}
+
+-----
+
+Convertir números escritos en letras en números enteros
+
+#include <stdio.h>
+#include <string.h>
+
+void main() {
+    char num1[100];
+    int val1;
+    char op[100];
+    char op1[100];
+    char num2[100];
+    int val2;
+    printf("Introduzca un número en letras (Del 1 al 10): ");
+    scanf("%s", &num1);
+    printf("Introduzca la operación en letras (Valores válidos: mas, menos, por, entre): ");
+    scanf("%s", &op);
+    printf("Introduzca un segundo número en letras (Del 1 al 10): ");
+    scanf("%s", &num2);
+    if (!strcmp("uno", num1)) {
+        val1 = 1;
+    }
+    else {
+        if (!strcmp("dos", num1)) {
+            val1 = 2;
+        }
+        else {
+            if (!strcmp("tres", num1)) {
+                val1 = 3;
+            }
+            else {
+                if (!strcmp("cuatro", num1)) {
+                    val1 = 4;
+                }
+                else {
+                    if (!strcmp("cinco", num1)) {
+                        val1 = 5;
+                    }
+                    else {
+                        if (!strcmp("seis", num1)) {
+                            val1 = 6;
+                        }
+                        else {
+                            if (!strcmp("siete", num1)) {
+                                val1 = 7;
+                            }
+                            else {
+                                if (!strcmp("ocho", num1)) {
+                                    val1 = 8;
+                                }
+                                else {
+                                    if (!strcmp("nueve", num1)) {
+                                        val1 = 9;
+                                    }
+                                    else {
+                                        if (!strcmp("diez", num1)) {
+                                            val1 = 10;
+                                        }
+                                        else {
+                                            printf("Uno de los datos es inválido\n");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if (!strcmp("mas", op)) {
+        strncpy(op1, "+", 100);
+    }
+    else {
+        if (!strcmp("menos", op)) {
+            strncpy(op1, "-", 100);
+        }
+        else {
+            if (!strcmp("por", op)) {
+                strncpy(op1, "*", 100);
+            }
+            else {
+                if (!strcmp("entre", op)) {
+                    strncpy(op1, "/", 100);
+                }
+                else {
+                    printf("Uno de los datos es inválido\n");
+                }
+            }
+        }
+    }
+        if (!strcmp("uno", num2)) {
+        val2 = 1;
+    }
+    else {
+        if (!strcmp("dos", num2)) {
+            val2 = 2;
+        }
+        else {
+            if (!strcmp("tres", num2)) {
+                val2 = 3;
+            }
+            else {
+                if (!strcmp("cuatro", num2)) {
+                    val2 = 4;
+                }
+                else {
+                    if (!strcmp("cinco", num2)) {
+                        val2 = 5;
+                    }
+                    else {
+                        if (!strcmp("seis", num2)) {
+                            val2 = 6;
+                        }
+                        else {
+                            if (!strcmp("siete", num2)) {
+                                val2 = 7;
+                            }
+                            else {
+                                if (!strcmp("ocho", num2)) {
+                                    val2 = 8;
+                                }
+                                else {
+                                    if (!strcmp("nueve", num2)) {
+                                        val2 = 9;
+                                    }
+                                    else {
+                                        if (!strcmp("diez", num2)) {
+                                            val2 = 10;
+                                        }
+                                        else {
+                                            printf("Uno de los datos es inválido\n");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    printf("%d ", val1);
+    printf(op1);
+    printf(" %d ", val2);
+    printf("\n");
+}
