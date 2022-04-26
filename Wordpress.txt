@@ -193,6 +193,14 @@ llenaremos los campos del nombre del sitio, usuario, contraseña, correo, otros.
 Usando wordpress con servidor apache en Debian 11
 =================================================
 
+Instalamos apache server
+
+# apt-get install apache2
+
+Instalamos php, en este caso el 7.4
+
+# apt-get install php7.4 php7.4-gd php7.4-mysql libapache2-mod-php7.4
+
 Actualizar los repositorios
 
 # apt-get update
@@ -209,6 +217,42 @@ Nos logeamos en MariaDB using el usuario root de MariaDB, nos pedirá el
 password.
 
 $ sudo mysql -u root
+
+Dentro de la consola de MySQL creamos el usuario y la contraseña del sistema de
+wordpress:
+
+> CREATE USER 'user'@'localhost' IDENTIFIED BY '123456';
+
+Creamos la base de datos del sistema wordpress.
+
+> CREATE DATABASE wordpress_db;
+
+Sobre la base de datos recién creada le asignamos el usuario:
+
+> GRANT ALL PRIVILEGES ON wordpress_db.* TO 'user'@'localhost';
+
+Refrescamos el esquema de las tablas de MySQL.
+
+> FLUSH PRIVILEGES;
+
+Renombramos el archivo de configuración por defecto de wp-config-sample.php a
+wp-config.php
+
+$ mv /var/www/html/wordpress/wp-config-sample.php /var/www/html/wordpress/wp-config.php
+
+Editamos el fichero y agregamos la db_name, user y password que creamos en el
+paso anterior y guardamos.
+
+$ vim /var/www/html/wordpress/wp-config.php
+
+Reiniciamos el servicio de apache para que todo ande calidad.
+
+$ sudo service apache2 restart
+
+Visitamos la url http://127.0.0.1/wordpress/
+
+Con esto ya deberíamos ver nuestra interfáz de inicio de wordpress, donde
+llenaremos los campos del nombre del sitio, usuario, contraseña, correo, otros.
 
 ==========================
 Poner wordpress en español
