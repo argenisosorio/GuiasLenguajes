@@ -8400,3 +8400,64 @@ CSRF, es decir que puedan usarse formularios sin que se quejen porque falta el
 token de verificación.
 
 /app/Http/Middleware/VerifyCsrfToken.php
+
+=============================================================
+Obtener los datos del usuario y el id del usuario autenticado
+=============================================================
+
+use Illuminate\Support\Facades\Auth;
+
+// Obtener el usuario actualmente autenticado...
+$user = Auth::user();
+
+// Obtener el ID del usuario actualmente autenticado...
+$id = Auth::id();
+
+===============================================================
+Funcionalidad de cambio de contraseña de un usuario autenticado
+===============================================================
+
+Ruta:
+
+// Ruta que recibe los datos de la nueva contraseña del usuario.
+Route::post('user-password-edit', [UserController::class, 'passwordEdit']);
+
+Controlador:
+
+/**
+  * Método que recibe los datos y actualiza la nueva contraseña de los
+  * usuarios.
+  *
+  * @method passwordEdit
+  */
+public function passwordEdit(Request $request)
+{
+    $request->validate(
+    [
+        'password' => 'required|min:8',
+        'password_confirmation' => 'required|min:8|same:password'
+    ],
+    [
+        'password.required' => 'El campo nueva contraseña es obligatorio',
+        'password.min' => 'El campo nueva contraseña debe contener al menos 8 caracteres',
+        'password_confirmation.required' => 'El campo confirmar contraseña es obligatorio',
+        'password_confirmation.min' => 'El campo confirmar contraseña es obligatorio',
+        'password_confirmation.same' => 'Los campos nueva contraseña y confirmar contraseña deben coincidir',
+    ]);
+
+    $id = Auth::id();
+    $user = User::find($id);
+    $user->password = Hash::make($request->input('password'));
+    $user->save();
+}
+
+=================================================
+Si el sistema redirecciona la url a popper.js.map
+=================================================
+
+ir a webpack.mix.js y agragrar .sourceMaps() tal que:
+
+mix.js('resources/js/app.js', 'public/js')
+    .sourceMaps()
+    .vue()
+    .sass('resources/sass/app.scss', 'public/css');

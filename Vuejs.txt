@@ -4717,3 +4717,14 @@ methods: {
     window.scrollTo(0, top);
   }
 }
+
+=================================================
+Si el sistema redirecciona la url a popper.js.map
+=================================================
+
+ir a webpack.mix.js y agragrar .sourceMaps() tal que:
+
+mix.js('resources/js/app.js', 'public/js')
+    .sourceMaps()
+    .vue()
+    .sass('resources/sass/app.scss', 'public/css');

@@ -349,3 +349,14 @@ Este error da al ejecutar npm run dev, se soluciona ejecutando lo siguiente:
 $ npm i @popperjs/core
 
 $ npm run dev
+
+=================================================
+Si el sistema redirecciona la url a popper.js.map
+=================================================
+
+ir a webpack.mix.js y agragrar .sourceMaps() tal que:
+
+mix.js('resources/js/app.js', 'public/js')
+    .sourceMaps()
+    .vue()
+    .sass('resources/sass/app.scss', 'public/css');
