@@ -8451,6 +8451,39 @@ public function passwordEdit(Request $request)
     $user->save();
 }
 
+Controlador incluyendo el campo password actual:
+
+public function passwordEdit(Request $request)
+{
+    $request->validate(
+    [
+        'old_password' => 'required|min:8|password',
+        'new_password' => 'required|min:8',
+        'password_confirmation' => 'required|min:8|same:new_password'
+    ],
+    [
+        'old_password.required' => 'El campo contraseña actual es obligatorio',
+        'old_password.min' => 'El campo contraseña actual debe contener al menos 8 caracteres',
+        'new_password.required' => 'El campo nueva contraseña es obligatorio',
+        'new_password.min' => 'El campo nueva contraseña debe contener al menos 8 caracteres',
+        'password_confirmation.required' => 'El campo confirmar contraseña es obligatorio',
+        'password_confirmation.min' => 'El campo confirmar contraseña es obligatorio',
+        'password_confirmation.same' => 'Los campos nueva contraseña y confirmar contraseña deben coincidir',
+        'old_password.password' => 'La contraseña actual es incorrecta',
+    ]);
+
+    $id = Auth::id();
+    $user = User::find($id);
+    if ($request->input('old_password')) {
+        if (Hash::check($request->input('old_password'), $user->password)) {
+            $id = Auth::id();
+            $user = User::find($id);
+            $user->password = Hash::make($request->input('new_password'));
+            $user->save();
+        }
+    }
+}
+
 =================================================
 Si el sistema redirecciona la url a popper.js.map
 =================================================

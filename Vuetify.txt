@@ -856,3 +856,27 @@ const routes = [
      <v-btn to="/panda">Kung Fu</v-btn>
   </v-app>
 </div>
+
+===========================================
+Agregar imagen en v-select o v-autocomplete
+===========================================
+
+Se usa template v-slot así:
+
+<v-autocomplete
+  v-model="productSelected"
+  :items="products"
+  item-text="name"
+  item-value="id"
+  label="Producto"
+>
+  <template v-slot:selection="data">
+    <v-img
+      :src="data.item.default_image"
+      height="100"
+      width="100"
+    >
+    </v-img>
+    {{ data.item.name }}
+  </template>
+</v-autocomplete>
