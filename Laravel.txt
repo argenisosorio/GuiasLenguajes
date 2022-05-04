@@ -8494,3 +8494,29 @@ mix.js('resources/js/app.js', 'public/js')
     .sourceMaps()
     .vue()
     .sass('resources/sass/app.scss', 'public/css');
+
+==================================================
+Enviar mensajes o notificaciones flash al template
+==================================================
+
+En el controlador:
+
+use Session;
+
+Session::flash('message', "Special message goes here");
+
+En el template:
+
+@if (Session::has('message'))
+  <div class="alert alert-info">{{ Session::get('message') }}</div>
+@endif
+
+================================
+Validar solo números en un campo
+================================
+
+'cédula' => ['required','digits_between:1,15'],
+
+1,15 es el rango de dígitos requeridos
+
+'cedula.digits_between' => 'La cédula de identidad debe contener solo números',

@@ -4686,7 +4686,6 @@ data() {
     }
 },
 
-
 ===============================================
 Desplácese hasta la parte superior de la página
 ===============================================
@@ -4728,3 +4727,9 @@ mix.js('resources/js/app.js', 'public/js')
     .sourceMaps()
     .vue()
     .sass('resources/sass/app.scss', 'public/css');
+
+=============================
+Operador ternario en template
+=============================
+
+<h1>{{ someProp ? 'Hello' : 'Bye' }}</h1>
