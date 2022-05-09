@@ -4499,16 +4499,6 @@ class AddTagsTable extends Migration
     }
 }
 
-Método softDeletes()
-====================
-
-El método softDeletes agrega una columna equivalente a nullable deleted_at
-TIMESTAMP con una precisión opcional (dígitos totales). Esta columna está
-destinada a almacenar la marca de tiempo deleted_at necesaria para la
-funcionalidad de "eliminación suave" de Eloquent:
-
-$table->softDeletes($column = 'deleted_at', $precision = 0);
-
 ===============
 Crear un modelo
 ===============
@@ -8520,3 +8510,64 @@ Validar solo números en un campo
 1,15 es el rango de dígitos requeridos
 
 'cedula.digits_between' => 'La cédula de identidad debe contener solo números',
+
+Método softDeletes()
+====================
+
+El método softDeletes lo que hace es agregar una columna de nombre deleted_at
+que es nullable por defecto pero cuando reciba un valor guardara un TIMESTAMP
+con una precisión opcional (dígitos totales). Esta columna está destinada a
+almacenar la marca de tiempo deleted_at necesaria para la funcionalidad de
+"eliminación suave" de Eloquent o "eliminación lógica" es decir que un registro
+no es eliminado completamente de la base de datos, sino que se desactiva y puede
+ser recuperado en caso de que se necesite, también sirve para hacer seguimiento
+de los registros eliminados:
+
+Implementación
+==============
+
+Agregramos $table->softDeletes(); en la tabla de la migración que se requiera:
+
+public function up()
+{
+    Schema::create('projects', function (Blueprint $table) {
+        $table->id();
+        $table->string('name', 255)->nullable();
+        $table->string('introduction', 500)->nullable();
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable();
+        $table->softDeletes();
+    });
+}
+
+Y en el modelo agregagos
+
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+use HasFactory, SoftDeletes;
+
+Tal que:
+
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
+
+class Project extends Model
+{
+    use HasFactory, SoftDeletes;
+
+    protected $table = 'projects';
+    public $timestamps = true;
+
+    protected $fillable = [
+        'name',
+        'introduction',
+    ];
+}
+
+Luego php artisan migrate y listo, probar revisando las tablas y eliminando un
+registro.
