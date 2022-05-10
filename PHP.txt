@@ -10,6 +10,27 @@ Usaremos $ para describir los comandos que se usaran con usuario regular.
 
 Usaremos # para describir los comandos que se usaran con superusuario.
 
+=====================================
+Instalar php 8 en GNU/Linux Debian 11
+=====================================
+
+$ sudo apt-get install apt-transport-https lsb-release ca-certificates
+
+$ sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+
+$ echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+
+$ sudo apt-get update
+
+Si da problema con la firma, volver a ejecutar:
+
+$ sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+--2019-03-18 21:28:18--  https://packages.sury.org/php/apt.gpg
+
+y probar de nuevo el update, luego:
+
+$ sudo apt-get install php8
+
 ============================================
 Instalar php 7.4 en GNU/Linux Debian 10 y 11
 ============================================
@@ -49,13 +70,64 @@ $ sudo apt-get update
 
 $ sudo apt-get install php7.2-cli
 
+===========================================
+Instalar php 7.4 y 8 en GNU/Linux Debian 11
+===========================================
+
+$ sudo apt-get install apt-transport-https lsb-release ca-certificates
+
+$ sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+
+$ echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+
+$ sudo apt-get update
+
+Si da problema con la firma, volver a ejecutar:
+
+$ sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+--2019-03-18 21:28:18--  https://packages.sury.org/php/apt.gpg
+
+y probar de nuevo el update, luego:
+
+$ sudo apt-get install php7.4 php8.1
+
+Al ejecutar:
+
+$ php -v
+
+Nos mostrará que la versión por defecto es la 8, pero ejecutando el siguiente
+comando podemos elegir la versión que queremos por defecto:
+
+$ sudo update-alternatives --config php
+
 -----
 
 Verificar la versión de php que se instaló.
 
 $ php -v
 
------
+====================
+Servidor web interno
+====================
+
+Advertencia
+===========
+
+Este servidor web ha sido diseñado para ayudar al desarrollo de aplicaciones.
+También puede ser útil para propósitos de prueba o para demostraciones de
+aplicaciones que se ejecutan en entornos controlados. No se pretende que sea un
+servidor web con todas las funciones. No debe ser utilizado en una red pública.
+
+Iniciando el servidor web:
+
+$ php -S localhost:8000
+[Tue May 10 19:51:42 2022] PHP 7.4.25 Development Server (http://localhost:8000) started
+
+$ php8.1 -S localhost:8000
+[Tue May 10 19:51:58 2022] PHP 8.1.5 Development Server (http://localhost:8000) started
+
+Si ejecutamos eso en /var/www/html y tenemos un index.php por ejemplo, nos lo
+abre automáticamente con el servidor que está corriendo.
 
 ============================================
 Paquetes de PHP para usar con mysql y apache
