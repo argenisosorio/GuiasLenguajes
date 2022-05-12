@@ -880,3 +880,18 @@ Se usa template v-slot así:
     {{ data.item.name }}
   </template>
 </v-autocomplete>
+
+=====================================================
+Cambiar el color de una imagen svg, invertir el color
+=====================================================
+
+Si por ejemplo el ícono es negro, con style="filter: invert(1)" lo invertimos
+a blanco.
+
+<v-img
+  class="mx-auto"
+  :src="@/assets/icons/report.svg"
+  height="60"
+  width="60"
+  style="filter: invert(1)"
+></v-img>

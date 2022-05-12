@@ -3183,7 +3183,8 @@ X11 forwarding a través de ssh
 X11, es el servidor gráfico que usan casi todas las distribuciones Linux. Este
 servidor permite, entre otras cosas, forwarding a través de SSH. Esto significa
 que es posible ejecutar apliaciones gráficas de una máquina remota exportando el
-display a nuestro escritorio. Es decir, la aplicación se ejecuta en el servidor remoto, pero la interfaz gráfica la visualizamos en nuestro escritorio local.
+display a nuestro escritorio. Es decir, la aplicación se ejecuta en el servidor
+remoto, pero la interfaz gráfica la visualizamos en nuestro escritorio local.
 
 Ejemplo:
 
@@ -6019,8 +6020,12 @@ Lista filtrada de dispositivos de audio del sistema.
 
 $ pacmd list-sources | egrep '^\s+name: .*alsa_output'
 
+Eso nos mostrará algo como esto:
+
+name: <alsa_output.pci-0000_00_1b.0.analog-stereo.monitor>
+
 Luego de identificar el dispositivo usaremos el comando para grabar el audio de
-la máquina.
+la máquina usando el dispositivo que identificamos:
 
 $ parecord --channels=1 -d alsa_output.pci-0000_00_1b.0.analog-stereo.monitor grabacion.wav
 
@@ -7113,8 +7118,8 @@ vm.vfs_cache_pressure = 50
 vm.watermark_scale_factor = 200
 vm.dirty_ratio = 3
 
-3) Una vez pegado el código ya pueden guardar los cambios, cerrar el fichero, para
-aplicar los cambios sin reiniciar usamos el siguiente comando:
+3) Una vez pegado el código ya pueden guardar los cambios, cerrar el fichero,
+para aplicar los cambios sin reiniciar usamos el siguiente comando:
 
 $ sudo sysctl -p
 
@@ -7549,7 +7554,7 @@ curr1:         2.74 A
 Donde notamos que nos dice la temperatura actual en grados centigrados, además
 de que nos indica cual valor sería lato y cual sería crítico.
 
-Para el procesador no dedbería pasar de los 70°C, en este ejemplo está en 58°C
+Para el procesador no de bería pasar de los 70°C, en este ejemplo está en 58°C
 cada núcleo.
 
 ===========================
