@@ -4746,14 +4746,12 @@ Una vez que todo esté comentado, agregamos lo siguiente:
 # Debian GNU/Linux 9 Stretch
 # ==========================
 
-deb http://deb.debian.org/debian stretch main contrib non-free
-deb-src http://deb.debian.org/debian stretch main contrib non-free
-
-deb http://security.debian.org/debian-security/ stretch/updates main
-deb-src http://security.debian.org/debian-security/ stretch/updates main
-
 deb http://deb.debian.org/debian stretch-updates main
-deb-src http://deb.debian.org/debian stretch-updates main
+deb http://deb.debian.org/debian stretch main contrib non-free
+deb http://http.debian.net/debian/ stretch main contrib non-free
+deb http://security.debian.org/debian-security/ stretch/updates main
+deb https://fasttrack.debian.net/debian-fasttrack/ stretch-fasttrack main contrib
+deb https://fasttrack.debian.net/debian-fasttrack/ stretch-backports-staging main contrib
 
 Actualizamos la lista de los repositorios con:
 
