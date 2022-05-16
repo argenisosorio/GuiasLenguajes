@@ -895,3 +895,30 @@ a blanco.
   width="60"
   style="filter: invert(1)"
 ></v-img>
+
+Agregando ternario o condicional en el style, $vuetify.theme.dark puede ser true
+o false:
+
+<v-img
+  v-else
+  class="mx-auto"
+  :src="item.img"
+  height="60"
+  width="60"
+  :style="
+    $vuetify.theme.dark
+      ? 'filter: invert(1)'
+      : 'filter: invert(0)'
+  "
+></v-img>
+
+Fuente
+======
+
+https://stackoverflow.com/questions/22252472/how-to-change-the-color-of-an-svg-element
+
+==============================================================
+Obtener el color del filter conviertiendo el color hexadecimal
+==============================================================
+
+https://isotropic.co/tool/hex-color-to-css-filter/#:~:text=Simply%20paste%20your%20color%20(as,the%20CSS%20code%20as%20needed.
