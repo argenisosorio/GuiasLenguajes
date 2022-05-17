@@ -1,36 +1,50 @@
 ##### Guía de Nginx by dM #####
 
-##### Nginx #####
+Nginx (pronunciado en inglés "engine X") es un servidor web/proxy inverso ligero
+de alto rendimiento y un proxy para protocolos de correo electrónico
+(IMAP/POP3).
 
-Nginx (pronunciado en inglés "engine X") es un servidor web/proxy inverso ligero de alto rendimiento y un proxy
-para protocolos de correo electrónico (IMAP/POP3).
+======================
+Ventajas de usar Nginx
+======================
 
-##### Ventajas de usar Nginx #####
-
-Se trata de un software multiplataforma, por lo tanto podremos instalarlo en la mayoría de nuestros servidores.
+Se trata de un software multiplataforma, por lo tanto podremos instalarlo en la
+mayoría de nuestros servidores.
 
 Consume menos recursos que la mayoría de servicios que hacen su misma función.
 
-Nos proporciona un alto rendimiento soportando mayor carga y respondiendo mejor que sus competidores.
+Nos proporciona un alto rendimiento soportando mayor carga y respondiendo mejor
+que sus competidores.
 
 Puede ser usado como proxy inverso cacheando el contenido de nuestros sitios web.
 
-Podemos integrarlo junto con Apache, de forma que Nginx procese contenido estático y Apache contenido dinámico.
+Podemos integrarlo junto con Apache, de forma que Nginx procese contenido
+estático y Apache contenido dinámico.
 
-Puede usarse como balanceador de carga entre varios servidores, permitiéndonos así una mayor facilidad a la hora de escalar nuestros servidores.
+Puede usarse como balanceador de carga entre varios servidores, permitiéndonos
+así una mayor facilidad a la hora de escalar nuestros servidores.
 
-Es compatible con una gran variedad de CMS y aplicaciones actuales como pueden ser: Wordpress, Drupal, Prestashop, y muchas más.
+Es compatible con una gran variedad de CMS y aplicaciones actuales como pueden
+ser: Wordpress, Drupal, Prestashop, y muchas más.
 
-El proyecto Nginx tiene detrás a la empresa Nginx Inc. y también cuenta con el apoyo de una gran comunidad contribuyendo a mejorar y resolver dudas. También podemos recurrir a soporte profesional.
+El proyecto Nginx tiene detrás a la empresa Nginx Inc. y también cuenta con el
+apoyo de una gran comunidad contribuyendo a mejorar y resolver dudas. También
+podemos recurrir a soporte profesional.
 
-##### Inconvenientes de usar Nginx #####
+============================
+Inconvenientes de usar Nginx
+============================
 
-No se integra con PHP de forma nativa. Es necesario usar FastCGI para poder integrarlo.
+No se integra con PHP de forma nativa. Es necesario usar FastCGI para poder
+integrarlo.
 
-##### Instalación #####
+===========
+Instalación
+===========
 
 No debe estar instalado Apache porque puede dar problemas, como por ejemplo
-que ambos servidores usan algunos puertos por defecto, lo que conlleva a colisiones.
+que ambos servidores usan algunos puertos por defecto, lo que conlleva a
+colisiones.
 
 # apt-get install nginx
 

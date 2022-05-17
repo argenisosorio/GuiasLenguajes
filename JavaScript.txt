@@ -549,8 +549,29 @@ Fuente
 
 https://desarrolloweb.com/articulos/recorridos-propiedades-objetos-javascript-forin.html
 
+=========
 forEach()
 =========
+
+<!DOCTYPE html>
+<html>
+<body>
+<h1>JavaScript Arrays</h1>
+<h2>The forEach() Method</h2>
+<p>forEach() calls a function for each element in an array:</p>
+<p id="demo"></p>
+<script>
+const fruits = ["apple", "orange", "cherry"];
+fruits.forEach(myFunction);
+function myFunction(item, index) {
+  console.log(index);
+  console.log(item);
+}
+</script>
+</body>
+</html>
+
+-----
 
 <!DOCTYPE html>
 <html>
