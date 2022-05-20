@@ -4733,3 +4733,52 @@ Operador ternario en template
 =============================
 
 <h1>{{ someProp ? 'Hello' : 'Bye' }}</h1>
+
+=======
+@change
+=======
+
+Asignas a tu select que ejecute una funcion cuando ocurra el evento onChange, y
+luego habilitas o deshabilitas una propiedad de tu data para que apague o prenda
+el textbox
+
+<select id="pais" class="form-control" @change="onChange()" required>
+
+Y tu textbox deberia tener
+
+<input type="text" name="ciudad" id="ciudad" :disabled="habilitado == 1" class="form-control">
+
+Y en tu control deberías tener:
+
+data: {
+  habilitado : 0
+},
+methods: {
+  onChange() {
+    if (lo que necesites) {
+        this.habilitado = 1
+    } else {
+        this.habilitado = 0
+    }
+  }
+}
+
+====
+Vuex
+====
+
+Es un patrón de gestión de estado + biblioteca para aplicaciones Vue.js. Sirve
+como un almacén centralizado para todos los componentes de una aplicación, con
+reglas que garantizan que el estado solo se puede modificar de forma predecible.
+
+======================
+v-for otions en select
+======================
+
+<select2
+  v-model="record.position_reference_column"
+>
+  <option v-for="(value, key) in lines" :value="key">
+      {{ value.text }}
+  </option>
+</select2>
