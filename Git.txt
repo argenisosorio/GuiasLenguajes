@@ -1119,3 +1119,17 @@ Fuente
 ======
 
 https://blog.artegrafico.net/git-archive-exportacion-del-contenido-de-un-repositorio
+
+=========================
+Devolver cambio del stage
+=========================
+
+Usa "git restore --staged <archivo>..." para sacar del área de stage, ejemplo:
+
+$ git add app/Http/Controllers/UserController.php
+
+Con lo anterior UserController.php está en stage
+
+Ahora lo sacamops de stage con:
+
+$ git restore --staged app/Http/Controllers/UserController.php
