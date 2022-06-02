@@ -8301,3 +8301,56 @@ Agregar punto y coma; al final de las llamadas de función para que ambos
 funcionen.
 
 <input id="btn" type="button" value="click" onclick="pay(); cls();"/>
+
+=========================================
+Cómo usar JSON.parse() y JSON.stringify()
+=========================================
+
+El objeto JSON, que está disponible en todos los navegadores modernos, tiene dos
+útiles métodos para manejar el contenido con formato JSON: parse y stringify.
+
+JSON.parse() toma una cadena JSON y la transforma en un objeto de JavaScript.
+
+JSON.stringify() toma un objeto de JavaScript y lo transforma en una cadena
+JSON.
+
+Ejemplo:
+
+const myObj = {
+  name: 'Skip',
+  age: 2,
+  favoriteFood: 'Steak'
+};
+
+const myObjStr = JSON.stringify(myObj);
+
+console.log(myObjStr);
+// "{"name":"Sammy","age":6,"favoriteFood":"Tofu"}"
+
+console.log(JSON.parse(myObjStr));
+// Object {name:"Sammy",age:6,favoriteFood:"Tofu"}
+
+=========================================
+Obtener fecha y hora actual en JavaScript
+=========================================
+
+Fecha actual en JavaScript:
+
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+
+Hora actual en JavaScript:
+
+var today = new Date();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+Fecha y hora actual, ambos en JavaScript:
+
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date+' '+time;
+
+Resulta en:
+
+2018-8-3 11:12:40
