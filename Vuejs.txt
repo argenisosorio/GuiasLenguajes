@@ -4809,3 +4809,27 @@ Fuente
 ======
 
 https://laracasts.com/discuss/channels/vue/how-to-replace-a-dot-with-a-comma-for-a-number-in-vuejs
+
+
+================================
+Eliminar elementos de un arreglo
+================================
+
+Template:
+
+<div class="list-group-item" v-for="event in events">
+  <h4 class="list-group-item-heading">
+  {{ event.name }}
+  </h4>
+  <h5>
+  {{ event.date }}
+  </h5>
+  <p class="list-group-item-text" v-if="event.description">{{ event.description }}</p>
+  <button class="btn btn-xs btn-danger" @click="deleteEvent(event)">Delete</button>
+</div>
+
+Script:
+
+deleteEvent: function(event) {
+  this.events.splice(this.events.indexOf(event), 1);
+}
