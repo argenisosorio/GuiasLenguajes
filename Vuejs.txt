@@ -4782,3 +4782,30 @@ v-for otions en select
       {{ value.text }}
   </option>
 </select2>
+
+
+========================
+Remplazar coma por punto
+========================
+
+<p>{{ quantity | formatQuantity }}</p>
+
+new Vue({
+    el: '#app',
+
+    data: {
+        quantity: 0.25,
+    },
+
+    filters: {
+        // you can call this whatever you want to
+        formatQuantity (value) {
+            return value.replace('.', ',');
+        }
+    }
+});
+
+Fuente
+======
+
+https://laracasts.com/discuss/channels/vue/how-to-replace-a-dot-with-a-comma-for-a-number-in-vuejs

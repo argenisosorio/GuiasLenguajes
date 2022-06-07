@@ -186,6 +186,7 @@ export default new Vuetify({
   theme: {
     themes: {
       light: {
+        // primary: '#3f51b5',
         primary: colors.red.darken1,
         colorPersonalizado: '#000000'
       }
@@ -922,3 +923,29 @@ Obtener el color del filter conviertiendo el color hexadecimal
 ==============================================================
 
 https://isotropic.co/tool/hex-color-to-css-filter/#:~:text=Simply%20paste%20your%20color%20(as,the%20CSS%20code%20as%20needed.
+
+========================
+Remplazar coma por punto
+========================
+
+<p>{{ quantity | formatQuantity }}</p>
+
+new Vue({
+    el: '#app',
+
+    data: {
+        quantity: 0.25,
+    },
+
+    filters: {
+        // you can call this whatever you want to
+        formatQuantity (value) {
+            return value.replace('.', ',');
+        }
+    }
+});
+
+Fuente
+======
+
+https://laracasts.com/discuss/channels/vue/how-to-replace-a-dot-with-a-comma-for-a-number-in-vuejs
