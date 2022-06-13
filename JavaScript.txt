@@ -8362,3 +8362,11 @@ var dateTime = date+' '+time;
 Resulta en:
 
 2018-8-3 11:12:40
+
+=============================================================
+Método que ordena un arreglo de más reciente a menos reciente
+=============================================================
+
+sortedItems (items) {
+  return this.items.sort((a, b) => new Date(b.crated_at) - new Date(a.created_at))
+},
