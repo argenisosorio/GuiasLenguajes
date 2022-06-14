@@ -2396,6 +2396,10 @@ probar:
 
 dd("Mensajes de prueba");
 
+dd($request());
+
+dd($request->input());
+
 ===============================================
 Consultar la base de datos desde un controlador
 ===============================================
@@ -8571,3 +8575,69 @@ class Project extends Model
 
 Luego php artisan migrate y listo, probar revisando las tablas y eliminando un
 registro.
+
+======================================
+Guardar archivos en laravel file input
+======================================
+
+1) Agregamos el campo document en la migración:
+
+public function up()
+{
+    Schema::create('projects', function (Blueprint $table) {
+        $table->string('document', 200)->nullable();
+    });
+}
+
+2) Agregamos el campo document en el modelo como fillable:
+
+protected $fillable = [
+    'document'
+];
+
+3) Agregamos el campo document en el método store
+
+public function store(Request $request)
+{
+    $request->validate([
+        'document' => 'required',
+        'document' => 'mimes:jpeg,gif,bmp,png'
+    ]);
+
+    $file_path = $request->file('document')->store('public/projects');
+    Project::create([
+        'document' => $file_path
+    ]);
+    return redirect()->route('projects.index')->with('success', 'Project created successfully.');
+}
+
+4) Agregamos el campo document en el formulario:
+
+<form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data">@csrf
+  <div>
+    <label>Document</label>
+    <input type="file" name="document" />
+  </div>
+  <button type="submit">SAVE</button>
+</form>
+
+5) Si guardamos un archivo .png por ejemplo, no conservara su nombre original
+y en la base de datos se guardara como public/projects/Dnv5HKKkarOhMGJIOdQP.png
+por ejemplo, sin embargo el archivo integro se almacenará en
+my-project/storage/app/public, pero para que pueda ser visualizado en el
+navegador se debe hacer un enlace simbólico con el siguiente comando:
+
+$ php artisan storage:link
+
+La salida sería:
+
+The [/home/user/my-project/public/storage] link has been connected to
+[/home/user/my-project/storage/app/public].
+The links have been created.
+
+Esto quiere decir que la imagen ahora se encuentra en
+my-project/public/storage/projects/Dnv5HKKkarOhMGJIOdQP.png
+
+Y desde el navegador será accesible desde:
+
+http://127.0.0.1:8000/storage/projects/Dnv5HKKkarOhMGJIOdQP.png
