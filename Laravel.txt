@@ -8571,3 +8571,12 @@ class Project extends Model
 
 Luego php artisan migrate y listo, probar revisando las tablas y eliminando un
 registro.
+
+=================================================
+Usando doble where en una consulta de controlador
+=================================================
+
+$users = DB::table('users')
+    ->where('votes', '=', 100)
+    ->where('age', '>', 35)
+    ->get();
