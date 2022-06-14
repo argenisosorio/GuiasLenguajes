@@ -263,6 +263,14 @@ para leer (sobretodo para principiantes). Por eso se explícita, para reconocerl
 cuando este leyendo código. Sin embargo su utilización no es recomendable a
 menos que esté cómodo con el concepto y su comportamiento.
 
+Ejemplo:
+
+const a = 3;
+const b = 2;
+const c = 1;
+console.log(a > b || c > b);
+// expected output: true
+
 Operadores de comparación
 =========================
 
@@ -8354,3 +8362,11 @@ var dateTime = date+' '+time;
 Resulta en:
 
 2018-8-3 11:12:40
+
+=============================================================
+Método que ordena un arreglo de más reciente a menos reciente
+=============================================================
+
+sortedItems (items) {
+  return this.items.sort((a, b) => new Date(b.crated_at) - new Date(a.created_at))
+},
