@@ -4833,3 +4833,99 @@ Script:
 deleteEvent: function(event) {
   this.events.splice(this.events.indexOf(event), 1);
 }
+
+==========================
+Preview the selected image
+==========================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Preview the selected image</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+<body>
+  <main id="app">
+    <div style="border-style:solid">
+      <input type="file" ref="file" @change="readFile()" />
+      <div v-if="image">
+        <img :src="preview" />
+      </div>
+    </div>
+  </main>
+<script>
+  var example = new Vue({
+    el: '#app',
+    data: {
+      file: null,
+      image: false,
+      preview: null
+    },
+    methods: {
+      readFile: function() {
+        this.file = this.$refs.file.files[0];
+        if (this.file.name.includes(".png") || this.file.name.includes(".jpg")) {
+          this.image = true;
+          this.preview = URL.createObjectURL(this.file);
+        }
+        else {
+          this.image = false;
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>
+
+=========================
+Preview selected txt file
+=========================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Preview selected txt file</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+<body>
+  <main id="app">
+    <div style="border-style:solid">
+      <input type="file" ref="doc" @change="readFile()" />
+        <div>{{content}}</div>
+      </div>
+  </main>
+<script>
+  var example = new Vue({
+    el: '#app',
+    data: {
+      file: null,
+      content: null
+    },
+    methods: {
+      readFile: function() {
+        this.file = this.$refs.doc.files[0];
+        const reader = new FileReader();
+        if (this.file.name.includes(".txt")) {
+          reader.onload = (res) => {
+            this.content = res.target.result;
+          };
+          reader.onerror = (err) => console.log(err);
+          reader.readAsText(this.file);
+        }
+        else {
+          this.content = "File not is .txt, check the console for file output";
+          reader.onload = (res) => {
+            console.log(res.target.result);
+          };
+          reader.onerror = (err) => console.log(err);
+          reader.readAsText(this.file);
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>

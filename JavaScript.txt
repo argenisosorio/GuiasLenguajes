@@ -8370,3 +8370,27 @@ Método que ordena un arreglo de más reciente a menos reciente
 sortedItems (items) {
   return this.items.sort((a, b) => new Date(b.crated_at) - new Date(a.created_at))
 },
+
+==================================================
+Obtener solo el año a partir de una fecha completa
+==================================================
+
+<!DOCTYPE html>
+<html>
+<body>
+<h1>JavaScript Dates</h1>
+<h2>The getFullYear() Method</h2>
+<p>getFullYear() returns the year with four digits:</p>
+<p id="demo"></p>
+<script>
+const d = new Date("July 21, 1983 01:15:00");
+let year = d.getFullYear();
+document.getElementById("demo").innerHTML = year;
+</script>
+</body>
+</html>
+
+Resultado
+=========
+
+1983
