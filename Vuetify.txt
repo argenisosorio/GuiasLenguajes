@@ -955,3 +955,36 @@ Generador de iconos para app (diferentes sistemas operativos y navegadores)
 ===========================================================================
 
 https://realfavicongenerator.net
+
+=======================================================
+Validación, limitar el número de caracteres en un campo
+=======================================================
+
+<input v-model="amount"
+  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+  type = "number"
+  maxlength = "10"
+/>
+
+===================================
+Validación solo números en un campo
+===================================
+
+<input
+  type="number"
+  oninput="this.value=this.value.replace(/[^0-9]/g,'');"
+  v-model="record.dni"
+/>
+
+==========================================================
+Configuración de .htaccess de Apache para Vue y vue-router
+==========================================================
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>

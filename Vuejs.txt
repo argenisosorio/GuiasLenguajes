@@ -3351,9 +3351,9 @@ elemento, como este:
 
 <input v-focus>
 
-======================
-Propiedades computadas
-======================
+===============================
+Propiedades computadas computed
+===============================
 
 Las expresiones en el template son muy convenientes, pero están diseñadas para
 operaciones simples. Poner demasiada lógica en sus templates puede hacerlos
@@ -4834,6 +4834,7 @@ deleteEvent: function(event) {
   this.events.splice(this.events.indexOf(event), 1);
 }
 
+<<<<<<< HEAD
 ==========================
 Preview the selected image
 ==========================
@@ -4929,3 +4930,17 @@ Preview selected txt file
 </script>
 </body>
 </html>
+=======
+==========================================================
+Configuración de .htaccess de Apache para Vue y vue-router
+==========================================================
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+>>>>>>> f99e85ef80c4a3cb03e9cd43c0ecd59c6418b399
