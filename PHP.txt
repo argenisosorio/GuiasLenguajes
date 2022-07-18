@@ -1137,14 +1137,15 @@ configuración cuando estas ejecutando php por consola.
 
 La ruta seria entonces /etc/php/7.4/cli/php.ini
 
-Cuando se está usando el servidor apache, el busca la configuración en esta
+Cuando se está usando el servidor http apache, el busca la configuración en esta
 ruta:
 
 /etc/php/7.4/apache2/php.ini
 
-Cuando se ejecuta mediante consola, el busca la configuración en esta ruta:
+Cuando se está usando el servidor http nginx, el busca la configuración en esta
+ruta:
 
-/etc/php/7.4/cli/php.ini
+/etc/php/7.2/fpm/php.ini
 
 ================================
 Instalar y configurar phpMyAdmin
