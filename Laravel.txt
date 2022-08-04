@@ -8651,3 +8651,11 @@ Y desde el navegador será accesible desde:
 
 http://127.0.0.1:8000/storage/projects/Dnv5HKKkarOhMGJIOdQP.png
 
+======================
+float() en migraciones
+======================
+
+El primer parámetro es el nombre del campo, el segundo parámetro corresponde al
+máximo de dígitos y el tercero al máximo número de decimales.
+
+$table->float('amount', 8, 2);
