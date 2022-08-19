@@ -602,7 +602,9 @@ Copiar datos de una tabla a un fichero .csv
 Creamos un fichero .csv, en este ejemplo será "x.csv" y lo guardamos en el
 /home/user/ luego le damos permisos con:
 
-# chmod 777 x.csv
+$ touch x.csv
+
+$ sduo chmod 777 x.csv
 
 Luego, desde la línea de comandos de postgres, nos conectamos a la db y ahí
 ponemos el comando de copia de la tabla que queremos:

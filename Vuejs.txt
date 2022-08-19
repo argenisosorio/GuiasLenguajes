@@ -4930,7 +4930,7 @@ Preview selected txt file
 </script>
 </body>
 </html>
-=======
+
 ==========================================================
 Configuración de .htaccess de Apache para Vue y vue-router
 ==========================================================
@@ -4943,4 +4943,22 @@ Configuración de .htaccess de Apache para Vue y vue-router
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]
 </IfModule>
->>>>>>> f99e85ef80c4a3cb03e9cd43c0ecd59c6418b399
+
+============================
+Recargar página con un click
+============================
+
+<template>
+  <button @click="reloadPage">Reload</button>
+</template>
+
+<script>
+export default {
+  ...
+  methods: {
+    reloadPage() {
+      window.location.reload();
+    }
+  }
+}
+</script>
