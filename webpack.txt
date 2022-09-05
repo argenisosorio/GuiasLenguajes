@@ -717,6 +717,41 @@ $ npm run build
 y nuestro estilo estara compilado en bundle.js y luego chequeamos nuestros
 estilos en el navegador examinando index.js.
 
+==========================================================
+Introducción a los mapas fuente de JavaScript o sourcemaps
+==========================================================
+
+¿Alguna vez deseaste poder mantener el código del lado del cliente legible y, lo
+que es más importante, depurable incluso después de haberlo combinado y
+minimizado, sin afectar el rendimiento? Pues ahora puedes gracias a la magia de
+los mapas de origen.
+
+Básicamente, es una forma de mapear un archivo combinado/minificado a un estado
+no construido. Cuando se compila y construye para la producción, además de
+minimizar y combinar sus archivos JavaScript, genera un mapa de origen que
+contiene información sobre sus archivos originales. Cuando consulta un
+determinado número de línea y columna en su JavaScript generado, puede realizar
+una búsqueda en el mapa de origen que devuelve la ubicación original. Las
+herramientas de desarrollo (actualmente compilaciones nocturnas de WebKit,
+Google Chrome o Firefox) pueden analizar el mapa de origen automáticamente y
+hacer que parezca que está ejecutando archivos sin minimizar ni combinar.
+
+Algunos proyectos que usen vue, pueden quejarse porque intentan buscar el
+archivo .map y este les da error, es por eso que esto se soluciona acompañando
+la librería a usar con su respectivo archivo de mapa fuente, ejemplo:
+
+popper.min.js
+popper.min.js.map
+
+Cuando se está usando una librería que se gestiona con node, y se está usando
+webpack, la solución puede ser agregar el método sourceMaps() en el archivo de
+configuración de webpack.mix.js, tal que:
+
+mix.js('resources/js/app.js', 'public/js')
+    .vue()
+    .sass('resources/sass/app.scss', 'public/css')
+    .sourceMaps();
+
 =================================================
 Si el sistema redirecciona la url a popper.js.map
 =================================================
