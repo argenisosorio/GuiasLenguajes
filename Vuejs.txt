@@ -4962,3 +4962,33 @@ export default {
   }
 }
 </script>
+
+=================================================
+Importar una función desde otro archivo js en Vue
+=================================================
+
+1- Creamos el nuevo archivo js, por ejemplo test.js
+
+2- Dentro del archivo creado agergamos y guardamos:
+
+var test = {
+  foo () {
+    console.log('foo');
+  },
+}
+
+export default test
+
+2- En nuestro componente importamos el archivo, le pasamos la ruta relativa
+donde esté, tal que:
+
+import test from '../../test'
+
+3- Llamamos nuestro método, invocando primero el nombre que declaramos en la
+importación del archivo, tal que:
+
+test.foo();
+
+4- Esto nos debe imprimir en la consola de js lo siguiente:
+
+foo
