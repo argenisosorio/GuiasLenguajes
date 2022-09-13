@@ -8446,12 +8446,104 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .sourceMaps();
 
-====================================================
-Limitar el número de elementos del arreglo a obtener
-====================================================
+================================================================
+Limitar el número de elementos del arreglo a obtener con slice()
+================================================================
 
 slice(0, n)
 
 Para obtener los primeros n elementos del arrlego usar:
 
 myArray.slice(0, n);
+
+===============
+Método filter()
+===============
+
+El método filter() crea una nueva matriz llena de elementos que pasan una prueba
+proporcionada por una función.
+
+El método filter() no ejecuta la función para elementos vacíos.
+
+El método filter() no cambia la matriz original.
+
+Ejemplo
+=======
+
+const ages = [15, 17, 18, 25, 35, 40];
+
+/**
+ * Método que recibe "age" como parámetro y lo devuelve solo si es mayor o igual
+ * a 18.
+ */
+function checkAdult(age) {
+  return age >= 18;
+}
+
+const result = ages.filter(checkAdult);
+
+console.log(ages);
+console.log(result);
+
+Otro ejemplo
+============
+
+const ages = [15, 17, 18, 25, 35, 40];
+const user = 15;
+
+function checkUser(age) {
+  return age === user;
+}
+
+// Cada elemento de "ages" se le pasa a checkUser mediante filter, es ahí
+// donde realiza la comparación con cada uno.
+
+const result = ages.filter(checkUser);
+console.log(result);
+
+================
+Comparación (==)
+================
+
+El operador de comparacion (==) comprueba si sus dos operandos son iguales y
+devuelve un resultado booleano. A diferencia del operador de igualdad estricta
+(===), es que este convierte y compara operandos que son de diferentes tipos.
+
+Ejemplo
+=======
+
+console.log(1 == 1);
+// expected output: true
+
+console.log('hello' == 'hello');
+// expected output: true
+
+console.log('1' ==  1);
+// expected output: true
+
+console.log(0 == false);
+// expected output: true
+
+=======================
+Igualdad Estricta (===)
+=======================
+
+El operador de estricta igualdad (===) revisa si dos operandos son iguales y
+produce un resultado Booleano. A diferencia del operador de igualdad regular
+(==), el operador de estricta igualdad siempre considera que los operandos de
+distinto tipo de valor son diferentes y nunca similares.
+
+Ejemplo
+=======
+
+console.log(1 === 1);
+// expected output: true
+
+console.log('hello' === 'hello');
+// expected output: true
+
+console.log('1' ===  1);
+// expected output: false
+
+console.log(0 === false);
+// expected output: false
