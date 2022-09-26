@@ -8659,3 +8659,34 @@ El primer parámetro es el nombre del campo, el segundo parámetro corresponde a
 máximo de dígitos y el tercero al máximo número de decimales.
 
 $table->float('amount', 8, 2);
+
+======================================================================
+Obtener el valor de una variable del archivo .env desde un controlador
+======================================================================
+
+En el archivo .env declaramos SEND_MAILS=true
+
+Ahora en el controlador declaramos:
+
+$send_mails = env('SEND_MAILS');
+
+Ahora la variable $send_mails tendra el valor de la variable del .env
+
+Comprobar si está presente en el .env
+=====================================
+
+if (null !== env('SEND_MAILS')) {
+    dd("está presente SEND_MAILS en el .env");
+}
+else {
+    dd("No está presente SEND_MAILS en el .env");
+}
+
+Ejemplo
+=======
+
+Si es true, enviar email
+
+if ($send_mails === true) {
+    $user->notify(new UserRegistered($password));
+}
