@@ -6185,6 +6185,25 @@ class ProjectController extends Controller
 
 Si navegamos a /sendmail debería envíar el correo.
 
+=================================
+Envío de correo mediante notify()
+=================================
+
+notify() siempre va enviar un correo por defecto a un objeto email del cual
+reciba datos, por ejemplo:
+
+$user->notify(new UserRegistered());
+
+Donde $user es el usuario de Laravel el cual tiene un campo email.
+
+Pero si se quiere enviar un correo a otro correo que no sea el de usuario,
+se puede construir un arreglo temporal pasa que notify() encuentre el valor
+email que le indiquemos, ejemplo:
+
+// Enviar correo electrónico a la dirección que viene de $request->another_email
+(new User)->forceFill(['email' => $request->another_email])
+->notify(new UserRegistered());
+
 =========================
 Campo select en una vista
 =========================
