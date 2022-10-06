@@ -8604,6 +8604,39 @@ $users = DB::table('users')
     ->where('age', '>', 35)
     ->get();
 
+==========================================
+Validar tamaño y tipo extensión de archivo
+==========================================
+
+public function store(Request $request)
+{
+    $this->validate(
+        $request,
+        [
+            'refusal_file' => ['required', 'min:1', 'max:5120', 'mimes:pdf,docx,doc,odt'],
+        ],
+        [
+            'refusal_file.required' => 'El acta de negativa familiar es obligatoria',
+            'refusal_file.max' => 'El acta de negativa familiar no debe pesar más de 5MB',
+            'refusal_file.mimes' => 'El acta de negativa familiar debe ser un archivo de tipo: pdf, docx, doc, odt',
+        ]
+    );
+
+    DB::transaction(function () use ($request) {
+        $file_path = $request->file('refusal_file')->store('public/refusal');
+        Donor::updateOrCreate(
+            [
+                'id' => $request->donor_id,
+            ],
+            [
+                'url_family_refusal_file' => $file_path,
+            ]
+        );
+    });
+
+    return $this->success('success');
+}
+
 ======================================
 Guardar archivos en laravel file input
 ======================================
