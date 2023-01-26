@@ -698,9 +698,27 @@ salida del shell en el fichero x.txt que se creará.
 
 # sudo find / -type f -name /home/user/fichero.c>>/home/user/x.txt
 
-====================================================
+===================================================
 Comando para el mantenimiento de los logs de Debian
-====================================================
+===================================================
+
+Los logs del sistema se almacenan en /var/log/* tiene un limite maximo, se van
+guardando comprimidos y luego se van borrando automáticamente.
+
+-----
+
+Ver el tamaño del directorio:
+
+# du -sh /var/log
+
+-----
+
+Ver el tamaño de los directorios que estan adentro:
+
+# du -h /var/log
+
+Los siguientes comandos eliminan los logs guardados de manera segura, no afecta
+el funcionamiento del sistema:
 
 # aptitude clean && aptitude autoclean && apt-get autoremove && apt autoremove && apt purge && apt remove
 
