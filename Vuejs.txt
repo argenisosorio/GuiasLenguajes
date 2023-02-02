@@ -3197,6 +3197,21 @@ este caso para poner un valor a una variable. También podemos llamar a métodos
 de la sección methods con el this e incluso podemos hacer uso de las propiedades
 *computadas.*
 
+===========
+BeforeMount
+===========
+
+Se ejecuta justo antes de insertar el componente en el DOM, justamente, en
+tiempo de la primera renderización de un componente. Es uno de los hooks que
+menos usarás y, como muchos otros, se podrá utilizar para trazar el ciclo de
+vida del componente.
+
+A veces se usa para iniciar variables, pero yo te recomiendo que delegues esto
+al hook created.
+
+beforeMount () {
+}
+
 Mounted
 =======
 
@@ -3244,6 +3259,22 @@ export default {
 La función nextTick lo que hace es dejar pasar un pequeño intervalo de tiempo,
 el correspondiente a un tick.
 
+============
+BeforeUpdate
+============
+
+Es el hook que se desencadena nada más que se provoca un actualización de
+estado, antes de que se se comience con el re renderizado del Virtual DOM y su
+posterior ‘mapeo’ en el DOM real.
+
+Este hook es un buen sitio para trazar cuándo se provocan cambios de estado y
+se desembocan renderizados que nosotros no preveíamos o que son muy poco
+intuitivos a simple vista. Podríamos hacer lo siguiente:
+
+beforeUpdate: function () {
+  console.log('Empieza un nuevo renderizado de component');
+}
+
 Updated
 =======
 
@@ -3265,6 +3296,20 @@ export default {
 
 Hay que tener cuidado porque puede que se ejecute más veces de las que en
 realidad queremos.
+
+=============
+BeforeDestroy
+=============
+
+Se produce justamente antes de eliminar la instancia. El componente es
+totalmente operativo todavía y podemos acceder tanto al estado interno, como a
+sus propiedades y eventos.
+
+Suele usarse para quitar eventos o escuchadores. Por ejemplo:
+
+beforeDestroy() {
+  document.removeEventListener('keydown', this.onKeydown);
+}
 
 Destroyed
 =========
@@ -3304,10 +3349,11 @@ usa mucho en todos los proyectos y tienes que entenderla bien.
 Existen muchos más métodos en el ciclo de un componente de Vue como el
 beforeMounted o el beforeUpdated.
 
-Fuente
-======
+Fuentes
+=======
 
 -https://codingpotions.com/vue-ciclo-vida
+-https://elabismodenull.wordpress.com/2017/05/05/vuejs-el-ciclo-de-vida-de-un-componente/
 
 Directivas Personalizadas
 =========================
