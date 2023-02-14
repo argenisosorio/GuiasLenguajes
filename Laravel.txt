@@ -8742,3 +8742,95 @@ Si es true, enviar email
 if ($send_mails === true) {
     $user->notify(new UserRegistered($password));
 }
+
+=========================================
+Tipo de dato enum en migración de Laravel
+=========================================
+
+Voy a mostrarte cómo usar el tipo de dato enum en Laravel dentro de una
+migración. Será muy sencillo.
+
+Primero debemos estar dentro de un archivo de migración y tener una variable de
+tipo Blueprint que representa a la tabla. Después, invocamos a enum cuya
+sintaxis es:
+
+enum("columna", ["valores", "que", "puede", "tener"]);
+
+Enum restringe el tipo de dato que puede tener la columna por lo cual si se
+intenta guardar un nuevo valor que no está en el arreglo de datos de enum
+dará problemas, es por esto que se puede cambiar el tipo de dato de la columna
+mediante una migración nueva, cambiar la columna de enum a string para que
+acepte nuevos valores.
+
+Cambiando el tipo de dato enum por string
+=========================================
+
+Migración original:
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateDonorsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('donors', function (Blueprint $table) {
+            $table->enum('donorSchema', ['P', 'T']);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('donors');
+    }
+}
+
+-----
+
+Nueva migración cambiando enum por string:
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class UpdateFieldDonorSchemaToNullableInDonorTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('donors', function (Blueprint $table) {
+        $table->string('donorSchema')->nullable()->comment('Donación de órganos parcial o total')->change();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('donors', function (Blueprint $table) {
+        $table->enum('donorSchema', ['P', 'T'])->comment('Donación de órganos parcial o total');
+        });
+    }
+}
