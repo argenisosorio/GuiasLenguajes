@@ -7535,15 +7535,31 @@ texto como puede intuirse, también es capaz de eliminarlo.
 Ejemplo de uso
 ==============
 
-Creación del fichero:
+1- Creación del fichero:
 
-$ diff -u oldFile newFile > mods.diff
+Creamos el fichero a.txt, agregar contenido, hacer una copia de a.txt que se
+llamará b.txt y hacerle modificaciones:
 
------
+2- Comparar las diferencias con git diff, se requiere tener instalado el paquete
+git:
 
-Aplicación del parche:
+$ git diff diff a.txt b.txt
+
+3- Crear archivo que contiene la mezcla de ambos archivo, lo cual incluye las
+modificaciones:
+
+$ diff -u a.txt b.txt > mods.diff
+
+Esto nos crea el archivo mods.diff el cual podemos revisar y ver su contenido
+para ver como funciona.
+
+4- Aplicación del parche, con el siguiente comando vamos a aplicar creado,
+esto quiere decir que b.txt ahora a.txt se actualizara con las modificaciones de
+b.txt:
 
 $ patch < mods.diff
+
+El resultado es que ahora a.txt y b.txt son iguales.
 
 ================================================================
 Monitorear temperatura del CPU y otros componentes de la máquina
