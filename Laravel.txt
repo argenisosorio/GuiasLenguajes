@@ -8834,3 +8834,49 @@ class UpdateFieldDonorSchemaToNullableInDonorTable extends Migration
         });
     }
 }
+
+Si de casualidad lo anterior no funciona es porque no se borró la restricción
+del campo, a pesar de que cambió su tipo de dato, eso por eso que hay que
+eliminar la restricción, con algo como lo siguiente:
+
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class UpdateFieldToUsersTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        DB::statement("ALTER TABLE users DROP CONSTRAINT users_role_check");
+        DB::getDoctrineSchemaManager()->getDatabasePlatform()->registerDoctrineTypeMapping('enum', 'string');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('role')
+            ->nullable()
+            ->default('USR')
+            ->change();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+    }
+}
+
+Revisar las restricciones revisando la estructura de la tabla desde Postgres.
+
+Fuente
+======
+
+https://stackoverflow.com/questions/33496518/how-to-change-enum-type-column-in-laravel-migration
