@@ -2400,6 +2400,21 @@ dd($request());
 
 dd($request->input());
 
+=================
+Función hasFile()
+=================
+
+El método hasFile() nos sirve para comprar si estamos recibiendo un archivo
+en el controlador a través del request, es decir si estamos enviando el
+archivo desde un formulario o si se está recibiendo vacío o nulo.
+
+if ($request->hasFile('photo')) {
+    dd("Estoy recibiendo el archivo photo");
+}
+else {
+   dd("No estoy recibiendo el archivo photo");
+}
+
 ===============================================
 Consultar la base de datos desde un controlador
 ===============================================
