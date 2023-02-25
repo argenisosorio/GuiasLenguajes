@@ -395,6 +395,23 @@ age = 18;
 voteable = (age < 18) ? "Menor de edad" : "Mayor de edad";
 alert(voteable);
 
+Operador ternario con más de 1 comparación
+==========================================
+
+var number, result;
+
+number = 1;
+result = (number == 1) ? "Valgo 1" : (number == 2) ? "Valgo 2" : 'No valgo ni 1 ni 2';
+"Valgo 1"
+
+number = 2;
+result = (number == 1) ? "Valgo 1" : (number == 2) ? "Valgo 2" : 'No valgo ni 1 ni 2';
+"Valgo 2"
+
+number = 3;
+result = (number == 1) ? "Valgo 1" : (number == 2) ? "Valgo 2" : 'No valgo ni 1 ni 2';
+"No valgo ni 1 ni 2"
+
 ==================
 Declaración switch
 ==================
