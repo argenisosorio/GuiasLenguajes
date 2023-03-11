@@ -1706,3 +1706,21 @@ Por último, se puede recorrer $data con un bucle foreach para mostrar los datos
 en pantalla. En este caso, se asume que los datos tienen propiedades llamadas
 "nombre" y "descripcion", pero esto puede variar dependiendo de la estructura
 del JSON que devuelve el endpoint que estás consultando.
+
+=============================================================================
+Validar que un RIF guardado sea igual o diferente de uno que vien por request
+=============================================================================
+
+la cadena que viene por request y la que está guardada en base de datos
+se convierten en minúsculas para hacer la comparación.
+
+public function compararRifs(Request $request)
+{
+    $purchaseSupplier = PurchaseSupplier::whereRaw("LOWER(rif) = ?", strtolower($request->rif))->first();
+
+    if ($purchaseSupplier) {
+        dd("El rif es igual al rif en la base de datos.");
+    } else {
+        dd("El rif es diferente al rif en la base de datos.");
+    }
+}
