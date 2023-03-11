@@ -1651,3 +1651,42 @@ http de preferencia.
 
 3) Desde el navegador web, abrir el archivo adminer-4.8.1.php, realizar la
 configuración de la conexión y darle a Login.
+
+=========================================
+Consumir un endpoint que devuelve un JSON
+=========================================
+
+Para consumir un endpoint que devuelve un JSON desde una plantilla de PHP y
+HTML, puedes utilizar la función file_get_contents() de PHP para obtener el
+contenido de la URL del endpoint y la función json_decode() para decodificar el
+JSON.
+
+Aquí te dejo un ejemplo de cómo podrías hacerlo:
+
+<?php
+// URL del endpoint
+$url = 'https://ejemplo.com/endpoint';
+
+// Obtener el contenido de la URL
+$json = file_get_contents($url);
+
+// Decodificar el JSON
+$data = json_decode($json);
+
+// Recorrer los datos y mostrarlos en pantalla
+foreach ($data as $item) {
+    echo $item->nombre;
+    echo $item->descripcion;
+    // ...
+}
+?>
+
+En el ejemplo anterior, $url es la URL del endpoint que devuelve el JSON.
+file_get_contents() se encarga de obtener el contenido de la URL y almacenarlo
+en $json. Luego, json_decode() se utiliza para decodificar el JSON y almacenar
+los datos en $data.
+
+Por último, se puede recorrer $data con un bucle foreach para mostrar los datos
+en pantalla. En este caso, se asume que los datos tienen propiedades llamadas
+"nombre" y "descripcion", pero esto puede variar dependiendo de la estructura
+del JSON que devuelve el endpoint que estás consultando.
