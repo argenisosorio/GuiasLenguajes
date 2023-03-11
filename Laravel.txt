@@ -8895,3 +8895,25 @@ Fuente
 ======
 
 https://stackoverflow.com/questions/33496518/how-to-change-enum-type-column-in-laravel-migration
+
+=============================================================================
+Validación de que el rif que viene por $request sea único en la base de datos
+tomando en cuenta mayúsculas y minúsculas
+=============================================================================
+
+Muestra un mensaje personalizado.
+
+$rifSupplier = PurchaseSupplier::whereRaw("LOWER(rif) = ?", strtolower($request->rif))->first();
+
+$rules = [
+    'person_type'                    => ['required'],
+    'company_type'                   => ['required'],
+    'rif'                            => [
+        'required',
+        'size:10',
+        new RifRule,
+        Rule::when($rifSupplier, function ($attribute, $value, $fail) {
+            $fail('El campo rif ya ha sido registrado.');
+        }),
+    ],
+]
