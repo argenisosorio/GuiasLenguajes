@@ -8833,7 +8833,8 @@ class UpdateFieldDonorSchemaToNullableInDonorTable extends Migration
     public function up()
     {
         Schema::table('donors', function (Blueprint $table) {
-        $table->string('donorSchema')->nullable()->comment('Donación de órganos parcial o total')->change();
+          $table->string('donorSchema')->nullable()
+            ->comment('Donación de órganos parcial o total')->change();
         });
     }
 
@@ -8845,14 +8846,18 @@ class UpdateFieldDonorSchemaToNullableInDonorTable extends Migration
     public function down()
     {
         Schema::table('donors', function (Blueprint $table) {
-        $table->enum('donorSchema', ['P', 'T'])->comment('Donación de órganos parcial o total');
+            $table->enum('donorSchema', ['P', 'T'])
+                ->comment('Donación de órganos parcial o total');
         });
     }
 }
 
 Si de casualidad lo anterior no funciona es porque no se borró la restricción
 del campo, a pesar de que cambió su tipo de dato, eso por eso que hay que
-eliminar la restricción, con algo como lo siguiente:
+eliminar la restricción (Para saber cual es la restricción, Laravel te la hará
+saber mediante la excepción que te de por el navegador web, algunas es posibles
+verlas analizando la tabla desde el gestor de la base de datos, pero otras no)
+con algo como lo siguiente:
 
 <?php
 
