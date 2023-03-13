@@ -1724,3 +1724,27 @@ public function compararRifs(Request $request)
         dd("El rif es diferente al rif en la base de datos.");
     }
 }
+
+==============================================
+Detectar la primera letra de una cadena en PHP
+==============================================
+
+Para detectar la primera letra de una cadena en PHP, puedes usar la función
+substr para extraer el primer carácter. El código sería así:
+
+$cadena = "Ejemplo de cadena";
+$primera_letra = substr($cadena, 0, 1);
+
+echo $primera_letra; // Imprime "E"
+
+La función substr toma tres parámetros: la cadena original, el índice inicial
+(en este caso, 0 para la primera letra) y la longitud del substring a extraer
+(en este caso, 1 para extraer solo la primera letra).
+
+Con este código, $primera_letra contendrá la primera letra de la cadena original
+$cadena. En este ejemplo, $primera_letra contendrá la letra "E".
+
+Fuente
+======
+
+ChatGPT
