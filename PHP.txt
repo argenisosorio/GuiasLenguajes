@@ -1748,3 +1748,48 @@ Fuente
 ======
 
 ChatGPT
+
+================
+Que es un trait?
+================
+
+Un trait en PHP es una unidad de código que se utiliza para compartir
+funcionalidades entre clases, sin necesidad de crear una jerarquía de herencia
+compleja. En otras palabras, un trait es una colección de métodos que puede ser
+utilizada por múltiples clases sin tener que repetir el mismo código en cada una
+de ellas.
+
+Para usar un trait, se utiliza la palabra clave use en la declaración de la
+clase y se especifica el nombre del trait que se desea utilizar. El código de
+los métodos definidos en el trait se incorpora al cuerpo de la clase que lo usa,
+como si fuera parte del mismo.
+
+Aquí hay un ejemplo simple de cómo se puede definir y utilizar un trait en PHP:
+
+trait Saludar {
+    public function saludar() {
+        echo "Hola, ¿cómo estás?";
+    }
+}
+
+class Persona {
+    use Saludar;
+
+    public function __construct($nombre) {
+        $this->nombre = $nombre;
+    }
+}
+
+$persona = new Persona("Juan");
+$persona->saludar(); // Imprime "Hola, ¿cómo estás?"
+
+En este ejemplo, se define un trait llamado Saludar que contiene un método
+llamado saludar(). Luego, se define una clase Persona que utiliza el trait
+Saludar. Al instanciar un objeto de la clase Persona y llamar al método
+saludar(), se llama al método definido en el trait y se imprime "Hola,
+¿cómo estás?" en la salida.
+
+Fuente
+======
+
+ChatGPT
