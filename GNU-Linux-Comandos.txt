@@ -5763,23 +5763,31 @@ Fuentes
 -http://www.kacharreando.com/ubuntu/reducir-mp3/
 -http://www.comograbar.com/conceptos-basicos/diferencia-entre-mono-y-stereo/
 
-=====================
-Instalar steam client
-=====================
+====================================================
+Instalar steam client en GNU/Linux Debian de 64 bits
+====================================================
 
-Agregar en /etc/apt/sources.list
+1- Descargar el .deb de la página oficial de steam, debe ser el archivo
+steam_latest.deb
 
-deb http://http.debian.net/debian/ jessie main contrib non-free
-
-Habilitar el soporte multi-arch y actualizar la lista de paquetes disponibles:
+2- Habilitar el soporte multi-arch y actualizar la lista de paquetes
+disponibles:
 
 # dpkg --add-architecture i386
 
-$ aptitude update
+$ sudo aptitude update
 
-Instalar el paquete steam
+3- Instalar esta dependencia dependencia
 
-# aptitude install steam
+$ sudo apt-get install libc6-i386
+
+# dpkg -i steam_latest.deb
+
+4- Luego ya saldrá steam en las opciones del menú, al darle click, te pide dar
+enter para actualizarse.
+
+Nota: Lo anterior no me funciono, me dio problemas de dependencias, hay que
+probarlo bien.
 
 =============================================================
 Cambiar el nombre de la máquina o el host en GNU/Linux Debian
