@@ -7890,3 +7890,30 @@ vscode o sublime
 firefox de la página oficial y crear lanzador al ejecutable
 Chrome
 Inkscape
+
+====================================================
+Apagar el ordenador después de un tiempo determinado
+====================================================
+
+Abrimos una terminal. Una vez abierta la terminal ejecutamos el siguiente
+comando:
+
+$ sudo shutdown -h +30
+
+El significado de cada uno los términos del comando son los siguientes:
+
+sudo: Porque el programa shutdown precisa permisos de superusuario para ejecutarse.
+
+shutdown: Es el programa que permite programar el apagado del ordenador.
+
+-h: Indica la acción a realizar una vez pasado un tiempo determinado. En este
+caso la acción es la acción halt (-h). Por lo tanto una vez pasado el tiempo que
+queramos el ordenador se apagará.
+
++30: Indicamos el tiempo en minutos que queremos que tarde en apagarse el
+ordenador.
+
+Fuente
+======
+
+https://geekland.eu/programar-el-apagado-del-ordenador/
