@@ -77,6 +77,48 @@ puede visitar desde el navegador web donde podrás ver un "Hello world!"
 En los archivos main.js y App.svelte que están en la carpeta src podrás
 ver un ejemplo de como se crea el hola mundo que vemos en el navegador.
 
+Hola mundo simple
+=================
+
+Para hacer un "Hola mundo" en Svelte, sigue estos pasos:
+
+1- Abre el directorio de tu proyecto Svelte en tu editor de código preferido.
+
+2- Crea o edita un nuevo archivo llamado App.svelte en la carpeta src.
+
+En el archivo App.svelte, escribe lo siguiente:
+
+<script>
+  let nombre = 'Mundo';
+</script>
+
+<h1>Hola, {nombre}!</h1>
+
+Este código define una variable llamada nombre y la usa en un encabezado que
+dice "Hola, {nombre}!".
+
+En el archivo main.js, reemplaza el contenido existente con lo siguiente:
+
+import App from './App.svelte';
+
+const app = new App({
+  target: document.body
+});
+
+export default app;
+
+Este código importa el componente App desde el archivo App.svelte y lo
+renderiza en el cuerpo del documento HTML.
+
+Guarda los cambios en ambos archivos.
+
+En la terminal, ejecuta el siguiente comando para iniciar el servidor de desarrollo:
+
+Abre un navegador web y navega a http://localhost:8080. Deberías ver el
+mensaje "Hola, Mundo!" en la página.
+
+¡Y eso es todo! Ahora has creado tu primera aplicación Svelte.
+
 Fuentes
 =======
 
