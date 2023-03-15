@@ -1,0 +1,83 @@
+====================
+Guía de Svelte by dM
+====================
+
+¿Qué es Svelte?
+===============
+
+Svelte es un framework de JavaScript para construir aplicaciones web
+interactivas y dinámicas. Lo que distingue a Svelte de otros frameworks como
+React o Angular es que Svelte se centra en la compilación en lugar de en la
+ejecución en tiempo real.
+
+En otras palabras, Svelte no carga una biblioteca de tiempo de ejecución en el
+navegador para actualizar la página. En su lugar, el código de la aplicación se
+compila en JavaScript puro durante el proceso de construcción, lo que significa
+que el navegador solo necesita descargar y ejecutar el código final. Esto puede
+hacer que las aplicaciones sean más rápidas y ligeras.
+
+Svelte también utiliza un enfoque diferente para manejar el estado de la
+aplicación en comparación con otros frameworks. En lugar de depender de
+bibliotecas de gestión de estado externas, Svelte incluye su propio sistema de
+gestión de estado, que se integra bien con el enfoque de compilación. En
+general, Svelte es una herramienta muy poderosa y popular para la construcción
+de aplicaciones web modernas.
+
+Instalación en GNU/Linux Debian
+===============================
+
+Probado en GNU/Linux Debian 11
+
+1- Asegúrate de tener Node.js y npm instalados en tu sistema.
+
+2- Crear un nuevo proyecto de svelte:
+
+$ npx degit sveltejs/template my-svelte-project
+
+Si no está instalado te dirá que necesita instalar el paquete degit
+
+Need to install the following packages:
+  degit@2.8.4
+Ok to proceed? (y) y
+> cloned sveltejs/template#HEAD to my-svelte-project
+
+Esto creará un nuevo directorio llamado "my-svelte-project" en tu ubicación
+actual y descargará el proyecto base de Svelte.
+
+El directorio creado contiene:
+
+my-svelte-project
+    package.json
+    public
+    README.md
+    rollup.config.js
+    scripts
+    src
+
+3- Navega al directorio del proyecto recién creado e instala las dependencias
+usando el siguiente comando:
+
+$ cd my-svelte-project
+
+$ npm install
+
+Esto instalará todas las dependencias del proyecto, incluyendo el propio
+framework de Svelte.
+
+¡Y eso es todo! Ahora puedes comenzar a desarrollar tu aplicación Svelte en
+Debian.
+
+4- Compilar los archivos del proyecto
+
+$ npm run dev
+
+Esto levantara el proyecto en la dirección http://localhost:8080 la cual se
+puede visitar desde el navegador web donde podrás ver un "Hello world!"
+
+En los archivos main.js y App.svelte que están en la carpeta src podrás
+ver un ejemplo de como se crea el hola mundo que vemos en el navegador.
+
+Fuentes
+=======
+
+ChatGPT y dM
