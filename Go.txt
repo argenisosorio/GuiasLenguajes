@@ -1,0 +1,153 @@
+================
+Guía de Go by dM
+================
+
+¿Qué es Go o Golang?
+====================
+
+Go es un lenguaje de programación relativamente nuevo, su lanzamiento oficial
+fue a finales de 2009 (aunque su primera versión estable fue en 2012), por lo
+que no lleva ni una década entre nosotros. ¿Y qué hace que el lenguaje Go sea
+lo que todos esperan? Más allá de que haya sido desarrollado por Google,
+puntualmente por Ken Thompson, Rob Pike y Robert Griesemer "que no es poco", las
+características de Go y su desempeño son las que nominan a este lenguaje de
+programación como el enésimo sustituto natural de C. ¿Será verdad esta vez?
+Veamos las características de Go y para qué sirve go.
+
+Características de Go
+=====================
+
+El Lenguaje Go, al igual que C y C++, es un lenguaje compilado y concurrente, o
+en otras palabras: soporta canales de comunicación basados en el lenguaje CSP.
+Sin embargo, dentro de las características de Go aparece su concurrencia. En Go
+es diferente a los criterios de programación basados en bloqueos como pthreads.
+Los creadores de Go, además, se inspiraron en la versatilidad y las cualidades
+de otros lenguajes como Python, C++ y Java (entre otros), para conseguir un
+lenguaje con las siguientes características, algunas únicas, y otras compartidas
+con otros lenguajes compilados.
+
+Simplicidad
+===========
+
+Otra de las características de Go es su simplicidad. Lenguajes como C++, Java o
+C# son más pesados y voluminosos que Go. La simplicidad es la característica
+principal de Go. Con una sintaxis clara, limpia y organizada, la idea de la
+programación en Go es diferenciarse de la complejidad de C. Comparando ambos
+lenguajes compilados, vemos que Go utiliza inferencia implícita de tipos para
+así poder evitar la declaración explícita de variables que tienen lugar en C.
+
+Funcionalidades
+===============
+
+Pero ¿para qué sirve go? Aun siendo un lenguaje diseñado para la programación de
+sistemas, lenguaje Go dispone de un recolector de basura como la mayoría de los
+lenguajes modernos. El recolector de basura de Go está siendo reimplementado
+para reducir la latencia todo lo posible. Y a pesar de no ser un lenguaje
+orientado a objetos (no existe jerarguía de tipos), Go admite su paradigma.
+Aunque a diferencia de los lenguajes orientados a objetos más populares, no
+dispone de herencia de tipos ni de palabras clave que denoten claramente que
+soporta este paradigma.
+
+Facilidad de uso
+================
+
+El lenguaje Go usa tipado estático y es tan eficiente como C. Está pensado para
+facilitar la vida al máximo a los programadores. Permite detectar errores en la
+sintaxis durante la compilación y no durante la ejecución, a diferencia de otros
+lenguajes compilados. Sin embargo, después de programar algo más que un
+«Hola Mundo», enseguida se puede sentir una sensación agradable al programar.
+Además, los programadores que hayan usado C se sentirán extremadamente cómodos,
+ya que Go posee una sintaxis muy parecida.
+
+Compatibilidad
+==============
+
+Al igual que otros muchos lenguajes "pero no por ello deja de ser importante",
+el lenguaje de programación Go es compatible con sistemas Windows, Mac OS X,
+Linux y FreeBSD.
+
+Go vs C. ¿Llegó su recambio natural?
+====================================
+
+El lenguaje de programación Go siempre ha estado acompañado de mucho ruido a su
+alrededor. El hecho de que Google esté detrás siempre aumentará el eco de todo
+lo que ocurra, y a veces puede jugar en su contra. Como el hecho de ser
+bautizado como «el nuevo C». Pero es en el momento de probar Go cuando uno se da
+cuenta de que todo el ruido de alrededor está justificado, más allá del
+marketing y el «fanboyismo».
+
+Go es un lenguaje de programación que posee unas características únicas para
+hacerse con una buena parte del mercado.
+
+Instalación en GNU/Linux Debian
+===============================
+
+Nota: Probado en GNU/Linux Debian 11
+
+Instalar el paquete golang desde los repositorios de Debian:
+
+$ sudo apt install golang
+
+Comprobar la correcta instalación:
+
+$ go version
+
+Mostrará algo como:
+
+go version go1.15.15 linux/amd64
+
+Hola mundo simple
+=================
+
+1- Creamos un archivo llamado prueba.go
+
+Todos los archivos de Go tienen que tener esa extensión .go.
+
+Abrimos el archivo creado, y lo primero que hay que definir es el paquete main:
+
+package main
+
+También debemos importar el paquete fmt que incluye un monton de métodos útiles
+como el print que nos permite mostrar por pantalla información:
+
+import "fmt"
+
+Ahora se debe crear la función main que es la función por defecto de nuestro
+paquete main:
+
+func main () {
+}
+
+Ahora lo siguiente que vamos a hacer es imprir algo por pantalla o por la
+consola, usaremos fmt.Print:
+
+func main () {
+    fmt.Print("Hola mundo!")
+}
+
+En Go no hace falta finalizar o cerrar las líneas con punto y coma (;)
+
+El ejemplo completo sería:
+
+package main
+
+import "fmt"
+
+func main () {
+    fmt.Print("Hola mundo!")
+}
+
+Por tanto ya podríamos ejecutar este código, abrimos la consola, nos ubicamos
+a la ruta donde guardamos a prueba.go y ejecutamos:
+
+$ go run prueba.go
+
+Nos debe imprimir
+
+Hola mundo!
+
+Fuentes
+=======
+
+https://keepcoding.io/blog/lenguaje-de-programacion-go-caracteristicas/
+ChatGPT
