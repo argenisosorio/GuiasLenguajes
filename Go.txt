@@ -146,8 +146,389 @@ Nos debe imprimir
 
 Hola mundo!
 
+Comentarios de código
+=====================
+
+// Comentario de una línea
+
+/*
+Comentario de
+múltiples
+líneas
+*/
+
+Método Println() para imprimir en una nueva línea:
+
+Cada Println imprime en una línea distinta o separada
+
+fmt.Println("Hola")
+fmt.Println("mundo!")
+
+Variables
+=========
+
+Las variables en Go se definen con la palabra reservada "var" y el nombre de la 
+variable.
+
+En Go, puedo guardar cualquier tipo de dato dentro de una variable, enteros,
+arreglos, listas, cadenas.
+
+Tampoco hace falta definir el tipo de variable
+
+Ejemplo:
+
+var nombre = "Jose"
+
+var edad = 34
+
+Ahora podemos mostra esos datos por pantalla con:
+
+package main
+
+import "fmt"
+
+func main () {
+    var nombre = "Jose"
+    var edad = 34
+    fmt.Println(nombre)
+    fmt.Println(edad)
+}
+
+Concatenación
+=============
+
+En un mismo Println podemos usar la coma "," para concatenar, ejemplo:
+
+package main
+
+import "fmt"
+
+func main () {
+    var nombre = "Jose"
+    var edad = 34
+    fmt.Println("Mi nombre es:", nombre)
+    fmt.Println("Mi edad es:", edad)
+}
+
+Print más estricto
+==================
+
+Podemos indicarle a print cual es el tipo de valor que voy a mostrar, por
+ejemplo solo cadenas con "%s"
+
+package main
+
+import "fmt"
+
+func main () {
+    var nombre = "Jose"
+    var edad = 34
+    fmt.Println("Mi nombre es:", nombre)
+    fmt.Printf("%s %s","Mi edad es:", edad)
+}
+
+se usa Printf y como primero parámetro tenemos a "%s %s" que indica que lo que
+sigue deben ser 2 cadenas, como edad es un entero esto dará un error al
+ejecutarlo porque está esperando 2 cadenas, no una cadena y un entero:
+
+Mi nombre es: Jose
+Mi edad es: %!s(int=34)
+
+Si quiero imprimir un entero debería usar "%d" tal que:
+
+package main
+
+import "fmt"
+
+func main () {
+    var nombre = "Jose"
+    var edad = 34
+    fmt.Println("Mi nombre es:", nombre)
+    fmt.Printf("%s %d","Mi edad es:", edad)
+}
+
+Lo anterior ya no debe dar error y debe imprimir los datos correctos.
+
+Entrada de datos
+================
+
+Nos va a permitir recolectar datos introducidos por pantalla y procesar esos
+datos.
+
+Por ejemplo vamos a solicitar el apellido del usuario:
+
+fmt.Print("¿Cuál es tu apellido?: ")
+
+Eso solo imprime el texto, para poder que el usuario pueda escribir hay que usar
+Scan(), y también vamos a crear una variable llamada apellida y definimos que va
+a almacenar una cadena, ejemplo:
+
+var apellido string
+var edad int // Variable que recibe un número entero
+fmt.Print("¿Cuál es tu apellido?: ")
+fmt.Scan(&apellido)
+
+Ahora vamos a mostrar el valor de la variable apellido:
+
+package main
+
+import "fmt"
+
+func main () {
+    var apellido string
+    fmt.Println("¿Cuál es tu apellido?: ")
+    fmt.Scan(&apellido)
+    fmt.Println(apellido)
+}
+
+Ejemplo de sumar 2 números pedidos por pantalla:
+
+package main
+
+import "fmt"
+
+func main () {
+    var a int
+    var b int
+    var c int
+    fmt.Print("Número a: ")
+    fmt.Scan(&a)
+    fmt.Print("Número b: ")
+    fmt.Scan(&b)
+    c = a + b
+    fmt.Println("a más b es igual a: ", c)
+}
+
+Condiciones
+===========
+
+Consiste en un tipo de estructura de control que va a ejecutar un código
+dependiendo de si se cumple una condición o no.
+
+Ejemplo de la condición if y else:
+
+package main
+
+import "fmt"
+
+func main () {
+    var altura int
+    fmt.Print("¿Cuál es tu altura en cm?: ")
+    fmt.Scan(&altura)
+    fmt.Println("Tu altura es:", altura, "cm")
+
+    if altura >= 185 {
+        fmt.Println("Eres una persona alta")
+    } else {
+        fmt.Println("Eres una persona baja")
+    }
+}
+
+El código anteior indica que si la altura es mayor o igual a 185, mostrará por
+pantalla que es una persona alta, de lo contrario, mostrará que es una persona
+baja.
+
+Funciones
+=========
+
+Una función es un bloque de código que puedes ejecutar cuantas veces quisieras
+invocandolo. Una función generalmente lo que hace es procesar datos y devolver
+un resultado.
+
+Lo primero que hay que hacer es declarar la función, por ejemplo:
+
+func mostarAltura()
+
+Que en este ejemplo va a recibir 1 parámetro que es la altura de tipo entero,
+y esa función va a devolver una cadena, por eso usamos string:
+
+func mostarAltura(altura int) string {
+}
+
+Ejemplo completo:
+
+package main
+
+import "fmt"
+
+func mostarAltura(altura int) string {
+    var resultado string
+
+    if altura >= 185 {
+        resultado = ("Eres una persona alta")
+    } else {
+        resultado = ("Eres una persona baja")
+    }
+    return resultado
+}
+
+func main () {
+    fmt.Println(mostarAltura(170))
+}
+
+Esto imprime:
+
+Eres una persona alta
+
+Ahora vamos a solicitar la altura por pantalla:
+
+package main
+
+import "fmt"
+
+func mostarAltura(altura int) string {
+    var resultado string
+
+    if altura >= 185 {
+        resultado = ("Eres una persona alta")
+    } else {
+        resultado = ("Eres una persona baja")
+    }
+    return resultado
+}
+
+func main () {
+    var altura int
+    fmt.Println("¿Cuál es tu altura en cm?")
+    fmt.Scan(&altura)
+    fmt.Println(mostarAltura(altura))
+}
+
+Ejemplo de sumar números:
+
+package main
+
+import "fmt"
+
+func mostrarSuma(a int,b int) int {
+    var c int
+    c = a + b
+    return c
+}
+
+func main () {
+    var a = 3
+    var b = 5
+    fmt.Println(mostrarSuma(a,b))
+}
+
+Arrays o Listas
+===============
+
+Es una variable donde dentro puedo almacenar multiples valores, generalmente
+del mismo tipo pero no necesariamente siempre es así.
+
+Un ejemplo es el siguiente, creamos una variable llamada personas y dentro
+va tener un array de 3 elementos que definimos en corchetes y también definimos
+el tipo de dato que será string:
+
+package main
+
+import "fmt"
+
+func main () {
+    var personas = [3] string {"José", "María", "Juan"}
+    fmt.Println(personas)
+}
+
+Lo anteior nos imprime:
+
+[José María Juan]
+
+Si quiero imprimir un valor específico le pasamos la posición en el array,
+recuerda que la primera posición es 0, luego 1, etc. Ejemplo:
+
+package main
+
+import "fmt"
+
+func main () {
+    var personas = [3] string {"José", "María", "Juan"}
+    fmt.Println(personas[0])
+    fmt.Println(personas[1])
+    fmt.Println(personas[2])
+}
+
+Lo anteior nos imprime:
+
+José
+María
+Juan
+
+Método len() para contar los elementos de un array:
+
+var personas = [3] string {"José", "María", "Juan"}
+fmt.Println(len(personas))
+
+Esto imprime 3
+
+Bucle FOR
+=========
+
+Nos permite iterar o recorrer los elementos de un array o lista, es decir
+ejecutar un bloque de código tantas veces como sea necesario mientras se cumpla
+una condición.
+
+Un bucle for tiene tres partes: el inicializador, la condición y el modificador.
+
+-Para el inicializador creamos la variable contador que tenga el valor de 0,
+ejemplo:
+
+contador :=0
+
+-Para la condición, mientras que contador sea menor que la cantidad de elementos
+del array, len(personas) voy a seguir iterando el código interno del for:
+
+contador < len(personas)
+
+-Para el modificador, con cada ejecución voy a incrementar el valor de contador,
+ejemplo:
+
+contador++
+
+Ejemplo completo:
+
+package main
+
+import "fmt"
+
+func main () {
+    var personas = [3] string {"José", "María", "Juan"}
+    for contador :=0; contador < len(personas); contador++ {
+        fmt.Println("Hola")
+    }
+}
+
+Lo anteior nos imprime:
+
+Hola
+Hola
+Hola
+
+3 veces porque es la cantidad de elementos del arreglo
+
+Ahora vamos a mostrar cada nombre según la posición:
+
+package main
+
+import "fmt"
+
+func main () {
+    var personas = [3] string {"José", "María", "Juan"}
+    for contador :=0; contador < len(personas); contador++ {
+        fmt.Println("El nombre es: ", personas[contador])
+    }
+}
+
+Esto imprime:
+
+El nombre es:  José
+El nombre es:  María
+El nombre es:  Juan
+
 Fuentes
 =======
 
 https://keepcoding.io/blog/lenguaje-de-programacion-go-caracteristicas/
-ChatGPT
+
+https://www.youtube.com/watch?v=p3xPUO_Z_hs
