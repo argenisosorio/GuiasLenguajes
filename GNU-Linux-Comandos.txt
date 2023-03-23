@@ -557,13 +557,39 @@ Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
 
 $ grep cadena_texto ./* -rIn
 
+-----
+
 Busca la cadena de manera recursiva en la carpeta en que se encuentre situado.
 
 $ grep --color=always -n "cadena_texto" ./* -Ir
 
-No hace falta poner =always.
+No hace falta poner =always siempre.
+
+-----
 
 $ grep --color -n "cadena_texto" -Ir
+
+Aquí está el significado de cada una de las opciones utilizadas en el comando:
+
+grep es un comando utilizado para buscar texto en archivos.
+
+--color hace que la salida del comando se resalte en color para que sea más fácil de leer.
+
+-n hace que se imprima el número de línea junto con la línea coincidente.
+
+-I hace que los archivos binarios se ignoren durante la búsqueda.
+
+-r hace que la búsqueda se realice de manera recursiva en todos los archivos y subdirectorios a partir del directorio actual.
+
+Si se quiere buscar más de una cadena se usan las comillas dobrles:
+
+$ grep --color -n -Ir "la casa"
+
+Al utilizar comillas dobles, indicas que el contenido entre las comillas es una
+sola cadena que debe ser buscada. En este caso, el comando buscará la cadena
+"la casa" en todos los archivos del directorio actual y sus subdirectorios.
+
+-----
 
 Otra forma de busqueda.
 
