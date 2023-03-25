@@ -13,3 +13,66 @@ Fuente
 =======
 
 https://odoo-devops.readthedocs.io/en/latest/git/github-telegram-notifications.html
+
+========================
+Crear un bot de Telegram
+========================
+
+1- Abre Telegram y busca el bot "BotFather".
+
+2- Inicia una conversación con BotFather y envíale el comando "/newbot".
+
+3- Sigue las instrucciones que te dará BotFather. Primero, debes proporcionarle
+un nombre para tu bot. Luego, debes proporcionarle un nombre de usuario que
+termine en "bot". Por ejemplo, "myawesomebot".
+
+BotFather te proporcionará un token de acceso para tu bot. Guárdalo en un lugar
+seguro, ya que lo necesitarás más adelante para enviar solicitudes a la API de
+Telegram.
+
+Ejemplo:
+
+Ya estando en el chat con BotFather, escribimos
+
+/newbot
+
+BotFather:
+
+Alright, a new bot. How are we going to call it? Please choose a name for your bot.
+
+prueba
+
+BotFather:
+
+Good. Now let's choose a username for your bot. It must end in `bot`. Like this,
+for example: TetrisBot or tetris_bot.
+
+pruebabot
+
+BotFather:
+
+Done! Congratulations on your new bot. You will find it at t.me/pruebabot. You
+can now add a description, about section and profile picture for your bot, see
+/help for a list of commands. By the way, when you've finished creating your
+cool bot, ping our Bot Support if you want a better username for it. Just make
+sure the bot is fully operational before you do this.
+
+Use this token to access the HTTP API:
+xxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Keep your token secure and store it safely, it can be used by anyone to control
+your bot.
+
+For a description of the Bot API, see this page:
+https://core.telegram.org/bots/api
+
+-----
+
+¡Listo! Ahora tienes un bot de Telegram. Puedes usar el token de acceso para
+enviar solicitudes a la API de Telegram y crear las funcionalidades que deseas
+para tu bot. Por ejemplo, puedes configurar el bot para enviar mensajes
+automáticos, responder a comandos o interactuar con otros usuarios de Telegram.
+
+Fuente
+=======
+
+ChatGPT

@@ -27,7 +27,126 @@ para una amplia variedad de casos de uso en el desarrollo de software.
 Con GitHub Actions, puedes automatizar tareas repetitivas, mejorar la calidad
 de tu código y acelerar el tiempo de lanzamiento de tu aplicación.
 
+=======================================================================
+Recibir notificaciones en telegram de las acciones de un repo de GitHub
+=======================================================================
+
+1- Primero debes crear un nuevo bot. Abre Telegram y busca el bot "BotFather".
+
+2- Inicia una conversación con BotFather y envíale el comando "/newbot".
+
+3- Sigue las instrucciones que te dará BotFather. Primero, debes proporcionarle
+un nombre para tu bot. Luego, debes proporcionarle un nombre de usuario que
+termine en "bot". Por ejemplo, "myawesomebot".
+
+BotFather te proporcionará un token de acceso para tu bot. Guárdalo en un lugar
+seguro, ya que lo necesitarás más adelante para enviar solicitudes a la API de
+Telegram.
+
+Ejemplo:
+
+Ya estando en el chat con BotFather, escribimos
+
+/newbot
+
+BotFather:
+
+Alright, a new bot. How are we going to call it? Please choose a name for your bot.
+
+prueba
+
+BotFather:
+
+Good. Now let's choose a username for your bot. It must end in `bot`. Like this,
+for example: TetrisBot or tetris_bot.
+
+pruebabot
+
+BotFather:
+
+Done! Congratulations on your new bot. You will find it at t.me/pruebabot. You
+can now add a description, about section and profile picture for your bot, see
+/help for a list of commands. By the way, when you've finished creating your
+cool bot, ping our Bot Support if you want a better username for it. Just make
+sure the bot is fully operational before you do this.
+
+Use this token to access the HTTP API:
+xxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Keep your token secure and store it safely, it can be used by anyone to control
+your bot.
+
+For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+
+-----
+
+¡Listo! Ahora tienes un bot de Telegram. Puedes usar el token de acceso para
+enviar solicitudes a la API de Telegram y crear las funcionalidades que deseas
+para tu bot. Por ejemplo, puedes configurar el bot para enviar mensajes
+automáticos, responder a comandos o interactuar con otros usuarios de Telegram.
+
+4- Ahora debemos obtener el id que es único único de un grupo o canal en el cual
+queremos recibir las notificaciones, para obtenerlo agregue temporalmente el bot
+https://telegram.me/itpp_myid_bot al grupo o canal, este te devolvera el id del
+grupo. normalmente, es un entero negativo.
+
+5- Ahora vamos al repo que queremos que notifique cuando tenga interacciones Y
+creamos en la raíz un directorio .github y dentro otro con nombre workflows y
+luego dentro un archivo con nombre main.yml es decir este nuevo archivo estará
+en la ruta .github/workflows/main.yml, el contenido de ese archivo será:
+
+-----
+
+name: Telegram Notifications
+
+on:
+  issues:
+    types: [opened, reopened, deleted, closed]
+
+jobs:
+  notify:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Send notifications to Telegram
+      run: curl -s -X POST https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage -d chat_id=${{ secrets.TELEGRAM_CHAT_ID }} -d text="${MESSAGE}" >> /dev/null
+      env:
+        MESSAGE: "Issue ${{ github.event.action }}: \n${{ github.event.issue.html_url }}"
+
+-----
+
+Donde ${{ secrets.TELEGRAM_TOKEN }} es el token secreto de tu bot y
+${{ secrets.TELEGRAM_CHAT_ID }} es el id del chat que te dio el bot
+itpp_myid_bot, para nuestro ejemplo el archivo quedaría así:
+
+name: Telegram Notifications
+
+on:
+  issues:
+    types: [opened, reopened, deleted, closed]
+
+jobs:
+  notify:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Send notifications to Telegram
+      run: curl -s -X POST https://api.telegram.org/botxxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/sendMessage -d chat_id=xxxxxxxx -d text="${MESSAGE}" >> /dev/null
+      env:
+        MESSAGE: "Issue ${{ github.event.action }}: \n${{ github.event.issue.html_url }}"
+
+-----
+
+6- Pruébalo!!!
+
+Crea una nueva issue en el repositorio en GitHub
+
+RESULTADO: el bot envía una notificación al grupo o canal.
+
 Fuente
 =======
+
+https://odoo-devops.readthedocs.io/en/latest/git/github-telegram-notifications.html
 
 ChatGPT
