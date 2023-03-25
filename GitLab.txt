@@ -83,9 +83,9 @@ telegram.
 4) Le damos click a Add webhook y listo, ya solo resta probar algún eventos
 para verificar que esté funcionando.
 
-=======================
-El archiv gitlab-ci.yml
-=======================
+========================
+El archivo gitlab-ci.yml
+========================
 
 El archivo .gitlab-ci.yml sirve para configurar el comportamiento de Gitlab CI
 en cada proyecto. En el archivo define la estructura y el orden de los pipelines
@@ -97,3 +97,69 @@ Fuente
 ======
 
 https://platzi.com/clases/1526-gitlab/19299-gitlab-ciyml/
+
+================================
+Caso casi práctico GitlLab CI/CD
+================================
+
+Vamos a suponer que tenemos un API de Node que trae una lista de libros de una
+base de datos. Un escenario bastante sencillo y práctico, para no complicar
+mucho las cosas.
+
+A partir de ahora, podemos crear una tubería (pipeline a partir de ahora), que
+empuje nuestro código en 3 fases: construcción, pruebas y entrega. Recordemos
+que un pipeline es un grupo de pasos que son agrupados bajo características
+similares. Con estas fases o etapas, nuestro pipeline es definido en 3 tipos:
+
+1: El Pipeline del proyecto (Project Pipeline).
+2: El Pipeline de integración continua.
+3: El Pipeline de entrega.
+
+El pipeline del proyecto instala dependencias, corre los linters y cualquier
+script que tenga que ver con código. El pipeline de integración continua corre
+pruebas automatizadas y construye versiones distribuidas del código.
+
+Finalmente, el pipeline de entrega, entrega el código a un ambiente de un
+proveedor de nube designado.
+
+El esquema resultante resumido sería el siguiente:
+
+A) Build
+  i. Install NPM Dependencies
+  ii. Run ES-Linter
+  iii. Run Code-Minifier
+B) Test
+  i. Run unit
+  ii. Run compile
+C) Deploy
+  i. Production
+    1) Launch EC2 instance on AWS
+  ii. Staging
+  iii.
+    1) Launch on local development server
+
+En esta jerarquía, los tres componentes son considerados tres diferentes
+pipelines. Las partes importantes (build, test y deploy) son etapas (stages) y
+cada parte debajo de estas secciones son trabajos.
+
+Para usar GitLab CI/CD, creamos un archivo con nombre “.gitlab-ci.yml” en la
+raíz del proyecto de nuestro repositorio de GitLab y agregamos el siguiente
+código yaml:
+
+image: node:10.5.0
+
+stages:
+  - build
+  - test
+  - deploy
+
+before_scripts
+  - npm install
+
+Todo lo anterior es un ejemplo, simplemente el archivo describe instrucciones
+para ejecutar de manera secuencial.
+
+Fuente
+======
+
+https://www.icm.es/2020/07/17/caso-practico-gitlab-ci-cd/

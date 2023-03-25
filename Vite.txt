@@ -1,0 +1,113 @@
+==================
+Guía de Vite by dM
+==================
+
+¿Qué es Vite?
+=============
+
+Vite (palabra en francés para "rápido", pronunciado como /vit/ , como "veet") es
+una herramienta de compilación que tiene como objetivo proporcionar una
+experiencia de desarrollo más rápida y ágil para proyectos web modernos.
+
+Consta de dos partes principales:
+
+-Un servidor de desarrollo que proporciona mejoras enriquecidas de
+funcionalidades sobre módulos ES nativos, por ejemplo Hot Module Replacement
+(HMR) extremadamente rápido.
+
+-Un comando de compilación que empaqueta tu código con Rollup, preconfigurado
+para generar recursos estáticos altamente optimizados para producción.
+
+Vite es dogmático y viene con configuraciones predeterminadas listas para usar,
+pero también es altamente extensible a través de sus API de complementos y API
+de JavaScript con soporte completo de tipado.
+
+Compatibilidad
+==============
+
+Vite requiere Node.js versión 14.18+, 16+.
+
+Instalación en GNU/Linux Debian y creación un proyecto básico
+=============================================================
+
+1- Creación de proyecto con la última versión de vite
+
+$ npm create vite@latest
+
+La ejecución de este comando generara preguntas que hay que confirmar o
+seleccionar la instalación del paquete vita, el nombre del proyecto, en este
+ejemplo será vite-project y también seleccionar el framework y la variante,
+ejemplo:
+
+Need to install the following packages:
+  create-vite@4.2.0
+Ok to proceed? (y) y
+✔ Project name: … vite-project
+✔ Select a framework: › Vanilla
+✔ Select a variant: › JavaScript
+
+Scaffolding project in /home/aosorio/tmp/vite/vite-project...
+
+2- Luego de que termine el proceso se habrá creado el directorio vite-project,
+debemos acceder a el:
+
+$ cd vite-project
+
+3- Instalamos los paquetes de node requeridos:
+
+$ npm install
+
+Esto nos crea el directorio /node_modules
+
+4- Ejecutar el proyecto:
+
+$ npm run dev
+
+VITE v4.2.1  ready in 268 ms
+
+  ➜  Local:   http://127.0.0.1:5173/
+  ➜  Network: use --host to expose
+  ➜  press h to show help
+
+Esto nos levanta el servidor de desarrollo en la dirección:
+http://127.0.0.1:5173/
+
+index.html y raíz del proyecto
+==============================
+
+Una cosa que puedes haber notado es que en un proyecto de Vite, index.html es
+frontal y central en lugar de estar escondido dentro de public. Esto es
+intencional: durante el desarrollo, Vite es un servidor e index.html es el
+punto de entrada a tu aplicación.
+
+Vite trata a index.html como código fuente y como parte del grafo de módulos.
+Esto resuelve a <script type="module" src="..."> que hace referencia a tu
+código JavaScript. Incluso <script type="module"> inline y el CSS referenciado a
+través de <link href> también disfrutan de características específicas de Vite.
+Además, las URLs dentro de index.html se reorganizan automáticamente, por lo que
+no se necesitan marcadores de posición especiales para %PUBLIC_URL%.
+
+Similar a los servidores http estáticos, Vite tiene el concepto de un
+"directorio raíz" desde el cual se sirven tus archivos. Lo verás referenciado
+como <root> en el resto de la documentación. Las URL absolutas en el código se
+resolverán utilizando la raíz del proyecto como base, por lo que puedes escribir
+código como si estuvieras trabajando con un servidor de archivos estático normal
+(¡excepto que es mucho más poderoso!). Vite también es capaz de manejar
+dependencias que se resuelven en ubicaciones del sistema de archivos fuera de la
+raíz, lo que lo hace utilizable incluso en una configuración basada en
+monorepos.
+
+Vite también admite aplicaciones de múltiples páginas con múltiples puntos de
+entrada .html.
+
+Especificar una raíz alternativa
+
+Ejecutar vite inicia el servidor de desarrollo utilizando el directorio de
+trabajo actual como raíz. Puedes especificar una raíz alternativa con:
+
+$ vite serve some/sub/dir
+
+Fuente
+=======
+
+https://vitejs.dev/guide/
