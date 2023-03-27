@@ -7,9 +7,7 @@ telegram_notification:
   script:
     - export MESSAGE="Nuevooo push en el repo $CI_PROJECT_URL de $(echo $CI_COMMIT_AUTHOR | cut -d' ' -f1,2) en la rama $CI_COMMIT_REF_NAME, commit $CI_COMMIT_MESSAGE -> $CI_PROJECT_URL/-/commit/$CI_COMMIT_SHA"
     - curl -s -X POST https://api.telegram.org/bot$BotTELEGRAM_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="${MESSAGE}" >> /dev/null
-  only:
-    refs:
-      - master
-      - dev
+  only: ['branches', 'tags']
+
 
 
