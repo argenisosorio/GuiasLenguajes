@@ -160,7 +160,7 @@ jobs:
 
     steps:
     - name: Send notifications to Telegram
-      run: curl -s -X POST https://api.telegram.org/botxxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/sendMessage -d chat_id=xxxxxxxx -d text="${MESSAGE}" >> /dev/null
+      run: curl -s -X POST https://api.telegram.org/botxxxxx/sendMessage -d chat_id=xxxxx -d text="${MESSAGE}" >> /dev/null
       env:
         MESSAGE: "Issue ${{ github.event.action }}: \n${{ github.event.issue.html_url }}"
 
@@ -177,8 +177,7 @@ repositorio:
 
 name: Telegram Notifications
 
-on:
-  [ push ]
+on: [push]
 
 jobs:
   notify:
@@ -187,12 +186,15 @@ jobs:
 
     steps:
     - name: Send notifications to Telegram
-      run: curl -s -X POST https://api.telegram.org/botxxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/sendMessage -d chat_id=xxxxxxxx -d text="${MESSAGE}" >> /dev/null
+      run: curl -s -X POST https://api.telegram.org/botXXXXXXXXX/sendMessage -d chat_id=XXXX -d text="${MESSAGE}" >> /dev/null
       env:
-        MESSAGE: "Issue ${{ github.event.action }}: \n${{ github.event.issue.html_url }}"
+        MESSAGE: "Se ha realizado un nuevo push en la rama ${{ github.ref }}, el mensaje del commit es: ${{ github.event.head_commit.message }} y el enlace al commit es ${{ github.event.head_commit.url }}."
+
+-----
 
 Fuente
 =======
 
 https://odoo-devops.readthedocs.io/en/latest/git/github-telegram-notifications.html
+
 ChatGPT
