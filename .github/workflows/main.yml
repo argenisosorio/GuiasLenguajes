@@ -12,4 +12,4 @@ jobs:
     - name: Send notifications to Telegram
       run: curl -s -X POST https://api.telegram.org/bot5954860043:AAE_3WJgDxYUGZb8A5-Kmsycsj6cWFc2ytw/sendMessage -d chat_id=-849254269 -d text="${MESSAGE}" >> /dev/null
       env:
-        MESSAGE: "Se ha realizado un nuevo push, el commit es: ${{ github.event.head_commit.url }} --- ${{ github.event.head_commit }}."
+        MESSAGE: "Se ha realizado un nuevo push, el commit es: ${{ github.event.head_commit.message }} > ${{ github.event.head_commit.url }}."
