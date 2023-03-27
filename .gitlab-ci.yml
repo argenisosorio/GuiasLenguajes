@@ -9,3 +9,6 @@ telegram_notification:
     - curl -s -X POST https://api.telegram.org/bot$BotTELEGRAM_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="${MESSAGE}" >> /dev/null
   only:
     - dev
+  except:
+    - master
+
