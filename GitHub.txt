@@ -172,6 +172,26 @@ Crea una nueva issue en el repositorio en GitHub
 
 RESULTADO: el bot envía una notificación al grupo o canal.
 
+Ahora vamos a mostrar una configuración que notifique cuando hay un push al
+repositorio:
+
+name: Telegram Notifications
+
+on:
+  issues:
+    types: [opened, reopened, deleted, closed]
+
+jobs:
+  notify:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Send notifications to Telegram
+      run: curl -s -X POST https://api.telegram.org/botxxxxxxxxxx:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/sendMessage -d chat_id=xxxxxxxx -d text="${MESSAGE}" >> /dev/null
+      env:
+        MESSAGE: "Issue ${{ github.event.action }}: \n${{ github.event.issue.html_url }}"
+
 Fuente
 =======
 
