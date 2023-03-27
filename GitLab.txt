@@ -239,7 +239,7 @@ telegram_notification:
   stage: notify
   image: curlimages/curl:latest
   script:
-    - export MESSAGE="Se ha realizado un nuevo push"
+    - export MESSAGE="Se ha realizado un nuevo push, el mensaje del commit es: '$CI_COMMIT_MESSAGE'"
     - curl -s -X POST https://api.telegram.org/botTELEGRAM_TOKEN/sendMessage -d chat_id=XXXX -d text="${MESSAGE}" >> /dev/null
   only:
     - master
@@ -254,3 +254,18 @@ debería notificar en telegram.
 
 Desde la sección pipelines de nuestro repositorio podremos ver las ejecuciones
 realizadas del archivo .gitlab-ci.yml.
+
+Con más detalles:
+
+stages:
+  - notify
+
+telegram_notification:
+  stage: notify
+  image: curlimages/curl:latest
+  script:
+    - export MESSAGE="Nuevo push a la rama: $CI_COMMIT_REF_NAME, commit '$CI_COMMIT_MESSAGE' > $CI_PROJECT_URL/-/commit/$CI_COMMIT_SHA"
+    - curl -s -X POST https://api.telegram.org/botXXXX/sendMessage -d chat_id=XXXX -d text="${MESSAGE}" >> /dev/null
+  only:
+    - master
+
