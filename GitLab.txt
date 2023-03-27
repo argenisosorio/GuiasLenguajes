@@ -306,3 +306,17 @@ telegram_notification:
   only:
     - master
     - dev
+
+Obteniendo solo el Nombre y Apellido del auto y no el correo:
+
+stages:
+  - notify
+
+telegram_notification:
+  stage: notify
+  image: curlimages/curl:latest
+  script:
+    - export MESSAGE="Nuevo push en el repo $CI_PROJECT_URL de $(echo $CI_COMMIT_AUTHOR | cut -d' ' -f1,2) en la rama $CI_COMMIT_REF_NAME, commit $CI_COMMIT_MESSAGE -> $CI_PROJECT_URL/-/commit/$CI_COMMIT_SHA"
+    - curl -s -X POST https://api.telegram.org/bot$BotTELEGRAM_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="${MESSAGE}" >> /dev/null
+  only:
+    - master
