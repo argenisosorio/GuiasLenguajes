@@ -290,3 +290,19 @@ anteriormente.
 
 Lo mismo se puede hacer con el ID del chat, declarar la variable CHAT_ID, agregar
 su valor con usarla en el comando con $CHAT_ID.
+
+Ahora agregamos el autor del commit y también que notifique de cambios en la
+rama dev:
+
+stages:
+  - notify
+
+telegram_notification:
+  stage: notify
+  image: curlimages/curl:latest
+  script:
+    - export MESSAGE="Nuevo push de $CI_COMMIT_AUTHOR en la rama $CI_COMMIT_REF_NAME, commit '$CI_COMMIT_MESSAGE' > $CI_PROJECT_URL/-/commit/$CI_COMMIT_SHA"
+    - curl -s -X POST https://api.telegram.org/bot$BotTELEGRAM_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="${MESSAGE}" >> /dev/null
+  only:
+    - master
+    - dev
