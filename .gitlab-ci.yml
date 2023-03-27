@@ -6,6 +6,6 @@ telegram_notification:
   image: curlimages/curl:latest
   script:
     - export MESSAGE="Nuevo push, rama $CI_COMMIT_REF_NAME, commit '$CI_COMMIT_MESSAGE' > $CI_PROJECT_URL/-/commit/$CI_COMMIT_SHA"
-    - curl -s -X POST https://api.telegram.org/bot5954860043:AAE_3WJgDxYUGZb8A5-Kmsycsj6cWFc2ytw/sendMessage -d chat_id=-849254269 -d text="${MESSAGE}" >> /dev/null
+    - curl -s -X POST https://api.telegram.org/bot$BotTELEGRAM_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="${MESSAGE}" >> /dev/null
   only:
     - master
