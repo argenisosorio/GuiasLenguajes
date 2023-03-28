@@ -1,0 +1,85 @@
+==========================
+Guía de React Native by dM
+==========================
+
+¿Qué es React Native?
+=====================
+
+React Native es framework para construir aplicaciones móviles usando el lenguaje
+de programación JavaScript y la biblioteca React. Permite a los desarrolladores
+utilizar la misma base de código para crear aplicaciones para plataformas iOS y
+Android, reduciendo el tiempo y el costo de desarrollo.
+
+React Native funciona mediante el uso de componentes nativos, que son elementos
+preconstruidos específicos para cada plataforma, y código JavaScript para crear
+la interfaz de usuario y la lógica de la aplicación. Esto permite a los
+desarrolladores crear aplicaciones móviles de alto rendimiento con una
+apariencia y sensación nativas, mientras aún usan la sintaxis y el flujo de
+trabajo familiar de React.
+
+React Native es ampliamente utilizado por desarrolladores y empresas para
+construir aplicaciones móviles, y tiene una comunidad grande y activa de
+desarrolladores que contribuyen a su desarrollo y mantenimiento.
+
+Escrito en JavaScript, renderizado con código nativo
+====================================================
+
+Las directivas de react se procesan en la interfaz de usuario de la plataforma
+nativa, lo que significa que su aplicación usa las mismas API de plataforma
+nativa que usan otras aplicaciones.
+
+Instalación en GNU/Linux Debian
+===============================
+
+Probado en GNU/Linux Debian 11
+
+1- Asegúrate de tener Node.js y npm instalados en tu sistema.
+
+2- Abre una terminal y ejecuta el siguiente comando para instalar la
+herramienta de línea de comandos de React Native:
+
+$ npm install -g react-native-cli
+
+3- Luego, crea un nuevo proyecto de React Native con el siguiente comando:
+
+$ react-native init nombre_de_tu_proyecto
+
+4- Cambia al directorio de tu nuevo proyecto:
+
+$ cd nombre_de_tu_proyecto
+
+5- Finalmente, inicia la aplicación ejecutando el siguiente comando:
+
+Antes de ejecutar este comando, asegúrate de que el dispositivo o emulador esté
+configurado correctamente. Si estás usando un emulador, asegúrate de que esté
+iniciado y que Android Studio lo esté ejecutando. Si estás usando un dispositivo
+físico, asegúrate de que el modo de depuración USB esté habilitado en el
+dispositivo y que el dispositivo esté conectado a tu computadora a través de un
+cable USB.
+
+$ react-native run-android
+
+Ejecutar el comando react-native run-android iniciará tu aplicación React Native
+en un dispositivo o emulador Android conectado a tu computadora.
+
+Cuando ejecutes el comando react-native run-android, se compilará la aplicación
+y se instalará en el dispositivo o emulador. Si todo funciona correctamente,
+deberías ver tu aplicación React Native iniciarse en el dispositivo o emulador.
+
+Si hay algún error, asegúrate de revisar los mensajes de error en la terminal
+para solucionar el problema.
+
+Si deseas iniciar la aplicación en un dispositivo iOS, debes ejecutar el
+siguiente comando en lugar del último comando:
+
+$ react-native run-ios
+
+Ten en cuenta que para iniciar la aplicación en un dispositivo iOS, necesitarás
+una Mac con Xcode instalado.
+
+Fuentes
+=======
+
+ChatGPT
+
+https://reactnative.dev/
