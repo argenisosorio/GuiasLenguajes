@@ -3228,8 +3228,68 @@ for elemento in codigos:
     if re.match('a+1+', elemento):
         print elemento # aaa111 , aaa1111 
 
-##########################
-##### Function str() #####
-##########################
+==============
+Function str()
+==============
 
 The str() function converts the specified value into a string.
+
+=================================================
+Test unitario en Python usando el módulo unittest
+=================================================
+
+Supongamos que tenemos una función llamada sumar que recibe dos números y
+devuelve su suma. El código de la función es el siguiente:
+
+def sumar(a, b):
+    return a + b
+
+Para crear un test unitario para esta función, podemos crear un archivo
+test_sumar.py con el siguiente código:
+
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+import unittest
+
+def sumar(a, b):
+    return a + b
+
+class TestSumar(unittest.TestCase):
+
+    def test_suma_positivos(self):
+        resultado = sumar(2, 3)
+        self.assertEqual(resultado, 5)
+
+    def test_suma_negativos(self):
+        resultado = sumar(-2, -3)
+        self.assertEqual(resultado, -5)
+
+if __name__ == '__main__':
+    unittest.main()
+
+En este ejemplo, hemos creado una clase llamada TestSumar que hereda de
+unittest.TestCase. Dentro de esta clase, hemos definido dos métodos de
+prueba: test_suma_positivos y test_suma_negativos. Cada uno de estos métodos
+prueba un caso de uso diferente de la función sumar.
+
+Dentro de cada método de prueba, llamamos a la función sumar con los argumentos
+correspondientes y luego usamos el método assertEqual para comprobar que el
+resultado es el esperado. Si el resultado no es el esperado, el test unitario
+fallará y nos indicará que hay un problema en la función sumar.
+
+Finalmente, en el bloque if __name__ == '__main__': llamamos al método main() de
+unittest para ejecutar todos los tests definidos en la clase TestSumar.
+
+Probamos el script:
+
+$ python test_sumar.py 
+..
+---------------------------
+Ran 2 tests in 0.000s
+
+OK
+
+Fuente
+======
+
+ChatGPT
