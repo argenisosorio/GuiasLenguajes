@@ -4498,3 +4498,50 @@ Fuente
 ======
 
 https://dev.to/dmx/spinner-facil-y-rapido-5bei
+
+========================
+Insertar videos en html5
+========================
+
+La etiqueta video en HTML es una etiqueta que se utiliza para insertar videos en
+una página web. Es compatible con varios formatos de video, como MP4, WebM y Ogg
+y puede reproducirse en la mayoría de los navegadores web modernos, ejemplo:
+
+<video controls src="http://www.misitio.com/media/videos/xxxx.mp4"></video>
+
+El atributo controls que se usa en el ejemplo anterior, indica que los
+controles de reproducción del video deben mostrarse en la página web, como el
+botón de "play", "pause", "volume", entre otros.
+
+Algunos otros atributos que se pueden usar con la etiqueta video son:
+
+src: especifica la URL del archivo de video que se va a reproducir.
+width: establece el ancho del video en píxeles.
+height: establece la altura del video en píxeles.
+poster: muestra una imagen de vista previa del video antes de que se reproduzca.
+autoplay: indica que el video debe reproducirse automáticamente cuando se carga la página.
+loop: indica que el video debe reproducirse en bucle infinito.
+muted: indica que el audio del video debe estar desactivado de manera predeterminada.
+preload: indica cómo se deben cargar los datos de video antes de la reproducción.
+
+Es importante tener en cuenta que no todos los atributos funcionan en todos los
+navegadores y que algunos navegadores pueden tener soporte limitado para ciertos
+formatos de video. Por lo tanto, siempre es una buena práctica realizar pruebas
+en diferentes navegadores y dispositivos para asegurarse de que el video se
+reproduzca de manera adecuada.
+
+Si por ejemplo un video no hace caso a width, se puede forzar mediante estilo
+css, ejemplo:
+
+
+<video
+  controls
+  style="max-width: 500px; width: 100%; height: auto;"
+  src="http://www.misitio.com/media/videos/xxxx.mp4"
+>
+</video>
+
+Fuente
+======
+
+ChatGPT

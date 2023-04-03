@@ -7979,3 +7979,113 @@ Fuente
 ======
 
 ChatGPT
+
+=====
+NGROK
+=====
+
+NGROK es una herramienta de uso gratuito que nos permite exponer nuestro entorno
+local a la web, es decir, podemos "publicar" nuestro trabajo en local para que
+el resto del mundo lo pueda ver sin la necesidad de subir la aplicación a un
+servidor.
+
+1- Creamos una cuenta e iniciamos sesión en https://ngrok.com
+
+2- Descargamos el script desde https://dashboard.ngrok.com/get-started/setup
+nos quedara algo como esto ngrok-v3-stable-linux-amd64.tgz
+
+3- Descomprimimos el archivo, nos debe quedar una carpeta de nombre
+ngrok-v3-stable-linux-amd64 y dentro debe haber un script llamado ngrok
+
+4- Conecta tu cuenta
+
+Ejecutar este comando agregará su authtoken al archivo de configuración
+predeterminado ngrok.yml.
+
+Esto le otorgará acceso a más funciones y tiempos de sesión más prolongados.
+
+Los túneles en ejecución aparecerán en la página de puntos finales del tablero.
+
+El token es proporcionado desde la web.
+
+$ ngrok config add-authtoken XXXXXX
+
+ó
+
+$ ./ngrok config add-authtoken XXXXXX
+
+4. Copiamos el script ngrok obtenido dentro de /var/www/html
+
+5. Ejecutamos el script desde /var/ww/html con:
+
+/var/www/html$ ./ngrok http 80
+
+Esto te levanta un servicio:
+
+ngrok                                                                                                                                         (Ctrl+C to quit)
+                                                                                                                                                              
+Announcing ngrok-rs: The ngrok agent as a Rust crate: https://ngrok.com/rust                                                                                  
+                                                                                                                                                              
+Session Status                online                                                                                                                          
+Account                       usuario-de-mi-cuenta@mail.com (Plan: Free)                                                                                          
+Version                       3.2.2                                                                                                                           
+Region                        United States (us)                                                                                                              
+Latency                       -                                                                                                                               
+Web Interface                 http://127.0.0.1:4040                                                                                                           
+Forwarding                    https://a71f-XXXXX.ngrok.io -> http://localhost:80                                                                      
+                                                                                                                                                              
+Connections                   ttl     opn     rt1     rt5     p50     p90                                                                                     
+                              0       0       0.00    0.00    0.00    0.00
+
+Si copias esta dirección en la web, podrás ver el contenido de /var/www/html
+desde cualquier parte.
+
+Esto es ideal para mostrar proyectos, hacer pruebas, etc.
+
+Conectarse por ssh usando ngrok
+===============================
+
+--- En el servidor ---
+
+1- Instalar openssh-server
+
+$ sudo apt install openssh-server
+
+2- Ejecutar el servicio de openssh-server
+
+$ sudo service ssh start
+
+3- Ejecutar ngrok con tcp y el puerto 22
+
+$ ./ngrok tcp 22
+
+# ngrok will start like:
+# ngrok by @inconshreveable                                     (Ctrl+C to quit)
+#                                                                                                
+# Session Status                online                                                            
+# Account                       User Name (Plan: Free)                                      
+# Version                       2.3.27                                                            
+# Region                        United States (us)                                                
+# Web Interface                 http://127.0.0.1:4040                                             
+# Forwarding                    tcp://0.tcp.ngrok.io:16965 -> localhost:22
+#                            /\ url and port number you'll use on ssh connection
+
+--- En el cliente ---
+
+Si el usuario de la maquina es pcontreras entonces:
+
+$ ssh pcontreras@0.tcp.ngrok.io -p 16965
+
+Te pedirá la contrasena del usuario pcontreras, la introduces y listo! ya estás
+en el server mediante SSH
+
+Fuentes
+=======
+
+https://dashboard.ngrok.com/get-started/setup
+
+https://www.youtube.com/watch?v=NqCYquO3byk
+
+https://gist.github.com/philippeoz/e33632f11c64149a00393465fee2cff5
+
+https://www.endtoend.ai/tutorial/ngrok-ssh-forwarding/
