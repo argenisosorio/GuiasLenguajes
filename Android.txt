@@ -107,12 +107,55 @@ dispositivo en el monitor de la pc.
 
 $ scrcpy
 
+Probarlo vía wifi
+=================
+
+1- Conecta el dispositivo vía usb a la pc.
+
+2- Activa la depuración usb
+
+3- Ejecute el siguiente comando para establecer una conexión TCP con el
+dispositivo conectado:
+
+$ adb tcpip 5555
+
+Ahora busque la dirección IP de su dispositivo conectado, la ip que le asigne la
+red wifi, ejemplo: 192.168.18.92, Puede encontrar la dirección IP en
+Configuración > Acerca del Acerca del teléfono > Estado > Dirección IP.
+
+4- Ejecute el siguiente comando para conectarse con el dispositivo:
+
+$ adb connect <Android_device_id>:5555
+
+en nuestro ejemplo sería:
+
+$ adb connect 192.168.18.92:5555
+
+5- Ver los dispositivos conectados:
+
+$ adb devices
+
+6- Probarlo, ahora puede desconectar el teléfono del usb y ejecutar en la pc:
+
+$ scrcpy
+
+Notas:
+
+-Tanto PC como dispositivo Android deben estar conectados en la misma red
+wifi.
+
+-Recuerda desconectar el dispositvo al terminar de usarlo con:
+
+$ adb disconnect 192.168.18.92:5555
+
 Fuentes
 =======
 
 https://www.linuxadictos.com/scrcpy-una-excelente-aplicacion-para-duplicar-la-pantalla-android-en-tu-pc.html
 
 https://www.xatakandroid.com/tutoriales/como-conectar-movil-android-al-ordenador-adb
+
+https://proandroiddev.com/supercharge-android-dev-with-scrcpy-and-adb-wifi-f286091c72fc
 
 ==============
 ADB en Android
