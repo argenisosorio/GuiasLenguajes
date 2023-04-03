@@ -21,3 +21,95 @@ Fuentes
 =======
 
 -https://www.xatakandroid.com/tutoriales/dns-android-que-como-cambiarlo-tu-movil
+
+==============================================================
+Scrcpy (Aplicación para duplicar la pantalla Android en tu PC)
+==============================================================
+
+Scrcpy es una aplicación de duplicación de pantalla gratuita y de código abierto
+que permite el control de un dispositivo Android desde una computadora de
+escritorio con GNU/Linux.
+
+Scrcpy es una herramienta gratuita de duplicación de pantalla de Android de
+código abierto que permite a los usuarios controlar Android en PC y Mac (a
+través de USB y de forma inalámbrica), sin siquiera instalar ninguna aplicación.
+
+La característica más importante de Scrcpy es su baja tasa de latencia de 35 y
+70 ms, lo que hace que su rendimiento esté a la par con Vysor, una de las
+aplicaciones más populares para duplicar Android.
+
+La conexión del teléfono inteligente se puede realizar a través de USB o TCP/IP.
+
+Se inicia una aplicación de servidor en el teléfono inteligente, que interactúa
+con un sistema externo a través de un túnel organizado mediante la utilidad adb.
+
+Pero a diferencia del modelo freemium de Vysor, Scrcpy es completamente gratuito
+e incluye todas las funciones necesarias, como compartir archivos, cambiar la
+resolución, grabar pantalla, hacer clic en capturas de pantalla y mucho más.
+
+Dado que Scrcpy no implica la instalación de una aplicación, también es una de
+las aplicaciones espejo más seguras para Android.
+
+No se requiere acceso root al dispositivo. La aplicación del servidor genera un
+flujo de video (a elegir entre H.264, H.265 o AV1) con el contenido de la
+pantalla del teléfono inteligente y el cliente decodifica y muestra el video.
+
+Los eventos de entrada de teclado y mouse se transmiten al servidor y se
+sustituyen en el sistema de entrada de Android.
+
+Características clave:
+
+-Alto rendimiento (30~120fps).
+-Compatibilidad con resoluciones de pantalla de 1920 × 1080 y superiores.
+-Baja latencia (35~70ms).
+-Alta velocidad de inicio.
+-Emisión de sonido.
+-Posibilidad de grabar sonido y video.
+-Admite la duplicación cuando la pantalla del teléfono inteligente está apagada/bloqueada.
+-Portapapeles con la capacidad de copiar y pegar información entre una computadora y un teléfono inteligente.
+-Calidad de transmisión de pantalla personalizable.
+-Compatibilidad con el uso de un teléfono inteligente Android como cámara web (V4L2).
+-Simulación de un teclado y un mouse conectados físicamente.
+-Modo OTG.
+
+1- Instalación:
+
+Probado en GNU/Linux Debian 11.
+
+$ apt install scrcpy
+
+2- Activa la depuración USB:
+
+La D de ADB viene de Debug o depuración, y efectivamente necesita que tu móvil
+tenga activada la depuración USB para funcionar. Y para activar la depuración
+USB primero necesitas activar las opciones para desarrolladores. Suena
+complicado, pero en realidad es un minuto.
+
+En tu móvil, ve a Ajustes y Acerca del teléfono. A partir de aquí la ruta varía
+mucho de una capa de Android y versión a otra, pero tu objetivo es llegar al
+lugar donde se muestra el Número de compilación o Build number. Es posible que
+se encuentre dentro de algún submenú. Debes tocar en "número de compilación"
+unas ocho veces, hasta que Android te muestre una pequeña notificación de que
+ya tienes permiso de Programador o Desarrollador.
+
+Ya con las opciones para desarrollador activas, vuelve a los ajustes de Android
+y verás que hay un nuevo elemento en la lista. Efectivamente, son las opciones
+de desarrollador.
+
+Conecta el dispositivo a la PC mediante el cable usb, ahora ve a las opciones
+del desarrollador en los ajustes y activa la Depuración de USB, Una ventana
+emergente te pedirá confirmación y después ya tienes el móvil listo.
+
+3- Prueba:
+
+Ejecuta el comando de scrcpy y listo, te debería mostra la pantalla de tu
+dispositivo en el monitor de la pc.
+
+$ scrcpy
+
+Fuentes
+=======
+
+https://www.linuxadictos.com/scrcpy-una-excelente-aplicacion-para-duplicar-la-pantalla-android-en-tu-pc.html
+
+https://www.xatakandroid.com/tutoriales/como-conectar-movil-android-al-ordenador-adb
