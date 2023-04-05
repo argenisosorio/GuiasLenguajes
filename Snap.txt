@@ -1,0 +1,124 @@
+==================
+Guía de Snap by dM
+==================
+
+Snap, también conocido como Snappy, es una herramienta alternativa de gestión de
+paquetes y un formato de paquete de programas desarrollado por Canonical, la
+empresa que está detrás de GNU/ Linux Ubuntu. Snap se introdujo en Ubuntu 16.04
+LTS (Xenial Xerus) y forma parte de cualquier versión de Ubuntu desde entonces,
+pudiendo utilizarse en todas las distribuciones de Linux. Los paquetes Snap
+pueden instalarse a través de la línea de comandos o pueden descargarse de
+sitios web como archivos .snap. El gestor de paquetes Snap crea una carpeta
+independiente para cada paquete y no interfiere con el resto del sistema.
+
+Instalar Snap
+=============
+
+Por defecto, Snap está disponible en el repositorio por defecto de Ubuntu y
+Debian. Puedes instalarlo con los siguientes comandos:
+
+$ sudo apt install snapd
+
+$ sudo snap install core
+
+Comprobando la instalación
+==========================
+
+$ snap version
+
+Nos data la versión de snap y datos del SO.
+
+snap    2.58.3
+snapd   2.58.3
+series  16
+debian  11
+kernel  5.10.0-21-amd64
+
+Listar paquetes de Snap disponibles
+===================================
+
+El siguiente comando nos permite listar los paquetes más interesantes y
+disponibles en el repositorio de paquetes de Snap:
+
+$ snap find
+
+Encontrar un paquete específico con Snap
+========================================
+
+También puedes encontrar un paquete específico del repositorio de Snap con el
+siguiente comando, aunque si no sabes el nombre completo igual buscará
+coincidencias:
+
+$ snap find package-name
+
+Por ejemplo, para buscar los paquetes que contengan el texto "vl" en el nombre:
+
+$ snap find vl
+
+O podemos buscar un paquete exactamente por su nombre:
+
+$ snap find vlc
+
+Instalar un paquete con Snap
+============================
+
+Puedes instalar cualquier paquete disponible en el repositorio de Snap con el
+siguiente comando:
+
+$ snap install package-name
+
+Actualizar el paquete instalado
+===============================
+
+Si quieres actualizar el paquete instalado, ejecuta el siguiente comando:
+
+$ snap refresh package-name
+
+Listar todos los paquetes de Snap instalados
+============================================
+
+Ejecuta el siguiente comando para ver los paquetes que hemos instalado con Snap:
+
+$ snap list
+
+Ver los cambios recientes realizados por Snap
+=============================================
+
+Si quieres ver los cambios recientes realizados por Snap, es como un historial
+de tareas realizadas con snap, ejecuta el siguiente comando:
+
+$ snap changes
+
+Ver información sobre un paquete instalado
+==========================================
+
+Si quieres ver información sobre el paquete Snap instalado, ejecuta el siguiente
+comando:
+
+$ snap info vlc
+
+Eliminar un paquete Snap específico
+===================================
+
+Para eliminar un paquete Snap específico de tu sistema, ejecuta el siguiente
+comando:
+
+$ snap remove package-name
+
+Ruta de los paquetes snap instalados
+====================================
+
+Todos los archivos Snap se almacenan en el directorio /var/lib/snapd/snaps/.
+
+Puedes verlos todos con el siguiente comando:
+
+$ ls /var/lib/snapd/snaps/
+
+Deberías ver la siguiente salida:
+
+core_10583.snap  core18_1944.snap  partial  package-name.snap
+
+Fuente
+======
+
+https://howtoforge.es/como-instalar-y-utilizar-el-gestor-de-paquetes-snap-en-ubuntu-20-04/
