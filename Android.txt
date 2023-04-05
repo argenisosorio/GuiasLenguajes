@@ -76,7 +76,7 @@ Características clave:
 
 Probado en GNU/Linux Debian 11.
 
-$ apt install scrcpy
+$ sudo apt install scrcpy
 
 2- Activa la depuración USB:
 
@@ -183,3 +183,45 @@ Fuente
 ======
 
 https://www.xatakandroid.com/tutoriales/adb-android-que-puedes-utilizarlo
+
+
+Cómo usar tu smartphone como touchpad para Linux
+================================================
+
+Probado en GNU/Linux Debian 11.
+
+El software Remote Touchpad te permite controlar el cursos de la pc o laptop
+desde el dispositivo Android, para poder usarlo hay que instalar el paquete
+remote-touchpad en el SO, la instalación se hace con el gestor de paquetes snap,
+si ya lo tienes instalado omites los primeros comandos:
+
+1- Instalar snap en el SO:
+
+$ sudo apt update
+
+$ sudo apt install snapd
+
+$ sudo snap install core
+
+2- Instalar remote-touchpad en el SO mediante Snap:
+
+$ sudo snap install remote-touchpad
+
+3- Ejecutar remote-touchpad
+
+$ snap run remote-touchpad
+
+El comando anteior te abre un código QR en la consola que puedes escanear
+con el dispositivo pero también desde la consola te muestra una dirección web,
+el código QR redirije a esa misma web, es una web temporal y local, al navegar
+hasta ella te abrira la aplicación donde podras controlar el cursos desde el
+dispositivo movil.
+
+Nota: Tanto pc como dispositivo móvil deben estar en la misma red Wifi
+
+Fuentes
+=======
+
+https://snapcraft.io/install/remote-touchpad/debian
+
+https://esgeeks.com/usar-smartphone-como-touchpad-para-linux/
