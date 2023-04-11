@@ -461,6 +461,11 @@ Ver los tamaños en kg, mg, etc, de un fichero específico.
 
 $ du -h file_name.xxx
 
+Ver el tamaño de los directorios y de los archivos en megabytes, hasta 10
+niveles de profundidad.
+
+$ du -ha --max-depth=10 | sort -hr
+
 Calcular el tamaño ocupado por un directorio.
 
 # du -h -s /var/log
