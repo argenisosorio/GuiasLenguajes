@@ -391,27 +391,39 @@ Muestra lo que hay en la carpeta en la que te encuentras.
 
 $ ls
 
+-----
+
 Muestra los archivos, fecha, permisos, etc.
 
 $ ls -l
+
+-----
 
 Muestra los archivos, fecha, permisos, y el peso pero en kb,mg o gb según sea el
 caso.
 
 $ ls -lh
 
+-----
+
 Muestra los archivos, los ocultos tambien, fecha, permisos, etc.
 
 $ ls -la
+
+-----
 
 Muestra los archivos en forma de lista.
 
 $ ls -1
 
+-----
+
 Lista el contenido de un directorio en orden alfabético, usa space para paginar
 si la lista es grande.
 
 $ ls | more
+
+-----
 
 Listar todos los ficheros de un directorio que tengan las extension .xxx, donde
 xxx puede ser: txt, html, php, css.
@@ -420,51 +432,75 @@ $ ls *.xxxetc.
 
 ejemplo: ls *.txt
 
+-----
+
 Listar los directorios y subdirectorios asi como ficheros de un directorio.
 
 $ ls -R
+
+-----
 
 Muestra el contenido del directorio en una lista numerada.
 
 $ ls | cat -n
 
+-----
+
 Contar el número de ficheros o elementos contenidos en un directorio.
 
 $ ls name_dir | wc
+
+-----
 
 Ver la lista de carpetas y sub carpetas, los directorios que existen, lo primero
 que muestra es el tamaño.
 
 $ du
 
+-----
+
 Los mismo que arriba pero se ven los tamaños pesos en kb, mg, etc.
 
 $ du -h
+
+-----
 
 Ver el tamaño total de los directorios.
 
 $ du -sh
 
+-----
+
 Ver el tamaño de un directorio específico.
 
 $ du -sh name_dir
+
+-----
 
 Muestra todos directorios y ficheros y el espacio que ocupan en el disco.
 
 $ du *
 
+-----
+
 Leer todos los elementos y ver los tamaños en kg, mg, etc.
 
 $ du -h *
+
+-----
 
 Ver los tamaños en kg, mg, etc, de un fichero específico.
 
 $ du -h file_name.xxx
 
+-----
+
 Ver el tamaño de los directorios y de los archivos en megabytes, hasta 10
 niveles de profundidad.
 
 $ du -ha --max-depth=10 | sort -hr
+
+-----
 
 Calcular el tamaño ocupado por un directorio.
 
@@ -484,6 +520,8 @@ Cambiar de directorio, nos lleva al home del usuario.
 
 $ cd
 
+-----
+
 Acceder a un directorio que tiene espacios en el nombre.
 
 $ cd 'nombre carpeta'
@@ -494,9 +532,13 @@ Al final siempre lleva el / normal, los otros usan el invertido.
 
 $ cd a\ b\ c\ d\ e/
 
+-----
+
 Retroceder un directorio.
 
 $ cd ..
+
+-----
 
 Retroceder dos directorios (../) representa un directorio.
 
@@ -540,23 +582,33 @@ Mostrar el historial de los comandos de la consola.
 
 $ history
 
+-----
+
 Mostrar los ultimos comandos usados por el usuario
 
 $ fc -l
+
+-----
 
 Busqueda especifica de una comando usado, ejemplo: aptitude, alias, grep etc.
 
 $ history | grep xxx
 
- En los archivos ocultos del home, en este fichero se almacena el historial de
- los comandos usados.
+-----
+
+En los archivos ocultos del home, en este fichero se almacena el historial de
+los comandos usados.
 
 .bash_history
+
+-----
 
 --color para colorear la palabra a buscar, -n para listar la la linea del
 caracter buscado y al final la ruta del archivo a buscar.
 
 $ grep --color=always -n "mysql" /var/www/prueba/2/datos.php
+
+-----
 
 Busca la cadena de manera recursiva en la carpeta en que se encuentre situado
 
@@ -600,17 +652,24 @@ Otra forma de busqueda.
 
 $ egrep -r "Saludo" .
 
+-----
+
 Filtra la busqueda con el parametro que le demos ejemplo:
 
 | grep xxx
+
+-----
 
 Busca las versiones de python que coincidan con el patron 2.7.
 
 $ aptitude search python | grep 2.7
 
+-----
+
 Busca en los procesos del sistema las coincidencias con ruby
 
 $ ps -e | grep ruby
+-----
 
 Para saber donde esta instalado un programa, saber el directorio
 
@@ -620,28 +679,40 @@ $ whereis firefox
 
 $ whereis apache2
 
+-----
+
 Listar todos los archivos contenidos en el directorio actual y en los sub
 directorios, si estamos en /home/user nos listara todo, dependiendo de donde
 este pues listara el contenido.
 
 $ find
 
+-----
+
 Buscar un directorio especifico en el sistema.
 
 $ find -name name_dir
 
+-----
+
 Buscar un fichero o directorio específico en el sistema.
 
 # find / -name name_file_or_package
+
+-----
 
 Para mostrar el directorio del archivo que se quiera buscar, se debe saber el
 nombre del archivo.
 
 # find / -type f -name NombreArchivo.html
 
+-----
+
 Abrir un fichero del directorio desde el navegador.
 
 file:///home/user/nombre_fichero.xxx
+
+-----
 
 Hacer una busqueda de un archivo en los directorios, se puede especificar un
 nombre con su extensión o solo especificar una palabra, la busqueda se hara en
@@ -649,57 +720,83 @@ todos los archivos que contengan la palabra o nombre de archivo escrita.
 
 $ locate nombre_del_archivo
 
+-----
+
 Buscar en todos los directorios los ficheros con la extension especificada.
 
 $ locate .jpg
 
+-----
+
 Buscar en todos los directorios los ficheros con la extension especificada.
 
 $ locate "*.jpg"
+
+-----
 
 Buscar en todos los .pdf del sistema que contengan la palabra "software" en el
 nombre. Sí hace distinción entre mayúsculas, minúsculas y acéntos.
 
 $ locate .pdf | grep software
 
+-----
+
 Muestra cuantos archivos contienen la palabra "hola" en el nombre.
 
 $ sudo locate -c hola
+
+-----
 
 Busca todos los archivos que contienen la palabra "hola" en el nombre tanto en
 mayúsculas como en minúsculas.
 
 $ sudo locate -i hola
 
+-----
+
 Para guardar el resultado de la búsqueda en un archivo de texto.
 
 $ sudo locate nombre_archivo > /home/usuario/lista.txt
+
+-----
 
 (/) es para hacer la busqueda desde ahi en adelante, puede ser (/home/user)
 
 $ sudo find / -name nombre_carpeta
 
+-----
+
 Lista los archivos que componen el directorio introducido.
 
 $ find /carpeta
+
+-----
 
 Busca la ruta donde se encuentra el comando, ejemplo: aptitude, python, etc.
 
 $ type nombre_comando
 
+-----
+
 Buscar la ruta de un programa.
 
 $ which nombre_programa
+
+-----
 
 Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion
 escrita.
 
 $ sudo find / -name "*nombre_fichero*"
 
+-----
+
 Buscar en el directorio actual los ficheros cuyo nombre contengan la expresion
 escrita.
 
 $ sudo find -name "*nombre_fichero*"
+
+-----
 
 Buscar en todo el sistema los ficheros cuyo nombre contengan la expresion
 escrita, en este caso, una extensión de fichero, donde / puede ser /home/user
@@ -707,21 +804,29 @@ etc y .xxx la extension: .jpg, .png, .txt, .py, etc.
 
 $ sudo find / -name "*.xxx*"
 
+-----
+
 Busca todos los archivos que NO contienen la palabra "xxx" en el nombre, se
 especifíca el directorio en el cual buscar.
 
 $ sudo find /home/user ! -name "*xxx*"
+
+-----
 
 Busca todos los archivos que contienen la palabra "xxx" en el nombre tanto en
 mayúsculas como en minúsculas.
 
 $ sudo find /home/user -iname "*xxx*"
 
+-----
+
 Si el resultado de la búsqueda anterior te ha proporcionado una gran cantidad de
 información, resulta más cómodo almacenar el resultado de la búsqueda en un
 fichero de texto para revisarlo posteriormente.
 
 $ sudo find /home/user/ -iname "*xxx*" > /home/user/lista.txt
+
+-----
 
 Crear un fichero (x.txt) que guardará la salida de la consola, en este caso es
 una búsqueda, buscamos el fichero.c en el directorio user y guardaremos la
