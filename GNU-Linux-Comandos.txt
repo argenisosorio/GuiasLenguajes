@@ -502,11 +502,38 @@ $ du -ha --max-depth=10 | sort -hr
 
 -----
 
+Listar los archivos de X extensión por peso sin importar si está en un
+subdirectorio, en este caso los .txt por ejemplo, dara los pesos en mg y kb
+ordenados de mayor a menor en la lista:
+
+$ find . -type f -name "*.pdf" -exec du -ah {} + | sort -hr
+
+Explicación del comando:
+
+find . -type f -name "*.txt": busca en el directorio actual (.) todos los
+archivos (-type f) con la extensión .txt (-name "*.txt").
+
+-exec du -ah {} +: ejecuta el comando du -ah en cada uno de los archivos
+encontrados. La opción {} se reemplaza con el nombre del archivo encontrado, y
+el + al final indica que se deben procesar varios archivos a la vez para mejorar
+el rendimiento.
+
+| sort -hr: ordena la lista resultante por tamaño, de mayor a menor.
+
+Este comando mostrará una lista de todos los archivos con la extensión .txt en
+el directorio actual y sus subdirectorios, ordenados por tamaño en megabytes.
+Puedes cambiar la extensión .txt en el comando para listar otros tipos de
+archivos.
+
+-----
+
 Calcular el tamaño ocupado por un directorio.
 
 # du -h -s /var/log
 
 9,6M    /var/log
+
+-----
 
 Nos dira el tipo de archivo de todos los ficheros del directorio.
 
