@@ -1793,3 +1793,46 @@ Fuente
 ======
 
 ChatGPT
+
+=======
+round()
+=======
+
+Tiene como funcionalidad redondear los decimales resultantes de una división.
+
+round(numero,precision,modo);
+
+-número (Obligatorio): Es el número que queremos redondear.
+
+-precisión: En este parámetro se especifican el número de decimales a redondear.
+
+-modo: modo de redondeo.
+
+Los diferentes modos de redondeo de decimales son los siguientes:
+
+PHP_ROUND_HALF_UP: Redondeo hacia arriba, ej: 1.5 redondea a 2, y -1.5 a -2.
+
+PHP_ROUND_HALF_DOWN: Redondeo hacia abajo, ej: 1.5 redondea a 1, y -1.5 a -1.
+
+PHP_ROUND_HALF_EVEN: Redondeo de decimales hacia el siguiente valor par.
+
+PHP_ROUND_HALF_ODD: Redondeo de decimales hacia el siguiente valor impar.
+
+Ejemplo:
+
+echo round(1.917, 2);
+echo round(1.005, 2);
+echo round(1.5, 0, PHP_ROUND_HALF_UP);
+echo round(1.5, 0, PHP_ROUND_HALF_DOWN);
+
+En el primer ejemplo redondeamos 2 decimales, siendo el resultado 1.92.
+
+En el segundo redondeamos otros 2 siendo el resultado 1.01.
+
+En el tercero y cuarto redondeamos hacia arriba y abajo siendo los resultados 2
+y 1.
+
+Fuente
+======
+
+https://www.anerbarrena.com/php-round-redondeo-decimales-6994/
