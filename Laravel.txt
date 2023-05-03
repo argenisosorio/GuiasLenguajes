@@ -8922,3 +8922,229 @@ $rules = [
         }),
     ],
 ]
+
+==================================
+Relaciones polimórficas en Laravel
+==================================
+
+Podríamos empezar a definir las relacines polomórficas como las que se
+establecen entre distintos modelos y un modelo común. El modelo común sería como
+una cualidad que comparten los diferentes modelos. Estos son distintos pero van
+a presentar un comportamiento, una capacidad, una cualidad, un aspecto similar.
+
+Cierto que es algo dificil de entender con la mera definición, así que vamos a
+apoyarla con un ejemplo lo más simple posible, que nos permita entenderlo.
+
+Pensemos en la siguiente situación. Desarrollamos una aplicación que va a
+contemplar, entre otros modelos, usuarios y stands (esos que te encuentas en los
+congresos, eventos, …).
+
+No es dificil imaginar que podemos necesitar que la aplicación contemple la
+posibilidad de añadir a un usuario una imagen (su foto por ejemplo, a modo de
+avatar). Y tampoco es dificil imaginar que tendremos que contemplar la
+posibilidad de añadir alguna imagen o imagenes de cada stand.
+
+Pues bien, recordando la definición inicial, los modelos diferentes serían los
+usuarios y los stands. Y el modelo común, esa cualidad similar de ambos, sería
+la posiblidad de contemplar una o más imágenes.
+
+Por tanto, voy a necesitar almacenar las imagenes de usuarios y stands en el
+sistema de ficheros del servidor donde esté alojada la aplicación. Y necesitaré
+igualmente tablas en base de datos para relacionar imágenes con sus
+‘propietarios’ ya sean usuarios o stands.
+
+Nuestro primer boceto de estructura sería el siguiente:
+
+usuarios:
+id
+nombre
+apellidos
+email
+
+usuarios_imagenes:
+id
+idusuario
+descripcion
+archivo
+
+stands:
+id
+titulo
+dimensiones
+
+stands_imagenes:
+id
+idstand
+descripcion
+archivo
+
+Vemos que las estructuras necesarias para las imágenes son iguales salvo que
+apuntan a diferentes modelos. ¿Qué pasaría si tuviera más modelos en mi
+aplicación con la necesidad de asociarles imágenes? Necesitaríamos una
+estructura de imágenes para cada modelo?
+
+Todo este comportamiento común (tener imagenes asociadas) e infraestructura en
+servidor y base de datos, debe hacernos pensar en un principio que debe estar
+siempre presente en el desarrollo, la reutilización.
+
+Relaciones polimórficas al rescate
+==================================
+
+Las relaciones polimórficas nos permiten implementar ese comportamiento común
+(la capacidad de tener asociadas imágenes) una vez y reutilizar todo para todos
+los modelos que tengan ese comportamiento.
+
+Esta sería nuestra estructura con relaciones polimórficas:
+
+usuarios:
+id
+nombre
+apellidos
+email
+
+stands:
+id
+titulo
+dimensiones
+
+imagenes:
+id
+modelo_id
+modelo_type
+descripcion
+archivo
+
+Ahora en vez de tener una estructura de datos específica para almacenar las
+imágenes por cada modelo, tenemos una sola. En esta única estructura indicamos,
+el identificador del propietario de la imagen y también el tipo, o sea, el
+modelo. El campo modelo_id contemplará el identificador del usuario o stand,
+mientras que el campo modelo_type determinará el modelo propietario de la
+imagen.
+
+Por lo tanto:
+
+Un usuario podrá tener imágenes asociadas
+
+Un stand podrá tener imágenes asociadas
+
+Una imágen podrá pertenecer a un usuario o un stand.
+
+Implementación en Laravel
+=========================
+
+Aclarar que existen tres tipos de relaciones polimóificas: uno a uno, uno a
+muchos y muchos a muchos. En la documentación oficial de Laravel podrás
+encontrar ejemplo de cada uno, pero aquí nos estamos centrando en la relación
+uno a muchos (un usuario/stand puede tener varias imágenes y una imagen
+pertenece a sólo un usuario/stand).
+
+Migraciones
+===========
+
+Schema::create('imagenes', function (Blueprint $table) {
+    $table->id();
+    $table->unsignedBigInteger('modelo_id');
+    $table->string('modelo_type');
+    $table->longText('descripcion')->nullable();
+    $table->string('archivo');
+});
+
+Schema::create('usuarios', function (Blueprint $table) {
+    $table->id();
+    $table->string('nombre');
+    $table->string('apellidos');
+    $table->string('email');
+});
+
+Schema::create('stands', function (Blueprint $table) {
+    $table->id();
+    $table->string('titulo');
+    $table->string('dimensinoes');
+});
+
+Modelos
+
+// app/Usuario.php
+
+<?php
+
+namespace App;
+use Illuminate\Database\Eloquent\Model; 
+
+class Usuario extends Model {
+    /**
+    * Devuelve todas las imagenes del usuario.
+    */
+    public function imagenes() {
+        return $this->morphMany('App\Imagen', 'modelo');
+    }
+}
+
+// app/Stand.php
+
+<?php
+
+namespace App;
+use Illuminate\Database\Eloquent\Model; 
+
+class Stand extends Model {
+    /**
+    * Devuelve todas las imagenes del stand.
+    */
+    public function imagenes() {
+        return $this->morphMany('App\Imagen', 'modelo');
+    }
+}
+
+// app/Imagen.php
+
+<?php
+
+namespace App;
+use Illuminate\Database\Eloquent\Model; 
+
+class Imagen extends Model {
+    /**
+    * Devuelve el modelo propietario de la imagen
+    */
+    public function modelo() {
+        return $this->morphTo();
+    }
+}
+
+Tanto el modelo usuario como el modelo stand tendrán el método imagenes, que
+devuelve las imágenes asociadas al usaurio o stand.
+
+El método hace uso de morphMany al que se le indica el modelo común (App\Imagen)
+así como una cadena de texto que Laravel necesita para determinar cuáles son los
+campos en la estructura que relacionan las imágenes con sus propietarios.
+Indicando ‘modelo’, Laravel sabrá que estos campos son ‘modelo_id’ y
+‘modelo_type’.
+
+En una relación uno a uno, en vez de morphMany utilizariamos el método morphTo.
+Para más información consulta la documentación oficial de Laravel.
+
+Por su parte en el modelo Imagen se contempla el método modelo, que retornará el
+modelo propietario de la imagen simplemente llamando al método morphTo.
+
+Conclusión
+==========
+
+Cada vez que intuyamos un comportamiento común entre distintos modelos podremos
+analizar la posiblidad de resolverlos con relaciones polimórficas.
+
+Por ejemplo:
+
+Comentar posts, videos, imágenes, … (son todos comentables)
+
+Asociar documentos una solicitud, a un presupuesto, a una factura, …
+
+Guardar un registro de la evolución o progreso de un proyecto, de un evento, un
+video, …
+
+Evaluar un examen, un trabajo, una tesis, … (son todos evaluables)
+
+Fuente
+======
+
+https://virtumedia.wordpress.com/2020/04/10/relaciones-polimorficas-en-laravel/
