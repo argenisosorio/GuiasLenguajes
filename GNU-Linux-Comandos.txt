@@ -8261,3 +8261,176 @@ contraseña, en la segunda máquina a la cual te quieres conectar, también debe
 realizar toda la instalación igual, abrir el cliente de teamviewer y ya, desde
 cualquiera de los dos clientes, debes introducir el id y la contraseña de la
 máquina a la cual te quieres conectar.
+
+================
+¿Qué es pfSense?
+================
+
+PfSense es un programa de código abierto que le permite a un usuario tener un
+firewall de alto nivel en su ordenador. PfSense permite establecer cortafuegos
+desde máquinas virtuales, las cuales pueden descargarse desde su página oficial.
+No obstante, también se venden dispositivos físicos (appliances), que traen el
+sistema incorporado y listo para funcionar.
+
+PfSense es un cortafuegos que se ubica entre internet y nuestros dispositivos
+con el fin de detectar actividades sospechosas y bloquearlas de inmediato. Esto
+nos puede poner a salvo de la mayoría de amenazas externas (aunque también
+pueden existir fuentes de amenaza internas). Por esta razón, se trata de un
+software o hardware bastante útil para las compañías o, incluso, para uso
+personal.
+
+Existen diferentes tipos de firewalls y, por supuesto, también diferentes
+formatos. PfSense puede clasificarse dentro del tipo de firewall UTM, cuyas
+siglas significan unified threat management, que se traduce como gestión
+unificada de amenazas. Esto quiere decir que pfSense contiene un conjunto de
+funciones avanzadas que van más allá de la simple regulación del tráfico de red
+basado en normas.
+
+Al ser un software 100% libre, su código fuente puede hallarse en un repositorio
+de GitHub. Por este motivo, la aplicación también puede personalizarse según las
+necesidades del equipo de ciberseguridad. Aprender qué es pfSense, cómo
+implementarlo y cómo se desarrolló es esencial para contar con un firewall de
+alto nivel, totalmente gratuito, protegiendo tu red.
+
+Fuente
+======
+
+https://keepcoding.io/blog/que-es-pfsense/
+
+================
+¿Qué es PROXMOX?
+================
+
+PROXMOX VE “Virtual Environment” es una potente plataforma de virtualización de
+nivel empresarial 100% libre y sin límites en su uso.
+
+PROXMOX VE ofrece beneficios similares a los productos para virtualización como
+VMware vSphere, Windows Hyper-V, Citrix XenServer, entre otros.
+
+​Siendo PROXMOX libre sin costo, lo puede instalar en cualquier cantidad de
+“Servidores físicos”, sin límite en uso de Procesadores y Sockets, Puentes de
+comunicación, o integración de NAS o SAN ya sea a través de Fibra Canal, iSCSI
+Over Ethernet o NFS.
+
+Principales características de PROXMOX
+======================================
+
+Administrador Web HTML5, PROXMOX proporciona un interfaz Web para configurar los
+servidores físicos, cluster, máquinas virtuales, políticas de backups,
+restauración de backups, snapshots. No es necesario instalar aplicaciones
+clientes en su máquina para administrar y siendo HTML5 le permite conectarse y
+gestionar el entorno virtualizado desde su Smartphone Android, Iphone, tablet's,
+entre otros.
+
+​Virtualización para la mayoría de Sistemas Operativos, en sus versiones
+32/64bits: Linux en todas sus versiones, Microsoft Windows 10 / 2016 / 2012 / 7
+/ 8/ 2003 / xp, Solaris, AIX, entre otros.
+
+​KVM (Máquina virtual basada en el núcleo) es una solución para implementar
+virtualización sobre Linux. Puede funcionar en hardware x86/x86_64 y es
+necesario que el microprocesador tenga soporte de virtualización Intel "VT" y en
+AMD "SVM".​
+
+​Container-based Virtualization (LXC), es una alternativa para ejecutar máquina
+"Linux" en espacios separados. A diferencia de la virtualización este funciona
+como un módulo agregado al servidor físico y hace uso directo del hardware
+(también conocido como Paravirtualización).
+
+Backup & Restore de "Máquinas Virtuales". En Proxmox el efectuar estas tareas es
+muy sencillo y se administra a través de su interfaz Web. Puede efectuar un
+backup de forma inmediata o dejarlo programado. La restauración es simple, solo
+debe de seleccionar el backup a restaurar y listo.
+
+Snapshot Live. le permite hacer copias instantáneas de "Máquinas Virtuales"
+incluyendo el contenido de la RAM, su configuración y el estado de los discos
+virtuales. Usted puede retroceder en tiempo la "Maquina Virtual" restaurando
+spanshot's.
+
+​"Migración en caliente". En la gráfica izquierda se muestra un pequeño cluster
+formado por 3 nodos y poblado con “Máquinas virtuales”. Con fondo rojo se
+muestra un nodo con sobrecarga. La administración de los nodos es centralizada a
+través de un interfaz Web, permitiéndole movilizar “Máquinas virtuales” entre
+cada “Servidor Físico (NODO)” sin tener que apagar la “Máquina Virtual”.​
+
+"Cluster Alta disponibilidad". Esta característica le permite definir reglas de
+“Alta disponibilidad” en el cluster, por ejemplo: Si uno de los “Servidores
+Físicos (NODO)” esta sobrecargado, este transfiere automáticamente a otro
+“Servidor Físico (NODO)” con menos carga la “Máquina Virtual”. Este ejemplo es
+una regla de "balanceo de carga entre nodos".
+
+Administración centralizada. En un "Cluster Proxmox" se debe definir una de los
+Nodos como "Orquestador" con el objetivo de centralizar el trabajo, sin embargo
+cada nodo cuenta con su propio administrador Web.
+
+Cluster no SPOF (Single Point Of Failure). Cada nodo "Servidor físico Proxmox"
+cuenta con su propio interfaz Web permitiendo acceso a la administración de las
+"Máquinas Virtuales". Si el nodo "Orquestador" llega a fallar, cada nodo tiene
+replicado la información del "Orquestador" y desde cualquiera de los nodos puede
+tomar control del cluster.
+
+Puentes de red. Proxmox administra las tarjetas físicas a través de "Bridges"
+que comparte a las "Máquinas Virtuales". Es muy sencillo asociar 1 o varias
+tarjetas a un "Bridge" haciendo un balanceo automático del tráfico de datos.
+
+NAS & SAN. Es muy fácil el uso de NAS o SAN ya sea a través de Fibra Canal,
+iSCSI Over Ethernet o NFS. Proxmox no le limita.
+
+Autenticación. Puede configurar la autenticación de acceso al área de
+"Administración a los Nodos" a través de cuentas propias con Proxmox o
+utilizando LDAP/Active Directory.
+
+Firewall. Proxmox VE Firewall proporciona una manera fácil de proteger su
+infraestructura en un entorno virtualizado. Puede definir reglas de firewall
+para todas las máquinas virtuales o definir reglas precisas a una máquina
+virtual.
+
+¿Cómo funciona Proxmox?
+=======================
+
+Proxmox, le permite instalar en múltiples equipos y los únicos requisitos que le
+pide es tener un "Procesador que cuente con VT o SVM" y que la máquina esté
+vacía. El implanta Debian como sistema operativo y configura KVM para trabajar
+con el recurso físico.
+
+Cada máquina con Proxmox se convierte en un NODO y puede trabajar de forma
+independiente o puede estar agrupado en un Cluster. El beneficio de definir un
+Cluster es tener la administración centralizada, poder mover máquinas entre cada
+nodo, activar "Alta Disponibilidad" y aprovechar todo el recurso de los equipos
+físicos para la virtualización.
+
+Para hacer uso de "Alta Disponibilidad" y "Mover Máquinas Virtuales sin
+apagarlas" es necesario definir un "dispositivo de almacenamiento de tipo NAS o
+SAN" por ejemplo OpenMediaVault o FreeNAS. También puede utilizar ECM, NetAPP,
+DELL Equallogic, entre otros.
+
+¿Que nos permite el Administración Web PROXMOX?
+===============================================
+
+Agregar "Máquinas Virtuales" y gestionarlas. Por ejemplo, puede apagar,
+reiniciar, agregar hardware virtual, entre otros.
+
+Mover máquinas entre cada nodo o activar "Alta Disponibilidad".
+
+Conectarse directamente al interfaz gráfico o consola de la "Máquina Virtual" a
+través de una conexión segura VNC "HTML5 WebSockets and Canvas -- NoVNC".
+
+Programar Backups, restaurar backups o generar Snapshot.
+
+Ver de forma gráfica la información de las "Máquinas Virtuales" como el tráfico
+de red, consumo de procesador, consumo de memoria, entre otros.
+
+Subir medias en formato ISO para instalar sistemas operativos en las "Máquinas
+Virtuales".
+
+Cambiar la configuración de los nodos.
+
+Definir reglas en "Proxmox Firewall VE" para todas las "Máquinas Virtuales" o
+para una es especial.
+
+El Administrador Web PROXMOX es HTML5 por lo cual le será posible conectarse y
+trabajar desde su Smartphone Android, Iphone, tablet's entre otros.
+
+Fuente
+======
+
+http://911-ubuntu.weebly.com/proxmox_como_funciona/conoce-como-funciona-proxmox-y-como-usarlo

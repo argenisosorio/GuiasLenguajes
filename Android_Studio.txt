@@ -81,3 +81,336 @@ Fuentes
 =======
 
 ChatGPT
+
+==============================
+Creando un projecto Hola mundo
+==============================
+
+1- Ejecutar Android Studio, deberas ver una página de bienvenida.
+
+2- En la página de bienvenida, haz clic en Start a new Android Studio project
+(Comienza un nuevo proyecto de Android Studio). La siguiente ventana presenta la
+página de las actividades.
+
+3- Crea una actividad "Hola mundo":
+
+Android Studio proporciona plantillas de actividades para ayudarte a comenzar.
+Para el proyecto "Hola mundo" elige Empty Activity (Actividad vacía) y haz clic
+en Next (Siguiente).
+
+Una actividad es un componente crucial de cualquier aplicación Android. Esta
+proporciona una pantalla con la que los usuarios pueden interactuar para llevar
+a cabo actividades, como marcar el teléfono, tomar una fotografía o enviar un
+mensaje. Cada actividad tiene una ventana en la que puede desplegar su interfaz
+de usuario. La ventana normalmente llena la pantalla, pero puede ser más pequeña
+que la pantalla y flotar por encima de otras ventanas.
+
+4- Configura los detalles del proyecto "Hola mundo":
+
+Terminaremos de crear el proyecto configurando algunos detalles sobre su nombre,
+ubicación y qué versión de API utiliza.
+
+-Cambia el nombre de la aplicación, HelloWoldBasic le puse en este ejemplo.
+
+-Cambia el valor predeterminado de Project location (Ubicación del proyecto) a
+tu directorio preferido, o simplemente déjalo con la ubicación predeterminada.
+
+-Lenguaje: Tendremos Java y Kotlin, en ese ejemplo usaremos Java.
+
+-En el Minimum API level (Nivel de API mínimo), se configura la compatibilidad
+de la aplicacion que estamos creando, con las diferentes versiones de los
+sistemas operativos de android, generalmente deebemos escoger la más baja,
+la ventana nos mostrará el nivel de compatibilidad en puntos percentuales. Esto
+garantiza que tu aplicación pueda ejecutarse en casi todos los dispositivos.
+
+Haz clic en Finish (Finalizar).
+
+5- El sistema de compilación Gradle: Cada vez que creas una nueva aplicación,
+Android Studio crea una carpeta para tus proyectos y compila el proyecto con su
+sistema Gradle. El proceso de Gradle puede tardar unos minutos. Gradle es el
+sistema de compilación de Android, que es responsable de la compilación, prueba
+y despliegue del código. Este permite que la aplicación se ejecute en el
+dispositivo.
+
+6- Explicando los archivos de un proyecto de aplicación Android
+
+Cada vez que comienzas un proyecto nuevo, Android Studio crea la estructura de
+carpetas y archivos necesarios para esa aplicación. Echemos un vistazo a los
+diferentes archivos involucrados en un proyecto de aplicación de Android.
+
+En este ejemplo le pusimos como nombre a nustra app: HelloWoldBasic por lo cual
+se creo la carpeta en la ruta AndroidStudio/AndroidStudioProjects/HelloWoldBasic
+
+El contenido de la app HelloWoldBasic será:
+
+├── app
+│   ├── build.gradle
+│   ├── libs
+│   ├── proguard-rules.pro
+│   └── src
+│       ├── androidTest
+│       │   └── java
+│       │       └── com
+│       │           └── example
+│       │               └── hellowoldbasic
+│       │                   └── ExampleInstrumentedTest.java
+│       ├── main
+│       │   ├── AndroidManifest.xml
+│       │   ├── java
+│       │   │   └── com
+│       │   │       └── example
+│       │   │           └── hellowoldbasic
+│       │   │               └── MainActivity.java
+│       │   └── res
+│       │       ├── drawable
+│       │       │   └── ic_launcher_background.xml
+│       │       ├── drawable-v24
+│       │       │   └── ic_launcher_foreground.xml
+│       │       ├── layout
+│       │       │   └── activity_main.xml
+│       │       ├── mipmap-anydpi-v26
+│       │       │   ├── ic_launcher_round.xml
+│       │       │   └── ic_launcher.xml
+│       │       ├── mipmap-anydpi-v33
+│       │       │   └── ic_launcher.xml
+│       │       ├── mipmap-hdpi
+│       │       │   ├── ic_launcher_round.webp
+│       │       │   └── ic_launcher.webp
+│       │       ├── mipmap-mdpi
+│       │       │   ├── ic_launcher_round.webp
+│       │       │   └── ic_launcher.webp
+│       │       ├── mipmap-xhdpi
+│       │       │   ├── ic_launcher_round.webp
+│       │       │   └── ic_launcher.webp
+│       │       ├── mipmap-xxhdpi
+│       │       │   ├── ic_launcher_round.webp
+│       │       │   └── ic_launcher.webp
+│       │       ├── mipmap-xxxhdpi
+│       │       │   ├── ic_launcher_round.webp
+│       │       │   └── ic_launcher.webp
+│       │       ├── values
+│       │       │   ├── colors.xml
+│       │       │   ├── strings.xml
+│       │       │   └── themes.xml
+│       │       ├── values-night
+│       │       │   └── themes.xml
+│       │       └── xml
+│       │           ├── backup_rules.xml
+│       │           └── data_extraction_rules.xml
+│       └── test
+│           └── java
+│               └── com
+│                   └── example
+│                       └── hellowoldbasic
+│                           └── ExampleUnitTest.java
+├── build.gradle
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradle.properties
+├── gradlew
+├── gradlew.bat
+├── local.properties
+└── settings.gradle
+
+34 directories, 36 files
+
+El archivo AndroidManifest.xml
+==============================
+
+Su ruta es /app/src/main/AndroidManifest.xml. Es el archivo manifiesto describe
+información esencial sobre tu aplicación.
+
+Ejemplo:
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.HelloWoldBasic"
+        tools:targetApi="31">
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+
+La carpeta java
+===============
+
+Esta carpeta contiene los archivos del código fuente de Java.
+
+El archivo MainActivity.java
+
+Su ruta es: HelloWoldBasic/app/src/main/java/com/example/hellowoldbasic/MainActivity.java
+
+Este archivo contiene el código fuente de Java para la actividad principal de la
+aplicación.
+
+La carpeta res
+==============
+
+Cuya ruta es HelloWoldBasic/app/src/main
+
+Esta carpeta incluye todos los recursos que no son de código, por ejemplo:
+
+-Diseños (layouts): los diseños son archivos XML que definen la arquitectura de
+la interfaz de usuario en una actividad o en un componente de una interfaz de
+usuario. Por ejemplo, en nuestra aplicación, el archivo activity_main.xml
+corresponde a la actividad principal.
+
+-Valores (values): contiene el color, estilo y los archivos XML de cadenas para
+la aplicación.
+
+-Dibujables (drawable): este es un repositorio general para todos los gráficos
+que pueden ser dibujados en la pantalla, por ejemplo las imágenes.
+
+El archivo build.gradle
+=======================
+
+Este es un archivo generado automáticamente que contiene información sobre los
+detalles de la aplicación, por ejemplo la versión del SDK, la versión de las
+herramientas de compilación, el ID de la aplicación y más.
+
+Escribiendo el código de la aplicación "Hola mundo"
+===================================================
+
+Ahora que tienes un panorama general de la estructura del proyecto, describamos
+los archivos componentes más críticos que constituyen a la aplicación
+"Hola mundo".
+
+La actividad principal predeterminada
+=====================================
+
+La actividad principal es la primera pantalla que aparecerá cuando ejecutes tu
+aplicación.
+
+Cada actividad representa una pantalla de la interfaz de usuario de la
+aplicación Android. Cada actividad tiene un archivo de implementación Java
+(o Kotlin) y un archivo de diseño XML.
+
+El código Java de la actividad principal predeterminada
+=======================================================
+
+A continuación se encuentra el código Java predeterminado generado por la
+aplicación para la actividad principal cuya ruta es
+app/src/main/java/com/example/hellowoldbasic/MainActivity.java:
+
+package com.example.hellowoldbasic;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+}
+
+El código define una clase MainActivity, y define lo que ocurre cuando se crea
+la actividad con el método onCreate. En este caso, simplemente inicializa la
+vista de la actividad con el diseño del archivo activity_main.
+
+El archivo de diseño XML predeterminado
+=======================================
+
+Los archivos XML se usan para los diseños. El archivo de diseño XML de la
+actividad principal se encuentra en el directorio /app/src/main/res/layout del
+proyecto. Los archivos de diseño son nombrados de acuerdo a lo que representan.
+Por ejemplo, la aplicación "Hola mundo" tiene un diseño, que es el
+activity_main.xml, cuyo nombre se basa en la actividad principal.
+
+Este es el diseño predeterminado activity_main.xml. Este contiene un elemento
+text view, con el texto Hello World! (¡Hola mundo!):
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+Cambiando el diseño de la actividad
+===================================
+
+Como puedes ver, no necesitamos cambiar mucho para terminar nuestra aplicación
+"Hola mundo", pero haremos un pequeño cambio para que el texto destaque más:
+cambiaremos el color y el tamaño de la fuente del texto.
+
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Hello World!"
+    android:textSize="50dp"
+    android:textColor="#800000"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+El archivo strings (cadenas)
+============================
+
+El archivo strings.xml proporciona cadenas de texto para tu aplicación. Por
+ejemplo, un archivo de cadenas predeterminado se ve así:
+
+<resources>
+   <string name="app_name">Hello World Application</string>
+</resources>
+
+Si quieres cambiar el nombre de tu aplicación, puedes hacerlo aquí.
+
+Ejecutando la aplicación
+========================
+
+Conecta tu dispositivo Android a tu computadora con un cable USB. El tipo de
+conexión correcto debería aparecer como connected as a media device (conectado
+como un dispositivo de medios).
+
+Nota: También necesitarás tener habilitadas las opciones de desarrollador en tu
+dispositivo
+
+En Android Studio navega hasta el menú superior y selecciona Run 'app' (Ejecutar
+'aplicación'). Android Studio mostrará un cuadro de diálogo en el que puedes
+elegir en qué dispositivo ejecutar tu aplicación Android. Elige el dispositivo
+que conectaste y haz clic en el botón OK.
+
+La aplicación "Hola mundo" ahora debería estar ejecutándose en tu teléfono.
+Desde aquí puedes modificar tu aplicación según lo que desees y agregar más
+funciones.
+
+Fuente
+======
+
+https://code.tutsplus.com/es/tutorials/the-simplest-android-app-hello-world--cms-35175
