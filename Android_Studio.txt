@@ -414,3 +414,114 @@ Fuente
 ======
 
 https://code.tutsplus.com/es/tutorials/the-simplest-android-app-hello-world--cms-35175
+
+========================================================================
+Cómo desactivar Google Play Protect para que no analice tus aplicaciones
+========================================================================
+
+Google Play Protect protege a los dispositivos Android de aplicaciones
+maliciosas tanto a nivel del móvil como en la propia tienda.
+
+¿Quieres desactivarlo de tu smartphone? Así puedes hacerlo:
+
+Uno de los entornos que veremos cambiado con esto es la Google Play Store; que
+nos ofrecerá información sobre si las aplicaciones que actualizamos son seguras.
+Pero hay un funcionamiento en segundo plano que no apreciaremos a primera vista:
+Google Play Protect escanea nuestro dispositivo analizando las aplicaciones que
+hayamos instalado, también las Apk.
+
+Ahora disponemos de una especie de «antivirus» dentro del sistema, una opción
+más avanzada de seguridad que la que proveía anteriormente SafetyNet. Con Google
+Play Protect nuestro dispositivo se escanea a diario enviando la información a
+Google. Incluso se envían los archivos Apk que hayamos instalado para averiguar
+si ofrecen riesgos de seguridad.
+
+Google Play Protect se instala sin que te des cuenta en tu móvil y también se
+activa por defecto. Es una medida de seguridad excelente, pero también implica
+cierta pérdida de privacidad, algo en lo que es especialista Google.
+
+Desactiva el análisis y envío de aplicaciones en tu móvil:
+
+Ajustes/Configuración > Seguridad/Estado de seguridad
+> Google Play Protect > Desactivar.
+
+Esto nos debería permitar instalar nuestras aplicaciones de prueba generadas con
+Android Studio.
+
+Fuente
+======
+
+https://www.elespanol.com/elandroidelibre/tutoriales/20170811/desactivar-google-play-protect-no-analice-aplicaciones/238227300_0.html
+
+==============
+APK de Android
+==============
+
+Android tiene **sus propios archivos* que permiten instalar aplicaciones. Estos
+archivos pueden instalarse desde la propia tienda de aplicaciones, o bien por
+libre, a través de páginas de terceros.
+
+Esta última forma siempre ha sido permitida por Google, quien incorpora un
+instalador de aplicaciones en el sistema para que todo archivo APK que
+descarguemos, pueda ser instalado. En resumidas cuentas, un APK es un paquete de
+instalación que contiene los datos de una aplicación.
+
+Cada aplicación requiere de una serie de datos para poder ejecutarse en un
+sistema operativo. En el caso de Android, esos datos de la app se encuentran
+comprimidos dentro del archivo APK (Android Application Package). Estos archivos
+pueden compartirse entre móviles Android (basta con enviarlos por la vía que
+quieras), y para abrirlos no hace falta más que pulsar sobre ellos.
+
+En la mayoría de los casos, los APK contienen todos los datos necesarios para
+hacer funcionar la aplicación. No obstante, hay casos en los que, tras instalar
+el APK, es necesario que se descarguen aún más datos para que la aplicación
+puede funcionar.
+
+Fuente
+======
+
+https://www.xatakandroid.com/aplicaciones-android/que-apk-android-como-se-instala-diferencias-apps-normales
+
+=====================================================
+Generar archivos APK y APK firmados en Android Studio
+=====================================================
+
+Android Studio te permite crear dos tipos de archivos APK.
+
+Primero están los archivos APK de depuración que se generan únicamente con fines
+de prueba. Se ejecutarán en tu móvil Android. Sin embargo, no se pueden cargar
+en Play Store ni ponerse a disposición del público.
+
+En segundo lugar, puedes generar archivos APK firmados. Los archivos APK
+firmados son útiles cuando has probado tu aplicación y está lista para ser
+cargada en Play Store y lanzada al público en general.
+
+Este tutorial te mostrará cómo crear una aplicación de Android generando
+archivos APK utilizando Android Studio.
+
+1- Crear un nuevo proyecto, probar que funcione con el dispositivo conectado.
+
+2- Crea un archivo APK: Generar un archivo APK de depuración es fácil y es
+cuestión de unos pocos clics. Primero, abre tu proyecto o aplicación que deseas
+importar a un archivo APK. A continuación, selecciona en el menú de la barra de
+herramientas a Build > Build Bundle(s)/APK(s) > Build APK(s).
+
+Android Studio tardará unos minutos en generar un archivo APK. Una vez que se
+complete la compilación del APK, recibirás una notificación en la esquina
+inferior derecha de la pantalla. A partir de esa notificación, selecciona
+Localizar y se te llevará a la ubicación del archivo APK.
+
+Si pierdes la notificación, aún puedes ubicar el archivo APK en la siguiente
+ruta dentro de la carpeta de tu proyecto:
+
+/HelloWoldBasic/app/build/intermediates/apk/debug/app-debug.apk
+
+El archivo se denomina app-debug.apk de forma predeterminada.
+
+La podemos copiar al dispositivo directamente para instalarla y probarla,
+es posible que no deje instalar directamente debido a Google Play Protect.
+
+Fuente
+======
+
+https://code.tutsplus.com/es/tutorials/how-to-generate-apk-and-signed-apk-files-in-android-studio--cms-37927
