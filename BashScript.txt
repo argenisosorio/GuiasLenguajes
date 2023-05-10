@@ -402,7 +402,7 @@ Otros ejemplos
 
 #A Simple Bash Example
 #!/bin/bash  
-echo "This is a shell script"  
+echo "This is a shell script"
 ls -lah
 echo "I am done running ls"  
 SOMEVAR='text stuff'
@@ -447,6 +447,23 @@ tar -cvf backup.tar $DIRS
 #Abrir un fichero específico con el editor gedit
 #!/bin/bash
 gedit /home/user/try.txt
+
+=============
+set -x set +x
+=============
+
+set -x Se ejecuta luego de un comando de unix que pueda generar una salida
+por la consola, esto nos permitira ver la salida del comando, si queremos
+dejar de ver la salida del comando luego de la ejecución usamos set +x
+
+Ejemplo:
+
+#Comprimir un directorio con un script de bash.
+#!/bin/bash
+tree
+set -x # Ver la salida del comando tree por la consola
+set +x # Dejar de ver la salida del comando por la consola
+tree # Acá no veremos la salida del comando
 
 ----------------------
 
@@ -569,3 +586,99 @@ php artisan db:seed
 echo "--- Guardados datos en la base de datos ---"
 
 echo "--- Listo!!! ---"
+
+----------
+
+#!/bin/bash
+# Script para respaldar una base de datos de postgres.
+
+echo
+echo "----------"
+echo
+
+# Solicitar el nombre de la base de datos
+read -p "Escriba el nombre de la base de datos que deseas respaldar: " nombre_bd
+
+echo
+
+# Solicitar el nombre del dueño de la base de datos
+read -p "Escriba el nombre del dueño de la base de datos que deseas respaldar: " nombre_dueno
+
+echo
+
+# Solicitar la contraseña del dueño de la base de datos
+read -s -p "Escriba la contraseña del dueño de la base de datos: " contrasena
+
+echo
+
+echo
+
+# Solicitar el nombre del archivo de respaldo
+read -p "Escriba el nombre que tendrá el archivo .sql que será el respaldo (Solo ingrese el nombre, no agregue .sql al final): " nombre_respaldo
+
+# Agregar la extensión .sql al nombre del archivo de respaldo
+nombre_respaldo="$nombre_respaldo.sql"
+
+# Establecer la contraseña del dueño de la base de datos
+export PGPASSWORD="$contrasena"
+
+# Ejecutar el comando pg_dump para realizar el respaldo
+pg_dump -U "$nombre_dueno" -h 127.0.0.1 "$nombre_bd" > "$nombre_respaldo"
+
+# Limpiar la variable de entorno PGPASSWORD
+unset PGPASSWORD
+
+echo
+
+# Indicar al usuario que se realizó el respaldo con éxito
+echo "¡La base de datos $nombre_bd se respaldó con éxito en el archivo $nombre_respaldo de su directorio actual!"
+
+----------
+
+#!/bin/bash
+# Script para restaurar una base de datos de postgres.
+
+echo
+echo "----------"
+echo
+
+# Solicitar el nombre de la base de datos
+read -p "Escriba el nombre de la base de datos que desea restaurar (Debe estar creada en Postgresql y además estar vacía): " nombre_bd
+
+echo
+
+# Solicitar el nombre del dueño de la base de datos
+read -p "Escriba el nombre del dueño de la base de datos que desea restaurar: " nombre_dueno
+
+echo
+
+# Solicitar la contraseña del dueño de la base de datos
+read -s -p "Escriba la contraseña del dueño de la base de datos que desea restaurar: " contrasena
+
+echo
+
+echo
+
+# Solicitar el nombre del archivo de respaldo
+read -p "Escriba el nombre del archivo .sql que es el respaldo que desea restaurar (No escriba .sql al final): " nombre_respaldo
+
+# Agregar la extensión .sql al nombre del archivo de respaldo
+nombre_respaldo="$nombre_respaldo.sql"
+
+# Establecer la contraseña del dueño de la base de datos
+export PGPASSWORD="$contrasena"
+
+# Ejecutar el comando psql para restaurar el respaldo
+psql -h 127.0.0.1 -U "$nombre_dueno" -d "$nombre_bd" -f "$nombre_respaldo"
+
+set -x
+
+set +x
+
+# Limpiar la variable de entorno PGPASSWORD
+unset PGPASSWORD
+
+echo
+
+# Indicar al usuario que se realizó el respaldo con éxito
+echo "¡La base de datos $nombre_bd se restauro con éxito a partir del archivo $nombre_respaldo!"

@@ -770,11 +770,12 @@ for ($x = 0; $x <= 4; $x++) {
 
 Array como mapa de propiedades
 
-$mapa = array('version' => 5,
-              'SO' => 'Linux',
-              'idioma' => 'Español',
-              'etiquetas_cortas' => true
-              );
+$mapa = array(
+        'version' => 5,
+        'SO' => 'Linux',
+        'idioma' => 'Español',
+        'etiquetas_cortas' => true
+    );
 print_r($mapa);
 
 -----
@@ -783,7 +784,7 @@ foreach() para recorrer matrices o arrays
 
 $colores = array('rojo', 'azul', 'verde', 'amarillo');
 foreach ($colores as $color) {
-echo "$color <br />";
+    echo "$color <br />";
 }
 
 =======
