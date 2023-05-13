@@ -525,3 +525,29 @@ Fuente
 ======
 
 https://code.tutsplus.com/es/tutorials/how-to-generate-apk-and-signed-apk-files-in-android-studio--cms-37927
+
+=====================
+El archivo .gitignore
+=====================
+
+Al crear el proyecto con Android Studio, en la carpeta raís del mismo también se
+creara el archivo .gitignore, cuyo contenido por defecto es:
+
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+Significa que podemos ejecutar git init para inicializar un nuevo repositorio
+local desde la carpeta raíz de nuestro proyecto.
