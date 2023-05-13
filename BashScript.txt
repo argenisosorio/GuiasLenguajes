@@ -682,3 +682,63 @@ echo
 
 # Indicar al usuario que se realizó el respaldo con éxito
 echo "¡La base de datos $nombre_bd se restauro con éxito a partir del archivo $nombre_respaldo!"
+
+----------
+
+#!/bin/bash
+# Borrar una base de datos de Postgresql.
+
+echo "Ingrese el nombre de la base de datos que desea borrar:"
+read database_name
+
+echo "¿Está seguro de que desea borrar la base de datos '$database_name'? (S/N)"
+read confirmation
+
+if [ "$confirmation" == "S" ] || [ "$confirmation" == "s" ]; then
+    sudo -u postgres psql -c "DROP DATABASE $database_name"
+    echo "La base de datos '$database_name' ha sido borrada exitosamente."
+else
+    echo "Operación cancelada. No se ha borrado la base de datos."
+fi
+
+----------
+
+#!/bin/bash
+
+# Borrar una base de datos de Postgresql y crear una nueva inmediatamente.
+
+echo "Ingrese el nombre de la base de datos que desea borrar:"
+read database_name
+
+echo
+
+echo "¿Está seguro de que desea borrar la base de datos '$database_name'? (S/N)"
+read confirmation
+
+echo
+
+if [ "$confirmation" == "S" ] || [ "$confirmation" == "s" ]; then
+    # Verificar si la base de datos existe antes de borrarla
+    sudo -u postgres psql -t -c "SELECT 1 FROM pg_database WHERE datname='$database_name'" | grep -q 1
+    if [ $? -eq 0 ]; then
+        sudo -u postgres psql -c "DROP DATABASE $database_name"
+        echo "La base de datos '$database_name' ha sido borrada exitosamente."
+    else
+        echo "La base de datos '$database_name' no existe."
+    fi
+
+    echo "Ingrese el nombre de la nueva base de datos que desea crear:"
+    read new_database_name
+
+    echo
+
+    echo "Ingrese el nombre del propietario de la nueva base de datos que desea crear:"
+    read owner_name
+
+    echo
+
+    sudo -u postgres psql -c "CREATE DATABASE $new_database_name OWNER $owner_name"
+    echo "La base de datos '$new_database_name' ha sido creada exitosamente."
+else
+    echo "Operación cancelada. No se ha borrado la base de datos."
+fi
