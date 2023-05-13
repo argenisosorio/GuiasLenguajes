@@ -1,0 +1,157 @@
+====================
+Guía de Kotlin by dM
+====================
+
+¿Qué es Kotlin?
+===============
+
+Kotlin es un lenguaje de programación multiplataforma, tipificado estáticamente
+y de propósito general con inferencia de tipos. Kotlin está diseñado para
+interoperar completamente con Java, y la versión JVM de su biblioteca estándar
+depende de la biblioteca de clases de Java, pero la inferencia de tipos permite
+que su sintaxis sea más concisa.
+
+==========
+Hola mundo
+==========
+
+Para escribir un "¡Hola, mundo!" programa en Kotlin, puedes usar el siguiente
+código:
+
+fun main(args: Array<String>) {
+  println("Hello, World!")
+}
+
+Este código imprimirá el mensaje "Hello, World!" a la consola.
+
+Aquí hay un desglose del código:
+
+La palabra clave fun se usa para declarar una función.
+
+La función main es el punto de entrada para todos los programas de Kotlin.
+
+El parámetro args es una matriz de cadenas que se pasan a la función principal
+desde la línea de comandos.
+
+La función println() imprime el mensaje dado en la consola.
+
+Los paréntesis () se utilizan para agrupar los argumentos de una función.
+
+Las llaves {} se utilizan para agrupar las declaraciones en una función.
+
+=================
+Sintáxis y Reglas
+=================
+
+Punto y coma
+============
+
+En Kotlin, las líneas de código no tienen que terminar con un punto y coma (;).
+Esto contrasta con muchos otros lenguajes de programación, como Java, C++ y C#.
+
+La decisión de no requerir puntos y comas en Kotlin se tomó para que el lenguaje
+sea más conciso y fácil de leer. A veces, los puntos y comas pueden ser
+difíciles de ver, especialmente cuando hay muchas líneas de código en una sola
+pantalla. Al no requerir puntos y comas, Kotlin hace que sea más fácil
+concentrarse en la lógica del código, en lugar de la puntuación.
+
+Por supuesto, aún es posible usar punto y coma en Kotlin si lo desea. Pueden ser
+útiles para mejorar la legibilidad en algunos casos. Por ejemplo, puede usar un
+punto y coma para separar dos declaraciones que están en la misma línea.
+
+En última instancia, la decisión de usar o no punto y coma en Kotlin depende del
+desarrollador individual. No hay respuesta correcta o incorrecta.
+
+Indentación o sangría
+=====================
+
+No se requiere sangría en Kotlin. El compilador aún podrá entender su código
+incluso si no lo sangra. Sin embargo, se recomienda enfáticamente que sangre su
+código. Esto hará que su código sea más legible y fácil de mantener.
+
+Las convenciones de codificación de Kotlin recomiendan usar cuatro espacios para
+la sangría. También debe usar pestañas con moderación, en todo caso.
+
+Aquí hay un ejemplo de código Kotlin bien sangrado:
+
+fun main(args: Array<String>) {
+  val name = "Kotlin"
+  println("Hello, $name!")
+}
+
+Aquí hay un ejemplo de código Kotlin mal sangrado:
+
+diversión principal(argumentos: Array<String>) {
+val nombre = "Kotlin"
+println("¡Hola, $nombre!")
+}
+
+Como puede ver, el código mal sangrado es mucho más difícil de leer. También es
+más difícil encontrar errores en código mal sangrado.
+
+Por lo tanto, aunque no se requiere sangría en Kotlin, se recomienda
+enfáticamente que sangre su código. Hará que su código sea más legible y fácil
+de mantener.
+
+Compilación
+===========
+
+El código de Kotlin debe compilarse antes de poder ejecutarse. El compilador de
+Kotlin convierte el código fuente de Kotlin en código de bytes, que es un
+formato que puede ejecutar una máquina virtual Java (JVM).
+
+Hay algunas formas diferentes de compilar código Kotlin. Puede usar el
+compilador de línea de comandos de Kotlin, el complemento Kotlin Gradle o el
+complemento Kotlin IntelliJ IDEA.
+
+Una vez que se ha compilado el código de Kotlin, una máquina virtual de Java
+puede ejecutarlo. La JVM es un programa de software que ejecuta bytecode. Está
+disponible para la mayoría de los sistemas operativos, incluidos Windows,
+macOS y Linux.
+
+Estos son algunos de los beneficios de compilar código Kotlin:
+
+-El código de Kotlin se puede ejecutar en cualquier plataforma que tenga una
+JVM.
+-El código Kotlin se puede integrar con el código Java existente.
+-El código de Kotlin se puede depurar con un depurador de Java.
+-El código de Kotlin se puede perfilar utilizando un generador de perfiles de
+Java.
+
+Estos son algunos de los inconvenientes de compilar código Kotlin:
+
+-El proceso de compilación puede ser lento.
+-El código compilado puede ser más grande que el código fuente original de
+Kotlin.
+-El código compilado puede no ser tan eficiente como el código nativo.
+
+Extensión
+=========
+
+Los dicheros en lenguaje Kotlin se guardan con extensión .kt.
+
+Instalación de kotlin
+=====================
+
+Instalaremos el compilador de Kotlin mediante Snap:
+
+$ sudo snap install kotlin --classic
+
+Comprobar la correcta instalación del compilador
+================================================
+
+$ kotlinc -version
+
+kotlinc-jvm 1.7.21 (JRE 11.0.18+10-post-Debian-1deb11u1)
+
+Ubicación de la instalación
+===========================
+
+$ which kotlinc
+
+/snap/bin/kotlinc
+
+Fuente
+=======
+
+Bard
