@@ -1562,3 +1562,39 @@ Fuente
 ======
 
 ChatGPT
+
+====================================================================
+Nueva variable en el archivo wp-config.php para ser usada en el tema
+====================================================================
+
+Para lograr que la variable $a sea configurable desde el archivo de
+configuración de WordPress en lugar de tenerla directamente en el archivo
+index.php, puedes seguir estos pasos:
+
+1- Abre el archivo wp-config.php ubicado en el directorio raíz de tu instalación de
+WordPress (/var/www/html/wordpress/).
+
+2- Añade el siguiente código después de las líneas de configuración de la base
+de datos:
+
+/** Configuración personalizada */
+define('MI_VARIABLE', 'https://miweb.com');
+
+3- Guarda los cambios en el archivo wp-config.php.
+
+4- Ahora, puedes acceder al valor de la variable $a en tu archivo index.php
+utilizando MI_VARIABLE. Por ejemplo:
+
+<?php
+    $a = MI_VARIABLE;
+    echo $a; // Imprime https://miweb.com
+?>
+
+Al hacer esto, puedes modificar el valor de MI_VARIABLE directamente en el
+archivo wp-config.php sin tener que editar el archivo index.php cada vez que
+desees cambiar su valor.
+
+Fuente
+======
+
+ChatGPT
