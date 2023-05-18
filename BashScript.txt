@@ -356,6 +356,8 @@ case $var in
   *) echo "INVALID NUMBER!" ;;
 esac
 
+------------------------
+
 #!/bin/sh
 #Probando elección de los usuarios, y usando operaciones aritmeticas
 echo "¿Desea realizar una suma o una resta?"
@@ -742,3 +744,109 @@ if [ "$confirmation" == "S" ] || [ "$confirmation" == "s" ]; then
 else
     echo "Operación cancelada. No se ha borrado la base de datos."
 fi
+
+----------
+
+#!/bin/sh
+
+echo
+echo "--------------------------------------------------"
+echo "Operaciones con bases de datos de Postgresql by dM"
+echo "--------------------------------------------------"
+echo
+echo "1 = Borrar una base de datos de Postgresql"
+echo "2 = Crear una nueva base de datos de Postgresql"
+echo "3 = Respaldar una base de datos de Postgresql en un archivo .sql"
+echo "4 = Restaurar una base de datos de Postgresql desde un archivo .sql"
+echo 
+read -p "Introduzca su opción y presione enter: " var
+
+case $var in
+    1)
+        echo
+        read -p "Ingrese el nombre de la base de datos que desea borrar y presione enter: " database_name
+        echo
+        read -p "¿Está seguro de que desea borrar la base de datos '$database_name'? ingrese (S/N) y presione enter: " confirmation
+        if [ "$confirmation" == "S" ] || [ "$confirmation" == "s" ]; then
+            # Verificar si la base de datos existe antes de borrarla
+            sudo -u postgres psql -t -c "SELECT 1 FROM pg_database WHERE datname='$database_name'" | grep -q 1
+            if [ $? -eq 0 ]; then
+                echo
+                echo "Ingrese su contraseña de usuario sudo (Si ya lo ha hecho antes, no será necesario):"
+                sudo -u postgres psql -c "DROP DATABASE $database_name"
+                echo "La base de datos '$database_name' ha sido borrada exitosamente."
+            else
+                echo
+                echo "La base de datos '$database_name' no existe."
+            fi
+        else
+            echo "Operación cancelada. No se ha borrado la base de datos."
+        fi
+        ;;
+    2)
+        echo
+        read -p "Ingrese el nombre de la nueva base de datos que desea crear: " new_database_name
+        echo
+        read -p "Ingrese el nombre del propietario de la nueva base de datos que desea crear: " owner_name
+        echo
+        sudo -u postgres psql -c "CREATE DATABASE $new_database_name OWNER $owner_name"
+        echo "La base de datos '$new_database_name' ha sido creada exitosamente."
+        ;;
+    3)
+        echo
+        # Solicitar el nombre de la base de datos
+        read -p "Ingrese el nombre de la base de datos que desea respaldar: " nombre_bd
+        echo
+        # Solicitar el nombre del dueño de la base de datos
+        read -p "Ingrese el nombre del propietario de la base de datos que desea respaldar: " nombre_dueno
+        echo
+        # Solicitar la contraseña del dueño de la base de datos
+        read -s -p "Ingrese la contraseña del propietario de la base de datos que desea respaldar: " contrasena
+        echo
+        echo
+        # Solicitar el nombre del archivo de respaldo
+        read -p "Ingrese el nombre del archivo .sql que será creado y presione enter (No escriba .sql al final, solo el nombre): " nombre_respaldo
+        # Agregar la extensión .sql al nombre del archivo de respaldo
+        nombre_respaldo="$nombre_respaldo.sql"
+        # Establecer la contraseña del dueño de la base de datos
+        export PGPASSWORD="$contrasena"
+        # Ejecutar el comando pg_dump para realizar el respaldo
+        pg_dump -U "$nombre_dueno" -h 127.0.0.1 "$nombre_bd" > "$nombre_respaldo"
+        # Limpiar la variable de entorno PGPASSWORD
+        unset PGPASSWORD
+        echo
+        # Indicar al usuario que se realizó el respaldo con éxito
+        echo "¡La base de datos $nombre_bd se respaldó con éxito en el archivo $nombre_respaldo de su directorio actual!"
+        ;;
+    4)
+        echo
+        # Solicitar el nombre de la base de datos
+        read -p "Ingrese el nombre de la base de datos que desea restaurar y presione enter (Debe estar creada en Postgresql y además estar vacía): " nombre_bd
+        echo
+        # Solicitar el nombre del dueño de la base de datos
+        read -p "Ingrese el nombre del propietario de la base de datos que desea restaurar y presione enter: " nombre_dueno
+        echo
+        # Solicitar la contraseña del dueño de la base de datos
+        read -s -p "Ingrese la contraseña del propietario de la base de datos que desea restaurar y presione enter: " contrasena
+        echo
+        echo
+        # Solicitar el nombre del archivo de respaldo
+        read -p "Ingrese el nombre del archivo .sql que es el respaldo que desea restaurar y presione enter (No escriba .sql al final, solo el nombre): " nombre_respaldo
+        # Agregar la extensión .sql al nombre del archivo de respaldo
+        nombre_respaldo="$nombre_respaldo.sql"
+        # Establecer la contraseña del dueño de la base de datos
+        export PGPASSWORD="$contrasena"
+        # Ejecutar el comando psql para restaurar el respaldo
+        psql -h 127.0.0.1 -U "$nombre_dueno" -d "$nombre_bd" -f "$nombre_respaldo"
+        set -x
+        set +x
+        # Limpiar la variable de entorno PGPASSWORD
+        unset PGPASSWORD
+        echo
+        # Indicar al usuario que se realizó el respaldo con éxito
+        echo "¡La base de datos $nombre_bd se restauro con éxito a partir del archivo $nombre_respaldo!"
+        ;;
+    *)
+        echo "¡Opción inválida!"
+        ;;
+esac
