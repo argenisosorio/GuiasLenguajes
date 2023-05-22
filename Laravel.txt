@@ -9148,3 +9148,206 @@ Fuente
 ======
 
 https://virtumedia.wordpress.com/2020/04/10/relaciones-polimorficas-en-laravel/
+
+======================
+Procesamiento de colas
+======================
+
+En Laravel, el procesamiento de colas es una forma de ejecutar tareas en segundo
+plano de manera asíncrona. Permite separar el procesamiento de tareas largas o
+intensivas en recursos de la respuesta inmediata a una solicitud del usuario.
+
+El procesamiento de colas se basa en la idea de enviar trabajos (jobs) a una
+cola, donde están esperando a ser procesados. Estos trabajos pueden ser tareas
+como enviar correos electrónicos, generar informes, procesar imágenes, realizar
+cálculos intensivos, entre otros.
+
+En lugar de realizar estas tareas directamente en el momento en que se
+solicitan, se encolan en una cola de tareas. Luego, un proceso de trabajador
+(worker) se encarga de tomar los trabajos de la cola y procesarlos en segundo
+plano.
+
+Al utilizar colas, se pueden obtener varios beneficios:
+
+1- Mejora de la velocidad de respuesta: Al enviar tareas a la cola, se libera el
+proceso principal de la aplicación para manejar más solicitudes, lo que resulta
+en una respuesta más rápida al usuario.
+
+2- Procesamiento asíncrono: Las tareas en la cola se procesan en segundo plano,
+lo que permite al usuario continuar interactuando con la aplicación sin tener
+que esperar a que las tareas se completen.
+
+3- Control del flujo de trabajo: Puedes priorizar, reintentar o programar la
+ejecución de trabajos en la cola según tus necesidades. Esto proporciona
+flexibilidad para manejar diferentes escenarios y optimizar el rendimiento de la
+aplicación.
+
+Laravel proporciona un sistema de colas integrado que utiliza una variedad de
+controladores de cola, como Redis, base de datos, Amazon SQS, entre otros.
+Puedes configurar el controlador de cola deseado en el archivo de configuración
+queue.php y definir las tareas de trabajo en clases de trabajos (job classes).
+
+Luego, puedes iniciar uno o más procesos de trabajador utilizando el comando de
+php artisan queue:work. Estos trabajadores estarán pendientes de la cola y
+procesarán los trabajos según el controlador de cola configurado.
+
+En resumen, el procesamiento de colas en Laravel te permite realizar tareas en
+segundo plano de manera eficiente, mejorando el rendimiento y la capacidad de
+respuesta de tu aplicación.
+
+Monitoreo de trabajos fallidos
+==============================
+
+Escenario: Supongamos que tengo un controlador encargado de guardar los datos
+enviados por un formulario, y delegué a un worker el trabajo de enviar una
+notificación por correo, entonces, que pasaría si se guardan los datos del
+formulario pero por alguna razón el worker falla porque se cayó la conexión a
+internet en ese momento y la notificación nunca le llegó al usuario.
+
+Respuesta: Si en el escenario que planteas el controlador guarda los datos del
+formulario exitosamente, pero el worker encargado de enviar la notificación por
+correo falla debido a una caída de la conexión a Internet, la notificación no se
+enviará y el usuario no recibirá el correo.
+
+Este tipo de situaciones pueden ocurrir cuando se trabaja con colas y
+procesamiento en segundo plano. Si el worker no puede completar su tarea debido
+a un error o una interrupción en la conexión, es importante tener en cuenta cómo
+se manejarán esos casos.
+
+En Laravel, hay diferentes enfoques para manejar estas situaciones:
+
+-Retries (reintentos): Puedes configurar el worker para que intente nuevamente
+el trabajo en caso de que falle. Por ejemplo, puedes establecer un número máximo
+de reintentos y un intervalo de espera entre cada intento. Esto permitiría que
+el worker vuelva a intentar enviar la notificación cuando la conexión a Internet
+se restablezca.
+
+-Fallos en la cola: Laravel proporciona una funcionalidad llamada "failed jobs"
+(trabajos fallidos) que permite capturar y registrar los trabajos que no se
+pudieron procesar correctamente. Puedes configurar el sistema para almacenar
+estos trabajos fallidos en una tabla de base de datos o enviar notificaciones
+por correo electrónico cuando ocurran errores.
+
+-Supervisión y monitoreo: Es recomendable utilizar herramientas de supervisión y
+monitoreo para verificar el estado de los trabajadores y las colas. Puedes
+utilizar herramientas como Horizon (una interfaz de administración para colas) y
+herramientas de monitoreo de aplicaciones para asegurarte de que los
+trabajadores estén funcionando correctamente y detectar cualquier problema o
+error en tiempo real.
+
+Además, es importante diseñar adecuadamente tus tareas de trabajo y manejar
+situaciones de errores o fallas de manera adecuada. Puedes implementar lógica en
+tus trabajos para manejar escenarios de excepciones y notificar o registrar los
+errores para su posterior revisión y solución.
+
+En resumen, si un worker falla debido a una caída de la conexión a Internet
+mientras se procesa una tarea en segundo plano, es importante configurar
+reintentos, manejar los trabajos fallidos y utilizar herramientas de supervisión
+y monitoreo para garantizar el correcto funcionamiento del sistema y mitigar
+problemas en tiempo real.
+
+Crear una clase de trabajo (job class)
+======================================
+
+Puedes utilizar el comando Artisan para generar la clase de trabajo:
+
+$ php artisan make:job SendNotificationJob
+
+Esto creará una clase SendNotificationJob en el directorio app/Jobs.
+
+El contenido por defecto será:
+
+-----
+
+<?php
+
+namespace App\Jobs;
+
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldBeUnique;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
+
+class SendNotificationJob implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    /**
+     * Create a new job instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+
+    /**
+     * Execute the job.
+     *
+     * @return void
+     */
+    public function handle()
+    {
+        //
+    }
+}
+
+-----
+
+En el método handle es donde se debe realizar la lógica del trabajo, como
+guardar algo en la base de datos o enviar una notificación de correo, etc.
+
+Luego, en el controlador donde queremos ejecutar el trabajo podemos agregar
+esto:
+
+SendNotificationJob::dispatch($data);
+
+Donde $data puede ser información que necesitamos recibir en nuestra clase
+trabajo para ser procesada.
+
+Configurar .env
+===============
+
+Tambien debemos agregar la siguiente variable en el archivo .env
+
+QUEUE_CONNECTION=database
+
+Crear tabla para los trabajos
+=============================
+
+Ejecuta el siguiente comando para generar la migración:
+
+$ php artisan queue:table
+
+Después de ejecutar el comando anterior, se generará una migración en el
+directorio database/migrations.
+
+Ejecuta el siguiente comando para ejecutar la migración y crear la tabla "jobs":
+
+$ php artisan migrate
+
+Una vez que hayas ejecutado la migración, la tabla "jobs" debería estar
+disponible en tu base de datos y podrás utilizar las colas de trabajo
+correctamente.
+
+Ejecución del trabajo
+=====================
+
+Ejecutamos el siguiente comando en la consola:
+
+
+$ php artisan queue:work
+
+Si usamos el controlador que llama a la job class creada y se ejecuta
+correctamente debemos ver en la consola la ejecución, tal como esta salida:
+
+[2023-05-22 17:15:18][1] Processing: App\Jobs\SendNotificationJob
+[2023-05-22 17:15:21][1] Processed:  App\Jobs\SendNotificationJob
+
+Fuente
+======
+
+ChatGPT
