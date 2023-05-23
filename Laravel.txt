@@ -9347,6 +9347,65 @@ correctamente debemos ver en la consola la ejecución, tal como esta salida:
 [2023-05-22 17:15:18][1] Processing: App\Jobs\SendNotificationJob
 [2023-05-22 17:15:21][1] Processed:  App\Jobs\SendNotificationJob
 
+La tabla jobs en la base de datos
+=================================
+
+Si estás utilizando Laravel y el procesamiento de colas con la tabla jobs, es
+normal que inicialmente no se muestren registros en esa tabla. Esto se debe a
+que los trabajos encolados se procesan y eliminan de la tabla automáticamente
+una vez que han sido completados.
+
+Cuando encolas un trabajo mediante el uso de Laravel's dispatch o dispatchNow,
+el trabajo se agrega a la tabla jobs con la información necesaria para su
+procesamiento. Una vez que el trabajo es tomado por un worker de la cola y se
+completa su ejecución, Laravel lo eliminará automáticamente de la tabla jobs.
+
+Si estás ejecutando trabajos en segundo plano con colas y no ves registros en la
+tabla jobs, significa que los trabajos están siendo procesados de manera
+eficiente y eliminados correctamente una vez que se completan.
+
+Sin embargo, si deseas conservar los registros de los trabajos en la tabla jobs
+incluso después de que se completen, puedes configurar tu archivo de
+configuración de colas (config/queue.php) y establecer el valor de
+'database' => 'jobs' en true. Esto permitirá que los trabajos se almacenen en la
+tabla jobs incluso después de que se completen. Ten en cuenta que esto podría
+ocupar espacio en tu base de datos con el tiempo, por lo que es importante
+administrar adecuadamente esos registros si decides habilitar esta opción.
+
+En resumen, si los trabajos se están ejecutando correctamente y no ves
+registros en la tabla jobs, significa que los trabajos están siendo procesados y
+eliminados correctamente una vez que se completan.
+
+QUEUE_CONNECTION=sync o QUEUE_CONNECTION=database
+=================================================
+
+La diferencia entre QUEUE_CONNECTION=sync y QUEUE_CONNECTION=database en el
+archivo de configuración de Laravel está relacionada con el tipo de conexión que
+se utilizará para procesar las colas de trabajos.
+
+QUEUE_CONNECTION=sync: Cuando utilizas esta configuración, Laravel procesará las
+colas de trabajos de forma sincrónica, lo que significa que los trabajos se
+ejecutarán inmediatamente en el mismo hilo de ejecución en el que se encolan. En
+otras palabras, los trabajos se ejecutarán de manera secuencial y bloquearán la
+ejecución de otros trabajos o tareas hasta que se completen. Esta opción es útil
+durante el desarrollo o en casos en los que no necesitas diferir la ejecución de
+los trabajos a un proceso en segundo plano.
+
+QUEUE_CONNECTION=database: Con esta configuración, Laravel utiliza la base de
+datos para almacenar los trabajos encolados y procesarlos en segundo plano. Los
+trabajos se almacenan en la tabla jobs de la base de datos y son procesados por
+un worker de la cola de trabajos en un proceso separado. Este enfoque permite
+diferir la ejecución de los trabajos y liberar el hilo de ejecución principal
+para atender otras solicitudes. El procesamiento de los trabajos en la cola se
+realiza de manera asíncrona y en segundo plano.
+
+En resumen, QUEUE_CONNECTION=sync ejecuta los trabajos de forma sincrónica en el
+hilo de ejecución actual, mientras que QUEUE_CONNECTION=database almacena los
+trabajos en una tabla de la base de datos y los procesa en segundo plano
+mediante un worker de la cola. La elección entre estas configuraciones depende
+de tus necesidades y de si deseas ejecutar los trabajos de forma inmediata o en
+segundo plano para liberar el hilo principal de ejecución.
+
 Fuente
 ======
 
