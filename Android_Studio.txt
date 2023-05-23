@@ -589,3 +589,65 @@ Fuente
 ======
 
 ChatGPT
+
+==================================================
+Diferenciar 2 apks generadas con el mismo proyecto
+==================================================
+
+Para diferenciar dos APK generados desde el mismo proyecto de Android Studio,
+debes realizar algunos ajustes en el archivo build.gradle y en el archivo
+AndroidManifest.xml. A continuación, te proporciono los pasos necesarios:
+
+En el archivo build.gradle del módulo de la aplicación, asegúrate de tener
+diferentes valores para applicationId en las configuraciones de compilación.
+
+Por ejemplo:
+
+android {
+    // ...
+
+    defaultConfig {
+        // ...
+        applicationId "com.example.app1" // Nombre del paquete de la primera app
+    }
+
+    productFlavors {
+        app2 {
+            applicationId "com.example.app2" // Nombre del paquete de la segunda app
+        }
+    }
+}
+
+En el archivo AndroidManifest.xml, asegúrate de que el atributo package sea
+diferente para cada aplicación. Puedes usar variables de resolución de recursos
+(${applicationId}) para mantenerlo dinámico. Por ejemplo:
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="${applicationId}">
+    <!-- ... -->
+</manifest>
+
+Modifica el nombre de la aplicación y el logo en el archivo
+res/values/strings.xml y res/mipmap para cada aplicación. Por ejemplo, en
+res/values/strings.xml, puedes agregar lo siguiente para cada aplicación:
+
+<resources>
+    <string name="app_name">Nombre de la primera app</string>
+</resources>
+
+Y en res/mipmap puedes tener diferentes archivos de ícono con nombres como
+ic_launcher.png para cada aplicación.
+
+Luego de realizar los cambios anteriores, genera los APK nuevamente para cada
+aplicación utilizando las configuraciones de compilación adecuadas.
+
+Con estos pasos, cada APK generado tendrá un nombre de paquete y atributos
+diferentes, lo que permitirá que Android los trate como aplicaciones distintas.
+
+Recuerda ajustar los nombres y paquetes según tus necesidades específicas para
+las dos aplicaciones que deseas diferenciar.
+
+Fuente
+======
+
+ChatGPT
