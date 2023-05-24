@@ -287,6 +287,34 @@ Este es un archivo generado automáticamente que contiene información sobre los
 detalles de la aplicación, por ejemplo la versión del SDK, la versión de las
 herramientas de compilación, el ID de la aplicación y más.
 
+En el archivo build.gradle, la sección android define la configuración
+específica de compilación para tu proyecto de Android.
+
+La línea compileSdkVersion XX indica la versión del SDK de compilación que se
+utilizará para compilar tu aplicación.
+
+El compileSdkVersion es el nivel de API de Android con el que tu aplicación se
+compilará y se asegurará de que las clases y métodos de la API específica estén
+disponibles durante la compilación. Por ejemplo: compileSdkVersion 33. En este
+caso, compileSdkVersion 33 indica que estás compilando tu aplicación utilizando
+el nivel de API 33, que corresponde a la versión de Android 12.
+
+Al establecer compileSdkVersion en 33, aseguras que tu aplicación pueda utilizar
+todas las características y funcionalidades disponibles en la versión 33 del SDK
+de Android. Sin embargo, también es importante asegurarse de que tu proyecto
+esté correctamente configurado con las dependencias y bibliotecas adecuadas para
+ser compatibles con la versión de compilación seleccionada.
+
+Es recomendable mantener compileSdkVersion actualizado con la versión más
+reciente del SDK de Android disponible, ya que esto te permitirá aprovechar las
+mejoras y características más recientes. Sin embargo, al hacerlo, también debes
+asegurarte de que las dependencias y bibliotecas que estás utilizando sean
+compatibles con esa versión.
+
+Recuerda que al cambiar el valor de compileSdkVersion, es posible que también
+debas realizar cambios en otras partes de tu proyecto para garantizar la
+compatibilidad y el correcto funcionamiento de tu aplicación.
+
 Escribiendo el código de la aplicación "Hola mundo"
 ===================================================
 
