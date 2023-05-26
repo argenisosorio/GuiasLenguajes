@@ -8444,10 +8444,21 @@ compañía Brave Software en el año 2016, fundada por el cofundador del Proyect
 Mozilla y creador de JavaScript, Brendan Eich.​ A partir de 2019, Brave ha sido
 lanzado para Windows, macOS, Linux, Android e iOS.
 
-Instalación
-===========
+Instalación con apt
+===================
 
-Usaremos snap:
+$ sudo apt install curl
+
+$ sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+
+$ echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+
+$ sudo apt update
+
+$ sudo apt install brave-browser
+
+Instalación con Snap
+====================
 
 $ sudo snap install brave
 
