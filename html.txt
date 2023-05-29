@@ -4545,3 +4545,39 @@ Fuente
 ======
 
 ChatGPT
+
+================
+Atributo oninput
+================
+
+oninput es un atributo de eventos en HTML que se utiliza para asociar una
+función JavaScript a un elemento de entrada (como un campo de texto) y ejecutar
+esa función cada vez que el valor del elemento cambie.
+
+Cuando se usa oninput en un campo de texto, la función asociada se ejecuta
+cuando se ingresa, elimina o modifica el texto en el campo. Esto permite
+capturar los cambios en tiempo real a medida que el usuario interactúa con el
+campo.
+
+Aquí tienes un ejemplo de cómo se puede utilizar el evento oninput en un campo
+de texto:
+
+<input type="text" oninput="myFunction()">
+
+<script>
+  function myFunction() {
+    console.log("El valor del campo ha cambiado");
+  }
+</script>
+
+En este ejemplo, cada vez que el usuario ingrese, elimine o modifique el texto
+en el campo de entrada, se imprimirá un mensaje en la consola del navegador.
+
+El evento oninput es útil para realizar acciones inmediatas basadas en los
+cambios del usuario, como actualizaciones en tiempo real, validaciones o
+cálculos dinámicos.
+
+Fuente
+======
+
+ChatGPT
