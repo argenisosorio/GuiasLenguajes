@@ -8229,6 +8229,32 @@ $ ssh pcontreras@0.tcp.ngrok.io -p 16965
 Te pedirá la contrasena del usuario pcontreras del servidor, la introduces y
 listo! ya estás en el server mediante SSH.
 
+==============================================================
+Correr aplicación Laravel usando ngrok para verla por internet
+==============================================================
+
+1- Inicia tu servidor local de Laravel ejecutando el comando adecuado, como php
+artisan serve en la raíz de tu proyecto Laravel, esto seguro servira la app
+en una dirección como esta: http://127.0.0.1:8000
+
+2- Abre una nueva terminal o línea de comandos y ejecuta el comando ngrok,
+especificando el puerto en el que se está ejecutando tu servidor Laravel. Por
+ejemplo, si tu servidor se está ejecutando en el puerto 8000, utiliza el
+siguiente comando:
+
+$ ngrok http 8000
+
+Ngrok generará una URL pública que puedes compartir con la persona a la que
+deseas mostrar tu aplicación.
+
+Copia la URL generada por ngrok y compártela con la persona a la que deseas
+mostrar tu aplicación. Cuando esa persona acceda a la URL en su navegador web,
+el tráfico se redirigirá a tu servidor local y podrán ver y utilizar tu
+aplicación Laravel en tiempo real.
+
+Recuerda que ngrok genera una URL pública temporal que puede cambiar cada vez
+que lo ejecutas.
+
 Fuentes
 =======
 
@@ -8239,6 +8265,8 @@ https://www.youtube.com/watch?v=NqCYquO3byk
 https://gist.github.com/philippeoz/e33632f11c64149a00393465fee2cff5
 
 https://www.endtoend.ai/tutorial/ngrok-ssh-forwarding/
+
+ChatGPT
 
 Teamviewer
 ==========

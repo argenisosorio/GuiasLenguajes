@@ -8758,6 +8758,33 @@ if ($send_mails === true) {
     $user->notify(new UserRegistered($password));
 }
 
+=============================================================
+Obtener el valor de una variable del archivo .env desde blade
+=============================================================
+
+Si estás utilizando el archivo .env para configurar una URL de tu aplicación
+Laravel y deseas utilizarla en tus vistas de Blade, puedes hacerlo de la
+siguiente manera:
+
+Ejemplo la variable WEB_URL=XXXX
+
+Sería así:
+
+<link rel="stylesheet" type="text/css" href="{{ env('WEB_URL') }}/bootstrap/css/bootstrap.min.css">
+
+Con env('WEB_URL'), Laravel recuperará el valor de la variable WEB_URL
+directamente del archivo .env. Esto te permitirá utilizar la URL base que has
+configurado en tu archivo .env en el enlace de los estilos CSS.
+
+Asegúrate de haber guardado los cambios en tu archivo .env y, si es necesario,
+reiniciar tu servidor para que los cambios se reflejen correctamente en tu
+aplicación Laravel.
+
+Fuente
+======
+
+ChatGPT
+
 =========================================
 Tipo de dato enum en migración de Laravel
 =========================================
