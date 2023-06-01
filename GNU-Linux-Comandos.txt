@@ -1335,9 +1335,87 @@ dirección ip, el tipo de conexión que está utilizando, etc.
 
 $ ip addr
 
-Ver que puertos estan escuchando.
+====
+nmap
+====
 
-$ nmap -sT -O localhost
+Nmap es una poderosa herramienta de exploración de redes que te permite
+descubrir hosts y servicios, así como realizar análisis de seguridad en una red.
+
+1- Instalar Nmap:
+
+sudo apt install nmap
+
+2- Ejecutar Nmap:
+
+Una vez que Nmap esté instalado, puedes comenzar a ejecutar comandos. Aquí
+tienes algunos ejemplos básicos:
+
+Escaneo de un solo host:
+
+$ sudo nmap <dirección IP>
+
+Reemplaza <dirección IP> por la dirección IP del host que deseas escanear.
+
+Ejemplo:
+
+$ sudo nmap 192.168.12.82
+[sudo] password for user:
+Starting Nmap 7.80 ( https://nmap.org ) at 2023-06-01 12:05 -04
+Nmap scan report for 192.168.12.82
+Host is up (0.0000060s latency).
+Not shown: 998 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+
+Nmap done: 1 IP address (1 host up) scanned in 0.13 seconds
+
+-----
+
+Escaneo de un rango de direcciones IP:
+
+$ sudo nmap <rango de direcciones IP>
+
+Reemplaza <rango de direcciones IP> por el rango que deseas escanear, por
+
+Ejemplo:
+
+$ sudo nmap 192.168.12.1-100
+
+Esto te dara los detalles de los dispositivos conectados a la red en el rango
+establecido, con los detalles como en el primer comando de ejemplo
+
+-----
+
+Escaneo de una red completa:
+
+$ sudo nmap <dirección de red/máscara>
+
+Reemplaza <dirección de red/máscara> por la dirección de red y la máscara de
+subred que deseas escanear, por ejemplo, 192.168.0.0/24.
+
+Ejemplo:
+
+$ sudo nmap 192.168.12.0/24
+
+Esto te dara los detalles de los dispositivos conectados a la red, con los
+detalles como en el primer comando de ejemplo
+
+Estos son solo ejemplos básicos, y Nmap ofrece muchas opciones y funcionalidades
+avanzadas. Puedes explorar la documentación oficial de Nmap para aprender más
+sobre los comandos y las opciones disponibles.
+
+-----
+
+Ver que puertos de la pc que estan escuchando:
+
+$ sudo nmap -sT -O localhost
+
+Fuente
+======
+
+ChatGPT
 
 ========
 Iproute2
