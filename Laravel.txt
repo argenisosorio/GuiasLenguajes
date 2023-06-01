@@ -9437,3 +9437,25 @@ Fuente
 ======
 
 ChatGPT
+
+========================================================================
+Correr 2 proyectos de laravel a la vez con diferentes versiones a la vez
+========================================================================
+
+1- El proyecto A que usa php 7.4 el cual está configurado por defecto, al
+ejecutar php -v muestra que por defecto es la 7.4 la que está configurada por
+defecto, entonces ejecutamos:
+
+$ php artisan serve
+
+Starting Laravel development server started: http://127.0.0.1:8000
+
+2- El proyecto B que usa php 8.1 el cual no está configurado por defecto, al
+ejecutar php -v muestra que por defecto es la 7.4 la que está configurada por
+defecto, entonces ejecutamos:
+
+$ php8.1 artisan serve
+
+Starting Laravel development server: http://127.0.0.1:8001
+
+Nota; Deben estar instaladas ambas versiones de PHP
