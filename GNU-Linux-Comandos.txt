@@ -7567,6 +7567,19 @@ pdfsig
 
 Portable Document Format (PDF) digital signatures tool.
 
+Es una herramienta de firmas digitales en formato de documento portátil (PDF).
+
+pdfsig verifica las firmas digitales en un documento PDF. También muestra la
+identidad de cada firmante (campo commonName y nombre distinguido completo del
+certificado del firmante), la hora y la fecha de la firma, el algoritmo hash
+utilizado para firmar, el tipo de firma como se indica en el PDF y los rangos
+firmados. con una declaración si el documento total está firmado. También puede
+firmar documentos PDF.
+
+Instalación:
+
+$ sudo apt install poppler-utils
+
 Para verificar la firma de un archivo se ejecuta el siguiente comando:
 
 $ pdfsig mi-archivo-firmado.pdf
