@@ -1,0 +1,96 @@
+====================
+Guía de sqlite by dM
+====================
+
+SQLite es un sistema de gestión de bases de datos relacional compatible con
+ACID, contenida en una relativamente pequeña biblioteca escrita en C. SQLite es
+un proyecto de dominio público1​ creado por D. Richard Hipp.
+
+A diferencia de los sistema de gestión de bases de datos cliente-servidor, el
+motor de SQLite no es un proceso independiente con el que el programa principal
+se comunica. En lugar de eso, la biblioteca SQLite se enlaza con el programa
+pasando a ser parte integral del mismo. El programa utiliza la funcionalidad de
+SQLite a través de llamadas simples a subrutinas y funciones. Esto reduce la
+latencia en el acceso a la base de datos, debido a que las llamadas a funciones
+son más eficientes que la comunicación entre procesos. El conjunto de la base de
+datos (definiciones, tablas, índices, y los propios datos), son guardados como
+un solo fichero estándar en la máquina host. Este diseño simple se logra
+bloqueando todo el fichero de base de datos al principio de cada transacción.
+
+En su versión 3, SQLite permite bases de datos de hasta 2 Terabytes de tamaño,
+y también permite la inclusión de campos tipo BLOB.
+
+============================
+Línea de comandos de sqlite3
+============================
+
+# apt-get install sqlite3
+
+Para abrir la línea de comandos:
+
+$ sqlite3
+
+Acceder a una base de datos desde la consola de sqlite3.
+
+$ sqlite3 db.sqlite3
+
+Listar las tablas de la db a la cual se acceso.
+
+sqlite> .tables
+
+Acceder al modo csv, para poder ejecutar operaciones con estos ficheros.
+
+sqlite> .mode csv
+
+Importamos los datos de el fichero .csv a la tabla especifica.
+
+Obviamente deben coincidir los campos en el .csv y en la tabla.
+
+sqlite> .import test.csv yourtable
+
+Ver esquema de creación de la tabla.
+
+sqlite> .schema tablename
+
+Listar todos los registros de una tabla.
+
+sqlite> SELECT * FROM tablename;
+
+Agregar una nueva columna a una tabla existente en una base de datos.
+
+sqlite> ALTER TABLE appname_modelname ADD COLUMN name_column DEFAULT 'value';
+
+Acceder a la consola de sqlite3 desde dentro de un proyecto de django con una db
+ya existente.
+
+$ python manage.py dbshell
+
+Para salir del prompt de sqlite3.
+
+sqlite> .exit
+
+=============
+sqlitebrowser
+=============
+
+Herramienta de alta calidad visual para crear, diseñar y editar archivos de
+bases de datos compatibles con SQLite.
+
+Es para usuarios y desarrolladores que desean crear bases de datos, buscar y
+editar datos.
+
+Utiliza una interfaz de tipo hoja de cálculo familiar y no necesita aprender
+comandos SQL complicados.
+
+Ideal para gestionar datos de las db de django.
+
+# aptitude install sqlitebrowser
+
+Para ejecutarlo.
+
+$ sqlitebrowser
+
+Fuente
+======
+
+https://es.wikipedia.org/wiki/SQLite
