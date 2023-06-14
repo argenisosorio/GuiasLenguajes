@@ -6165,23 +6165,74 @@ responseData()
 </body>
 </html>
 
-=================
-Función toFixed()
-=================
+===============================
+Redondear números en JavaScript
+===============================
 
-Convierta un número en una cadena, redondeando el número para mantener solo con
-dos decimales
+Puedes utilizar las siguientes funciones:
+
+Math.round()
+============
+
+Esta función redondea un número al entero más cercano. Si el número decimal está
+a medio camino entre dos enteros, se redondea al entero par más cercano.
+
+var numero = 3.7;
+var redondeado = Math.round(numero);
+console.log(redondeado); // Salida: 4
+
+Math.floor()
+============
+
+Esta función redondea un número al entero más pequeño más cercano. Si el número
+decimal es negativo, se redondea al entero menor más cercano.
+
+var numero = 3.7;
+var redondeado = Math.floor(numero);
+console.log(redondeado); // Salida: 3
+
+Math.ceil()
+===========
+
+Esta función redondea un número al entero más grande más cercano. Si el número
+decimal es negativo, se redondea al entero mayor más cercano.
+
+var numero = 3.7;
+var redondeado = Math.ceil(numero);
+console.log(redondeado); // Salida: 4
+
+toFixed()
+=========
+
+Este método de los objetos Number redondea un número al número especificado de
+decimales y devuelve una cadena de texto.
+
+var numero = 3.14159;
+var redondeado = numero.toFixed(2);
+console.log(redondeado); // Salida: "3.14"
+
+Estas son algunas de las funciones más comunes para redondear números en
+JavaScript.
+
+Ejemplo
+=======
 
 <!DOCTYPE html>
 <html>
+<head>
+  <title>Redondeo de números</title>
+</head>
 <body>
-<script>
-var num = 5.56789;
-var n = num.toFixed(2);
-document.write(num);
-document.write("<br />");
-document.write(n);
-</script>
+  <div id="numeroOriginal"></div>
+  <div id="numeroRedondeado"></div>
+  <script>
+    var numero = 3.14159;
+    var redondeado = numero.toFixed(2);
+    var numeroOriginalDiv = document.getElementById('numeroOriginal');
+    var numeroRedondeadoDiv = document.getElementById('numeroRedondeado');
+    numeroOriginalDiv.textContent = "Número original: " + numero;
+    numeroRedondeadoDiv.textContent = "Número redondeado: " + redondeado;
+  </script>
 </body>
 </html>
 
