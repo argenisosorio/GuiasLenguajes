@@ -1839,3 +1839,54 @@ Fuente
 ======
 
 https://www.anerbarrena.com/php-round-redondeo-decimales-6994/
+
+=========================================================================
+Crear un archivo con la extensión que se requiera en el directorio actual
+=========================================================================
+
+<?php
+// Verificar si se han enviado los datos del formulario
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Obtener los valores del formulario
+    $fileName = $_POST['file_name'];
+    $fileExtension = $_POST['file_extension'];
+
+    // Obtener la ruta actual del script
+    $currentPath = __DIR__;
+
+    // Ruta completa del archivo a crear
+    $filePath = $currentPath . '/' . $fileName . '.' . $fileExtension;
+
+    // Ejecutar el comando 'touch' para crear el archivo
+    $command = 'touch ' . escapeshellarg($filePath);
+
+    $output = shell_exec($command);
+    $returnStatus = $output === null ? 0 : 1;
+
+    if ($returnStatus === 0) {
+        echo "El archivo '$fileName.$fileExtension' ha sido creado exitosamente en la ruta '$filePath'.";
+    } else {
+        echo "Ocurrió un error al crear el archivo. Detalles del error:<br>";
+        echo nl2br($output);
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crear archivo</title>
+</head>
+<body>
+    <h2>Crear archivo</h2>
+    <form method="POST" action="">
+        <label for="file_name">Nombre del archivo:</label>
+        <input type="text" name="file_name" required><br>
+
+        <label for="file_extension">Extensión del archivo:</label>
+        <input type="text" name="file_extension" required><br>
+
+        <input type="submit" value="Crear">
+    </form>
+</body>
+</html>
