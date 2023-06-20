@@ -1703,7 +1703,7 @@ ocument.write(arreglo[1][1]);
 <body>
     <script type="text/javascript">    
         document.write(saludar());    
-    </script>    
+    </script>
 </body>
 </html>
 
@@ -2331,7 +2331,7 @@ ocument.write(arreglo[1][1]);
       // si pulsamos en cancelar
       alert('Has dicho que no'); 
       }
-    </script>    
+    </script>
 </head>
 <body>  
   <form action="#" method="get">
@@ -2543,7 +2543,7 @@ function pregunta(){
                     + encodeURIComponent(txt.value);
                 };
             };          
-        </script>       
+        </script>
     </head>
 <body>      
     <textarea id="txt"></textarea>
@@ -3052,7 +3052,7 @@ var objetoJSON = {"usuario":"user","password":"123456"};
   function cuenta(){
     document.forms[0].caracteres.value=document.forms[0].texto.value.length
   }
-</script> 
+</script>
 </html>
 
 -------------------------------------
@@ -6211,8 +6211,9 @@ var numero = 3.14159;
 var redondeado = numero.toFixed(2);
 console.log(redondeado); // Salida: "3.14"
 
-Estas son algunas de las funciones más comunes para redondear números en
-JavaScript.
+var a = 10.78745;
+var numeroFormateado = a.toFixed(2);
+console.log(numeroFormateado); // Salida: "10.79"
 
 Ejemplo
 =======
@@ -8030,9 +8031,9 @@ JavaScript Window Location
 El objeto window.location se puede utilizar para obtener la dirección de la
 página actual (URL) y para redirigir el navegador a una nueva página.
 
-=======
-typeof
-======
+============================================
+typeof (Saber el tipo de dato en JavaScript)
+============================================
 
 El operador typeof se usa en cualquiera de los siguientes modos:
 
@@ -8057,6 +8058,41 @@ typeof forma === 'string'
 typeof tamano === 'number'
 typeof hoy === 'object'
 typeof noExiste === 'undefined'
+
+-----
+
+Ejemplo:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo typeof</title>
+</head>
+<body>
+<script>
+var miFuncion = new Function("5+2");
+var forma = "redonda";
+var tamano = 1;
+var hoy = new Date();
+console.log(typeof miFuncion);
+console.log(typeof forma);
+console.log(typeof tamano);
+console.log(typeof hoy);
+console.log(typeof noExiste);
+/*
+Esto imprime:
+function
+string
+number
+object
+undefined
+*/
+</script>
+</body>
+</html>
+
+-----
 
 Para las palabras clave true y null, el operador typeof devuelve los siguientes resultados:
 
@@ -8675,6 +8711,326 @@ en el campo de entrada, se imprimirá un mensaje en la consola del navegador.
 El evento oninput es útil para realizar acciones inmediatas basadas en los
 cambios del usuario, como actualizaciones en tiempo real, validaciones o
 cálculos dinámicos.
+
+Fuente
+======
+
+ChatGPT
+
+======================
+El método parseFloat()
+======================
+
+En JavaScript, el método parseFloat() se utiliza para convertir una cadena de
+texto en un número de punto flotante (número decimal). Este método analiza la
+cadena de texto y devuelve un número.
+
+Ejemplo:
+
+var numero = parseFloat("3.14");
+console.log(numero); // 3.14
+
+En el ejemplo anterior, se pasa la cadena de texto "3.14" a parseFloat(), que la
+analiza y devuelve el número decimal 3.14. Si la cadena no puede ser analizada
+como un número válido, parseFloat() devuelve NaN (Not a Number).
+
+Es importante tener en cuenta que parseFloat() solo analiza el comienzo de la
+cadena y detiene el análisis cuando encuentra un carácter que no es parte de la
+representación de un número válido. Por ejemplo:
+
+var numero = parseFloat("3.14 metros");
+console.log(numero); // 3.14
+
+En este caso, parseFloat() analiza la parte inicial de la cadena "3.14" y
+devuelve el número 3.14. Ignora el resto de la cadena "metros" porque no es
+parte de la representación de un número.
+
+Ejemplo práctico:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo de parseFloat</title>
+</head>
+<body>
+<script>
+  var a = "3.14";
+  console.log(a); // Imprime "3.14"
+  console.log(typeof a); // Imprime que es string
+  console.log(parseFloat(a)); // Imprime 3.14
+  console.log(typeof parseFloat(a)); // Imprime que es number
+</script>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
+
+====================
+El método parseInt()
+====================
+
+En JavaScript, el método parseInt() se utiliza para convertir una cadena de
+texto en un número entero. Este método analiza la cadena de texto y devuelve un
+número entero.
+
+Aquí tienes un ejemplo de cómo usar parseInt():
+
+var numero = parseInt("42");
+console.log(numero); // 42
+
+En el ejemplo anterior, se pasa la cadena de texto "42" a parseInt(), que la
+analiza y devuelve el número entero 42. Si la cadena no puede ser analizada como
+un número válido, parseInt() devuelve NaN (Not a Number).
+
+Es importante mencionar que parseInt() también puede aceptar un segundo
+parámetro opcional llamado radix, que indica la base numérica del número en la
+cadena. Por defecto, se asume una base decimal (10), pero se puede especificar
+otra base entre 2 y 36.
+
+var numeroBinario = parseInt("1010", 2);
+console.log(numeroBinario); // 10
+
+var numeroHexadecimal = parseInt("FF", 16);
+console.log(numeroHexadecimal); // 255
+
+En el primer ejemplo, parseInt("1010", 2) interpreta la cadena "1010" como un
+número binario y devuelve 10 en base decimal. En el segundo ejemplo,
+parseInt("FF", 16) interpreta la cadena "FF" como un número hexadecimal y
+devuelve 255 en base decimal.
+
+Ejemplo:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo de parseInt</title>
+</head>
+<body>
+<script>
+var a = "42"
+console.log(a); // Imprime "42"
+console.log(typeof a); // Imprime que es string
+console.log(parseInt(a)); // Imprime 42
+console.log(typeof parseInt(a)); // Imprime que es number
+</script>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
+
+=================================================================
+Convertir un número en una cadena utilizando el método toString()
+=================================================================
+
+En JavaScript, puedes convertir un número en una cadena utilizando el método
+toString(). Este método se puede aplicar a un valor numérico y devuelve una
+representación de cadena del número.
+
+Aquí tienes un ejemplo de cómo convertir un número en una cadena:
+
+var numero = 42;
+var cadena = numero.toString();
+console.log(cadena); // "42"
+
+En el ejemplo anterior, toString() se aplica al número 42 y devuelve la cadena
+"42". Ahora cadena contiene una representación en forma de cadena del número
+original.
+
+Ten en cuenta que también puedes especificar la base numérica como argumento
+para toString(). Por defecto, la base es 10. Aquí tienes un ejemplo que muestra
+cómo especificar una base diferente:
+
+var numero = 10;
+var cadenaBinaria = numero.toString(2);
+console.log(cadenaBinaria); // "1010"
+
+var cadenaHexadecimal = numero.toString(16);
+console.log(cadenaHexadecimal); // "a"
+
+En este ejemplo, toString(2) convierte el número 10 en una cadena binaria
+"1010", mientras que toString(16) lo convierte en una cadena hexadecimal "a".
+
+Recuerda que toString() es un método disponible para valores numéricos en
+JavaScript y te permite obtener una representación en forma de cadena del número
+deseado.
+
+Ejemplo:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo de toString</title>
+</head>
+<body>
+  <script>
+    var a = 42;
+    console.log(a); // Imprime 42
+    console.log(typeof a); // Imprime que es number
+    console.log(a.toString()); // Imprime "42"
+    console.log(typeof a.toString()); // Imprime que es string
+  </script>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
+
+====================
+Método toPrecision()
+====================
+
+En JavaScript, el método toPrecision() se utiliza para formatear un número con
+una precisión específica, es decir, especificar el número total de dígitos
+significativos que se deben mostrar. Este método devuelve una cadena que
+representa el número formateado.
+
+Aquí tienes un ejemplo de cómo usar toPrecision():
+
+var numero = 3.14159;
+var numeroFormateado = numero.toPrecision(4);
+console.log(numeroFormateado); // "3.142"
+
+Ejemplo:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo de toPrecision</title>
+</head>
+<body>
+  <script>
+    var numero = 3.14159;
+    var numeroFormateado = numero.toPrecision(4);
+    console.log(numeroFormateado); // "3.142"
+  </script>
+</body>
+</html>
+
+En el ejemplo anterior, se aplica toPrecision(4) al número 3.14159, lo cual
+indica que se deben mostrar 4 dígitos significativos. Como resultado, se obtiene
+la cadena "3.142", que representa el número formateado.
+
+Es importante tener en cuenta que toPrecision() también puede redondear el
+número según sea necesario para alcanzar la precisión especificada. Por ejemplo:
+
+var numero = 12.345;
+var numeroFormateado = numero.toPrecision(2);
+console.log(numeroFormateado); // "12"
+
+En este caso, toPrecision(2) indica que se deben mostrar 2 dígitos
+significativos. Como resultado, el número se redondea a 12, ya que eso cumple
+con la precisión requerida.
+
+Si el número es muy grande o muy pequeño, toPrecision() puede usar la notación
+exponencial para representar el número. Por ejemplo:
+
+var numero = 123456789;
+var numeroFormateado = numero.toPrecision(4);
+console.log(numeroFormateado); // "1.235e+8"
+
+En este ejemplo, toPrecision(4) muestra 4 dígitos significativos y utiliza la
+notación exponencial para representar el número como "1.235e+8".
+
+Fuente
+======
+
+ChatGPT
+
+===================================
+Truncar número de decimales exactos
+===================================
+
+Tengo la cifra 10.78745 y quiero imprimir 10.78 exactamente.
+
+Si necesitas imprimir el número 10.78 exactamente sin redondeo y limitando el
+resultado a 4 caracteres en total, puedes utilizar toFixed(4) para obtener el
+número con 4 decimales y luego truncar la cadena resultante a 4 caracteres.
+
+Aquí tienes el código actualizado:
+
+<script>
+  var a = 10.78747;
+  var numeroFormateado = a.toFixed(4);
+  console.log(numeroFormateado); // Imprime "10.7875"
+  var truncado = numeroFormateado.substring(0, 5);
+  console.log(truncado); // Imprime "10.78"
+</script>
+
+El método toFixed(4) se utiliza para formatear "a" con 4 decimales, lo cual
+resulta en "10.7875". A continuación, utilizamos substring(0, 5) para tomar los
+primeros 5 caracteres de la cadena, lo cual da como resultado "10.78". Esto
+asegura que se obtengan exactamente los caracteres "10.78" sin redondeo.
+
+El valor impreso en la consola será:
+
+10.78
+
+Recuerda que el número de caracteres en la cadena resultante incluye el punto
+decimal. En este caso, se toman los primeros 5 caracteres para incluir el punto
+y los dos dígitos decimales.
+
+Otra forma
+==========
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ejemplo de truncar número de decimales</title>
+</head>
+<body>
+  <script>
+    var a = 10.78747;
+    console.log(a); // Number
+    let cadena = a.toString();
+    console.log(cadena); // String
+    let regex=/(\d*.\d{0,2})/;
+    var truncado = cadena.match(regex)[0];
+    console.log(truncado);
+  </script>
+</body>
+</html>
+
+En la primera línea, se declara la variable a con el valor 10.78747.
+
+Luego, se imprime el valor de a en la consola, lo cual mostrará 10.78747 ya que
+es un número.
+
+En la siguiente línea, se utiliza el método toString() para convertir el valor
+numérico de a en una cadena. La variable cadena almacenará la cadena resultante.
+
+Se imprime la variable cadena en la consola, lo cual mostrará "10.78747" ya que
+ahora es una cadena de texto.
+
+A continuación, se define la expresión regular regex que tiene el patrón
+(\d*.\d{0,2}). Este patrón busca una secuencia de dígitos seguida de un punto y
+luego de 0 a 2 dígitos adicionales.
+
+Luego, se utiliza el método match() junto con la expresión regular regex para
+encontrar el patrón en la cadena. El resultado se almacena en la variable
+truncado.
+
+Por último, se imprime el valor de truncado en la consola, que en este caso será
+"10.78" ya que el patrón encontrado cumple con las condiciones de tener hasta
+dos decimales.
+
+La salida en la consola será:
+
+10.78747
+"10.78747"
+"10.78"
 
 Fuente
 ======
