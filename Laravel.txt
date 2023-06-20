@@ -9459,3 +9459,43 @@ $ php8.1 artisan serve
 Starting Laravel development server: http://127.0.0.1:8001
 
 Nota; Deben estar instaladas ambas versiones de PHP
+
+=====================
+El archivo Helper.php
+=====================
+
+En Laravel, el archivo Helper.php ubicado en la carpeta /app/Helpers/ es un
+archivo que puedes utilizar para definir tus propias funciones de ayuda (helper
+functions) personalizadas.
+
+Las funciones de ayuda son funciones globales que se pueden utilizar en todo el
+proyecto sin la necesidad de importar o incluir manualmente el archivo en cada
+lugar donde se necesiten.
+
+El archivo Helper.php es un lugar comúnmente utilizado para definir estas
+funciones personalizadas que pueden ayudar a simplificar tareas comunes o
+proporcionar funcionalidad adicional a tu aplicación Laravel.
+
+Dentro del archivo Helper.php, puedes definir cualquier cantidad de funciones de
+ayuda que desees, siguiendo la sintaxis de funciones de PHP normales. Estas
+funciones pueden realizar cualquier operación o tarea que necesites y pueden ser
+utilizadas en cualquier parte del proyecto.
+
+Por ejemplo, podrías definir una función de ayuda para formatear una fecha de
+manera específica, realizar cálculos matemáticos comunes, manipular cadenas de
+texto, generar códigos aleatorios, entre muchas otras tareas útiles.
+
+Una vez que hayas definido tus funciones en Helper.php, puedes utilizarlas en
+tus controladores, modelos, vistas o cualquier otro lugar dentro de tu
+aplicación Laravel sin la necesidad de importar o incluir manualmente el
+archivo.
+
+Recuerda que después de definir tus funciones personalizadas en Helper.php, es
+posible que necesites ejecutar el comando composer dump-autoload en la terminal
+para que Laravel cargue correctamente las nuevas funciones de ayuda definidas en
+el archivo.
+
+Fuente
+======
+
+ChatGPT
