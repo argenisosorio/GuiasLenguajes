@@ -5167,6 +5167,8 @@ deb http://www.deb-multimedia.org wheezy main
 deb http://debian.cenditel/debian bullseye main contrib non-free
 deb http://debian.cenditel/debian bullseye-updates main contrib non-free
 deb http://debian.cenditel/debian bullseye-proposed-updates main contrib non-free
+deb http://debian.cenditel/debian bullseye-updates main contrib non-free
+deb http://debian.cenditel/debian-security bullseye-security main contrib non-free
 deb http://debian.cenditel/debian-multimedia bullseye main non-free
 
 Para que no falle la firma del repositorio multimedia ejecute:
@@ -5176,6 +5178,13 @@ $ wget http://www.deb-multimedia.org/pool/main/d/deb-multimedia-keyring/deb-mult
 Luego instale con dpkg
 
 # dpkg -i *.deb
+
+Pero se recomienda:
+
+# Debian CENDITEL
+deb http://debian.cenditel/debian bullseye main contrib non-free
+deb http://debian.cenditel/debian bullseye-updates main contrib non-free
+deb http://debian.cenditel/debian-security bullseye-security main contrib non-free
 
 #===== CENDITEL mirror - Debian GNU/Linux 10 (Buster) =====
 
