@@ -2058,3 +2058,44 @@ Fuente
 ======
 
 ChatGPT
+
+=============================
+La función array_key_exists()
+=============================
+
+En PHP, la función array_key_exists() se utiliza para comprobar si una clave
+determinada existe en un array. Toma dos argumentos: la clave que se desea
+comprobar y el array en el cual se realizará la búsqueda. Devuelve true si la
+clave existe en el array y false en caso contrario.
+
+Aquí tienes un ejemplo de uso de array_key_exists():
+
+$miArray = array(
+    "clave1" => "valor1",
+    "clave2" => "valor2",
+    "clave3" => "valor3"
+);
+
+// Verificar si una clave existe en el array
+if (array_key_exists("clave2", $miArray)) {
+    echo "La clave2 existe en el array.";
+} else {
+    echo "La clave2 no existe en el array.";
+}
+
+En este ejemplo, el array $miArray contiene tres pares clave-valor.
+array_key_exists("clave2", $miArray) verifica si la clave "clave2" existe en el
+array. Como la clave "clave2" está presente en el array, se muestra el mensaje
+"La clave2 existe en el array".
+
+Es importante tener en cuenta que array_key_exists() verifica solo la existencia
+de la clave y no se preocupa por el valor asociado a dicha clave. Si se
+necesita verificar tanto la existencia de la clave como el valor asociado, se
+puede utilizar la combinación de array_key_exists() y la sintaxis de acceso a
+elementos de array ($miArray['clave']) para obtener el valor y luego realizar
+las comprobaciones necesarias.
+
+Fuente
+======
+
+ChatGPT
