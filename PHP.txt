@@ -1890,3 +1890,52 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </body>
 </html>
+
+=======================================
+Operador de fusión null-coalescing (??)
+=======================================
+
+El operador de fusión null-coalescing (??) se utiliza principalmente para
+verificar si el primer valor es nulo y, en caso afirmativo, asignar un valor
+predeterminado. Sin embargo, su funcionalidad no se limita únicamente a la
+verificación de nulidad.
+
+El operador ?? evalúa si el primer operando es nulo o no. Si el primer operando
+no es nulo, se devuelve ese valor. En caso de que el primer operando sea nulo,
+se devuelve el segundo operando, que actúa como un valor predeterminado.
+
+El operador de fusión null-coalescing es útil cuando se desea asignar un valor
+por defecto a una variable en caso de que el valor original sea nulo o no
+exista. Esto puede ser útil en diferentes situaciones, como la manipulación de
+datos recibidos desde fuentes externas, la asignación de valores en casos donde
+puede haber valores nulos o la simplificación de código evitando condicionales
+largos.
+
+En resumen, el operador ?? se utiliza para proporcionar un valor predeterminado
+cuando el primer operando es nulo, pero también se puede usar en combinación con
+otros operadores y expresiones para lógica más compleja.
+
+Ejemplo:
+
+<?php
+// Ejemplo 1: Valor no nulo
+$number = 42;
+$defaultValue = 0;
+
+$result = $number ?? $defaultValue;
+echo $result; // Salida: 42
+
+echo "<br>";
+
+// En este caso, $number no es nulo, por lo tanto, se asigna su valor a $result.
+
+// Ejemplo 2: Valor nulo
+$number = null;
+$defaultValue = 0;
+
+$result = $number ?? $defaultValue;
+echo $result; // Salida: 0
+
+// En este caso, $number es nulo, por lo tanto, se asigna el valor
+// predeterminado $defaultValue a $result.
+?>
