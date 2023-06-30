@@ -229,6 +229,53 @@ $a > $b Mayor que Cierto si $a es mayor que $b
 $a <= $b Menor o igual Correcto si $a es menor o igual que $b
 $a >= $b Mayor o igual Correcto si $a es mayor o igual que $b
 
+===============
+El operador !==
+===============
+
+El operador !== se utiliza para comprobar si dos valores son diferentes tanto en
+valor como en tipo de dato. A diferencia del operador !=, que solo verifica la
+igualdad de valor sin tener en cuenta el tipo de dato.
+
+En resumen, la expresión $a !== $b en un if evaluará como verdadera si $a y $b
+son diferentes en valor o en tipo de dato. Si son iguales tanto en valor como en
+tipo de dato, la expresión evaluará como falsa.
+
+Ejemplos:
+
+$a = 5;
+$b = '5';
+
+if ($a !== $b) {
+    echo '$a y $b son diferentes en valor o tipo de dato';
+} else {
+    echo '$a y $b son iguales en valor y tipo de dato';
+}
+// Salida: $a y $b son diferentes en valor o tipo de dato
+
+$c = 10;
+$d = 10;
+
+if ($c !== $d) {
+    echo '$c y $d son diferentes en valor o tipo de dato';
+} else {
+    echo '$c y $d son iguales en valor y tipo de dato';
+}
+// Salida: $c y $d son iguales en valor y tipo de dato
+
+En el primer ejemplo, aunque $a y $b tienen el mismo valor (5), la expresión $a
+!== $b evalúa como verdadera porque tienen diferentes tipos de dato ($a es de
+tipo entero y $b es de tipo cadena).
+
+En el segundo ejemplo, tanto $c como $d tienen el mismo valor (10) y también son
+del mismo tipo de dato (ambos son enteros), por lo tanto, la expresión $c !== $d
+evalúa como falsa.
+
+Fuente
+======
+
+ChatGPT
+
 ========================
 Operadores de asignación
 ========================
@@ -1939,3 +1986,26 @@ echo $result; // Salida: 0
 // En este caso, $number es nulo, por lo tanto, se asigna el valor
 // predeterminado $defaultValue a $result.
 ?>
+
+=================================================================
+Validaciones de una variable, si está presente, o su tipo y valor
+=================================================================
+
+if (isset($xxx)) {
+    if ($xxx === null) {
+        echo "La variable es nula";
+    } elseif (is_string($xxx)) {
+        echo "La variable es una cadena: " . $xxx;
+    } elseif (is_numeric($xxx)) {
+        echo "La variable es un número: " . $xxx;
+    } else {
+        echo "La variable tiene un tipo de dato desconocido";
+    }
+} else {
+    echo "La variable no está presente";
+}
+
+Fuente
+======
+
+ChatGPT
