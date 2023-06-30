@@ -57,6 +57,103 @@ Guía de la wiki y markdown
 
 Url: https://gitlab.com/help/user/markdown#wiki-specific-markdown
 
+====================
+Integración continua
+====================
+
+La integración continua (continuous integration en inglés) es una práctica de
+ingeniería de software que consiste en hacer integraciones automáticas de un
+proyecto lo más a menudo posible para así poder detectar fallos cuanto antes.
+
+Entendemos por integración la compilación y ejecución de pruebas de todo un
+proyecto.
+
+El proceso suele ser: cada cierto tiempo (horas), descargarse las fuentes desde
+el control de versiones (por ejemplo CVS, Git, Subversion, Mercurial o Microsoft
+Visual SourceSafe) compilarlo, ejecutar pruebas y generar informes.
+
+Para esto suelen utilizarse aplicaciones como Solano CI, Bamboo, Pipeline,
+Apache Continuum, Hudson, Jenkins, GoCD, CruiseControl o Anthill (para proyectos
+Java) o CruiseControl.Net, Team Foundation Build para .Net, que se encargan de
+controlar las ejecuciones, apoyadas en otras herramientas como Ant o Maven
+(también para proyectos Java), o Nant o MSBUILD (para .Net) que se encargan de
+realizar las compilaciones, ejecutar las pruebas y realizar los informes.
+
+A menudo la integración continua está asociada con las metodologías de
+programación extrema y desarrollo ágil.
+
+Ventajas
+========
+
+-Los desarrolladores pueden detectar y solucionar problemas de integración de
+forma continua, evitando el caos de última hora cuando se acercan las fechas de
+entrega.
+
+-Disponibilidad constante de una versión para pruebas, demos o lanzamientos
+anticipados.
+
+-Ejecución inmediata de las pruebas unitarias.
+
+-Monitorización continua de las métricas de calidad del proyecto.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Integraci%C3%B3n_continua
+
+=====
+CI/CD
+=====
+
+En ingeniería de software, CI/CD o CICD generalmente refiere a las prácticas
+combinadas de integración continua y entrega continua (también conocida como
+despliegue continuo).
+
+Contamos con herramientas para esto en GitLab por ejemplo.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/CI/CD
+
+================
+Entrega continua
+================
+
+Entrega continua (continuous delivery en inglés) es un enfoque de la ingeniería
+del software en que los equipos de desarrollo producen software en ciclos
+cortos, asegurando que el software puede ser liberado en cualquier momento, de
+forma confiable.
+
+Apunta a la construcción, prueba, y liberación del software de forma más rápida
+y más frecuente. Este enfoque ayuda en la reducción del costo, tiempo, y riesgo
+de la liberación de versiones a través de la liberación de versiones más
+incrementales a aplicaciones en producción. Un proceso directo y repetible de
+liberación es importante para una entrega continua.
+
+Etapas
+======
+
+-Automatización de la compilación e integración continua: Esta etapa consta de
+la creación de archivos binarios a partir del código fuente. A medida que los
+desarrolladores implementan nuevas funciones, estas son integradas al código
+central, compiladas, y probadas.
+
+-Automatización de pruebas: En esta etapa se prueba rigurosamente la nueva
+versión de aplicación, para asegurar que cumple con todos los requerimientos de
+calidad del sistema.
+
+-Automatización de implementación: Luego que las etapas anteriores fueron
+verificadas, se puede implementar la nueva versión en el ambiente de producción.
+
+Esta implementación se realiza de forma automática, dejando disponibles las
+nuevas funcionalidades al usuario, en solo unos minutos.
+
+Fuentes
+=======
+
+-https://es.wikipedia.org/wiki/Entrega_continua
+
 =================================================================
 Cómo recibir notificaciones del repositorio de GitLab en Telegram
 =================================================================
