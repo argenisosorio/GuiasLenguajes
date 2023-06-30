@@ -1490,6 +1490,10 @@ La función isset()
 
 Nos permite evaluar si una variable está definida o no.
 
+Cuando me refiero a "definida" en el contexto de isset(), significa que la
+variable existe y no es nula. En otras palabras, para que isset() devuelva true,
+la variable debe estar declarada y tener un valor asignado que no sea null.
+
 Ejemplo:
 
 $var1 = 'oscar';
@@ -1499,6 +1503,51 @@ if ( isset($var1) ){
 } else {
     echo "La variable \$var1 no está definida.<br />";
 }
+
+Si una variable no está declarada o no tiene ningún valor asignado, isset()
+devolverá false. Veamos algunos ejemplos para aclarar esto:
+
+Otro ejemplo:
+
+$variable1 = 10;
+$variable2 = null;
+$variable3;
+
+// Verificar si las variables están definidas
+if (isset($variable1)) {
+    echo "La variable1 está definida.";
+} else {
+    echo "La variable1 no está definida.";
+}
+
+echo "<br>";
+
+if (isset($variable2)) {
+    echo "La variable2 está definida.";
+} else {
+    echo "La variable2 no está definida.";
+}
+
+echo "<br>";
+
+if (isset($variable3)) {
+    echo "La variable3 está definida.";
+} else {
+    echo "La variable3 no está definida.";
+}
+
+echo "<br>";
+
+if (isset($variable4)) {
+  echo "La variable4 está definida.";
+} else {
+  echo "La variable4 no está definida.";
+}
+
+Fuente
+======
+
+ChatGPT
 
 =====================
 Función array_merge()
