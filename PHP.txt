@@ -2099,3 +2099,43 @@ Fuente
 ======
 
 ChatGPT
+
+===============
+PHP_CodeSniffer
+===============
+
+Es un conjunto de dos scripts PHP, el script phpcbf principal que tokeniza los
+archivos PHP, JavaScript y CSS para detectar violaciones de un estándar de
+codificación definido, y un segundo script phpcbf para corregir automáticamente
+las violaciones del estándar de codificación.
+
+PHP_CodeSniffer es una herramienta de desarrollo esencial que garantiza que su
+código permanezca limpio y consistente.
+
+1- Instalación
+
+Lo usaremos de manera global
+
+$ composer global require "squizlabs/php_codesniffer=*"
+
+2- Exportar el PATH de composer para ejecutar el comando de manera global,
+agregar la siguiente línea en el archivo .bashrc del directorio /home/user
+
+export PATH=$PATH:$(composer global config bin-dir --absolute)
+
+3- Verificar que el comando phpcs se ejecuta con éxito:
+
+$ phpcs --help
+
+4- Verificar el estandar de un archivo:
+
+$ phpcs --standard=PSR12 /path/to/code-directory
+
+Para el kavac sería:
+
+$ phpcs --standard=PSR12 kavac/modules/Purchase/Http/Controllers/PurchaseRequirementController.php
+
+Fuente
+======
+
+https://github.com/squizlabs/PHP_CodeSniffer
