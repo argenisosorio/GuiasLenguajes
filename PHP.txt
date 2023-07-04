@@ -2118,16 +2118,23 @@ Lo usaremos de manera global
 
 $ composer global require "squizlabs/php_codesniffer=*"
 
-2- Exportar el PATH de composer para ejecutar el comando de manera global,
-agregar la siguiente línea en el archivo .bashrc del directorio /home/user
+2- Verificamos la ruta de composer:
 
-export PATH=$PATH:$(composer global config bin-dir --absolute)
+$ composer global config bin-dir --absolute
 
-3- Verificar que el comando phpcs se ejecuta con éxito:
+Changed current directory to /home/user/.config/composer
+/home/user/.config/composer/vendor/bin
+
+3- Agregar la siguiente línea en el archivo .bashrc del directorio /home/user
+segun la ruta de composer del comando anteior:
+
+export PATH="$PATH:/home/user/.config/composer/vendor/bin"
+
+4- Verificar que el comando phpcs se ejecuta con éxito:
 
 $ phpcs --help
 
-4- Verificar el estandar de un archivo:
+5- Verificar el estandar de un archivo:
 
 $ phpcs --standard=PSR12 /path/to/code-directory
 
@@ -2135,7 +2142,8 @@ Para el kavac sería:
 
 $ phpcs --standard=PSR12 kavac/modules/Purchase/Http/Controllers/PurchaseRequirementController.php
 
-Fuente
-======
+Fuentes
+=======
 
 https://github.com/squizlabs/PHP_CodeSniffer
+ChatGPT
