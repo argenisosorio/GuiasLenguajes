@@ -2130,11 +2130,15 @@ segun la ruta de composer del comando anteior:
 
 export PATH="$PATH:/home/user/.config/composer/vendor/bin"
 
-4- Verificar que el comando phpcs se ejecuta con éxito:
+4- Actualizar los cambios:
+
+$ source .bashrc
+
+5- Verificar que el comando phpcs se ejecuta con éxito:
 
 $ phpcs --help
 
-5- Verificar el estandar de un archivo:
+6- Verificar el estandar de un archivo:
 
 $ phpcs --standard=PSR12 /path/to/code-directory
 
