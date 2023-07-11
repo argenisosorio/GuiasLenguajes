@@ -3330,14 +3330,80 @@ export default {
 </script>
 
 Watch
-======
+=====
 
-Vue proporciona una forma más genérica de observar y reaccionar a los cambios de
-datos en una instancia de Vue: Watch las propiedades. Cuando tiene algunos datos
-que deben cambiar en función de otros datos, es tentador hacer un uso excesivo
-de twatch, especialmente si proviene de un entorno AngularJS. Sin embargo, a
-menudo es una mejor idea utilizar una propiedad calculada en lugar de una
-devolución de llamada de watch imperativa.
+El estado watch en Vue.js te permite observar cambios en una propiedad
+específica y ejecutar código en respuesta a esos cambios. Puedes utilizarlo para
+realizar acciones personalizadas cuando una propiedad cambie su valor.
+
+Para definir un watch en un componente Vue, debes agregar una sección llamada
+watch al objeto de opciones del componente. Dentro de esta sección, puedes
+definir diferentes propiedades a observar y las correspondientes funciones que
+se ejecutarán cuando esas propiedades cambien.
+
+Ejemplo:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>My first Vue app</title>
+  <script src="https://unpkg.com/vue@2"></script>
+</head>
+<body>
+  <div id="app">
+    <input v-model="message" placeholder="Escribe algo">
+    <p>El valor de "message": {{ message }}</p>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: ''
+      },
+      watch: {
+        message(newMessage, oldMessage) {
+          console.log('El valor de "message" ha cambiado');
+          console.log('Nuevo valor:', newMessage);
+          console.log('Valor anterior:', oldMessage);
+        },
+      },
+    })
+  </script>
+</body>
+</html>
+
+En la sección data, defines las propiedades del componente. En este caso, solo
+tenemos una propiedad llamada message, que se inicializa como una cadena vacía.
+
+A continuación, definimos la sección watch para observar cambios en la propiedad
+message. Dentro de esta sección, especificamos una función que se ejecutará cada
+vez que el valor de message cambie.
+
+La función del watch toma dos parámetros: newMessage y oldMessage. Estos
+parámetros representan el nuevo valor y el valor anterior de la propiedad
+message, respectivamente.
+
+Dentro de la función del watch, utilizamos console.log() para imprimir mensajes
+en la consola del navegador. Mostramos el mensaje "El valor de 'message' ha
+cambiado", seguido del nuevo valor y el valor anterior.
+
+En el HTML, tenemos un <input> que está vinculado a la propiedad message
+utilizando la directiva v-model. Esto significa que cualquier cambio en el input
+actualizará automáticamente el valor de message.
+
+También tenemos un párrafo <p> que muestra el valor actual de message utilizando
+la interpolación de Vue {{ message }}. Este valor se actualizará automáticamente
+cuando message cambie.
+
+Cuando ejecutes este código en tu navegador, verás el input y el párrafo en la
+página. Al escribir algo en el input, el valor de message se actualizará y se
+mostrará en el párrafo. Además, en la consola del navegador verás los mensajes
+de seguimiento que se imprimen cada vez que message cambia.
+
+Esta es una forma básica de utilizar el estado watch en Vue.js para observar y
+reaccionar a los cambios en las propiedades de un componente.
 
 Conclusiones
 ============
@@ -3354,6 +3420,7 @@ Fuentes
 
 -https://codingpotions.com/vue-ciclo-vida
 -https://elabismodenull.wordpress.com/2017/05/05/vuejs-el-ciclo-de-vida-de-un-componente/
+-ChatGPT
 
 Directivas Personalizadas
 =========================
