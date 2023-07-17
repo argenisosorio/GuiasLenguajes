@@ -8614,3 +8614,39 @@ Nota: Probado en GNU/Linux Debian 11
 3- Abrir el navegador:
 
 $ microsoft-edge
+
+==========
+echo $PATH
+==========
+
+En Linux Debian, el comando echo $PATH muestra el valor de la variable de
+entorno PATH. Esta variable es una de las más importantes en sistemas Unix y
+Linux, y es utilizada por el sistema operativo para buscar ejecutables y
+programas en el sistema de archivos.
+
+La variable PATH contiene una lista de directorios separados por dos puntos (:),
+y cada uno de estos directorios es escaneado por el sistema para encontrar
+ejecutables cuando se ejecuta un comando en la terminal. Cuando escribes un
+comando en la terminal, el sistema busca en cada uno de los directorios
+especificados en PATH para encontrar el ejecutable asociado con ese comando.
+
+Por ejemplo, si ejecutas echo $PATH en la terminal, podrías obtener una salida
+similar a esta:
+
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/
+local/games:/snap/bin
+
+Esta salida muestra los directorios que el sistema busca para encontrar los
+ejecutables. Si ejecutas un comando que no está ubicado en uno de estos
+directorios, obtendrás un error del tipo "comando no encontrado".
+
+Es importante tener la variable PATH configurada correctamente para que puedas
+acceder a los comandos y programas instalados en tu sistema sin tener que
+escribir la ruta completa hasta su ubicación. Si necesitas agregar un nuevo
+directorio al PATH, puedes hacerlo modificando el archivo de inicio de tu shell
+(como .bashrc, .bash_profile, o .profile, dependiendo de la shell que uses).
+
+Fuente
+======
+
+ChatGPT

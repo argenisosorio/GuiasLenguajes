@@ -421,3 +421,46 @@ telegram_notification:
     - curl -s -X POST https://api.telegram.org/bot$BotTELEGRAM_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="${MESSAGE}" >> /dev/null
   only:
     - master
+
+========================
+Rama protegida en GitLab
+========================
+
+Una rama protegida en GitLab es una rama en un repositorio de Git que ha sido
+configurada para tener restricciones adicionales para evitar cambios no
+autorizados. Esta configuración se implementa para prevenir modificaciones
+accidentales o no autorizadas en ramas importantes del repositorio, como la rama
+"master" o ramas de desarrollo principales.
+
+Cuando una rama está protegida en GitLab, se aplican ciertas restricciones y
+reglas que generalmente incluyen:
+
+No permitir push directo: Los usuarios no pueden hacer push directamente a la
+rama protegida. Los cambios deben enviarse mediante merge requests (también
+conocidos como "pull requests" en otros sistemas de control de versiones).
+
+Revisión de cambios (Code Review): Antes de que los cambios se incorporen a la
+rama protegida, al menos una revisión de código (code review) aprobada es
+necesaria. Otros miembros del equipo deben revisar y aprobar los cambios antes
+de que se fusionen con la rama protegida.
+
+Requerir pipelines exitosos: Antes de que los cambios se fusionen con la rama
+protegida, se exige que los pipelines de CI/CD sean exitosos. Esto garantiza que
+los cambios cumplan con las pruebas automatizadas antes de integrarlos en la
+rama protegida.
+
+Restricciones adicionales: GitLab permite configurar restricciones adicionales
+según las necesidades del proyecto, como requerir que solo ciertos usuarios o
+grupos tengan permiso para aprobar merge requests en la rama protegida.
+
+Las ramas protegidas en GitLab son una medida de seguridad importante para
+garantizar la calidad y la integridad del código en el repositorio. Al
+restringir la posibilidad de cambios directos en ramas importantes, se minimiza
+el riesgo de errores y problemas en el código base, y se fomenta un enfoque
+colaborativo a través de revisiones y pruebas antes de la incorporación de
+cambios a la rama principal del repositorio.
+
+Fuente
+======
+
+ChatGPT
