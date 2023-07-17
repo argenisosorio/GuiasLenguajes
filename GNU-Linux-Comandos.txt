@@ -8646,6 +8646,40 @@ escribir la ruta completa hasta su ubicación. Si necesitas agregar un nuevo
 directorio al PATH, puedes hacerlo modificando el archivo de inicio de tu shell
 (como .bashrc, .bash_profile, o .profile, dependiendo de la shell que uses).
 
+Editar la variable de entorno $PATH
+===================================
+
+Para editar la variable de entorno $PATH en Linux Debian, puedes modificar
+algunos archivos de inicio de sesión específicos según la shell que estés
+utilizando (por ejemplo, Bash, Zsh, etc.). Aquí te menciono los archivos más
+comunes donde puedes agregar o modificar la variable $PATH:
+
+Bash: Si estás utilizando la shell Bash (que es la predeterminada en muchas
+distribuciones de Linux, incluyendo Debian), puedes editar el archivo ~/.bashrc
+o ~/.bash_profile.
+
+Abre una terminal y utiliza un editor de texto, como nano o vim, para editar el
+archivo. Por ejemplo:
+
+$ nano .bashrc
+
+Agrega la línea que define la variable $PATH con los directorios que deseas
+incluir. Por ejemplo:
+
+export PATH="/ruta/a/tu/directorio:$PATH"
+
+ó la que he usado:
+
+export PATH="$PATH:/ruta/a/tu/directorio"
+
+Guarda los cambios y cierra el editor.
+
+Después de editar el archivo ~/.bashrc, cierra y vuelve a abrir la terminal para
+que los cambios surtan efecto. También puedes ejecutar el siguiente comando para
+cargar la configuración sin reiniciar la terminal:
+
+$ source .bashrc
+
 Fuente
 ======
 
