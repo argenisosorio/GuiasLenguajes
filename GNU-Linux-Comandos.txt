@@ -4674,6 +4674,83 @@ Para accecer a la jaula o ejecutarla debes ser usuario root o usar sudo
 
 # chroot /home/user/jaulas/wheezy
 
+========================
+Problemas para desmontar
+========================
+
+Si no se dejan desmontar algunos recursos montados es porque aún se están
+usando, ejecuta:
+
+$ lsof | grep /home/user/Documentos/jaulas/bullseye
+
+Esto te mostrará los procesos que están utilizando recursos dentro de la jaula
+chroot. Debes finalizarlos o cerrarlos antes de desmontarla, con kill -9
+y el ID de proceso se puede hacer.
+
+$ kill -9 XXX
+
+Detener servicios: Si estás ejecutando servicios dentro de la jaula chroot,
+asegúrate de detenerlos antes de desmontarla. Puedes usar los comandos
+específicos para detener los servicios, como systemctl stop, service stop, etc.,
+dependiendo del sistema y servicios que estés utilizando dentro de la jaula.
+
+Una vez que hayas realizado estos pasos y asegurado que no hay procesos o
+aplicaciones utilizando la jaula chroot, intenta desmontarla nuevamente con el
+comando:
+
+# umount /home/user/Documentos/jaulas/bullseye/proc
+
+Fuente
+======
+
+ChatGPT
+
+======================================
+Copia de seguridad de una jaula chroot
+======================================
+
+Es posible hacer una copia de la jaula chroot como una copia de seguridad del
+estado actual. De hecho, hacer copias de seguridad periódicas de tu jaula chroot
+es una práctica recomendada para evitar pérdida de datos o configuraciones
+importantes.
+
+Para hacer una copia de seguridad de tu jaula chroot, puedes seguir estos pasos:
+
+Detener cualquier proceso en la jaula chroot: Antes de hacer una copia de
+seguridad, asegúrate de detener todos los procesos y servicios que se estén
+ejecutando dentro de la jaula. Esto garantizará que todos los archivos estén en
+un estado coherente.
+
+Copiar los archivos: Utiliza el comando cp para copiar todos los archivos y
+directorios de la jaula chroot a una nueva ubicación de copia de seguridad.
+Puedes hacerlo con el siguiente comando:
+
+# cp -a /home/user/Documentos/jaulas/bullseye /ruta/donde/quieres/crear/la/copia
+
+El argumento -a en cp garantiza que se conserve toda la estructura de
+directorios, atributos y permisos durante la copia.
+
+Desmontar la jaula chroot: Una vez que hayas hecho la copia de seguridad,
+desmonta la jaula chroot utilizando el comando umount:
+
+# umount /home/user/Documentos/jaulas/bullseye
+
+Almacenar la copia de seguridad en un lugar seguro: Guarda la copia de seguridad
+en un lugar seguro fuera de la jaula chroot original, preferiblemente en un
+dispositivo de almacenamiento externo o en una ubicación que no esté sujeta a
+los cambios que puedan ocurrir dentro de la jaula.
+
+Recuerda que hacer copias de seguridad regulares te ayudará a mantener tus datos
+y configuraciones seguros y te permitirá restaurar la jaula chroot en caso de
+algún problema o pérdida de información. Siempre es recomendable realizar copias
+de seguridad antes de realizar cambios significativos en la jaula chroot o al
+actualizar el sistema operativo dentro de la jaula.
+
+Fuente
+======
+
+ChatGPT
+
 ===========================
 Instalar el paquete locales
 ===========================
