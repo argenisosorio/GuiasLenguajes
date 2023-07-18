@@ -2151,3 +2151,73 @@ Fuentes
 
 https://github.com/squizlabs/PHP_CodeSniffer
 ChatGPT
+
+======================
+Función anónima en PHP
+======================
+
+Una función anónima en PHP es una función que no tiene un nombre asociado y se
+define utilizando la sintaxis function () { ... }. También se les conoce como
+"closures" o "funciones lambda". Estas funciones son útiles cuando necesitas
+pasar lógica o comportamiento como argumento a otra función, o cuando necesitas
+definir una función de una sola vez sin asignarle un nombre.
+
+La sintaxis básica de una función anónima es la siguiente:
+
+$miFuncionAnonima = function ($parametro1, $parametro2, ...) {
+    // Código de la función
+    // Puedes hacer lo que desees con los parámetros y retornar un valor si es
+    // necesario
+};
+
+Ejemplo de una función anónima sencilla que suma dos números:
+
+$sumar = function ($a, $b) {
+    return $a + $b;
+};
+
+$resultado = $sumar(5, 3); // Llamamos a la función como si fuera una función normal
+echo $resultado; // Imprimirá: 8
+
+Las funciones anónimas son especialmente útiles en contextos donde se requiere
+una función temporal y no es necesario asignarle un nombre o si solo se
+utilizará dentro de un ámbito específico.
+
+Aquí tienes un ejemplo práctico de cómo se utilizan las funciones anónimas con
+el método array_map() para aplicar una función a cada elemento de un array:
+
+$datos = [1, 2, 3, 4];
+
+// Utilizamos una función anónima para elevar cada elemento al cuadrado
+$resultado = array_map(function ($numero) {
+    return $numero * $numero;
+}, $datos);
+
+print_r($resultado); // Imprimirá: [1, 4, 9, 16]
+
+En este ejemplo, la función anónima se utiliza para elevar cada número del array
+$datos al cuadrado.
+
+Las funciones anónimas también pueden capturar variables definidas fuera de
+ellas (variables en el ámbito padre), lo que las hace poderosas y flexibles.
+Por ejemplo:
+
+$factor = 10;
+
+$calcularMultiplicacion = function ($numero) use ($factor) {
+    return $numero * $factor;
+};
+
+echo $calcularMultiplicacion(5); // Imprimirá: 50
+
+En este caso, la función anónima calcularMultiplicacion captura la variable
+$factor definida fuera de ella.
+
+Las funciones anónimas son muy útiles en PHP para mejorar la legibilidad y
+modularidad del código, especialmente en situaciones donde se necesitan
+funciones pequeñas y de uso temporal.
+
+Fuente
+======
+
+ChatGPT
