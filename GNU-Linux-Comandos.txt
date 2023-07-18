@@ -3111,6 +3111,12 @@ Descargar una carpeta o directorio específico con wget
 
 $ wget -H -r --level=1 -k -p http://192.168.12.82/share/fff
 
+========================================================
+Imágenes .iso de todas las versiones de GNU/Linux Debian
+========================================================
+
+https://cdimage.debian.org/cdimage/archive/
+
 =====
 jigdo
 =====
@@ -3124,24 +3130,12 @@ Página del paquete -> https://www.debian.org/CD/jigdo-cd/
 
 # aptitude install jigdo-file
 
-Aquí, por ejemplo, podemos buscar los .jigdo
---> http://cdimage.debian.org/debian-cd/8.5.0/amd64/ en jigdo-dvd/
+Aquí, por ejemplo, podemos buscar los .jigdo de la versión que queremos
+descargar https://cdimage.debian.org/cdimage/archive/ en jigdo-dvd/
 
-Nos pedirá un fichero .jigdo para descargar.
-
-$ jigdo-lite
-
-ó simplemente le pasamos el fichero en el mismo comando:
-
-Para descargar
+Descargar un .jigdo, por ejemplo:
 
 $ jigdo-lite http://cdimage.debian.org/debian-cd/8.5.0/amd64/jigdo-dvd/debian-8.5.0-amd64-DVD-1.jigdo
-
-ó
-
-Para descargar
-
-$ jigdo-lite http://cdimage.debian.org/cdimage/archive/7.11.0/amd64/jigdo-cd/debian-7.11.0-amd64-CD-1.jigdo
 
 Luego nos preguntará por ejemplo:
 
@@ -3152,7 +3146,7 @@ nada en este paso.
 
 Lo otro que va a preguntar es cuál el mirror que quieres usar (se puede usar un
 mirror local siempre y cuando esté actualizado). por lo tango metemos la
-dirección en el espacio: http://debian.cen.... y enter
+dirección en el espacio: http://debian.cenditel/debian/ y enter.
 
 Ejecutará muchos procesos y al final debe mostrar un:
 
@@ -3163,6 +3157,8 @@ was generated correctly. I will perform an additional, final check,
 which you can interrupt safely with Ctrl-C if you do not want to wait.
 
 OK: Checksums match, image is good!
+
+Al final nos quedara la imagen .iso de GNU/Linux Debian que escogimos descargar.
 
 =======================
 Conexion remota con ssh
