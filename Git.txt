@@ -1138,3 +1138,12 @@ Con lo anterior UserController.php está en stage
 Ahora lo sacamops de stage con:
 
 $ git restore --staged app/Http/Controllers/UserController.php
+
+-----
+
+Se utiliza en Git para deshacer el último commit y dejar los cambios que se
+realizaron en el área de preparación (staging area) sin perderlos. En otras
+palabras, este comando deshace el último commit pero mantiene los cambios en un
+estado preparado para ser confirmados nuevamente.
+
+$ git reset --soft HEAD~
