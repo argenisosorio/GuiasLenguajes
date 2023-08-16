@@ -2221,3 +2221,53 @@ Fuente
 ======
 
 ChatGPT
+
+===
+EOT
+===
+
+En PHP, EOT se refiere a la sintaxis de "End of Text" (Fin de Texto) y se
+utiliza para definir cadenas de texto largas y formateadas en bloques de código.
+Es una forma de crear cadenas de texto delimitadas que no requieren escapar
+caracteres especiales y permiten mantener el formato sin tener que concatenar
+múltiples líneas con el operador '.'.
+
+La sintaxis general de EOT se ve así:
+
+$string = <<<EOT
+Texto aquí
+Puede incluir saltos de línea,
+variables como $variable,
+y cualquier otro contenido.
+EOT;
+
+En este ejemplo, EOT es el delimitador que marca el inicio y el fin de la
+cadena. Puedes reemplazar EOT por cualquier etiqueta de tu elección, siempre y
+cuando uses la misma etiqueta para marcar el inicio y el fin de la cadena.
+
+Esta forma de definir cadenas es especialmente útil cuando necesitas crear
+bloques de texto largo que contienen HTML, SQL u otros tipos de contenido que
+normalmente requerirían muchos caracteres de escapado si se usara la sintaxis de
+comillas simples o dobles.
+
+Aquí tienes un ejemplo práctico:
+
+$html = <<<HTML
+<div class="container">
+    <h1>Bienvenido a mi sitio web</h1>
+    <p>Este es un ejemplo de cómo usar EOT en PHP.</p>
+</div>
+HTML;
+
+echo $html;
+
+Esto imprimirá el contenido HTML formateado dentro del bloque div.container.
+
+En resumen, EOT en PHP se utiliza para definir cadenas de texto multilínea y
+formateadas de manera legible, especialmente cuando se necesita mantener el
+formato y evitar el escapado excesivo de caracteres especiales.
+
+Fuente
+======
+
+ChatGPT
