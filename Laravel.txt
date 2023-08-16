@@ -9499,3 +9499,27 @@ Fuente
 ======
 
 ChatGPT
+
+=====================================================================
+Validar solo letras y no caracteres especiales en controlador Laravel
+=====================================================================
+
+Nota: Permite espacios
+
+[
+  'name' => [
+      'required',
+      'max:200',
+      'unique:payroll_coordinations',
+      'regex:/^[a-zA-Z\s]+$/',
+  ],
+  'description' => [
+      'nullable',
+      'max:200'
+  ],
+  'department_id' => ['required'],
+],
+[
+  'department_id.required' => 'El campo departamento de adscripción es obligatorio.',
+  'name.regex' => 'El campo nombre no debe contener caracteres especiales.',
+]

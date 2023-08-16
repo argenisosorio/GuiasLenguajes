@@ -5135,6 +5135,26 @@ Validación solo números en un campo
   v-model="record.dni"
 />
 
+====================================================
+Validación de solo letras en un campo y sin espacios
+====================================================
+
+<input
+  type="text"
+  oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');"
+  v-model="record.dni"
+/>
+
+=====================================
+Validación de solo letras en un campo
+=====================================
+
+<input
+  type="text"
+  oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"
+  v-model="record.dni"
+/>
+
 =====
 Vue 3
 =====
