@@ -9523,3 +9523,43 @@ Nota: Permite espacios
   'department_id.required' => 'El campo departamento de adscripción es obligatorio.',
   'name.regex' => 'El campo nombre no debe contener caracteres especiales.',
 ]
+
+==========================
+constrained() en migración
+==========================
+
+En el contexto de una migración de Laravel, "constrained" se refiere a la
+restricción de clave externa que se aplica a un campo de una tabla, lo que
+significa que el valor en ese campo debe existir en otra tabla como clave
+primaria.
+
+Ejemplo:
+
+Supongamos que tienes dos tablas en tu base de datos: 'users' y 'posts'. En la
+tabla 'posts', tienes un campo llamado 'user_id' que se utiliza para almacenar
+el ID del usuario que creó el post.
+
+Si deseas aplicar una restricción de clave externa en el campo 'user_id' de la
+tabla 'posts', puedes utilizar el método `constrained()` en Laravel. Esto
+garantizará que el valor en el campo 'user_id' exista como una clave primaria en
+la tabla 'users'.
+
+Aquí está un ejemplo de cómo se vería en código:
+
+```php
+Schema::table('posts', function (Blueprint $table) {
+    $table->foreign('user_id')
+          ->references('id')
+          ->on('users')
+          ->constrained();
+});
+```
+
+Con esto, Laravel creará automáticamente la restricción de clave externa en la
+columna 'user_id' de la tabla 'posts', asegurando que solo se puedan agregar
+valores que existan como claves primarias en la tabla 'users'.
+
+Fuente
+======
+
+LuzIA Telegram Bot
