@@ -4383,6 +4383,22 @@ El comando migrate:reset revertirá todas las migraciones de su aplicación:
 
 $ php artisan migrate:reset
 
+Ejemplo:
+
+Cuando ejecutas una migración en Laravel, estás alterando la estructura de la
+base de datos. Si realizas un rollback, estás revirtiendo esa última migración y
+restaurando la estructura anterior de la base de datos.
+
+Por ejemplo, si tienes una migración que agrega un campo "city" a la tabla
+"profiles", y luego ejecutas el comando "php artisan migrate", se agregará el
+campo a la tabla. Pero si luego realizas un rollback con el comando
+"php artisan migrate:rollback", se eliminará ese campo de la tabla.
+
+En cuanto a los datos, si se realiza un rollback después de agregar un campo,
+los datos ingresados en ese campo se perderán. En el ejemplo que mencionaste, si
+agregaste el campo "age" a la tabla "profiles" y luego realizas un rollback, se
+eliminará el campo y cualquier dato ingresado en él se perderá.
+
 ==============================================
 Restricciones de Foreign Key o lláves foráneas
 ==============================================
