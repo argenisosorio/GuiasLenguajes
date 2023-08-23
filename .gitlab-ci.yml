@@ -5,8 +5,8 @@ telegram_notification:
   stage: notify
   image: curlimages/curl:latest
   script:
-    - export MESSAGE="Nuevo push\nRepositorio: $CI_PROJECT_URL\nDe: $(echo $CI_COMMIT_AUTHOR | cut -d' ' -f1,2)\nRama: $CI_COMMIT_REF_NAME\nCommit: $CI_COMMIT_MESSAGE\nUrl: $CI_PROJECT_URL/-/commit/$CI_COMMIT_SHA"
-    - echo -e "$MESSAGE" | curl -s -X POST https://api.telegram.org/bot$BotTELEGRAM_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text=$(cat) >> /dev/null
+    - export MESSAGE="Nuevo push | REPOSITORIO $CI_PROJECT_URL | AUTOR $(echo $CI_COMMIT_AUTHOR | cut -d' ' -f1,2) | RAMA $CI_COMMIT_REF_NAME | COMMIT $CI_COMMIT_MESSAGE | URL $CI_PROJECT_URL/-/commit/$CI_COMMIT_SHA"
+    - curl -s -X POST https://api.telegram.org/bot$BotTELEGRAM_TOKEN/sendMessage -d chat_id=$CHAT_ID -d text="${MESSAGE}" >> /dev/null
   only:
     - master
     - dev
