@@ -9643,6 +9643,27 @@ public function up()
     });
 }
 
+o esta versión más compacta:
+
+public function up()
+{
+    Schema::create('course_student', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('course_id')
+                ->constrained('courses')
+                ->onUpdate('cascade')
+                ->onDelete('restrict')
+                ->nullable();
+        $table->foreignId('student_id')
+            ->constrained('students')
+            ->onUpdate('cascade')
+            ->onDelete('restrict')
+            ->nullable();
+        $table->timestamp('created_at')->useCurrent();
+        $table->timestamp('updated_at')->nullable();
+    });
+}
+
 Definir las relaciones en los modelos:
 
 En el modelo Course, define la relación muchos a muchos con el modelo Student:
@@ -9680,7 +9701,57 @@ $courses = $student->courses;
 Con este ejemplo, podrás entender cómo funciona una relación muchos a muchos con
 una tabla intermedia en Laravel.
 
-Fuente
-======
+Ejemplo completo de tabla intermedia entre cursos y estudiantes en:
+https://github.com/argenisosorio/laravel_8_crud/tree/prueba_tabla_intermedia
+
+===========================
+El método attach en Laravel
+===========================
+
+El método attach en Laravel se utiliza para establecer relaciones de muchos a
+muchos entre modelos a través de una tabla intermedia. En el contexto de tu
+aplicación (https://github.com/argenisosorio/laravel_8_crud/tree/prueba_tabla_intermedia)
+de administración de cursos y estudiantes, se utiliza para relacionar
+estudiantes con cursos seleccionados.
+
+En tu caso específico, tienes una relación muchos a muchos entre los modelos
+Student y Course, y la tabla intermedia se llama course_student. El método
+attach se utiliza para agregar registros a esta tabla intermedia y establecer
+la relación entre un estudiante y uno o varios cursos.
+
+La sintaxis básica del método attach es la siguiente:
+
+$student->courses()->attach($courseIds);
+
+Donde:
+
+$student es una instancia del modelo Student.
+
+courses() es el método de relación definido en el modelo Student que representa
+la relación muchos a muchos con cursos.
+
+attach($courseIds) es el método que se utiliza para establecer la relación.
+$courseIds es un array de IDs de cursos que deseas relacionar con el estudiante.
+
+En tu código, dentro del método store, utilizas el método attach para
+relacionar el estudiante recién creado con los cursos seleccionados a través del
+campo 'selected_courses' del formulario.
+
+if ($request->has('selected_courses')) {
+    $student->courses()->attach($request->input('selected_courses'));
+}
+
+Este código toma los IDs de los cursos seleccionados del formulario (contenidos
+en el campo 'selected_courses') y establece las relaciones correspondientes en
+la tabla intermedia course_student. Esto permite que puedas asociar múltiples
+cursos con un estudiante específico.
+
+En resumen, el método attach es una forma de establecer relaciones de muchos a
+muchos en Laravel, agregando registros a una tabla intermedia que conecta dos
+modelos.
+
+Fuentes
+=======
 
 ChatGPT
+https://github.com/argenisosorio/laravel_8_crud/tree/prueba_tabla_intermedia
