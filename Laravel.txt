@@ -4897,18 +4897,32 @@ facilita la gestión y el trabajo con estas relaciones.
 
 Laravel admite muchos tipos de relaciones:
 
--One To One (Uno a uno) su función es hasOne().
+1. Uno a Uno:
+- Relación: HasOne
+- Reverso: BelongsTo
+- Ejemplo: Un usuario tiene un perfil.
 
--One To Many (Uno a muchos) su función es hasMany() y la inversa es belongsTo().
+2. Uno a Muchos:
+- Relación: HasMany
+- Reverso: BelongsTo
+- Ejemplo: Un autor tiene muchos libros.
 
--Many To Many (Muchos a muchos) su función es belongsToMany() y la inversa es
-belongsToMany().
+3. Muchos a Muchos:
+- Relación: BelongsToMany
+- Reverso: BelongsToMany
+- Ejemplo: Un post tiene muchas etiquetas y una etiqueta puede estar asociada
+con varios posts.
 
--Has Many Through (Tiene muchos) su función es hasManyThrough().
+4. Polimórfica Uno a Uno o Uno a Muchos:
+- Relación: MorphOne, MorphMany
+- Reverso: MorphTo
+- Ejemplo: Una imagen puede pertenecer a un usuario o un post.
 
--Polymorphic Relations (Relaciones polimórficas)
-
--Many To Many Polymorphic Relations (Relaciones polimórficas de muchos a muchos)
+5. Polimórfica Muchos a Muchos:
+- Relación: MorphToMany
+- Reverso: MorphToMany
+- Ejemplo: Varios modelos, como videos y fotos, pueden estar etiquetados con
+diferentes etiquetas.
 
 Ejemplo de relación One To Many (Uno a muchos)
 ==============================================
