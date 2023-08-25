@@ -9680,6 +9680,43 @@ $courses = $student->courses;
 Con este ejemplo, podrás entender cómo funciona una relación muchos a muchos con
 una tabla intermedia en Laravel.
 
+Ejemplo de como se manejas los datos en esas tablas:
+
+Imagina que tienes dos conjuntos de datos, digamos "A" y "B", y deseas
+establecer una relación muchos a muchos entre ellos. Esto significa que un
+elemento del conjunto "A" puede estar relacionado con varios elementos del
+conjunto "B", y viceversa.
+
+Sin embargo, para almacenar esta relación en una base de datos relacional,
+necesitas una forma de vincular los elementos de "A" con los elementos de "B".
+Aquí es donde entra en juego la tabla intermedia.
+
+La tabla intermedia es una tabla adicional que se crea para mantener un registro
+de las conexiones entre los elementos de "A" y "B". Esta tabla contiene, al
+menos, dos columnas: una que corresponde a los elementos de "A" y otra que
+corresponde a los elementos de "B". Estas columnas actúan como claves foráneas
+que hacen referencia a las tablas originales de los conjuntos "A" y "B".
+
+Cuando deseas establecer una relación entre un elemento específico de "A" y uno
+o más elementos de "B", insertas registros en la tabla intermedia. Cada registro
+indicará que un elemento de "A" está relacionado con uno de "B". Así, a medida
+que agregas registros a la tabla intermedia, estás construyendo las relaciones
+entre los conjuntos "A" y "B".
+
+Por ejemplo, si "A" son estudiantes y "B" son cursos, la tabla intermedia podría
+llamarse "course_student" y contendría registros que indican qué estudiantes
+están inscritos en qué cursos.
+
+Esta tabla intermedia no se llena automáticamente con datos; más bien, se llena
+a medida que estableces relaciones entre los elementos de "A" y "B". Es
+utilizada principalmente para consultas y para mantener la integridad
+referencial en la base de datos, asegurando que las relaciones entre los
+conjuntos se mantengan correctamente.
+
+En resumen, las tablas intermedias son esenciales en las relaciones muchos a
+muchos para registrar y gestionar las conexiones entre conjuntos de datos
+diferentes.
+
 Fuente
 ======
 
