@@ -8559,6 +8559,10 @@ Enviar mensajes o notificaciones flash al template
 
 En el controlador:
 
+use Illuminate\Support\Facades\Session;
+
+ó
+
 use Session;
 
 Session::flash('message', "Special message goes here");
@@ -8979,6 +8983,41 @@ $rules = [
         }),
     ],
 ]
+
+Validación personalizada en Laravel
+===================================
+
+Si $message es true, salta el mensaje de valiadción
+
+/* Validación de que no pueda registrarse un nuevo trabajador si no  hay
+* cargos disponibles */
+
+/* Obtener el valor de number_positions_assigned del PayrollPosition
+relacionado */
+$position = PayrollPosition::find($request->payroll_position_id);
+$numberPositionsAssigned = $position->number_positions_assigned ? $position->number_positions_assigned : 0;
+
+// Contar cuántos registros de PayrollEmployment ya están relacionados con el cargo
+$existingEmploymentsCount = $position->payrollEmployments()->count();
+
+if ($numberPositionsAssigned - $existingEmploymentsCount <= 0) {
+    $message = true;
+    $this->validate(
+        $request,
+        [
+            'payroll_position_id' => [
+                Rule::when($message, function ($attribute, $value, $fail) {
+                    if ($value) {
+                        $fail('No hay disponibilidad para el cargo que está intentando registrar');
+                    }
+                }),
+            ],
+        ],
+    );
+}
+else {
+    $message = false;
+}
 
 ==================================
 Relaciones polimórficas en Laravel
