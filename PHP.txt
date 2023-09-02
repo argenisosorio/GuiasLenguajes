@@ -2271,3 +2271,50 @@ Fuente
 ======
 
 ChatGPT
+
+================
+El método trim()
+================
+
+El método trim() en PHP se utiliza para eliminar espacios en blanco u otros
+caracteres específicos desde el principio y el final de una cadena (string). Es
+útil para limpiar y formatear cadenas de texto, especialmente cuando se están
+manipulando datos de formularios o de entrada de usuario.
+
+La sintaxis básica de trim() es la siguiente:
+
+string trim ( string $cadena [, string $caracteres = " \t\n\r\0\x0B" ] )
+
+$cadena: La cadena de texto que deseas recortar, es decir, eliminar los
+caracteres de espacios en blanco al principio y al final.
+
+$caracteres (opcional): Una cadena que contiene los caracteres que deseas
+eliminar. Por defecto, se eliminan espacios en blanco (incluyendo espacio,
+tabulación, nueva línea, retorno de carro, nulo y tabulación vertical).
+
+Ejemplo de uso básico:
+
+$texto = "   Hola, soy una cadena con espacios en blanco al principio y al final.   ";
+$limpio = trim($texto);
+echo $limpio;
+
+Esto eliminará los espacios en blanco al principio y al final de la cadena, y el
+resultado será:
+
+Hola, soy una cadena con espacios en blanco al principio y al final.
+
+trim() es muy útil para normalizar datos de entrada, ya que asegura que no haya
+espacios en blanco innecesarios que puedan afectar la manipulación de los datos
+o la presentación en una aplicación PHP. También puedes utilizar variantes de
+esta función como ltrim() (eliminar espacios en blanco al principio) y rtrim()
+(eliminar espacios en blanco al final) si solo necesitas realizar la operación
+en una dirección específica de la cadena.
+
+Si hay espacios en blanco entre las palabras en la cadena, trim() no los
+eliminará porque solo elimina espacios en blanco al principio y al final de la
+cadena, no en el medio.
+
+Fuente
+======
+
+ChatGPT
