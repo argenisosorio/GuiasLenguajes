@@ -3076,7 +3076,7 @@ decidir si se aplica cada clase:
 
 <ul id="app">
   <li
-    v-bind:class="{ red: price <= 100, green: price > 100 }"
+    v-bind :class="{ red: price <= 100, green: price > 100 }"
     v-for="(price, date) in sales">
     {{ date }} - ${{ price }}
   </li>
@@ -3096,6 +3096,14 @@ var vue = new Vue({
 </script>
 </body>
 </html>
+
+Otro ejemplo de clase porsonalizada según valor de variable:
+
+<button
+  :class="['btn', isError ? 'btn-danger' : 'btn-success']"
+>
+  Submit
+</button>
 
 =================
 Sintaxis de array
