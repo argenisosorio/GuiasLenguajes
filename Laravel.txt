@@ -9593,6 +9593,17 @@ Nota: Permite espacios
   'name.regex' => 'El campo nombre no debe contener caracteres especiales.',
 ]
 
+=====================================================================
+Validar solo letras, no números, permite acentos y espacios en blanco
+=====================================================================
+
+'name' => [
+    'required',
+    'max:200',
+    'unique:payroll_coordinations',
+    'regex:/^[a-zA-ZáéíóúÁÉÍÓÚüÜ\s]+$/u'
+],
+
 ==========================
 constrained() en migración
 ==========================

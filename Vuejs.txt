@@ -5150,7 +5150,7 @@ Validación de solo letras en un campo y sin espacios
 <input
   type="text"
   oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');"
-  v-model="record.dni"
+  v-model="record.xxx"
 />
 
 =====================================
@@ -5160,7 +5160,17 @@ Validación de solo letras en un campo
 <input
   type="text"
   oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"
-  v-model="record.dni"
+  v-model="record.xx"
+/>
+
+===========================================================================
+Validación de solo letras, no números, permite acentos y espacios en blanco
+===========================================================================
+
+<input
+  type="text"
+  oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜ\s]/g, '');"
+  v-model="record.xxx"
 />
 
 =====
