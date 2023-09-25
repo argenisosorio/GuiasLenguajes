@@ -9899,3 +9899,75 @@ Fuente
 ======
 
 ChatGPT
+
+=================================
+Observer" (observador) en Laravel
+=================================
+
+Un "Observer" (observador) en Laravel es una clase que te permite observar y
+responder a eventos que ocurren en los modelos de tu aplicación. Los
+observadores son una forma poderosa de centralizar la lógica relacionada con los
+eventos del modelo y mantener tu código más limpio y organizado.
+
+Los observadores se utilizan principalmente para automatizar tareas comunes o
+realizar acciones adicionales cuando ocurren eventos en los modelos. Algunos
+ejemplos de eventos que puedes observar en un modelo incluyen:
+
+Creación de un registro: Puedes observar el evento created que se dispara cuando
+se crea un nuevo registro en la base de datos. Por ejemplo, puedes enviar un
+correo electrónico de bienvenida a un usuario cuando se registre.
+
+Actualización de un registro: Puedes observar el evento updated que se dispara
+cuando un registro se actualiza. Esto es útil para realizar seguimientos de
+cambios o ejecutar acciones cuando ciertos campos se actualizan.
+
+Eliminación de un registro: Puedes observar el evento deleted que se dispara
+cuando se elimina un registro. Esto es útil para realizar acciones de limpieza o
+archivar datos antes de eliminarlos.
+
+Restauración de un registro: Si estás utilizando "soft deletes" y restauras un
+registro eliminado, puedes observar el evento restored para realizar acciones
+cuando se restaura un registro.
+
+Para crear un observador en Laravel, normalmente sigues estos pasos:
+
+Genera un nuevo observador usando el comando Artisan:
+
+$ php artisan make:observer NombreDelObservador
+
+En el observador recién creado, puedes definir métodos que correspondan a los
+eventos que deseas observar (por ejemplo, created, updated, deleted, restored,
+etc.). Dentro de estos métodos, puedes escribir la lógica que deseas ejecutar
+cuando se dispare el evento.
+
+Registra el observador en el servicio EventServiceProvider de tu aplicación.
+Esto se hace en el archivo EventServiceProvider.php en la propiedad $listen:
+
+protected $listen = [
+    'App\Events\ModelCreated' => [
+        'App\Observers\NombreDelObservador',
+    ],
+];
+
+Asocia el observador con el modelo correspondiente utilizando el método observe
+en el modelo:
+
+protected static function boot()
+{
+    parent::boot();
+    static::observe(NombreDelObservador::class);
+}
+
+Una vez que hayas configurado un observador, cada vez que ocurra el evento en el
+modelo, se llamará al método correspondiente en el observador, permitiéndote
+realizar acciones específicas en respuesta a ese evento.
+
+En resumen, los observadores en Laravel son una forma efectiva de separar la
+lógica de los eventos del modelo, lo que hace que tu código sea más mantenible
+y limpio al tiempo que permite automatizar tareas comunes.
+
+======
+Fuente
+======
+
+ChatGPT
