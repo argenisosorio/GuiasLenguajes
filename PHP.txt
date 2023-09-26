@@ -1987,6 +1987,339 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </body>
 </html>
 
+====================================================================
+Probar la conexión exitosa o no con una base de datos ded PostgreSQL
+====================================================================
+
+<?php
+// Inicializa variables
+$databaseName = '';
+$username = '';
+$password = '';
+$connectionStatus = '';
+
+// Verifica si se envió el formulario
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Recupera los datos del formulario
+    $databaseName = $_POST['database_name'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Construye el comando de conexión a la base de datos
+    $command = "PGPASSWORD='$password' psql -h 127.0.0.1 -p 5432 -U $username -d $databaseName -c 'SELECT 1'";
+
+    // Ejecuta el comando y verifica la salida
+    exec($command, $output, $returnCode);
+
+    if ($returnCode === 0) {
+        $connectionStatus = 'Conexión exitosa';
+    } else {
+        $connectionStatus = 'Error al conectar';
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prueba de Conexión a PostgreSQL</title>
+</head>
+<body>
+    <h1>Prueba de Conexión a PostgreSQL</h1>
+    <form method="post">
+        <label for="database_name">Nombre de la base de datos:</label>
+        <input type="text" id="database_name" name="database_name" value="<?php echo $databaseName; ?>" required><br><br>
+
+        <label for="username">Nombre de usuario:</label>
+        <input type="text" id="username" name="username" value="<?php echo $username; ?>" required><br><br>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" value="<?php echo $password; ?>" required><br><br>
+
+        <input type="submit" value="Probar Conexión">
+    </form>
+
+    <h2>Estado de la Conexión:</h2>
+    <p><?php echo $connectionStatus; ?></p>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
+
+======================================
+Borrar una base de datos de PostgreSQL
+======================================
+
+<?php
+// Inicializa variables
+$databaseName = '';
+$username = '';
+$password = '';
+$deleteStatus = '';
+
+// Verifica si se envió el formulario
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Recupera los datos del formulario
+    $databaseName = $_POST['database_name'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Construye el comando para borrar la base de datos
+    $command = "PGPASSWORD='$password' dropdb -h 127.0.0.1 -U $username $databaseName";
+
+    // Ejecuta el comando y verifica la salida
+    exec($command, $output, $returnCode);
+
+    if ($returnCode === 0) {
+        $deleteStatus = "La base de datos '$databaseName' ha sido borrada exitosamente.";
+    } else {
+        $deleteStatus = "Error al borrar la base de datos '$databaseName'.";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Borrar Base de Datos PostgreSQL</title>
+</head>
+<body>
+    <h1>Borrar Base de Datos PostgreSQL</h1>
+    <form method="post">
+        <label for="database_name">Nombre de la base de datos a borrar:</label>
+        <input type="text" id="database_name" name="database_name" value="<?php echo $databaseName; ?>" required><br><br>
+
+        <label for="username">Nombre de usuario:</label>
+        <input type="text" id="username" name="username" value="<?php echo $username; ?>" required><br><br>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" value="<?php echo $password; ?>" required><br><br>
+
+        <input type="submit" value="Borrar Base de Datos">
+    </form>
+
+    <h2>Estado del Borrado:</h2>
+    <p><?php echo $deleteStatus; ?></p>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
+
+===========================================
+Crear una nueva base de datos de PostgreSQL
+===========================================
+
+<?php
+// Inicializa variables
+$databaseName = '';
+$username = '';
+$password = '';
+$createStatus = '';
+
+// Verifica si se envió el formulario
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Recupera los datos del formulario
+    $databaseName = $_POST['database_name'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Construye el comando para crear la nueva base de datos
+    $command = "PGPASSWORD='$password' createdb -h 127.0.0.1 -U $username $databaseName";
+
+    // Ejecuta el comando y verifica la salida
+    exec($command, $output, $returnCode);
+
+    if ($returnCode === 0) {
+        $createStatus = "La base de datos '$databaseName' ha sido creada exitosamente.";
+    } else {
+        $createStatus = "Error al crear la base de datos '$databaseName'.";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crear Nueva Base de Datos PostgreSQL</title>
+</head>
+<body>
+    <h1>Crear Nueva Base de Datos PostgreSQL</h1>
+    <form method="post">
+        <label for="database_name">Nombre de la nueva base de datos:</label>
+        <input type="text" id="database_name" name="database_name" value="<?php echo $databaseName; ?>" required><br><br>
+
+        <label for="username">Nombre de usuario:</label>
+        <input type="text" id="username" name="username" value="<?php echo $username; ?>" required><br><br>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" value="<?php echo $password; ?>" required><br><br>
+
+        <input type="submit" value="Crear Nueva Base de Datos">
+    </form>
+
+    <h2>Estado de la Creación:</h2>
+    <p><?php echo $createStatus; ?></p>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
+
+====================================================================
+Crear respaldo de una base de datos de PostgreSQL en un archivo .sql
+====================================================================
+
+<?php
+// Inicializa variables
+$databaseName = '';
+$username = '';
+$password = '';
+$backupName = '';
+$backupStatus = '';
+
+// Verifica si se envió el formulario
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Recupera los datos del formulario
+    $databaseName = $_POST['database_name'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $backupName = $_POST['backup_name'];
+
+    // Añade la extensión .sql al nombre del archivo si no está presente
+    if (!pathinfo($backupName, PATHINFO_EXTENSION)) {
+        $backupName .= '.sql';
+    }
+
+    // Construye el comando para crear el respaldo (dump) en un archivo .sql
+    $command = "PGPASSWORD='$password' pg_dump -h 127.0.0.1 -U $username $databaseName > $backupName";
+
+    // Ejecuta el comando y verifica la salida
+    exec($command, $output, $returnCode);
+
+    if ($returnCode === 0) {
+        $backupStatus = "El respaldo de la base de datos '$databaseName' se ha creado exitosamente en '$backupName'.";
+    } else {
+        $backupStatus = "Error al crear el respaldo de la base de datos '$databaseName'.";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crear Respaldo .sql de Base de Datos PostgreSQL</title>
+</head>
+<body>
+    <h1>Crear Respaldo .sql de Base de Datos PostgreSQL</h1>
+    <form method="post">
+        <label for="database_name">Nombre de la base de datos a respaldar:</label>
+        <input type="text" id="database_name" name="database_name" value="<?php echo $databaseName; ?>" required><br><br>
+
+        <label for="username">Nombre de usuario:</label>
+        <input type="text" id="username" name="username" value="<?php echo $username; ?>" required><br><br>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" value="<?php echo $password; ?>" required><br><br>
+
+        <label for="backup_name">Nombre del archivo de respaldo (con extensión .sql):</label>
+        <input type="text" id="backup_name" name="backup_name" value="<?php echo $backupName; ?>" required><br><br>
+
+        <input type="submit" value="Crear Respaldo .sql">
+    </form>
+
+    <h2>Estado de la Creación del Respaldo:</h2>
+    <p><?php echo $backupStatus; ?></p>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
+
+============================================================================
+Restaurar una base de datos de PostgreSQL a través de un archivo .sql previo
+============================================================================
+
+Nota: Hay una limitación y es que si el archivo es muy grande la solicitud
+fallara por el tamaño del archivo.
+
+<?php
+// Inicializa variables
+$databaseName = '';
+$username = '';
+$password = '';
+$restoreStatus = '';
+
+// Verifica si se envió el formulario
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['sql_file'])) {
+    // Recupera los datos del formulario
+    $databaseName = $_POST['database_name'];
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    // Verifica si se subió un archivo .sql
+    if ($_FILES['sql_file']['error'] === 0 && pathinfo($_FILES['sql_file']['name'], PATHINFO_EXTENSION) === 'sql') {
+        $sqlFileName = $_FILES['sql_file']['tmp_name'];
+
+        // Construye el comando para restaurar la base de datos desde el archivo .sql
+        $command = "PGPASSWORD='$password' psql -h 127.0.0.1 -U $username -d $databaseName < $sqlFileName";
+
+        // Ejecuta el comando y verifica la salida
+        exec($command, $output, $returnCode);
+
+        if ($returnCode === 0) {
+            $restoreStatus = "La base de datos '$databaseName' se ha restaurado exitosamente desde el archivo .sql.";
+        } else {
+            $restoreStatus = "Error al restaurar la base de datos '$databaseName' desde el archivo .sql.";
+        }
+    } else {
+        $restoreStatus = "Por favor, seleccione un archivo .sql válido.";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Restaurar Base de Datos PostgreSQL desde Archivo .sql</title>
+</head>
+<body>
+    <h1>Restaurar Base de Datos PostgreSQL desde Archivo .sql</h1>
+    <form method="post" enctype="multipart/form-data">
+        <label for="database_name">Nombre de la base de datos a restaurar:</label>
+        <input type="text" id="database_name" name="database_name" value="<?php echo $databaseName; ?>" required><br><br>
+
+        <label for="username">Nombre de usuario:</label>
+        <input type="text" id="username" name="username" value="<?php echo $username; ?>" required><br><br>
+
+        <label for="password">Contraseña:</label>
+        <input type="password" id="password" name="password" value="<?php echo $password; ?>" required><br><br>
+
+        <label for="sql_file">Seleccione un archivo .sql para restaurar:</label>
+        <input type="file" id="sql_file" name="sql_file" accept=".sql" required><br><br>
+
+        <input type="submit" value="Restaurar Base de Datos">
+    </form>
+
+    <h2>Estado de la Restauración de la Base de Datos:</h2>
+    <p><?php echo $restoreStatus; ?></p>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
+
 =======================================
 Operador de fusión null-coalescing (??)
 =======================================
