@@ -9971,3 +9971,37 @@ Fuente
 ======
 
 ChatGPT
+
+====================
+Método forceDelete()
+====================
+
+forceDelete() en Laravel. Este método se utiliza para eliminar permanentemente
+un registro de la base de datos cuando estás utilizando el sistema de
+eliminación suave (soft delete) de Laravel.
+
+En Laravel, el sistema de eliminación suave te permite "eliminar" registros de
+la base de datos sin eliminarlos realmente físicamente. En su lugar, se
+establece una columna de marca de tiempo llamada deleted_at en el registro, lo
+que indica que el registro ha sido eliminado lógicamente. Esto es útil para
+mantener un historial de registros eliminados y permitir la posible restauración
+de registros en el futuro.
+
+Cuando deseas eliminar permanentemente un registro eliminado suavemente, es
+decir, borrarlo de forma irreversible de la base de datos, puedes usar el
+método forceDelete(). Aquí tienes un ejemplo de cómo se usa:
+
+// Elimina permanentemente un registro eliminado suavemente por su ID
+$model = Modelo::onlyTrashed()->find($id);
+$model->forceDelete();
+
+En este ejemplo, $model representa el modelo del registro que se ha eliminado
+suavemente y forceDelete() se utiliza para eliminarlo permanentemente de la base
+de datos. Ten en cuenta que esta operación es irreversible y no se puede
+deshacer. Asegúrate de usar forceDelete() con precaución.
+
+======
+Fuente
+======
+
+ChatGPT
