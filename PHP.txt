@@ -2651,3 +2651,66 @@ Fuente
 ======
 
 ChatGPT
+
+=====================
+El método get_class()
+=====================
+
+Es una función en PHP que se utiliza para obtener el nombre de la clase de un
+objeto dado. En el contexto de Laravel y la mayoría de las aplicaciones
+orientadas a objetos en PHP, puedes usar este método para obtener el nombre de
+la clase de un objeto para realizar tareas específicas basadas en la clase a la
+que pertenece un objeto.
+
+Por ejemplo, si tienes un objeto $model y deseas saber a qué clase pertenece,
+puedes hacer lo siguiente:
+
+$class_name = get_class($model);
+
+Después de ejecutar esto, $class_name contendrá el nombre de la clase del
+objeto $model. Esto puede ser útil para tomar decisiones basadas en la clase de
+un objeto, como lo hicimos en tu código anterior para verificar si la clase de
+$model coincide con las clases en el arreglo $getModels.
+
+En resumen, get_class() es una función útil para obtener el nombre de la clase
+de un objeto en PHP, lo que permite la programación orientada a objetos más
+dinámica y la toma de decisiones basada en las clases de los objetos.
+
+Ejemplo:
+
+Ejemplo simple para ilustrar el uso de get_class() en PHP. Supongamos que
+tenemos una clase Car y creamos una instancia de ella. Luego, utilizamos
+get_class() para obtener el nombre de la clase de esa instancia.
+
+<?php
+class Car {
+    public $brand;
+    public $model;
+
+    public function __construct($brand, $model) {
+        $this->brand = $brand;
+        $this->model = $model;
+    }
+}
+
+// Crear una instancia de la clase Car
+$myCar = new Car("Toyota", "Camry");
+
+// Obtener el nombre de la clase de $myCar
+$className = get_class($myCar);
+
+// Mostrar el nombre de la clase
+echo "La instancia de \$myCar pertenece a la clase: " . $className;
+?>
+
+Esto imprime: La instancia de $myCar pertenece a la clase: Car
+
+En este ejemplo, hemos creado una instancia de la clase Car llamada $myCar y
+luego hemos utilizado get_class($myCar) para obtener el nombre de la clase de
+$myCar. El resultado mostrará que la instancia de $myCar pertenece a la clase
+Car.
+
+Fuente
+======
+
+ChatGPT
