@@ -10005,3 +10005,46 @@ Fuente
 ======
 
 ChatGPT
+
+================================================================================
+Convertir el nombre de una clase model de laravel en un nombre de campo de tabla
+================================================================================
+
+Ejemplo, Si deseas convertir el nombre de la clase $model "App\Models\City" en
+"city_id", puedes hacerlo utilizando funciones de manipulación de cadenas en
+PHP. Puedes seguir estos pasos:
+
+Obtén el nombre de la clase del modelo.
+
+Extrae el último segmento del nombre de la clase (en este caso, "City").
+
+Agrega "_id" al final del segmento extraído.
+
+Aquí tienes una función que realiza esta conversión:
+
+static::deleting(function ($model) {
+    // Obtén el nombre de la clase del modelo
+    $class_name = get_class($model);
+
+    // Divide el nombre de la clase en segmentos utilizando '\'
+    $segments = explode('\\', $class_name);
+
+    // Obtiene el último segmento (el nombre de la clase en sí)
+    $class_name = end($segments);
+
+    // Agrega "_id" al final del nombre de la clase
+    $column_name = strtolower($class_name) . '_id';
+
+    // Imprime el resultado
+    dd($column_name);
+});
+
+Con este código, obtendrás "city_id" cuando dd($column_name) se ejecute con el
+nombre de clase "App\Models\City". Puedes adaptar este código a tu evento de
+eliminación en Laravel según tus necesidades específicas.
+
+======
+Fuente
+======
+
+ChatGPT
