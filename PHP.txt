@@ -2714,3 +2714,46 @@ Fuente
 ======
 
 ChatGPT
+
+==================
+La función ini_get
+==================
+
+La función ini_get en PHP se utiliza para obtener el valor de una configuración
+específica en el archivo de configuración de PHP (php.ini) o en la configuración
+del servidor. Esta función toma como argumento el nombre de la configuración que
+deseas consultar y devuelve su valor actual.
+
+Por ejemplo, si deseas obtener el valor de la configuración upload_max_filesize
+que establece el tamaño máximo de archivo que se puede cargar al servidor,
+puedes usar ini_get de la siguiente manera:
+
+$maxFileSize = ini_get('upload_max_filesize');
+
+$maxFileSize contendría el valor actual de la configuración upload_max_filesize
+en el formato que se encuentra en el archivo de configuración de PHP (por
+ejemplo, "2M" para 2 megabytes).
+
+Esta función es útil cuando necesitas acceder a valores de configuración
+específicos en tiempo de ejecución, lo que te permite ajustar el comportamiento
+de tu aplicación en función de la configuración actual.
+
+Fuente
+======
+
+ChatGPT
+
+========================================================
+Obtener el valor de la configuración upload_max_filesize
+========================================================
+
+Obtener el valor de la configuración upload_max_filesize que establece el tamaño
+máximo de archivo que se puede cargar al servidor, puedes usar ini_get de la
+siguiente manera:
+
+$maxFileSize = ini_get('upload_max_filesize');
+
+Fuente
+======
+
+ChatGPT
