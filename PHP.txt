@@ -2757,3 +2757,45 @@ Fuente
 ======
 
 ChatGPT
+
+==================
+El método strpos()
+==================
+
+El método strpos() de PHP se utiliza para encontrar la posición de la primera
+aparición de una cadena dentro de otra cadena.
+
+Ejemplo:
+
+$frase = "La casa es de color azul";
+$palabra = "casa";
+
+$posicion = strpos($frase, $palabra);
+
+if ($posicion !== false) {
+    echo "La palabra '$palabra' se encuentra en la posición $posicion de la frase.";
+} else {
+    echo "La palabra '$palabra' no se encuentra en la frase.";
+}
+
+En este ejemplo, la función strpos() busca la posición de la palabra "casa"
+dentro de la frase "La casa es de color azul".
+
+Si encuentra la palabra, devuelve la posición en la que se encuentra. Si no la
+encuentra, devuelve false. En este caso, mostraría el mensaje "La palabra 'casa'
+se encuentra en la posición 3 de la frase".
+
+¿Y por que en la posición 3?
+
+En PHP, las posiciones de los caracteres comienzan desde 0. En el ejemplo dado,
+la letra "c" de la palabra "casa" se encuentra en la posición 3 de la frase
+"La casa es de color azul", osea el ejemplo dado, en la posición 0 se encuentra
+la letra "L", en la posición 1 se encuentra la letra "a", en la posición 2 se
+encuentra un espacio en blanco y en la posición 3 se encuentra la letra "c" de
+la palabra "casa".
+
+======
+Fuente
+======
+
+LuzIA
