@@ -4676,6 +4676,34 @@ manera:
 
 >>> $user
 
+Actualizar la contraseña de un usuario
+======================================
+
+$ php artisan tinker
+
+> use App\Models\User;
+
+> $user = User::find(13);
+
+= App\Models\User {#6791
+    id: 13,
+    name: "José",
+    email: "jose@mail.com",
+    username: "jose",
+    #password: "$2y$10$t3IphI6d/qeKJLBJD6Ua4OTa5JaCOS0O1GOO4ctfR6Zh6BYRvsSCa",
+    created_at: "2023-02-15 14:59:10",
+    updated_at: "2023-02-15 14:59:10",
+    deleted_at: null,
+  }
+
+> $user->password = bcrypt('123456');
+= "$2y$10$BeJc12CdbXOl2ofC7UY27eGVkRJgvofGUr87IbJPBYiuF2o0HFBEO"
+
+> $user->save();
+= true
+
+ahora el usuario jose tiene la contraseña 123456.
+
 Consultar todos los usuarios o todos los registros de cualquier tabla
 =====================================================================
 
