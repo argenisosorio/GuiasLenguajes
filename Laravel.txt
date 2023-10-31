@@ -10116,3 +10116,73 @@ Fuente
 ======
 
 ChatGPT
+
+=======================
+Instalar y usar MailHog
+=======================
+
+MailHog permite atrapar el correo SMTP saliente, de modo que puedas ver el
+contenido sin que email se envíe realmente. Cómo instalar MailHog en diversos
+sistemas y usarlo para aplicaciones web PHP y proyectos Laravel.
+
+Instalación en GNU/Linux Debian:
+
+Nota: Probado en GNU/Linux Debian 11
+
+1) Instalar el paquete golang desde los repositorios de Debian:
+
+$ sudo apt install golang
+
+2) Comprobar la correcta instalación:
+
+$ go version
+
+Mostrará algo como:
+
+go version go1.15.15 linux/amd64
+
+3) Ejecutar MailHog
+
+$ ~/go/bin/MailHog
+2023/10/31 15:36:16 Using in-memory storage
+2023/10/31 15:36:16 [SMTP] Binding to address: 0.0.0.0:1025
+[HTTP] Binding to address: 0.0.0.0:8025
+2023/10/31 15:36:16 Serving under http://0.0.0.0:8025/
+Creating API v1 with WebPath: 
+Creating API v2 with WebPath: 
+[APIv2] GET /api/v2/jim
+[APIv2] GET /api/v2/messages
+[APIv2] GET /api/v2/websocket
+[APIv1] KEEPALIVE /api/v1/events
+[APIv1] KEEPALIVE /api/v1/events
+[APIv1] KEEPALIVE /api/v1/events
+
+Visitar http://127.0.0.1:8025/ verás la interfaz de MailHog.
+
+4) Luego en la aplicación de Laravel, en el archivo .env configurar las
+siguientes variables:
+
+MAIL_DRIVER=smtp
+MAIL_HOST=0.0.0.0
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_NAME="Pepe el pruebas"
+
+Refrescar la caché de la configuración con:
+
+$ php artisan optimize:clear
+
+5) Listo, enviar cualquier email con la aplicación, por ejemplo el reseteo de
+contraseña, este debería ser interceptado por MailHog y mostrado en su bandeja
+de mensajes.
+
+Fuentes
+=======
+
+https://desarrolloweb.com/articulos/instalar-mailhog-mac-php.html
+
+https://github.com/mailhog/MailHog
+
+https://styde.net/capturando-emails-de-forma-local-con-mailhog-y-laravel-homestead/
