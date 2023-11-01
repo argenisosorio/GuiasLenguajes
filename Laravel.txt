@@ -9901,10 +9901,47 @@ personalizar la consulta de manera más flexible. Por ejemplo, puedes usar
 toBase() para realizar operaciones adicionales antes de ejecutar la consulta
 final.
 
-Fuente
-======
+Ejemplo:
+
+Supongamos que tienes una tabla llamada usuarios y deseas realizar una consulta
+simple para obtener todos los usuarios cuyas edades son mayores de 25 años.
+
+Sin toBase():
+
+$usuarios = DB::table('usuarios')->where('edad', '>', 25)->get();
+
+En este caso, estamos utilizando la fachada DB de Laravel para construir una
+consulta directamente en la tabla "usuarios" y aplicando una restricción donde
+la edad es mayor que 25.
+
+Con toBase():
+
+$consulta = DB::table('usuarios')->where('edad', '>', 25);
+
+$baseConsulta = $consulta->toBase();
+
+$resultado = $baseConsulta->get();
+
+Aquí, en lugar de ejecutar get() en la consulta original, primero almacenamos la
+consulta en la variable $consulta. Luego, usamos el método toBase() para
+convertirla en una instancia de BaseQuery, que es más flexible y nos permite
+realizar operaciones adicionales antes de ejecutar la consulta final.
+
+Por ejemplo, podríamos agregar más condiciones o personalizaciones a la consulta
+$consulta antes de llamar a get() en la instancia $baseConsulta. Esto puede ser
+útil en situaciones donde necesitas construir la consulta de manera dinámica o
+aplicar operaciones adicionales antes de recuperar los resultados finales.
+
+En resumen, toBase() te permite manipular y personalizar una consulta de manera
+más flexible antes de ejecutarla, lo que puede ser útil en escenarios donde
+necesitas realizar acciones adicionales en la consulta antes de obtener los
+resultados.
+
+Fuentes
+=======
 
 LuzIA
+ChatGPT
 
 ===================
 php artisan db:wipe
@@ -10141,7 +10178,13 @@ Mostrará algo como:
 
 go version go1.15.15 linux/amd64
 
-3) Ejecutar MailHog
+3) Obtener el software MailHog
+
+$ go get github.com/mailhog/MailHog
+
+Esto creara la caprte "go" en la caprpeta personal, dentro está el software
+
+4) Ejecutar MailHog
 
 $ ~/go/bin/MailHog
 2023/10/31 15:36:16 Using in-memory storage
