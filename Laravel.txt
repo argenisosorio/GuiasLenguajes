@@ -10269,3 +10269,62 @@ https://desarrolloweb.com/articulos/instalar-mailhog-mac-php.html
 https://github.com/mailhog/MailHog
 
 https://styde.net/capturando-emails-de-forma-local-con-mailhog-y-laravel-homestead/
+
+============
+Método map()
+============
+
+En Laravel, el método map() se utiliza para transformar los elementos de una
+colección, aplicando una función a cada elemento y creando una nueva colección
+con los resultados de estas transformaciones. Es útil cuando deseas modificar
+los datos de una colección sin cambiar la colección original. La función
+proporcionada toma cada elemento de la colección como entrada y devuelve el
+elemento transformado.
+
+Ejemplo Práctico:
+
+Supongamos que tienes una colección de objetos Product y deseas crear una nueva
+colección que contenga los nombres de los productos en mayúsculas. Puedes
+utilizar el método map() para lograr esto.
+
+use Illuminate\Support\Collection;
+
+// Crear una colección de objetos Product
+$products = new Collection([
+    ['name' => 'Producto 1', 'price' => 10],
+    ['name' => 'Producto 2', 'price' => 20],
+    ['name' => 'Producto 3', 'price' => 30],
+]);
+
+// Utilizar el método map() para transformar la colección
+$upperCaseNames = $products->map(function ($product) {
+    $product['name'] = strtoupper($product['name']);
+    return $product;
+});
+
+// Imprimir la colección resultante
+$upperCaseNames->each(function ($product) {
+    echo "Nombre: " . $product['name'] . ", Precio: " . $product['price'] . "\n";
+});
+
+En este ejemplo, creamos una colección de objetos Product. Luego, utilizamos el
+método map() para transformar cada elemento de la colección. La función de
+callback toma cada producto, convierte el nombre a mayúsculas y devuelve el
+producto modificado. La colección resultante $upperCaseNames contiene los
+nombres de los productos en mayúsculas. Luego, imprimimos los nombres y precios
+de los productos en mayúsculas utilizando el método each().
+
+El resultado será:
+
+Nombre: PRODUCTO 1, Precio: 10
+Nombre: PRODUCTO 2, Precio: 20
+Nombre: PRODUCTO 3, Precio: 30
+
+Como puedes ver, el método map() se utiliza para transformar los elementos de la
+colección sin modificar la colección original y crear una nueva colección con
+los resultados transformados.
+
+Fuente
+======
+
+ChatGPT
