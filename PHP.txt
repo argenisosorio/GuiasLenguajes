@@ -2794,8 +2794,46 @@ la letra "L", en la posición 1 se encuentra la letra "a", en la posición 2 se
 encuentra un espacio en blanco y en la posición 3 se encuentra la letra "c" de
 la palabra "casa".
 
-======
 Fuente
 ======
 
 LuzIA
+
+==================
+Método array_map()
+==================
+
+Se utiliza para aplicar una función a cada elemento de una matriz (array) y
+crear una nueva matriz con los resultados transformados.
+
+Aquí tienes un ejemplo sencillo de cómo puedes usar array_map() en PHP:
+
+$numbers = [1, 2, 3, 4, 5];
+
+// Utiliza array_map() para elevar al cuadrado cada número en la matriz.
+$squaredNumbers = array_map(function($number) {
+    return $number * $number;
+}, $numbers);
+
+print_r($squaredNumbers);
+
+En este ejemplo, la función array_map() se utiliza para elevar al cuadrado cada
+número en el arreglo $numbers, y el resultado se almacena en la variable
+$squaredNumbers. Luego, se muestra el contenido de $squaredNumbers, que será
+[1, 4, 9, 16, 25], ya que cada número se ha elevado al cuadrado.
+
+<?php
+$numbers = [1, 2, 3, 4, 5];
+
+// Utiliza array_map() para elevar al cuadrado cada número en la matriz.
+$squaredNumbers = array_map(function($number) {
+  return $number * $number;
+}, $numbers);
+
+print_r($squaredNumbers);
+?>
+
+Fuente
+======
+
+ChatGPT
