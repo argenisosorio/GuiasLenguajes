@@ -80,6 +80,68 @@ Reinicia o inicia el servicio de OpenLDAP
 
 $ sudo systemctl restart slapd
 
+¿Como podría verse un archivo que contenga usuarios y contraseñas?
+==================================================================
+
+En un archivo LDIF (LDAP Data Interchange Format), que es comúnmente utilizado
+para importar y exportar datos en LDAP, podrías representar usuarios y
+contraseñas de la siguiente manera. Ten en cuenta que este es un ejemplo básico
+y que la estructura real dependerá de tu configuración LDAP específica:
+
+Supongamos que estamos trabajando con una estructura LDAP con el dominio
+dc=example,dc=com. Aquí hay un ejemplo de cómo podría verse un archivo LDIF con
+usuarios y contraseñas:
+
+ldif
+Copy code
+# Definición del dominio
+dn: dc=example,dc=com
+objectClass: top
+objectClass: domain
+dc: example
+
+# Entradas para usuarios
+dn: uid=john,ou=people,dc=example,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: john
+cn: John Doe
+sn: Doe
+givenName: John
+userPassword: {SHA}nU4r9FvJ7PKoB4Dx7LfbJ0cBeA0=  # Contraseña en formato SHA-1
+
+dn: uid=alice,ou=people,dc=example,dc=com
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: inetOrgPerson
+uid: alice
+cn: Alice Johnson
+sn: Johnson
+givenName: Alice
+userPassword: {SHA}W6ph5Mm5Pz8GgiULbPgzG37mj9g=  # Otra contraseña en formato SHA-1
+En este ejemplo:
+
+Estamos definiendo el dominio dc=example,dc=com.
+
+Luego, creamos entradas para dos usuarios, "john" y "alice", bajo la unidad
+organizativa (organizational unit) "people".
+
+Cada entrada de usuario tiene atributos como objectClass, uid
+(nombre de usuario), cn (nombre completo), sn (apellido), givenName (nombre), y
+userPassword (contraseña).
+
+Ten en cuenta que la contraseña está representada en un formato hash (SHA-1 en
+este caso) en lugar de almacenarse directamente en texto claro. Esto es una
+práctica común en LDAP para mejorar la seguridad.
+
+Este es solo un ejemplo básico. En un entorno de producción, podrías tener más
+atributos según tus necesidades y esquema LDAP específico. Además, podrías
+utilizar métodos de encriptación más seguros para almacenar contraseñas, como
+SHA-256 o SHA-512.
+
 Fuentes
 =======
 
