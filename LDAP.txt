@@ -64,6 +64,22 @@ Instalando...
 Ahora se te pedirá que configures la contraseña del usuario administrador de
 OpenLDAP.
 
+Luego de este proceso ya estará instalado.
+
+Configuración de OpenLDAP
+=========================
+
+OpenLDAP utiliza un archivo llamado slapd.conf para su configuración. Puedes
+encontrar este archivo en la ruta /etc/ldap/slapd.conf.
+
+Configura este archivo según tus necesidades, especificando la base DN
+(Distinguished Name) y otros parámetros importantes.
+
+Reinicia o inicia el servicio de OpenLDAP
+=========================================
+
+$ sudo systemctl restart slapd
+
 Fuentes
 =======
 
