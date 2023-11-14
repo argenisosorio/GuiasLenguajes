@@ -32,13 +32,37 @@ Instalación en GNU/Linux Debian 11:
 
 $ sudo apt install flatpak
 
+$ sudo apt install gnome-software-plugin-flatpak
+
+Agregar el repo de Flathub para buscar aplicaciones
+
+# flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+
+Reiniciar la máquina para que se hagan efectivos los cambios
+
 Una vez hecho eso puedes instalar cualquiera de las apps disponibles actualmente
 para Flatpak, como LibreOffice, Telegram, Skype, Spotify, etc. la lista no es
 muy larga de momento, pero más vienen en camino, como el paquete Flatpak de
 GIMP. En distros como Fedora 25, OpenSUSE Tumbleweed, Debian Testing y Arch
 Cauldron, puedes hacer click para instalar directamente desde la web de Flatpak.
 
-Fuente
-======
+Lista de aplicaciones que se pueden instalar: https://flathub.org/
+
+Instalación:
+
+Por ejemplo instalemos Wine
+
+$ flatpak install flathub org.winehq.Wine
+
+Ejecutarlo:
+
+$ flatpak run org.winehq.Wine
+
+Fuentes
+=======
 
 https://www.genbeta.com/linux/flatpack-quiere-revolucionar-la-instalacion-de-apps-en-linux-con-paquetes-universales-que-funcionan-en-cualquier-distro
+
+https://flathub.org/setup/Debian
+
+https://www.reddit.com/r/flatpak/comments/yki2rl/i_cant_install_spotify_from_flathub_unable_to/?rdt=42632
