@@ -1,0 +1,72 @@
+==================
+Guía de LDAP by dM
+==================
+
+¿Qué es LDAP?
+=============
+
+LDAP significa "Protocolo Ligero de Acceso a Directorios" en inglés, que se
+traduce a "Lightweight Directory Access Protocol". Es un protocolo estándar de
+la industria que se utiliza para acceder y mantener información de un servicio
+de directorio. Un servicio de directorio es una base de datos especializada que
+almacena información acerca de usuarios y recursos en una red.
+
+LDAP se utiliza comúnmente para centralizar y organizar información, como datos
+de usuarios, contraseñas, información de red, y otros atributos. Es
+especialmente valioso en entornos empresariales grandes donde hay una necesidad
+de gestionar eficientemente grandes cantidades de información de directorio.
+
+Características
+===============
+
+-Jerarquía de datos: LDAP organiza la información de manera jerárquica en una
+estructura de árbol. Los datos se organizan en unidades llamadas "entradas" que
+pueden contener atributos.
+
+-Protocolo cliente-servidor: LDAP sigue un modelo cliente-servidor, donde los
+clientes realizan solicitudes de búsqueda o actualización al servidor LDAP.
+
+-Eficiencia y ligereza: Como su nombre indica, LDAP es "ligero" en comparación
+con otros protocolos de acceso a directorios. Esto significa que es eficiente en
+términos de recursos y ancho de banda.
+
+-Seguridad: LDAP puede implementarse con medidas de seguridad, como encriptación
+de la conexión mediante SSL/TLS y autenticación mediante nombre de usuario y
+contraseña.
+
+LDAP se utiliza comúnmente para autenticación y autorización en sistemas
+informáticos, como en entornos empresariales donde se gestionan grandes
+cantidades de cuentas de usuario y otros datos de directorio.
+
+Instalación
+===========
+
+Instalaremos OpenLDAP en Debian 11, OpenLDAP es una implementación de LDAP
+(Protocolo Ligero de Acceso a Directorios) de software libre y de código
+abierto. Es un protocolo independiente de la plataforma que puede utilizarse
+para la autenticación centralizada y los servicios de acceso al directorio, 
+omo el correo electrónico y otras aplicaciones.
+
+OpenLDAP es un demonio LDAP independiente que proporciona sus bibliotecas y
+utilidades. Además, ofrece soporte para la autenticación de certificados TLS y
+la autenticación SASL.
+
+$ sudo apt update
+
+Ahora instala los paquetes de OpenLDAP ‘slapd‘ y‘ldap-utils‘. El paquete ‘slapd‘
+es el paquete principal de OpenLDAP, y el ‘ldap-utils‘ proporciona utilidades de
+línea de comandos para gestionar el servidor OpenLDAP.
+
+$ sudo apt install slapd ldap-utils
+
+Instalando...
+
+Ahora se te pedirá que configures la contraseña del usuario administrador de
+OpenLDAP.
+
+Fuentes
+=======
+
+ChatGPT
+
+https://howtoforge.es/como-instalar-openldap-en-debian-11/
