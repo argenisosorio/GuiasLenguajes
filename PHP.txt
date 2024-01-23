@@ -2837,3 +2837,29 @@ Fuente
 ======
 
 ChatGPT
+
+================================================================
+Leer la informacion de un certificado digital con extensión .p12
+================================================================
+
+Se usa la función openssl_pkcs12_read() de PHP.
+
+<?php
+if (!$almacén_cert = file_get_contents("pedrito.p12")) {
+    echo "Error: No se puede leer el fichero del certificado\n";
+    exit;
+}
+
+if (openssl_pkcs12_read($almacén_cert, $info_cert, "123456")) {
+    echo "Información del certificado\n";
+    print_r($info_cert);
+} else {
+    echo "Error: No se puede leer el almacén de certificados.\n";
+    exit;
+}
+?>
+
+Fuente
+======
+
+https://www.php.net/manual/es/function.openssl-pkcs12-read.php

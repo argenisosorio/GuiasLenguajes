@@ -7688,6 +7688,21 @@ $ java -jar ruta-ejecutable -n -t ruta-documento-firmar -o ruta-almacenar-docume
 
 $ java -jar PortableSigner.jar -n -t descarga.pdf -o descargar-sign.pdf -s miarchivo.p12 -p "micontraseñ@"
 
+Ejemplo de la salida del comando:
+
+$ java -jar PortableSigner.jar
+Gtk-Message: 16:18:21.542: Failed to load module "canberra-gtk-module"
+Position V:0.0 L:0.0 R:0.0
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by com.itextpdf.text.pdf.MappedRandomAccess
+File$1 (file:/home/user/PortableSigner/lib/itextpdf-5.1.3.jar) to method
+java.nio.DirectByteBuffer.cleaner()
+WARNING: Please consider reporting this to the maintainers of com.itextpdf.text
+.pdf.MappedRandomAccessFile$1
+WARNING: Use --illegal-access=warn to enable warnings of further illegal
+reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+
 ======
 pdfsig
 ======
@@ -7709,7 +7724,23 @@ $ sudo apt install poppler-utils
 
 Para verificar la firma de un archivo se ejecuta el siguiente comando:
 
-$ pdfsig mi-archivo-firmado.pdf
+$ pdfsig mi-archivo-firmado-sign.pdf
+
+Ejemplo de la salida del comando:
+
+$ pdfsig doc-sign.pdf
+Digital Signature Info of: mi-archivo-firmado-sign.pdf
+Signature #1:
+  - Signer Certificate Common Name: CARLOS PEREZ
+  - Signer full Distinguished Name: E=cperez@mail.com,CN=CARLOS PEREZ,
+  OU=SEGURIDAD,O=CENDITEL,L=Caracas,ST=Caracas,C=VE
+  - Signing Time: Jan 23 2024 16:20:21
+  - Signing Hash Algorithm: SHA1
+  - Signature Type: adbe.pkcs7.sha1
+  - Signed Ranges: [0 - 223305], [225887 - 231064]
+  - Total document signed
+  - Signature Validation: Signature is Valid.
+  - Certificate Validation: Certificate issuer isn't Trusted.
 
 ======================================================================
 Pŕactica del Curso en línea del uso de Murachí para firmar y verificar

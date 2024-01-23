@@ -3293,3 +3293,70 @@ Fuente
 ======
 
 ChatGPT
+
+======================================================
+Diferencias entre "método" y "función" en programación
+======================================================
+
+En programación de software, los términos "método" y "función" se utilizan a
+menudo de manera intercambiable, pero en muchos contextos tienen significados
+específicos:
+
+Función:
+
+-En términos generales, una función es un bloque de código que realiza una tarea
+específica y puede recibir parámetros (entrada), realizar operaciones y devolver
+un resultado (salida).
+
+-En programación estructurada, las funciones suelen ser bloques de código
+independientes y modulares.
+
+-En programación orientada a objetos, una función dentro de una clase se llama
+"método".
+
+Método:
+
+-En el contexto de la programación orientada a objetos, un método es una función
+que está asociada a un objeto o clase específica.
+
+-Los métodos se definen dentro de una clase y operan en instancias de esa clase.
+
+-Un método puede acceder a los datos internos de la instancia y modificar su
+estado.
+
+En resumen, la principal diferencia entre un método y una función es el contexto
+en el que se utilizan:
+
+Función: Término general que se utiliza para describir un bloque de código
+independiente que realiza una tarea específica.
+
+Método: Una función específica que está asociada a una clase o instancia en
+programación orientada a objetos.
+
+Ejemplo en Python (orientado a objetos):
+
+python
+Copy code
+# Función
+def suma(a, b):
+    return a + b
+
+# Clase con método
+class Calculadora:
+    def suma(self, a, b):
+        return a + b
+
+# Uso de la función
+resultado_funcion = suma(3, 5)
+
+# Uso del método
+calculadora = Calculadora()
+resultado_metodo = calculadora.suma(3, 5)
+
+Ambos producen resultados similares, pero la función es independiente, mientras
+que el método está asociado a la instancia de la clase Calculadora.
+
+Fuente
+======
+
+ChatGPT
