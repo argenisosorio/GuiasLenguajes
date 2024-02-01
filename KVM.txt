@@ -1,0 +1,92 @@
+=================
+Guía de KVM by dM
+=================
+
+KVM es una solución de virtualización completa para Linux en hardware x86
+(incluyendo hardware de 64-bits) que contienen las extensiones de virtualización
+Intel VT o AMD-V. Se compone de un módulo del kernel que puede ser cargado,
+kvm.ko, que provee la infraestructura de virtualización base, y un módulo
+específico para el tipo de procesador, kvm-intel.ko o kvm-amd.ko.
+
+En Debian, Xen es la alternativa a KVM. (VirtualBox no está en Debian main
+(Buster) y tampoco en Buster-Backports).
+
+-----
+
+Usaremos $ para describir los comandos que se usaran con usuario regular.
+
+Usaremos # para describir los comandos que se usaran con superusuario. 
+
+Instale KVM/QEMU en Debian 12|11|10
+===================================
+
+Siga los pasos a continuación para instalar la virtualización KVM en el sistema
+Debian Linux. Todos los paquetes KVM para Debian están disponibles en
+repositorios ascendentes. El administrador de paquetes apt se utiliza para la
+instalación de todos los paquetes.
+
+1- Instalamos los paquetes necesarios:
+
+$ sudo apt update
+
+$ sudo apt -y install qemu-kvm libvirt-daemon  bridge-utils virtinst libvirt-daemon-system
+
+2- Instalemos también herramientas útiles de administración de máquinas virtuales:
+
+$ sudo apt -y install vim libguestfs-tools libosinfo-bin  qemu-system virt-manager
+
+3- Cargue y habilite el módulo vhost_net:
+
+$ sudo modprobe vhost_net 
+
+$ lsmod | grep vhost
+vhost_net              24576  0
+tun                    49152  1 vhost_net
+vhost                  49152  1 vhost_net
+tap                    28672  1 vhost_net
+
+$ echo vhost_net | sudo tee -a /etc/modules 
+vhost_net
+
+4- Verificamos el estado de KVM:
+
+# systemctl status libvirtd
+
+5- Reiniciamos el servicio de KVM:
+
+# systemctl restart libvirtd
+
+6- Abrimos la interfaz de KVM es decir el manager de las VM:
+
+# virt-manager
+
+7- Creamos una nueva máquina virtual dándo click en la opción resaltada de
+"Crear una nueva máquina virtual"
+
+8- Seleccionamos "Medio de instalación local (Imagen ISO o CDROM)"
+
+9- Seleccionamos la arquitectura x86_64 y damos al botón "Adelante"
+
+10- Buscamos la ISO con el botón "Explorar > Explorar localmente"
+
+11- Desactivamos la detección automática desde el medio de instalación y en el
+campo de búsqueda escribimos Debian testing y luego damos click en el botón
+"Adelante".
+
+12- Asignamos la memoría ram que tendrá la máquina virtual y también la cantidad
+de CPU que tendrá disponible para usar, se recomienda usar 1 CPU, luego pulsamos
+el botón "Adelante"
+
+13- Ahora asignamos el tamaño del disco virtual que tendrá la máquina virtual
+y pulsamos el botón "Adelante"
+
+14- Ya estando en la etapa 5 le ponemos nombre a la VM, se nos muestra un
+resumen de la VM que vamos a crear y ahora damos click en el botón "Finalizar"
+esto creara la VM de manera automática e inmediatamane nos saldrá la pantalla
+para instalar el SO que hayamos seleccionado en el paso de la ISO.
+
+Fuentes
+=======
+
+https://wiki.debian.org/es/KVM
+https://es.linux-console.net/?p=21505
