@@ -275,3 +275,125 @@ Aquí es donde entra en juego PurgeCSS. PurgeCSS analiza su contenido y sus
 archivos CSS. Luego, hace coincidir los selectores utilizados en sus archivos
 con el de sus archivos de contenido. Elimina los selectores no utilizados de su
 CSS, lo que resulta en archivos CSS más pequeños.
+
+Container como Bootstrap
+========================
+
+<div class="container mx-auto px-4 mt-4">
+    <p class="mb-4">
+        Acercarse al megalitismo más impactante de la Península Ibérica en el
+        Alentejo.
+    </p>
+</div>
+
+Explicación de las clases utilizadas:
+
+container: Esta clase establece un ancho máximo para el contenedor y centraliza
+su contenido. Es similar al contenedor de Bootstrap.
+
+mx-auto: Esta clase establece los márgenes horizontales a "auto", lo que ayuda a
+centrar el contenedor en el viewport.
+
+px-4: Estas clases establecen un relleno horizontal de tamaño 4 en la escala de
+espaciado de Tailwind. Puedes ajustar el valor según tus necesidades.
+
+mt-4: Establece un margen superior de 4 píxeles en la escala de espaciado de
+Tailwind. Puedes ajustar este valor según tus necesidades.
+
+Componente parecido a una card
+==============================
+
+<div class="rounded-2xl bg-white shadow-lg ring-1 ring-gray-900/5 sm:col-span-2 xl:col-start-2 xl:row-end-1">
+    <div class="container mx-auto px-4 mt-4">
+        <p>“Learn from yesterday , live for taday , hop for tomorrow. The important thing is not to stop questioning. ”</p>
+    </div>
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-4 border-t border-gray-900/10 px-6 py-4 sm:flex-nowrap">
+        <img class="h-10 w-10 flex-none rounded-full bg-gray-50" src="https://insidetheperimeter.ca/wp-content/uploads/2015/11/Albert_einstein_by_zuzahin-d5pcbug-WikiCommons.jpg" alt="">
+        <div class="flex-auto">
+            <div class="font-semibold">Albert Einstein</div>
+        </div>
+    </div>
+</div>
+
+Template por secciones, sencillo como base de una landing page
+==============================================================
+
+<!-- Navbar -->
+<nav class="bg-blue-500 text-white p-4">
+    <div class="container mx-auto">
+    <ul class="flex justify-center">
+        <li class="mr-6"><a href="#" class="hover:text-gray-300">Enlace 1</a></li>
+        <li class="mr-6"><a href="#" class="hover:text-gray-300">Enlace 2</a></li>
+        <li><a href="#" class="hover:text-gray-300">Enlace 3</a></li>
+    </ul>
+    </div>
+</nav>
+
+<!-- Sección 1 (Fondo blanco) -->
+<section class="bg-white py-16">
+    <div class="container mx-auto">
+    <!-- Contenido de la sección 1 -->
+    <h1 class="text-4xl font-bold mb-4">Welcome</h1>
+    <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+</section>
+
+<!-- Sección 2 (Fondo gris) -->
+<section class="bg-gray-200 py-16">
+    <div class="container mx-auto">
+    <!-- Contenido de la sección 2 -->
+    <h2 class="text-3xl font-bold mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+    <p class="text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+</section>
+
+<!-- Sección 3 (Fondo blanco) -->
+<section class="bg-white py-16">
+    <div class="container mx-auto">
+    <!-- Contenido de la sección 3 -->
+    <h2 class="text-3xl font-bold mb-4">Contact</h2>
+    <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white py-8">
+    <div class="container mx-auto text-center">
+    <!-- Contenido del footer -->
+    <p>&copy; 2024 Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+</footer>
+
+Fuente
+======
+
+ChatGPT
+
+===========================================
+Hello World con inertiajs y tailwind y vue3
+===========================================
+
+<script setup>
+import { Head, Link } from '@inertiajs/vue3';
+
+// Define la variable message y asigna el valor "Hello World"
+const message = "Hello World";
+</script>
+
+<template>
+    <Head title="Welcome" />
+
+    <!-- Sección 1 (Fondo blanco) -->
+    <section class="bg-white py-16">
+        <div class="container mx-auto">
+            <!-- Contenido de la sección 1 -->
+            <h1 class="text-4xl font-bold mb-4">Welcome {{ message }}</h1>
+            <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+    </section>
+</template>
+
+Fuente
+======
+
+ChatGPT
