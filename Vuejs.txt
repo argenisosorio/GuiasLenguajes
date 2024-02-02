@@ -4481,6 +4481,52 @@ Ejemplo completo Laravel+Vue
 
 https://github.com/argenisosorio/laravel-8-vue-crud/tree/loading-overlay-example
 
+Ejemplo de uso en Laravel + vue3
+================================
+
+1- Instalar el paquete, está probado con la versión 6 del paquete:
+
+$ npm install vue-loading-overlay
+
+Luego:
+
+<script setup>
+import NavBar from '@/Layouts/NavBar.vue';
+import { Head, Link } from '@inertiajs/vue3';
+import { onMounted, onBeforeMount, ref } from 'vue';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/css/index.css';
+
+const isLoading = ref(false);
+const fullPage = ref(true);
+const imagePath = '/images/1.jpg';
+const LogoQuimiecologi01 = '/images/Logo-Quimiecologi-01.png';
+
+onBeforeMount(async () => {
+    // Iniciar spinner de carga.
+    isLoading.value = true;
+});
+
+onMounted(async () => {
+    // Finalizar spinner de carga.
+    isLoading.value = false;
+});
+</script>
+
+<template>
+    <Head title="Inicio" />
+
+    <loading
+        :active="isLoading"
+        :is-full-page="fullPage"
+    ></loading>
+</template>
+
+Fuente
+======
+
+https://www.npmjs.com/package/vue3-loading-overlay
+
 ===============================================
 Establecer una variable global con archivo .env
 ===============================================
