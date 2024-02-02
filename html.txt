@@ -4452,21 +4452,19 @@ Fuente
 Spinner carga en HTML+CSS
 =========================
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Spinner</title>
-    <meta charset="UTF-8">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <title>Spinner</title>
   <style>
-    /* Creamos el diseño del spinner y lo centramos en la página*/
+    /* Creamos el diseño del spinner y lo centramos en la página */
     .spinner {
       border: 5px solid rgba(0, 0, 0, 0.3);
       width: 36px;
       height: 36px;
       border-radius: 50%;
       border-left-color: #7d47ff;
-      margin-top: 20px;
       animation: spin 1s ease infinite;
       margin: auto;
       top: 0;
@@ -4485,9 +4483,137 @@ Spinner carga en HTML+CSS
       }
     }
   </style>
-  <body>
+</head>
+<body>
+  <div class="spinner"></div>
+</body>
+</html>
+
+Otro ejemplo, esta vez el spinner se oculta cuando se termina la carga de la
+página:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spinner</title>
+  <style>
+    /* Creamos el diseño del spinner y lo centramos en la página*/
+    .spinner {
+      border: 5px solid rgba(0, 0, 0, 0.3);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border-left-color: #7d47ff;
+      animation: spin 1s ease infinite;
+      margin: auto;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      position: absolute;
+    }
+    /* Pasos de la animación con keyframes */
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="spinner" id="spinner"></div>
+
+  <!-- Contenido de la página -->
+  <h1>Contenido de la página</h1>
+  <p>Este es un ejemplo de página con un spinner.</p>
+
+  <script>
+    // Función para ocultar el spinner cuando la página ha cargado completamente
+    window.addEventListener('load', function() {
+      console.log("Cargando...");
+
+      var spinner = document.getElementById('spinner');
+
+      // Ocultar el spinner de carga.
+      // spinner.style.display = 'none';
+
+      // Retraso de 5 segundos (5000 milisegundos)
+      setTimeout(function() {
+        spinner.style.display = 'none';
+        console.log("Cargo la página!");
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
+
+Ahora otro ejemplo donde el spinner oculta el contenido de la página:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spinner</title>
+  <style>
+    /* Creamos el diseño del spinner y lo centramos en la página */
+    .spinner-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: gray; /* Fondo gris oscuro con opacidad */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999; /* Asegura que el spinner esté en la parte superior */
+    }
+
+    .spinner {
+      border: 5px solid rgba(255, 255, 255, 0.7); /* Bordes blancos translúcidos */
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border-left-color: #7d47ff;
+      animation: spin 1s ease infinite;
+    }
+
+    /* Pasos de la animación con keyframes */
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="spinner-container" id="spinnerContainer">
     <div class="spinner"></div>
-  </body>
+  </div>
+
+  <!-- Contenido de la página -->
+  <h1>Contenido de la página</h1>
+  <p>Este es un ejemplo de página con un spinner.</p>
+
+  <script>
+    // Función para ocultar el spinner después de 5 segundos
+    window.addEventListener('load', function() {
+      var spinnerContainer = document.getElementById('spinnerContainer');
+
+      // Retraso de 5 segundos (5000 milisegundos)
+      setTimeout(function() {
+        spinnerContainer.style.display = 'none';
+      }, 5000);
+    });
+  </script>
+</body>
 </html>
 
 Fuentes
