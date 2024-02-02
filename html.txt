@@ -4452,8 +4452,6 @@ Fuente
 Spinner carga en HTML+CSS
 =========================
 
-https://cybmeta.com/diferencia-async-y-defer
-
 <!doctype html>
 <html lang="en">
   <head>
@@ -4461,22 +4459,21 @@ https://cybmeta.com/diferencia-async-y-defer
     <meta charset="UTF-8">
   </head>
   <style>
-    p {
-      text-align: center;
-      font-weight: bold;
-      font-family: 'Lato', 'Lucida Grande', 'Lucida Sans Unicode', Tahoma, Sans-Serif;
-      margin-top: 50px;
-    }
-    /* Creamos el diseño del spinner */
+    /* Creamos el diseño del spinner y lo centramos en la página*/
     .spinner {
       border: 5px solid rgba(0, 0, 0, 0.3);
       width: 36px;
       height: 36px;
       border-radius: 50%;
       border-left-color: #7d47ff;
-      margin: 0 auto;
       margin-top: 20px;
       animation: spin 1s ease infinite;
+      margin: auto;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      position: absolute;
     }
     /* Pasos de la animación con keyframes */
     @keyframes spin {
@@ -4489,15 +4486,15 @@ https://cybmeta.com/diferencia-async-y-defer
     }
   </style>
   <body>
-    <p>Spinner Preview</p>
     <div class="spinner"></div>
   </body>
 </html>
 
-Fuente
-======
+Fuentes
+=======
 
 https://dev.to/dmx/spinner-facil-y-rapido-5bei
+https://cybmeta.com/diferencia-async-y-defer
 
 ========================
 Insertar videos en html5
