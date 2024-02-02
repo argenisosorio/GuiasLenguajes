@@ -37,7 +37,7 @@ $ sudo apt -y install vim libguestfs-tools libosinfo-bin  qemu-system virt-manag
 
 3- Cargue y habilite el módulo vhost_net:
 
-$ sudo modprobe vhost_net 
+$ sudo modprobe vhost_net
 
 $ lsmod | grep vhost
 vhost_net              24576  0
@@ -45,7 +45,7 @@ tun                    49152  1 vhost_net
 vhost                  49152  1 vhost_net
 tap                    28672  1 vhost_net
 
-$ echo vhost_net | sudo tee -a /etc/modules 
+$ echo vhost_net | sudo tee -a /etc/modules
 vhost_net
 
 4- Verificamos el estado de KVM:
