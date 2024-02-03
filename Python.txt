@@ -2033,6 +2033,86 @@ Fuente
 
 https://linuxize.com/post/how-to-install-python-3-8-on-debian-10/
 
+================================
+Instalar Python 2.7 en Debian 12
+================================
+
+1. Comience instalando los paquetes necesarios para compilar el código fuente de
+Python:
+
+$ sudo apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev curl libbz2-dev
+
+2- Descargue el código fuente de la última versión desde la página de descarga
+de Python con wget o curl. Al momento de escribir este artículo, la última
+versión es 3.8.2:
+
+$ curl -O https://www.python.org/ftp/python/2.7.9/Python-2.7.9.tar.xz
+
+3- Cuando se complete la descarga, extraiga el tarball:
+
+$ tar -xf Python-2.7.9.tar.xz
+
+4- Navegue al directorio fuente de Python y ejecute el script de configuración:
+
+$ cd Python-2.7.9
+
+$ ./configure --enable-optimizations
+
+El script realiza una serie de comprobaciones para asegurarse de que todas las
+dependencias de su sistema estén presentes. La opción --enable-optimizations
+optimizará el binario de Python mediante la ejecución de varias pruebas, lo que
+hará que el proceso de compilación sea más lento.
+
+5- Ejecute make para iniciar el proceso de compilación:
+
+$ make -j 4
+
+Modifique -j para que se corresponda con la cantidad de núcleos en su
+procesador. Puede encontrar el número escribiendo nproc en la consola.
+
+6- Una vez finalizada la compilación, instale los binarios de Python ejecutando
+el siguiente comando como usuario con acceso sudo:
+
+$ sudo make altinstall
+
+No utilice la instalación make estándar, ya que sobrescribirá el sistema
+binario python3 predeterminado.
+
+7- En este punto, Python 2.7 está instalado en su sistema Debian y listo para
+usarse. Puedes verificarlo escribiendo:
+
+$ python2.7 --version
+
+Esta opción no hace que python 2.7 sea la versión por defecto de python
+
+Otra forma de instalar python2.7
+================================
+
+1- Configurar este repo de Debian 10
+
+deb http://deb.debian.org/debian buster main contrib non-free
+
+2- Actualizar el repo
+
+$ sudo apt update
+
+3- Instalar el siguientes paquete:
+
+$ sudo apt install python-setuptools
+
+Esto hará que quede instalado Python 2.7 por defecto, al ejecutar:
+
+$ python --version
+Python 2.7.16
+
+Para usar pip, lo instalamos:
+
+$ sudo apt install python-pip
+
+$ sudo python -m pip install --upgrade pip
+
+$ sudo python -m pip install --upgrade setuptools
+
 ==============
 Python 3.8-PIP
 ==============
