@@ -2113,6 +2113,50 @@ $ sudo python -m pip install --upgrade pip
 
 $ sudo python -m pip install --upgrade setuptools
 
+=============================================================================
+Establecer una versión de Python por defecto o cambiar la versión por defecto
+=============================================================================
+
+En este ejemplo tengo instalado tanto python 2.7.16 como python 3.11.2
+
+Vamos a usar la herramienta de línea de comandos ‘Update-Alternatives‘ para
+crear y mantener los enlaces simbólicos de comandos predeterminados. Es decir,
+cambiar fácilmente los comandos a diferentes versiones.
+
+1- Creamos un enlace simbólico de /usr/bin/python2.7 a /usr/bin/python y
+establecemos el nombre del grupo como «python«. Más tarde, el nombre del grupo
+se utilizará para cambiar los enlaces.
+
+$ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2.7 1
+
+2- Cambiamos el enlace Symlink a /usr/bin/python3.8 para /usr/bin/python y
+establezca el nombre del grupo en «Python«. El nombre del grupo debe ser el
+mismo para todas las versiones de Python.
+
+$ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.11 2
+
+En este punto ya hemos adicionado dos versiones de Python al grupo «Python«. Ya
+con estos podemos cambiar fácilmente a cualquier versión con los siguientes
+comandos:
+
+$ sudo update-alternatives --config python
+
+Existen 2 opciones para la alternativa python (que provee /usr/bin/python).
+
+  Selección   Ruta                 Prioridad  Estado
+------------------------------------------------------------
+  0            /usr/bin/python3.11   2         modo automático
+  1            /usr/bin/python2.7    1         modo manual
+* 2            /usr/bin/python3.11   2         modo manual
+
+Pulse <Intro> para mantener el valor por omisión [*] o pulse un número de
+selección:
+
+Fuente
+======
+
+https://espaciotecnologico.co/cambiar-la-version-predeterminada-de-python-en-ubuntu/
+
 ==============
 Python 3.8-PIP
 ==============
