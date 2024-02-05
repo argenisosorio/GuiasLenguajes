@@ -3542,3 +3542,35 @@ Traceback (most recent call last):
 ModuleNotFoundError: No module named 'django'
 
 Como vemos no lo puede importar porque no está instalado.
+
+====================================================================
+Creando un entorno virtual de python 2.7 con virtualenv en Debian 12
+====================================================================
+
+1- Instalar Python 2.7 con los pasos sugeridos arriba.
+
+2- Crear el entorno virtual
+
+$ virtualenv -p python2.7 my_env27
+
+3- Activar el virtualenv:
+
+$ source my_env27/bin/activate
+
+4- Al usar Python 2.7 en el entorno virtual ya podemos hacer uso de pip con
+normalidad e instalar cosas con pip de python 2.7, ejemplo:
+
+user@debian:~$ source my_env27/bin/activate
+
+(my_env27) user@debian:~$ pip install django
+DEPRECATION: Python 2.7 reached the end of its life on January 1st, 2020. Please upgrade your Python as Python 2.7 is no longer maintained. pip 21.0 will drop support for Python 2.7 in January 2021. More details about Python 2 support in pip can be found at https://pip.pypa.io/en/latest/development/release-process/#python-2-support pip 21.0 will remove support for this functionality.
+Collecting django
+Successfully installed django-1.11.29 pytz-2024.1
+
+(my_env27) usuario@debian:~$ python
+Python 2.7.16 (default, Oct 10 2019, 22:02:15)
+[GCC 8.3.0] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import django
+>>> django.VERSION
+(1, 11, 29, u'final', 0)
