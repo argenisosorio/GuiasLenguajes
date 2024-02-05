@@ -3484,3 +3484,61 @@ Fuente
 ======
 
 ChatGPT
+
+======================================================
+Crear entorno virtual de python 3 de base en Debian 12
+======================================================
+
+$ sudo apt install python3-virtualenv virtualenv python3-pip-whl
+
+-----
+
+Crear un virtualenv:
+
+$ virtualenv mi_env
+
+-----
+
+Activar el virtualenv:
+
+$ source mi_env/bin/activate
+
+Probarlo
+========
+
+1- Accedemos al entorno virtual mi_env:
+
+usuario@debian:~$ source mi_env/bin/activate
+
+2- Instalamos Django dentro del entorno virtual:
+
+(mi_env) usuario@debian:~$ pip install django
+
+Installing collected packages: sqlparse, asgiref, django
+Successfully installed asgiref-3.7.2 django-5.0.1 sqlparse-0.4.4
+
+3- Entramos en la consola de python, importamos Django y comprobamos su versión:
+
+(mi_env) usuario@debian:~$ python
+Python 3.11.2 (main, Mar 13 2023, 12:18:29) [GCC 12.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import django
+>>> django.VERSION
+(5, 0, 1, 'final', 0)
+
+4- Salimos del entorno virtual:
+
+(mi_env) usuario@debian:~$ deactivate
+
+5- Entramos en la consola de python fuera del entorno virtual e intentamos
+importar Django:
+
+usuario@debian:~$ python
+Python 3.11.2 (main, Mar 13 2023, 12:18:29) [GCC 12.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import django
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+ModuleNotFoundError: No module named 'django'
+
+Como vemos no lo puede importar porque no está instalado.
