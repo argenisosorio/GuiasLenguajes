@@ -8924,3 +8924,81 @@ Fuente
 ======
 
 ChatGPT
+
+================================================================
+Crear un Punto de Restauración en GNU/Linux - Backup del sistema
+================================================================
+
+Los que vienen desde Microsoft Windows saben que una forma de recuperar el buen
+funcionamiento del sistema, es aplicando un punto de restauración. Un punto de
+restauración devuelve nuestro sistema a un estado anterior en el que funcionaba
+bien, algo así como devolverlo en el tiempo (un backup). En Linux también
+disponemos una solución similar, pero no viene de forma predeterminada, nos toca
+instalarla. Entonces veamos como crear un punto de restauración en Linux, o
+backup en Ubuntu.
+
+Aunque en Linux no es preciso hablar de «punto de restauración», sino de
+«instantánea» o «snapshot». Entonces, para realizar un snapshot de nuestro
+sistema, instalamos un paquete de software llamado TimeShift.
+
+1- Instalarlo:
+
+$ sudo apt install timeshift
+
+2- Navgar hasta Apliaciones > Herramientas del sistema > Timeshift
+
+3- En la primera pantalla seleccionamos el método con le vamos a realizar la
+instantánea, RSYNC es la opción por defecto y recomendada, dejamos esa
+eleccionada > Siguiente.
+
+4- Seleccionamos la ubicación donde el software guardará las instantáneas >
+Siguiente.
+
+5- Definimos la periodicidad de las instantáneas, este paso se pude omitir
+y se puede crear una snapshot en el momento en que se requiera > Siguiente.
+
+6- En la siguiente pantalla definimos los directorios que vamos o no vamos a
+incluir en las instantáneas, si incluímos todo significa que las instantáneas
+respaldaran todo el sistema en el estado en que se encuentren > Siguiente.
+
+7- Ahora se presenta un resumen de la configuración que hicimos, haga clic en
+Finalizar para completar la configuración inicial.
+
+8- Creación de instantáneas del sistema, haga clic en "Crear" para comenzar el
+proceso de creación de la instantánea.
+
+9- Una vez que la instantánea de su sistema se haya creado correctamente,
+veremos en la instantánea creada en la lista.
+
+10- Restaurar desde instantáneas:
+
+Ahora que tiene la instantánea que protege su sistema, aquí le mostramos cómo
+restaurarlas:
+  - Abra Timeshift.
+  - Seleccione la instantánea que desea restaurar de la lista.
+  - Haga clic en "Restaurar" y confirme su acción.
+  - Timeshift comenzará el proceso de restauración, esto puede llevar algún
+      tiempo dependiendo del tamaño de la instantánea.
+
+11- Elija el dispositivo de destino, por lo general es mejor las opciones por
+defecto, haga clic en Siguiente.
+
+12- Confirma las acciones haciendo click en Siguiente, comenzará a restaurar el
+sistema desde la instantánea y lo reiniciará después de la restauración.
+
+13- Luego de reiniciar el sistema deberá estar en la versión en que se creó la
+instantánea.
+
+Conclusión
+==========
+
+Timeshift es una herramienta invaluable para cualquiera que use Debian 12 y
+quiera garantizar la estabilidad y seguridad de su sistema. Con su interfaz
+fácil de usar y sus potentes capacidades de instantáneas, está equipado para
+abordar problemas imprevistos con confianza.
+
+Fuentes
+=======
+
+https://espaciotecnologico.co/crear-un-punto-de-restauracion-en-linux/
+https://www.linuxbuzz.com/how-to-install-use-timeshift-on-debian/
