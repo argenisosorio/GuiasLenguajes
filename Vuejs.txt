@@ -3970,6 +3970,16 @@ const app = new Vue({
 </body>
 </html>
 
+=================================
+Eliminar variable de localStorage
+=================================
+
+if (localStorage.token) {
+  localStorage.removeItem('token')
+} else {
+  alert('No token exists')
+}
+
 =============================
 Ejemplo básico de vue-table-2
 =============================
