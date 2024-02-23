@@ -1,0 +1,235 @@
+====================
+Guía de Vue.js by dM
+====================
+
+============
+Introducción
+============
+
+¿Qué es Vue.js?
+
+Vue (pronunciado /vjuː/ en inglés, como view) es un framework progresivo para
+construir interfaces de usuario. A diferencia de otros frameworks monolíticos,
+Vue está diseñado desde el inicio para ser adoptado incrementalmente.
+La biblioteca principal se enfoca solo en la capa de la vista, y es muy simple
+de utilizar e integrar con otros proyectos o bibliotecas existentes. Por otro
+lado, Vue también es perfectamente capaz de soportar aplicaciones sofisticadas
+de una sola página (en inglés single-page-application o SPA) cuando se utiliza
+en combinación con herramientas modernas y librerías compatibles.
+
+Vue combina buenas prácticas de Angular y de React.
+
+===========
+Instalación
+===========
+
+Inclusión directa con <script>
+==============================
+
+La manera más sencilla de probar Vue.js es usando el ejemplo “hola mundo” creado
+un archivo .html e incluir Vue con un llamado a un enlace CDN:
+
+<!-- development version, includes helpful console warnings -->
+<script src="https://unpkg.com/vue@3.4.19/dist/vue.global.js"></script>
+
+Instalación con NPM
+===================
+
+NPM es el método de instalación recomendado para construir aplicaciones a gran
+escala con Vue. Este combina perfectamente con empaquetadores de módulos, tales
+como Webpack o Browserify. Vue también ofrece herramientas para la creación de
+componentes de un solo archivo (en inglés Single-File Components).
+
+$ npm install vue
+
+Con esto se instalara la versión estable de Vue, no la más reciente, a la fecha
+de 2024 la versión estable es la 3.X.
+
+=================
+Directivas de Vue
+=================
+
+Son como una herencia que toma Vue de Angular 1 y son atributos en el html o el
+template que insertan lógica de manera sencilla, siempre empiezan con "v-".
+
+Ejemplos:
+
+v-for: Lo que hace es recorrer una lista de elementos, es un ciclo for.
+
+v-on: Que lo que hace es escuchar un evento, nativo o creado por el usuario.
+
+v-bind: Vincula un atributo HTML a un valor que tengamos en nuestro modelo.
+Encadena datos, es decir que establece comunicación con los datos que haya en el
+componente asociado. Sirve para cualquier atributo, por ejemplo style.
+
+v-if: Un condicional que inyecta un elemento al DOM según la condición.
+
+v-else: El else de esa condicional.
+
+v-show: Para mostrar u ocultar elementos usando la propiedad display de CSS.
+
+v-model: Permite enlazar un elemento con alguna propiedad de un estado. Permite
+la vinculación bidireccional entre los datos del dom y el estado de la
+aplicación.
+
+v-text: Esta directiva permite hacer un trabajo similar a la interpolación de
+texto con la diferencia que la interpolación puede ser usada para renderizar un
+fragmento del texto de un elemento, la directiva v-text renderizará todo el
+contenido. Permite actualizar la propiedad textContent del elemento.
+
+v-html: Esta directiva permite imprimir código html en el elemento en cuestión.
+Es el equivalente al innerHTML de JavaScript.
+
+v-pre: Le indica a Vue que no debe realizar ningún proceso de compilación en
+este elemento y cualquiera de sus hijos.
+
+v-once: Renderiza el elemento solo una vez. Si la expresión asociada al elemento
+cambia no se verá reflejada en el template.
+
+Y existen más directivas en Vue...
+
+=====================
+Hola mundo en Vuejs 3
+=====================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Hello world!</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">{{ message }}</div>
+    <script>
+        const { createApp, ref } = Vue
+
+        createApp({
+            setup() {
+                const message = ref('Hello world!');
+                return {
+                    message
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
+
+=================
+Crear una función
+=================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="../vue/vue.global.js"></script>
+    <title>My first Vue page</title>
+</head>
+<body>
+    <div id="app">
+        <button @click="myFunction()">Click me!</button>
+    </div>
+    <script>
+        const { createApp, ref } = Vue
+
+        createApp({
+            setup() {
+                const myFunction = () => {
+                    alert("Hello!");
+                }
+
+                return {
+                    myFunction
+                }
+            }
+        }).mount('#app')
+
+    </script>
+</body>
+</html>
+
+=================
+Ejemplo de v-bind
+=================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>v-bind Example</title>
+    <script src="../vue/vue.global.js"></script>
+    <style>
+        div {
+            margin: 10px;
+            padding: 10px;
+            border: solid black 1px;
+            display: inline-block;
+        }
+
+        .pinkBG{
+            background-color: lightpink;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div v-bind:class="vueClass">Este elemento está vinculado a la clase "pinkBG".</div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                vueClass: "pinkBG"
+            }
+        }
+    })
+
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
+==================================================
+Mostrar un número random en base a un método de JS
+==================================================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>My first Vue page</title>
+    <!--script src="https://unpkg.com/vue@3/dist/vue.global.js"></!--script-->
+    <script src="../vue/vue.global.js"></script>
+    <style>
+        #app {
+            display: inline-block;
+            padding: 10px;
+            font-size: x-large;
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        {{ message }}
+        <br>
+        {{'Random number: ' + Math.ceil(Math.random()*6) }}
+    </div>
+    <script>
+        const { createApp, ref } = Vue
+
+        createApp({
+            setup() {
+                const message = ref('Hello world!')
+                return {
+                    message
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
