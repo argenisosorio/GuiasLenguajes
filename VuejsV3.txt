@@ -709,6 +709,53 @@ v-if, v-else-if y v-else
 </body>
 </html>
 
+=================
+v-if con includes
+=================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>v-if con includes</title>
+    <script src="../vue/vue.global.js"></script>
+    <style>
+    #app {
+        border: dashed black 1px;
+        width: 160px;
+        padding: 0 20px;
+        font-weight: bold;
+        background-color: lightgreen;
+    }
+    </style>
+</head>
+<body>
+
+<p>
+    En este ejemplo, 'v-if' utiliza un método 'includes()' en lugar de un
+    operador de comparación.
+</p>
+
+<p>'v-if' analiza la propiedad 'text' buscando la palabra pizza.</p>
+
+<div id="app">
+    <p v-if="text.includes('pizza')">El texto incluye la palabra 'pizza'</p>
+    <p v-else>El texto no incluye la palabra 'pizza'</p>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                text: 'I like pizza.'
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
 =====================================
 Interpolación de texto con JavaScript
 =====================================
@@ -863,3 +910,747 @@ Enviar data desde un formulario Login form
     </script>
 </body>
 </html>
+
+======
+v-show
+======
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>v-show</title>
+        <script src="vue/vue.global.js"></script>
+        <style>
+            #app {
+                border: black dashed 1px;
+                width: 200px;
+                padding: 0 20px 20px 20px;
+            }
+            #app div {
+                padding: 20px;
+                background-color: lightgreen;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+<body>
+
+<h1>Ejemplo de v-show</h1>
+
+<div id="app">
+    <p>
+        Encuentra la propiedad 'showDiv', dependiendo del valor muestra el
+        div.
+    </p>
+    <div v-show="showDiv">XXX</div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                showDiv: true
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+</body>
+</html>
+
+==============
+v-show vs v-if
+==============
+
+La diferencia entre v-show y v-if es que v-if crea (renderiza) el elemento
+dependiendo de la condición, pero con v-show el elemento ya está creado, v-show
+solo cambia su visibilidad.
+
+Por lo tanto, es mejor usar v-show al cambiar la visibilidad de un objeto,
+porque es más fácil de hacer para el navegador y puede generar una respuesta más
+rápida y una mejor experiencia de usuario.
+
+Una razón para usar v-if en lugar de v-show es que v-if se puede usar con
+v-else-if y v-else.
+
+=============
+v-if y v-show
+=============
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>v-if y v-show</title>
+        <script src="vue/vue.global.js"></script>
+        <style>
+            #app {
+                border: black dashed 1px;
+                width: 200px;
+                padding: 0 20px 20px 20px;
+            }
+            #app div {
+                padding: 20px;
+                background-color: lightgreen;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+<body>
+
+<div id="app">
+    <div v-show="showDiv">Div tag with v-show</div>
+    <div v-if="showDiv">Div tag with v-if</div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                showDiv: true
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+</body>
+</html>
+
+=====
+v-for
+=====
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My first Vue page</title>
+    <script src="vue/vue.global.js"></script>
+</head>
+<body>
+
+<h2>
+    Ejemplo: 'v-for' recorre la propiedad manyFoods y crea una lista html con
+    los elementos que contiene:
+</h2>
+
+<div id="app">
+    <ol>
+        <li v-for="x in manyFoods">{{ x }}</li>
+    </ol>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                manyFoods: [
+                    'Burrito',
+                    'Salad',
+                    'Cake'
+                ]
+            }
+        }
+    })
+
+    app.mount('#app')
+</script>
+</body>
+</html>
+
+=========================
+v-for con v-bind imágenes
+=========================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My first Vue page</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        img {
+            width: 70px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Example 'v-for' to create images</h1>
+
+<p>
+    The 'v-for' directive is used to create images based on the 'manyFoods'
+    array in the Vue instance.
+</p>
+
+<div id="app">
+    <div>
+        <img v-for="x in manyFoods" v-bind:src="x">
+    </div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                manyFoods: [
+                    'https://www.w3schools.com/vue/img_burrito.svg',
+                    'https://www.w3schools.com/vue/img_burrito.svg',
+                    'https://www.w3schools.com/vue/img_burrito.svg'
+                ]
+            }
+        }
+    })
+
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
+=========================================
+v-for que imprime los datos de un arreglo
+=========================================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My first Vue page</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app > div {
+            border: solid black 1px;
+            width: 80%;
+            padding: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        figure {
+            width: 80px;
+            padding: 10px;
+            margin: 10px;
+            background-color: lightskyblue;
+            border-radius: 5px;
+        }
+        figcaption {
+            text-align: center;
+        }
+        img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Example 'v-for' to create images and text</h1>
+<p>
+    The 'v-for' directive is used to create images and text based on the
+    'manyFoods' array in the Vue instance.
+</p>
+
+<div id="app">
+    <div>
+        <figure v-for="x in manyFoods">
+            <img v-bind:src="x.url">
+            <figcaption>{{ x.name }}</figcaption>
+        </figure>
+    </div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+    data() {
+        return {
+            manyFoods: [
+                {
+                    name: 'XXX',
+                    url: 'https://www.w3schools.com/vue/img_burrito.svg'
+                },
+                {
+                    name: 'YYY',
+                    url: 'https://www.w3schools.com/vue/img_burrito.svg'
+                },
+            ]
+        }
+    }
+    })
+
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
+===============================================
+v-for que imprime el elemento index del arreglo
+===============================================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My first Vue page</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app > div {
+            display: inline-block;
+            border: dashed black 1px;
+            padding: 10px;
+            background-color: lightgreen;
+        }
+        #app p {
+            font-weight: bold;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Example: Get the array element index with 'v-for'</h1>
+
+<p>
+    The 'v-for' directive is used to get the index and food name of elements
+    inside the 'manyFoods' array in the Vue instance.
+</p>
+
+<div id="app">
+    <div>
+        <p v-for="(x, index) in manyFoods">
+            {{ index }}: "{{ x }}" <br>
+        </p>
+    </div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+    data() {
+        return {
+            manyFoods: [
+                'Burrito',
+                'Salad',
+                'Cake',
+                'Soup',
+                'Fish',
+                'Pizza',
+                'Rice'
+            ]
+        }
+    }
+    })
+    app.mount('#app')
+</script>
+</body>
+</html>
+
+====
+v-on
+====
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Conteo</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app {
+            border: dashed black 1px;
+            width: 200px;
+            padding: 20px;
+        }
+        img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Counteo</h1>
+
+<div id="app">
+    <p>{{ "Conteo: " + count }}</p>
+    <button v-on:click="count++">+</button>
+    <br>
+    <button v-on:click="count--">-</button>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                count: 0
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
+Otro ejemplo
+============
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Light Switch</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #lightDiv {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        #lightDiv > div {
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 80%;
+            border-radius: 50%;
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <h1>Example: Light Switch</h1>
+    <p>
+        La directiva v-on se utiliza en la etiqueta del botón para escuchar el
+        evento de "clic". Cuando se produce el evento 'clic', la propiedad de
+        datos 'lightOn' se alterna entre 'verdadero' y 'falso', lo que hace que
+        el div amarillo sea visible/oculto.
+    </p>
+    <div id="app">
+        Bombilla
+        <span v-if="lightOn">
+            encendida
+        </span>
+        <span v-else>
+            apagada
+        </span>
+        <br>
+        <div id="lightDiv">
+            <div v-show="lightOn"></div>
+        </div>
+        <button v-on:click="lightOn =! lightOn">Switch</button>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    lightOn: true
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+</html>
+
+v-on:input
+==========
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Count Input Events</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app {
+            border: dashed black 1px;
+            width: 200px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>
+        Utilice v-on:input para realizar una acción cuando el elemento reciba una
+        entrada, como presionar una tecla dentro de un campo de texto.
+    </h2>
+    <p>Count los eventos input</p>
+    <div id="app">
+        <input type="text" v-on:input="inpCount++" placeholder="Escribe...">
+        <p>{{ 'Eventos input ocurridos: '+inpCount }}</p>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    inpCount: 0
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+</html>
+
+v-on:input
+==========
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>v-on:input</title>
+    <script src="vue/vue.global.js"></script>
+</head>
+<body>
+    <h2>
+        La directiva v-on se usa en la etiqueta textarea para escuchar el
+        evento 'input' que ocurre cada vez que hay un cambio en el texto dentro
+        del elemento textarea.
+    </h2>
+    <div id="app">
+        <textarea
+            v-on:input="writeText"
+            rows="8"
+            cols="30"
+            placeholder="Escriba..."
+        ></textarea>
+        <br>
+        <span>{{ text }}</span>
+    </div>
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    text: ''
+                }
+            },
+            methods: {
+                writeText(event) {
+                    this.text = event.target.value
+                }
+            }
+        })
+        app.mount('#app')
+    </script>
+</body>
+</html>
+
+v-on-mousemove
+==============
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Change Color</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app {
+            border: dashed black 1px;
+            width: 350px;
+            padding: 0 20px;
+        }
+        #app > div {
+            width: 200px;
+            height: 80px;
+        }
+        #app span {
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body>
+<h1>Example: Change Color</h1>
+<div id="app">
+    <p>
+        Mueva el puntero del mouse sobre el cuadro a continuación para cambiar
+        el color de fondo aleatoriamente con el código de color hsl.
+    </p>
+    <div
+        v-on:mousemove="colorVal = Math.floor(Math.random()*360)"
+        v-bind:style=" {backgroundColor: 'hsl('+colorVal+',60%,60%)'}"
+    ></div>
+    <p>
+        <span>backgroundColor: hsl(<strong>{{ colorVal }}</strong>, 80%, 80%)</span>
+    </p>
+    <p>
+        To understand how to set a color in CSS with 'hsl()' see
+        <a href="/css/css_colors_hsl.asp" target="_blank">
+            our page about this
+        </a>.
+    </p>
+</div>
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                colorVal: 50
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+</body>
+</html>
+
+v-on:click con método
+=====================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Click To Run Method</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 200px;
+            padding: 0 20px 20px 20px;
+        }
+        #app > div {
+            width: 140px;
+            height: 60px;
+            background-color: lightgreen;
+            padding: 20px;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body>
+<h2>
+    La directiva v-on se usa en el elemento "<div>" para escuchar el evento
+    'clic'. Cuando se produce el evento 'clic', se llama al método 'writeText' y
+    se cambia el texto.
+</h2>
+
+<p>Click para ejecutar el método</p>
+
+<div id="app">
+    <p>Haga clic en el cuadro:</p>
+    <div v-on:click="changeText">
+        {{ text }}
+    </div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                text: 'Hello'
+            }
+        },
+        methods: {
+            changeText() {
+                this.text = 'Hello World!'
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+</body>
+</html>
+
+v-on mousemove
+==============
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mouse Pointer Position</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 200px;
+            padding: 0 20px 20px 20px;
+        }
+        #app > div {
+            width: 160px;
+            height: 80px;
+            background-color: lightcoral;
+            padding: 20px;
+        }
+        #app span {
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body>
+<p>
+    La directiva v-on se usa en el elemento <div> para escuchar el evento
+    'mousemove'.  Cuando ocurre el evento 'mousemove', se llama al método
+    'mousePos' y el objeto del evento se envía con el método de forma
+    predeterminada para que podamos obtener la posición del puntero del
+    mouse.
+</p>
+<p>
+    Debemos usar this, prefijo para hacer referencia a "xPos" dentro de la
+    propiedad de datos de la instancia de Vue del método.
+</p>
+
+<h1>Ejemplo: Posición del puntero del mouse</h1>
+
+<div id="app">
+    <p>Mueva el puntero del mouse sobre el cuadro:</p>
+    <div v-on:mousemove="mousePos">
+        <span>xPos: {{ xPos }}</span><br><span>yPos: {{ yPos }}</span>
+    </div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                xPos: 0,
+                yPos: 0
+            }
+        },
+        methods: {
+            mousePos(event) {
+                this.xPos = event.offsetX
+                this.yPos = event.offsetY
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+</body>
+</html>
+
+v-on:click pasando arguméntos al método
+=======================================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Example</title>
+    <script src="vue/vue.global.js"></script>
+</head>
+<body>
+<h1>Pasando argumentos al método addMoose()</h1>
+<div id="app">
+    <p>{{ "Count: " + count }}</p>
+    <button v-on:click="addMoose(1)">+1</button>
+    <button v-on:click="addMoose(5)">+5</button>
+    <button v-on:click="addMoose(-1)">-1</button>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                count: 0
+            }
+        },
+        methods: {
+            addMoose(number) {
+                this.count+=number
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+</body>
+</html>
+
+=======
+Fuentes
+=======
+
+https://www.w3schools.com/vue
