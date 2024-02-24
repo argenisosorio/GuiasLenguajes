@@ -667,6 +667,48 @@ v-if v-else Mostrar texto en base al valor de una propiedad
 </body>
 </html>
 
+========================
+v-if, v-else-if y v-else
+========================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My first Vue page</title>
+    <script src="../vue/vue.global.js"></script>
+</head>
+<body>
+
+<h1>Ejemplo 'v-if' y v-else-if y 'v-else'</h1>
+
+<div id="app">
+    <p v-if="count == 0">
+        count es igual que 0.
+    </p>
+
+    <p v-else-if="count == 1">
+        count es igual que 1.
+    </p>
+
+    <p v-else>
+        count no es igual ni a 0 ni 1.
+    </p>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                count: 2
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
 =====================================
 Interpolación de texto con JavaScript
 =====================================
@@ -708,6 +750,62 @@ llaves dobles {{ }}.
             }
         }).mount('#app')
     </script>
+</body>
+</html>
+
+==========================================
+Enviar data desde un formulario Login form
+==========================================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login form</title>
+    <script src="../vue/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <form method="post" @submit.prevent="login">
+            <label class="label">Username</label>
+            <input
+                v-model="username"
+                type="username"
+                name="username"
+            />
+            <br>
+            <label class="label">Password</label>
+            <input
+                v-model="password"
+                type="password"
+                name="password"
+            />
+            <br>
+            <button type="submit">Log In</button>
+        </form>
+    </div>
+    <script>
+        const { createApp, ref } = Vue
+
+        createApp({
+            setup() {
+                const username = ref('');
+                const password = ref('');
+
+                const login = () => {
+                    console.log(username.value);
+                    console.log(password.value);
+                }
+
+                return {
+                    login,
+                    username,
+                    password
+                }
+            }
+        }).mount('#app')
+
+    </script>
+
 </body>
 </html>
 
