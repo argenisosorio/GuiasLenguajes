@@ -1649,6 +1649,110 @@ v-on:click pasando arguméntos al método
 </body>
 </html>
 
+===============================
+Modificadores de eventos de Vue
+===============================
+
+Los modificadores de eventos en Vue modifican cómo los eventos desencadenan la
+ejecución de métodos y nos ayudan a manejar eventos de una manera más eficiente
+y sencilla.
+
+.once modificador de evento
+===========================
+
+El modificador .once se usa en la etiqueta <button> para ejecutar el método solo
+la primera vez que ocurre el evento 'clic'.
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Example</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 200px;
+            padding: 0 20px 20px 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Ejemplo: crear alerta solo una vez</h1>
+
+<div id="app">
+    <p>
+        El siguiente botón crea una alerta en un cuadro emergente, pero solo con
+        el primer clic gracias a .once:
+    </p>
+    <button v-on:click.once="createAlert">Create Alert</button>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        methods: {
+            createAlert() {
+                alert("Alert created from button click")
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+</body>
+</html>
+
+v-on:keydown
+============
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Find Out Key Value</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 200px;
+            padding: 0 20px 20px 20px;
+        }
+        #green {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Ejemplo: Encuentre el valor de la tecla del teclado</h1>
+
+<div id="app">
+    <p>
+        Comience a escribir dentro del cuadro de texto para registrar el valor
+        clave:
+    </p>
+    <input type="text" v-on:keydown="getKey">
+    <p id="green">{{ keyValue }}</p>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                keyValue: ''
+            }
+        },
+        methods: {
+            getKey(evt) {
+                this.keyValue = evt.key
+                console.log(evt.key)
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
 =======
 Fuentes
 =======
