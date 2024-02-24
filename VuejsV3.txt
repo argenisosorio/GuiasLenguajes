@@ -193,9 +193,486 @@ Ejemplo de v-bind
 </body>
 </html>
 
-==================================================
-Mostrar un número random en base a un método de JS
-==================================================
+Otro ejemplo
+============
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Hello world!</title>
+    <script src="vue/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <p>
+            {{ message }}
+        </p>
+        <img v-bind:src="url">
+    </div>
+    <script>
+        const { createApp, ref } = Vue
+
+        createApp({
+            setup() {
+                const message = "El navegador encuentra el valor del atributo src de la instancia de Vue con el uso de 'v-bind'.";
+                const url = "https://www.w3schools.com/vue/img_beach3.jpg";
+                return {
+                    url,
+                    message
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
+
+================
+v-bind font-size
+================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>v-bind font-size</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app > div {
+        width: 200px;
+        padding: 20px;
+        border: dashed black 1px;
+        background-color: lightcoral;
+        }
+    </style>
+</head>
+<body>
+
+<h1>'v-bind' Font Size Example</h1>
+
+<p>El navegador establece el tamaño de fuente según el valor de "tamaño" en la instancia de Vue.</p>
+
+<div id="app">
+    <div v-bind:style="{ fontSize: size }">Text example</div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                size: '28px'
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+
+================
+v-bind font-size
+================
+
+</body>
+</html>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>v-bind font-size</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app > div {
+            width: 200px;
+            padding: 20px;
+            border: dashed black 1px;
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+<body>
+
+<h1>'v-bind' Font Size Example</h1>
+
+<p>El navegador establece el tamaño de fuente en píxeles según el valor numérico de 'tamaño' en la instancia de Vue.</p>
+
+<div id="app">
+    <div v-bind:style="{ fontSize: size + 'px' }">Text example</div>
+    <div v-bind:style="{ fontSize2: size2 + 'px' }">Text example</div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                size: 28,
+                size2: 14
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
+=======================
+v-bind background-color
+=======================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>v-bind background-color</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app > div {
+            width: 200px;
+            padding: 20px;
+            border: dashed black 1px;
+            background-color: lightcoral;
+        }
+    </style>
+</head>
+<body>
+
+<h1>'v-bind' Background Color Example</h1>
+<p>El navegador establece el color de fondo según el valor de 'bgVal' en la instancia de Vue.</p>
+
+<div id="app">
+    <div v-bind:style="{ backgroundColor: bgVal }">XXX.</div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                bgVal: '#808080'
+                // bgVal: 'red'
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
+====================================
+v-bind background-color con ternario
+====================================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>v-bind background-color</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app > div {
+        width: 200px;
+        padding: 20px;
+        border: dashed black 1px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Example: 'v-bind' with Conditional Background Color</h1>
+
+<p>
+    El navegador establece el color de fondo con según el valor de
+    'bgVal' en la instancia de Vue.
+</p>
+
+<div id="app">
+    <div v-bind:style="{ backgroundColor: isImportant ? 'lightcoral' : 'lightgray' }">
+        Importancia basada en el color de fondo.
+    </div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                isImportant: true
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
+========================================
+v-bind' para cambiar la classe de un div
+========================================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>v-bind background-color</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+            #app > div {
+                width: 200px;
+                padding: 20px;
+                border: dashed black 1px;
+            }
+            .impClass {
+                background-color: lightcoral;
+            }
+    </style>
+</head>
+<body>
+
+<h1>Example: 'v-bind' used to change class.</h1>
+<p>
+    El navegador establece el nombre de la clase en el valor almacenado en la
+    propiedad 'className' dentro de la instancia de Vue.
+</p>
+
+<div id="app">
+    <div v-bind:class="className">
+        XXX.
+    </div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+    data() {
+            return {
+                className: 'impClass'
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
+========================================
+v-bind' para cambiar la classe de un div
+========================================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>v-bind background-color</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app > div {
+            width: 200px;
+            padding: 20px;
+            border: dashed black 1px;
+        }
+        .myClass {
+            background-color: lightcoral;
+        }
+        .myClass2 {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Example</h1>
+<p>'v-bind' se utiliza para asignar clases con verdadero/falso.</p>
+<p>El navegador establece la clase 'myClass' en la etiqueta div cuando se establece en 'true'.</p>
+
+<div id="app">
+    <div v-bind:class="{ myClass: true }">
+        XXX
+    </div>
+    <div v-bind:class="{ myClass2: false }">
+        yyy
+    </div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        // The Vue instance is empty
+    })
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
+==========================================================================
+v-bind' para cambiar la classe de un div en base al valor de una propiedad
+==========================================================================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>v-bind background-color</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app > div {
+            width: 200px;
+            padding: 20px;
+            border: dashed black 1px;
+        }
+        .myClass {
+            background-color: lightcoral;
+        }
+        .myClass2 {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Example: 'v-bind' used to change class dynamically.</h1>
+
+<p>
+    El navegador establece la clase 'myClass' en la etiqueta div si la propiedad
+    'isImportant' es 'true'.
+</p>
+
+<div id="app">
+    <div v-bind:class="{ myClass: isImportant }">
+        XXX
+    </div>
+    <div v-bind:class="{ myClass2: !isImportant }">
+        YYY
+    </div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                isImportant: true
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
+Shorthand de v-bind
+===================
+
+El shorthand de 'v-bind:' es solo ':'.
+
+Ejemplo:
+
+Here we just write ':' instead of 'v-bind:':
+
+<div :class="{ impClass: isImportant }">
+  The class is set conditionally to change the background color
+</div>
+
+=============
+v-if y v-else
+=============
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Typewriters</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app {
+            border: dashed black 1px;
+            width: 130px;
+            padding-left: 20px;
+            font-weight: bold;
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Example with 'v-if' and 'v-else'</h1>
+
+<p>
+    Intente cambiar el valor 'typewritersInStock' en la instancia de Vue de
+    'verdadero' a 'falso' y ejecute el código nuevamente.
+</p>
+
+<div id="app">
+    <p v-if="typewritersInStock">
+        in stock
+    </p>
+    <p v-else>
+        not in stock
+    </p>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                typewritersInStock: true
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
+===========================================================
+v-if v-else Mostrar texto en base al valor de una propiedad
+===========================================================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My first Vue page</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app {
+        border: dashed black 1px;
+        width: 130px;
+        padding-left: 20px;
+        font-weight: bold;
+        background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Example with 'v-if' and 'v-else'</h1>
+
+<p>
+    Se mostrara el texto "in stock" si el valor de la propiedad typewriterCount
+    es mayor que cero '0'.
+</p>
+
+<div id="app">
+    <p v-if="typewriterCount>0">
+        in stock
+    </p>
+    <p v-else>
+        not in stock
+    </p>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                typewriterCount: 1
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
+=====================================
+Interpolación de texto con JavaScript
+=====================================
+
+También se pueden escribir expresiones simples de JavaScript dentro de las
+llaves dobles {{ }}.
 
 <!DOCTYPE html>
 <html>
@@ -227,6 +704,61 @@ Mostrar un número random en base a un método de JS
                 const message = ref('Hello world!')
                 return {
                     message
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
+
+==========================================
+Enviar data desde un formulario Login form
+==========================================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login form</title>
+    <script src="../vue/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <form method="post" @submit.prevent="login">
+            <label class="label">Username</label>
+            <input
+                v-model="record.username"
+                type="username"
+                name="username"
+            />
+            <br>
+            <label class="label">Password</label>
+            <input
+                v-model="record.password"
+                type="password"
+                name="password"
+            />
+            <br>
+            <button type="submit">Log In</button>
+        </form>
+    </div>
+    <script>
+        const { createApp, ref } = Vue
+
+        createApp({
+            setup() {
+                const record = ref({
+                    username: '',
+                    password: '',
+                });
+
+                const login = () => {
+                    console.log(record.value.username);
+                    console.log(record.value.password);
+                }
+
+                return {
+                    login,
+                    record
                 }
             }
         }).mount('#app')
