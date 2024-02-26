@@ -2863,3 +2863,44 @@ Fuente
 ======
 
 https://www.php.net/manual/es/function.openssl-pkcs12-read.php
+
+=================
+Función strtotime
+=================
+
+(PHP 4, PHP 5, PHP 7, PHP 8)
+
+Convierte una descripción de fecha/hora textual en Inglés a una fecha Unix
+
+Esta función espera que se proporcione una cadena que contenga un formato de
+fecha en Inglés US e intentará convertir ese formato a una fecha Unix (el número
+de segundos desde el 1 de Enero del 1970 00:00:00 UTC), relativa a la marca de
+tiempo dada en now, o la marca de tiempo actual si now no se proporciona.
+
+Cada parámetro de esta función utiliza la zona horaria predeterminada a menos
+que se especifique una en ese parámetro. Se ha de tener cuidado de no usar
+diferentes zonas horarias en cada parámetro a menos que sea esa la intención.
+
+Ejemplo:
+
+<?php
+    // Ver la fecha y hora actual;
+    echo strtotime("now");
+    echo "<br>";
+    // Ver la fecha actual con formato d/m/Y;
+    echo date("d/m/Y", strtotime("now"));
+    echo "<br>";
+    // Ver una fecha específica con formato d/m/Y;
+    echo date("d/m/Y", strtotime("22-12-01 17:51:03"));
+?>
+
+Salida del comando:
+
+1708975613
+26/02/2024
+01/12/2022
+
+Fuente
+======
+
+https://www.php.net/manual/es/function.strtotime.php
