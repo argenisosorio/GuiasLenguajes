@@ -5024,7 +5024,6 @@ deleteEvent: function(event) {
   this.events.splice(this.events.indexOf(event), 1);
 }
 
-<<<<<<< HEAD
 ==========================
 Preview the selected image
 ==========================
@@ -5241,90 +5240,3 @@ Validación de solo letras, no números, permite acentos y espacios en blanco
   oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜ\s]/g, '');"
   v-model="record.xxx"
 />
-
-=====
-Vue 3
-=====
-
-==================
-Using Vue from CDN
-==================
-​
-You can use Vue directly from a CDN via a script tag:
-
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
-===========
-Hello world
-===========
-
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Hello world!</title>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-</head>
-<body>
-  <div id="app">{{ message }}</div>
-
-  <script>
-    const { createApp, ref } = Vue
-
-    createApp({
-      setup() {
-        const message = ref('Hello world!')
-        return {
-          message
-        }
-      }
-    }).mount('#app')
-  </script>
-</body>
-</html>
-
-Otro ejemplo:
-
-<!DOCTYPE html>
-<html>
-<head>
-    <script src="../vue/vue.global.js"></script>
-    <title>My first Vue page</title>
-    <style>
-        #app {
-        display: inline-block;
-        padding: 10px;
-        font-size: x-large;
-        background-color: lightgreen;
-        }
-    </style>
-</head>
-<body>
-
-<h1>Vue Example</h1>
-
-<p>The message is taken from 'data' inside the Vue instance by writing {{ message }} inside the div with id="app".</p>
-
-<div id="app">
-    {{ message }}
-</div>
-
-<script>
-    const app = Vue.createApp({
-    data() {
-            return {
-                message: "Hello World!"
-            }
-        }
-    })
-    app.mount('#app')
-</script>
-</body>
-</html>
-
-Fuentes
-=======
-
-https://vuejs.org/guide/quick-start.html#creating-a-vue-application
-
-https://www.w3schools.com/vue/
