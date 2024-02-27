@@ -173,3 +173,41 @@ Fuentes
 https://dropcoding.com/extension-chatgpt-visual-studio-code/
 
 https://www.codegpt.co/docs/tutorial-basics/installation
+
+========================================================
+Compartir puerto en internet con Tunneling - dev tunnels
+========================================================
+
+Esta funcionalidad de vscode nos permite compartir un puerto que se esté
+ejecutando en nuestro entorno local con el objetivo de que a través de un
+enlace de internet cualquier persona, como un cliente por ejemplo pueda probar
+desde donde está, el proyecto que estamos trabajando.
+
+1- Para compartir nuestro proyecto en internet mediante un tunel de
+desarrollador de vscode lo primero que debemos hacer es abrir un terminal de
+vscode y ejecutar nuestro proyecto, supongamos que tenemos una página html
+con su archivo index.html y queremos mostrarlo mediante una dirección y un
+puerto, una opción recomendada es hacer uso de la extensión de vscode llamada
+Live Server que nos permite servir mediante una dirección y un purto lo que
+se encuentre en el directorio configurado para ello.
+
+2- Ejecutamos Live Server para servir nuestra página html según lo configurado,
+este hace que nuestra página esté disponible desde la dirección
+http://127.0.0.1:5500 lo que nos interesa de esa dirección es el puerto, que es
+el 5500.
+
+3- Ahora en la consola hacemos click en la pestaña PUERTOS y damos click al
+botón "Reenviar puerto", eso nos abre un pequeño formulario con columnas, la
+primeara es puerto, ahí debemos colocar el puerto que queremos compartir que es
+el 5500, luego de escribirlo damos a enter, eso hará que en la columna de la
+tabla "Dirección reenviada" veamos una dirección web, como por ejemplo esta:
+https://gt30058c-5500.use2.devtunnels.ms/ esa será la dirección que
+compartiremos con otra persona para que vea nuestra página html, sin embargo,
+primero hay que cambiar la visibilidad, que por defecto es privada, en la
+columna "Visibilidad" hacemos click en Privado > Cambiar visibilidad del puerto
+> Público
+
+4- Listo! ya cualquiera puede consulta la dirección
+https://gt30058c-5500.use2.devtunnels.ms/ para ver lo que se está ejecutando
+desde tu puerto 5500, siempre y cuando Live Server siga sirviendo la página
+desde la dirección local http://127.0.0.1:5500.
