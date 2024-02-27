@@ -1008,3 +1008,33 @@ Configuración de .htaccess de Apache para Vue y vue-router
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]
 </IfModule>
+
+===============================================
+Enlace para volver atrás back en una spa de vue
+===============================================
+
+Usamos el objeto global window.history para navegar hacia atrás en la historia
+del navegador. Puedes hacer esto mediante JavaScript. Aquí hay un ejemplo de
+cómo podrías implementarlo:
+
+<a
+  href="#"
+  @click.prevent="goBack"
+>
+  Atrás
+</a>
+
+<script>
+export default {
+  methods: {
+    goBack() {
+      window.history.back();
+    }
+  }
+}
+</script>
+
+Fuente
+======
+
+ChatGPT

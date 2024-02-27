@@ -5240,3 +5240,33 @@ Validación de solo letras, no números, permite acentos y espacios en blanco
   oninput="this.value = this.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚüÜ\s]/g, '');"
   v-model="record.xxx"
 />
+
+===============================================
+Enlace para volver atrás back en una spa de vue
+===============================================
+
+Usamos el objeto global window.history para navegar hacia atrás en la historia
+del navegador. Puedes hacer esto mediante JavaScript. Aquí hay un ejemplo de
+cómo podrías implementarlo:
+
+<a
+  href="#"
+  @click.prevent="goBack"
+>
+  Atrás
+</a>
+
+<script>
+export default {
+  methods: {
+    goBack() {
+      window.history.back();
+    }
+  }
+}
+</script>
+
+Fuente
+======
+
+ChatGPT
