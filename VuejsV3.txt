@@ -1753,6 +1753,221 @@ v-on:keydown
 </body>
 </html>
 
+============
+v-on-keydown
+============
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>v-on-keydown</title>
+    <script src="../vue/vue.global.js"></script>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 200px;
+            padding: 0 20px 20px 20px;
+        }
+        #app > div {
+            width: 160px;
+            background-color: lightcoral;
+            padding: 20px;
+        }
+        #app span {
+            color: black;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <p>Ejemplo: La tecla 's' genera alerta:</p>
+    <textarea
+        cols="20"
+        rows="3"
+        v-on:keydown.s="createAlert"
+    ></textarea>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        methods: {
+            createAlert(evt) {
+                alert("You pressed the 'S' key!");
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+
+</body>
+</html>
+
+Otro ejemplo:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>v-on:keydown</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 200px;
+            padding: 0 20px 20px 20px;
+        }
+        #app > div {
+            width: 160px;
+            background-color: lightcoral;
+            padding: 20px;
+        }
+        #app span {
+            color: black;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <p>Presione 'Ctrl' y 'S' en combinación para generar una alerta:</p>
+    <textarea
+        cols="20"
+        rows="3"
+        v-on:keydown.ctrl.s="createAlert"
+    ></textarea>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        methods: {
+            createAlert(evt) {
+                alert("You pressed the 'S' and 'Ctrl' keys, in combination!")
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+</body>
+</html>
+
+====================
+v-on-click del mouse
+====================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Left Mouse Button Event</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 200px;
+            padding: 20px;
+        }
+        #app > div {
+            width: 160px;
+            padding: 20px;
+            cursor: default;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <div
+        v-on:click.left="changeColor"
+        v-bind:style="{ backgroundColor:'hsl('+bgColor+',80%,80%)' }"
+    >
+        <p>Presione el botón izquierdo del mouse aquí para cambiar el color.</p>
+    </div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                bgColor : 0
+            }
+        },
+        methods: {
+            changeColor() {
+                this.bgColor+=50;
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+</body>
+</html>
+
+Ejemplo combinando tecla cotrl con click derecho:
+
+<div v-on:click.right.ctrl="changeColor"
+    v-bind:style="{backgroundColor:'hsl('+bgColor+',80%,80%)'}">
+<p>Press right mouse button here.</p>
+
+========================
+v-on:click.right.prevent
+========================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Right Mouse Button Event</title>
+    <script src="vue/vue.global.js"></script>
+    <style>
+        #app {
+            border: black dashed 1px;
+            width: 200px;
+            padding: 20px;
+        }
+        #app > div {
+            width: 160px;
+            padding: 20px;
+            cursor: default;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<p>
+    El menú desplegable predeterminado se evita cuando hacemos clic derecho en
+    el elemento DIV, y se cambia el color del elemento div.
+</p>
+
+<div id="app">
+    <div
+        v-on:click.right.prevent="changeColor"
+        v-bind:style="{ backgroundColor:'hsl('+bgColor+',80%,80%)' }"
+    >
+        <p>Press right mouse button here.</p>
+    </div>
+</div>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                bgColor : 0
+            }
+        },
+        methods: {
+            changeColor() {
+                this.bgColor+=50;
+            }
+        }
+    })
+    app.mount('#app')
+</script>
+</body>
+</html>
+
 =======
 Fuentes
 =======
