@@ -4444,17 +4444,26 @@ creamos la clave privada a la nueva máquina.
 Configurar sudo en Debian
 =========================
 
-En Debian no viene instalado y configurado por defecto.
+Sudo es un paquete que proporciona privilegios limitados de superusuario a
+usuarios específicos, En GNU/Linux Debian no viene instalado por defecto.
 
-$ aptitude install sudo
+1- Instalación
 
-Una vez con el sudo instalado deberemos agregar nuestro usuario en la sección
+# apt install sudo
+
+2- Una vez con el sudo instalado deberemos agregar nuestro usuario en la sección
 "User privilege specification" en el archivo /etc/sudoers, de tal forma que la
 sección quede así:
+
+# nano /etc/sudoers
+
+Agregamos tu_usuario ALL=(ALL) ALL despues de root, debe quedar así:
 
 User privilege specification
 root ALL=(ALL) ALL
 tu_usuario ALL=(ALL) ALL
+
+3- Guardamos con nano y listo!
 
 Una vez configurado esto, ya podremos ejecutar acciones de administrador desde
 una terminal común, anteponiendo el sudo a la acción a realizar.
@@ -9002,3 +9011,31 @@ Fuentes
 
 https://espaciotecnologico.co/crear-un-punto-de-restauracion-en-linux/
 https://www.linuxbuzz.com/how-to-install-use-timeshift-on-debian/
+
+=======================================================================
+Hacer que el grub reconozca otros SO instalados como Windows por ejmplo
+=======================================================================
+
+1- Hay que instalar el paquete os-prober que es una utilidad para detectar otros
+sistemas operativos en un conjunto de unidades, por lo general en Debian
+GNU/Linux Debian, este paquete viene instalado por defecto.
+
+Instalamos el paquete os-prober
+
+$ sudo apt-get install os-prober
+
+2- Luego editamos el archivo grub a través del editor nano de la siguiente
+manera:
+
+$ sudo nano /etc/default/grub
+
+Debajo de la línea GRUB_CMDLINE_LINUX="" escribimos lo siguiente:
+
+GRUB_DISABLE_OS_PROBER=false
+
+3- Guardamos con Ctrl + O, luego presionamos la combinación de teclas luego
+Ctrl + X para salir de la edición del archivo
+
+4- Y por último actualizamos nuestro grub de arranque de la siguiente manera:
+
+$ sudo update-grub
