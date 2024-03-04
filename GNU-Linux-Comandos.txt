@@ -657,13 +657,15 @@ Aquí está el significado de cada una de las opciones utilizadas en el comando:
 
 grep es un comando utilizado para buscar texto en archivos.
 
---color hace que la salida del comando se resalte en color para que sea más fácil de leer.
+--color hace que la salida del comando se resalte en color para que sea más
+fácil de leer.
 
 -n hace que se imprima el número de línea junto con la línea coincidente.
 
 -I hace que los archivos binarios se ignoren durante la búsqueda.
 
--r hace que la búsqueda se realice de manera recursiva en todos los archivos y subdirectorios a partir del directorio actual.
+-r hace que la búsqueda se realice de manera recursiva en todos los archivos y
+subdirectorios a partir del directorio actual.
 
 Si se quiere buscar más de una cadena se usan las comillas dobrles:
 
@@ -1156,7 +1158,7 @@ Gestionar procesos del sistema
 Cada proceso tiene un identificador (PID) proccess ID, entonces podemos matar
 ese proceso con:
 
- Matar un proceso donde xxxx es el identificador del proceso.
+Matar un proceso donde xxxx es el identificador del proceso.
 
 $ kill xxxx
 
@@ -1870,30 +1872,42 @@ passwd: contraseña actualizada correctamente
 Instalacion de programas y paquetes con apt y aptitude
 ======================================================
 
- Ver el manual de aptitude.
+Ver el manual de aptitude.
 
 $ man aptitude
+
+-----
 
 Ver el manual de apt-get.
 
 $ man apt-get
 
+-----
+
 Instalar paquetes.
 
-# apt-get install Nombre_Paquete
+# apt install Nombre_Paquete
+
+-----
 
 Actualizar un paquete unicamente.
 
-# apt-get install --only-upgrade packagename
+# apt install --only-upgrade packagename
+
+-----
 
 Instalar paquetes disponibles desde otro repositorio, en este caso, los de
 jessie-backports.
 
 # apt-get install -t jessie-backports Nombre_Paquete
 
+-----
+
 Instalar paquetes, otra forma usando el programa aptitude
 
 # aptitude install Nombre_Paquete
+
+-----
 
 Intentará satisfacer las dependencias de compilación de un paquete fuente, el
 comando build-dep busca en los repositorios locales en el sistema e instala las
@@ -1902,14 +1916,20 @@ repositorio local se devolverá un código de error.
 
 # apt-get build-dep Nombre_Paquete
 
+-----
+
 Hace una simulacion de la instalacion, podemos ver que procesos haría la
 instalación.
 
 $ aptitude install -s Nombre_Paquete
 
- Simulacion de instalacion con  apt-get install.
+-----
+
+Simulacion de instalacion con apt-get install.
 
 # apt-get install -s Nombre_Paquete
+
+-----
 
 El -y Supone una respuesta afirmativa a todas las preguntas, de esta forma
 apt-get se ejecuta sin necesidad de intervención posterior para tomar
@@ -1917,65 +1937,95 @@ decisiones, usar con cuidado.
 
 # apt-get install -y package
 
+-----
+
 Descargar las fuentes del paquete, para compilar e instalar.
 
 $ apt-get source Nombre_paquete
 
+-----
+
 Realizar una busqueda en los repositorios del paquete que se quiere encontrar
 
 $ sudo aptitude search Nombre_Paquete
+
+-----
 
 Para ver la informacion del paquete, version, estado, tamaño, conflictos,
 dependencias, etc.
 
 $ aptitude show Nombre_Paguete
 
- Ver informacion del paquete, version, dependencias, descripcion, tamaño, entre
- otros.
+-----
+
+Ver informacion del paquete, version, dependencias, descripcion, tamaño, entre
+otros.
 
 $ apt-cache show nombre_paquete
 
- Buscar un paquete en los repositorios.
+-----
+
+Buscar un paquete en los repositorios.
 
 $ apt-cache search nombre_paquete
+
+-----
 
 Muestra las versiones de los paquetes listados en la línea de órdenes.
 
 $ aptitude versions nombre_paquete
 
+-----
+
 Elimina o Desinstala el paquete.
 
 # aptitude remove Nombre_paquete
+
+-----
 
 Elimina el paquete y sus archivos de configuracion.
 
 # aptitude purge Nombre_Paquete
 
+-----
+
 Descarga el fichero .deb del paquete dado al directorio actual.
 
 $ aptitude download nombre_paquete
+
+-----
 
 Descarga el fichero .deb del paquete dado al directorio actual.
 
 $ apt-get download nombre_paquete
 
+-----
+
 Reinstalar un paquete
 
 # aptitude reinstall nombre_paquete
+
+-----
 
 Actualizar la lista de paquetes disponibles.
 
 $ aptitude update
 
+-----
+
 Saber si un paquete está instalado y su version.
 
 $ dpkg -l | grep nombre_paquete
+
+-----
 
 Borra los paquetes huérfanos, o las dependencias que quedan instaladas después
 de haber instalado una aplicación y luego eliminarla, por lo que ya no son
 necesarias.
 
 # apt-get autoremove
+
+-----
 
 Saber la version de algun paquete que tengamos instalado.
 
@@ -1986,6 +2036,32 @@ bash --version
 gcc --version
 python --version
 ruby --version
+
+-----
+
+El indicador '~c' se refiere a los paquetes que han sido marcados como
+"configurados pero no utilizados". Es decir, estos son los paquetes que están
+instalados en tu sistema, pero no se están utilizando actualmente. Pueden haber
+sido instalados como dependencias de otros paquetes que ya no están en uso.
+
+La salida de aptitude search '~c' mostrará una lista de paquetes que cumplen con
+esta descripción.
+
+$ aptitude search '~c'
+
+Si decides que ya no necesitas ninguno de estos paquetes, puedes usar aptitude
+purge para eliminar los paquetes y sus archivos de configuración del sistema.
+
+-----
+
+Para listar los paquetes rotos en Debian, puedes usar el comando apt-get en
+lugar de aptitude. Aquí hay un comando que puedes usar:
+
+$ sudo apt-get check
+
+Este comando verifica la integridad de los paquetes de la base de datos de
+paquetes. Si hay paquetes rotos, el comando mostrará un mensaje de advertencia y
+te pedirá que ejecutes sudo apt-get install -f para arreglarlos.
 
 =========================
 Liberando espacio con apt

@@ -9089,3 +9089,55 @@ Fuente
 ======
 
 ChatGPT
+
+========
+FormData
+========
+
+FormData es un objeto en JavaScript que te permite construir y enviar fácilmente
+datos de formularios HTML como una solicitud HTTP.
+
+Es especialmente útil cuando necesitas enviar archivos binarios (como imágenes
+o documentos) o cuando necesitas enviar datos de formularios que incluyen campos
+como texto, números, fechas, etc.
+
+Puedes crear un nuevo objeto FormData vacío:
+
+const formData = new FormData();
+
+Luego, puedes usar el método append para agregar datos al formulario. Por
+ejemplo, para agregar un campo de texto llamado "username" con el valor "john",
+puedes hacer lo siguiente:
+
+formData.append('username', 'john');
+
+Si tienes un campo de archivo en tu formulario, como un campo de imagen, puedes
+agregarlo al FormData de la misma manera. Por ejemplo, si tienes un campo de
+archivo llamado "avatar" y quieres agregar un archivo llamado "avatar.jpg",
+puedes hacer lo siguiente:
+
+const fileInput = document.querySelector('input[type="file"]');
+formData.append('avatar', fileInput.files[0]);
+
+Luego, cuando estés listo para enviar el formulario, puedes usar el objeto
+FormData como el cuerpo de tu solicitud HTTP. Por ejemplo, con la API Fetch:
+
+fetch('https://ejemplo.com/api/upload', {
+  method: 'POST',
+  body: formData
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+
+Esto enviará los datos del formulario al servidor como una solicitud POST. En el
+lado del servidor, puedes acceder a los datos del formulario como lo harías con
+un formulario HTML normal, dependiendo de tu tecnología del lado del servidor.
+
+FormData es muy útil cuando necesitas enviar datos de formularios complejos,
+especialmente cuando incluyen archivos binarios.
+
+Fuente
+======
+
+ChatGPT

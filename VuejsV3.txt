@@ -1968,6 +1968,95 @@ v-on:click.right.prevent
 </body>
 </html>
 
+=====================================
+Enviar un archivo desde un formulario
+=====================================
+
+Se hace uso de formData
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send document in form</title>
+    <script src="vue/vue.global.js"></script>
+</head>
+<body>
+    <div id="app">
+        <form
+            method="post"
+            @submit.prevent="saveData"
+            enctype="multipart/form-data"
+        >
+            <label class="label">Name</label>
+            <input
+                v-model="record.name"
+                type="name"
+                name="name"
+            />
+            <br>
+            <label class="label">Document</label>
+            <input
+                type="file"
+                name="document"
+                @change="handleFileChange"
+            />
+            <br>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+    <script>
+        const { createApp, ref } = Vue
+
+        createApp({
+            setup() {
+                const record = ref({
+                    name: '',
+                    document: null,
+                });
+
+                const handleFileChange = (event) => {
+                    record.value.document = event.target.files[0];
+                };
+
+                const saveData = async () => {
+                    try {
+                        console.log(record.value.name);
+                        console.log(record.value.document);
+
+                        const formData = new FormData();
+                        formData.append('username', record.value.name);
+                        formData.append('documento', record.value.document);
+
+                        console.log(formData);
+
+                        /*
+                        const response = await fetch('https://example.com/login', {
+                            method: 'POST',
+                            body: formData,
+                        });
+
+                        if (response.ok) {
+                            console.log('Login successful');
+                        } else {
+                            console.error('Login failed');
+                        }
+                        */
+                    } catch (error) {
+                        console.error('Error during login:', error);
+                    }
+                };
+
+                return {
+                    saveData,
+                    record,
+                    handleFileChange,
+                }
+            }
+        }).mount('#app')
+    </script>
+</body>
+</html>
+
 =======
 Fuentes
 =======
