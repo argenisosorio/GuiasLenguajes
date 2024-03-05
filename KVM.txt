@@ -111,3 +111,33 @@ Fuente
 ======
 
 LuzIA
+
+Migrar Máquina Virtual KVM
+==========================
+
+Para comenzar la migración, lo primero que debemos hacer es copiar la imagen de
+la Máquina Virtual que queremos migrar hacia el nuevo host. Si utilizamos
+libvirt, normalmente las VMs se almacenan en el directorio
+/var/lib/libvirt/images.
+
+Luego, desde el nuevo host, abrir Virtual Machine Manager, y arrancar el
+asistente para crear una nueva Máquina Virtual y seleccionar la opción Import
+existing disk image.
+
+En el siguiente paso del asistente nos pedirá especificar la ruta a nuestra
+imagen. No creo que sea estrictamente necesario, pero creo que es bueno, que la
+imagen se encuentre en /var/lib/libvirt/images y pertenezca al usuario root.
+
+A partir de aquí el proceso es igual al que normalmente realizamos para crear
+VMs, es decir, seleccionamos la cantidad de CPUs, cantidad de memoria RAM, etc.
+Obviamente, el asistente no nos permitirá seleccionar el tamaño de disco, porque
+ya tenemos la imagen.
+
+Al finalizar el asistente, la Máquina Virtual estará lista para usarse y
+arrancará inmediatamente. Sólo hay que tener en cuenta que la dirección de red
+local cambia (en el caso de que eso sea relevante).
+
+Fuente
+======
+
+http://quemantequilla.blogspot.com/2012/07/migrar-maquina-virtual-kvm.html
