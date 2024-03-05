@@ -7088,35 +7088,6 @@ function myFunction() {
 </body>
 </html>
 
-================
-JSON.stringify()
-================
-
-Un uso común de JSON es intercambiar datos hacia / desde un servidor web.
-
-Al enviar datos a un servidor web, los datos deben ser una cadena.
-
-Convierta un objeto JavaScript en una cadena con JSON.stringify().
-
-Ejemplo
-=======
-
-<!DOCTYPE html>
-<html>
-<body>
-
-<h2>Create a JSON string from a JavaScript object.</h2>
-<p id="demo"></p>
-
-<script>
-const obj = {name: "John", age: 30, city: "New York"};
-const myJSON = JSON.stringify(obj);
-document.getElementById("demo").innerHTML = myJSON;
-</script>
-
-</body>
-</html>
-
 ==================================
 Cómo funciona Lambda en JavaScript
 ==================================
@@ -8466,6 +8437,35 @@ Agregar punto y coma; al final de las llamadas de función para que ambos
 funcionen.
 
 <input id="btn" type="button" value="click" onclick="pay(); cls();"/>
+
+================
+JSON.stringify()
+================
+
+Un uso común de JSON es intercambiar datos hacia / desde un servidor web.
+
+Al enviar datos a un servidor web, los datos deben ser una cadena.
+
+Convierta un objeto JavaScript en una cadena con JSON.stringify().
+
+Ejemplo
+=======
+
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Create a JSON string from a JavaScript object.</h2>
+<p id="demo"></p>
+
+<script>
+const obj = {name: "John", age: 30, city: "New York"};
+const myJSON = JSON.stringify(obj);
+document.getElementById("demo").innerHTML = myJSON;
+</script>
+
+</body>
+</html>
 
 =========================================
 Cómo usar JSON.parse() y JSON.stringify()
