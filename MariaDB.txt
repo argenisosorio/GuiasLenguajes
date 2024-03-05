@@ -34,14 +34,16 @@ eadline 5.2
 Acceder a la consola de MariaDB
 ================================
 
-Nos logeamos en MariaDB using el usuario root de MariaDB, nos pedirá el
-password.
+Nos logeamos en MariaDB using el usuario root de MariaDB, nos pedirá el password
+del usuario root.
 
 $ mysql -u root -p
 
 ó
 
 $ sudo mysql -u root
+
+Nos pedirá el password del usuario que tengamos configurado con sudo.
 
 -----
 
@@ -133,17 +135,22 @@ Listas las bases de datos disponibles.
 
 -----
 
-Listar todas las tablas de una base de datos en MySQL
+Listar todas las tablas de una base de datos:
 
 > SHOW FULL TABLES FROM mi_base_de_datos;
 
-De hecho, podemos hacer consultas del tipo:
+-----
 
-> SHOW FULL TABLES FROM mi_base_de_datos LIKE '%busqueda%'
+Listar todas las tablas de una base de datos ya seleccionada:
+
+> USE test_db;
+Database changed
+
+MariaDB [test_db]> SHOW FULL TABLES;
 
 -----
 
-Borrar una base de datos específica.
+Borrar una base de datos específica:
 
 > DROP DATABASE db_name;
 
@@ -151,6 +158,31 @@ Si la base de datos no existe va a dar error, podemos usar el parámeteo IF
 EXISTS para que no de error.
 
 > DROP DATABASE IF EXISTS db_name;
+
+-----
+
+Ver todos los campos de una tabla, debe estar selecciona la base de datos, por
+ejemplo test_db:
+
+> DESCRIBE nombre_de_la_tabla;
+
+Ejemplo:
+
+MariaDB [test_db]> DESCRIBE users;
+
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| id       | int(11)     | NO   | PRI | NULL    | auto_increment |
+| username | varchar(50) | NO   |     | NULL    |                |
+
+Tambien podermos usar este otro comando:
+
+> SHOW COLUMNS FROM nombre_de_la_tabla;
+
+Ejemplo:
+
+MariaDB [test_db]> SHOW COLUMNS FROM users;
 
 ==============================
 Desinstalar e instalar MariaDB
@@ -185,3 +217,95 @@ Restaurar una base de datos
 ===========================
 
 $ mysql -u usuario -p nombre_base_de_datos < nombre_base_de_datos.sql
+
+====================================
+Crear una tabla en una base de datos
+====================================
+
+1- Lo primero que debemos hacer es seleccionar la base de datos con la cual
+vamos a trabajar, hacemos uso de la directiva USE, supongamos que tenemos una
+base de datos llamada test_db:
+
+> USE test_db;
+Database changed
+
+Al seleccionar a test_db el prompt nos debe quedar así:
+
+MariaDB [test_db]>
+
+2- Ahora vamos a crear la tabla users dentro de test_db:
+
+MariaDB [test_db]> CREATE TABLE users;
+ERROR 1113 (42000): A table must have at least 1 column
+
+Nos da un error porque al momento de crear una tabla esta debe contener al menos
+un campo o columna, entonces corregimos la sentencia para agregar los campos id
+y username:
+
+MariaDB [test_db]> CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY, username VARCHAR(50) NOT NULL);
+Query OK, 0 rows affected (0,015 sec)
+
+3- Ahora chequeamos que se haya creado la tabla con:
+
+MariaDB [test_db]> SHOW FULL TABLES;
+
++-------------------+------------+
+| Tables_in_test_db | Table_type |
++-------------------+------------+
+| users             | BASE TABLE |
++-------------------+------------+
+1 row in set (0,001 sec)
+
+==================================
+Agregar un nuevo campo a una tabla
+==================================
+
+La base de datos debe estar seleccionada. En este ejemplo vamos a agregar el
+campo age de tipo int y que por defecto sea null.
+
+MariaDB [test_db]> ALTER TABLE users ADD COLUMN age INT DEFAULT NULL;
+
+Query OK, 0 rows affected (0,007 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+MariaDB [test_db]> DESCRIBE users;
++----------+-------------+------+-----+---------+----------------+
+| Field    | Type        | Null | Key | Default | Extra          |
++----------+-------------+------+-----+---------+----------------+
+| id       | int(11)     | NO   | PRI | NULL    | auto_increment |
+| username | varchar(50) | NO   |     | NULL    |                |
+| age      | int(11)     | YES  |     | NULL    |                |
++----------+-------------+------+-----+---------+----------------+
+3 rows in set (0,001 sec)
+
+==============================
+Eliminar un campo de una tabla
+==============================
+
+La base de datos debe estar seleccionada:
+
+> ALTER TABLE nombre_de_la_tabla DROP COLUMN nombre_del_campo;
+
+Ejemplo:
+
+> ALTER TABLE users DROP COLUMN age;
+
+============================================
+Insertar información en un campo de la tabla
+============================================
+
+La base de datos debe estar seleccionada:
+
+> INSERT INTO nombre_de_la_tabla (nombre_del_campo) VALUES ('dato_a_guardar');
+
+Ejemplo:
+
+> INSERT INTO users (username) VALUES ('pedroperez');
+
+================================
+Insertar un registro en la tabla
+================================
+
+Ahora vamos a insetar información en varios campos a la vez:
+
+MariaDB [test_db]> INSERT INTO users (username, age) VALUES ('pedroperez', 20);
