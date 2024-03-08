@@ -9115,3 +9115,45 @@ Ctrl + X para salir de la edición del archivo
 4- Y por último actualizamos nuestro grub de arranque de la siguiente manera:
 
 $ sudo update-grub
+
+===============================================================
+Error: ENOSPC: System limit for number of file watchers reached
+===============================================================
+
+Error: ENOSPC: System limit for number of file watchers reached, watch ''
+    at FSWatcher.<computed> (node:internal/fs/watchers:247:19)
+    at Object.watch (node:fs:2473:36)
+    at createFsWatchInstance (file:///dist/node/chunks/dep-9A4-l-43.js:46210:17)
+
+Este error indica que se ha alcanzado el límite del sistema para el número de
+observadores de archivos (file watchers). En sistemas basados en Linux, macOS y
+otros sistemas Unix, hay un límite en la cantidad de archivos que pueden ser
+observados por el sistema de archivos en tiempo real para detectar cambios.
+
+Para solucionar este problema, puedes intentar aumentar el límite de
+observadores de archivos en tu sistema operativo. Aquí tienes algunos pasos para
+hacerlo:
+
+Ejecuta el siguiente comando para verificar el límite actual de observadores de
+archivos:
+
+$ cat /proc/sys/fs/inotify/max_user_watches
+
+Si el número devuelto es bajo, puedes aumentarlo temporalmente ejecutando:
+
+$ sudo sysctl fs.inotify.max_user_watches=524288
+
+o puedes aumentarlo permanentemente agregando esta línea al final de tu archivo
+/etc/sysctl.conf:
+
+fs.inotify.max_user_watches=524288
+
+Reinicia tu sistema o ejecuta sudo sysctl -p para aplicar los cambios.
+
+Una vez que hayas aumentado el límite de observadores de archivos, vuelve a
+intentar ejecutar tu aplicación y deberías evitar el error ENOSPC.
+
+Fuente
+======
+
+ChatGPT
