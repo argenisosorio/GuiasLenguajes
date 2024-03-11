@@ -5884,20 +5884,28 @@ Página para descarga: https://unetbootin.github.io/linux_download.html
 Podemos descargamos directamente el .bin, este enlace es para arquitecturas de
 64bits
 
-$ wget -c https://github.com/unetbootin/unetbootin/releases/download/657/unetbootin-linux64-657.bin
+$ wget -c https://github.com/unetbootin/unetbootin/releases/download/657/unetbootin-linux64-702.bin
 
-Eso nos descargara el fichero unetbootin-linux64-657.bin
+Eso nos descargara el fichero unetbootin-linux64-702.bin
 
 Instalamos lo siguiente, que son unas herramientas para manipular archivos
 MSDOS.
 
 # apt-get install mtools
 
-Para correrlo
+Ejecutamos el programa unetbootin-linux64-702.bin
 
-# ./unetbootin-linux64-657.bin
+# ./unetbootin-linux64-702.bin
 
 Listo, se nos debería ejecutar la ventana del programa.
+
+Si da problemas de permiso denegado cambiamos los permisos del script .bin
+
+# chmod -R 777 unetbootin-linux64-702.bin
+
+Luego, ejecutamos el programa unetbootin
+
+# ./unetbootin-linux64-702.bin
 
 ============================================
 Instalar Google Chrome en GNU/Linux Debian 8
