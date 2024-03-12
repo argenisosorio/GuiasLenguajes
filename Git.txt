@@ -1162,3 +1162,57 @@ Fuente
 ======
 
 ChatGPT
+
+===============================================================
+¿Cuál es la diferencia entre los comandos Git Fetch y Git Pull?
+===============================================================
+
+Git pull y fetch son dos comandos que son usados regularmente por los usuarios
+de Git. Veamos la diferencia entre ambos comandos.
+
+Por el contexto, vale la pena recordar que probablemente estemos trabajando en
+un repositorio clonado. ¿Qué es un clon? Es simplemente un duplicado de otro
+repositorio. Básicamente es obtener tu propia copia del código fuente de otra
+persona.
+
+Dicho esto, para mantener tu clon actualizado con cualquier cambio que se haya
+aplicado al original, necesitarás llevarlos a tu clon.
+
+Ahí es donde entran fetch y pull.
+
+git fetch es el comando que le dice a tu git local que recupere la última
+información de los metadatos del original (aunque no hace ninguna transferencia
+de archivos. Es más bien como comprobar si hay algún cambio disponible).
+
+git pull por otro lado hace eso Y trae (copia) esos cambios del repositorio
+remoto.
+
+Por ejemplo:
+
+$ git pull origin ankur bugfix
+
+Lo que hay que tomar de aquí es tener en cuenta que generalmente hay al menos
+tres copias de un proyecto en tu estación de trabajo.
+
+* Una copia es tu propio repositorio con tu propio historial de confirmación (el
+ya guardado, por así decirlo).
+
+* La segunda copia es tu copia de trabajo donde estás editando y construyendo
+(aún sin realizar commit a tu repositorio).
+
+* La tercera copia es tu copia local "en caché" de un repositorio remoto
+(probablemente el original de donde clonaste el tuyo).
+
+Puedes usar git fetch para saber los cambios hechos en el repo/rama remoto desde
+tu último pull. Esto es útil para permitir la comprobación antes de hacer un
+pull real, lo que podría cambiar los archivos en tu rama actual y en la copia de
+trabajo (y potencialmente perder tus cambios, etc.).
+
+$ git fetch
+
+$ git diff ...origin
+
+Fuente
+======
+
+https://www.freecodecamp.org/espanol/news/git-fetch-vs-pull-cual-es-la-diferencia-entre-los-comandos-git-fetch-y-git-pull/
