@@ -10228,11 +10228,16 @@ go version go1.15.15 linux/amd64
 
 $ go get github.com/mailhog/MailHog
 
-Esto creara la caprte "go" en la caprpeta personal, dentro está el software
+Si este comando falla, por get esta deprecado, se debe ejecutar el siguiente:
+
+$ go install github.com/mailhog/MailHog@latest
+
+Esto creara la carpeta "go" en la caprpeta personal, dentro está el software.
 
 4) Ejecutar MailHog
 
 $ ~/go/bin/MailHog
+
 2023/10/31 15:36:16 Using in-memory storage
 2023/10/31 15:36:16 [SMTP] Binding to address: 0.0.0.0:1025
 [HTTP] Binding to address: 0.0.0.0:8025
@@ -10266,6 +10271,20 @@ $ php artisan optimize:clear
 5) Listo, enviar cualquier email con la aplicación, por ejemplo el reseteo de
 contraseña, este debería ser interceptado por MailHog y mostrado en su bandeja
 de mensajes.
+
+Extra
+=====
+
+luego de hacer todo esto, quedara creada la carpeta "go" en el home del usuario,
+como esto puede ser molesto se puede cambiar el nombre de la carpeta "go" a
+".go" esto hará que la carpeta quede oculta, se puede hacer con el siguiente
+comando:
+
+$ mv go .go
+
+Y ahora para ejecutar MailHog se haría con el siguiente comando:
+
+$ ~/.go/bin/MailHog
 
 Fuentes
 =======
