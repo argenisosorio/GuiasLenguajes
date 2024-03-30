@@ -2062,3 +2062,35 @@ Fuentes
 =======
 
 https://www.w3schools.com/vue
+
+==============================================================
+Truncar o limitar la cantidad de texto o información a mostrar
+==============================================================
+
+Para limitar la cantidad de caracteres que se muestran en Vue, puedes usar un
+método para truncar el texto. Puedes crear un método personalizado en tu
+componente Vue para lograr esto. Aquí tienes un ejemplo de cómo podrías hacerlo:
+
+/**
+ * Truncar la cantidad de caracteres ded un texto que se muestran.
+*/
+const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+        return text.substring(0, maxLength) + '...';
+    } else {
+        return text;
+    }
+}
+
+Y en tu plantilla Vue, puedes llamar a este método para truncar el texto antes
+de mostrarlo:
+
+<span v-html="truncateText(service.description, 30)"></span>
+
+De esta manera, el método `truncateText` tomará la descripción del servicio y la
+truncará a un máximo de 30 caracteres antes de mostrarla en tu página.
+
+Fuente
+======
+
+LuzIA
