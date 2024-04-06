@@ -1,0 +1,205 @@
+=====================
+Guía de MongoDB by dM
+=====================
+
+¿Qué es MongoDB?
+================
+
+MongoDB es un sistema de gestión de bases de datos (DBMS) NoSQL, es decir, una
+base de datos no relacional. Fue desarrollado por la compañía MongoDB Inc. y se
+basa en un modelo de almacenamiento de datos de tipo documento. En lugar de usar
+tablas y filas como en las bases de datos relacionales tradicionales, MongoDB
+almacena datos en documentos JSON (JavaScript Object Notation) con un esquema
+dinámico, lo que significa que las estructuras de datos pueden variar de un
+documento a otro en la misma colección.
+
+Algunas características destacadas de MongoDB incluyen:
+
+-Escalabilidad horizontal: MongoDB está diseñado para escalar horizontalmente de
+manera eficiente, lo que permite manejar grandes volúmenes de datos
+distribuyendo la carga de trabajo en múltiples servidores.
+
+-Flexibilidad de esquema: A diferencia de las bases de datos relacionales que
+requieren un esquema predefinido y estructura rígida, MongoDB permite una mayor
+flexibilidad, lo que facilita la evolución del esquema con el tiempo.
+
+-Rendimiento: MongoDB está optimizado para ofrecer un rendimiento rápido en
+operaciones de lectura y escritura, lo que lo hace adecuado para una amplia gama
+de aplicaciones, incluidas las de alta disponibilidad y rendimiento.
+
+-Consultas avanzadas: MongoDB ofrece un potente sistema de consultas que incluye
+soporte para consultas ad hoc, consultas enriquecidas y agregaciones complejas.
+
+En resumen, MongoDB es una opción popular para aplicaciones que requieren una
+base de datos flexible, escalable y de alto rendimiento, especialmente en
+entornos donde la estructura de los datos puede cambiar con el tiempo o donde se
+necesitan operaciones de bases de datos intensivas.
+
+Fuente
+======
+
+ChatGPT
+
+==================================
+Instalación en GNU/Linux Debian 11
+==================================
+
+1- Importar la clave del repositorio
+
+$ curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
+   sudo gpg -o /etc/apt/trusted.gpg.d/mongodb-server-7.0.gpg \
+   --dearmor
+
+# curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
+   sudo gpg -o /etc/apt/trusted.gpg.d/mongodb-server-7.0.gpg \
+   --dearmor
+
+2- Crear el archivo mongodb-org-7.0.list
+
+# touch /etc/apt/sources.list.d/mongodb-org-7.0.list
+
+3- Copiar dentro de ese archivo lo siguiente:
+
+deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/debian bullseye/mongodb-org/7.0 main
+
+4- Guardar y actualizar con:
+
+# apt update
+
+5- Instalación de MongoDB:
+
+# apt-get install mongodb-org
+
+6- Verificamos la instalación:
+
+$ mongod --version
+
+db version v7.0.8
+Build Info: {
+    "version": "7.0.8",
+    "gitVersion": "c5d33e55ba38d98e2f48765ec4e55338d67a4a64",
+    "openSSLVersion": "OpenSSL 1.1.1w  11 Sep 2023",
+    "modules": [],
+    "allocator": "tcmalloc",
+    "environment": {
+        "distmod": "debian11",
+        "distarch": "x86_64",
+        "target_arch": "x86_64"
+    }
+}
+
+Fuentes
+=======
+
+https://www.mongodb.com/community/forums/t/getting-error-while-updating-mongodb-from-6-to-7-in-ubuntu-22-04/239822/6
+
+https://www.ionos.es/digitalguide/paginas-web/desarrollo-web/install-mongodb-en-ubuntu/
+
+===============================
+Gestión del servicio de MongoDB
+===============================
+
+Inicie MongoDB.
+
+Puede iniciar el proceso mongod emitiendo el siguiente comando:
+
+$ sudo systemctl start mongod
+
+-----
+
+Si recibe un error similar al siguiente al iniciar mongod:
+
+Failed to start mongod.service: Unit mongod.service not found.
+
+Ejecute el siguiente comando primero:
+
+$ sudo systemctl daemon-reload 
+
+Luego ejecute el comando de inicio anterior nuevamente.
+
+-----
+
+Verifique que MongoDB se haya iniciado correctamente.
+
+$ sudo systemctl status mongod
+
+Opcionalmente, puede asegurarse de que MongoDB comience después de reiniciar el
+sistema emitiendo el siguiente comando:
+
+$ sudo systemctl enable mongod
+
+-----
+
+Detener MongoDB:
+
+$ sudo systemctl stop mongod
+
+-----
+
+Reiniciar MongoDB:
+
+
+$ sudo systemctl restart mongod
+
+Puede seguir el estado del proceso en busca de errores o mensajes importantes
+observando el resultado en el archivo /var/log/mongodb/mongod.log.
+
+-----
+
+Comience a usar MongoDB:
+
+Inicie una sesión de mongosh en la misma máquina host que mongod. Puede ejecutar
+mongosh sin ninguna opción de línea de comandos para conectarse a un mongod que
+se esté ejecutando en su host local con el puerto predeterminado 27017.
+
+$ mongosh
+
+Fuente
+======
+
+https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-debian/#std-label-install-mdb-community-debian
+
+=======================
+Ver los logs de mongodb
+=======================
+
+$ sudo cat /var/log/mongodb/mongod.log
+
+===========================
+Error iniciando el servicio
+===========================
+
+Al iniciar el servicio revisando los logs daba este error:
+
+{"t":{"$date":"2024-04-06T01:07:36.901-04:00"},"s":"E",  "c":"NETWORK",  "id":23024,   "ctx":"initandlisten","msg":"Failed to unlink socket file","attr":{"path":"/tmp/mongodb-27017.sock","error":"Operation not permitted"}}
+{"t":{"$date":"2024-04-06T01:07:36.901-04:00"},"s":"F",  "c":"ASSERT",   "id":23091,   "ctx":"initandlisten","msg":"Fatal assertion","attr":{"msgid":40486,"file":"src/mongo/transport/asio/asio_transport_layer.cpp","line":1202}}
+{"t":{"$date":"2024-04-06T01:07:36.901-04:00"},"s":"F",  "c":"ASSERT",   "id":23092,   "ctx":"initandlisten","msg":"\n\n***aborting after fassert() failure\n\n"}
+
+El error que estaba experimentando indica que MongoDB no puede eliminar el
+archivo de socket /tmp/mongodb-27017.sock, y esto está causando una falla fatal
+en el proceso de inicio. Parece ser un problema relacionado con los permisos del
+sistema de archivos.
+
+Aquí hay algunas acciones que podrías intentar para solucionar este problema:
+
+Verificar permisos del directorio /tmp: Asegúrate de que el directorio /tmp
+tenga los permisos correctos para que MongoDB pueda crear y eliminar archivos.
+Puedes ejecutar el siguiente comando para verificar los permisos:
+
+$ ls -ld /tmp
+
+Si los permisos no son adecuados, puedes corregirlos con el siguiente comando:
+
+$ sudo chmod 1777 /tmp
+
+Eliminar manualmente el archivo de socket: Intenta eliminar manualmente el
+archivo de socket /tmp/mongodb-27017.sock utilizando el siguiente comando:
+
+$ sudo rm /tmp/mongodb-27017.sock
+
+Luego, intenta reiniciar MongoDB.
+
+Fuente
+======
+
+ChatGPT
