@@ -48,8 +48,8 @@ herramientas de complicación.
 
 -Salida CLI legible, y mínima.
 
-¿Vale la pena seguir utilizando Yarn en 2021?
-=============================================
+¿Vale la pena seguir utilizando Yarn?
+=====================================
 
 Desde la versión 5 de npm que el equipo de npm introdujo algunas características
 que hicieron acortar la brecha entre Yarn y npm, por ejemplo el “bloqueo de
@@ -78,3 +78,39 @@ Fuente
 ======
 
 -https://www.itdo.com/blog/javascript-que-es-yarn/
+
+==========================================
+Instalación de Yarn en GNU/Linux Debian 12
+==========================================
+
+Yarn dispone de un repositorio propio para su instalación, ya que por defecto no
+viene en los repositorios, así que tendremos que añadir primero la clave GPG del
+repositorio:
+
+$ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo gpg --dearmor -o /usr/share/keyrings/yarnkey.gpg
+
+Luego deberemos de añadir el repositorio con la llave GPG:
+
+$ echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+Tras esto, solo queda actualizar repositorios:
+
+$ sudo apt update
+
+Finalmente, tocará instalar el paquete para instalar Yarn:
+
+$ sudo apt install yarn
+
+Ten en cuenta que debes de tener instalado NodeJS previamente, si no está
+instalado este se instala con el comando anterior.
+
+Verificar la versión
+
+$ yarn -v
+
+1.22.19
+
+Fuente
+======
+
+https://voidnull.es/como-instalar-yarn-en-debian-12/
