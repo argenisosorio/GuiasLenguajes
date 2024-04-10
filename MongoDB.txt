@@ -117,7 +117,7 @@ Failed to start mongod.service: Unit mongod.service not found.
 
 Ejecute el siguiente comando primero:
 
-$ sudo systemctl daemon-reload 
+$ sudo systemctl daemon-reload
 
 Luego ejecute el comando de inicio anterior nuevamente.
 
@@ -141,7 +141,6 @@ $ sudo systemctl stop mongod
 -----
 
 Reiniciar MongoDB:
-
 
 $ sudo systemctl restart mongod
 
@@ -207,3 +206,11 @@ Fuente
 ======
 
 ChatGPT
+
+=================
+Eliminar paquetes
+=================
+
+Elimine cualquier paquete de MongoDB que haya instalado previamente.
+
+$ sudo apt-get purge "mongodb-org*"
