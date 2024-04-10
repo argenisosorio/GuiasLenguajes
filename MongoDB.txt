@@ -40,9 +40,9 @@ Fuente
 
 ChatGPT
 
-==================================
-Instalación en GNU/Linux Debian 11
-==================================
+=======================================
+Instalación en GNU/Linux Debian 11 y 12
+=======================================
 
 1- Importar la clave del repositorio
 
@@ -62,13 +62,17 @@ $ curl -fsSL https://pgp.mongodb.com/server-7.0.asc | \
 
 deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/debian bullseye/mongodb-org/7.0 main
 
+Para GNU/Linux Debian 12 cambia el bullseye por bookworm
+
+deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/debian bookworm/mongodb-org/7.0 main
+
 4- Guardar y actualizar con:
 
 # apt update
 
 5- Instalación de MongoDB:
 
-# apt-get install mongodb-org
+$ sudo apt install mongodb-org
 
 6- Verificamos la instalación:
 
