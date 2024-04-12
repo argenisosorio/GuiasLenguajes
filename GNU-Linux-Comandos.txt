@@ -1174,6 +1174,8 @@ Visualiza información sobre "todos" los procesos del sistema.
 
 $ ps -e
 
+-----
+
 Visualiza información sobre "todos" los procesos del sistema con mas detalles,
 así pues se puede detener un proceso con kill -9 PID_number.
 
@@ -1183,6 +1185,16 @@ Filtrar la búsqueda, en este caso, buscando el proceso que alberga el visor pdf
 evince.
 
 $ ps -ef | grep evince
+
+-----
+
+pidof es una utilidad de la línea de comandos de Linux que devuelve el ID de un
+proceso (PID) o procesos.
+
+$ pidof firefox
+2993
+
+-----
 
 Filtrar la búsqueda para ver las conexiones ssh activas, nuevamente se aclara
 que podemos matar esos procesos con kill -9 xxx pasandole el PID process.
@@ -2088,7 +2100,7 @@ deseamos instalar.
 Si queremos por ejemplo instalar GIMP, un programa para la manipulación de
 imágenes, se haría de la siguiente manera:
 
-$ apt-get install gimp
+$ sudo apt-get install gimp
 
 ================================
 Comprobando el espacio utilizado
