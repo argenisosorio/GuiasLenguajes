@@ -8105,7 +8105,7 @@ llamará b.txt y hacerle modificaciones:
 2- Comparar las diferencias con git diff, se requiere tener instalado el paquete
 git:
 
-$ git diff diff a.txt b.txt
+$ git diff a.txt b.txt
 
 3- Crear archivo que contiene la mezcla de ambos archivo, lo cual incluye las
 modificaciones:
@@ -8122,6 +8122,35 @@ b.txt:
 $ patch < mods.diff
 
 El resultado es que ahora a.txt y b.txt son iguales.
+
+====================================
+Aplicar parche de múltiples archivos
+====================================
+
+En este ejemplo necesitamos aplicar los cambios de b.txt en a.txt y de d.txt en
+c.txt
+
+Primero, necesitas crear un archivo que contenga las diferencias entre a.txt y
+b.txt, así como entre c.txt y d.txt.
+
+Luego, puedes combinar ambos conjuntos de diferencias en un solo archivo mods.diff.
+
+Aquí tienes los pasos detallados:
+
+Genera las diferencias entre a.txt y b.txt, y entre c.txt y d.txt:
+
+$ diff -u a.txt b.txt > diffs_ab.diff
+
+$ diff -u c.txt d.txt > diffs_cd.diff
+
+Combina ambos archivos de diferencias en uno solo, mods.diff:
+
+$ cat diffs_ab.diff diffs_cd.diff > mods.diff
+
+Ahora, mods.diff contendrá las diferencias entre a.txt y b.txt, así como entre
+c.txt y d.txt, en un solo archivo y aplicar el parche con:
+
+patch < mods.diff
 
 ================================================================
 Monitorear temperatura del CPU y otros componentes de la máquina
