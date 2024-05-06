@@ -8152,6 +8152,118 @@ c.txt y d.txt, en un solo archivo y aplicar el parche con:
 
 $ patch < mods.diff
 
+====================================================================
+Aplicar parche de múltiples archivos que están dentro de directorios
+====================================================================
+
+En este ejemplo vamos a aplicar el parche de modificaciones sobre 2 archivos:
+ReportController.php y UserController.php que están dentro de directorios
+
+└── project
+    ├── reports
+    │   └── ReportController.php
+    └── users
+        └── UserController.php
+
+1- En la carpeta raíz deberemos tener a project/ ReportControllerMod.php y
+UserControllerMod.php que son los archivos modificados y el proyecto con los
+archivos originales.
+
+2- Ahora hacemos que la carpet project sea un repo de git local:
+
+project$ git init
+
+3- Luego hacer un commit:
+
+project$ git add .
+
+project$ git commit -m "Initial commit"
+
+Con esto el commit inicial tiene la versión sin moficicar.
+
+4- Ahora hacemos las modificaciones en los archivos ReportController.php y
+UserController.php y hacemos un nuevo commit con esas modificaciones.
+
+Debemos tener 2 commit, algo como esto:
+
+project$ git log
+commit 851b8e64b3462f46fefd96dd3db2ad05276624bf (HEAD -> master)
+Author: Timmy Hardwell <thardwell@mail.com>
+Date:   Fri May 3 21:00:46 2024 -0400
+
+    Modificando archivos
+
+commit 5e61aa093a2b40fe34a1d5e389ad997794986b7d
+Author: Timmy Hardwell <thardwell@mail.com>
+Date:   Fri May 3 20:57:19 2024 -0400
+
+    Initial commit
+
+5- Ahora vamos a usar la funcionalidad format-patch de git para ver las
+diferencias entre el primer commit y el final del log,
+5e61aa093a2b40fe34a1d5e389ad997794986b7d es el hash del primero commit
+
+project$ git format-patch --stdout 5e61aa093a2b40fe34a1d5e389ad997794986b7d | less
+
+La salida del comando anterior son las diferencias, solo para examinarlas.
+
+6- Ahora vamos a generar un archivo .diff con las modificaciones y lo guardamos
+en la carpeta raíz
+
+project$ git format-patch --stdout 5e61aa093a2b40fe34a1d5e389ad997794986b7d > /home/user/mods.diff
+
+El archivo mods.diff contentra algo como esto:
+
+From 851b8e64b3462f46fefd96dd3db2ad05276624bf Mon Sep 17 00:00:00 2001
+From: Timmy Hardwell <thardwell@mail.com>
+Date: Fri, 3 May 2024 21:00:46 -0400
+Subject: [PATCH] Modificando archivos
+
+---
+ reports/ReportController.php | 3 ++-
+ users/UserController.php     | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/reports/ReportController.php b/reports/ReportController.php
+index d988ef9..2cb8d50 100644
+--- a/reports/ReportController.php
++++ b/reports/ReportController.php
+@@ -1 +1,2 @@
+-test report controller
+\ No newline at end of file
++test report controller
++new line in report controller
+\ No newline at end of file
+diff --git a/users/UserController.php b/users/UserController.php
+index d7883c0..76418b5 100644
+--- a/users/UserController.php
++++ b/users/UserController.php
+@@ -1 +1,2 @@
+-test user controller
+\ No newline at end of file
++test user controller
++new line in user controller
+\ No newline at end of file
+-- 
+2.39.2
+
+7- Ahora estando dentro de la carpeta project vamos a ejecutar un comando 
+para aplicar el parche mods.diff que está en la carpeta raíz:
+
+project$ patch -p1 < ../mods.diff
+
+Esto habrá aplicado las modificaciones sobre los archivos correspondientes
+
+Nota: No se necesita tener git para aplicar los parches y no importa si no
+está versionada con git la carpeta donde se aplicaran las modificaciones pero 
+en esta guía si se necesita git para generar el archivo con las modificaciones.
+
+Fuentes
+=======
+
+ChatGPT
+Ing. Dhionel Díaz
+
 ================================================================
 Monitorear temperatura del CPU y otros componentes de la máquina
 ================================================================
