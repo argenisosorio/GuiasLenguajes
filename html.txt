@@ -4714,3 +4714,28 @@ Desactivar los slides del carousel de Bootstrap
     interval: false,
   });
 </script>
+
+===================================
+Hover de una imágen por otra con js
+===================================
+
+<img
+  id="my-img"
+  src="static/img/banner.png"
+  onmouseover="hover(this);"
+  onmouseout="unhover(this);"
+/>
+
+<script>
+  function unhover(element) {
+    element.setAttribute('src', 'static/img/banner.png');
+  }
+  function hover(element) {
+    element.setAttribute('src', 'static/img/banner2.png');
+  }
+</script>
+
+Fuente
+======
+
+https://stackoverflow.com/questions/18032220/how-to-change-source-of-img-tag-on-hover
