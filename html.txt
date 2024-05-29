@@ -4739,3 +4739,54 @@ Fuente
 ======
 
 https://stackoverflow.com/questions/18032220/how-to-change-source-of-img-tag-on-hover
+
+========================================
+Reproducir sonido mp3 con click en botón
+========================================
+
+1- Asegúrate de tener un archivo de sonido (por ejemplo, click-sound.mp3) en la
+carpeta de tu proyecto.
+
+2- Crea un archivo HTML e incluye el código necesario para reproducir el sonido.
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproducir Sonido al Hacer Clic</title>
+</head>
+<body>
+    <button id="play-sound-button">Haz clic para reproducir sonido</button>
+
+    <audio id="click-sound" src="click-sound.mp3"></audio>
+
+    <script>
+        document.getElementById('play-sound-button').addEventListener('click', function() {
+            var audio = document.getElementById('click-sound');
+            audio.play();
+        });
+    </script>
+</body>
+</html>
+
+HTML Básico: El archivo HTML contiene un botón (<button>) y un elemento <audio>
+con el atributo id que apunta al archivo de sonido.
+
+Elemento <audio>: El elemento <audio> tiene un atributo id y un atributo src que
+apunta al archivo MP3. Este elemento se utilizará para reproducir el sonido.
+
+JavaScript:
+  - Selecciona el botón por su id (play-sound-button).
+
+  -Añade un evento click al botón que, al ser activado, selecciona el elemento
+  <audio> por su id (click-sound) y llama al método play() para reproducir el sonido.
+  Con este código, cada vez que hagas clic en el botón, se reproducirá el
+  sonido especificado. Asegúrate de que el archivo click-sound.mp3 esté en la
+  misma carpeta que tu archivo HTML, o ajusta la ruta del archivo si está en una
+  ubicación diferente.
+
+Fuente
+======
+
+ChatGPT
