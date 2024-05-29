@@ -4790,3 +4790,38 @@ Fuente
 ======
 
 ChatGPT
+
+==============================================
+Reproducir sonido mp3 con hover sibre span tag
+==============================================
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproducir Sonido al Hacer Hover</title>
+    <style>
+        #hover-span {
+            display: inline-block;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <span id="hover-span">Pasa el mouse por aquí</span>
+
+    <audio id="hover-sound" src="click-sound.mp3"></audio>
+
+    <script>
+        document.getElementById('hover-span').addEventListener('mouseover', function() {
+            var audio = document.getElementById('hover-sound');
+            audio.play();
+        });
+    </script>
+</body>
+</html>
+
