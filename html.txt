@@ -4622,6 +4622,80 @@ Fuentes
 https://dev.to/dmx/spinner-facil-y-rapido-5bei
 https://cybmeta.com/diferencia-async-y-defer
 
+========================================
+Imagen como spinner de carga, da vueltas
+========================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spinner</title>
+  <style>
+    /* Creamos el diseño del spinner y lo centramos en la página */
+    .spinner-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7); /* Fondo gris oscuro con opacidad */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999; /* Asegura que el spinner esté en la parte superior */
+    }
+
+    /* Modificamos el tamaño de la imagen para que sea más grande */
+    .spinner-img {
+      width: 100px;
+      height: 100px;
+      animation: spin 1s infinite linear; /* Agregamos la animación */
+    }
+
+    /* Pasos de la animación con keyframes */
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Clase para detener la animación */
+    .stop-spin {
+      animation-play-state: paused;
+    }
+  </style>
+</head>
+<body>
+  <!-- Mostramos la imagen como spinner de carga -->
+  <div class="spinner-container" id="spinnerContainer">
+    <!-- Cambiamos el div con la clase "spinner" por una imagen -->
+    <img src="robot.png" alt="Spinner" class="spinner-img">
+  </div>
+
+  <!-- Contenido de la página -->
+  <h1>Contenido de la página</h1>
+  <p>Este es un ejemplo de página con un spinner.</p>
+
+  <script>
+    // Función para ocultar el spinner después de 5 segundos
+    window.addEventListener('load', function() {
+      var spinnerContainer = document.getElementById('spinnerContainer');
+      var spinnerImg = document.querySelector('.spinner-img');
+
+      // Retraso de 5 segundos (5000 milisegundos)
+      setTimeout(function() {
+        spinnerContainer.style.display = 'none';
+        spinnerImg.classList.add('stop-spin'); // Detiene la animación
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
+
 ========================
 Insertar videos en html5
 ========================
@@ -4739,3 +4813,89 @@ Fuente
 ======
 
 https://stackoverflow.com/questions/18032220/how-to-change-source-of-img-tag-on-hover
+
+========================================
+Reproducir sonido mp3 con click en botón
+========================================
+
+1- Asegúrate de tener un archivo de sonido (por ejemplo, click-sound.mp3) en la
+carpeta de tu proyecto.
+
+2- Crea un archivo HTML e incluye el código necesario para reproducir el sonido.
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproducir Sonido al Hacer Clic</title>
+</head>
+<body>
+    <button id="play-sound-button">Haz clic para reproducir sonido</button>
+
+    <audio id="click-sound" src="click-sound.mp3"></audio>
+
+    <script>
+        document.getElementById('play-sound-button').addEventListener('click', function() {
+            var audio = document.getElementById('click-sound');
+            audio.play();
+        });
+    </script>
+</body>
+</html>
+
+HTML Básico: El archivo HTML contiene un botón (<button>) y un elemento <audio>
+con el atributo id que apunta al archivo de sonido.
+
+Elemento <audio>: El elemento <audio> tiene un atributo id y un atributo src que
+apunta al archivo MP3. Este elemento se utilizará para reproducir el sonido.
+
+JavaScript:
+  - Selecciona el botón por su id (play-sound-button).
+
+  -Añade un evento click al botón que, al ser activado, selecciona el elemento
+  <audio> por su id (click-sound) y llama al método play() para reproducir el sonido.
+  Con este código, cada vez que hagas clic en el botón, se reproducirá el
+  sonido especificado. Asegúrate de que el archivo click-sound.mp3 esté en la
+  misma carpeta que tu archivo HTML, o ajusta la ruta del archivo si está en una
+  ubicación diferente.
+
+Fuente
+======
+
+ChatGPT
+
+==============================================
+Reproducir sonido mp3 con hover sibre span tag
+==============================================
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reproducir Sonido al Hacer Hover</title>
+    <style>
+        #hover-span {
+            display: inline-block;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <span id="hover-span">Pasa el mouse por aquí</span>
+
+    <audio id="hover-sound" src="click-sound.mp3"></audio>
+
+    <script>
+        document.getElementById('hover-span').addEventListener('mouseover', function() {
+            var audio = document.getElementById('hover-sound');
+            audio.play();
+        });
+    </script>
+</body>
+</html>
+
