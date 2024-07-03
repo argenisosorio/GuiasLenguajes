@@ -5972,6 +5972,19 @@ Ahora instalamos Google Chrome stable con:
 Si toda va bien, debería estar disponible en la sección internet de nuestro
 GNU/Linux Debian 8 o 9
 
+Actualizar chrome
+=================
+
+1- Se debe tener habilitado esto en los repos:
+
+deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+
+2- Luego actualizar la lista de paquetes:
+
+$ sudo apt update
+
+$ sudo apt install --only-upgrade google-chrome-stable
+
 ==================================================
 Instalar Google Chrome en GNU/Linux Debian 10 y 11
 ==================================================
