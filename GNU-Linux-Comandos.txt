@@ -9395,3 +9395,43 @@ Fuente
 ======
 
 https://manpages.ubuntu.com/manpages/focal/man1/gnome-session-quit.1.html
+
+
+¿Que es Serialización en programación?
+======================================
+
+La serialización en programación es el proceso de convertir un objeto en una
+secuencia de bytes u otro formato de datos que se pueda almacenar o transmitir.
+Esto permite que los datos puedan ser guardados en un archivo, enviados a través
+de una red o almacenados en una base de datos y posteriormente deserializados
+para recuperar el objeto original.
+
+Algunos formatos comunes de serialización incluyen JSON y XML.
+
+Aquí hay un ejemplo simple en Python usando JSON:
+
+--- Serialización ---
+
+import json
+
+# Un objeto en Python
+data = {
+  'name': 'John',
+  'age': 30,
+  'city': 'New York'
+}
+
+# Convertir el objeto a una cadena JSON
+json_data = json.dumps(data)
+print(json_data)
+
+# Deserialización
+
+# Convertir la cadena JSON de nuevo a un objeto de Python
+data_back = json.loads(json_data)
+print(data_back)
+
+Fuente
+======
+
+ChatGPT
