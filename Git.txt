@@ -1216,3 +1216,38 @@ Fuente
 ======
 
 https://www.freecodecamp.org/espanol/news/git-fetch-vs-pull-cual-es-la-diferencia-entre-los-comandos-git-fetch-y-git-pull/
+
+===================================================
+Traerse rama remota del repositorio remoto al local
+===================================================
+
+Para traer la rama "nombre_rama" de tu repositorio remoto a tu repositorio local
+puedes seguir estos pasos:
+
+1- Actualiza las referencias de las ramas remotas:
+
+Ejecuta el siguiente comando en tu repositorio local:
+
+$ git fetch origin
+
+Este comando actualizará las referencias de las ramas remotas en tu repositorio
+local, lo que significa que Git obtendrá la información más reciente sobre las
+ramas de tu repositorio remoto, incluida nombre_rama.
+
+2- Crea la rama local nombre_rama:
+
+Ejecuta el siguiente comando para crear una rama local llamada nombre_rama que
+rastrea la rama remota origin/nombre_rama:
+
+$ git checkout -b nombre_rama origin/nombre_rama
+
+Este comando creará una nueva rama local llamada nombre_rama y te cambiará a
+ella. También establecerá un enlace de seguimiento entre la rama local
+nombre_rama y la rama remota origin/nombre_rama. Esto significa que, en el
+futuro, cuando ejecutes git fetch, los cambios realizados en la rama remota
+origin/nombre_rama se fusionarán automáticamente con tu rama local nombre_rama.
+
+Fuente
+======
+
+Gemini IA
