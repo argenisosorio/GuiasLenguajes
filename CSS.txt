@@ -1,0 +1,281 @@
+=================
+Guía de CSS by dM
+=================
+
+¿Qué son las Media Queries?
+===========================
+
+Las media queries son una parte fundamental del diseño web adaptable (responsive
+design). Permiten aplicar estilos CSS específicos dependiendo de las
+características del dispositivo que esté visualizando la página, como el ancho o
+la altura de la pantalla, la orientación, la resolución, entre otras.
+
+Las media queries son una característica de CSS3 que permiten aplicar estilos
+condicionalmente, basándose en el tipo de dispositivo y sus características.
+
+La sintaxis básica es:
+
+@media (condición) {
+  /* Reglas CSS */
+}
+
+Ejemplos de Media Queries
+=========================
+
+Adaptar el Diseño Según el Ancho de la Pantalla
+
+Uno de los usos más comunes es cambiar el diseño de una página web según el
+ancho de la pantalla del dispositivo.
+
+/* Estilos para dispositivos con un ancho máximo de 600px (ej. móviles) */
+@media (max-width: 600px) {
+  body {
+    background-color: lightblue;
+  }
+}
+
+/* Estilos para dispositivos con un ancho mínimo de 601px (ej. tabletas y escritorios) */
+@media (min-width: 601px) {
+  body {
+    background-color: lightgreen;
+  }
+}
+
+Ejemplo html y css:
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      /* Estilos para dispositivos con un ancho máximo de 600px (ej. móviles) */
+      @media (max-width: 600px) {
+        .container {
+          border: ridge 1px red;
+          background-color: blue;
+        }
+      }
+
+      /* Estilos para dispositivos con un ancho mínimo de 601px (ej. tabletas y escritorios) */
+      @media (min-width: 601px) {
+        .container {
+          border: ridge 1px red;
+          background-color: gray;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p>
+        <b>LVM (Logical Volume Manager)</b>
+        <br>
+        En Linux es una tecnología que permite gestionar el almacenamiento de manera más
+        flexible y dinámica. Con LVM, puedes crear volúmenes lógicos que pueden
+        expandirse y contraerse fácilmente, independientemente del tamaño físico de los
+        discos subyacentes. Esto facilita tareas como la creación de particiones
+        grandes, la gestión de espacio libre entre discos y la realización de copias de
+        seguridad mientras el sistema está en funcionamiento.
+      </p>
+    </div>
+  </body>
+</html>
+
+Adaptar el Diseño Según la Orientación del Dispositivo
+======================================================
+
+También puedes aplicar estilos según la orientación del dispositivo (horizontal
+o vertical).
+
+/* Estilos para dispositivos en modo vertical */
+@media (orientation: portrait) {
+  body {
+    background-color: lightcoral;
+  }
+}
+
+/* Estilos para dispositivos en modo horizontal */
+@media (orientation: landscape) {
+  body {
+    background-color: lightseagreen;
+  }
+}
+
+Usar Media Queries con Varias Condiciones
+=========================================
+
+Puedes combinar varias condiciones para crear reglas más específicas.
+
+/* Estilos para dispositivos con un ancho máximo de 800px y en modo vertical */
+@media (max-width: 800px) and (orientation: portrait) {
+  body {
+    background-color: lightgoldenrodyellow;
+  }
+}
+
+Buenas Prácticas
+================
+
+1- Mobile First: Comienza diseñando para dispositivos móviles y luego utiliza
+media queries para adaptarlo a pantallas más grandes. Esto generalmente se hace
+usando min-width en las media queries.
+
+/* Estilos para móviles */
+body {
+  background-color: white;
+}
+
+/* Estilos para pantallas de al menos 600px */
+@media (min-width: 600px) {
+  body {
+    background-color: lightgreen;
+  }
+}
+
+2- Usa Unidades Relativas: Prefiere unidades relativas como em y % sobre
+unidades absolutas como px para mejorar la flexibilidad y adaptabilidad de los
+estilos.
+
+3- Testea en Múltiples Dispositivos: Asegúrate de probar tu diseño en diferentes
+dispositivos y tamaños de pantalla para garantizar una experiencia de usuario
+consistente.
+
+Tamaños de pantallas más comunes
+================================
+
+Los tamaños de pantallas más comunes varían, pero aquí hay una lista de los
+tamaños más utilizados para diseñar sitios web adaptables. Estos puntos de
+ruptura (breakpoints) son una guía y pueden ajustarse según las necesidades
+específicas de tu proyecto.
+
+Tamaños de Pantalla Comunes y Breakpoints
+
+Dispositivos Móviles:
+
+Pequeños móviles (teléfonos pequeños)
+320px (ancho)
+
+Móviles medianos (teléfonos medianos)
+375px (ancho)
+
+Móviles grandes (teléfonos grandes)
+425px (ancho)
+
+/* Estilos para dispositivos móviles pequeños */
+@media (max-width: 320px) {
+  /* Reglas CSS */
+}
+
+/* Estilos para dispositivos móviles medianos */
+@media (max-width: 375px) {
+  /* Reglas CSS */
+}
+
+/* Estilos para dispositivos móviles grandes */
+@media (max-width: 425px) {
+  /* Reglas CSS */
+}
+
+Dispositivos Tablet:
+
+Tabletas pequeñas
+600px (ancho)
+
+Tabletas medianas a grandes
+768px (ancho)
+
+/* Estilos para tabletas pequeñas */
+@media (max-width: 600px) {
+  /* Reglas CSS */
+}
+
+/* Estilos para tabletas medianas a grandes */
+@media (max-width: 768px) {
+  /* Reglas CSS */
+}
+
+Dispositivos de Escritorio:
+
+Escritorios pequeños
+1024px (ancho)
+
+Escritorios medianos
+1280px (ancho)
+
+Escritorios grandes
+1440px (ancho)
+
+Escritorios muy grandes
+1920px (ancho)
+
+/* Estilos para escritorios pequeños */
+@media (max-width: 1024px) {
+  /* Reglas CSS */
+}
+
+/* Estilos para escritorios medianos */
+@media (max-width: 1280px) {
+  /* Reglas CSS */
+}
+
+/* Estilos para escritorios grandes */
+@media (max-width: 1440px) {
+  /* Reglas CSS */
+}
+
+/* Estilos para escritorios muy grandes */
+@media (max-width: 1920px) {
+  /* Reglas CSS */
+}
+
+Estos tamaños son una guía y pueden variar según el proyecto. Es importante
+probar el diseño en diferentes dispositivos y ajustar los breakpoints según sea
+necesario.
+
+Script de JavaScript para mostrar el tamaño de la pantalla en cada momento
+==========================================================================
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>XXX</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      /* Tus estilos CSS aquí */
+      .container {
+        border: ridge 1px red;
+        background-color: gray;
+        color: white;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="screen-size"></div>
+    </div>
+
+    <script>
+      function updateScreenSize() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        document.getElementById('screen-size').textContent
+          = `Ancho de pantalla: ${width}px, Alto de pantalla: ${height}px`;
+      }
+
+      // Actualiza el tamaño de la pantalla al cargar la página
+      updateScreenSize();
+
+      // Actualiza el tamaño de la pantalla cuando la ventana cambia de tamaño
+      window.addEventListener('resize', updateScreenSize);
+    </script>
+  </body>
+</html>
+
+Fuente
+======
+
+ChatGPT
