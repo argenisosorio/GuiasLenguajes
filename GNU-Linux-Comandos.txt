@@ -1371,7 +1371,7 @@ descubrir hosts y servicios, así como realizar análisis de seguridad en una re
 
 1- Instalar Nmap:
 
-sudo apt install nmap
+$ sudo apt install nmap
 
 2- Ejecutar Nmap:
 
@@ -9473,3 +9473,58 @@ Fuente
 ======
 
 https://hijosdeinit.gitlab.io/howto_botones_maximizar_minimizar_Debian_10_buster/
+
+====================================
+Dirección MAC (Media Access Control)
+====================================
+
+Una dirección MAC (Media Access Control) es un identificador único asignado a
+cada interfaz de red de un dispositivo. Esta dirección es utilizada para la
+comunicación dentro de una red local y es esencialmente la "dirección física"
+del dispositivo en la red.
+
+Características de la Dirección MAC:
+
+Formato: La dirección MAC se representa generalmente en notación hexadecimal y
+consta de 48 bits, divididos en seis grupos de dos dígitos separados por dos
+puntos o guiones. Por ejemplo:
+
+00:1A:2B:3C:4D:5E
+
+Unicidad: Cada dispositivo de red tiene una dirección MAC única. Esta dirección
+es asignada por el fabricante del dispositivo y es, en teoría, única en todo el
+mundo.
+
+Inmutabilidad: La dirección MAC está grabada en el hardware de la tarjeta de red
+(NIC) del dispositivo y no cambia, a menos que se realice un spoofing o cambio
+deliberado mediante software.
+
+¿Cómo se usa la Dirección MAC?
+
+Identificación: En una red local (LAN), los dispositivos se identifican y se
+comunican entre sí usando sus direcciones MAC.
+
+Seguridad: Algunas redes utilizan filtros de dirección MAC para permitir o
+denegar el acceso a la red a dispositivos específicos.
+
+Comunicación: La dirección MAC es utilizada por el protocolo Ethernet para
+asegurar que los paquetes de datos lleguen a la interfaz de red correcta en la
+red local.
+
+Ver la Dirección MAC en un Dispositivo:
+
+Para ver la dirección MAC de tu dispositivo, puedes usar comandos específicos
+dependiendo del sistema operativo:
+
+$ ip link show
+
+Ejemplo:
+
+3: wlan0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+    link/ether 00:1a:2b:3c:4d:5e brd ff:ff:ff:ff:ff:ff
+En este ejemplo, 00:1a:2b:3c:4d:5e es la dirección MAC de la interfaz wlan0.
+
+Fuente
+======
+
+ChatGPT
