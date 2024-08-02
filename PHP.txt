@@ -682,7 +682,8 @@ miFuncion();
 Parámetros en una función
 =========================
 
-# Pasando valores por parámetros a una función:
+Pasando valores por parámetros a una función:
+
 function miFuncion($x) {
     echo $x;
 }
@@ -690,12 +691,28 @@ miFuncion(5);
 
 -----
 
-# Pasando valores por parámetros a una función
+Pasando valores por parámetros a una función:
+
 function miFuncion($a,$b) {
     $c = $a + $b;
     echo $c;
 }
 miFuncion(3,9);
+
+-----
+
+Pasando valores por parámetros a una función con parámetros opcionales
+
+function miFuncion($nombre, $apellido = 'Parra') {
+    echo $nombre . " " . $apellido;
+    echo "<br>";
+}
+
+// Llamada a la función con un solo parámetro
+miFuncion("José");  // Esto imprimirá "José Parra"
+
+// Llamada a la función con dos parámetros
+miFuncion("José", "García");  // Esto imprimirá "José García"
 
 =======================================
 Argumentos por defecto de las funciones
