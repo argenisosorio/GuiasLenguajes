@@ -2157,6 +2157,54 @@ la carpeta que apt usa para almacenar todos los archivos como caché:
 
 $ du -hs /var/cache/apt/archives
 
+==========================================
+Mantener tu sistema Debian o Ubuntu limpio
+==========================================
+
+$ sudo apt-get update
+
+Este comando actualiza la lista de paquetes disponibles en los repositorios
+configurados en tu sistema. No instala ni actualiza ningún paquete; solo
+descarga la información más reciente sobre los paquetes, lo que permite al
+sistema saber qué versiones están disponibles para instalar o actualizar. Es un
+comando que se recomienda ejecutar antes de instalar o actualizar software.
+
+-----
+
+$ sudo apt-get autoclean:
+
+Este comando elimina los archivos .deb (paquetes descargados) que ya no son
+necesarios en el caché del sistema, específicamente los que ya no están
+disponibles para descargar de los repositorios actuales. Esto ayuda a liberar
+espacio en el disco eliminando archivos que ya no pueden ser reinstalados o que
+han sido actualizados a nuevas versiones.
+
+-----
+
+$ sudo apt-get clean:
+
+Este comando elimina todos los archivos .deb de la caché local, es decir, los
+paquetes descargados para la instalación o actualización. Después de ejecutar
+este comando, si deseas reinstalar un paquete, tendrá que ser descargado de
+nuevo desde los repositorios.
+
+-----
+
+$ sudo apt-get autoremove:
+
+Este comando elimina automáticamente los paquetes que se instalaron como
+dependencias de otros paquetes, pero que ya no son necesarios. Esto suele
+ocurrir cuando desinstalas un paquete que tenía dependencias, pero esas
+dependencias no son usadas por ningún otro paquete instalado en tu sistema.
+
+En resumen, estos comandos te ayudan a mantener tu sistema Debian o Ubuntu
+limpio y ordenado, eliminando archivos innecesarios y paquetes obsoletos.
+
+Fuente
+======
+
+ChatGPT
+
 ===============================
 Comprimir/Descomprimir archivos
 ===============================
@@ -8445,6 +8493,45 @@ Configurar Wine
 
 https://www.softzone.es/linux/tutoriales/instalar-configurar-wine/
 
+================
+Desinstalar wine
+================
+
+$ sudo apt-get --purge remove wine wine64 libwine fonts-wine
+
+$ cd $HOME
+
+$ rm -r .wine
+
+$ rm .config/menus/applications-merged/wine*
+
+$ rm -r .local/share/applications/wine
+
+$ rm .local/share/desktop-directories/wine*
+
+$ rm .local/share/icons/????_*.xpm
+
+Estos comandos eliminan archivos almacenados en el disco duro que pueden
+bloquear la desinstalación de Wine. Es muy posible que reciba algunas
+advertencias sobre rm: remove write-protected regular file aquí. Estos se pueden
+hacer cumplir colectivamente mediante el uso de la f opción, es decir rm -f y
+rm -rf en lugar de lo anterior.
+
+Después de eliminar los archivos, ejecute el comando:
+
+$ sudo apt-get remove --purge wine
+
+Haga lo siguiente para corregir cualquier error de instalación.
+
+$ sudo apt-get update
+
+$ sudo apt-get autoclean
+
+$ sudo apt-get clean
+
+$ sudo apt-get autoremove
+
+=============================
 Instalar Zoom en Debian 10/11
 =============================
 
