@@ -364,3 +364,69 @@ Fuente
 ======
 
 -https://es.wikipedia.org/wiki/Autenticaci%C3%B3n
+
+========================================
+Ataque Cross-Site Request Forgery (CSRF)
+========================================
+
+También conocido como "falsificación de solicitud entre sitios," es un tipo de
+ataque en el que un atacante engaña a un usuario para que realice acciones no
+deseadas en una aplicación web en la que está autenticado.
+
+¿Cómo funciona un ataque CSRF?
+
+Usuario autenticado: El ataque se dirige a un usuario que ya está autenticado en
+una aplicación web. Esto significa que el usuario ya ha iniciado sesión y su
+navegador tiene una cookie de sesión válida.
+
+Solicitudes maliciosas: El atacante crea una solicitud HTTP maliciosa (como
+enviar un formulario, realizar una transferencia de fondos, cambiar una
+configuración de cuenta, etc.) y la envía al usuario objetivo, normalmente a
+través de un enlace en un correo electrónico, mensaje instantáneo o incluso en
+un sitio web controlado por el atacante.
+
+Ejecución de la solicitud: Cuando el usuario hace clic en el enlace o visita la
+página maliciosa, su navegador, sin que el usuario lo sepa, envía la solicitud
+HTTP al servidor de la aplicación web en la que está autenticado.
+
+Acción no deseada: El servidor, creyendo que la solicitud es legítima porque
+proviene del navegador del usuario autenticado, procesa la solicitud y ejecuta
+la acción maliciosa (como cambiar la contraseña del usuario, realizar una compra, etc.).
+
+Ejemplo de un ataque CSRF:
+
+Supongamos que un usuario está autenticado en su cuenta bancaria en línea. Un
+atacante crea un formulario HTML que, al enviarse, transfiere dinero de la
+cuenta del usuario a la cuenta del atacante. El formulario podría verse así:
+
+html
+Copiar código
+<form action="https://bank.example.com/transfer" method="POST">
+  <input type="hidden" name="amount" value="1000">
+  <input type="hidden" name="to_account" value="attacker_account">
+  <input type="submit" value="Click here!">
+</form>
+
+Si el usuario está autenticado y el atacante logra que el usuario haga clic en
+el botón "Click here!", la transferencia se realizará, porque la solicitud se
+envía desde el navegador del usuario, que incluye su cookie de sesión válida.
+
+Medidas para protegerse contra CSRF:
+
+Nonces: Usar tokens CSRF (nonces) únicos en cada formulario y solicitud para
+asegurarse de que la solicitud es genuina y proviene de la aplicación web y no
+de una fuente externa.
+
+Verificación del Referer: Comprobar el encabezado Referer para asegurarse de que
+la solicitud proviene de una página dentro de la misma aplicación web.
+
+Métodos de autenticación seguros: Evitar que las solicitudes GET realicen
+acciones críticas y utilizar solo solicitudes POST con protección CSRF.
+
+Al implementar estas medidas, se reduce significativamente el riesgo de que un
+atacante pueda explotar un CSRF.
+
+Fuente
+======
+
+ChatGPT
