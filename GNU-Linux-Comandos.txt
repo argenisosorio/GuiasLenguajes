@@ -9536,3 +9536,144 @@ Instalar el cliente de correo thunderbird de mozilla
 Instalar el paquete thunderbird y sus traducciones al español.
 
 $ sudo apt install thunderbird thunderbird-l10n-es-es
+
+==============
+Virtualización
+==============
+
+La virtualización permite ejecutar varios sistemas operativos (SO) o
+aplicaciones simultáneamente en un único hardware físico. Se crea una capa de
+abstracción entre el hardware y el software, conformada por máquinas virtuales
+(VM) que actúan como ordenadores independientes, lo que permite activar una
+versión virtual (en lugar de física) de un recurso, como un servidor, una
+unidad de almacenamiento, una red, o incluso un sistema operativo completo.
+
+Elementos de la virtualización
+==============================
+
+Hipervisor: El software que gestiona la virtualización, actúa como intermediario
+entre el hardware y las VM.
+
+Máquina Virtual: Es un entorno que replica el comportamiento de un oprdenador
+físico. Puede ejecutar un SO y aplicaciones como si fuera un sistema
+independiente.
+
+Anfitrión (host): Es el hardware físico donde se ejecutan las VM.
+
+Huesped (Guest): El sistema operativo o aplicación que se ejecuta dentro de una
+VM.
+
+Beneficios de la virtualización
+===============================
+
+Ahorro de recursos: Permite ejecutar múltiples SO y aplicaciones en un solo
+servidor físico, reduciendo el consumo de energía y espacio físico.
+
+Mejor uso del hardware: Optimiza el uso de los recursos del hardware, ya que las
+VM pueden compartir el mismo hardware.
+
+Flexibilidad y escalabilidad: Permite agregar o eliminar máquinas virtuales
+fácilmente según las necesidades, sin necesidad de hardware adicional.
+
+Mayor seguridad: Las VM pueden aislarse unas de otras, lo que aumenta la
+seguridad al limitar el impacto de una falla o ataque en una VM.
+
+Facilidad de administración: Ofrece herramientas para administrar las VM de
+forma centralizada, facilitando la instalación, actualización y mantenimiento de
+los sistemas.
+
+Pruebas y desarrollo: Permiten crear y ejecutar diferentes entornos de prueba de
+forma rápida y eficiente.
+
+Tipos de Virtualización
+=======================
+
+Virtualización Completa (HVM): Procura replicar todos los componentes de un
+equipo físico. Requiere que los CPU físicos tengan soporte específico para
+virtualización (AMD- Vo Intel VT-x en la plataforma x86). Tiene la ventaja del
+soporte a sistemas operativos que no están modificados para virtualización, con
+la desventaja de un menor desempeño.
+
+Paravirtualización (PV): Procura optimizar el desempeño de la virtualización al
+incorporar modificaciones en el sistema operativo huesped que le permitan
+cooperar estrechamente con el hipervisor. Se beneficia de la presencia de
+soporte específico para virtualización en los CPU físicos, el cual no es un
+requerimiento sin embargo.
+
+Esquemas híbridos: HVM con controladores PV; PVHVM, donde Usa HVM con
+paravirtualización de controladores e interfaces de bajo nivel; PVH, núcleo PV
+completo dentro de un contenedor HVM, sin dispositivos emulados.
+
+
+Herramientas de virtualización libres y de código abierto
+=========================================================
+KVM (Kernel-based Virtual Machine): Un hipervisor de tipo 2 (hospedado)
+integrado en el kernel de Linux, ofreciendo un alto rendimiento y eficiencia.
+Es popular para aplicaciones de servidor.
+
+Xen: Hipervisor de tipo 1 (nativo o bare-metal) el cual se instala directamente
+sobre el hardware físico de un servidor al que entonces controla completamente,
+sin necesidad de un sistema operativo subyacente.
+
+QEMU (Quick Emulator): Un emulador de hardware que puede proporcionar
+dispositivos virtuales para diferentes arquitecturas. Es popular para pruebas y
+desarrollo de software en donde se utilicen esquemas de virtualización completa.
+
+Proxmox VE: Plataforma de virtualización de código abierto, que integra varios
+componentes para ofrecer una solución completa de virtualización, no es un
+virtualizador en sí mismo. Se basa en KVM para la virtualización y ofrece
+herramientas adicionales para la administración de máquinas virtuales,
+almacenamiento, redes y gestión de contenedores.
+
+Arquitectura en capas
+=====================
+La arquitectura en capas es un patrón de diseño que organiza un sistema de
+software en diferentes capas, cada una con un conjunto específico de
+responsabilidades. En un despliegue de aplicación web, esto significa dividir la
+lógica de funcionamiento en diferentes niveles que interactúan entre sí.
+
+En esencia, una arquitectura en capas divide un despliegue de aplicación web en
+capas susceptibles de escalamiento horizontal, donde cada una se comunica con la
+inmediatamente superior e inferior.
+
+El hospedaje de las capas puede o no estar desglosado en varios servidores. En
+el caso del despliegue del sistema ERP kavac el hospedaje de las capas se puede
+organizar en tres niveles:
+
+Capa Base de datos: Es la inferior, debe estar separada en una maquina virtual y
+su comunicación únicamente es con la capa aplicación.
+
+Capa aplicación y web: Es la capa intermedia, y en este caso particular reposa
+el código de aplicación con todas sus dependencias y configuraciones, así como
+el servidor web Nginx donde se integran los componentes estáticos y dinámicos de
+la aplicación, al tiempo que se comunica a la siguiente capa que es el proxy y
+permite que los usuarios pueda acceder a la funcionalidades de la aplicación.
+
+Сара proxy: Funciona como intermediario entre el cliente y la aplicación, es
+quien se encarga de aceptar y procesar las peticiones confiables a la
+aplicación. Está capa conforma una fachada del sistema en donde implementa
+terminación ssl, redirecciones, protecciones, gestión de flujo entre otras
+tareas.
+
+Ventajas
+========
+
+Mayor modularidad: Las capas están débilmente acopladas, lo que significa que se
+pueden modificar y actualizar de forma independiente.
+
+Reutilización del código: Las capas se pueden incorporar a otros proyectos o
+sistemas, con solo agregar las configuraciones correspondientes.
+
+Facilidad en la detección de fallas: Se puede detectar de forma mas rápida y
+eficiente en cuál capa se esta presentando una falla, cuando hay una
+configuración correcta de las bitácoras (logs).
+
+Escalabilidad: Se pueden escalar las capas de forma independiente, lo que
+facilita el crecimiento del despliegue, agregar o eliminar capas. El nivel de
+escalamiento horizontal puede adaptarse a la evolución de la concurrencia de uso
+del sistema.
+
+Fuente
+======
+
+Curso en línea técnico de despliegue del sistema ERP KAVAC
