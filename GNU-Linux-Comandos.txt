@@ -8451,9 +8451,75 @@ con teclas muertas, luego:
 
 á é í ó ú = Alt + vocal.
 
-====================================
-Instalar Counter-Strike en Debian 11
-====================================
+==========================
+Instalar Wine en Debian 12
+==========================
+
+Comprobar arquitecturas instaladas:
+
+1- Verifique la arquitectura de 64 bits.
+
+El siguiente comando debería responder con "amd64".
+
+$ dpkg --print-architecture
+
+2- Vea si la arquitectura de 32 bits ya está instalada.
+
+El siguiente comando debería responder con "i386":
+
+$ dpkg --print-foreign-architectures
+
+Si no muestra "i386", ejecute lo siguiente:
+
+$ sudo dpkg --add-architecture i386
+
+Vuelva a verificar con:
+
+$ dpkg --print-foreign-architectures
+
+3- Descargue y agregue la clave del repositorio WineHQ.
+
+$ sudo mkdir -pm755 /etc/apt/keyrings
+
+$ sudo wget -O /etc/apt/keyrings/winehq-archive.key https://dl.winehq.org/wine-builds/winehq.key
+
+Agrege el repositorio de Wine:
+
+$ sudo wget -NP /etc/apt/sources.list.d/ https://dl.winehq.org/wine-builds/debian/dists/bookworm/winehq-bookworm.sources
+
+4- Actualice la lista de paquetes
+
+$ sudo apt update
+
+5- Instalar Wine:
+
+El siguiente comando instala Wine Stable. Para instalar Wine Development o Wine
+Staging, reemplace winehq-stable por winehq-devel o winehq-staging
+
+Después de una actualización importante de Wine (de Wine 6 a Wine 7, por
+ejemplo), es posible que Wine Stable no esté disponible temporalmente, pero Wine
+Development y Wine Staging aún se pueden instalar.
+
+$ sudo apt-get install apt-transport-https
+
+$ sudo apt install --install-recommends winehq-stable
+
+Verificar la instalación:
+
+$ wine --version
+
+7- Si los comandos anteriores fallan instale wine de la siguiente manera:
+
+$ sudo apt-get install apt-transport-https
+
+$ sudo apt-get install wine
+
+Verificar la instalación:
+
+$ wine --version
+
+Otra forma
+==========
 
 $ sudo apt-get install apt-transport-https
 
@@ -8464,32 +8530,44 @@ $ wget -nc https://dl.winehq.org/wine-builds/Release.key
 $ sudo apt-key add Release.key
 
 Add this on /etc/apt/sources.list save changes and update repos:
-deb https://dl.winehq.org/wine-builds/debian/ jessie main
+deb https://dl.winehq.org/wine-builds/debian/ bookworm main
 
 $ sudo apt-get update
 
 $ sudo apt-get install wine
 
-Instalar el juego:
+$ wine --version
 
-$ wine cs.exe
-
-Ejecutar el juego, hay que ir a:
-/home/user/.wine/dosdevices/c:/Games/Counter-Strike 1.6
-
-y luego
-
-$ wine Counter-Strike\ 1.6.exe
-
-ó
-
-$ wine /home/user/.wine/dosdevices/c:/Program Files (x86)/Counter-Strike 1.6
-
-Todo depende de donde se haya instalado el juego.
-
-===============
 Configurar Wine
 ===============
+
+Para abrir el panel de configuración de Wine, abra una ventana de Terminal y
+ejecute winecfg. Si se ofrece instalar mono o gecko, acepte la oferta.
+
+$ wine winecfg
+
+Cuando se le solicite, configure su versión preferida de Windows. Es posible que
+se prefiera Windows 10 para la mayoría de las aplicaciones.
+
+Dos pruebas sencillas
+=====================
+
+Sólo por diversión o para ver a Wine en acción...
+
+Mostrar un reloj simple:
+
+$ wine clock
+
+Ejecute el navegador web integrado de Wine:
+
+Si se ofrece instalar gecko, acepte la oferta.
+
+$ wine iexplore
+
+Fuentes
+=======
+
+https://wine.htmlvalidator.com/install-wine-on-debian-12.html
 
 https://www.softzone.es/linux/tutoriales/instalar-configurar-wine/
 
@@ -8530,6 +8608,42 @@ $ sudo apt-get autoclean
 $ sudo apt-get clean
 
 $ sudo apt-get autoremove
+
+====================================
+Instalar Counter-Strike en Debian 11
+====================================
+
+$ sudo apt-get install apt-transport-https
+
+$ sudo dpkg --add-architecture i386
+
+$ wget -nc https://dl.winehq.org/wine-builds/Release.key
+
+$ sudo apt-key add Release.key
+
+Add this on /etc/apt/sources.list save changes and update repos:
+deb https://dl.winehq.org/wine-builds/debian/ jessie main
+
+$ sudo apt-get update
+
+$ sudo apt-get install wine
+
+Instalar el juego:
+
+$ wine cs.exe
+
+Ejecutar el juego, hay que ir a:
+/home/user/.wine/dosdevices/c:/Games/Counter-Strike 1.6
+
+y luego
+
+$ wine Counter-Strike\ 1.6.exe
+
+ó
+
+$ wine /home/user/.wine/dosdevices/c:/Program Files (x86)/Counter-Strike 1.6
+
+Todo depende de donde se haya instalado el juego.
 
 =============================
 Instalar Zoom en Debian 10/11
