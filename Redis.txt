@@ -1,0 +1,72 @@
+===================
+Guía de Redis by dM
+===================
+
+Redis es una base de datos en memoria de código abierto, de alta performance y
+persistente, utilizada comúnmente como caché y base de datos. Se destaca por su
+velocidad, flexibilidad y amplia gama de estructuras de datos.
+
+Dentro del despliegue del kavac en producción es utilizado para manejar cache,
+sesiones y worker (tareas intensivas del sistema en segundo plano mediante
+colas), permitiendo mejorar los tiempos de respuesta del kavac.
+
+Características clave de Redis:
+
+Almacenamiento en memoria: Los datos se almacenan en la memoria RAM, permitiendo
+un acceso extremadamente rápido.
+
+Multimodelo: Admite diferentes estructuras de datos, como claves-valor, listas,
+conjuntos, conjuntos ordenados, hashes y streams.
+
+Alta disponibilidad: Se puede configurar para replicación y clustering, lo que
+mejora la disponibilidad y el rendimiento.
+
+Uso flexible: Se puede utilizar como caché, base de datos, entre otros.
+
+Software libre: Es un software gratuito y de código abierto que puede ser usado,
+distribuido y modificado libremente.
+
+Caché de datos: Aumenta el rendimiento de las aplicaciones al almacenar datos de
+acceso frecuente en la memoria.
+
+Base de datos de sesión: Almacena datos de sesión de usuario para una
+experiencia de usuario más fluida.
+
+Procesamiento de colas: Permite grabar datos en memoria para agilizar la
+ejecución de trabajos en segundo plano.
+
+Instalación
+===========
+
+$ sudo apt install redis
+
+Gestión de Redis
+================
+
+Archivo de configuración de Redis
+
+$ sudo vim /etc/redis/redis.conf
+
+-----
+
+Reiniciar el servicio de Redis:
+
+# systemctl restart redis
+
+-----
+
+Ver el estatus del servicio de Redis:
+
+# systemctl status redis
+
+-----
+
+Habilitar Redis:
+
+# systemctl enable redis
+
+======
+Fuente
+======
+
+Curso en Línea técnico de despliegue del sistema ERP KAVAC
