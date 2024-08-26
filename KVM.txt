@@ -141,3 +141,24 @@ Fuente
 ======
 
 http://quemantequilla.blogspot.com/2012/07/migrar-maquina-virtual-kvm.html
+
+Enlace Simbólico para imágenes de KVM
+=====================================
+
+Si la imagen GNU-Linux_Debian_12.qcow2 no está en /var/lib/libvirt/images/ sino
+en /home/user por ejemplo, podemos crear un enlace simbólico para que KVM
+consiga la imagen en donde esta se encuentre. Un enlace simbólico es como un
+atajo que apunta al archivo original.
+
+Para crear un enlace simbólico, usa el siguiente comando:
+
+$ sudo ln -s /home/user/GNU-Linux_Debian_12.qcow2 /var/lib/libvirt/images/GNU-Linux_Debian_12.qcow2
+
+Este comando crea un enlace simbólico en /var/lib/libvirt/images/ que apunta al
+archivo real en /home/user/. KVM verá el archivo en su ubicación estándar, pero
+en realidad estará leyendo el archivo desde tu carpeta personal.
+
+Fuente
+======
+
+ChatGPT

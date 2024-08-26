@@ -1,11 +1,46 @@
-##### Guía de uwsgi by dM #####
+===================
+Guía de uwsgi by dM
+===================
 
-##### uwsgi #####
+Antigua definición cuando se usaba con Python + Django
+======================================================
 
-UWSGI es una implementación de WSGI capaz de servir aplicaciones Python, pero que además apunta a proveer la pila de
-software completa para implementar servicios de hosting.
+UWSGI es una implementación de WSGI capaz de servir aplicaciones Python, pero
+que además apunta a proveer la pila de software completa para implementar
+servicios de hosting.
 
 Suele trabajar conjuntamente con un servidor web como Nginx.
+
+Nueva definición
+================
+
+UWSGI es un protocolo de comunicación para aplicaciones web, y también un
+servidor de aplicación web que implementa este protocolo. Se utiliza como
+intermediario entre la aplicación web y el servidor web (Nginx). Su función
+principal es recibir solicitudes HTTP desde el servidor web, procesarlas,
+ejecutar el código PHP correspondiente y devolver las respuestas HTTP al
+servidor web, que luego las envía al cliente.
+
+Características principales de uwsgi
+====================================
+
+Mejor rendimiento: UWSGI puede mejorar significativamente el rendimiento de tus
+aplicaciones PHP al manejar las conexiones de forma eficiente.
+
+Escalabilidad: UWSGI te permite escalar tus aplicaciones PHP de forma fácil y
+eficiente, manejando grandes cantidades de tráfico.
+
+Integración con Nginx: UWSGI se integra muy bien con Nginx, un servidor web de
+alto rendimiento, lo que permite crear una arquitectura web robusta y escalable.
+
+Seguridad: UWSGI proporciona mecanismos de seguridad para proteger tus
+aplicaciones PHP de ataques y vulnerabilidades.
+
+======
+Fuente
+======
+
+Curso en Línea técnico de despliegue del sistema ERP KAVAC
 
 ##### Instalación #####
 

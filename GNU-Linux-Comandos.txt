@@ -9879,3 +9879,92 @@ Fuente
 ======
 
 Curso en Línea técnico de despliegue del sistema ERP KAVAC
+
+=======
+systemd
+=======
+
+Es un sistema de inicio y gestor de servicios ampliamente utilizado en sistemas
+operativos Linux.
+
+Razones para Configurar en systemd:
+
+• Gestión de Servicios: systemd proporciona una gestión eficiente de servicios,
+permitiendo iniciar, detener, reiniciar y monitorear servicios de manera sencilla.
+
+• Autostart: Configurar los servicios en systemd asegura que se inicien
+automáticamente al arrancar el sistema, garantizando que los workers y
+websockets estén siempre activos sin intervención manual.
+
+• Supervisión y Recuperación: systemd puede supervisar los servicios y
+reiniciarlos automáticamente en caso de fallos, mejorando la estabilidad y
+disponibilidad de la aplicación.
+
+• Registro de Logs: systemd integra el registro de logs de los servicios,
+facilitando la identificación y solución de problemas.
+
+• Seguridad y Aislamiento: systemd ofrece características avanzadas de seguridad
+y aislamiento, como el uso de groups y namespaces, para limitar los recursos y
+el acceso de los servicios.
+
+• Configuración Centralizada: Centraliza la configuración y gestión de todos los
+servicios del sistema, simplificando la administración y el mantenimiento.
+
+Worker
+======
+
+Workers son procesos encargados de manejar tareas en segundo plano que pueden
+ser ejecutadas de manera asíncrona, sin bloquear la ejecución principal de una
+aplicación. Son particularmente útiles para realizar trabajos que pueden ser
+intensivos en recursos o que requieren tiempos de ejecución más prolongados,
+como procesamiento de datos, envío de correos electrónicos, generación de
+informes, entre otros.
+
+Importancia de Configurar Workers en systemd:
+
+• Fiabilidad y Disponibilidad: Configurar los workers en systemd asegura que se
+reinicien automáticamente en caso de fallos, mejorando la fiabilidad y
+disponibilidad del servicio.
+
+• Gestión de Recursos: systemd permite limitar el uso de recursos (CPU, memoria)
+para cada servicio, evitando que los workers consuman más de lo necesario y
+afecten el rendimiento del sistema.
+
+• Supervisión Continua: systemd monitorea constantemente los servicios,
+permitiendo detectar y solucionar problemas rápidamente.
+
+• Facilidad de Administración: Permite gestionar los workers con comandos simples
+(start, stop, restart, status), facilitando su administración.
+
+• Automatización del Inicio: Configurando los workers en systemd, se asegura que
+se inicien automáticamente al arrancar el sistema, garantizando que estén
+siempre operativos sin intervención manual.
+
+En la aplicación kavac los worker se manejan como un servicio, en el que las
+colas están divididas en dos, colas largas (bulk) que puede tardar entre 1
+minuto y cuatro horas o más y colas cortas (default) que se ejecutan en menos de
+un minuto.
+
+Para su configuración puedes guiarte en el manual en la sección Configurar el
+procesamiento de colas y notificaciones.
+
+Websockets
+==========
+
+Websockets es una tecnología que permite la comunicación bidireccional en tiempo
+real entre un cliente (como un navegador web) y un servidor. A diferencia de las
+conexiones HTTP tradicionales, que son unidireccionales y requieren que el
+cliente inicie cada solicitud, los websockets permiten que el servidor envíe
+datos al cliente sin que el cliente los solicite explícitamente.
+
+Configurar servicios de websockets en systemd es fundamental para asegurar que
+las aplicaciones web que requieren comunicación en tiempo real sean confiables,
+eficientes y fáciles de administrar. systemd proporciona herramientas poderosas
+para gestionar, monitorear y asegurar estos servicios, garantizando su
+disponibilidad y rendimiento óptimo en todo momento.
+
+======
+Fuente
+======
+
+Curso en Línea técnico de despliegue del sistema ERP KAVAC
