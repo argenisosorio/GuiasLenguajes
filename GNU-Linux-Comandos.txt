@@ -9963,6 +9963,130 @@ eficientes y fáciles de administrar. systemd proporciona herramientas poderosas
 para gestionar, monitorear y asegurar estos servicios, garantizando su
 disponibilidad y rendimiento óptimo en todo momento.
 
+Fuente
+======
+
+Curso en Línea técnico de despliegue del sistema ERP KAVAC
+
+Proxy
+=====
+
+Un Proxy es un servidor intermedio que actúa como un puente entre un cliente
+(como un navegador web) y otro servidor (como un servidor web). Su función
+principal es enviar y recibir solicitudes en nombre del cliente, lo que puede
+ofrecer varias ventajas según cómo esté configurado.
+
+Funciones y Usos de un Proxy:
+
+Anonimato y Privacidad: Los proxies pueden ocultar la dirección IP del cliente,
+haciendo que las solicitudes parezcan provenir del proxy en lugar del cliente.
+Esto ayuda a proteger la identidad y la ubicación del usuario.
+
+Filtrado de Contenidos: Un proxy puede bloquear el acceso a ciertos sitios web o
+contenido no deseado. Esto es común en entornos corporativos o escolares, donde
+se quieren imponer políticas de uso de Internet.
+
+Mejora del Rendimiento (Caching): Los proxies pueden almacenar en caché
+(cachear) respuestas de servidores web. Esto significa que si varios usuarios
+solicitan el mismo contenido, el proxy puede servir la copia cacheada sin tener
+que solicitarla nuevamente al servidor de origen, mejorando la velocidad de
+acceso y reduciendo el ancho de banda.
+
+Acceso a Recursos Restringidos: Algunas veces, los usuarios emplean proxies para
+acceder a contenido que está bloqueado en su región geográfica. El proxy, al
+estar en una ubicación diferente, puede tener acceso al contenido y luego
+enviárselo al usuario.
+
+Seguridad: Los proxies pueden actuar como un cortafuegos, analizando y filtrando
+el tráfico que pasa a través de ellos para detectar amenazas potenciales.
+
+Control de Uso de Internet: En redes corporativas, los proxies pueden usarse
+para monitorear y registrar las actividades en Internet de los usuarios,
+ayudando a las organizaciones a asegurarse de que se cumplan sus políticas de
+uso.
+
+Tipos de Proxies:
+
+Proxy HTTP: Maneja solicitudes y respuestas HTTP, adecuado para navegar por la
+web.
+
+Proxy HTTPS: Similar al proxy HTTP, pero maneja tráfico HTTPS, lo que permite el
+acceso seguro a sitios web.
+
+Proxy Transparente: No requiere ninguna configuración en el cliente. El cliente
+ni siquiera sabe que su tráfico está pasando por un proxy.
+
+Proxy Inverso: En lugar de actuar como intermediario para los clientes, un proxy
+inverso actúa en nombre de uno o más servidores. Es comúnmente utilizado para
+distribuir cargas de tráfico, asegurar servidores, y actuar como punto de
+entrada para servicios web.
+
+En resumen, un proxy es una herramienta versátil que puede mejorar la seguridad,
+privacidad, rendimiento y control en una red informática.
+
+Fuente
+======
+
+ChatGPT
+
+Importancia de un Proxy inverso
+===============================
+
+Utilizar un proxy inverso como Nginx en la puesta en producción de una
+aplicación web que maneja datos sensibles es crucial para mejorar la seguridad,
+rendimiento y escalabilidad de la aplicación. Un proxy no solo protege los
+servidores backend de ataques y sobrecargas, sino que también optimiza la
+entrega de contenido y facilita la administración de la infraestructura.
+Implementar un proxy inverso correctamente configurado es una de las mejores
+prácticas esenciales para asegurar la integridad y disponibilidad de datos en
+una aplicación web.
+
+Tomando en cuenta que el kavac es un aplicación que guarda datos confidenciales
+de la institución o empresa es necesario que en el despliegue se tome en cuenta
+un proxy inverso.
+
+Nginx como servidor
+===================
+
+Nginx se utiliza como proxy inverso en la aplicación KAVAC para manejar diversas
+responsabilidades críticas que optimizan la seguridad, el rendimiento y la
+escalabilidad de la aplicación.
+
+• Balanceo de Carga: Nginx distribuye las solicitudes entrantes entre varios
+servidores backend de KAVAC, asegurando que ninguna máquina se sobrecargue y que
+los recursos se utilicen de manera eficiente.
+
+• Escalabilidad Horizontal: Permite añadir o quitar servidores backend
+fácilmente sin interrumpir el servicio, lo que facilita la escalabilidad de la
+aplicación.
+
+• Terminación SSL/TLS: Nginx maneja la terminación de SSL/TLS, asegurando que
+todo el tráfico entre los usuarios y el servidor esté encriptado y protegido
+contra ataques de intermediarios.
+
+• Oculta la Infraestructura: Al actuar como intermediario, Nginx oculta la
+infraestructura del backend, haciendo más difícil para los atacantes dirigirse
+a los servidores de la aplicación.
+
+• Caché de Contenido Estático: Nginx puede almacenar en caché contenido estático
+como imágenes, scripts y hojas de estilo, reduciendo la carga en los servidores
+backend y mejorando los tiempos de respuesta para los usuarios.
+
+• Compresión de Datos: Nginx puede comprimir respuestas antes de enviarlas al
+cliente, lo que reduce el uso del ancho de banda y acelera la entrega de
+contenido.
+
+• Persistencia de Sesión: Asegura que las solicitudes de un mismo usuario se
+dirijan al mismo servidor backend, lo cual es esencial para mantener la
+consistencia en las sesiones de usuario.
+
+• Manejo de Conexiones WebSocket: Facilita la gestión de conexiones WebSocket
+para aplicaciones en tiempo real, manteniendo las conexiones abiertas y
+permitiendo la comunicación bidireccional.
+
+• Logs Centralizados: Nginx registra todas las solicitudes y respuestas,
+proporcionando un único punto para monitorear el tráfico y diagnosticar problemas.
+
 ======
 Fuente
 ======
