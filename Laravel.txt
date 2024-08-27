@@ -398,7 +398,28 @@ default el cual carga el proyecto.
 Para comprobar la versión de Laravel instalada entramos en el directorio de un
 proyecto creado:
 
+Hay 2 formas:
+
+1) Revisar el archivo composer.json:
+
+Navega a la raíz del proyecto Laravel, abre el archivo composer.json, busca la
+línea que tiene "laravel/framework". El valor que aparece al lado te indicará la
+versión de Laravel que se está utilizando.
+
+Por ejemplo:
+
+"require": {
+    "laravel/framework": "^8.0"
+}
+
+2) Usar la línea de comandos:
+
+Abre la terminal en la raíz del proyecto, ejecuta el siguiente comando:
+
 $ php artisan --version
+
+Este comando mostrará la versión exacta de Laravel que se está utilizando en el
+proyecto.
 
 -----
 
