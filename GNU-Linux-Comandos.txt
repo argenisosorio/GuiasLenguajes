@@ -10092,3 +10092,84 @@ Fuente
 ======
 
 Curso en Línea técnico de despliegue del sistema ERP KAVAC
+
+
+SSL (Secure Sockets Layer) y TLS (Transport Layer Security)
+
+Son protocolos criptográficos diseñados para proporcionar seguridad en las
+comunicaciones a través de una red, como Internet. Ambos protocolos son
+fundamentales para garantizar que los datos transmitidos entre un cliente
+(por ejemplo, un navegador web) y un servidor (por ejemplo, un sitio web) estén
+protegidos contra la interceptación y manipulación por parte de terceros.
+
+SSL (Secure Sockets Layer)
+==========================
+
+SSL es el protocolo original desarrollado por Netscape en la década de 1990 para
+asegurar las comunicaciones en la web. Fue ampliamente utilizado para proteger
+las conexiones HTTPS, cifrando los datos intercambiados entre el navegador y el
+servidor.
+
+Versiones: SSL pasó por varias versiones (SSL 1.0, 2.0, 3.0). Sin embargo,
+debido a varias vulnerabilidades descubiertas en SSL 2.0 y 3.0, estos protocolos
+ya no se consideran seguros y han sido reemplazados por TLS.
+
+Estado Actual: SSL ha sido oficialmente deprecado, y su uso está desaconsejado
+en favor de TLS.
+
+TLS (Transport Layer Security)
+==============================
+
+TLS es la evolución de SSL. Es un protocolo más seguro y eficiente, que se
+desarrolló para abordar las vulnerabilidades de SSL. TLS proporciona
+autenticación, confidencialidad y la integridad de los datos transmitidos entre
+aplicaciones y servidores.
+
+Versiones: TLS tiene varias versiones: TLS 1.0, 1.1, 1.2, y 1.3 (la versión más
+reciente y segura). Cada versión sucesiva ha mejorado la seguridad y el
+rendimiento.
+
+Características Clave:
+
+Cifrado: TLS utiliza criptografía para cifrar los datos transmitidos, asegurando
+que cualquier información intercambiada entre el cliente y el servidor sea
+ilegible para los atacantes.
+
+Autenticación: TLS autentica la identidad del servidor (y opcionalmente del
+cliente) mediante certificados digitales, asegurando que el cliente esté
+comunicándose con el servidor correcto.
+
+Integridad de los Datos: TLS utiliza mecanismos de hashing para asegurar que los
+datos no se modifiquen durante la transmisión.
+
+Estado Actual: TLS es el estándar actual para la seguridad en la web y otros
+servicios de red. TLS 1.2 y 1.3 son las versiones más recomendadas, mientras que
+TLS 1.0 y 1.1 también están siendo gradualmente eliminadas debido a sus
+vulnerabilidades.
+
+Relación entre SSL y TLS
+
+Compatibilidad: TLS fue diseñado para ser compatible con SSL, de modo que los
+sistemas que implementan TLS puedan funcionar con sistemas que usan SSL, aunque
+con menor seguridad.
+
+Terminología: A pesar de que TLS ha reemplazado a SSL, el término "SSL" todavía
+se usa coloquialmente para referirse a la tecnología subyacente de cifrado y
+autenticación, incluso cuando en realidad se utiliza TLS.
+
+Importancia
+
+HTTPS: Uno de los usos más comunes de SSL/TLS es para habilitar HTTPS, que es
+HTTP sobre SSL/TLS. HTTPS asegura que la navegación web sea segura.
+
+Seguridad en la Red: SSL/TLS se utiliza no solo en navegadores, sino también en
+correos electrónicos, VPNs, VoIP, y muchas otras aplicaciones que requieren una
+comunicación segura.
+
+En resumen, SSL fue el precursor de TLS, pero debido a problemas de seguridad,
+TLS es ahora el estándar recomendado para asegurar las comunicaciones en la red.
+
+Fuente
+======
+
+ChatGPT
