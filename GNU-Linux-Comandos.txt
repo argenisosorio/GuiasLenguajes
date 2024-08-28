@@ -10173,3 +10173,28 @@ Fuente
 ======
 
 ChatGPT
+
+Convertir el archivo de video a Base64
+======================================
+
+Para convertir un archivo de video a Base64, puedes usar el comando base64.
+Supongamos que tu archivo de video se llama video.mp4.
+
+$ base64 video.mp4 > video_base64.txt
+
+Esto guardará la cadena Base64 en un archivo llamado video_base64.txt.
+
+2. Decodificar la cadena Base64 para obtener el video original
+
+Para decodificar la cadena Base64 y obtener de nuevo el archivo de video, puedes
+usar el siguiente comando:
+
+$ base64 -d video_base64.txt > video_decoded.mp4
+
+Esto generará un archivo video_decoded.mp4 que será una copia exacta del archivo
+de video original.
+
+Fuente
+======
+
+ChatGPT
