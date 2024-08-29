@@ -97,6 +97,100 @@ Fuentes
 https://wiki.debian.org/es/KVM
 https://es.linux-console.net/?p=21505
 
+===========================================================
+Activar la compatibilidad con UEFI en la virtualización KVM
+===========================================================
+
+Hay dos tipos de firmware en las placas base de los ordenadores:
+
+BIOS o Sistema Básico de Entrada y Salida
+
+UEFI o Interfaz de Firmware Extensible Unificado
+
+¿Qué es la UEFI?
+================
+
+La UEFI o Interfaz de Firmware Extensible Unificada se considera el sustituto
+del firmware de la BIOS. Viene con más características y funcionalidades que
+están limitadas en la BIOS, y está disponible en las placas base actuales y en
+los PCs modernos.
+
+Aunque se considera un sustituto de la BIOS, la UEFI funciona de forma diferente
+y tiene un concepto opuesto a la BIOS. La UEFI almacena toda la información
+sobre la inicialización y el arranque en el archivo .efi, que se almacena en la
+partición ESP (Partición del Sistema EFI). y en la ESP se almacenan también los
+programas del gestor de arranque del sistema operativo instalado en el
+ordenador.
+
+La UEFI utiliza GPT para almacenar toda la información sobre las particiones, en
+lugar de MBR.
+
+A continuación una explicación sencilla de cómo arranca el sistema operativo en
+UEFI.
+
+UEFI > GPT/ESP > Kernel > Operating System
+
+A continuación se muestran algunas características notables de la UEFI que no
+están disponibles en la BIOS tradicional:
+
+-Arranque más rápido
+
+-Maneja más de 2TB de disco (lo que es un gran problema en el entorno actual)
+
+-Soporta más de 4 particiones con tabla de particiones GUID
+
+-Soporta el arranque seguro
+
+-Soporta dispositivos de firmware modernos de 64 bits
+
+-Tiene una interfaz gráfica de usuario sencilla
+
+Firmware en la virtualización KVM
+=================================
+
+Por defecto, la virtualización KVM utiliza la BIOS como firmware por defecto
+para las máquinas virtuales invitadas. Para habilitar la compatibilidad con UEFI
+en KVM, debes instalar el paquete OVMF (Open Virtual Machine Firmware) en tu
+sistema anfitrión.
+
+El proyecto OVMF forma parte del firmware tianocore de intel para la máquina
+virtual qemu.
+
+Habilitar la UEFI en la máquina virtual
+=======================================
+
+Para crear una máquina virtual compatible con el firmware UEFI utilizando la
+aplicación virt-manager, debes configurarla durante la creación de la propia
+máquina virtual.
+
+En la última ventana al crear una máquina virtual utilizando el virt-manager,
+que es el paso 5 de 5, debes marcar la opción "Personalizar la configuración
+antes de la instalación" y luego hacer clic en el botón "Finalizar".
+
+En la nueva ventana, haz clic en el menú "Visión general" y ve a la sección
+"Detalles del hipervisor". En la opción "Firmware", selecciona
+"UEFI x86_64": ….fd" y haz clic en el botón "Aplicar".
+
+Fuente
+======
+
+https://howtoforge.es/activar-la-compatibilidad-con-uefi-en-la-virtualizacion-kvm/
+
+Conexión remota por ssh a la VM
+===============================
+
+Luego de completar la instalación, desde la consola procedemos a verificar
+si la VM tiene una ip asignada en la red:
+
+user@debian:~$ ip addr
+2: enp1s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP
+    inet 192.168.122.199/24 brd 192.168.122.255 scope global dynamic enp1s0
+
+Si está instalado el paquete ssh tanto en el host como en la VM entonces con esa
+dirección 192.168.122.199 nos podemos conectar a la VM desde el Host con:
+
+$ ssh user@192.168.122.199
+
 Imágenes de disco
 =================
 
