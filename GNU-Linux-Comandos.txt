@@ -5971,6 +5971,8 @@ windows.
 
 Para instalarlo:
 
+$ sudo apt install cabextract
+
 $ wget https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
 
 Le damos permisos de ejecucion:
@@ -8615,8 +8617,8 @@ $ wine winecfg
 Cuando se le solicite, configure su versión preferida de Windows. Es posible que
 se prefiera Windows 10 para la mayoría de las aplicaciones.
 
-Dos pruebas sencillas
-=====================
+Pruebas sencillas
+=================
 
 Sólo por diversión o para ver a Wine en acción...
 
@@ -8624,11 +8626,19 @@ Mostrar un reloj simple:
 
 $ wine clock
 
+-----
+
 Ejecute el navegador web integrado de Wine:
 
 Si se ofrece instalar gecko, acepte la oferta.
 
 $ wine iexplore
+
+-----
+
+Abrir el explorador de archivos.
+
+$ wine explorer
 
 Fuentes
 =======
@@ -8698,7 +8708,14 @@ Instalar el juego:
 
 $ wine cs.exe
 
+Instalar Winetricks:
+
+$ sudo apt install winetricks
+
+$ winetricks corefonts vcrun6 vb6run
+
 Ejecutar el juego, hay que ir a:
+
 /home/user/.wine/dosdevices/c:/Games/Counter-Strike 1.6
 
 y luego
@@ -10401,3 +10418,9 @@ Fuente
 ======
 
 https://wiki.archlinux.org/title/EFI_system_partition_(Espa%C3%B1ol)
+
+==============================
+Instalar OpenShot Video Editor
+==============================
+
+$ sudo apt install openshot-qt
