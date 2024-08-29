@@ -176,6 +176,21 @@ Fuente
 
 https://howtoforge.es/activar-la-compatibilidad-con-uefi-en-la-virtualizacion-kvm/
 
+Conexión remota por ssh a la VM
+===============================
+
+Luego de completar la instalación, desde la consola procedemos a verificar
+si la VM tiene una ip asignada en la red:
+
+user@debian:~$ ip addr
+2: enp1s0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP
+    inet 192.168.122.199/24 brd 192.168.122.255 scope global dynamic enp1s0
+
+Si está instalado el paquete ssh tanto en el host como en la VM entonces con esa
+dirección 192.168.122.199 nos podemos conectar a la VM desde el Host con:
+
+$ ssh user@192.168.122.199
+
 Imágenes de disco
 =================
 

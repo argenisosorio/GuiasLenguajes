@@ -2040,7 +2040,31 @@ $ aptitude update
 
 Saber si un paquete está instalado y su version.
 
-$ dpkg -l | grep nombre_paquete
+$ sudo dpkg -l | grep nombre_paquete
+
+sudo: Ejecuta el comando con privilegios de superusuario o administrador. Es
+necesario cuando se requieren permisos elevados.
+
+dpkg -l: Este comando lista todos los paquetes instalados en el sistema. dpkg es
+el sistema de gestión de paquetes en Debian y derivados (como Ubuntu), y la
+opción -l muestra un listado de todos los paquetes instalados junto con su
+estado.
+
+| grep nombre_paquete: El símbolo | es un pipe, que redirige la salida del
+comando anterior (dpkg -l) como entrada para el siguiente comando (grep). grep
+
+nombre_paquete busca en la lista generada por dpkg -l cualquier línea que
+contenga el texto nombre_paquete. Esto se utiliza para filtrar los resultados y
+mostrar solo los paquetes cuyo nombre o descripción coincida con name_package.
+
+Resumen: Este comando se usa para verificar si un paquete específico
+(nombre_paquete) está instalado en el sistema Debian, mostrando detalles del
+paquete si se encuentra instalado.
+
+Fuente
+======
+
+ChatGPT
 
 -----
 
@@ -5752,6 +5776,37 @@ Desinstalar VirtualBox
 # rm -rf VirtualBox\ VMs/
 
 # rm -rf .config/VirtualBox/
+
+Otra forma
+==========
+
+Si instaló VirtualBox a través del script de instalación, puede encontrar el
+directorio donde está instalado ejecutando
+
+$ cat /etc/vbox/vbox.cfg
+
+# VirtualBox installation directory
+INSTALL_DIR='/opt/VirtualBox'
+# VirtualBox version
+INSTALL_VER='6.1.22'
+INSTALL_REV='144080'
+# Build type and user name for logging purposes
+BUILD_TYPE='release'
+USERNAME='vbox'
+
+Luego puede ejecutar el script de desinstalación ubicado en el directorio de
+instalación. Suponiendo que esté instalado en /opt/VirtualBox, ejecute:
+
+$ sudo /opt/VirtualBox/uninstall.sh
+
+VirtualBox 6.1.22 r144080 has been removed successfully.
+
+$ sudo rm -rf /opt/VirtualBox
+
+Fuente
+======
+
+https://askubuntu.com/questions/703746/how-to-completely-remove-virtualbox
 
 =====
 Otros
@@ -9693,6 +9748,50 @@ sugiere que consideres formatearlo usando la opción LVM cifrado (encrypted LVM)
 Nota: Ni Grub ni LiLo son compatibles con LVM, así que el /boot debería quedar
 fuera del disco de almacenamienteo gestionado por LVM.
 
+Ventajas de usar LVM en Debian
+==============================
+
+Redimensionamiento Dinámico: Puedes redimensionar volúmenes lógicos (aumentar o
+reducir su tamaño) sin afectar a los datos existentes o requerir un reinicio.
+
+Administración Flexible: Puedes añadir más discos o particiones físicas al grupo
+de volúmenes y luego expandir volúmenes lógicos existentes o crear nuevos.
+
+Snapshots: LVM permite crear snapshots de volúmenes lógicos, lo que es útil para
+realizar copias de seguridad sin interrumpir el funcionamiento del sistema.
+
+Migración de Discos: Puedes mover datos entre diferentes discos físicos dentro de
+un grupo de volúmenes sin interrupciones.
+
+Proceso de utilización de LVM durante la instalación de Debian
+==============================================================
+
+Seleccionar "Guiado – utilizar disco entero con LVM": Durante la instalación,
+Debian ofrece una opción para utilizar LVM automáticamente. Esto configurará LVM
+sobre el disco seleccionado.
+
+Creación de Volúmenes Físicos y Grupos de Volúmenes: El instalador de Debian
+convierte las particiones seleccionadas en volúmenes físicos y las agrupa en un
+volumen de grupo.
+
+Creación de Volúmenes Lógicos: A partir del grupo de volúmenes, el instalador
+crea volúmenes lógicos para las diferentes particiones que necesitas, como
+/ (raíz), /home y swap.
+
+Asignación de Sistemas de Archivos: Finalmente, se asignan sistemas de archivos
+a los volúmenes lógicos creados, permitiendo que el sistema operativo y los
+datos sean almacenados en ellos.
+
+Consideraciones
+===============
+
+Complejidad: LVM añade una capa de complejidad sobre el particionado
+tradicional. Aunque ofrece muchas ventajas, puede ser más complicado de
+administrar para usuarios menos experimentados.
+
+Rendimiento: En la mayoría de los casos, el impacto en el rendimiento es mínimo,
+pero en entornos con alta carga de E/S, LVM podría tener un ligero impacto.
+
 Fuentes
 =======
 
@@ -10232,3 +10331,62 @@ Fuente
 ======
 
 ChatGPT
+
+================
+¿Qué es la UEFI?
+================
+
+La UEFI o Interfaz de Firmware Extensible Unificada se considera el sustituto
+del firmware de la BIOS. Viene con más características y funcionalidades que
+están limitadas en la BIOS, y está disponible en las placas base actuales y en
+los PCs modernos.
+
+Aunque se considera un sustituto de la BIOS, la UEFI funciona de forma diferente
+y tiene un concepto opuesto a la BIOS. La UEFI almacena toda la información
+sobre la inicialización y el arranque en el archivo .efi, que se almacena en la
+partición ESP (Partición del Sistema EFI). y en la ESP se almacenan también los
+programas del gestor de arranque del sistema operativo instalado en el
+ordenador.
+
+La UEFI utiliza GPT para almacenar toda la información sobre las particiones, en
+lugar de MBR.
+
+A continuación una explicación sencilla de cómo arranca el sistema operativo en
+UEFI.
+
+UEFI > GPT/ESP > Kernel > Operating System
+
+A continuación se muestran algunas características notables de la UEFI que no
+están disponibles en la BIOS tradicional:
+
+-Arranque más rápido
+
+-Maneja más de 2TB de disco (lo que es un gran problema en el entorno actual)
+
+-Soporta más de 4 particiones con tabla de particiones GUID
+
+-Soporta el arranque seguro
+
+-Soporta dispositivos de firmware modernos de 64 bits
+
+-Tiene una interfaz gráfica de usuario sencilla
+
+Fuente
+======
+
+https://howtoforge.es/activar-la-compatibilidad-con-uefi-en-la-virtualizacion-kvm/
+
+========================
+Sistema de partición EFI
+========================
+
+La partición del sistema EFI (también llamada, por sus siglas en inglés, ESP) es
+una partición independiente del sistema operativo, que actúa como el lugar de
+almacenamiento para los cargadores de arranque EFI, las aplicaciones y los
+controladores que serán lanzados por el firmware UEFI. Es obligatoria para el
+arranque UEFI.
+
+Fuente
+======
+
+https://wiki.archlinux.org/title/EFI_system_partition_(Espa%C3%B1ol)
