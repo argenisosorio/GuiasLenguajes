@@ -9660,10 +9660,44 @@ discos subyacentes. Esto facilita tareas como la creación de particiones
 grandes, la gestión de espacio libre entre discos y la realización de copias de
 seguridad mientras el sistema está en funcionamiento.
 
-Fuente
-======
+Definiciones
 
-ChatGPT
+PV: Volúmenes Físicos (Physical Volumes). Esto significa el disco duro,
+particiones de discos duros, RAID o LUNs de un SAN que forman "Volúmenes
+físicos" (o PVs).
+
+VG: Grupos de Volúmenes (Volume Groups). Esto es una colección de uno o más
+Volúmenes Físicos.
+
+LV: Volúmenes Lógicos (Logical Volumes). Los LVs están dentro de un Grupo de
+Volúmenes y conforman, en efecto, una partición virtual.
+
+PE: Extensiones Físicas (Physical Extents). Para manipular los verdaderos datos,
+se divide en bloques de datos llamados Extensiones Físicas.
+
+LE: Extensiones Lógicas (Logical Extents). Similar a las Extensiones Físicas,
+pero a nivel de Volumen Lógico. Las extensiones físicas son a los volúmenes
+lógicos tal como las Extensiones Lógicas son a los Volúmenes Lógicos. El tamaño
+de los bloques es el mismo para cada Volumen Lógico (LV) del mismo Grupo de
+Volúmenes (VG).
+
+LVM cifrado
+===========
+
+Al formatear un volumen LVM, se puede elegir entre LVM cifrado o LVM sin cifrar.
+Para proteger la confidencialidad de tus valiosos datos, por caso en el suceso
+de una pérdida o robo de tu computador o almacenamiento, tales como un volumen,
+un disco de estado sólido, o un disco duro; al formatear un volumen LVM se
+sugiere que consideres formatearlo usando la opción LVM cifrado (encrypted LVM).
+
+Nota: Ni Grub ni LiLo son compatibles con LVM, así que el /boot debería quedar
+fuera del disco de almacenamienteo gestionado por LVM.
+
+Fuentes
+=======
+
+-ChatGPT
+-https://wiki.debian.org/es/LVM
 
 ==========================
 Minimizar ventana en Gnome
