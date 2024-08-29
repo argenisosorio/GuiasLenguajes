@@ -6587,6 +6587,17 @@ Solución...
 
 $ sudo fuser -vki /var/lib/dpkg/lock
 
+========================================
+Problema con /var/lib/dpkg/lock-frontend
+========================================
+
+Citing for cache lock: Could not get lock /var/lib/dpkg/lock-frontend. It is
+held by process 1434 (packagekitd)... 54s
+
+Solución...
+
+$ sudo fuser -vki /var/lib/dpkg/lock
+
 -----
 
 En Debian 11 Bullseye el problema puede ser:
