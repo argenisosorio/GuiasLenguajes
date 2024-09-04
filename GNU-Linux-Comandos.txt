@@ -3250,13 +3250,19 @@ reanudar.
 
 $ wget -c ftp://sunsite.doc.ic.ac.uk/ls-lR.Z
 
+-----
+
 Indicar más de una descarga a la vez, incluso con distintos protocolos o extensiones
 
 $ wget http://ejemplo.com/programa.tar.gz ftp://otrositio.com/descargas/video.mpg
 
+-----
+
 Descargar varios archivos, con extensión similar.
 
 $ wget http://ejemplo.com/*.pdf
+
+-----
 
 Descargar varios archivos a traves de una lista.
 
@@ -3301,13 +3307,37 @@ de subdirectorios. De forma predeterminada wget emplea 5.
 
 $ wget -r -l7 www.ejemplo.com
 
+-----
+
 Ignorar avisos de certificados caducados, etc.
 
 $ wget --no-check-certificate my_url
 
+-----
+
 Descargar una carpeta o directorio específico con wget
 
 $ wget -H -r --level=1 -k -p http://192.168.12.82/share/fff
+
+-----
+
+Descargar archivos que tengan espacios en el nombre
+
+Cuando se intenta descargar un archivo que tenga espacios en el nombre o
+parentesis puede dar error, en la terminal, los paréntesis tienen un significado
+especial, por lo que necesitan ser escapados o el nombre completo del archivo
+debe estar entre comillas para evitar el error.:
+
+$ wget "https://example.com/Un Lugar En Silencio Día Uno (2024).mp4"
+
+O si prefieres escapar los paréntesis:
+
+$ wget https://example.com/Un\ Lugar\ En\ Silencio\ Día\ Uno\ \(2024\).mp4
+
+Fuente
+======
+
+ChatGPT
 
 ========================================================
 Imágenes .iso de todas las versiones de GNU/Linux Debian
