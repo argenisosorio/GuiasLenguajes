@@ -310,22 +310,53 @@ $ git checkout -b Nombre_Rama
 
 -----
 
-Borrar una rama, se debe estar en otra rama para borrarla
+Borrar o eliminar una rama, se debe estar en otra rama para borrarla
 
 $ git branch -d Nombre_Rama
 
 -----
 
-Forzar el borrado de una rama, a veces no se dejan borrar si hay cambios sin
-guardar.
+Forzar el borrado o eliminación de una rama, a veces no se dejan borrar si hay
+cambios sin guardar.
 
 $ git branch -D Nombre_Branch
 
 -----
 
-Borrar una rama del repositorio remoto.
+Borrar o eliminar una rama de un repositorio remoto.
 
 $ git push origin :the_remote_branch
+
+-----
+
+Borrar o eliminar múltiples ramas según la busqueda filtrada.
+
+Para borrar todas las ramas locales que comiencen con feat, puedes ejecutar el
+siguiente comando en Git:
+
+$ git branch | grep '^  feat' | xargs git branch -d
+
+Explicación:
+
+git branch: Lista todas las ramas locales.
+
+grep '^ feat': Filtra las ramas que comienzan con feat. El ^ indica el comienzo
+de la línea y el espacio en blanco que sigue está incluido para capturar ramas
+que están alineadas correctamente en el listado.
+
+xargs git branch -d: Pasa las ramas encontradas a git branch -d, que borra las
+ramas locales.
+
+Si algunas de estas ramas no se pueden eliminar porque aún no están
+completamente fusionadas, puedes usar la opción -D en lugar de -d para forzar la
+eliminación:
+
+$ git branch | grep '^  feat' | xargs git branch -D
+
+Fuente
+======
+
+ChatGPT
 
 -----
 

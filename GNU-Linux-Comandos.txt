@@ -2,6 +2,10 @@
 Guía de comandos en GNU/Linux Debian by dM
 ==========================================
 
+Nota:
+-Usaremos $ para describir los comandos que se usaran con usuario regular.
+-Usaremos # para describir los comandos que se usaran con superusuario.
+
 =============================================
 Comandos para mostrar información del sistema
 =============================================
@@ -7663,7 +7667,6 @@ La salida sería:
 <html><head><title>testdomain.com</title></head><body><h1>testdomain.com</h1><p>
 Coming soon.</p></body></html>
 
-=======================================
 Opciones de archivo de comandos de Curl
 =======================================
 
@@ -7702,7 +7705,6 @@ todos los archivos.
 
 $ xargs -n 1 curl -O < allUrls.txt
 
-=======================
 Comandos Curl para Http
 =======================
 
@@ -7745,6 +7747,24 @@ $ curl -X POST https://petroapp-price.petro.gob.ve/price/PTR -H 'Content-Type: a
 Respuesta
 
 {"status":200,"success":true,"data":{"BTC":{"BTC":185.10780816,"PTR":0.00540226}}}
+
+-----
+
+Descargar un archivo con curl
+
+$ curl https://misitio/downloads/1 --output archivo.zip
+
+curl: Es una herramienta de línea de comandos que permite hacer solicitudes HTTP
+(entre otros protocolos). Se usa para transferir datos desde o hacia un
+servidor.
+
+https://misitio/downloads/1: Es la URL desde la cual curl está solicitando el
+recurso. En este caso, parece que apunta a un archivo en un sitio web que
+quieres descargar.
+
+--output archivo.zip: Este parámetro le dice a curl que guarde el contenido
+descargado en un archivo llamado archivo.zip. Si no incluyeras este parámetro,
+el contenido de la descarga se mostraría directamente en la terminal.
 
 =======
 Fuentes
