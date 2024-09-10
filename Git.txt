@@ -1129,6 +1129,26 @@ por qué.
 
 $ git blame ruta/al/archivo.xxx
 
+-----
+
+Ver el autor de una línea o líneas específicas de un archivo
+
+$ git blame -L <línea_inicio>,<línea_fin> <archivo>
+
+Por ejemplo, si quieres ver el autor de la línea 42 de un archivo llamado
+archivo.txt, puedes ejecutar:
+
+$ git blame -L 42,42 archivo.txt
+
+Esto te mostrará quién cambió esa línea y en qué commit, con el identificador
+del commit, la fecha y el autor. El 42 y 42 puede ser un rango por ejemplo 42
+al 50.
+
+Fuente
+======
+
+ChatGPT
+
 ========================================================
 Git archive, Exportación del contenido de un repositorio
 ========================================================
