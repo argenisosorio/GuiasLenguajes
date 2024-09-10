@@ -1149,6 +1149,29 @@ Fuente
 
 ChatGPT
 
+-----
+
+Ver historial de modificaciones de una línea
+
+Ver todas las modificaciones que ha tenido una línea a lo largo del tiempo y
+quién las hizo, puedes usar el comando git log con las opciones adecuadas para
+rastrear los cambios de una línea específica.
+
+$ git log -L <línea_inicio>,<línea_fin>:<archivo>
+
+Por ejemplo, si quieres rastrear todos los cambios en la línea 42 de archivo.txt
+ejecutarías:
+
+$ git log -L 42,42:archivo.txt
+
+Este comando te mostrará todos los commits que han modificado esa línea, junto
+con el autor y otros detalles relevantes.
+
+Fuente
+======
+
+ChatGPT
+
 ========================================================
 Git archive, Exportación del contenido de un repositorio
 ========================================================
