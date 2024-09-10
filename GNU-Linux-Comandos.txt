@@ -4008,6 +4008,15 @@ alias ll='ls -l --color'
 alias buscar='grep --color -n -Ir'
 alias texto='echo "imprimir este texto"'
 
+alias ls='ls --color=auto'
+alias buscar='grep --color -n -Ir'
+alias my_project='cd /home/user/project_app && git status'
+alias guias_lenguajes='cd /home/user/Documentos/GIT/GuiasLenguajes/'
+alias gitlab='echo "XXXXXX"'
+alias github='echo "XXXXXXXX"'
+alias MailHog='~/.go/bin/MailHog'
+alias ruta='echo /home/user | tee >(xclip -selection clipboard)'
+
 Para que se haga efectivo algun cambio en .bashrc es necesario reiniciar pero
 hay otra forma de actualizar el fichero sin reiniciar, entonces:
 
@@ -4022,6 +4031,36 @@ iniciemos un shell nos saludará.
 
 ## Mensaje al iniciar
 echo "Hola Usuario"
+
+Copiar contenido del alias al portapapeles
+==========================================
+
+Si estás en un entorno como GNOME o KDE, normalmente se usa xclip.
+
+Instalar xclip:
+
+$ sudo apt install xclip
+
+Aquí te doy un ejemplo de cómo hacerlo con xclip (necesitarías tener xclip
+instalado.
+
+alias ruta='echo /home/user | tee >(xclip -selection clipboard)'
+
+Este comando hará lo siguiente:
+
+echo /home/user: Imprime la ruta en la terminal.
+
+tee >(xclip -selection clipboard): Copia la salida al portapapeles usando xclip mientras también la muestra en la terminal.
+
+Prueba el alias y comprueba si puedes pegar el contenido después de ejecutar
+ruta.
+
+alias ruta='echo /home/user | tee >(xclip -selection clipboard)'
+
+Fuente
+======
+
+ChatGPT
 
 ================================================
 Saber la direccion ip de una pagina o un sevidor
