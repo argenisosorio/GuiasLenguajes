@@ -1152,6 +1152,7 @@ ChatGPT
 -----
 
 Ver historial de modificaciones de una línea
+============================================
 
 Ver todas las modificaciones que ha tenido una línea a lo largo del tiempo y
 quién las hizo, puedes usar el comando git log con las opciones adecuadas para
@@ -1166,6 +1167,25 @@ $ git log -L 42,42:archivo.txt
 
 Este comando te mostrará todos los commits que han modificado esa línea, junto
 con el autor y otros detalles relevantes.
+
+Fuente
+======
+
+ChatGPT
+
+Ver historial de modificaciones de un archivo específico
+========================================================
+
+$ git log --follow -- <ruta-del-archivo>
+
+Esto te mostrará el historial de commits que han afectado a ese archivo, incluso
+si ha sido renombrado o movido en algún momento.
+
+Si además quieres ver los cambios realizados en cada commit, puedes usar:
+
+git log --follow -p -- <ruta-del-archivo>
+
+El flag -p muestra el parche con las diferencias en cada commit.
 
 Fuente
 ======
