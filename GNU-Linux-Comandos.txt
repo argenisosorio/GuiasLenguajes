@@ -10513,3 +10513,60 @@ Instalar OpenShot Video Editor
 ==============================
 
 $ sudo apt install openshot-qt
+
+==========================================================
+Conver el ancho y el alto de una pantalla en cm a pulgadas
+==========================================================
+
+X = Ancho en pulgadas
+Y = Alto en pulgadas
+
+X = Xcm / 2.54cm
+Y = Ycm / 2.54cm
+
+1- Elevar ambos al cuadrado
+
+X = X²
+Y = Y²
+
+2- Sumamos los resultados de los cuadrados:
+
+X + Y
+
+3- Aplicar la raíz cuadrada a ese número para obtener la diagonal
+
+Z = Raiz de suma de X + Y
+
+R = √z
+
+-----
+
+Ejemplo:
+
+X = 52cm / 2,54cm
+Y = 29.5cm / 2,54cm
+
+Resultado
+
+X = 20,47
+Y = 11,61
+
+Elevamos ambos al cuadrado
+
+X = 419,0209
+Y = 134,7921
+
+Sumamos los resultados de los cuadrados
+
+X+Y = 553,813
+
+Sacar la raíz del resultado
+
+R = √553,813
+
+R = 23,53" pulgadas
+
+Fuente
+======
+
+ChatGPT
