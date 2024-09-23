@@ -10570,3 +10570,57 @@ Fuente
 ======
 
 ChatGPT
+
+====================================================
+Dividir un archivo en partes y luego unir las partes
+====================================================
+
+1. Usa el comando split para dividir el archivo .mp4 en partes más pequeñas:
+
+$ split -b 100M archivo_grande.mp4 parte_
+
+-b 100M: Indica el tamaño de cada parte (en este caso, 100 MB). Puedes ajustar
+el tamaño a lo que necesites.
+
+archivo_grande.mp4: Es el archivo de video que quieres dividir.
+
+parte_: Prefijo para los archivos generados. El resultado serán archivos con
+nombres como parte_aa, parte_ab, etc.
+
+2. Unir las partes de nuevo:
+
+Una vez que las partes hayan sido transferidas o almacenadas, puedes
+recombinarlas usando el comando cat:
+
+$ cat parte_* > video_reconstruido.mp4
+
+Esto unirá todas las partes y generará el archivo original.
+
+3. Verificación (opcional):
+
+Puedes verificar que el archivo reconstruido es idéntico al original usando el
+comando md5sum antes y después de dividir:
+
+Obtener el hash del archivo original:
+
+$ md5sum archivo_grande.mp4
+
+Obtener el hash del archivo reconstruido:
+
+$ md5sum video_reconstruido.mp4
+
+Si los hashes coinciden, el archivo fue reconstruido correctamente.
+
+Este método es simple y te permite dividir y unir archivos sin perder calidad en
+el video.
+
+Nota:
+
+El método de dividir y unir archivos con split y cat funciona para cualquier
+tipo de archivo, incluyendo documentos como un archivo .odt (o cualquier otro
+formato, como .pdf, .zip, etc.).
+
+Fuente
+======
+
+ChatGPT
