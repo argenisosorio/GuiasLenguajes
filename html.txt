@@ -5165,6 +5165,256 @@ Drag and Drop Puzzle solo con HTML, CSS y JS
 </body>
 </html>
 
+----------
+
+Drag and Drop Puzzle solo con HTML, CSS y JS y con imágenes de 100px x 100px
+para los 12 recuadros.
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop Puzzle</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            width: 80%;
+            height: auto; /* Ajusta el tamaño según los cuadros */
+            border: 2px solid #000;
+            margin-bottom: 20px;
+        }
+        .left, .right {
+            width: 50%;
+            display: grid;
+            grid-template-columns: repeat(3, 100px); /* 3 columnas de 100px */
+            grid-template-rows: repeat(4, 100px);    /* 4 filas de 100px */
+            gap: 10px;
+            padding: 10px;
+        }
+        .left {
+            border-right: 2px solid #000;
+        }
+        .box {
+            width: 100px; /* Fijo a 100px */
+            height: 100px; /* Fijo a 100px */
+            border: 2px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            position: relative;
+        }
+        .box[data-drop="true"] {
+            background-color: #f0f0f0;
+        }
+        .box[data-drop="false"] {
+            background-color: lightgray;
+        }
+        .draggable {
+            background-color: lightcoral;
+            color: #fff;
+        }
+        .dragging {
+            opacity: 0.5;
+        }
+        .reset-button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .reset-button:hover {
+            background-color: #0056b3;
+        }
+        .box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Contenedor izquierdo con 12 cuadros para completar el puzzle -->
+        <div class="left">
+            <div class="box" data-drop="true"></div>
+            <div class="box" data-drop="true"></div>
+            <div class="box" data-drop="true"></div>
+            <div class="box" data-drop="true"></div>
+            <div class="box" data-drop="true"></div>
+            <div class="box" data-drop="true"></div>
+            <div class="box" data-drop="true"></div>
+            <div class="box" data-drop="true"></div>
+            <div class="box" data-drop="true"></div>
+            <div class="box" data-drop="true"></div>
+            <div class="box" data-drop="true"></div>
+            <div class="box" data-drop="true"></div>
+        </div>
+
+        <!-- Contenedor derecho con 12 cuadros arrastrables -->
+        <div class="right" id="right-boxes">
+            <div class="box draggable" draggable="true">
+                <img src="1.png" alt="Imagen 1">
+            </div>
+            <div class="box draggable" draggable="true">
+                <img src="2.png" alt="Imagen 2">
+            </div>
+            <div class="box draggable" draggable="true">
+                <img src="3.png" alt="Imagen 3">
+            </div>
+            <div class="box draggable" draggable="true">
+                <img src="4.png" alt="Imagen 4">
+            </div>
+            <div class="box draggable" draggable="true">
+                <img src="5.png" alt="Imagen 5">
+            </div>
+            <div class="box draggable" draggable="true">
+                <img src="6.png" alt="Imagen 6">
+            </div>
+            <div class="box draggable" draggable="true">
+                <img src="7.png" alt="Imagen 7">
+            </div>
+            <div class="box draggable" draggable="true">
+                <img src="8.png" alt="Imagen 8">
+            </div>
+            <div class="box draggable" draggable="true">
+                <img src="9.png" alt="Imagen 9">
+            </div>
+            <div class="box draggable" draggable="true">
+                <img src="10.png" alt="Imagen 10">
+            </div>
+            <div class="box draggable" draggable="true">
+                <img src="11.png" alt="Imagen 1">
+            </div>
+            <div class="box draggable" draggable="true">
+                <img src="12.png" alt="Imagen 12">
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón para reiniciar el puzzle -->
+    <button class="reset-button" id="resetButton">Reiniciar Puzzle</button>
+
+    <script>
+        const draggables = document.querySelectorAll('.draggable');
+        const dropZones = document.querySelectorAll('.box[data-drop="true"]');
+        const resetButton = document.getElementById('resetButton');
+        const rightBoxesContainer = document.getElementById('right-boxes');
+
+        // Función para manejar el arrastre
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', (e) => {
+                draggable.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', draggable.innerHTML);
+                setTimeout(() => draggable.style.display = 'none', 0);
+            });
+
+            draggable.addEventListener('dragend', () => {
+                draggable.classList.remove('dragging');
+                draggable.style.display = 'block';
+            });
+        });
+
+        // Permitir soltar en el área de la izquierda
+        dropZones.forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+            });
+
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const draggedItem = document.querySelector('.dragging');
+                zone.innerHTML = draggedItem.innerHTML;
+                zone.style.backgroundColor = draggedItem.style.backgroundColor;
+                if (draggedItem.querySelector('img')) {
+                    const img = draggedItem.querySelector('img').cloneNode(true);
+                    zone.innerHTML = ''; // Limpiar el contenido previo
+                    zone.appendChild(img); // Insertar la imagen en la zona de destino
+                }
+                draggedItem.remove(); // Elimina el cuadro del área derecha
+            });
+        });
+
+        // Función para reiniciar el puzzle
+        resetButton.addEventListener('click', () => {
+            // Limpiar las zonas de la izquierda
+            dropZones.forEach(zone => {
+                zone.innerHTML = '';
+                zone.style.backgroundColor = '#f0f0f0';
+            });
+
+            // Restaurar los cuadros en la derecha
+            rightBoxesContainer.innerHTML = `
+                <div class="box draggable" draggable="true">
+                    <img src="1.png" alt="Imagen 1">
+                </div>
+                <div class="box draggable" draggable="true">
+                    <img src="2.png" alt="Imagen 2">
+                </div>
+                <div class="box draggable" draggable="true">
+                    <img src="3.png" alt="Imagen 3">
+                </div>
+                <div class="box draggable" draggable="true">
+                    <img src="4.png" alt="Imagen 4">
+                </div>
+                <div class="box draggable" draggable="true">
+                    <img src="5.png" alt="Imagen 5">
+                </div>
+                <div class="box draggable" draggable="true">
+                    <img src="6.png" alt="Imagen 6">
+                </div>
+                <div class="box draggable" draggable="true">
+                    <img src="7.png" alt="Imagen 7">
+                </div>
+                <div class="box draggable" draggable="true">
+                    <img src="8.png" alt="Imagen 8">
+                </div>
+                <div class="box draggable" draggable="true">
+                    <img src="9.png" alt="Imagen 9">
+                </div>
+                <div class="box draggable" draggable="true">
+                    <img src="10.png" alt="Imagen 10">
+                </div>
+                <div class="box draggable" draggable="true">
+                    <img src="11.png" alt="Imagen 1">
+                </div>
+                <div class="box draggable" draggable="true">
+                    <img src="12.png" alt="Imagen 12">
+                </div>
+            `;
+
+            // Reasignar eventos drag a los nuevos elementos
+            const newDraggables = document.querySelectorAll('.draggable');
+            newDraggables.forEach(draggable => {
+                draggable.addEventListener('dragstart', (e) => {
+                    draggable.classList.add('dragging');
+                    e.dataTransfer.setData('text/plain', draggable.innerHTML);
+                    setTimeout(() => draggable.style.display = 'none', 0);
+                });
+
+                draggable.addEventListener('dragend', () => {
+                    draggable.classList.remove('dragging');
+                    draggable.style.display = 'block';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
 Fuente
 ======
 
