@@ -2685,3 +2685,46 @@ Fuente
 ======
 
 LuzIA
+
+=============================
+Carga diferida o lazy loading
+=============================
+
+Es una técnica de optimización utilizada en desarrollo web y aplicaciones que
+retrasa la carga de ciertos recursos hasta que sean realmente necesarios, en
+lugar de cargarlos de inmediato. Esto mejora el rendimiento y reduce el tiempo
+de carga inicial de una página o aplicación.
+
+Por ejemplo, en una aplicación web, si una página tiene muchas imágenes o
+recursos multimedia, el lazy loading solo cargará aquellas imágenes que sean
+visibles en la pantalla del usuario (en el viewport). A medida que el usuario
+hace scroll y más imágenes se vuelven visibles, estas se irán cargando
+dinámicamente.
+
+Ventajas del lazy loading
+=========================
+
+-Mejora el tiempo de carga inicial: Como solo se cargan los recursos necesarios
+al principio, la página carga más rápido.
+
+-Optimiza el uso de ancho de banda: Evita cargar recursos que el usuario podría
+no llegar a ver, ahorrando ancho de banda tanto en el servidor como en el
+cliente.
+
+-Mejor experiencia de usuario: Al mejorar el rendimiento, la página es más
+receptiva y fluida, lo que genera una mejor interacción para el usuario.
+
+Ejemplo:
+
+Si una página tiene 50 imágenes, en lugar de cargar todas de una vez, se cargan
+solo las primeras visibles. El resto se irán cargando conforme el usuario haga
+scroll hacia abajo.
+
+En JavaScript o frameworks como Vue.js o React, el lazy loading se utiliza para
+cargar dinámicamente componentes o recursos en lugar de hacerlo al inicio, lo
+que es especialmente útil para aplicaciones grandes o con muchos módulos.
+
+Fuente
+======
+
+ChatGPT
