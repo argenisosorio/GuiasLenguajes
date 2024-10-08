@@ -10624,3 +10624,118 @@ Fuente
 ======
 
 ChatGPT
+
+=============================================
+Fuentes tipográficas en Debian y en GNU Linux
+=============================================
+
+ALGUNOS TIPOS DE FUENTES EXISTENTES
+===================================
+
+En Linux podemos instalar varios tipos de fuentes. Los tipos de fuentes más
+habituales que encontraremos son los siguientes:
+
+Fuentes TrueType (ttf): Son las más habituales y se pueden utilizar en Linux, en
+Windows y en Mac OS. Las reconocerán fácilmente porque cuando las descarguen
+verán tienen el formato ttf.
+
+Este tipo de de formato de fuente fue originariamente creado por Apple, y a
+posteriori Microsoft adquirió una licencia de uso. Esto ha hecho que en la
+actualidad las fuentes ttf sean ampliamente usadas en Microsoft Windows.
+
+Fuentes PostScript tipo 1 (pbf + pfm): Las fuentes Postscript fueron
+desarrolladas por Adobe para utilizarse en impresoras PostScipt.
+
+Al igual que las TrueType y las OpenType, son escalables a prácticamente
+cualquier tamaño y se utilizan mayoritariamente para realizar impresiones de
+alta calidad, como por ejemplo revistas y libros, por ser fuentes detalladas,
+suaves y de alta calidad. Por lo tanto este tipo de fuentes es ampliamente usada
+por los diseñadores gráficos.
+
+Cada fuente se almacena en 2 archivos. El primero de ellos es con la extensión
+.pfb y el segundo con la extensión .pfm.
+
+Fuentes OpenType (otf): Formato de tipografía basado en las fuentes TrueType.
+
+Las fuentes OpenType han sido creadas por Microsoft y Adobe de forma conjunta
+para reemplazar los formatos TrueType y PostScript.
+
+Este tipo de fuentes son una evolución del formato de fuentes TrueType y
+Postscript, y las reconocerán fácilmente porque cuando las descarguen verán que
+tienen el formato otf.
+
+PROCEDIMIENTOS PARA INSTALAR FUENTES EN GNU/LINUX
+=================================================
+
+Los distintos métodos que podemos usar en GNU/Linux para instalar fuentes se
+detallan a continuación.
+
+Instalar fuentes de los repositorios de nuestra distribución
+
+En los repositorios de nuestra distribución tenemos muchos paquetes que si los
+instalamos nos ofrecerán fuentes tipográficas adicionales.
+
+La totalidad de paquetes relacionados con fuentes tipográficas de Debian se
+pueden consultar en los siguientes enlaces:
+
+Debian Estable
+https://packages.debian.org/stable/fonts/
+
+Debian Testing
+https://packages.debian.org/testing/fonts/
+
+Debian Sid
+https://packages.debian.org/sid/fonts/
+
+Algunos de los paquetes presentes en una distribución Linux que considero útiles
+instalar son los siguientes:
+
+Instalar las fuentes de Microsoft
+
+En el caso que queramos o tengamos necesidad de instalar algunas de las fuentes
+de Microsoft, tan solo tenemos que abrir una terminal y ejecutar el siguiente comando:
+
+$ sudo apt-get install ttf-mscorefonts-installer
+
+Una vez instalado el paquete ttf-mscorefonts-installer pasaremos a disponer de
+las siguientes fuentes:
+
+Andale Mono, Arial Black, Arial, Comic Sans MS, Courier New, Georgia, Impact,
+Times New Roman, Trebuchet, Verdana, Webdings.
+
+La totalidad de fuentes mencionadas son fuentes privativas que se hallan en el
+repositorio Contrib de Debian.
+
+Para disponer de variantes libres de las tipografías Times, Arial y Courier, etc
+pueden instalar el paquete fonts-liberation ejecutando el siguiente comando en
+la terminal:
+
+$ sudo apt-get install fonts-liberation
+
+Luego de instalar nuevas fuentes se debe recargar la lista de fuentes ejecutando
+el siguiente comando en la terminal:
+
+$ sudo fc-cache -f -v
+
+SACAR UN LISTADO DE LA TOTALIDAD DE FUENTES INSTALADAS EN NUESTRO EQUIPO
+========================================================================
+
+En el caso que precisen sacar un listado de la totalidad de fuentes instaladas,
+pueden ejecutar el siguiente comando en la terminal:
+
+$ fc-list
+
+Si lo que quieren es obtener un fichero de texto con la totalidad de fuentes
+instaladas pueden ejecutar el siguiente comando en la terminal:
+
+$ fc-list >fuentes_instaladas.txt
+
+Directorio de instalación
+=========================
+
+/usr/share/fonts
+
+Fuente
+======
+
+https://geekland.eu/instalar-fuentes-en-debian-linux/
