@@ -489,3 +489,45 @@ Fuente
 ======
 
 https://dbeaver.io/about/
+
+=========================================
+Diferencia hay entre integer y biginteger
+=========================================
+
+La diferencia entre integer y biginteger radica en la cantidad de espacio que
+ocupan en la base de datos y el rango de valores que pueden almacenar.
+
+1. integer (o int): Tamaño en almacenamiento: 4 bytes.
+
+Uso común: Es el tipo de dato más común para llaves primarias (id).
+
+2. biginteger (o bigint): Tamaño en almacenamiento: 8 bytes.
+
+Uso común: Para valores que requieren un rango mucho mayor, como grandes
+identificadores, conteos de visitas, o valores financieros que pueden exceder el
+rango de integer.
+
+¿Cuándo usar cada uno?
+======================
+
+integer: Es más eficiente en cuanto a uso de memoria y almacenamiento. Se usa
+cuando sabes que los números no serán muy grandes (como para la mayoría de las
+identificaciones de registros o conteos que no superan los dos mil millones).
+
+biginteger: Es útil cuando necesitas trabajar con números extremadamente
+grandes, como en sistemas que gestionan enormes bases de datos o cifras, como el
+número total de visitas a una página popular, cifras financieras globales, o
+sistemas que necesitan grandes valores de identificación.
+
+Ejemplo práctico:
+
+Si esperas que un id en una tabla nunca superará los dos mil millones, puedes
+usar integer.
+
+Si trabajas en un sistema donde el conteo de algo (como transacciones o
+usuarios) podría llegar a cifras astronómicas, usarías biginteger.
+
+Fuente
+======
+
+ChatGPT
