@@ -9143,3 +9143,63 @@ Fuente
 ======
 
 ChatGPT
+
+===========================================
+Diferencias entre =, == y === en JavaScript
+===========================================
+
+= (Asignación): Usamos este operador para asignar un valor a una variable.
+
+== (Igualdad débil): Compara valores, pero convierte los tipos de datos
+automáticamente, lo que puede llevar a resultados inesperados.
+
+=== (Igualdad estricta): Compara tanto el valor como el tipo de dato, asegurando
+una comparación más precisa.
+
+Ejemplos:
+
+1. Operador de asignación =
+
+Este operador asigna un valor a una variable.
+
+let x = 5; // Asigna el valor 5 a la variable x
+console.log(x); // Imprime: 5
+
+2. Igualdad débil ==
+
+Compara los valores, pero convierte los tipos de datos automáticamente si son
+diferentes.
+
+console.log(5 == '5'); // true, porque convierte la cadena '5' en número 5 antes
+de comparar
+
+console.log(true == 1); // true, porque true se convierte en 1 antes de comparar
+
+console.log(null == undefined); // true, porque ambos son considerados "vacíos"
+
+3. Igualdad estricta ===
+
+Compara tanto el valor como el tipo de dato, sin conversión automática.
+
+console.log(5 === '5'); // false, porque uno es número y el otro es cadena
+
+console.log(true === 1); // false, porque true es booleano y 1 es número
+
+console.log(null === undefined); // false, porque tienen tipos diferentes
+
+Conclusión
+==========
+
+Usa = para asignar valores.
+
+Usa == si no te importa que los tipos de datos se conviertan automáticamente.
+
+Usa === para comparaciones precisas, donde el tipo de dato debe coincidir
+también.
+
+Fuentes
+=======
+
+ChatGPT
+
+https://www.instagram.com/reel/C_gE1MbKWX5/?igsh=MWdvNnN5Y2luOWlidg%3D%3D
