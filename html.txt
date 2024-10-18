@@ -5446,3 +5446,255 @@ Cambiar cursor por imagen PNG al hacer hover
     <label>No funciona</label>
 </body>
 </html>
+
+----------
+
+Controlar una imagen en la pantalla con las teclas de dirección.
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Controla el Robot</title>
+  <style>
+    body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    }
+
+    .container {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    border: 2px solid #333;
+    background-color: #fff;
+    }
+
+    #robot {
+    position: absolute;
+    width: 100px;
+    transition: transform 0.1s ease;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <img id="robot" src="robot.png" alt="Robot">
+  </div>
+
+  <script>
+    const robot = document.getElementById('robot');
+
+    // Inicializamos las coordenadas del robot
+    let x = 0;
+    let y = 0;
+
+    // Evento para capturar las teclas de flecha
+    window.addEventListener('keydown', function(event) {
+    const containerWidth = document.querySelector('.container').clientWidth;
+    const containerHeight = document.querySelector('.container').clientHeight;
+    const robotWidth = robot.clientWidth;
+    const robotHeight = robot.clientHeight;
+
+    // Detectar qué tecla se presiona
+    switch (event.key) {
+        case 'ArrowUp':
+        if (y > 0) {
+            y -= 10; // Mover hacia arriba
+        }
+        break;
+        case 'ArrowDown':
+        if (y + robotHeight < containerHeight) {
+            y += 10; // Mover hacia abajo
+        }
+        break;
+        case 'ArrowLeft':
+        if (x > 0) {
+            x -= 10; // Mover hacia la izquierda
+        }
+        break;
+        case 'ArrowRight':
+        if (x + robotWidth < containerWidth) {
+            x += 10; // Mover hacia la derecha
+        }
+        break;
+    }
+
+    // Aplicar las coordenadas actualizadas al robot
+    robot.style.transform = `translate(${x}px, ${y}px)`;
+    });
+  </script>
+</body>
+</html>
+
+----------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Interactive Particles - Robotics Website</title>
+  <style>
+    /* Estilos para asegurar que el contenedor cubra toda la pantalla */
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #0b0e13; /* Fondo oscuro para resaltar las partículas */
+    }
+    .content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .content h1 {
+      font-size: 48px;
+    }
+    .content p {
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Contenedor de partículas -->
+  <div id="particles-js"></div>
+
+  <!-- Contenido sobre las partículas -->
+  <div class="content">
+    <h1>Robotics Lab</h1>
+    <p>Explore the world of robotics with interactive elements.</p>
+  </div>
+
+  <!-- Script de particles.js -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+  <!-- Configuración de las partículas -->
+  <script>
+    particlesJS('particles-js', {
+      "particles": {
+        "number": {
+          "value": 80,
+          "density": {
+            "enable": true,
+            "value_area": 800
+          }
+        },
+        "color": {
+          "value": "#ffffff"
+        },
+        "shape": {
+          "type": "circle",
+          "stroke": {
+            "width": 0,
+            "color": "#000000"
+          },
+          "polygon": {
+            "nb_sides": 5
+          }
+        },
+        "opacity": {
+          "value": 0.5,
+          "random": false,
+          "anim": {
+            "enable": false,
+            "speed": 1,
+            "opacity_min": 0.1,
+            "sync": false
+          }
+        },
+        "size": {
+          "value": 3,
+          "random": true,
+          "anim": {
+            "enable": false,
+            "speed": 40,
+            "size_min": 0.1,
+            "sync": false
+          }
+        },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#ffffff",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 6,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out",
+          "bounce": false,
+          "attract": {
+            "enable": false,
+            "rotateX": 600,
+            "rotateY": 1200
+          }
+        }
+      },
+      "interactivity": {
+        "detect_on": "canvas",
+        "events": {
+          "onhover": {
+            "enable": true,
+            "mode": "repulse"
+          },
+          "onclick": {
+            "enable": true,
+            "mode": "push"
+          },
+          "resize": true
+        },
+        "modes": {
+          "grab": {
+            "distance": 400,
+            "line_linked": {
+              "opacity": 1
+            }
+          },
+          "bubble": {
+            "distance": 400,
+            "size": 40,
+            "duration": 2,
+            "opacity": 8,
+            "speed": 3
+          },
+          "repulse": {
+            "distance": 200,
+            "duration": 0.4
+          },
+          "push": {
+            "particles_nb": 4
+          },
+          "remove": {
+            "particles_nb": 2
+          }
+        }
+      },
+      "retina_detect": true
+    });
+  </script>
+</body>
+</html>
