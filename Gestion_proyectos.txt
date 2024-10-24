@@ -458,6 +458,150 @@ alcance del proyecto te servirán hasta cierto punto; es la coordinación del d�
 a día lo que ayuda a utilizar estas metodologías de planificación y a llevar tu
 iniciativa desde la planificación hasta su finalización.
 
+=============================================================
+Los tres ingredientes de las buenas publicaciones de software
+=============================================================
+
+Mezcla una parte de arquitectura con dos partes de trabajo en equipo. Añade
+automatización y remueve.
+
+En algún punto de tu carrera (si es que no ha ocurrido ya), te verás implicado
+en una publicación monolítica de software. Es decir, una publicación de software
+con interdependencias y errores inmanejables que requiera tener a todo el equipo
+trabajando a todas horas. Por no hablar de que, una vez en producción,
+probablemente requerirá varios parches.
+
+El lanzamiento de código (la publicación del software) es un buen indicador de
+la metodología ágil para desarrolladores de software. Todos los esfuerzos para
+hacer que la planificación, la programación y las pruebas sean más rápidas son
+en vano si la publicación no es fluida. Por ello, los equipos ágiles y de DevOps
+adoptan la automatización y la integración continua, integran el desarrollo y
+las operaciones en una fase temprana del desarrollo y solucionan los defectos
+inmediatamente.
+
+Tener el código constantemente en un estado publicable es el mayor distintivo de
+un desarrollo ágil. Toda la planificación lean y el desarrollo iterativo del
+mundo no significarán nada si no puedes lanzar el código en el momento en el que
+decidas que está listo.
+
+Las buenas publicaciones de software empiezan por una arquitectura modular
+==========================================================================
+
+En cualquier programa de software, lo mejor son las publicaciones sencillas y
+frecuentes del software. Un equipo puede convertir la publicación en una parte
+natural de su cultura ágil creando una arquitectura modular (o aproximándose a
+ella). En lugar de tener una aplicación de gran tamaño (como el monolito
+mencionado anteriormente), divídela en varios módulos en una fase temprana del
+programa.Agrupa funcionalidades similares en aplicaciones o componentes más
+pequeños, y mantén contratos de API claros entre cada una de las aplicaciones y
+los componentes. Estas API pueden probarse automáticamente en cada compilación
+para garantizar la compatibilidad y reducir el riesgo en la publicación del
+software.
+
+Una arquitectura modular implica que no tendrás que publicar todo el software en
+un lanzamiento a lo grande, y los contratos de API simplifican la actualización
+de componentes y aseguran la compatibilidad entre versiones. En pocas palabras,
+las publicaciones modulares requieren menos partes móviles. Y eso se traduce en
+publicaciones más sencillas.
+
+Las buenas publicaciones de software se fundamentan en relaciones
+extraordinarias
+=================================================================
+
+El desarrollo de software rara vez se lleva a cabo en el vacío. De hecho, un
+buen desarrollo de software implica a todo el equipo, desde la gestión de
+productos a las operaciones. Por ejemplo, el equipo de operaciones es un socio
+clave para entregar el software a producción, dado que ayuda a que el software
+llegue a los usuarios finales.
+
+Los equipos de desarrollo informan a los equipos de operaciones y ayudan a
+mejorar su rendimiento con estas técnicas:
+
+-Crea una lista clara de materiales en cada publicación de software. Los equipos
+de operaciones no siempre tienen el mismo nivel de contexto sobre la publicación
+que el equipo de desarrollo.
+
+-En cada incidencia que se resuelve en la publicación, proporciona un vínculo de
+vuelta al gestor de incidencias y al sistema de control del código fuente para
+que el equipo de operaciones tenga el mismo contexto si surgen problemas durante
+el despliegue.
+
+-En ocasiones, surgen incidencias al insertar código desde el entorno de
+desarrollo al entorno de pruebas. Aísla estas incidencias, dado que podrían
+surgir de nuevo durante la producción.
+
+-Pueden ocurrir problemas durante el despliegue, de modo que el equipo de
+operaciones siempre debe tener una ruta de escalación clara para resolver
+problemas fácilmente.
+
+Los equipos de operaciones pueden ayudar a sus homólogos de desarrollo con estas
+sugerencias:
+
+-Cuando surjan problemas en producción, dedica algo de tiempo a entender las
+causas y las soluciones. De ese modo, se evitarán en el futuro (o se gestionarán mejor).
+
+-Migra los datos de configuración de producción de nuevo al entorno de pruebas y
+desarrollo para evitar desajustes de la configuración.
+
+A medida que el código se migra del desarrollo a pruebas y por último a
+producción, los datos clave de configuración y de usuario se migran en sentido
+contrario: de producción a pruebas y por último a desarrollo. Esta relación
+bidireccional ayuda al entorno de desarrollo a replicar con mayor precisión el
+entorno de producción. Esto significa menos bugs y sorpresas en el día de la
+publicación.
+
+En las buenas publicaciones de software la inserción es sencilla
+================================================================
+
+¡Automatiza! ¡Automatiza! ¡Automatiza!
+
+La automatización de la publicación de software es la mejor manera de mejorar la
+cultura de publicación. Si la publicación de software aún no está automatizada,
+empieza por automatizarla en un entorno de ensayo. Cuando todos vean lo fácil
+que es, el paso natural será automatizar también las implementaciones de
+producción.
+
+Si las publicaciones son complicadas, acostúmbrate a publicar software
+frecuentemente, aunque solo sea en el entorno de ensayo. Si el equipo de
+desarrollo experimenta las dificultades de la publicación, se sentirán motivados
+para innovar con el objetivo de simplificarla (y automatizarla).
+
+Las pruebas automatizadas y la integración continua son aspectos clave en los
+que se fundamentan las buenas publicaciones. Asegúrate de que los tiempos de
+compilación y de pruebas sean lo más cortos posibles, y recuerda que las
+compilaciones fáciles de validar también son fáciles de publicar. Esto se debe a
+que el ciclo de validación se ajusta mejor al equipo.
+
+¡Las buenas publicaciones de software están muy bien!
+
+Tener el código constantemente en un estado publicable es el mayor distintivo de
+un desarrollo ágil.
+
+Toda la planificación esbelta y el desarrollo iterativo no significan nada si no
+puedes realizar el lanzamiento con rapidez.
+
+Cómo lo hacemos?
+
+Para nosotros, las publicaciones de software frecuentes son más fáciles de
+gestionar para nuestras propiedades SaaS. En cuanto a los productos
+descargables, la colaboración estrecha entre los equipos de desarrollo,
+operaciones e ingeniería de compilación contribuye en gran medida al éxito.
+Estos grupos deben trabajar conjuntamente para automatizar las publicaciones de
+software y adaptar proactivamente la automatización según los cambios que están
+por venir en los productos. Muchos de los equipos de Atlassian implementan
+automáticamente cada compilación satisfactoria de la línea principal en un
+entorno de ensayo. Cuando llega el momento de mover una publicación de software
+al entorno de ensayo o de publicarla para los clientes, estos equipos pueden
+desencadenar la automatización de la implementación con tan solo pulsar un
+botón.
+
+Como desarrolladores de software, la publicación de software debe ser el punto
+álgido de nuestro ciclo de innovación. Vemos a los clientes interactuar con el
+código que hemos programado y nos aportan su feedback. Lograr que las
+publicaciones sean una parte natural de tu día de trabajo simplifica el paso del
+código a producción y proporciona la satisfacción de decir: "¡Ese código es
+mío!".
+
 Fuentes
 =======
 
@@ -468,3 +612,5 @@ https://asana.com/es/resources/how-prioritize-tasks-work
 https://asana.com/es/resources/project-coordination-tips
 
 ChatGPT
+
+https://www.atlassian.com/es/agile/software-development/release
