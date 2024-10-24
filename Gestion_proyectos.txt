@@ -602,6 +602,142 @@ publicaciones sean una parte natural de tu día de trabajo simplifica el paso de
 código a producción y proporciona la satisfacción de decir: "¡Ese código es
 mío!".
 
+===================
+Revisión del código
+===================
+
+Los equipos ágiles se autorganizan y sus habilidades abarcan todo el equipo.
+Esto se consigue, en parte, gracias a la revisión del código. La revisión del
+código ayuda a los desarrolladores a aprender la base de código, así como a
+utilizar nuevas tecnologías y técnicas que aumentan sus habilidades.
+
+
+Pero ¿qué es exactamente la revisión del código?
+
+Cuando un desarrollador deja de trabajar en una incidencia, otro desarrollador
+revisa el código y se plantea lo siguiente:
+
+-¿Hay errores lógicos obvios en el código?
+
+-Teniendo en cuenta los requisitos, ¿están todos los casos implementados
+completamente?
+
+-¿Las nuevas pruebas automatizadas son suficientes para el nuevo código? ¿Deben
+reescribirse las pruebas automatizadas actuales para tener en cuenta cambios en
+el código?
+
+-¿El nuevo código sigue las directrices de estilo actuales?
+
+Las revisiones del código deben integrarse con el proceso actual del equipo. Por
+ejemplo, si un equipo sigue flujos de trabajo de ramas de tareas, inicia una
+revisión del código después de que todo el código se haya escrito y las pruebas
+automatizadas se hayan ejecutado y superado, pero antes de que se fusione el
+código en el repositorio remoto. Así se asegura que el revisor del código
+dedique su tiempo a comprobar aspectos no detectados automáticamente y evita que
+malas decisiones de programación contaminen la línea de desarrollo principal.
+
+¿Qué ventajas tiene para un equipo ágil?
+========================================
+
+Todos los equipos pueden beneficiarse de las revisiones del código
+independientemente de la metodología de desarrollo. Los equipos ágiles, sin
+embargo, pueden obtener muchas ventajas debido a que el trabajo se encuentra
+descentralizado por todo el equipo. Nadie es la única persona que conoce una
+parte específica de la base de código. En pocas palabras, las revisiones del
+código facilitan la transmisión del conocimiento en toda la base de código y en
+todo el equipo.
+
+Las revisiones del código transmiten conocimiento
+
+En el núcleo de todos los equipos ágiles se encuentra una flexibilidad
+inigualable: una capacidad de descargar trabajo del backlog y empezar su
+ejecución por parte de todos los miembros del equipo. Como resultado, los
+equipos son más capaces de gestionar los nuevos trabajos porque nadie realiza
+una tarea esencial. Todo el equipo de ingenieros puede asumir trabajo de
+frontend y de servidor.
+
+A medida que las revisiones del código muestran a los desarrolladores nuevas
+ideas y tecnologías, escribirán cada vez mejor código.
+
+Las revisiones del código logran mejores estimaciones
+
+¿Recuerdas la sección sobre estimaciones? La estimación es un ejercicio de
+equipo. De ese modo, se realizan mejores estimaciones cuando el conocimiento del
+producto se extiende por todo el equipo. Al añadirse nuevas funcionalidades al
+código existente, el desarrollador original puede proporcionar buenos feedback y
+estimaciones. Además, todos los revisores del código adquieren conocimiento de
+la complejidad, problemas conocidos y preocupaciones con esa área de la base de
+código. El revisor del código comparte ese conocimiento del desarrollador
+original acerca de esa parte de la base de código. Esta práctica crea varias
+fuentes de datos bien informados que, al utilizarse para una estimación final,
+siempre consiguen que esa estimación sea más sólida y fiable.
+
+Las revisiones del código permiten descansar
+
+A nadie le gusta ser el único punto de contacto acerca de una parte del código.
+Asimismo, nadie quiere zambullirse en una parte crítica del código que no hayan
+escrito ellos, especialmente durante una urgencia de producción. Las revisiones
+del código transmiten conocimiento por todo el equipo para que cualquier miembro
+pueda tomar las riendas y seguir pilotando la nave. (En Atlassian nos encanta
+mezclar metáforas). Pero lo importante es esto: dado que no hay un único
+desarrollador crítico, todos los miembros del equipo pueden descansar como sea
+necesario. Si te encuentras anclado a tu mesa con el sistema de control de
+versiones, la revisión del código es una buena manera de liberarte. Esa
+libertad permite tomarse esas merecidas vacaciones o dedicar algún tiempo a
+trabajar en otra área del producto.
+
+Las revisiones del código enseñan a los nuevos ingenieros
+
+Un aspecto especial de la metodología ágil es que cuando se unen nuevos miembros
+al equipo, los ingenieros más experimentados actúan como mentores. La revisión
+del código les ayuda a simplificar las conversaciones acerca de la base de
+código. A menudo, los equipos tienen conocimiento oculto dentro del código que
+sale a la luz durante su revisión. Los nuevos miembros, con una mirada más
+fresca, descubren áreas laboriosas y retorcidas de la base de código que
+necesitan una nueva perspectiva. De modo que las revisiones del código ayudan a
+que el conocimiento existente se combine con las nuevas opiniones.
+
+Consejo de experto: Ten en cuenta que en la revisión del código no solo se trata
+de que un miembro del equipo experimentado revise el código de un novato. La
+revisión del código debe ocurrir en todo el equipo en todos los sentidos. ¡El
+conocimiento no tiene fronteras! Sí, la revisión del código ayuda a los nuevos
+ingenieros, pero no debe usarse únicamente como un ejercicio de mentor.
+
+¡Pero las revisiones de código tardan mucho tiempo!
+
+Eso es verdad. Sin embargo, no se trata de tiempo perdido en absoluto. Si se
+hacen adecuadamente, las revisiones del código en realidad ahorran tiempo a
+largo plazo.
+
+Estos son tres modos de optimizarlas.
+
+Comparte la carga: En Atlassian, muchos equipos requieren dos revisiones de
+cualquier parte del código antes de que se apruebe para la base de código.
+¿Suena a demasiado trabajo? En realidad, no es así. Cuando un autor selecciona
+revisores, extiende una amplia red por todo el equipo. Cualquier par de
+ingenieros puede aportar su opinión. Esto descentraliza el proceso para que
+nadie se convierta en un cuello de botella, y garantiza una buena cobertura de
+la revisión del código en todo el equipo.
+
+Revisa antes de hacer un merge: Exigir la revisión del código antes de hacer un
+merge más adelante garantiza que ninguna parte del código quede sin revisarse.
+Esto significa que las decisiones cuestionables de arquitectura realizadas a las
+dos de la mañana y un uso inapropiado de un patrón de fábrica por parte de un
+becario se detectan antes de que tengan un efecto duradero del que lamentarse en
+tu aplicación.
+
+Saca partido de la presión de los compañeros: Cuando los desarrolladores saben
+que los va a revisar un compañero, se esfuerzan más para garantizar que se
+superan todas las pruebas y que el código está bien diseñado, y así el proceso
+de revisión puede ser más fluido. Esa concentración también tiende a conseguir
+una programación más fluida y, con el tiempo, más rápida.
+
+No esperes a una revisión del código si se necesita feedback en una fase
+temprana del ciclo de desarrollo. Un feedback temprano y frecuente a menudo
+implica un código mejor, así que no temas implicar a otras personas en cualquier
+momento. Conseguirás que mejore tu trabajo, pero también que tus compañeros de
+equipo sean mejores revisores del código. Y así continúa el ciclo de virtudes.
+
 Fuentes
 =======
 
@@ -614,3 +750,5 @@ https://asana.com/es/resources/project-coordination-tips
 ChatGPT
 
 https://www.atlassian.com/es/agile/software-development/release
+
+https://www.atlassian.com/es/agile/software-development/code-reviews
