@@ -1,6 +1,6 @@
-=====================================================
-Guía Sobre sistemas de información y web Debian by dM
-=====================================================
+=======================================
+Guía sobre Desarrollo de Software by dM
+=======================================
 
 Convenciones y estándares en desarrollo de software
 ===================================================
@@ -2728,3 +2728,390 @@ Fuente
 ======
 
 ChatGPT
+
+====================
+Estructuras de datos
+====================
+
+Las estructuras de datos son fundamentales en el desarrollo de software, ya que
+permiten organizar y manejar la información de manera eficiente, facilitando la
+resolución de problemas y optimización del rendimiento. Aquí tienes una visión
+general de las estructuras de datos más importantes y los conceptos clave que
+deberías aprender:
+
+1. Concepto de Estructuras de Datos
+
+Las estructuras de datos son formas específicas de organizar y almacenar datos
+para que puedan ser utilizados de manera eficiente.
+
+Cada estructura de datos tiene características que la hacen más o menos adecuada
+para ciertos tipos de problemas o tareas.
+
+2. Tipos de Estructuras de Datos
+
+Existen varias estructuras de datos fundamentales que debes conocer y que se
+clasifican en estructuras de datos lineales y estructuras de datos no lineales.
+
+2.1 Estructuras de Datos Lineales
+
+Arrays (Arreglos):
+
+Son colecciones de elementos ordenados en posiciones contiguas de memoria.
+
+Facilitan el acceso rápido a través de índices.
+
+Útiles para almacenar una cantidad fija de datos.
+
+Listas Enlazadas (Linked Lists):
+
+Consisten en nodos que contienen datos y una referencia (o enlace) al siguiente
+nodo.
+
+Existen diferentes tipos: listas simplemente enlazadas, doblemente enlazadas y
+circulares.
+
+Son útiles cuando necesitas agregar o eliminar elementos frecuentemente y no
+necesitas acceso inmediato por índice.
+
+Pilas (Stacks):
+
+Siguen el principio LIFO (Last In, First Out).
+
+Solo permite operaciones de agregar y eliminar en el último elemento.
+
+Muy útiles en situaciones como deshacer operaciones, análisis sintáctico, y
+backtracking en algoritmos.
+
+Colas (Queues):
+
+Siguen el principio FIFO (First In, First Out).
+
+Solo permiten operaciones de agregar en el final y eliminar en el principio.
+
+Útiles en la gestión de tareas, procesamiento de órdenes y sistemas de
+impresión.
+
+2.2 Estructuras de Datos No Lineales
+
+Árboles (Trees):
+
+Son estructuras jerárquicas donde cada nodo tiene un elemento y puede tener
+hijos.
+
+El árbol binario es una versión en la que cada nodo tiene a lo sumo dos hijos.
+
+El árbol binario de búsqueda (Binary Search Tree) es útil para búsquedas rápidas
+de datos.
+
+Grafos (Graphs):
+
+Consisten en nodos conectados por aristas.
+
+Pueden ser dirigidos o no dirigidos y son útiles para representar redes, como
+redes de rutas, redes sociales, y conexiones de computadoras.
+
+3. Estructuras de Datos Abstractas (ADTs)
+
+Conjuntos (Sets):
+
+Estructuras que almacenan elementos únicos (sin duplicados).
+
+Útiles en operaciones de pertenencia y para eliminar duplicados.
+
+Mapas o Diccionarios (Maps o Hash Tables):
+
+Estructura clave-valor, donde cada valor se accede mediante una clave única.
+
+Es una de las estructuras de datos más usadas en desarrollo por su rapidez de acceso.
+
+4. Operaciones Clave y Complejidad
+
+Cada estructura de datos permite diferentes operaciones, y es importante conocer
+su complejidad de tiempo en Big O Notation. Aquí hay una referencia rápida de
+las operaciones comunes:
+
+Acceso: Es la operación para obtener un elemento en una posición específica.
+
+Búsqueda: Encuentra si un elemento existe dentro de la estructura.
+
+Inserción y eliminación: Agregar o quitar elementos según el tipo de estructura.
+
+5. Algoritmos y Estructuras de Datos
+
+Las estructuras de datos son la base de muchos algoritmos, como:
+
+Ordenación y búsqueda: Usando listas, pilas y colas para optimizar la
+manipulación de datos.
+
+Recorrido de árboles y grafos: Utilizados en algoritmos como DFS (Depth-First
+Search) y BFS (Breadth-First Search) para resolver problemas de optimización y
+caminos mínimos.
+
+6. Elección de la Estructura de Datos Adecuada
+
+La elección depende de:
+
+La cantidad de datos y si es conocida de antemano.
+
+Frecuencia de acceso, modificación, o búsqueda de los datos.
+
+Eficiencia en tiempo y espacio requerida en tu aplicación.
+
+7. Lenguajes y Librerías Comunes
+
+La mayoría de los lenguajes de programación tienen implementaciones listas para
+usar.
+
+Ejemplos
+========
+
+Ejemplos de cómo se implementan y utilizan algunas de las estructuras de datos
+más comunes en Python:
+
+1. Arrays (Listas)
+
+En Python, las listas funcionan como arrays. Son mutables y permiten almacenar
+elementos de cualquier tipo.
+
+# Crear una lista
+mi_lista = [1, 2, 3, 4, 5]
+
+# Acceder a un elemento
+print(mi_lista[2])  # Output: 3
+
+# Agregar un elemento
+mi_lista.append(6)
+print(mi_lista)  # Output: [1, 2, 3, 4, 5, 6]
+
+# Eliminar un elemento
+mi_lista.remove(3)
+print(mi_lista)  # Output: [1, 2, 4, 5, 6]
+
+-----
+
+2. Listas Enlazadas (Linked Lists)
+
+Python no tiene listas enlazadas por defecto, pero podemos crearlas manualmente
+utilizando clases.
+
+class Nodo:
+    def __init__(self, dato):
+        self.dato = dato
+        self.siguiente = None
+
+class ListaEnlazada:
+    def __init__(self):
+        self.cabeza = None
+
+    def agregar(self, dato):
+        nuevo_nodo = Nodo(dato)
+        nuevo_nodo.siguiente = self.cabeza
+        self.cabeza = nuevo_nodo
+
+    def imprimir_lista(self):
+        nodo_actual = self.cabeza
+        while nodo_actual:
+            print(nodo_actual.dato, end=" -> ")
+            nodo_actual = nodo_actual.siguiente
+        print("None")
+
+# Uso
+lista = ListaEnlazada()
+lista.agregar(1)
+lista.agregar(2)
+lista.agregar(3)
+lista.imprimir_lista() # Output: 3 -> 2 -> 1 -> None
+
+-----
+
+3. Pilas (Stacks)
+
+Las pilas pueden implementarse con listas o con la clase deque de collections
+para mayor eficiencia.
+
+from collections import deque
+
+# Implementación de pila con deque
+pila = deque()
+
+# Agregar elementos (push)
+pila.append("A")
+pila.append("B")
+pila.append("C")
+print(pila)  # Output: deque(['A', 'B', 'C'])
+
+# Eliminar el último elemento (pop)
+pila.pop()  # Output: 'C'
+print(pila)  # Output: deque(['A', 'B'])
+
+-----
+
+4. Colas (Queues)
+
+Para implementar una cola de manera eficiente, puedes usar deque de collections.
+
+from collections import deque
+
+# Implementación de cola
+cola = deque()
+
+# Agregar elementos (enqueue)
+cola.append("A")
+cola.append("B")
+cola.append("C")
+print(cola)  # Output: deque(['A', 'B', 'C'])
+
+# Eliminar el primer elemento (dequeue)
+cola.popleft()  # Output: 'A'
+print(cola)  # Output: deque(['B', 'C'])
+
+-----
+
+5. Árboles (Trees)
+
+Para crear un árbol binario, puedes definir una clase Nodo con referencias a
+hijos izquierdo y derecho.
+
+class Nodo:
+    def __init__(self, valor):
+        self.valor = valor
+        self.izquierda = None
+        self.derecha = None
+
+class ArbolBinario:
+    def __init__(self, raiz):
+        self.raiz = Nodo(raiz)
+
+    def agregar_nodo(self, nodo, valor):
+        if valor < nodo.valor:
+            if nodo.izquierda is None:
+                nodo.izquierda = Nodo(valor)
+            else:
+                self.agregar_nodo(nodo.izquierda, valor)
+        else:
+            if nodo.derecha is None:
+                nodo.derecha = Nodo(valor)
+            else:
+                self.agregar_nodo(nodo.derecha, valor)
+
+# Uso
+arbol = ArbolBinario(10)
+arbol.agregar_nodo(arbol.raiz, 5)
+arbol.agregar_nodo(arbol.raiz, 15)
+arbol.agregar_nodo(arbol.raiz, 3)
+
+-----
+
+6. Grafos (Graphs)
+
+Los grafos pueden implementarse utilizando un diccionario donde cada nodo tiene
+una lista de nodos adyacentes.
+
+# Implementación de un grafo no dirigido
+grafo = {
+    "A": ["B", "C"],
+    "B": ["A", "D", "E"],
+    "C": ["A", "F"],
+    "D": ["B"],
+    "E": ["B", "F"],
+    "F": ["C", "E"]
+}
+
+# Recorrido BFS (Breadth-First Search)
+from collections import deque
+
+def bfs(grafo, inicio):
+    visitados = set()
+    cola = deque([inicio])
+
+    while cola:
+        nodo = cola.popleft()
+        if nodo not in visitados:
+            print(nodo, end=" ")
+            visitados.add(nodo)
+            cola.extend(grafo[nodo])
+
+# Uso
+bfs(grafo, "A")  # Output: A B C D E F
+
+-----
+
+7. Conjuntos (Sets)
+
+Los conjuntos son colecciones no ordenadas de elementos únicos.
+
+# Crear un conjunto
+mi_conjunto = {1, 2, 3, 4, 5}
+
+# Agregar un elemento
+mi_conjunto.add(6)
+print(mi_conjunto)  # Output: {1, 2, 3, 4, 5, 6}
+
+# Eliminar un elemento
+mi_conjunto.discard(3)
+print(mi_conjunto)  # Output: {1, 2, 4, 5, 6}
+
+-----
+
+8. Diccionarios (Hash Tables)
+
+Los diccionarios son estructuras clave-valor y son extremadamente útiles para
+búsquedas rápidas.
+
+python
+Copy code
+# Crear un diccionario
+mi_diccionario = {"a": 1, "b": 2, "c": 3}
+
+# Acceder a un valor
+print(mi_diccionario["b"])  # Output: 2
+
+# Agregar o actualizar un valor
+mi_diccionario["d"] = 4
+print(mi_diccionario)  # Output: {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+
+# Eliminar un valor
+del mi_diccionario["a"]
+print(mi_diccionario)  # Output: {'b': 2, 'c': 3, 'd': 4}
+
+Cada estructura tiene su propósito y ventajas para distintos tipos de problemas
+en el desarrollo de software.
+
+Fuente
+======
+
+ChatGPT
+
+===============
+HTML <meta> Tag
+===============
+
+El <meta> La etiqueta define metadatos sobre un Documento HTML. Los metadatos
+son datos (información) sobre datos.
+
+<meta> las etiquetas siempre van dentro del elemento <head>, y normalmente se
+utilizan para especificar el juego de caracteres, la descripción de la página,
+palabras clave, autor del documento y configuración de la ventana gráfica.
+
+Los metadatos no se mostrarán en la página, pero son analizables por máquina.
+
+Los navegadores utilizan metadatos (cómo mostrar contenido o recargar la
+página), motores de búsqueda (palabras clave) y otros servicios web.
+
+Optimización de SEO: La meta descripción debe ser una clara y concisa de los
+servicios de la empresa o lo que se haga en la página, en la etiqueta <meta
+name="description" content=""> para mejorar la optimización de motores de,
+búsqueda (SEO).
+
+Ejemplo:
+
+<meta name="description" content="En XXX Graphics ofrecemos soluciones de
+impresión y diseño gráfico de alta calidad para empresas. Ahorra tiempo y dinero
+con nuestros servicios de diseño personalizado, impresión en gran formato,
+gráficos para vehículos y artículos promocionales. Comprometidos con
+la excelencia, ayudamos a que tu marca destaque.">
+
+Fuente
+======
+
+https://www.w3schools.com/tags/tag_meta.asp
