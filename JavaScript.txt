@@ -9203,3 +9203,639 @@ Fuentes
 ChatGPT
 
 https://www.instagram.com/reel/C_gE1MbKWX5/?igsh=MWdvNnN5Y2luOWlidg%3D%3D
+
+========================
+Mostrar CSV en una Tabla
+========================
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mostrar CSV en una Tabla</title>
+</head>
+<body>
+    <h1>Tabla de datos CSV</h1>
+    <input type="file" id="fileInput" accept=".csv">
+    <table id="csvTable" border="1">
+        <thead></thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const text = e.target.result;
+                    const rows = text.split("\n");
+
+                    // Crear la tabla HTML
+                    const tableHead = document.querySelector("#csvTable thead");
+                    const tableBody = document.querySelector("#csvTable tbody");
+
+                    tableHead.innerHTML = "";
+                    tableBody.innerHTML = "";
+
+                    rows.forEach((row, index) => {
+                        const cols = row.split(",");
+                        const tr = document.createElement("tr");
+
+                        cols.forEach(col => {
+                            const cell = document.createElement(index === 0 ? "th" : "td");
+                            cell.textContent = col.trim();
+                            tr.appendChild(cell);
+                        });
+
+                        if (index === 0) {
+                            tableHead.appendChild(tr);
+                        } else {
+                            tableBody.appendChild(tr);
+                        }
+                    });
+                };
+                reader.readAsText(file);
+            }
+        });
+    </script>
+</body>
+</html>
+
+-----
+
+El archivo csv
+
+Nombres,Apellidos,Número de Identificación,Edad,Sexo
+Juan,Pérez,12345678,30,M
+Ana,Gómez,87654321,25,F
+Carlos,Sánchez,23456789,40,M
+Lucía,Mendoza,34567890,35,F
+Miguel,Ramírez,45678901,28,M
+
+-----
+
+Ahora con un buscador de datos de la tabla
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Buscar en datos CSV</title>
+</head>
+<body>
+    <h1>Tabla de datos CSV con búsqueda</h1>
+    <input type="text" id="searchInput" placeholder="Buscar..." onkeyup="searchTable()">
+    <br>
+    <br>
+    <table id="csvTable" border="1">
+        <thead></thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        let originalData = []; // Para almacenar los datos originales del CSV
+
+        // Función para cargar y mostrar los datos del archivo CSV
+        function loadCSV() {
+            fetch('data.csv')
+                .then(response => response.text())
+                .then(data => {
+                    const rows = data.split("\n");
+                    originalData = rows; // Guardar los datos originales
+
+                    renderTable(rows);
+                })
+                .catch(error => console.error('Error al cargar el archivo CSV:', error));
+        }
+
+        // Función para renderizar la tabla
+        function renderTable(rows) {
+            const tableHead = document.querySelector("#csvTable thead");
+            const tableBody = document.querySelector("#csvTable tbody");
+
+            tableHead.innerHTML = "";
+            tableBody.innerHTML = "";
+
+            rows.forEach((row, index) => {
+                const cols = row.split(",");
+                const tr = document.createElement("tr");
+
+                cols.forEach(col => {
+                    const cell = document.createElement(index === 0 ? "th" : "td");
+                    cell.textContent = col.trim();
+                    tr.appendChild(cell);
+                });
+
+                if (index === 0) {
+                    tableHead.appendChild(tr);
+                } else {
+                    tableBody.appendChild(tr);
+                }
+            });
+        }
+
+        // Función de búsqueda para filtrar la tabla
+        function searchTable() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filteredRows = originalData.filter((row, index) => {
+                // Mostrar siempre la fila de encabezados
+                if (index === 0) return true;
+
+                // Verificar si la fila contiene la consulta de búsqueda
+                return row.toLowerCase().includes(query);
+            });
+
+            renderTable(filteredRows);
+        }
+
+        // Llamar a la función para cargar el CSV al cargar la página
+        window.onload = loadCSV;
+    </script>
+</body>
+</html>
+
+-----
+
+Mostrar datos CSV con búsqueda y mensaje de no coincidencias
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mostrar datos CSV con búsqueda y mensaje de no coincidencias</title>
+</head>
+<body>
+    <h1>Tabla de datos CSV con búsqueda</h1>
+    <input type="file" id="fileInput" accept=".csv" onchange="loadCSV()">
+    <br>
+    <br>
+    <input type="text" id="searchInput" placeholder="Buscar..." onkeyup="searchTable()">
+    <br>
+    <br>
+    <table id="csvTable" border="1">
+        <thead></thead>
+        <tbody></tbody>
+    </table>
+    <p id="noResultsMessage" style="display: none; color: red;">No hay coincidencias.</p>
+
+    <script>
+        let originalData = []; // Para almacenar los datos originales del CSV
+
+        // Función para cargar y procesar el archivo CSV
+        function loadCSV() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    const data = event.target.result;
+                    const rows = data.split("\n");
+                    originalData = rows; // Guardar los datos originales
+
+                    renderTable(rows);
+                };
+                reader.readAsText(file);
+            } else {
+                console.error('No se ha seleccionado ningún archivo.');
+            }
+        }
+
+        // Función para renderizar la tabla
+        function renderTable(rows) {
+            const tableHead = document.querySelector("#csvTable thead");
+            const tableBody = document.querySelector("#csvTable tbody");
+            const noResultsMessage = document.getElementById("noResultsMessage");
+
+            tableHead.innerHTML = "";
+            tableBody.innerHTML = "";
+
+            if (rows.length > 1) {
+                noResultsMessage.style.display = "none"; // Ocultar mensaje si hay datos
+                rows.forEach((row, index) => {
+                    const cols = row.split(",");
+                    const tr = document.createElement("tr");
+
+                    cols.forEach(col => {
+                        const cell = document.createElement(index === 0 ? "th" : "td");
+                        cell.textContent = col.trim();
+                        tr.appendChild(cell);
+                    });
+
+                    if (index === 0) {
+                        tableHead.appendChild(tr);
+                    } else {
+                        tableBody.appendChild(tr);
+                    }
+                });
+            } else {
+                noResultsMessage.style.display = "block"; // Mostrar mensaje si no hay datos
+            }
+        }
+
+        // Función de búsqueda para filtrar la tabla
+        function searchTable() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filteredRows = originalData.filter((row, index) => {
+                // Mostrar siempre la fila de encabezados
+                if (index === 0) return true;
+
+                // Verificar si la fila contiene la consulta de búsqueda
+                return row.toLowerCase().includes(query);
+            });
+
+            renderTable(filteredRows);
+
+            // Mostrar mensaje de no coincidencias si solo hay encabezado (sin datos coincidentes)
+            const noResultsMessage = document.getElementById("noResultsMessage");
+            if (filteredRows.length <= 1) {
+                noResultsMessage.style.display = "block";
+            } else {
+                noResultsMessage.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
+
+------
+
+Web landing con efecto aparición con scroll en las secciones de la página
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web de Viajes - Landing Page</title>
+    <style>
+    /* Estilos CSS */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f9f9f9;
+    }
+
+    header {
+        background-color: #333;
+        color: #fff;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 0 1rem;
+    }
+
+    .nav-links a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .hero {
+        background-color: #007BFF;
+        color: #fff;
+        padding: 5rem 1rem;
+        text-align: center;
+    }
+
+    .hero .cta {
+        background-color: #fff;
+        color: #007BFF;
+        border: none;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    section {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .about, .services, .products, .reviews, .destinations, .contact {
+        padding: 2rem 1rem;
+        text-align: center;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .service-item, .product-item, .review-item, .destination-item {
+        margin: 1rem 0;
+    }
+
+    footer {
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        padding: 1rem 0;
+    }
+</style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Viaja con Nosotros</div>
+            <ul class="nav-links">
+                <li><a href="#about">Sobre Nosotros</a></li>
+                <li><a href="#services">Servicios</a></li>
+                <li><a href="#products">Productos</a></li>
+                <li><a href="#reviews">Opiniones</a></li>
+                <li><a href="#destinations">Destinos</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero" id="hero">
+            <h1>Explora el Mundo con Nosotros</h1>
+            <p>Descubre destinos increíbles y vive experiencias únicas.</p>
+            <button class="cta">Reserva Ahora</button>
+        </section>
+
+        <section class="about" id="about">
+            <h2 class="section-title">Sobre Nosotros</h2>
+            <p>Somos una agencia de viajes apasionada por crear recuerdos inolvidables. Nuestro equipo está comprometido en ofrecer experiencias únicas adaptadas a cada viajero.</p>
+        </section>
+
+        <section class="services" id="services">
+            <h2 class="section-title">Servicios</h2>
+            <div class="service-item">Tours Guiados</div>
+            <div class="service-item">Paquetes Todo Incluido</div>
+            <div class="service-item">Asistencia de Viaje 24/7</div>
+        </section>
+
+        <section class="products" id="products">
+            <h2 class="section-title">Productos</h2>
+            <div class="product-item">Mochilas de Viaje</div>
+            <div class="product-item">Guías de Destinos</div>
+            <div class="product-item">Accesorios para Aventureros</div>
+        </section>
+
+        <section class="reviews" id="reviews">
+            <h2 class="section-title">Opiniones</h2>
+            <div class="review-item">"Un viaje increíble, todo estuvo perfecto. ¡Lo recomiendo!" - Juan P.</div>
+            <div class="review-item">"La atención fue espectacular, hicieron de nuestro viaje una experiencia inolvidable." - María G.</div>
+            <div class="review-item">"Servicio excelente y destinos maravillosos. ¡Volveré a viajar con ellos!" - Carlos R.</div>
+        </section>
+
+        <section class="destinations" id="destinations">
+            <h2 class="section-title">Destinos Populares</h2>
+            <div class="destination-item">París, Francia</div>
+            <div class="destination-item">Bali, Indonesia</div>
+            <div class="destination-item">Machu Picchu, Perú</div>
+        </section>
+
+        <section class="contact" id="contact">
+            <h2 class="section-title">Contacto</h2>
+            <form>
+                <input type="text" placeholder="Tu nombre"><br>
+                <input type="email" placeholder="Tu email"><br>
+                <textarea placeholder="Tu mensaje"></textarea><br>
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Viaja con Nosotros. Todos los derechos reservados.</p>
+    </footer>
+    <script>
+        // Script JavaScript para efecto de aparición
+        const sections = document.querySelectorAll('section');
+
+        const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            }
+        });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+        observer.observe(section);
+        });
+
+        // Evento para botón CTA
+        document.querySelector('.cta').addEventListener('click', function() {
+        alert('¡Gracias por tu interés! ¡Esperamos planear tu próximo viaje!');
+        });
+    </script>
+</body>
+</html>
+
+-----
+
+Web landing con efecto aparición con scroll en las secciones de la página
+
+Ejemplo simplificado con colores
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efecto aparición de secciones con scroll</title>
+    <style>
+    /* Estilos CSS */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    section {
+        opacity: 0;
+        transform: translateY(50px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .about, .services, .products, .reviews, .destinations, .contact {
+        padding: 2rem 1rem;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+    <main>
+        <section class="about" id="about" style="background-color: red;">
+            <h2 class="section-title">Sobre Nosotros</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </section>
+
+        <section class="about" id="about" style="background-color: blue;">
+            <h2 class="section-title">Sobre Nosotros</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </section>
+
+        <section class="about" id="about" style="background-color: green;">
+            <h2 class="section-title">Sobre Nosotros</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </section>
+
+        <section class="about" id="about" style="background-color: cyan;">
+            <h2 class="section-title">Sobre Nosotros</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </section>
+
+        <section class="about" id="about" style="background-color: gray;">
+            <h2 class="section-title">Sobre Nosotros</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </section>
+
+        <section class="about" id="about" style="background-color: orange;">
+            <h2 class="section-title">Sobre Nosotros</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </section>
+
+        <section class="about" id="about" style="background-color: brown;">
+            <h2 class="section-title">Sobre Nosotros</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </section>
+
+        <section class="about" id="about" style="background-color: aqua;">
+            <h2 class="section-title">Sobre Nosotros</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </section>
+    </main>
+    <script>
+        // Script JavaScript para efecto de aparición
+        const sections = document.querySelectorAll('section');
+
+        const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            }
+        });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+        observer.observe(section);
+        });
+    </script>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
