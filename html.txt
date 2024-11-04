@@ -6259,3 +6259,96 @@ Fuente
 ======
 
 ChatGPT
+
+===========================
+Etiquetas de HTML Semántico
+===========================
+
+¿Qué es HTML Semántico?
+=======================
+
+Es el uso de etiquetas, atributos y valores coherentes al contenido y estructura
+de nuestras páginas. Se mejora la lectura de los elementos y se le agrega un
+significado semántico. El uso de estas etiquetas permiten a los procesadores de
+HTML usar nuestro contenido en otros contextos.
+
+Un uso más común es con los motores de búsqueda, recolectan la estructura de los
+sitios para posicionar mejor los que cumplan los estándares.
+
+Ventajas
+========
+
+-Es importante para el SEO, los motores de búsqueda pueden encontrar la
+información más relevante para poder posicionar mejor el sitio.
+
+-Es usado para mejorar la accesibilidad web.
+
+-Es fácil de entender sin esfuerzo desde la estructura al contenido, no me
+imagino lo horrible tener que encontrar elementos entre varios div y tablas, en
+la web de hace años.
+
+Estructura
+==========
+
+Los elementos de estructura son de los más importantes para el SEO, definen como
+está construida nuestra página y como acceden a la información los agentes
+terceros.
+
+Ejemplo:
+
+<body>
+  <nav><nav>
+  <header></header>
+  <aside></aside>
+  <main>
+    <article>
+      <header></header>
+      <section>
+        <h2></h2>
+        <p></p>
+      </section>
+      <footer></footer>
+    </article>
+    <section>
+      <h2></h2>
+      <p></p>
+    </section>
+  </main>
+  <footer></footer>
+</body>
+
+<!-- No necesariamente tiene que seguir esta estructura -->
+
+-----
+
+Con la etiqueta <nav> se pueden identificar los enlaces de navegación. Puede
+haber varías secciones de navegación en una página y no todos los enlaces
+necesitan de ir dentro de una etiqueta <nav>.
+
+La etiqueta <header> agrupa la introducción de la página.
+
+<aside> es una etiqueta que designa un área en la cual hay información
+suplementaria al contenido principal.
+
+La etiqueta <main> señala al contenido principal de la página. Solo puede
+existir una etiqueta de este tipo visible por página.
+
+La etiqueta <article> se usa cuando hay contenido repetitivo e independiente,
+puede tener también header footer y section.
+
+La etiqueta <section> representa a un contenido genérico en un documento donde
+no es similar a otro elemento.
+
+El <footer> suele ser usado para añadir información extra sobre la página, el
+autor, copyright, avisos legales navegación, etc.
+
+Conclusión
+
+La web no debe de ser hecha solo para humanos. Que las computadoras entiendan lo
+que estamos plasmando es importante. Comunican el significado a las tecnologías
+asistivas y hacen llegar a más personas a través del SEO.
+
+Fuente
+======
+
+https://marcomadera.com/blog/html-semantico
