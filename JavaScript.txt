@@ -3100,8 +3100,10 @@ var objetoJSON = {"usuario":"user","password":"123456"};
 
 -------------------------------------
 
-<!-- Contador de visitas, cuenta las veces que se accede al doc a través del navegador
-LocalStorage: Guarda información que permanecerá almacenada por tiempo indefinido; sin importar que el navegador se cierre. -->
+Contador de visitas, cuenta las veces que se accede al doc a través del
+navegador LocalStorage: Guarda información que permanecerá almacenada por tiempo
+indefinido; sin importar que el navegador se cierre.
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -9834,6 +9836,48 @@ Ejemplo simplificado con colores
     </script>
 </body>
 </html>
+
+Fuente
+======
+
+ChatGPT
+
+========================================================
+Input tipo checkbox, guardar el valor en el LocalStorage
+========================================================
+
+<div class="card-body">
+  <div class="form-check">
+      <input
+          class="form-check-input"
+          type="checkbox"
+          value=""
+          id="flexCheckDefault"
+          style="width: 2em; height: 2em;"
+      >
+      <label class="form-check-label" for="flexCheckDefault">
+          Al marcar esta casilla, acepto recibir
+          comunicación por SMS de Area 862 Graphics
+          según nuestra política de privacidad
+      </label>
+  </div>
+</div>
+
+<script>
+    // Selecciona el checkbox por su ID
+    const checkbox = document.getElementById('flexCheckDefault');
+    // Función para guardar el estado en localStorage
+    checkbox.addEventListener('change', function() {
+        localStorage.setItem('flexCheckDefault', checkbox.checked);
+    });
+    // Función para cargar el estado desde localStorage al cargar la página
+    window.addEventListener('load', function() {
+        const storedValue = localStorage.getItem('flexCheckDefault');
+        if (storedValue === 'true') {
+            checkbox.checked = true;
+        }
+    });
+</script>
 
 Fuente
 ======
