@@ -10739,3 +10739,36 @@ Fuente
 ======
 
 https://geekland.eu/instalar-fuentes-en-debian-linux/
+
+============================================
+Reducir el tamaño de un archivo de video mp4
+============================================
+
+Linux es posible reducir el tamaño de un archivo .mp4 usando herramientas como
+FFmpeg. Esta herramienta es muy potente y permite comprimir archivos de video
+ajustando la calidad, la resolución, o la tasa de bits.
+
+Ejemplo de uso de FFmpeg para reducir el tamaño de un archivo .mp4:
+
+Instala FFmpeg (si aún no lo tienes):
+
+$ sudo apt-get install ffmpeg
+
+Comprime el archivo .mp4:
+
+$ ffmpeg -i input.mp4 -vcodec libx264 -crf 23 output.mp4
+
+input.mp4: tu archivo original.
+
+-vcodec libx264: especifica el códec de video.
+
+-crf 23: ajusta la calidad. Puedes cambiar este valor; 23 es una buena opción
+para compresión estándar. Valores más bajos aumentan la calidad (y el tamaño),
+mientras que valores más altos disminuyen la calidad (y el tamaño).
+
+output.mp4: el nombre del archivo comprimido.
+
+Fuente
+======
+
+ChatGPT
