@@ -6358,3 +6358,42 @@ Fuente
 ======
 
 https://marcomadera.com/blog/html-semantico
+
+=========
+formspree
+=========
+
+Servicio de envío de correo desde un backend como servicio contact form o
+formulario de contacto sin tener backen.
+
+1- Registrarse en el servicio de https://formspree.io por cada cuenta se crea un 
+token como x21kprln, el sitio provee de código HTML junto con el token para
+asociar el formulario con la cuenta de formspree
+
+2- Este es un ejemplo del html contact form:
+
+<form
+    action="https://formspree.io/f/x21kprln"
+    method="POST"
+>
+    <b>Correo electrónico:</b>
+    <input class="form-control" type="email" name="email">
+    <br>
+    <b>Nombre:</b>
+    <input class="form-control" type="text" name="name">
+    <br>
+    <b>Teléfono:</b>
+    <input class="form-control" type="text" name="phone">
+    <br>
+    <b>Mensaje:</b>
+    <textarea class="form-control" name="message"></textarea>
+    <br>
+    <div class="text-center">
+        <button
+            type="submit"
+            class="btn btn-secondary btn-blue btn-grad mt-3 "
+        >
+            Enviar
+        </button>
+    </div>
+</form>
