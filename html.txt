@@ -6397,3 +6397,88 @@ asociar el formulario con la cuenta de formspree
         </button>
     </div>
 </form>
+
+---------
+
+Contador de número en un rango que se ve con Scroll
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contador en Scroll</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .content {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .counter {
+      font-size: 3rem;
+      font-weight: bold;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h1>Haz scroll hacia abajo</h1>
+  </div>
+
+  <div id="counter" class="counter">0</div>
+
+  <div class="content">
+    <p>¡Has llegado al final de la página!</p>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const counterElement = document.getElementById("counter");
+      let started = false;
+
+      const startCounter = () => {
+        const targetNumber = 100;
+        let currentNumber = 0;
+        const duration = 2000; // Duración en milisegundos
+        const increment = targetNumber / (duration / 10); // Incremento por cada 10ms
+
+        const countUp = setInterval(() => {
+          currentNumber += increment;
+          counterElement.innerText = Math.floor(currentNumber);
+          if (currentNumber >= targetNumber) {
+            clearInterval(countUp);
+            counterElement.innerText = targetNumber; // Asegura que el valor final sea 100
+          }
+        }, 10);
+      };
+
+      // Usa Intersection Observer para empezar el contador solo cuando el usuario llega a la sección
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !started) {
+            startCounter();
+            started = true;
+          }
+        });
+      });
+
+      observer.observe(counterElement);
+    });
+  </script>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
