@@ -4750,6 +4750,72 @@ Fuente
 
 ChatGPT
 
+=========================================================================
+Insertar video como fonde de un section, tipo section hero en una landing
+=========================================================================
+
+Dimensiones del video: 1920 × 1080
+
+El video queda de fondo del todo, sin controles, muteado y en loop infinito.
+
+<section class="zzz py-5 container-fluid">
+    <!-- Video de fondo -->
+    <div class="video-background">
+        <video autoplay loop muted>
+            <source src="assets/video/video.webm" type="video/mp4">
+        </video>
+    </div>
+
+    <!-- Contenido de la sección -->
+    <div class="py-lg-3">
+        <div class="row text-center mt-5">
+            <div class="col-2"></div>
+            <div class="col-4">
+                <p class="text-center text-light section-9" style="font-size: 3.5rem !important;">
+                    Damos las mejores impresiones
+                </p>
+                <p class="text-center fs-3 text-light section-6">
+                    Ahorre tiempo y dinero. Tenemos tu impresión y diseño para tu empresa.
+                </p>
+                <a href="sobre_nosotros.html">
+                    <button type="button" class="btn btn-secondary btn-blue btn-grad mt-1">
+                        Saber más
+                    </button>
+                </a>
+            </div>
+            <div class="col-4">
+                <img src="assets/img/image-1.jpg" alt="image" width="80%" class="d-inline-block align-text-top img-zoom"
+                      style="border-radius: 12px; box-shadow: 3px 3px 3px #395da3;">
+            </div>
+            <div class="col-2"></div>
+        </div>
+    </div>
+</section>
+
+/* Estilos del video de fondo */
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%; /* Asegura que el video abarque todo el ancho */
+    height: 100%; /* Asegura que el video abarque toda la altura */
+    z-index: -1; /* Coloca el video detrás del contenido */
+    object-fit: cover; /* Hace que el video cubra todo el espacio sin deformarse */
+    overflow: hidden; /* Evita desbordamiento si el video excede el tamaño */
+}
+
+.zzz {
+    position: relative; /* Asegura que el video se posicione dentro de esta sección */
+    z-index: 1; /* El contenido estará encima del video */
+    overflow: hidden; /* Evita desbordamiento de elementos */
+    min-height: 100vh; /* Opcional: hace que la sección tenga al menos el tamaño de la ventana */
+}
+
+Fuente
+======
+
+ChatGPT
+
 ================
 Atributo oninput
 ================
