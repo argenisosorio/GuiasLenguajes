@@ -136,3 +136,18 @@ Restaurar una base de datos
 ===========================
 
 $ mysql -u usuario -p nombre_base_de_datos < nombre_base_de_datos.sql
+
+=====================
+Error MySQL extension
+=====================
+
+Your PHP installation appears to be missing the MySQL extension which is required by WordPress.
+
+$ sudo apt install php-mysql
+
+$ sudo systemctl restart apache2
+
+Fuente
+======
+
+ChatGPT

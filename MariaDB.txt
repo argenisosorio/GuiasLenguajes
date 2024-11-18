@@ -309,3 +309,18 @@ Insertar un registro en la tabla
 Ahora vamos a insetar información en varios campos a la vez:
 
 MariaDB [test_db]> INSERT INTO users (username, age) VALUES ('pedroperez', 20);
+
+=====================
+Error MySQL extension
+=====================
+
+Your PHP installation appears to be missing the MySQL extension which is required by WordPress.
+
+$ sudo apt install php-mysql
+
+$ sudo systemctl restart apache2
+
+Fuente
+======
+
+ChatGPT
