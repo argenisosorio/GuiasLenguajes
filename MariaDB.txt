@@ -95,9 +95,21 @@ Crear un usuario y asignarle el password.
 
 -----
 
+Crea un nuevo usuario con host localhost
+
+> CREATE USER 'username'@'localhost' IDENTIFIED BY 'tu_contraseña';
+
+-----
+
 Eliminar un usuario creado.
 
 > DROP USER user_name;
+
+-----
+
+Eliminar un usuario creado especificando el host.
+
+> DROP USER 'admin'@'localhost';
 
 -----
 
@@ -132,6 +144,12 @@ Refrescamos el esquema de las tablas de MySQL.
 Listas las bases de datos disponibles.
 
 > show databases;
+
+-----
+
+Listas las bases de datos disponibles con sus dueños.
+
+> SELECT Db AS `Database`, User AS `Owner`, Host FROM mysql.db WHERE User != '';
 
 -----
 
