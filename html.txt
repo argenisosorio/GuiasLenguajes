@@ -6548,3 +6548,79 @@ Fuente
 ======
 
 ChatGPT
+
+==========================
+Texto con efecto de tecleo
+==========================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Texto con efecto de tecleo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #282c34;
+      color: #61dafb;
+      margin: 0;
+    }
+    .typewriter {
+      font-size: 2rem;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid #61dafb;
+      animation: blink 0.7s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="typewriter" id="typewriter"></div>
+
+  <script>
+    const text = "¡Bienvenido a mi página!"; // El texto que quieres mostrar
+    const typewriterElement = document.getElementById("typewriter");
+    let index = 0;
+    let deleting = false;
+
+    function typeEffect() {
+      // Mostrar o borrar caracteres
+      typewriterElement.textContent = text.substring(0, index);
+
+      if (!deleting) {
+        if (index < text.length) {
+          index++;
+        } else {
+          deleting = true;
+          setTimeout(typeEffect, 1000); // Pausa antes de borrar
+          return;
+        }
+      } else {
+        if (index > 0) {
+          index--;
+        } else {
+          deleting = false;
+        }
+      }
+
+      // Cambiar la velocidad dependiendo de si escribe o borra
+      const speed = deleting ? 50 : 100;
+      setTimeout(typeEffect, speed);
+    }
+
+    // Iniciar el efecto
+    typeEffect();
+  </script>
+</body>
+</html>
