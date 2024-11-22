@@ -10772,3 +10772,48 @@ Fuente
 ======
 
 ChatGPT
+
+================================================
+cloudflared para compartir URL local en internet
+================================================
+
+1- Instalar cloudflared desde acá: https://github.com/cloudflare/cloudflared/releases
+
+2- Ahora, por ejemplo queremos compartir la url local http://127.0.0.1:5500 con
+el mundo, ejecutamos:
+
+$ cloudflared tunnel --url http://127.0.0.1:5500
+
+Esta salida corresponde a la ejecución del comando cloudflared tunnel para crear
+un túnel rápido (Quick Tunnel) con Cloudflare, sin necesidad de una cuenta
+registrada en Cloudflare.
+
+Se utiliza --url para exponer localmente a http://127.0.0.1:5500. Cloudflare
+crea un enlace temporal accesible públicamente:
+
+2024-11-22T14:58:44Z INF +--------------------------------------------------------------------------------------------+
+2024-11-22T14:58:44Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
+2024-11-22T14:58:44Z INF |  https://vs-fingers-outside-mel.trycloudflare.com                                          |
+2024-11-22T14:58:44Z INF +--------------------------------------------------------------------------------------------+
+
+Mensajes informativos:
+
+Cloudflare avisa que este túnel es experimental y sin garantías de tiempo de
+actividad, ya que es una función limitada para probar.
+
+Si necesitas un uso en producción, sugiere configurar un túnel nombrado con una
+cuenta Cloudflare.
+
+Configuración detectada:
+
+Se menciona que no hay un archivo de configuración (config.yml o config.yaml),
+pero esto no impide el funcionamiento del túnel.
+
+El túnel se creó correctamente y está disponible en https://vs-fingers-outside-mel.trycloudflare.com. Sin embargo:
+
+Fuentes
+=======
+
+https://www.instagram.com/reel/DBBtDGTiXAF/?igsh=MWRiazV4dHdlNDJ3ag%3D%3D
+
+ChatGPT
