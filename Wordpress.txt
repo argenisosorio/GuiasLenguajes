@@ -1619,3 +1619,28 @@ Fuente
 ======
 
 https://kinsta.com/es/base-de-conocimiento/comprobar-su-version-de-wordpress/
+
+================================================================
+Cómo aumentar el tamaño máximo del archivo de carga en WordPress
+================================================================
+
+Editar .htaccess archivo
+
+php_value subir_max_filesize 128M
+php_value post_max_size 128M
+php_value límite_memoria 256M
+php_value max_execution_time 300
+php_value max_input_time 300
+
+Editar wp-config.php archivo
+
+@ini_set('upload_max_filesize', '128M');
+@ini_set('post_max_size', '128M');
+@ini_set('límite_memoria', '256M');
+@ini_set('max_execution_time', '300');
+@ini_set('max_input_time', '300');
+
+Fuente
+======
+
+https://help.servmask.com/2018/10/27/how-to-increase-maximum-upload-file-size-in-wordpress/
