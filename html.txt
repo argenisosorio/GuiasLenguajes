@@ -6812,7 +6812,118 @@ imágenes en línea.
 
 Convertir PNG a WebP: https://convertio.co/es/
 
+Uso:
+
+<img src="imagen.webp" alt="Descripción de la imagen en WebP" width="300">
+
 Fuente
 ======
 
 LuzIA
+
+====================
+Convertir PNG a WebP
+====================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convertir PNG a WebP</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    input, button {
+      margin: 10px;
+    }
+    img {
+      max-width: 100%;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Convertir PNG a WebP</h1>
+  <p>Selecciona una imagen PNG para convertirla a WebP:</p>
+  <input type="file" id="fileInput" accept="image/png">
+  <br>
+  <button id="downloadBtn" style="display: none;">Descargar WebP</button>
+  <img id="preview" alt="Vista previa de la imagen" style="display: none;">
+
+  <script>
+    function convertPngToWebp(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+          const img = new Image();
+          img.onload = function () {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+
+            // Convertir a WebP
+            canvas.toBlob(
+              (blob) => {
+                if (blob) resolve(blob);
+                else reject(new Error("No se pudo convertir la imagen a WebP."));
+              },
+              "image/webp",
+              0.9 // Calidad (0.9 = 90%)
+            );
+          };
+          img.onerror = reject;
+          img.src = event.target.result;
+        };
+
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    const fileInput = document.getElementById('fileInput');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const preview = document.getElementById('preview');
+
+    fileInput.addEventListener('change', async (event) => {
+      const file = event.target.files[0];
+      if (file && file.type === "image/png") {
+        try {
+          const webpBlob = await convertPngToWebp(file);
+
+          // Mostrar vista previa de la imagen convertida
+          const webpUrl = URL.createObjectURL(webpBlob);
+          preview.src = webpUrl;
+          preview.style.display = "block";
+
+          // Preparar el botón de descarga
+          downloadBtn.style.display = "inline-block";
+          downloadBtn.onclick = () => {
+            const link = document.createElement('a');
+            link.href = webpUrl;
+            link.download = 'imagen-convertida.webp';
+            link.click();
+          };
+        } catch (err) {
+          console.error("Error al convertir:", err);
+          alert("Ocurrió un error al convertir la imagen.");
+        }
+      } else {
+        alert("Por favor, selecciona un archivo PNG.");
+      }
+    });
+  </script>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
