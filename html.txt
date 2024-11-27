@@ -6927,3 +6927,77 @@ Fuente
 ======
 
 ChatGPT
+
+====================
+Carousel de Imágenes
+====================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carousel de Imágenes</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f3f3f3;
+    }
+
+    .carousel {
+      width: 80%;
+      max-width: 600px;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .carousel-images {
+      display: flex;
+      transition: transform 1s ease-in-out;
+    }
+
+    .carousel-images img {
+      width: 100%;
+      flex-shrink: 0;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <div class="carousel">
+    <div class="carousel-images">
+      <img src="1.jpg" alt="Imagen 1">
+      <img src="2.jpg" alt="Imagen 2">
+      <img src="3.jpg" alt="Imagen 3">
+    </div>
+  </div>
+
+  <script>
+    const carouselImages = document.querySelector('.carousel-images');
+    const images = document.querySelectorAll('.carousel-images img');
+    const totalImages = images.length;
+
+    let currentIndex = 0;
+
+    function moveCarousel() {
+      currentIndex = (currentIndex + 1) % totalImages;
+      const offset = currentIndex * -100;
+      carouselImages.style.transform = `translateX(${offset}%)`;
+    }
+
+    // Cambiar imagen cada 5 segundos
+    setInterval(moveCarousel, 5000);
+  </script>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
