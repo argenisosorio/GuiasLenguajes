@@ -7001,3 +7001,47 @@ Fuente
 ======
 
 ChatGPT
+
+=========================
+Hover 3D Effect en imagen
+=========================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hover 3D Effect</title>
+  <style>
+    /* Contenedor de la imagen */
+    .image-container {
+      perspective: 1000px; /* Para activar el efecto 3D */
+    }
+
+    /* Imagen */
+    .image-container img {
+      width: 300px; /* Ajusta el tamaño según sea necesario */
+      transform: rotateX(70deg); /* La inclinación inicial */
+      transition: transform 0.6s ease, box-shadow 0.3s ease; /* Suavizado del efecto */
+      box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    /* Efecto hover */
+    .image-container img:hover {
+      transform: rotateX(0deg); /* Imagen de frente */
+      box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.4); /* Sombra más dramática */
+    }
+  </style>
+</head>
+<body>
+  <div class="image-container">
+    <img src="1.jpg" alt="Ejemplo de imagen">
+  </div>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
