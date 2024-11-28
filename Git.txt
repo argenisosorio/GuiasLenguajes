@@ -1426,3 +1426,93 @@ Fuente
 ======
 
 https://www.conventionalcommits.org/es/v1.0.0-beta.3/
+
+=============================================
+Estrategias de Nomenclatura para Ramas en Git
+=============================================
+
+Una buena nomenclatura de ramas en Git es esencial para una gestión eficaz del
+proyecto. Este post explora los tipos de ramas en Git y ofrece consejos para
+nombrarlas de manera efectiva.
+
+1. Ramas Principales
+
+main o master: Esta es la rama principal donde el código fuente refleja el
+estado de producción actual.
+
+develop o dev: En algunos flujos de trabajo, especialmente en Git Flow, se
+utiliza una rama de desarrollo aparte para acumular características antes de
+pasarlas a main.
+
+2. Ramas de Características (Feature Branches)
+
+Estas ramas se usan para desarrollar nuevas características o cambios en el
+código. Suelen nombrarse de manera que reflejen la característica o el trabajo
+que se está realizando. Por ejemplo:
+
+feature/login-authentication
+
+feature/new-ui-layout
+
+feature/add-user-profile
+
+feature/orders-style-adjustments
+
+3. Ramas de Corrección de Errores (Bugfix Branches)
+
+Para la corrección de errores, las ramas pueden seguir un patrón similar a las
+ramas de características pero destacando que están enfocadas en correcciones.
+Por ejemplo:
+
+bugfix/login-error
+
+bugfix/missing-icons
+
+bugfix/404-page-not-found
+
+4. Ramas de Lanzamiento (Release Branches)
+
+Utilizadas para preparar lanzamientos, estas ramas a menudo se nombran según la
+versión del lanzamiento. Por ejemplo:
+
+release/v1.2.0
+
+release/v1.2.1
+
+5. Ramas de Mantenimiento o Parches (Hotfix Branches)
+
+Para cambios urgentes que necesitan ser desplegados rápidamente en producción,
+se utilizan ramas de mantenimiento o parches:
+
+hotfix/critical-login-issue
+
+hotfix/payment-processing-error
+
+6. Ramas Personales o de Experimentación
+
+Los desarrolladores a veces crean ramas para trabajo experimental o de prueba,
+y estas pueden llevar nombres más personales o descriptivos del experimento:
+
+experiment/new-framework-test
+
+john/prototype-new-feature
+
+Buenas Prácticas:
+
+-Mantén los nombres de las ramas cortos pero descriptivos.
+
+-Usa guiones para separar palabras.
+
+-Evita caracteres especiales o espacios.
+
+-Incluye un identificador de tarea o ticket si se usa un sistema de seguimiento
+(por ejemplo, feature/JIRA-123-add-login).
+
+Nombrar correctamente las ramas en Git es clave para la claridad y eficiencia
+del proyecto. Estos consejos ayudarán a tu equipo a mantenerse organizado y
+colaborar de manera más efectiva.
+
+Fuentes
+=======
+
+https://dev.to/marmariadev/estrategias-de-nomenclatura-para-ramas-en-git-mejorando-la-gestion-de-proyectos-de-software-3efa
