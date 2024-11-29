@@ -7045,3 +7045,268 @@ Fuente
 ======
 
 ChatGPT
+
+=======================
+Partículas con css y js
+=======================
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partículas</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overflow: hidden;
+      height: 100vh;
+      background-color: #111;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none; /* Permite interactuar con el contenido debajo del canvas */
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particleCanvas"></canvas>
+
+   <script>
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Ajustar tamaño del canvas para cubrir toda la página
+    function resizeCanvas() {
+      canvas.width = document.documentElement.scrollWidth;
+      canvas.height = document.documentElement.scrollHeight;
+    }
+
+    // Configuración de partículas
+    const particles = [];
+    const numParticles = 150;
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 5 + 1;
+        this.speedX = Math.random() * 3 - 1.5;
+        this.speedY = Math.random() * 3 - 1.5;
+        this.color = `rgba(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, 0.7)`;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // Rebotar en los bordes
+        if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+        if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+      }
+
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles.length = 0; // Vaciar partículas existentes
+      for (let i = 0; i < numParticles; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let particle of particles) {
+        particle.update();
+        particle.draw();
+      }
+
+      requestAnimationFrame(animateParticles);
+    }
+
+    // Ajustar canvas y partículas al redimensionar
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      initParticles();
+    });
+
+    // Inicialización
+    resizeCanvas();
+    initParticles();
+    animateParticles();
+  </script>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
+
+=====================
+Partículas con Imagen
+=====================
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partículas con Imagen</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background-color: #111;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none; /* Permite interactuar con el contenido debajo del canvas */
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particleCanvas"></canvas>
+  <div style="height: 200vh; color: white; padding: 20px;">
+    <h1>Ejemplo con partículas</h1>
+    <p>Este es un ejemplo con partículas utilizando una imagen PNG como partícula.</p>
+    <p>Continúa desplazándote para ver cómo las partículas abarcan toda la página.</p>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Ajustar tamaño del canvas para cubrir toda la página
+    function resizeCanvas() {
+      canvas.width = document.documentElement.scrollWidth;
+      canvas.height = document.documentElement.scrollHeight;
+    }
+
+    // Cargar la imagen de la partícula
+    const particleImage = new Image();
+    particleImage.src = 'robot.png';  // Cambia esta URL por tu propia imagen PNG
+
+    // Configuración de partículas
+    const particles = [];
+    const numParticles = 150;
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 20 + 10; // Tamaño de la partícula (ajustado según la imagen)
+        this.speedX = Math.random() * 3 - 1.5;
+        this.speedY = Math.random() * 3 - 1.5;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // Rebotar en los bordes
+        if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+        if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+      }
+
+      draw() {
+        // Dibujar la imagen en lugar de un círculo
+        ctx.drawImage(particleImage, this.x, this.y, this.size, this.size);
+      }
+    }
+
+    function initParticles() {
+      particles.length = 0; // Vaciar partículas existentes
+      for (let i = 0; i < numParticles; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (let particle of particles) {
+        particle.update();
+        particle.draw();
+      }
+
+      requestAnimationFrame(animateParticles);
+    }
+
+    // Ajustar canvas y partículas al redimensionar
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      initParticles();
+    });
+
+    // Inicialización
+    resizeCanvas();
+    particleImage.onload = () => { // Asegurarse de que la imagen se cargue antes de iniciar
+      initParticles();
+      animateParticles();
+    };
+
+  </script>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animación de entrada para div</title>
+  <style>
+    .text {
+      transform: translateY(100px);
+      animation: slide-in 0.8s forwards;
+    }
+
+    @keyframes slide-in {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="text">
+    <h3>Curso de IA</h3>
+    <p>Aprende inteligencia artificial aplicada a robótica.</p>
+  </div>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
