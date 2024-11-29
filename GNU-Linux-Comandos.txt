@@ -10773,6 +10773,66 @@ Fuente
 
 ChatGPT
 
+======================================================
+Reducir el tamaño de un archivo de wav o pasarlo a mp3
+======================================================
+
+Instala FFmpeg (si aún no lo tienes):
+
+$ sudo apt-get install ffmpeg
+
+1. Convertir .wav a un formato comprimido (como MP3):
+
+MP3 es mucho más compacto y adecuado para reducir el tamaño.
+
+$ ffmpeg -i input.wav -acodec libmp3lame -b:a 128k output.mp3
+
+-acodec libmp3lame: Utiliza el códec de audio MP3.
+
+-b:a 128k: Configura la tasa de bits de audio a 128 kbps. Puedes reducir este
+valor a 96k o 64k para archivos más pequeños, pero con menor calidad.
+
+2. Reducir la calidad del archivo WAV:
+
+Si necesitas mantener el archivo en formato WAV pero más ligero, puedes reducir
+su calidad:
+
+$ ffmpeg -i input.wav -ar 22050 -ac 1 -b:a 128k output.wav
+
+-ar 22050: Reduce la frecuencia de muestreo a 22.05 kHz (en lugar de los
+habituales 44.1 kHz).
+
+-ac 1: Cambia el audio a mono (1 canal en lugar de estéreo).
+
+-b:a 128k: Configura la tasa de bits de audio.
+
+3. Convertir a un formato moderno (como AAC):
+
+AAC es más eficiente que MP3 y mantiene mejor calidad con tasas de bits más
+bajas.
+
+$ ffmpeg -i input.wav -acodec aac -b:a 128k output.aac
+
+-acodec aac: Utiliza el códec AAC.
+
+-b:a 128k: Configura la tasa de bits. Puedes bajar hasta 96k para mayor
+compresión.
+
+4. Comprimir usando Opus (muy eficiente):
+
+Opus es ideal para máxima compresión con buena calidad:
+
+$ ffmpeg -i input.wav -acodec libopus -b:a 96k output.opus
+
+libopus: Usa el códec Opus.
+
+-b:a 96k: Configura la tasa de bits a 96 kbps.
+
+Fuente
+======
+
+ChatGPT
+
 ================================================
 cloudflared para compartir URL local en internet
 ================================================
