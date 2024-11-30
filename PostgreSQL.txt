@@ -282,6 +282,22 @@ namedb=# SELECT * FROM nombre_tabla WHERE nombre_campo='valor';
 
 -----
 
+Hacer una consulta de los datos de una tabla cuando el registro contenga la
+cadena o valor a buscar.
+
+# SELECT * FROM auth_permission WHERE codename LIKE '%email%';
+
+Resultado: Registros que contenienten la cadena 'email'.
+
+ id |       name       | content_type_id |   codename
+----+------------------+-----------------+--------------
+  1 | Can add email    |               1 | add_email
+  2 | Can change email |               1 | change_email
+  3 | Can delete email |               1 | delete_email
+  4 | Can view email   |               1 | view_email
+
+-----
+
 Hacer una consulta de los datos de una tabla cuando coincida con el parametro
 establecido, entero
 
