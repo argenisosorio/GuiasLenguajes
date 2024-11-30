@@ -10056,7 +10056,6 @@ Esquemas híbridos: HVM con controladores PV; PVHVM, donde Usa HVM con
 paravirtualización de controladores e interfaces de bajo nivel; PVH, núcleo PV
 completo dentro de un contenedor HVM, sin dispositivos emulados.
 
-
 Herramientas de virtualización libres y de código abierto
 =========================================================
 KVM (Kernel-based Virtual Machine): Un hipervisor de tipo 2 (hospedado)
@@ -10213,10 +10212,193 @@ eficientes y fáciles de administrar. systemd proporciona herramientas poderosas
 para gestionar, monitorear y asegurar estos servicios, garantizando su
 disponibilidad y rendimiento óptimo en todo momento.
 
-Fuente
+Características principales de WebSocket
+========================================
+
+Bidireccionalidad: Tanto el cliente como el servidor pueden enviar y recibir
+datos en cualquier momento, a diferencia de HTTP, donde el cliente debe iniciar
+todas las solicitudes.
+
+Persistencia: La conexión se mantiene abierta hasta que se cierra
+explícitamente, lo que lo hace ideal para aplicaciones que requieren
+comunicación continua.
+
+Bajo consumo de recursos: Al evitar la sobrecarga de abrir y cerrar conexiones
+repetidamente, WebSocket es más eficiente que las solicitudes HTTP
+tradicionales, especialmente para grandes volúmenes de datos en tiempo real.
+
+Tiempo real: WebSocket es perfecto para aplicaciones que necesitan
+actualizaciones instantáneas, como chats, videojuegos, paneles de control en
+vivo, o aplicaciones financieras.
+
+Compatibilidad: Está soportado por la mayoría de los navegadores modernos.
+
+Cómo funciona WebSocket:
+
+Establecer la conexión:
+
+El cliente (generalmente un navegador) inicia la conexión utilizando el
+protocolo HTTP con un "handshake" especial.
+
+Si el servidor acepta, se cambia al protocolo WebSocket.
+
+El protocolo usa la misma infraestructura que HTTP (puerto 80 para WebSocket,
+443 para WebSocket seguro).
+
+Ejemplo completo de un archivo index.html
+=========================================
+
+Este ejemplo implementa y prueba una conexión WebSocket. Este archivo permite al
+cliente conectarse a un servidor WebSocket, enviar mensajes y recibir
+respuestas.
+
+Archivo completo: index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebSocket Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .log {
+      border: 1px solid #ddd;
+      padding: 10px;
+      height: 200px;
+      overflow-y: auto;
+      background: #f9f9f9;
+    }
+    .log p {
+      margin: 5px 0;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>WebSocket Client</h1>
+  <div>
+    <label for="messageInput">Message:</label>
+    <input type="text" id="messageInput" placeholder="Type a message">
+    <button id="sendButton">Send</button>
+  </div>
+  <h2>Logs</h2>
+  <div class="log" id="log"></div>
+
+  <script>
+    // Create WebSocket connection
+    const socket = new WebSocket('ws://localhost:8080'); // Replace with your server URL if needed
+
+    // DOM elements
+    const logDiv = document.getElementById('log');
+    const messageInput = document.getElementById('messageInput');
+    const sendButton = document.getElementById('sendButton');
+
+    // Log messages to the logDiv
+    function logMessage(message, type = 'info') {
+      const logEntry = document.createElement('p');
+      logEntry.textContent = `${type.toUpperCase()}: ${message}`;
+      if (type === 'error') logEntry.style.color = 'red';
+      logDiv.appendChild(logEntry);
+      logDiv.scrollTop = logDiv.scrollHeight; // Auto-scroll to the latest message
+    }
+
+    // Connection opened
+    socket.addEventListener('open', () => {
+      logMessage('Connected to WebSocket server.');
+    });
+
+    // Listen for messages from the server
+    socket.addEventListener('message', (event) => {
+      logMessage(`Received: ${event.data}`);
+    });
+
+    // Handle errors
+    socket.addEventListener('error', (error) => {
+      logMessage('WebSocket error', 'error');
+      console.error('WebSocket error:', error);
+    });
+
+    // Handle connection close
+    socket.addEventListener('close', () => {
+      logMessage('WebSocket connection closed.', 'error');
+    });
+
+    // Send message to the server
+    sendButton.addEventListener('click', () => {
+      const message = messageInput.value;
+      if (message.trim() !== '') {
+        socket.send(message);
+        logMessage(`Sent: ${message}`);
+        messageInput.value = ''; // Clear input field
+      }
+    });
+  </script>
+</body>
+</html>
+
+Servidor WebSocket:
+
+Antes de probar este archivo, asegúrate de tener un servidor WebSocket en
+ejecución.
+
+Aquí hay un ejemplo básico en Node.js utilizando la biblioteca ws:
+
+-----
+
+const WebSocket = require('ws');
+
+const server = new WebSocket.Server({ port: 8080 });
+
+server.on('connection', (ws) => {
+  console.log('Client connected.');
+
+  ws.on('message', (message) => {
+    console.log(`Received: ${message}`);
+    ws.send(`Echo: ${message}`); // Echo message back to the client
+  });
+
+  ws.on('close', () => {
+    console.log('Client disconnected.');
+  });
+});
+
+-----
+
+Ejecuta el servidor:
+
+Guarda el código del servidor en un archivo, por ejemplo, server.js.
+
+Ejecuta el servidor usando Node.js:
+
+Probado con node v20.11.0 y npm v10.2.4
+
+$ npm install ws
+
+$ node server.js
+
+Abre el archivo index.html en tu navegador.
+
+Escribe un mensaje en el cuadro de texto y presiona "Send".
+
+El servidor devolverá el mensaje con un prefijo Echo:.
+
+Observa los registros:
+
+Los mensajes enviados y recibidos se mostrarán en el área de logs del navegador.
+
+Fuentes
 ======
 
 Curso en Línea técnico de despliegue del sistema ERP KAVAC
+
+ChatGPT
 
 Proxy
 =====
