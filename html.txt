@@ -7310,3 +7310,74 @@ Fuente
 ======
 
 ChatGPT
+
+=======================================
+Scroll Progress Bar - Barra de progreso
+=======================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll Progress Bar</title>
+  <style>
+    /* Estilos generales */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      height: 200vh; /* Para simular una página larga */
+      background: linear-gradient(to bottom, #f9f9f9, #dcdcdc);
+    }
+
+    /* Barra de progreso */
+    #progressBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 5px; /* Altura de la barra */
+      background-color: #3498db; /* Color de la barra */
+      width: 0%; /* Ancho inicial */
+      z-index: 1000; /* Aparece encima de todo */
+    }
+  </style>
+</head>
+<body>
+  <!-- Barra de progreso -->
+  <div id="progressBar"></div>
+
+  <!-- Contenido de ejemplo -->
+  <h1 style="text-align: center; margin-top: 50px;">Barra de Progreso con Scroll</h1>
+  <p style="text-align: center; padding: 0 20px;">
+    Desplázate hacia abajo para ver cómo la barra de progreso crece a medida que navegas por la página. Este efecto es común en aplicaciones y páginas modernas para mejorar la experiencia del usuario.
+  </p>
+
+  <script>
+    // Selecciona la barra de progreso
+    const progressBar = document.getElementById('progressBar');
+
+    // Escuchar el evento de scroll
+    window.addEventListener('scroll', () => {
+      // Altura total del documento
+      const scrollHeight = document.documentElement.scrollHeight;
+
+      // Altura visible de la ventana
+      const clientHeight = document.documentElement.clientHeight;
+
+      // Distancia desplazada desde la parte superior
+      const scrollTop = document.documentElement.scrollTop;
+
+      // Calcular el porcentaje de progreso
+      const scrollPercentage = (scrollTop / (scrollHeight - clientHeight)) * 100;
+
+      // Actualizar el ancho de la barra
+      progressBar.style.width = `${scrollPercentage}%`;
+    });
+  </script>
+</body>
+</html>
+
+Fuente
+======
+
+ChatGPT
