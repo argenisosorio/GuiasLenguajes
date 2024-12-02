@@ -850,3 +850,165 @@ case $var in
         echo "¡Opción inválida!"
         ;;
 esac
+
+----------
+
+Script para obtener la información técnica de un equipo.
+
+#!/bin/bash
+
+clear
+
+echo ""
+echo -e "\e[1;34m#######################################################################\e[0m"
+echo ""
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Solicitarle al usuario que ingrese su nombre:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+echo "Por favor ingrese su nombre:"
+read name
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Mostrar un saludo personalizado:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+echo "Hola, $name!"
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Crear carpeta en escritorio:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+cd /home/$USER/Escritorio/
+mkdir -p /home/$USER/Escritorio/$name
+echo -e "\e[1;37m Finalizado:\e[0m"
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Instalar programas:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+sudo apt install lshw dmidecode fdisk smartmontools
+echo -e "\e[1;37m Finalizado:\e[0m"
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Guardar datos en la pc:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+cd /home/$USER/Escritorio/$name
+echo -e "\e[1;37m Finalizado:\e[0m"
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Guardar datos de la Memoria:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+sudo dmidecode --type memory | less > $name.memory.txt
+echo -e "\e[1;37m Finalizado:\e[0m"
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Guardar datos de Lshw:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+sudo lshw > $name.lshw.txt
+echo -e "\e[1;37m Finalizado:\e[0m"
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Guardar datos de la Bios:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+sudo dmidecode -t bios | less > $name.bios.txt
+echo -e "\e[1;37m Finalizado:\e[0m"
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Guardar otros datos de la pc:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+sudo dmidecode -q | less > $name.inf.txt
+echo -e "\e[1;37m Finalizado:\e[0m"
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Guardar datos del Procesador:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+sudo dmidecode -t processor | less > $name.inf.txt
+echo -e "\e[1;37m Finalizado:\e[0m"
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Guardar información del disco:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+sudo fdisk -l | less > $name.disco.txt
+echo -e "\e[1;37m Finalizado:\e[0m"
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Guardar información del disco1:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+sudo lshw -short -c disk | less > $name.disco1.txt
+echo -e "\e[1;37m Finalizado:\e[0m"
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Guardar información del disco2:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+sudo smartctl --all /dev/sda | less > $name.disco2.txt
+echo -e "\e[1;37m Finalizado:\e[0m"
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Guardar información del disco3:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+sudo smartctl --all /dev/sdb | less > $name.disco3.txt
+echo -e "\e[1;37m Finalizado:\e[0m"
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Guardar datos de los perifericos:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+sudo lspci | less > $name.pci.txt
+echo -e "\e[1;37m Finalizado:\e[0m"
+
+echo -e "\e[1;32m ======================================= \e[0m"
+echo -e "\e[1;32m Definimos las rutas de origen y destino:\e[0m"
+echo -e "\e[1;32m ======================================= \e[0m"
+ 
+ORIGEN="/home/$USER/Escritorio/$name"
+DESTINO="/media/$USER/DOCUMENTOS/"
+
+# Mensaje de inicio
+echo "Se va a realizar una copia de seguridad de la carpeta copias al disco data"
+
+# Comprobamos si la carpeta de origen existe
+if [ ! -d "$ORIGEN" ]; then
+    echo "Error: La carpeta de origen '$ORIGEN' no existe."
+    exit 1
+fi
+
+# Comprobamos si la carpeta de destino existe, si no, la creamos
+if [ ! -d "$DESTINO" ]; then
+    echo "La carpeta de destino '$DESTINO' no existe. Creándola..."
+    mkdir -p "$DESTINO"
+    if [ $? -ne 0 ]; then
+        echo "Error: No se pudo crear la carpeta de destino '$DESTINO'."
+        exit 1
+    fi
+fi
+
+# Realizamos la copia de seguridad
+cp -r -u -v "$ORIGEN" "$DESTINO"
+if [ $? -eq 0 ]; then
+    echo "Copia de seguridad completada con éxito."
+else
+    echo "Error: La copia de seguridad falló."
+    exit 1
+fi
+
+cd /home/$USER/Escritorio/$name
+sudo chmod -R 777 /home/$USER/Escritorio/$name
+echo -e "\e[1;37m Finalizado:\e[0m"
+
+=============================================
+Ejemplo de documentación de un script en bash
+=============================================
+
+#!/bin/bash
+# -*- coding: UTF-8 -*-
+
+# Nombre del Proyecto: [Nombre del Proyecto]
+# Descripción: [Descripción breve del proyecto]
+# Autor: [Tu Nombre]
+# Fecha de Creación: [Fecha de creación]
+# Última Actualización: [Fecha de última actualización]
+# Licencia: [Tipo de licencia, por ejemplo, GPLv3]
+
+# [Opcional] Detalles adicionales o notas relevantes
+
+Fuente
+======
+
+ChatGPT
