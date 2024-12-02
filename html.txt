@@ -4963,6 +4963,28 @@ Fuente
 
 https://www.campusmvp.es/recursos/post/como-insertar-audio-en-html5.aspx
 
+Otra forma
+==========
+
+A veces lo anterior no funciona en dispositivos móviles porque le pica el
+trasero entonces logre que un audio se reproduciera con:
+
+1- Agregar este botón:
+
+<button id="startAudio">Reproducir Audio</button>
+
+2- Agregar este script al final de la página dentro de body:
+
+<script type="text/javascript">
+    let audio;
+    document.getElementById("startAudio").addEventListener("click", function() {
+        if (!audio) {
+            audio = new Audio('assets/audio/audio.mp3');
+            audio.play();
+        }
+    });
+</script>
+
 =========================================================================
 Insertar video como fonde de un section, tipo section hero en una landing
 =========================================================================
