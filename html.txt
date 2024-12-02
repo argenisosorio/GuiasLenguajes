@@ -4868,6 +4868,101 @@ Fuente
 
 ChatGPT
 
+========================
+Insertar audios en html5
+========================
+
+Al grano, de entrada la etiqueta <audio> parece ser casi perfecta porque de
+entrada es muy sencilla de utilizar, pero como más adelante veremos, el problema
+está en los formatos de archivos de audio que soporta cada navegador, sobre todo
+pensando en navegadores antiguos . Esta sería la etiqueta de audio ideal en el
+mundo de los unicornios y del arco iris:
+
+<audio src="mi-archivo-de-audio.mp3"></audio>
+
+A partir de aquí podemos añadirle diferentes atributos a la etiqueta.
+
+Atributos de la etiqueta <audio>
+================================
+
+En la especificación de HTML5 hay alguno más, que nunca está de más echarle un
+vistazo, pero estos son los atributos que hay que conocer sí o sí:
+
+autoplay: Autoplay es un atributo booleano. Vamos, que o está o no está, no
+necesita tener un valor asociado. Este atributo reproduce automáticamente el
+archivo, así que damos por hecho que eres buena gente y no lo piensas usar.
+
+<audio autoplay src="mi-archivo-de-audio.mp3"></audio>
+
+loop: Este atributo, como su nombre indica, nos permite indicar si queremos
+reproducir el archivo en bucle. Usarlo en combinación con autoplay te elevaría
+a la categoría de "troll supervillano" en el mundo del desarrollo web.
+
+<audio src="mi-archivo-de-audio.mp3" autoplay loop></audio>
+
+preload: Preload sirve para precargar tus archivos de audio. También existe el
+booleano autobuffer, que estaría genial si no fuese porque Safari hace la
+precarga, exista o no el atributo autobuffer. Así que hubo que introducir
+Preload, que no es booleano y tiene tres valores: media, auto y none. Si no
+quieres que tus archivos de audio se precarguen, añádeles preload= "none". La
+precarga está bien si tienes uno o dos archivos, pero si tienes muchos va a
+ralentizar mucho la carga de tu página.
+
+<audio src="mi-archivo-de-audio.mp3" preload="none"></audio>
+
+controls: Controls es un atributo booleano que nos permite disponer de un panel
+de control nativo de cada navegador para, obviamente, controlar la reproducción.
+
+La cruda realidad: Uso práctico de la etiqueta <audio>
+======================================================
+
+El problema con el elemento de audio no está en la especificación, que es
+bastante clara, ni en la etiqueta. Como ya comentamos antes, el problema a la
+hora de insertar sonido en HTML5 radica en los formatos de audio.
+
+Aunque el formato MP3 es omnipresente y nos resulta muy familiar, no es un
+formato abierto. Debido a esto ningún programa puede descodificar y reproducir
+archivos MP3 sin tener que pasar por caja.
+
+Eso está bien para los megaempresas como Apple, Google o Microsoft, pero no es
+tan fácil para las pequeñas empresas o grupos de código abierto. De ahí que nos
+encontremos a Safari reproduciendo archivos MP3, mientras que Firefox hasta hace
+unos pocos años no lo hacía, y aún ahora lo soporta de forma parcial porque tira
+del sistema operativo (puedes encontrar toda la información sobre formatos de
+audio disponibles en HTML5 y su soporte en cada navegador en esta página de la
+Mozilla Developer Network).
+
+El caso es que para maximizar la compatibilidad vamos a necesitar usar varios
+formatos audio. Por ejemplo, con el códec Vorbis (o el códec Opus) se pueden
+crear archivos de audio con la extensión .ogg, que no se ve afectado por ninguna
+patente. Ahora bien, Firefox soporta archivos de audio Ogg, pero Safari no.
+
+Por suerte hay una manera genial de utilizar la etiqueta audio sin tener que
+elegir un sólo formato de archivo. En lugar de sólo utilizar el atributo src en
+la etiqueta <audio> podemos especificar múltiples formatos de archivo de
+distintas fuentes así:
+
+<audio controls>
+    <source src="mi-archivo-de-audio.ogg" type="audio/ogg">
+    <source src="mi-archivo-de-audio.mp3" type="audio/mpeg">
+    <source src="mi-archivo-de-audio.wav" type="audio/wav">
+</audio>
+
+Así cada navegador reproducirá el primer archivo que pueda reproducir.
+
+En conclusión
+=============
+
+Con el lanzamiento y adopción de html se nos ha facilitado mucho la vida a la
+hora de insertar archivos multimedia en nuestras páginas web pero todavía hay
+chinitas en nuestro camino si queremos dar la máxima compatibilidad debido a los
+distintos formatos y los obstáculos que suponen las patentes.
+
+Fuente
+======
+
+https://www.campusmvp.es/recursos/post/como-insertar-audio-en-html5.aspx
+
 =========================================================================
 Insertar video como fonde de un section, tipo section hero en una landing
 =========================================================================
@@ -7376,6 +7471,90 @@ Scroll Progress Bar - Barra de progreso
   </script>
 </body>
 </html>
+
+Fuente
+======
+
+ChatGPT
+
+=========================================
+Elementos distintivos de una landing page
+=========================================
+
+1. Encabezado Claro y Atractivo (Hero Section)
+
+Título Impactante: Directo, relevante y enfocado en el beneficio para el usuario.
+
+Subtítulo: Explica brevemente cómo se resuelve un problema o se satisface una necesidad.
+
+Call-to-Action (CTA) Principal: Un botón llamativo que guía al usuario hacia la
+acción deseada (ejemplo: "Descargar ahora", "Regístrate gratis").
+
+2. Imágenes y/o Videos de Alta Calidad
+
+Representan el producto, servicio o idea central de manera profesional.
+
+Los videos breves y dinámicos están ganando relevancia por su capacidad de mantener la atención.
+
+3. Beneficios y Soluciones Claros
+
+Presentados en formato de lista o secciones destacadas con iconos visuales.
+
+Responde rápidamente a la pregunta del visitante: "¿Qué gano con esto?"
+
+4. Prueba Social
+
+Reseñas, testimonios, logos de clientes importantes, o estadísticas de usuarios
+satisfechos.
+
+Aumenta la confianza en la propuesta de valor.
+
+5. Diseño Visual Moderno
+
+Colores alineados con la identidad de la marca.
+
+Uso efectivo del espacio en blanco para mejorar la claridad visual.
+
+Tipografías legibles y consistentes.
+
+7. Optimización para Móviles
+
+Diseño responsive que funcione perfectamente en dispositivos móviles y tablets.
+
+CTA y elementos clave accesibles fácilmente en pantallas pequeñas.
+
+8. Carga Rápida y Optimización SEO
+
+Una landing debe cargar en pocos segundos para evitar que los visitantes
+abandonen la página.
+
+Uso de palabras clave relevantes para facilitar el tráfico orgánico.
+
+Extras
+======
+
+Imagen completa en la section 1, como patreon website
+
+Secciones que van intercalando color, generalmente 2 para hacer el efecto piano.
+
+Observer para las secciones, efecto de aparición de cada sección al hacer scroll.
+
+Progress bar con scroll.
+
+Hover effect sobre imágenes (zoom in o out, rotate).
+
+Gradient moderno para las secciones o el footer.
+
+Hover en los enlaces del navbar.
+
+Hover effect sobre los botones.
+
+Carousel de imágenes o logos patrocinantes, miembros del equipo, tecnologías
+empleadas, etc.
+
+Usar otras fuentes para resaltar título principal y otros téxtos.
+
+Usar íconos personalizados como los de font-awesome.
 
 Fuente
 ======
