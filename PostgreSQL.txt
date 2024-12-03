@@ -900,6 +900,187 @@ mantener la infomación. Por ejemplo compania1.clientes y compañia2.clientes
 Las tablas clientes tendrían la misma estructura y el mismo nombre pero
 almacenadas en esquemas diferentes.
 
+En PostgreSQL, los esquemas son una forma de organizar y agrupar objetos dentro
+de una base de datos. Actúan como contenedores que permiten gestionar tablas,
+vistas, índices, funciones y otros objetos de manera ordenada, separándolos por
+contexto o propósito dentro de una misma base de datos.
+
+Características principales de los esquemas:
+
+Separación lógica: Ayudan a organizar los objetos en una base de datos de forma
+lógica, evitando conflictos de nombres entre tablas o vistas que cumplen
+propósitos diferentes.
+
+Control de acceso: Puedes asignar permisos específicos a cada esquema,
+controlando quién puede acceder y modificar los objetos dentro de ellos.
+
+Espacios de nombres: Cada esquema funciona como un espacio de nombres
+independiente. Por ejemplo, podrías tener dos tablas con el mismo nombre en
+diferentes esquemas (esquema1.tabla y esquema2.tabla).
+
+Predeterminado: PostgreSQL crea automáticamente un esquema predeterminado
+llamado public. Si no se especifica un esquema al crear un objeto, se utiliza
+este por defecto.
+
+Uso en consultas: Puedes referenciar un objeto en un esquema usando la notación
+esquema.objeto. Por ejemplo:
+
+# SELECT * FROM esquema1.mi_tabla;
+
+Ventajas de usar esquemas:
+
+Organización: Facilita estructurar bases de datos grandes con múltiples objetos.
+
+Modularidad: Permite agrupar objetos relacionados y manejarlos como una unidad.
+
+Colaboración: Diferentes equipos pueden trabajar en diferentes esquemas sin
+interferir.
+
+Seguridad: Puedes restringir el acceso a un esquema completo en lugar de
+administrar permisos objeto por objeto.
+
+Crear esquemas
+==============
+
+# CREATE DATABASE test_schema OWNER admin;
+
+# \c test_schema
+
+Para crear un esquema, se utiliza el comando CREATE SCHEMA:
+
+# CREATE SCHEMA nombre_del_esquema;
+
+Ejemplo de uso:
+
+-- Crear dos esquemas
+CREATE SCHEMA ventas;
+CREATE SCHEMA inventario;
+
+-- Crear una tabla en el esquema "ventas"
+CREATE TABLE ventas.clientes (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    email VARCHAR(100)
+);
+
+-- Crear una tabla en el esquema "inventario"
+CREATE TABLE inventario.productos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    cantidad INT
+);
+
+-- Consultar datos de una tabla en un esquema específico
+SELECT * FROM ventas.clientes;
+
+Eliminar un esquema:
+
+DROP SCHEMA nombre_del_esquema CASCADE;
+(Usar CASCADE elimina también todos los objetos dentro del esquema).
+
+Ver los esquemas existentes:
+
+# \dn
+
+Los esquemas son esenciales para bases de datos complejas y multiusuario, ya
+que permiten mantener un alto nivel de organización y control.
+
+Ejemplo con 2 compañias
+=======================
+
+# CREATE DATABASE test_schema OWNER admin;
+
+# \c test_schema
+
+CREATE SCHEMA company_1;
+
+CREATE SCHEMA company_2;
+
+-- Crear una tabla en el esquema "company_1"
+CREATE TABLE company_1.clientes (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    email VARCHAR(100)
+);
+
+-- Crear una tabla en el esquema "company_2"
+CREATE TABLE company_2.productos (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    cantidad INT
+);
+
+
+# SELECT * FROM compani_1.clientes;
+
+ id | nombre | email 
+----+--------+-------
+(0 filas)
+
+# SELECT * FROM compani_2.clientes;
+id | nombre | email 
+----+--------+-------
+(0 filas)
+
+postgres=# \dn
+
+ Listado de esquemas
+  Nombre   |  Dueño   
+-----------+----------
+ compani_1 | postgres
+ compani_2 | postgres
+ public    | postgres
+
+# INSERT INTO compani_1.clientes (id, nombre, email) VALUES (1, 'Juan Pérez', 'juan.perez@example.com');
+INSERT 0 1
+
+# INSERT INTO compani_2.clientes (id, nombre, email) VALUES (1, 'Maria Angulo', 'mangulo@example.com');
+INSERT 0 1
+
+# SELECT * FROM compani_1.clientes;
+ id |   nombre   |         email          
+----+------------+------------------------
+  1 | Juan Pérez | juan.perez@example.com
+(1 fila)
+
+# SELECT * FROM compani_2.clientes;
+ id |    nombre    |        email        
+----+--------------+---------------------
+  1 | Maria Angulo | mangulo@example.com
+(1 fila)
+
+Notas importantes:
+
+Esquema predeterminado: Si omites el nombre del esquema en el INSERT, PostgreSQL
+intentará usar el esquema predeterminado (public en la mayoría de los casos).
+Por lo tanto, debes especificar el esquema para evitar confusiones.
+
+Verificación de esquemas:
+
+Si tienes dudas sobre las tablas disponibles en cada esquema, puedes usar:
+
+# \dt compani_1.*
+          Listado de relaciones
+  Esquema  |  Nombre  | Tipo  |  Dueño   
+-----------+----------+-------+----------
+ compani_1 | clientes | tabla | postgres
+(1 fila)
+
+# \dt compani_2.*
+          Listado de relaciones
+  Esquema  |  Nombre  | Tipo  |  Dueño   
+-----------+----------+-------+----------
+ compani_2 | clientes | tabla | postgres
+(1 fila)
+
+Esto mostrará todas las tablas en el esquema correspondiente. ¡Con esto podrás
+asegurarte de que estás insertando en la tabla correcta!
+
+Fuente
+======
+
+ChatGPT
+
 ====================================
 ¿Cómo otorgar acceso a los usuarios?
 ====================================
