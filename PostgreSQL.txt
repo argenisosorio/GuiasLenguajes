@@ -1010,22 +1010,22 @@ CREATE TABLE company_2.productos (
     cantidad INT
 );
 
-
 # SELECT * FROM compani_1.clientes;
 
- id | nombre | email 
+ id | nombre | email
 ----+--------+-------
 (0 filas)
 
 # SELECT * FROM compani_2.clientes;
-id | nombre | email 
+
+id | nombre | email
 ----+--------+-------
 (0 filas)
 
 postgres=# \dn
 
  Listado de esquemas
-  Nombre   |  Dueño   
+  Nombre   |  Dueño
 -----------+----------
  compani_1 | postgres
  compani_2 | postgres
@@ -1038,13 +1038,13 @@ INSERT 0 1
 INSERT 0 1
 
 # SELECT * FROM compani_1.clientes;
- id |   nombre   |         email          
+ id |   nombre   |         email
 ----+------------+------------------------
   1 | Juan Pérez | juan.perez@example.com
 (1 fila)
 
 # SELECT * FROM compani_2.clientes;
- id |    nombre    |        email        
+ id |    nombre    |        email
 ----+--------------+---------------------
   1 | Maria Angulo | mangulo@example.com
 (1 fila)
@@ -1061,14 +1061,14 @@ Si tienes dudas sobre las tablas disponibles en cada esquema, puedes usar:
 
 # \dt compani_1.*
           Listado de relaciones
-  Esquema  |  Nombre  | Tipo  |  Dueño   
+  Esquema  |  Nombre  | Tipo  |  Dueño
 -----------+----------+-------+----------
  compani_1 | clientes | tabla | postgres
 (1 fila)
 
 # \dt compani_2.*
           Listado de relaciones
-  Esquema  |  Nombre  | Tipo  |  Dueño   
+  Esquema  |  Nombre  | Tipo  |  Dueño
 -----------+----------+-------+----------
  compani_2 | clientes | tabla | postgres
 (1 fila)
