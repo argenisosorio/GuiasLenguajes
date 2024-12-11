@@ -680,3 +680,83 @@ Fuente
 ======
 
 ChatGPT
+
+=========================
+Clúster en Bases de Datos
+=========================
+
+Un clúster de bases de datos implica múltiples servidores o nodos que colaboran
+para almacenar, administrar y procesar datos. Dependiendo del propósito, los
+clústeres de bases de datos pueden configurarse de varias maneras.
+
+Tipos de Clústeres en Bases de Datos:
+
+-Clúster de Alta Disponibilidad:
+
+Diseñado para garantizar que la base de datos esté siempre disponible, incluso
+si hay fallas en uno o más nodos.
+
+Ejemplo: PostgreSQL con Patroni para alta disponibilidad.
+
+-Clúster de Replicación:
+
+Crea copias de la base de datos en múltiples nodos para permitir consultas
+distribuidas o respaldo.
+
+Ejemplo: MySQL con Master-Slave Replication.
+
+-Clúster de Particionamiento (Sharding):
+
+Los datos se distribuyen entre diferentes nodos, dividiendo la base de datos en
+partes más pequeñas (shards).
+
+Ejemplo: MongoDB con Sharding.
+
+-Clúster de Almacenamiento Distribuido:
+
+Los datos se dividen y se almacenan en diferentes nodos, permitiendo escalar
+horizontalmente.
+
+Ejemplo: Apache Cassandra o Amazon Aurora.
+
+PostgreSQL: Clúster de Bases de Datos
+
+En PostgreSQL, un clúster de base de datos no implica múltiples servidores, sino
+un conjunto de bases de datos administradas por un único servidor PostgreSQL.
+Todas las bases de datos en el clúster comparten configuraciones comunes y se
+encuentran en el mismo directorio de datos.
+
+Ventajas de un Clúster
+======================
+
+Escalabilidad: Los clústeres permiten manejar mayores volúmenes de datos o
+solicitudes al agregar más nodos.
+
+Tolerancia a fallos: Si un nodo falla, otros pueden asumir su carga.
+
+Rendimiento: La distribución del trabajo reduce la sobrecarga en nodos
+individuales.
+
+Alta disponibilidad: Se garantiza que el servicio esté siempre disponible.
+
+Ejemplo Práctico: Clúster de Alta Disponibilidad en PostgreSQL
+==============================================================
+
+Un clúster de PostgreSQL puede configurarse con herramientas como:
+
+Patroni: Coordina la replicación y la conmutación por error automática.
+
+PgBouncer: Para balancear conexiones.
+
+ETCD o Consul: Usados como sistemas de orquestación.
+
+Así, el clúster puede manejar fallos automáticamente y continuar sirviendo las
+consultas sin interrupciones significativas.
+
+En resumen, los clústeres son fundamentales para garantizar rendimiento,
+escalabilidad y disponibilidad, tanto en computación como en bases de datos.
+
+Fuente
+======
+
+ChatGPT
