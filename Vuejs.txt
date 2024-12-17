@@ -5301,3 +5301,215 @@ Fuente
 ======
 
 LuzIA
+
+===============================================================================
+La forma correcta de obligar a Vue a volver a renderizar recargar un componente
+===============================================================================
+
+#reload
+
+Mejor manera: puedes usar forceUpdate
+=====================================
+
+Esta es una de las dos mejores formas de resolver este problema, las cuales
+cuentan con el respaldo oficial de Vue.
+
+Normalmente, Vue reaccionará a los cambios en las dependencias actualizando la
+vista. Sin embargo, cuando llamas forceUpdate, puede forzar que se realice esa
+actualización, incluso si ninguna de las dependencias ha cambiado realmente.
+
+Esto evita todo el sistema de reactividad, por lo que no se recomienda como
+solución.
+
+Pero a veces, el sistema de reactividad de Vue puede resultar confuso y pensar
+que Vue reaccionará a los cambios en una determinada propiedad o variable, pero
+no es así.
+
+Si está utilizando Vue 2, hay ciertos casos en los que El sistema de reactividad
+de Vue no detectará ningún cambio . Pero Vue 3 tiene un sistema de reactividad
+basado en proxy mucho más robusto que no sufre estos mismos problemas.
+
+Nuevamente, si necesita forzar que su componente se vuelva a renderizar o
+recargar, probablemente exista una mejor manera. Probablemente solo estés
+tratando el síntoma y no el problema subyacente real.
+
+Así es como puedes llamar forceUpdate usando la API de opciones:
+
+export default {
+  methods: {
+    methodThatForcesUpdate() {
+      // ...
+      this.$forceUpdate();  // Notice we have to use a $ here
+      // ...
+    }
+  }
+}
+
+Para llamarlo usando la API de composición en Vue 3, tenemos que ser un poco
+inteligentes ya que este método solo vive en la instancia del componente:
+
+import { getCurrentInstance } from 'vue';
+
+const methodThatForcesUpdate = () => {
+  // ...
+  const instance = getCurrentInstance();
+  instance.proxy.forceUpdate();
+  // ...
+};
+
+Importante : Esto no actualizará ninguna propiedad calculada que tenga. Vocación
+forceUpdate solo lo hará forzar la vista a volver a renderizarse.
+
+La mejor manera: la técnica del cambio de claves
+================================================
+
+Hay muchos casos en los que tendrá una necesidad legítima de forzar la
+actualización de un componente.
+
+Para hacer esto de la manera correcta, le proporcionaremos un key atributo para
+que Vue sepa que un componente específico está vinculado a un dato específico.
+Si la clave permanece igual, no cambiará el componente, pero si la clave cambia,
+Vue sabe que debería deshacerse del componente antiguo y crear uno nuevo.
+
+¡Exactamente lo que necesitamos!
+
+Primero, explicaré la técnica de cambio de clave. Luego, me tomaré un momento
+para explicar por qué usamos el key atributo en Vue.
+
+Cambio de clave para forzar la actualización de un componente
+
+Finalmente, esta es la mejor manera (en mi opinión) de obligar a Vue a
+actualizar un componente.
+
+Agregamos un key atribuir a nuestro componente, y luego cambiar esa clave cada
+vez que necesitemos volver a renderizar el componente.
+
+Aquí tienes una forma muy básica de hacerlo con script setup:
+
+<template>
+  <MyComponent :key="componentKey" />
+</template>
+
+import { ref } from 'vue';
+const componentKey = ref(0);
+
+const forceRerender = () => {
+  componentKey.value += 1;
+};
+
+Así es como lo harías con la API de opciones si no estás usando Vue 3 o la API
+de composición:
+
+export default {
+  data() {
+    return {
+      componentKey: 0,
+    };
+  },
+  methods: {
+    forceRerender() {
+      this.componentKey += 1;
+    }
+  }
+}
+
+Cada vez que forceRerender se llama, el valor de componentKey cambiará. Cuando
+esto suceda, Vue sabrá que tiene que destruir el componente y crear uno nuevo.
+
+Lo que obtiene es un componente secundario que se reinicializará y
+"restablecerá" su estado, forzando una actualización y una nueva representación
+del componente.
+
+¡Una forma sencilla y elegante de resolver nuestro problema!
+
+Escribo sobre esta técnica de cambio de clave en más detalles aquí .
+
+¿Por qué necesitamos usar una clave en Vue?
+
+Podemos profundizar un poco más en lo que esto key El atributo realmente está
+funcionando aquí y por qué lo necesitamos.
+
+Digamos que estás renderizando una lista de componentes que tiene uno o más de
+los siguientes:
+
+Es su propio estado local.
+
+Algún tipo de proceso de inicialización, ya sea en el setup funcionar con Vue 3
+o en el created y mounted ganchos si se utiliza la API de opciones
+
+Manipulación DOM no reactiva, a través de jQuery o API vanilla
+
+Si ordena esa lista o la actualiza de cualquier otra manera, deberá volver a
+representar partes de la lista. Pero no querrás volver a renderizar todo en la
+lista, solo las cosas que han cambiado.
+
+Para ayudar a Vue a realizar un seguimiento de lo que ha cambiado y lo que no,
+proporcionamos un key atributo. Usar el índice de una matriz no es útil aquí, ya
+que el índice no está vinculado a objetos específicos en nuestra lista.
+
+Aquí hay una lista de ejemplo que tenemos:
+
+const people = [
+  { name: 'Evan', age: 34 },
+  { name: 'Sarah', age: 98 },
+  { name: 'James', age: 45 },
+];
+
+Si lo representamos usando índices obtendremos esto:
+
+<ul>
+  <li v-for="(person, index) in people" :key="index">
+    {{ person.name }} - {{ index }}
+  </li>
+</ul>
+
+Evan - 0
+Sarah - 1
+James - 2
+
+Si eliminamos a Sarah, obtendremos:
+
+Evan - 0
+James - 1
+
+El índice asociado con James cambia, aunque James sigue siendo James. James será
+re-presentado, incluso si no queremos que lo sea.
+
+Queremos usar algún tipo de identificación única, sin embargo terminamos
+generándola:
+
+const people = [
+  { id: 'this-is-an-id', name: 'Evan', age: 34 },
+  { id: 'unique-id', name: 'Sarah', age: 98 },
+  { id: 'another-unique-id', name: 'James', age: 45 },
+];
+
+<ul>
+  <li v-for="person in people" :key="person.id">
+    {{ person.name }} - {{ person.id }}
+  </li>
+</ul>
+
+Antes, cuando eliminamos a Sarah de nuestra lista, Vue eliminó los componentes
+de Sarah y James, y luego creó un nuevo componente para James. Ahora, Vue sabe
+que puede conservar los dos componentes de Evan y James, y todo lo que tiene que
+hacer es eliminar el de Sarah.
+
+Pero se pone aún mejor.
+
+Si agregamos una persona a la lista, también sabe que puede conservar todos los
+componentes existentes, y solo tiene que crear un único componente nuevo e
+insertarlo en el lugar correcto. Esto es realmente útil y nos ayuda mucho cuando
+tenemos componentes más complejos que tienen su propio estado, tienen lógica de
+inicialización o realizan algún tipo de manipulación DOM.
+
+Solo recuerde, si necesita forzar a Vue a volver a renderizar un componente,
+probablemente exista una mejor manera.
+
+Si, sin embargo, usted hacer necesita volver a renderizar algo, elija el Técnica
+de cambio de clave sobre cualquier otra cosa.
+
+Fuente
+======
+
+https://michaelnthiessen.com/force-re-render/
