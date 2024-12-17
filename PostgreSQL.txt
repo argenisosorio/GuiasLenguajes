@@ -1207,3 +1207,92 @@ $ echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main
 $ sudo apt update
 
 Instalar lo que se necesite.
+
+===================================
+Consultar los índices en PostgreSQL
+===================================
+
+PostgreSQL puedes consultar los índices existentes en tu base de datos
+utilizando las vistas del catálogo del sistema, como pg_indexes. Estas vistas
+contienen información sobre los índices creados en las tablas.
+
+Comando para ver los índices de toda la base de datos, primero debe conectarse a
+la base de datos que requiera:
+
+SELECT * FROM pg_indexes;
+
+Esto mostrará una lista de todos los índices en la base de datos actual,
+incluyendo las columnas:
+
+schemaname: Esquema al que pertenece la tabla.
+tablename: Nombre de la tabla.
+indexname: Nombre del índice.
+indexdef: Definición del índice.
+
+Ver índices de una tabla específica
+===================================
+
+Si deseas listar solo los índices de una tabla en particular, puedes usar un
+filtro:
+
+SELECT * FROM pg_indexes WHERE tablename = 'nombre_de_tu_tabla';
+
+Detalle sobre índices usando \d en psql
+=======================================
+
+Si estás trabajando en la consola de PostgreSQL (psql), puedes usar el comando
+\d para ver los índices de una tabla específica:
+
+\d nombre_de_tu_tabla
+
+Esto mostrará detalles sobre la estructura de la tabla, incluyendo los índices
+asociados.
+
+Consultar índices con detalles avanzados
+========================================
+
+Si necesitas información más detallada sobre los índices, como su tipo o si son
+únicos, puedes usar una consulta que combine otras vistas del sistema, como
+pg_class y pg_index:
+
+SELECT
+    i.relname AS index_name,
+    a.attname AS column_name,
+    ix.indisunique AS is_unique,
+    ix.indisprimary AS is_primary
+FROM
+    pg_class t
+    JOIN pg_index ix ON t.oid = ix.indrelid
+    JOIN pg_class i ON i.oid = ix.indexrelid
+    JOIN pg_attribute a ON a.attnum = ANY(ix.indkey)
+WHERE
+    t.relname = 'nombre_de_tu_tabla';
+Esto te mostrará:
+
+index_name: El nombre del índice.
+
+column_name: Las columnas asociadas al índice.
+
+is_unique: Si el índice es único (TRUE o FALSE).
+
+is_primary: Si el índice corresponde a la clave primaria.
+
+Ejemplo práctico
+================
+
+Si tienes una tabla llamada clientes, puedes consultar los índices asociados
+con:
+
+SELECT * FROM pg_indexes WHERE tablename = 'clientes';
+
+O, en la consola de PostgreSQL:
+
+\d clientes
+
+Ambos métodos te permitirán identificar los índices existentes y evaluar si
+necesitas crear nuevos índices para optimizar el rendimiento de tus consultas.
+
+Fuente
+======
+
+ChatGPT
