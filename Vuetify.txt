@@ -1038,3 +1038,40 @@ Fuente
 ======
 
 ChatGPT
+
+========================================
+Llamar un método del padre desde el hijo
+========================================
+
+Padre
+=====
+
+// Componente hijo en el template del padre
+
+<orderMessages
+  ref="orderMessagesComponent"
+  :chat_id="subOrder.chat_id"
+  @file-picked="scrollToBottom"
+/>
+
+// Método en el padre.
+
+scrollToBottom() {
+  console.log('Hola)
+}
+
+Hijo
+====
+
+// Método en el hijo que llama al padre mediante file-picked que ejecutará a
+scrollToBottom()
+
+onFilePicked(e) {
+  // Emitir un evento para notificar al componente padre
+  this.$emit('file-picked')
+},
+
+Fuente
+======
+
+GitHub Copilot
