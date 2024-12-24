@@ -7588,3 +7588,64 @@ Fuente
 ======
 
 ChatGPT
+
+----------
+
+Calculadora del Tamaño del Monitor o Pantalla en Pulgadas
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcular Tamaño de Monitor</title>
+</head>
+<body>
+    <h1>Calculadora del Tamaño del Monitor en Pulgadas</h1>
+    <form id="monitorForm">
+        <label for="widthCm">Ancho (cm):</label>
+        <input type="text" id="widthCm" name="widthCm" required><br><br>
+        <label for="heightCm">Alto (cm):</label>
+        <input type="text" id="heightCm" name="heightCm" required><br><br>
+        <button type="submit">Calcular</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+        document.getElementById('monitorForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Obtener los valores ingresados por el usuario y reemplazar comas por puntos
+            let widthCm = document.getElementById('widthCm').value.replace(',', '.');
+            let heightCm = document.getElementById('heightCm').value.replace(',', '.');
+
+            // Convertir los valores a números de punto flotante
+            widthCm = parseFloat(widthCm);
+            heightCm = parseFloat(heightCm);
+
+            // Verificar si los valores son números válidos
+            if (isNaN(widthCm) || isNaN(heightCm)) {
+                document.getElementById('result').textContent = "Por favor, ingrese valores numéricos válidos.";
+                return;
+            }
+
+            // Convertir las dimensiones de cm a pulgadas
+            const widthInches = widthCm / 2.54;
+            const heightInches = heightCm / 2.54;
+
+            // Elevar ambos valores al cuadrado
+            const widthSquared = Math.pow(widthInches, 2);
+            const heightSquared = Math.pow(heightInches, 2);
+
+            // Sumar los resultados de los cuadrados
+            const sumOfSquares = widthSquared + heightSquared;
+
+            // Aplicar la raíz cuadrada a la suma de los cuadrados
+            const diagonalInches = Math.sqrt(sumOfSquares);
+
+            // Mostrar el resultado al usuario
+            document.getElementById('result').textContent = `El tamaño del monitor es: ${diagonalInches.toFixed(2)} pulgadas`;
+        });
+    </script>
+</body>
+</html>

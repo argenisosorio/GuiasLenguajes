@@ -335,9 +335,30 @@ $ xrandr
 
 -----
 
-Obtener la resolución de la pantalla o pantallas.
+Obtener la resolución de la pantalla o pantallas o monitor:
 
 $ xrandr | grep '*'
+
+-----
+
+Dimensiones de las pantallas, pantalla o monitor en mm:
+
+$ xrandr | grep ' connected'
+
+Este comando busca las pantallas conectadas y muestra información sobre ellas.
+La salida se verá algo así:
+
+HDMI-1 connected primary 1920x1080+0+0 (normal left inverted right x axis y axis) 477mm x 268mm
+
+Para convertir las dimensiones de milímetros (mm) a centímetros (cm),
+simplemente divide cada dimensión entre 10, ya que 1 centímetro es igual a 10
+milímetros.
+
+Aquí están los pasos para convertir 477 mm x 268 mm a cm:
+
+Ancho: 477mm / 10 = 47.7cm
+
+Alto: 268mm / 10 = 26.8cm
 
 -----
 
@@ -10696,9 +10717,9 @@ Instalar OpenShot Video Editor
 
 $ sudo apt install openshot-qt
 
-==========================================================
-Conver el ancho y el alto de una pantalla en cm a pulgadas
-==========================================================
+=============================================================
+Convertir el ancho y el alto de una pantalla en cm a pulgadas
+=============================================================
 
 X = Ancho en pulgadas
 Y = Alto en pulgadas
@@ -10752,6 +10773,67 @@ Fuente
 ======
 
 ChatGPT
+
+-----
+
+Calculadora del Tamaño del Monitor en Pulgadas
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcular Tamaño de Monitor</title>
+</head>
+<body>
+    <h1>Calculadora del Tamaño del Monitor en Pulgadas</h1>
+    <form id="monitorForm">
+        <label for="widthCm">Ancho (cm):</label>
+        <input type="text" id="widthCm" name="widthCm" required><br><br>
+        <label for="heightCm">Alto (cm):</label>
+        <input type="text" id="heightCm" name="heightCm" required><br><br>
+        <button type="submit">Calcular</button>
+    </form>
+    <p id="result"></p>
+
+    <script>
+        document.getElementById('monitorForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Obtener los valores ingresados por el usuario y reemplazar comas por puntos
+            let widthCm = document.getElementById('widthCm').value.replace(',', '.');
+            let heightCm = document.getElementById('heightCm').value.replace(',', '.');
+
+            // Convertir los valores a números de punto flotante
+            widthCm = parseFloat(widthCm);
+            heightCm = parseFloat(heightCm);
+
+            // Verificar si los valores son números válidos
+            if (isNaN(widthCm) || isNaN(heightCm)) {
+                document.getElementById('result').textContent = "Por favor, ingrese valores numéricos válidos.";
+                return;
+            }
+
+            // Convertir las dimensiones de cm a pulgadas
+            const widthInches = widthCm / 2.54;
+            const heightInches = heightCm / 2.54;
+
+            // Elevar ambos valores al cuadrado
+            const widthSquared = Math.pow(widthInches, 2);
+            const heightSquared = Math.pow(heightInches, 2);
+
+            // Sumar los resultados de los cuadrados
+            const sumOfSquares = widthSquared + heightSquared;
+
+            // Aplicar la raíz cuadrada a la suma de los cuadrados
+            const diagonalInches = Math.sqrt(sumOfSquares);
+
+            // Mostrar el resultado al usuario
+            document.getElementById('result').textContent = `El tamaño del monitor es: ${diagonalInches.toFixed(2)} pulgadas`;
+        });
+    </script>
+</body>
+</html>
 
 ====================================================
 Dividir un archivo en partes y luego unir las partes
