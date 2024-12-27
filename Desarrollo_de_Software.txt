@@ -2143,10 +2143,92 @@ introducirlas directamente desde el cliente, sin necesidad de los CGLI. En un
 principio, debido a errores del navegador, esto dio algunos problemas de
 seguridad. Las cookies pueden ser borradas, aceptadas, ignoradas o bloqueadas.
 
+Explicación más corta:
+
+Cuando un usuario inicia sesión en una página web o servicio, se genera una
+cookie de sesión. Una cookie es un archivo o cadena de texto (a menudo en forma
+de hash) que se almacena temporalmente en el navegador. Lo que hace el sitio web
+o servicio es verificar si hay una cookie de sesión almacenada en el navegador,
+leer su contenido y buscar en su base de datos si la cookie coincide con la
+almacenada en el servidor. Si coinciden, el usuario se autentica automáticamente
+sin necesidad de ingresar nuevamente sus datos, permitiendo que la sesión se
+mantenga activa. Esto significa que, aunque el usuario visite la web o servicio
+en otro momento, permanecerá identificado. Cuando este archivo o hash es robado,
+se le llama robo de sesiones, el atacante puede enviar esa cookie al servidor
+haciéndose pasar por el usuario legítimo y obtener acceso a la web o servicio
+de manera fraudulenta.
+
+Fuentes
+=======
+
+https://es.wikipedia.org/wiki/Cookie_(inform%C3%A1tica)
+
+BaityBait
+
+====================================
+El robo de sesiones mediante cookies
+====================================
+
+El robo de sesiones mediante cookies, también conocido como secuestro de
+sesiones (session hijacking), es un ataque en el que un atacante obtiene acceso
+no autorizado a una sesión de usuario activa en una aplicación web. Este tipo de
+ataque se basa en la captura de las cookies de sesión que se utilizan para
+autenticar a los usuarios después de iniciar sesión.
+
+Aquí hay un desglose de cómo funciona este ataque:
+
+Captura de cookies: El atacante obtiene la cookie de sesión de un usuario
+legítimo. Esto se puede hacer de varias maneras, incluyendo:
+
+Sniffing: Interceptando el tráfico de red no cifrado en una red compartida.
+
+Cross-Site Scripting (XSS): Inyectando scripts maliciosos en una página web que
+extraen las cookies del navegador del usuario.
+
+Ingeniería social: Engañando al usuario para que revele sus cookies a través de
+técnicas de phishing.
+
+Uso de la cookie de sesión: Una vez que el atacante tiene la cookie de sesión,
+puede usarla para hacerse pasar por el usuario legítimo. Al enviar la cookie
+robada al servidor, el atacante obtiene acceso a la sesión del usuario sin
+necesidad de conocer su nombre de usuario o contraseña.
+
+Acceso a recursos: Con la sesión secuestrada, el atacante puede realizar
+cualquier acción que el usuario legítimo podría hacer, como acceder a datos
+personales, realizar transacciones, cambiar configuraciones, etc.
+
+Medidas de Protección
+=====================
+
+Para prevenir el robo de sesiones mediante cookies, se pueden implementar varias
+medidas de seguridad:
+
+Cifrado (HTTPS): Utilizar HTTPS para cifrar todas las comunicaciones entre el
+cliente y el servidor, haciendo difícil la intercepción de cookies.
+
+Configuración de cookies seguras: Establecer las cookies con las propiedades
+HttpOnly y Secure. HttpOnly impide el acceso a las cookies mediante scripts del
+lado del cliente y Secure asegura que las cookies solo se envíen a través de
+conexiones HTTPS.
+
+Sesiones cortas y expiración de cookies: Configurar las sesiones para que
+expiren después de un período de inactividad.
+
+Regeneración de ID de sesión: Cambiar el ID de sesión del usuario después de
+iniciar sesión y en intervalos regulares para limitar la validez de una cookie
+robada.
+
+Detección de anomalías: Implementar mecanismos para detectar y responder a
+comportamientos sospechosos, como accesos desde ubicaciones geográficas
+inusuales.
+
+Implementando estas prácticas, puedes reducir significativamente el riesgo de
+que las sesiones de tus usuarios sean secuestradas mediante el robo de cookies.
+
 Fuente
 ======
 
-https://es.wikipedia.org/wiki/Cookie_(inform%C3%A1tica)
+GitHub Copilot
 
 ===================================
 Códigos de estado de respuesta HTTP
