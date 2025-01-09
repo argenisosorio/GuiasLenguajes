@@ -551,3 +551,209 @@ Fuente
 ======
 
 GitHub Copilot
+
+===================
+¿Qué son SSL y TLS?
+===================
+
+Una conexión segura está encriptada. El cifrado protege los datos que envías y
+recibes para que nadie más pueda leerlos.
+
+Hay dos tipos de encriptación: SSL y TLS. Cada uno tiene sus pros y sus contras,
+pero ambos proporcionan una conexión segura.
+
+-SSL, o Transport Layer Security, es un protocolo criptográfico escrito en
+lenguaje C que proporciona seguridad en las comunicaciones a través de una red
+informática. Protege la integridad y confidencialidad de los datos mediante
+cifrado.
+
+-TLS, o Transport Layer Security, es un estándar para la comunicación segura en
+Internet. Permite que las aplicaciones cliente/servidor se comuniquen a través
+de una red de forma que se evite el espionaje y la manipulación de la
+información.
+
+Diferencias importantes en el funcionamiento de SL y TLS
+========================================================
+
+Autenticación de mensajes: Una de las principales diferencias entre SSL y TLS es
+la autenticación de los mensajes. SSL utiliza códigos de autenticación de
+mensajes (MAC) para garantizar que los mensajes no sean manipulados durante la
+transmisión. TLS no utiliza MACs para la protección, sino que se basa en otros
+medios, como el cifrado, para evitar la manipulación.
+
+Protocolo de registro: El Protocolo de Registro es la forma en que se
+transportan los datos a través de un canal de comunicaciones seguro tanto en TLS
+como en SSL, pero tiene algunas diferencias menores. En TLS, sólo se puede
+llevar un registro por paquete, mientras que en SSL, se pueden llevar varios
+registros por paquete (aunque esto se implementó raramente).
+
+Además, algunas características del protocolo de registro de TLS no se incluyen
+en SSL, como las opciones de compresión y relleno.
+
+Suites de cifrado: TLS admite varias suites de cifrado, que son algoritmos
+utilizados para el cifrado y el descifrado. El conjunto de cifrado más conocido
+es el intercambio de claves efímero Diffie-Hellman (DHE) basado en curvas
+elípticas, que proporciona un secreto perfecto hacia adelante (PFS) y puede
+utilizarse con cualquier longitud de clave. Otras suites de cifrado admiten el
+PFS, pero su uso es menos frecuente. SSL sólo admite un conjunto de cifrado con
+PFS, que utiliza una clave RSA de 1024 bits.
+
+Mensajes de alerta: El protocolo SSL utiliza mensajes de alerta para informar al
+cliente o al servidor sobre un error específico durante la comunicación.
+El protocolo TLS no tiene ningún mecanismo equivalente.
+
+Fuente
+======
+
+https://www.certificadosdigitales.net/que-son-ssl-y-tls/
+
+=======================
+Criptografía asimétrica
+=======================
+
+La criptografía asimétrica (del inglés asymmetric key cryptography), también
+conocida como criptografía de clave pública (public key cryptography) o
+criptografía de dos claves (two-key cryptography),  es un sistema criptográfico
+que se caracteriza por utilizar dos claves, una clave pública y otra privada,
+para el envío de mensajes o datos informáticos. Las dos claves están conectadas
+entre sí y tienen roles complementarios, al ser la clave pública la responsable
+del cifrado y la clave privada la del descifrado. En cuanto al procedimiento,
+el destinatario genera ambas claves y comunica la clave pública al emisor del
+mensaje quien, por su parte, tiene ahora la opción de cifrar el mensaje. Una
+vez que se haya enviado el mensaje, solo se podrá descifrar con la clave
+privada, de manera que si el mensaje cifrado es interceptado, la información del
+mensaje permanecerá oculta. Además, los métodos criptográficos garantizan que
+esa pareja de claves solo se puede generar una vez, de modo que se puede asumir
+que no es posible que dos personas hayan obtenido casualmente la misma pareja de
+claves.
+
+Si una persona que emite un mensaje a un destinatario, usa la clave pública de
+este último para cifrarlo; una vez cifrado, solo la clave privada del
+destinatario podrá descifrar el mensaje, ya que es el único que debería
+conocerla. Por tanto, se logra la confidencialidad del envío del mensaje, ya que
+es extremadamente difícil que lo descifre alguien salvo el destinatario.
+Cualquiera, usando la llave pública del destinatario, puede cifrarle mensajes;
+los que serán descifrados por el destinatario usando su clave privada.
+
+Si el propietario del par de claves usa su clave privada para cifrar un mensaje,
+cualquiera puede descifrarlo utilizando la clave pública del primero. En este
+caso se consigue la identificación y autentificación del remitente, ya que se
+sabe que solo pudo haber sido él quien empleó su clave privada (salvo que un
+tercero la haya obtenido). Esta idea es el fundamento de la firma digital, donde
+jurídicamente existe la presunción de que el firmante es efectivamente el dueño
+de la clave privada.
+
+Los sistemas de cifrado de clave pública se inventaron con el fin de evitar por
+completo el problema del intercambio de claves de los sistemas de cifrado
+simétricos. Con las claves públicas no es necesario que el remitente y el
+destinatario se pongan de acuerdo en la clave a emplear. Todo lo que se requiere
+es que, antes de iniciar la comunicación secreta, cada uno debe conseguir la
+llave pública del otro y cuidar cada uno su llave privada. Es más, esas mismas
+claves públicas pueden ser usadas por cualquiera que desee comunicarse con
+alguno de ellos siempre que se utilice correctamente la llave pública de cada
+uno.
+
+La criptografía asimétrica usa funciones exponenciales.
+
+Fuente
+======
+
+https://es.wikipedia.org/wiki/Criptograf%C3%ADa_asim%C3%A9trica
+
+====================================
+Criptografía de curva elíptica (ECC)
+====================================
+
+La criptografía de curva elíptica (del inglés: elliptic curve cryptography, ECC)
+es una variante de la criptografía asimétrica o de clave pública basada en las
+matemáticas de las curvas elípticas. Propuesta en 1985 por Neal Koblitz y Victor
+Miller, ECC destaca por ser más eficiente y usar claves más pequeñas que métodos
+tradicionales como RSA, mientras ofrece el mismo nivel de seguridad.
+
+Introducción a ECC
+==================
+
+Definición: La ECC utiliza propiedades matemáticas de las curvas elípticas para
+implementar sistemas de clave pública.
+
+Eficiencia: Sus claves más pequeñas y rápidas son ideales para dispositivos de
+recursos limitados, como IoT y móviles.
+
+Seguridad: Se basa en problemas matemáticos difíciles de resolver, como el
+logaritmo discreto en curvas elípticas.
+
+Características principales
+===========================
+
+Tamaño reducido de clave: Una clave ECC de 256 bits es tan segura como una clave
+RSA de 3072 bits. Esto reduce significativamente el uso de memoria y ancho de
+banda.
+
+Eficiencia computacional: Las operaciones criptográficas (cifrado, descifrado,
+firma) son rápidas y consumen menos recursos.
+
+Seguridad avanzada: Resistente a ataques criptográficos convencionales gracias a
+la complejidad del problema matemático en el que se basa.
+
+Ventajas de ECC
+===============
+
+Seguridad con claves pequeñas: Ofrece niveles de seguridad comparables a RSA con
+claves significativamente menores, haciéndola más eficiente.
+
+Mayor velocidad: Operaciones como firma y cifrado son más rápidas, reduciendo el
+tiempo de procesamiento.
+
+Menor consumo de energía: Ideal para dispositivos portátiles y de IoT que
+dependen de baterías.
+
+Compatibilidad moderna: ECC es ampliamente adoptada en protocolos como TLS/SSL,
+IPsec, y estándares de criptomonedas.
+
+Preparación para el futuro: Su diseño compacto y eficiente la hace más
+resistente a avances computacionales.
+
+Reducción de ancho de banda: Claves más pequeñas significan datos más ligeros,
+ideales para comunicaciones seguras.
+
+Aplicaciones de ECC
+===================
+
+Firmas digitales: Algoritmos como ECDSA  (Elliptic Curve Digital Signature
+Algorithm) se utilizan en sistemas de autenticación y verificación de
+documentos.
+
+Intercambio de claves: ECDH (Elliptic Curve Diffie-Hellman) es una opción
+popular para establecer comunicaciones seguras.
+
+Cifrado en protocolos modernos: ECC se usa en TLS, criptomonedas (como Bitcoin y
+Ethereum), y estándares definidos por NIST (Instituto Nacional de Estándares y
+Tecnología (National Institute of Standards and Technology)) de USA.
+
+Dispositivos IoT: Perfecta para sensores y dispositivos con limitaciones de
+memoria y potencia.
+
+Casos prácticos
+===============
+
+Criptomonedas: Utilizada para proteger transacciones y crear firmas digitales
+seguras (ej. secp256k1 en Bitcoin).
+
+Autenticación moderna: Integración en sistemas como FIDO2 para asegurar accesos.
+
+Conexiones seguras: Protocolos como HTTPS dependen de ECC para cifrar datos de
+usuario.
+
+Dispositivos limitados: Implementación en teléfonos móviles, tarjetas
+inteligentes, y sistemas IoT.
+
+Fuentes
+=======
+
+https://es.wikipedia.org/wiki/Criptograf%C3%ADa_de_curva_el%C3%ADptica
+
+https://estudiobitcoin.com/curva-eliptica-en-bitcoin/
+
+https://csrc.nist.gov/projects/elliptic-curve-cryptography
+
+https://www.certificadosdigitales.net/que-es-ecc/
