@@ -757,3 +757,368 @@ https://estudiobitcoin.com/curva-eliptica-en-bitcoin/
 https://csrc.nist.gov/projects/elliptic-curve-cryptography
 
 https://www.certificadosdigitales.net/que-es-ecc/
+
+==========================================================
+Ejemplos prácticos de criptografía de curva elíptica (ECC)
+==========================================================
+
+Ejemplo en Python
+=================
+
+Python tiene bibliotecas como cryptography y ecdsa que facilitan trabajar con
+ECC.
+
+Crear una firma digital con ECC usando la biblioteca ecdsa
+==========================================================
+
+1- Instalar el paquete ecdsa de python
+
+$ sudo apt install python3-ecdsa
+
+2- Probar en un script de python, por ejemplo test.py
+
+-----
+
+from ecdsa import SigningKey, SECP256k1
+
+# Generar una clave privada (Signing Key)
+# La clave privada se utiliza para firmar los mensajes y debe mantenerse en secreto.
+private_key = SigningKey.generate(curve=SECP256k1)
+
+# Derivar la clave pública a partir de la clave privada.
+# La clave pública se utiliza para verificar las firmas y puede compartirse con otras personas.
+public_key = private_key.verifying_key
+
+# Mensaje a firmar.
+# Este es el mensaje que queremos proteger con una firma digital. En este caso, es un mensaje de texto simple.
+message = b"Este es un mensaje seguro."
+
+# Crear una firma del mensaje usando la clave privada.
+# La firma es única para este mensaje y es generada solo con la clave privada.
+signature = private_key.sign(message)
+
+# Verificar la firma usando la clave pública.
+# Aquí verificamos que la firma creada corresponde al mensaje original.
+# Si la firma es válida, el mensaje es auténtico y no ha sido alterado.
+try:
+    public_key.verify(signature, message)
+    print("Firma verificada correctamente.")
+except Exception as e:
+    # Si la verificación falla, es posible que la firma no sea válida o que el mensaje haya sido alterado.
+    print("La verificación de la firma falló:", e)
+
+# Mostrar la clave privada en formato hexadecimal.
+# Esto es solo para propósitos de visualización. La clave privada nunca debe compartirse.
+print("Clave privada:", private_key.to_string().hex())
+
+# Mostrar la clave pública en formato hexadecimal.
+# La clave pública puede ser compartida para que otros puedan verificar las firmas generadas con la clave privada.
+print("Clave pública:", public_key.to_string().hex())
+
+-----
+
+Al ejecutarlo se optiene algo como esto:
+
+$ python3 test.py
+Firma verificada correctamente.
+Clave privada: 3b2f78c5772cb4d281ee9c0231f0c905a6f4958e19d425d4592e2965c1d3ab5
+Clave pública: 438d772ee509c67321e2e1cc715766f6cff0fb3f1620353dd8e3845b84f2d5aa
+
+-----
+
+Explicación del script:
+
+Este script de Python utiliza la librería ecdsa para trabajar con criptografía
+de curva elíptica (ECC), específicamente usando la curva SECP256k1, que es
+ampliamente utilizada en aplicaciones como Bitcoin. Aquí te doy una explicación
+detallada del script paso a paso:
+
+1. Importación de librerías
+
+from ecdsa import SigningKey, SECP256k1
+
+SigningKey: Esta clase se usa para crear una clave privada que se utilizará para
+firmar mensajes.
+
+SECP256k1: Es una de las curvas elípticas más populares en criptografía, usada
+en el ámbito de criptomonedas como Bitcoin. Es una curva de 256 bits, que
+balancea seguridad y eficiencia.
+
+2. Generación de la clave privada (Signing Key)
+
+private_key = SigningKey.generate(curve=SECP256k1)
+
+SigningKey.generate(curve=SECP256k1): Esta línea genera una clave privada
+aleatoria utilizando la curva SECP256k1.
+
+Clave privada: Es un valor secreto que se utiliza para crear firmas digitales.
+Debe mantenerse en secreto porque cualquier persona con la clave privada puede
+generar firmas válidas.
+
+3. Derivación de la clave pública (Verifying Key)
+
+public_key = private_key.verifying_key
+
+private_key.verifying_key: A partir de la clave privada, se genera una clave
+pública. Esta clave pública se utiliza para verificar las firmas generadas con
+la clave privada.
+
+Clave pública: A diferencia de la clave privada, la clave pública se puede
+compartir libremente con otros. Se utiliza para verificar las firmas,
+garantizando que provienen de quien posee la clave privada correspondiente.
+from ecdsa import SigningKey, SECP256k1
+
+# Generar una clave privada (Signing Key)
+# La clave privada se utiliza para firmar los mensajes y debe mantenerse en secreto.
+private_key = SigningKey.generate(curve=SECP256k1)
+
+# Derivar la clave pública a partir de la clave privada.
+# La clave pública se utiliza para verificar las firmas y puede compartirse con otras personas.
+public_key = private_key.verifying_key
+
+# Mensaje a firmar.
+# Este es el mensaje que queremos proteger con una firma digital. En este caso, es un mensaje de texto simple.
+message = b"Este es un mensaje seguro."
+
+# Crear una firma del mensaje usando la clave privada.
+# La firma es única para este mensaje y es generada solo con la clave privada.
+signature = private_key.sign(message)
+
+# Verificar la firma usando la clave pública.
+# Aquí verificamos que la firma creada corresponde al mensaje original.
+# Si la firma es válida, el mensaje es auténtico y no ha sido alterado.
+try:
+    public_key.verify(signature, message)
+    print("Firma verificada correctamente.")
+except Exception as e:
+    # Si la verificación falla, es posible que la firma no sea válida o que el mensaje haya sido alterado.
+    print("La verificación de la firma falló:", e)
+
+# Mostrar la clave privada en formato hexadecimal.
+# Esto es solo para propósitos de visualización. La clave privada nunca debe compartirse.
+print("Clave privada:", private_key.to_string().hex())
+
+# Mostrar la clave pública en formato hexadecimal.
+# La clave pública puede ser compartida para que otros puedan verificar las firmas generadas con la clave privada.
+print("Clave pública:", public_key.to_string().hex())
+private_key.sign(message): Usando la clave privada, se firma el mensaje. El
+proceso de firma genera una secuencia de bytes única (la firma), que está
+asociada al mensaje. Esto garantiza que si el mensaje es alterado, la firma no
+será válida.
+
+Firma digital: La firma actúa como una especie de "huella digital" para el
+mensaje. Solo la persona que posee la clave privada puede generar la firma, lo
+que asegura la autenticidad del mensaje.
+
+6. Verificación de la firma
+
+try:
+    public_key.verify(signature, message)
+    print("Firma verificada correctamente.")
+except Exception as e:
+    print("La verificación de la firma falló:", e)
+public_key.verify(signature, message): Aquí, la clave pública se utiliza para
+verificar que la firma corresponde al mensaje original.
+
+Si la firma es válida, significa que el mensaje no ha sido alterado y que fue
+firmado por alguien que posee la clave privada corresponfrom ecdsa import SigningKey, SECP256k1
+
+# Generar una clave privada (Signing Key)
+# La clave privada se utiliza para firmar los mensajes y debe mantenerse en secreto.
+private_key = SigningKey.generate(curve=SECP256k1)
+
+# Derivar la clave pública a partir de la clave privada.
+# La clave pública se utiliza para verificar las firmas y puede compartirse con otras personas.
+public_key = private_key.verifying_key
+
+# Mensaje a firmar.
+# Este es el mensaje que queremos proteger con una firma digital. En este caso, es un mensaje de texto simple.
+message = b"Este es un mensaje seguro."
+
+# Crear una firma del mensaje usando la clave privada.
+# La firma es única para este mensaje y es generada solo con la clave privada.
+signature = private_key.sign(message)
+
+# Verificar la firma usando la clave pública.
+# Aquí verificamos que la firma creada corresponde al mensaje original.
+# Si la firma es válida, el mensaje es auténtico y no ha sido alterado.
+try:
+    public_key.verify(signature, message)
+    print("Firma verificada correctamente.")
+except Exception as e:
+    # Si la verificación falla, es posible que la firma no sea válida o que el mensaje haya sido alterado.
+    print("La verificación de la firma falló:", e)
+
+# Mostrar la clave privada en formato hexadecimal.
+# Esto es solo para propósitos de visualización. La clave privada nunca debe compartirse.
+print("Clave privada:", private_key.to_string().hex())
+
+# Mostrar la clave pública en formato hexadecimal.
+# La clave pública puede ser compartida para que otros puedan verificar las firmas generadas con la clave privada.
+print("Clave pública:", public_key.to_string().hex())diente.
+
+Si la verificación falla, se lanza iuna excepción, y el bloque except muestra un
+mensaje indicando que la firma no es válida (por ejemplo, si el mensaje fue
+modificado o la firma no corresponde).
+
+7. Mostrar la clave privada y pública en formato hexadecimal
+
+print("Clave privada:", private_key.to_string().hex())
+print("Clave pública:", public_key.to_string().hex())
+
+private_key.to_string().hex(): Convierte la clave privada a una cadena de bytes
+y luego la convierte a formato hexadecimal. Esto es solo para visualizar la
+clave en un formato legible.
+
+public_key.to_string().hex(): Similar a lo anterior, pero con la clave pública.
+La clave pública puede ser compartida sin riesgos de comprometer la seguridad.
+
+Formato hexadecimal: Se usa para representar datos binarios de manera legible y
+compacta. Es común mostrar claves criptográficas enfrom ecdsa import SigningKey, SECP256k1
+
+# Generar una clave privada (Signing Key)
+# La clave privada se utiliza para firmar los mensajes y debe mantenerse en secreto.
+private_key = SigningKey.generate(curve=SECP256k1)
+
+# Derivar la clave pública a partir de la clave privada.
+# La clave pública se utiliza para verificar las firmas y puede compartirse con otras personas.
+public_key = private_key.verifying_key
+
+# Mensaje a firmar.
+# Este es el mensaje que queremos proteger con una firma digital. En este caso, es un mensaje de texto simple.
+message = b"Este es un mensaje seguro."
+
+# Crear una firma del mensaje usando la clave privada.
+# La firma es única para este mensaje y es generada solo con la clave privada.
+signature = private_key.sign(message)
+
+# Verificar la firma usando la clave pública.
+# Aquí verificamos que la firma creada corresponde al mensaje original.
+# Si la firma es válida, el mensaje es auténtico y no ha sido alterado.
+try:
+    public_key.verify(signature, message)
+    print("Firma verificada correctamente.")
+except Exception as e:
+    # Si la verificación falla, es posible que la firma no sea válida o que el mensaje haya sido alterado.
+    print("La verificación de la firma falló:", e)
+
+# Mostrar la clave privada en formato hexadecimal.
+# Esto es solo para propósitos de visualización. La clave privada nunca debe compartirse.
+print("Clave privada:", private_key.to_string().hex())
+
+# Mostrar la clave pública en formato hexadecimal.
+# La clave pública puede ser compartida para que otros puedan verificar las firmas generadas con la clave privada.
+print("Clave pública:", public_key.to_string().hex()) este formato.
+i
+Fuente
+======
+
+ChatGPT
+
+Otro ejemplo:
+
+Cifrar y Descifrar un mensaje usando ECC en Python
+==================================================
+
+Se puede simular el cifrado y descifrado utilizando la firma digital, lo cual es
+común en criptografía de clave pública. Lo que podemos hacer es "firmar" un
+mensaje y luego "verificar" esa firma para simular un proceso de cifrado y
+descifrado. Aquí te dejo un ejemplo más completo que utiliza claves públicas y
+privadas, firmando y verificando el mensaje.
+
+Código completo con firma y verificación (simulando cifrado/descifrado):
+
+-----
+
+from ecdsa import SigningKey, VerifyingKey, SECP256k1
+import hashlib
+
+# Generar la clave privada (SigningKey)
+private_key = SigningKey.generate(curve=SECP256k1)
+
+# Derivar la clave pública (VerifyingKey)
+public_key = private_key.get_verifying_key()
+
+# Mensaje a firmar (el mensaje que queremos "cifrar")
+message = b"Este es un mensaje seguro."
+
+# Crear una firma digital del mensaje
+signature = private_key.sign(message)
+
+# Imprimir la firma en formato hexadecimal (esto es el 'mensaje cifrado')
+print(f"Firma (mensaje cifrado): {signature.hex()}")
+
+# Verificar la firma usando la clave pública (esto es el 'descifrado')
+try:
+    # Verificar si la firma es válida
+    public_key.verify(signature, message)
+    print("Firma verificada correctamente.")
+except Exception as e:
+    print("La verificación de la firma falló:", e)
+
+# Mostrar las claves privada y pública en formato hexadecimal
+print("\nClave privada:", private_key.to_string().hex())
+print("Clave pública:", public_key.to_string().hex())
+
+# Para simular el descifrado, simplemente verificamos la firma con la clave
+# pública:
+def decrypt_signature(signature, public_key, message):
+    try:
+        # Verificar si la firma es válida
+        public_key.verify(signature, message)
+        print("Firma verificada correctamente (simulando descifrado).")
+    except Exception as e:
+        print("La verificación de la firma falló:", e)
+
+# Llamada a la función para simular el 'descifrado'
+decrypt_signature(signature, public_key, message)
+
+-----
+
+Explicación del código:
+
+Generación de claves: Se genera una clave privada (private_key) usando la curva
+SECP256k1, que es muy común en criptomonedas. A partir de esa clave privada, se
+deriva la clave pública (public_key), que se utilizará para verificar la firma.
+
+Firmar el mensaje: Se "firma" un mensaje utilizando la clave privada. Esto es lo
+que simula el cifrado.
+
+Verificación de la firma: La firma se verifica utilizando la clave pública. Si
+la verificación es exitosa, podemos asumir que el mensaje no ha sido alterado,
+lo que simula un proceso de "descifrado".
+
+Simulación de descifrado: Dado que ECC en sí no proporciona una función de
+cifrado y descifrado como RSA, verificamos la firma como si fuera el proceso de
+descifrado.
+
+Ejemplo de salida:
+
+-----
+
+Firma (mensaje cifrado): 3046022100f6c1d0e3d36b07f63a04f1581588d0939d54550d19a7
+Firma verificada correctamente.
+
+Clave privada: 18ecbbf85d881de548213ad34227cd7d77a5c7b984375b4e6e9ba397eb6f70b77
+Clave pública: 046e5371d49823ab6ee833dcb3e3acb0b34b72b3de170abfead4389c97b08410d
+
+Firma verificada correctamente (simulando descifrado).
+
+-----
+
+Cómo funciona:
+
+La firma es como el "cifrado", y la verificación es como el "descifrado". Este
+proceso no es el mismo que el cifrado/descifrado tradicional (como RSA), pero en
+ECC se utiliza para asegurar la autenticidad del mensaje.
+
+Si el mensaje o la firma se modifican, la verificación fallará, lo cual es útil
+para detectar alteraciones, lo que es una parte clave de la criptografía.
+
+Este código es un ejemplo sencillo de cómo puedes trabajar con ECC y simular un
+cifrado/descifrado mediante firmas digitales y verificaciones.
+
+Fuente
+======
+
+ChatGPT
