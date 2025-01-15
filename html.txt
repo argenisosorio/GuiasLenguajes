@@ -7649,3 +7649,87 @@ Calculadora del Tamaño del Monitor o Pantalla en Pulgadas
     </script>
 </body>
 </html>
+
+============================
+Transición de imágens con js
+============================
+
+<div class="text-center mt-5 mb-3">
+  <img class="img-zoom" src="static/img/1.jpg" width="40%">
+</div>
+
+Puedes lograrlo utilizando JavaScript para cambiar dinámicamente la imagen cada
+2 segundos, junto con transiciones suaves en CSS para el efecto visual. A
+continuación, te presento una solución completa:
+
+<div class="text-center mt-5 mb-3">
+    <img id="slideshow" class="img-zoom" src="static/img/1.jpg" width="40%">
+</div>
+
+Código CSS
+
+Agrega este estilo para manejar la transición suave:
+
+<style>
+  .img-zoom {
+      transition: opacity 1s ease-in-out;
+      opacity: 1;
+  }
+
+  .img-zoom.hidden {
+      opacity: 0;
+  }
+</style>
+
+Código JavaScript
+
+Incluye el siguiente script para cambiar las imágenes en bucle:
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+      const images = [
+        "static/img/1.jpg",
+        "static/img/2.jpg",
+        "static/img/3.jpg"
+      ];
+      const imgElement = document.getElementById("slideshow");
+      let index = 0;
+
+      setInterval(() => {
+          // Oculta la imagen actual
+          imgElement.classList.add("hidden");
+
+          setTimeout(() => {
+              // Cambia la imagen una vez oculta
+              index = (index + 1) % images.length;
+              imgElement.src = images[index];
+              // Muestra la nueva imagen
+              imgElement.classList.remove("hidden");
+          }, 1000); // Espera que la transición termine (1s)
+      }, 2000); // Cambia cada 2 segundos
+  });
+</script>
+
+Explicación
+
+HTML: La imagen tiene un id para ser seleccionada por el script.
+
+CSS: Se define una clase hidden para hacer que la imagen desaparezca
+gradualmente (opacity: 0).
+
+JavaScript: Se usa un arreglo images con las rutas de las imágenes.
+
+Cada 2 segundos, el índice del arreglo se incrementa en 1 (usando módulo para
+reiniciar al principio).
+
+Se agrega y elimina la clase hidden para manejar la transición de opacidad.
+
+Resultado
+
+La imagen cambiará cada 2 segundos con una transición suave entre cada cambio, y
+el bucle será infinito.
+
+Fuente
+======
+
+ChatGPT
