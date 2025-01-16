@@ -5756,6 +5756,35 @@ Cambiar cursor por imagen PNG al hacer hover
 
 ----------
 
+Cambiar cursor por imagen PNG en toda la página
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change mouse cursor</title>
+    <style>
+        /* Cambiar el cursor en toda la página */
+        body {
+            cursor: url("XD.png"), auto;
+        }
+
+        /* Puedes agregar excepciones o estilos específicos para otros elementos si es necesario */
+        button {
+            cursor: pointer; /* Ejemplo: restablecer el cursor estándar para botones */
+        }
+    </style>
+</head>
+<body>
+    <p>El cursor se cambia en toda la página</p>
+    <br>
+    <label>El cursor también funciona aquí</label>
+</body>
+</html>
+
+----------
+
 Controlar una imagen en la pantalla con las teclas de dirección.
 
 <!DOCTYPE html>
