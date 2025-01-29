@@ -1014,3 +1014,23 @@ Fuente
 ======
 
 ChatGPT
+
+========================================================
+Script para abrir programas del SO al ejecutar el script
+========================================================
+
+#!/bin/bash
+
+code &
+terminator &
+nautilus &
+/home/aosorio/Descargas/tsetup.2.7.4/Telegram/Telegram -- %u &
+/home/aosorio/Descargas/firefox-89.0.1/firefox/firefox &
+
+Guardarlo por ejemplo como "run_desktop.sh".
+
+Nota
+====
+
+Se puede crear un lanzador en el menú que apunte al script, el command del
+lanzador sería algo así: /home/user/Descargas/run_desktop.sh
