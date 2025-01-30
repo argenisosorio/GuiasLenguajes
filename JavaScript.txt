@@ -9901,3 +9901,37 @@ Fuente
 ======
 
 ChatGPT
+
+==============================================
+Ejemplo de formateo de fecha y hora con moment
+==============================================
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de Moment.js</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+</head>
+<body>
+    <h1>Formato de Fecha y Hora con Moment.js</h1>
+    <p id="fecha"></p>
+
+    <script>
+        // Crear una fecha actual
+        const date = new Date();
+
+        // Formatear la fecha usando moment.js
+        const fechaFormateada = moment(date).format('DD/MM/YYYY HH:mm:ss');
+
+        // Mostrar la fecha formateada en el elemento con id "fecha"
+        document.getElementById('fecha').textContent = fechaFormateada;
+    </script>
+</body>
+</html>
+
+Fuente
+======
+
+DeepSeek
