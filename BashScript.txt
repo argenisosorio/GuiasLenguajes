@@ -427,7 +427,7 @@ touch FFF.txt
 
 # Ejemplo de programa en bash que crea un fichero en un directorio específico.
 #!/bin/bash
-touch /home/aosorio/FFF.txt
+touch /home/user/FFF.txt
 
 ------------------------
 
@@ -527,7 +527,7 @@ cd /home/user/tmp/
 wget -c 192.168.0.$oct/share/x.zip
 
 # Descomprimir el archivo descarcago en la ruta especificada.
-unzip /home/aosorio/tmp/x.zip
+unzip /home/user/tmp/x.zip
 
 # Imprimir por pantalla que finalizó la descarga
 echo -e '\n¡Descarga finalizada, el fichero fue descomprimido!\n'
@@ -569,11 +569,11 @@ printf "my text solo \n"
 #!/bin/bash
 #Script para re generar una base de datos sqlite en Laravel.
 
-rm -rf /home/aosorio/Proyectos/my_project/database/database.sqlite
+rm -rf /home/user/Proyectos/my_project/database/database.sqlite
 
 echo "--- Eliminada la base de datos actual ---"
 
-touch /home/aosorio/Proyectos/my_project/database/database.sqlite
+touch /home/user/Proyectos/my_project/database/database.sqlite
 
 echo "--- Creada la base de datos database.sqlite ---"
 
@@ -1024,8 +1024,8 @@ Script para abrir programas del SO al ejecutar el script
 code &
 terminator &
 nautilus &
-/home/aosorio/Descargas/tsetup.2.7.4/Telegram/Telegram -- %u &
-/home/aosorio/Descargas/firefox-89.0.1/firefox/firefox &
+/home/user/Descargas/tsetup.2.7.4/Telegram/Telegram -- %u &
+/home/user/Descargas/firefox-89.0.1/firefox/firefox &
 
 Guardarlo por ejemplo como "run_desktop.sh".
 

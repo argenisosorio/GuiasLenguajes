@@ -538,6 +538,105 @@ $ pg_dump -U username db_name > db_ename.sql
 
 $ pg_dump -U usuario -h 127.0.0.1 nombre_database > nombre_database.sql
 
+Hacer un dump o respaldo de una base de datos omitiendo los ALTER
+=================================================================
+
+En PostgreSQL, el comando pg_dump se utiliza para crear un respaldo (dump) de
+una base de datos. El parámetro --no-owner es una opción que afecta cómo se
+manejan los propietarios (owners) de los objetos de la base de datos en el
+archivo de respaldo generado.
+
+¿Qué hace el parámetro --no-owner?:
+
+Cuando usas pg_dump sin --no-owner, el archivo de respaldo incluye comandos
+ALTER para asignar los propietarios originales de los objetos (tablas,
+secuencias, funciones, etc.) en la base de datos de destino al restaurar el
+respaldo. Esto puede causar problemas si los usuarios o roles propietarios no
+existen en el servidor de destino.
+
+Al usar --no-owner, PostgreSQL omite estos comandos ALTER en el archivo de
+respaldo. En su lugar, todos los objetos se crearán en la base de datos de
+destino con el propietario del usuario que ejecuta el comando de restauración
+(por ejemplo, el usuario que ejecuta psql o pg_restore).
+
+¿Cuándo usar --no-owner?:
+
+Este parámetro es útil en los siguientes casos:
+
+-Migración de bases de datos entre servidores: Si los usuarios o roles
+propietarios no existen en el servidor de destino, usar --no-owner evita errores
+durante la restauración.
+
+-Simplificación de la restauración: Si no te importa quién es el propietario de
+los objetos y prefieres que todos los objetos pertenezcan al usuario que realiza
+la restauración, --no-owner es una buena opción.
+
+-Evitar conflictos de permisos: Si no tienes permisos para asignar propietarios
+en el servidor de destino, --no-owner te permite evitar problemas de permisos.
+
+Ejemplo de uso:
+
+$ pg_dump -U usuario -h 127.0.0.1 --no-owner nombre_database > nombre_database.sql
+
+Explicación del comando:
+
+-U usuario: Especifica el usuario con el que te conectas a PostgreSQL.
+
+-h 127.0.0.1: Indica la dirección IP del servidor de PostgreSQL (en este caso,
+localhost).
+
+--no-owner: Omite los comandos ALTER para asignar propietarios en el archivo de
+respaldo.
+
+nombre_database: Es el nombre de la base de datos que deseas respaldar.
+
+> nombre_database.sql: Redirige la salida del comando a un archivo llamado
+nombre_database.sql.
+
+Resultado:
+
+El archivo nombre_database.sql contendrá el respaldo de la base de datos, pero
+no incluirá los comandos para asignar los propietarios originales de los
+objetos. Esto es útil si no necesitas conservar los propietarios o si estás
+migrando la base de datos a un servidor donde los usuarios/roles propietarios
+no existen.
+
+Parámetro --no-acl
+==================
+
+El parámetro --no-acl le indica a pg_dump que no incluya en el archivo de
+respaldo los comandos relacionados con los privilegios de acceso (ACL: Access
+Control List). Esto significa que:
+
+-No se incluirán comandos GRANT ni REVOKE en el archivo .sql.
+
+-No se guardará información sobre los permisos asignados a roles o usuarios en
+la base de datos.
+
+¿Cuándo usar --no-acl?
+
+Este parámetro es útil en los siguientes casos:
+
+-Simplificar la restauración: Si no necesitas conservar los permisos específicos
+de la base de datos original.
+
+-Evitar advertencias o errores: Si los roles o usuarios de la base de datos
+original no existen en el servidor de destino, usar --no-acl evita advertencias
+o errores relacionados con permisos durante la restauración.
+
+-Migraciones rápidas: Cuando solo necesitas migrar la estructura y los datos,
+sin preocuparte por los permisos.
+
+Ejemplo:
+
+$ pg_dump -U usuario -h 127.0.0.1 --no-owner --no-acl nombre_database > nombre_database.sql
+
+Fuente
+======
+
+Deepseek
+
+================================================================
 postgresql dump ERROR: permiso denegado a la relación name_table
 ================================================================
 
