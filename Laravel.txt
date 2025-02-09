@@ -10375,13 +10375,45 @@ Fuente
 
 ChatGPT
 
-====================================================================
-Laravel Policies - Cómo garantizar la seguridad de tu aplicación web
-====================================================================
+=================
+Model::unguard();
+=================
 
-¿Alguna vez has querido saber cómo proteger ciertas acciones de tu aplicación
-web de usuarios no autorizados? Te presento a las Policies.
+En Laravel, Model::unguard(); es un método que desactiva temporalmente la
+protección de asignación masiva en los modelos de Eloquent. Esto permite que
+puedas asignar valores a cualquier atributo del modelo sin necesidad de
+definirlos en la propiedad $fillable o $guarded del modelo.
 
-En este tutorial tendremos 2 usuarios (administrador y empleado). El
-administrador tendrá todas las acciones sobre una Tarea, en cambio el empleado
-solo podrá ver las tareas que se le asignó.
+¿Qué es la protección de asignación masiva?
+===========================================
+
+Laravel, por defecto, protege contra la asignación masiva para evitar que los
+usuarios malintencionados modifiquen atributos sensibles de un modelo a través
+de formularios o solicitudes HTTP. Por ejemplo, si tienes un modelo User con un
+atributo is_admin, no querrías que alguien pueda asignar is_admin = true desde
+un formulario.
+
+Para controlar qué atributos pueden ser asignados masivamente, Laravel usa dos
+propiedades en los modelos:
+
+$fillable: Define los atributos que sí pueden ser asignados masivamente.
+
+$guarded: Define los atributos que no pueden ser asignados masivamente.
+
+¿Qué hace Model::unguard();?
+============================
+
+Cuando llamas a Model::unguard();, desactivas temporalmente esta protección.
+Esto significa que:
+
+Puedes asignar valores a cualquier atributo del modelo, incluso si no está en
+$fillable o está en $guarded.
+
+Es útil en situaciones como seeders o tareas de desarrollo, donde necesitas
+asignar datos masivamente sin preocuparte por las restricciones de asignación
+masiva.
+
+Fuente
+======
+
+Deepseek
