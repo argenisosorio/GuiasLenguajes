@@ -9078,7 +9078,7 @@ else {
 Relaciones polimórficas en Laravel
 ==================================
 
-Podríamos empezar a definir las relacines polomórficas como las que se
+Podríamos empezar a definir las relaciones polomórficas como las que se
 establecen entre distintos modelos y un modelo común. El modelo común sería como
 una cualidad que comparten los diferentes modelos. Estos son distintos pero van
 a presentar un comportamiento, una capacidad, una cualidad, un aspecto similar.
@@ -9299,6 +9299,129 @@ Fuente
 ======
 
 https://virtumedia.wordpress.com/2020/04/10/relaciones-polimorficas-en-laravel/
+
+==============
+$table->morphs
+==============
+
+En Laravel, el método $table->morphs('XXX') es un atajo (shortcut) que crea dos
+columnas en la tabla de la base de datos para soportar una relación polimórfica.
+
+Estas columnas son:
+
+XXX_id: Un campo de tipo unsignedBigInteger que almacena el ID del modelo
+relacionado.
+
+XXX_type: Un campo de tipo string que almacena el nombre de la clase del modelo
+relacionado.
+
+¿Para qué sirve?
+
+Este método se utiliza cuando una tabla necesita estar relacionada con múltiples
+modelos (tablas) de manera dinámica. Por ejemplo, si tienes una tabla comments
+que puede estar asociada tanto a posts como a videos, usarías una relación
+polimórfica.
+
+Ejemplo de uso:
+
+Supongamos que tienes una tabla images que puede estar asociada tanto a users
+como a products. La migración podría verse así:
+
+Schema::create('images', function (Blueprint $table) {
+    $table->id();
+    $table->string('url');
+    $table->morphs('imageable'); // Esto crea imageable_id y imageable_type
+    $table->timestamps();
+});
+
+¿Qué hace exactamente morphs('XXX')?
+
+Crea dos columnas:
+
+XXX_id: Un campo de tipo unsignedBigInteger que almacena el ID del modelo
+relacionado.
+
+XXX_type: Un campo de tipo string que almacena el nombre de la clase del modelo
+relacionado (por ejemplo, App\Models\User o App\Models\Product).
+
+Ejemplo de datos:
+
+Si una imagen está asociada a un User con ID 1, la tabla images tendría:
+
+imageable_id = 1
+
+imageable_type = 'App\Models\User'
+
+Si una imagen está asociada a un Product con ID 5, la tabla images tendría:
+
+imageable_id = 5
+
+imageable_type = 'App\Models\Product'
+
+Relación polimórfica en los modelos
+
+En los modelos de Laravel, debes definir la relación polimórfica. Por ejemplo:
+
+En el modelo Image:
+
+class Image extends Model
+{
+    public function imageable()
+    {
+        return $this->morphTo();
+    }
+}
+
+En el modelo User:
+
+class User extends Model
+{
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+}
+
+En el modelo Product:
+
+class Product extends Model
+{
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+}
+
+¿Cómo se usa en la práctica?:
+
+Guardar una imagen para un usuario:
+
+$user = User::find(1);
+$user->images()->create(['url' => 'path/to/image.jpg']);
+
+Guardar una imagen para un producto:
+
+$product = Product::find(5);
+$product->images()->create(['url' => 'path/to/image.jpg']);
+
+Obtener las imágenes de un usuario o producto:
+
+$user = User::find(1);
+$images = $user->images; // Devuelve todas las imágenes asociadas al usuario
+
+Resumen
+
+$table->morphs('XXX') crea dos columnas: XXX_id y XXX_type.
+
+Se utiliza para relaciones polimórficas, donde una tabla puede estar asociada a
+múltiples modelos.
+
+En los modelos, se define la relación usando morphTo() y morphMany().
+
+Fuente
+======
+
+Deepseek
 
 ======================
 Procesamiento de colas
