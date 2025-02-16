@@ -2437,10 +2437,80 @@ Comprimir directorio:
 
 $ 7z a file.7z nombre_carpeta
 
-Fuente
-======
+Dividir archivo en partes
+=========================
+
+1. Comprimir el archivo en partes:
+
+Usa el comando 7z con la opción -v para dividir el archivo comprimido en partes
+del tamaño que desees. Por ejemplo, si quieres que cada parte sea de 500 MB (o
+cualquier tamaño que elijas), puedes usar:
+
+$ 7z a -v500M video_partes.7z video.mp4
+
+a: Añade el archivo video.mp4 al archivo comprimido.
+
+-v500M: Divide el archivo comprimido en partes de 500 MB cada una.
+
+video_partes.7z: Nombre base del archivo comprimido.
+
+video_partes.7z.001
+video_partes.7z.002
+video_partes.7z.003
+
+2. Unir las partes comprimidas:
+
+Para unir las partes y reconstruir el archivo comprimido original, puedes usar
+el comando cat en Linux:
+
+$ cat video_partes.7z.001 video_partes.7z.002 video_partes.7z.003 > video_partes.7z
+
+cat: Concatena los archivos en orden.
+
+video_partes.7z.001 video_partes.7z.002 video_partes.7z.003: Las partes que deseas unir.
+
+> video_partes.7z: Redirige la salida a un archivo único.
+
+3. Descomprimir el archivo unido:
+
+Una vez que hayas unido las partes en un solo archivo .7z, puedes descomprimirlo
+con:
+
+$ 7z x video_partes.7z
+
+x: Extrae el contenido del archivo .7z.
+
+Resumen de comandos:
+
+Comprimir en partes:
+
+$ 7z a -v500M video_partes.7z video.mp4
+
+Unir las partes:
+
+$ cat video_partes.7z.001 video_partes.7z.002 video_partes.7z.003 > video_partes.7z
+
+Descomprimir:
+
+$ 7z x video_partes.7z
+
+Notas adicionales:
+
+Tamaño de las partes: Ajusta el tamaño de las partes cambiando el valor de -v.
+Por ejemplo, -v200M para partes de 200 MB.
+
+Verificación: Si quieres verificar la integridad de las partes antes de unirlas,
+puedes usar:
+
+$ 7z t video_partes.7z.001
+
+Esto verificará la primera parte y, por extensión, las demás.
+
+Fuentes
+=======
 
 https://weblinus.com/como-instalar-7zip-en-linux/
+Deepseek
 
 ===================================================================
 Proteger un archivo ZIP con contraseña mediante la línea de comando
