@@ -10899,6 +10899,126 @@ Fuente
 
 ChatGPT
 
+===========================================
+Cortar un video MP4/MKV en dos o más partes
+===========================================
+
+Es posible cortar un video MP4 en dos partes en Linux Debian y obtener dos
+archivos MP4 funcionales. Puedes hacerlo utilizando la herramienta ffmpeg, que
+es una utilidad de línea de comandos muy potente para manipular videos y audios.
+
+Pasos para cortar un video MP4 en dos partes:
+
+Instalar ffmpeg (si no lo tienes instalado):
+
+$ sudo apt update
+
+$ sudo apt install ffmpeg
+
+Cortar el video:
+
+Supongamos que tienes un video llamado video.mp4 y quieres cortarlo en dos
+partes en el minuto 5 (300 segundos).
+
+Primera parte (desde el inicio hasta el minuto 5):
+
+$ ffmpeg -i video.mp4 -t 300 -c copy parte1.mp4
+
+Aquí, -t 300 indica que quieres cortar los primeros 300 segundos (5 minutos) del
+video. -c copy se utiliza para copiar los streams de video y audio sin
+re-codificarlos, lo que hace que el proceso sea rápido y sin pérdida de calidad.
+
+Segunda parte (desde el minuto 5 hasta el final):
+
+$ ffmpeg -i video.mp4 -ss 300 -c copy parte2.mp4
+
+Aquí, -ss 300 indica que quieres empezar a cortar desde el segundo 300
+(5 minutos) hasta el final del video.
+
+Explicación de los parámetros:
+
+-i video.mp4: Especifica el archivo de entrada.
+
+-t 300: Corta el video hasta el segundo 300.
+
+-ss 300: Empieza a cortar desde el segundo 300.
+
+-c copy: Copia los streams de video y audio sin re-codificarlos.
+
+Ejemplo completo:
+
+Si tienes un video de 10 minutos (600 segundos) y quieres cortarlo en dos
+partes de 5 minutos cada una:
+
+ffmpeg -i video.mp4 -t 300 -c copy parte1.mp4
+
+ffmpeg -i video.mp4 -ss 300 -c copy parte2.mp4
+
+Esto te dejará con dos archivos MP4 funcionales: parte1.mp4 (los primeros 5
+minutos) y parte2.mp4 (los últimos 5 minutos).
+
+Nota: Si el video no tiene puntos clave (keyframes) en el punto de corte, es
+posible que ffmpeg tenga que re-codificar el video para hacer el corte exacto.
+En ese caso, puedes omitir -c copy y dejar que ffmpeg re-codifique el video,
+aunque esto tomará más tiempo y puede resultar en una ligera pérdida de calidad.
+
+$ ffmpeg -i video.mp4 -t 300 parte1.mp4
+
+$ ffmpeg -i video.mp4 -ss 300 parte2.mp4
+
+Con estos comandos, ffmpeg re-codificará el video, asegurando que el corte sea
+exacto en el punto especificado.
+
+Unir los videos cortados
+========================
+
+Es posible unir parte1.mp4 y parte2.mp4 para recrear el video original. Para
+hacerlo, puedes usar ffmpeg nuevamente. Sin embargo, debes asegurarte de que
+ambos archivos tengan las mismas características (misma resolución, codec, tasa
+de bits, etc.), ya que de lo contrario ffmpeg podría necesitar re-codificar el
+video.
+
+Método 1: Usar ffmpeg con un archivo de lista
+
+Este método es simple y no requiere re-codificación si los archivos son
+compatibles.
+
+Crea un archivo de texto (por ejemplo, lista.txt) que contenga las rutas de los
+archivos que deseas unir. El archivo debe tener el siguiente formato:
+
+file 'parte1.mp4'
+file 'parte2.mp4'
+
+Usa ffmpeg para unir los archivos:
+
+$ ffmpeg -f concat -safe 0 -i lista.txt -c copy video_unido.mp4
+
+-f concat: Especifica que estás usando el método de concatenación.
+
+-safe 0: Permite el uso de rutas relativas o absolutas en el archivo de lista.
+
+-i lista.txt: Especifica el archivo de lista que creaste.
+
+-c copy: Copia los streams de video y audio sin re-codificarlos.
+
+El archivo resultante será video_unido.mp4, que es la unión de parte1.mp4 y
+parte2.mp4.
+
+Método 2: Usar ffmpeg sin archivo de lista
+
+Si prefieres no crear un archivo de lista, puedes usar el siguiente comando:
+
+$ ffmpeg -i "concat:parte1.mp4|parte2.mp4" -c copy video_unido.mp4
+
+concat:parte1.mp4|parte2.mp4: Especifica los archivos a concatenar.
+
+-c copy: Copia los streams sin re-codificarlos.
+
+Fuente
+======
+
+Deepseek
+
 =============================================
 Fuentes tipográficas en Debian y en GNU Linux
 =============================================
