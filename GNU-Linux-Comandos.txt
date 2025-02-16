@@ -2417,6 +2417,34 @@ Comprimir directorios y su contenido.
 
 $ zip -r carpeta.zip nombre_carpeta
 
+Comprimir un directorio con contraseña
+======================================
+
+Para comprimir un directorio en un archivo ZIP protegido con contraseña, usa el
+siguiente comando:
+
+$ zip -r -e archivo_comprimido.zip directorio
+
+-r: Comprime el directorio de manera recursiva (incluyendo todos los archivos y
+subdirectorios).
+
+-e: Solicita una contraseña para cifrar el archivo ZIP.
+
+archivo_comprimido.zip: Nombre del archivo ZIP que se generará.
+
+directorio/: Ruta del directorio que deseas comprimir.
+
+Nota:
+
+Fuerza de la contraseña: El cifrado usado por zip no es el más seguro (usa ZIP
+2.0 encryption). Si necesitas un cifrado más robusto, considera usar
+herramientas como 7z con el formato .7z y cifrado AES-256.
+
+Fuente
+======
+
+Deepseek
+
 =================
 7zip en GNU/Linux
 =================
@@ -2436,6 +2464,17 @@ $ 7z a file.7z foto.jpeg
 Comprimir directorio:
 
 $ 7z a file.7z nombre_carpeta
+
+Comprimir con 7z con contraseña
+===============================
+
+Si prefieres usar 7z para mayor seguridad, el comando sería:
+
+$ 7z a -p -mhe=on archivo_comprimido.7z directorio
+
+-p: Solicita una contraseña.
+
+-mhe=on: Cifra también los nombres de los archivos (opcional).
 
 Dividir archivo en partes
 =========================
@@ -2510,6 +2549,7 @@ Fuentes
 =======
 
 https://weblinus.com/como-instalar-7zip-en-linux/
+
 Deepseek
 
 ===================================================================
