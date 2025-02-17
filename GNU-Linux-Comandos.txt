@@ -2545,6 +2545,83 @@ $ 7z t video_partes.7z.001
 
 Esto verificará la primera parte y, por extensión, las demás.
 
+============================================
+Comprimir una carpeta o directorio en Partes
+============================================
+
+1. Comprimir la carpeta en partes:
+
+Supongamos que tienes una carpeta llamada mi_carpeta y quieres comprimirla en
+partes de 100 MB cada una. Usa el siguiente comando:
+
+$ 7z a -v100m mi_carpeta_partes.7z mi_carpeta/
+
+a: Añade los archivos al archivo comprimido.
+
+-v100m: Divide el archivo comprimido en partes de 100 MB.
+
+mi_carpeta_partes.7z: Nombre base del archivo comprimido.
+
+mi_carpeta/: Ruta de la carpeta que deseas comprimir.
+
+Esto generará archivos como:
+
+mi_carpeta_partes.7z.001
+mi_carpeta_partes.7z.002
+mi_carpeta_partes.7z.003
+...
+
+2. Verificar las partes generadas:
+
+Puedes listar los archivos generados para asegurarte de que todo esté correcto:
+
+$ ls -lh mi_carpeta_partes.7z.*
+
+3. Unir las partes (opcional):
+
+Si necesitas unir las partes para descomprimir la carpeta, puedes usar el
+comando cat:
+
+cat mi_carpeta_partes.7z.001 mi_carpeta_partes.7z.002 mi_carpeta_partes.7z.003
+> mi_carpeta.7z
+
+Luego, descomprime el archivo unido:
+
+$ 7z x mi_carpeta.7z
+
+5. Descomprimir las partes directamente:
+
+Si no quieres unir las partes manualmente, puedes descomprimirlas directamente
+con 7z. Solo necesitas indicar la primera parte:
+
+$ 7z x mi_carpeta_partes.7z.001
+
+7z detectará automáticamente las partes restantes y descomprimirá todo.
+
+Ejemplo completo:
+
+Si tienes una carpeta llamada proyecto y quieres comprimirla en partes de 50 MB,
+usa:
+
+$ 7z a -v50m proyecto_partes.7z proyecto
+
+Esto generará archivos como proyecto_partes.7z.001, proyecto_partes.7z.002, etc.
+
+Notas adicionales:
+
+Tamaño de las partes: Puedes ajustar el tamaño de las partes cambiando el valor de -v. Por ejemplo:
+
+-v100m: Partes de 100 MB.
+
+-v1g: Partes de 1 GB.
+
+Cifrado con contraseña: Si deseas proteger el archivo comprimido con una
+contraseña, añade la opción -p:
+
+$ 7z a -v100m -p mi_carpeta_partes.7z mi_carpeta/
+
+Te pedirá que ingreses y confirmes una contraseña.
+
 Fuentes
 =======
 
