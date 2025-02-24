@@ -115,29 +115,37 @@ tiene permisos root, -R para que los permisos se hagan de forma recursiva, esto
 se hace porque al pegar ficheros o carpetas estas no tiene los permisos de
 lectura/escritura necesarios.
 
-Restart apache para guardar los cambios.
+Ver el estatus de Apache.
 
-$ sudo service apache2 restart
+$ sudo systemctl status apache2
 
-ó
+-----
 
-$ sudo /etc/init.d/apache2 restart
+Reiniciar el servicio de Apache.
 
-Detener el servicio de apache.
+$ sudo systemctl restart apache2
 
-$ sudo service apache2 stop
+-----
 
-Ver el estado del servicio.
+Detener el servicio de Apache:
 
-$ sudo service apache2 status
+$ sudo systemctl stop apache2
 
-Para recargar la configuración del servicio de Apache.
+-----
 
-$ sudo service apache2 reload
+Iniciar el servicio de Apache:
 
-Forzar la recargar de configuración del servicio.
+$ sudo systemctl start apache2
 
-$ sudo service apache2 force-reload
+-----
+
+Recargar la configuración de Apache:
+
+Si solo has realizado cambios en la configuración y no necesitas reiniciar
+completamente el servicio, puedes recargar Apache. Esto aplica los cambios sin
+interrumpir las conexiones activas:
+
+$ sudo systemctl reload apache2
 
 ==============
 log de accesos
