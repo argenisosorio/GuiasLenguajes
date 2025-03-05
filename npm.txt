@@ -366,3 +366,51 @@ mix.js('resources/js/app.js', 'public/js')
     .sourceMaps()
     .vue()
     .sass('resources/sass/app.scss', 'public/css');
+
+========
+Prettier
+========
+
+Prettier es un formateador de código obstinado. Haga cumplir un estilo
+consistente al analizar su código y reimprimirlo con sus propias reglas que
+tienen en cuenta la longitud de línea máxima, envolviendo el código cuando sea
+necesario.
+
+1- Instalación:
+
+$ npm i prettier
+
+2- Luego, cree un archivo de configuración vacío para que los editores y otras
+herramientas sepan que está utilizando Prettier:
+
+$ node --eval "fs.writeFileSync('.prettierrc','{}\n')"
+
+3- A continuación, cree un archivo .prettierignore para que la CLI y los
+editores más bonitos sepan qué archivos no formatear. Aquí hay un ejemplo:
+
+$ node --eval "fs.writeFileSync('.prettierignore','# Ignore artifacts:\nbuild\ncoverage\n')"
+
+Prettier seguirá las reglas especificadas en .gitignore si existe en el mismo
+directorio desde el que se ejecuta. También puede basar su .prettierignore en
+.eslintignore (si tiene uno).
+
+Si su proyecto no está listo para formatear, digamos, archivos HTML todavía,
+agregue *.html.
+
+4- Ahora, formatea todos los archivos del proyecto con Prettier:
+
+$ npx prettier . --write
+
+npx prettier . --write. es ideal para formatear todo, pero para un gran proyecto
+podría llevar un poco de tiempo.
+
+Puede ejecutar npx prettier --write app/ para formatear un directorio determinado,
+o npx prettier --write app/components/Button.js para formatear un archivo
+determinado.
+
+Fuentes
+=======
+
+https://www.npmjs.com/package/prettier
+
+https://prettier.io/docs/install
