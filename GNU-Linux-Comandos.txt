@@ -11526,3 +11526,157 @@ Fuente
 ======
 
 GitHub Copilot
+
+================================
+¿Como documentar bien el código?
+================================
+
+Usaremos un formato de comentarios utilizado para documentar código,
+específicamente en JSDoc (para JavaScript) o PHPDoc (para PHP). Este estilo de
+documentación es común en lenguajes como JavaScript, PHP, TypeScript, y otros,
+donde los comentarios se utilizan para describir funciones, métodos, clases y
+otros elementos del código.
+
+Características del formato:
+
+Etiquetas estándar:
+
+@class: Describe la clase a la que pertenece el método.
+
+@method: Describe el método o función.
+
+@brief: Descripción resumida, proporciona una explicación corta y directa de lo
+que hace el elemento (función, método, clase, etc.).
+
+@param: Describe los parámetros de entrada de la función.
+
+@return: Describe el valor de retorno de la función.
+
+@author: Indica el autor del código.
+
+@license: Especifica la licencia bajo la cual se distribuye el código.
+
+Estructura clara:
+
+-El comentario comienza con una descripción general del método.
+
+-Luego se detallan los parámetros, el valor de retorno y otra información
+relevante.
+
+Uso en herramientas de desarrollo:
+
+Este formato es compatible con IDEs (Entornos de Desarrollo Integrados) como
+VSCode, PHPStorm, WebStorm, entre otros, que pueden leer estos comentarios y
+proporcionar autocompletado, sugerencias y documentación emergente.
+
+Código sin documentar:
+
+class UserController extends Controller
+{
+    protected function create(array $data)
+    {
+        $password = $this->generateHash();
+
+        DB::transaction(function () use ($data, $password) {
+            $user = User::create([
+                'name' => $data['names'],
+                'email' => $data['email'],
+                'password' => Hash::make($password),
+                'role' => $data['role']
+            ]);
+
+            $user->profile()->create([
+                'names' => $data['names'],
+                'surnames' => $data['surnames'],
+            ]);
+
+            $user->notify(new UserRegistered($password));
+        });
+    }
+}
+
+Código documentado:
+
+/**
+ * @class    UserController
+ *
+ * @brief    Controlador que gestiona la creación y registro de usuarios en el
+ * sistema.
+ *
+ * @author Ing. Linus Torvalds <ltorvalds@linux.org>
+ *
+ * Este controlador se encarga de manejar la lógica relacionada con la creación
+ * de usuarios, incluyendo la generación de contraseñas, la creación de perfiles
+ * asociados y la notificación al usuario registrado.
+ *
+ * @license <a href='http://derechoinformatico.cenditel.gob.ve/licencia-de-software/'>
+ *              LICENCIA DE SOFTWARE CENDITEL
+ *          </a>
+ */
+class UserController extends Controller
+{
+    /**
+     * @method    create
+     *
+     * @brief    Crea un nuevo usuario en el sistema.
+     *
+     * Este método genera una contraseña aleatoria, crea un usuario en la base
+     * de datos, asocia un perfil al usuario y notifica al usuario su registro
+     * mediante un correo electrónico. todas las operaciones se realizan dentro
+     * de una transacción para garantizar la integridad de los datos.
+     *
+     * @param    array $data Arreglo con los datos del usuario a registrar, debe
+     * contener:
+     * -names: Nombres del usuario.
+     * -surnames: Apellidos del usuario.
+     * -email: Correo electrónico del usuario.
+     * -role: Rol del usuario en el sistema.
+     *
+     * @return    void
+     *
+     * @author Ing. Linus Torvalds <ltorvalds@linux.org>
+     */
+    protected function create(array $data)
+    {
+        // Genera una contraseña aleatoria segura.
+        $password = $this->generateHash();
+
+        // Transacción con la BD para garantizar integridad de las operaciones.
+        DB::transaction(function () use ($data, $password) {
+            // Crea un nuevo usuario en la base de datos.
+            $user = User::create([
+                'name' => $data['names'],
+                'email' => $data['email'],
+                'password' => Hash::make($password),
+                'role' => $data['role']
+            ]);
+
+            // Crea un perfil asociado al usuario.
+            $user->profile()->create([
+                'names' => $data['names'],
+                'surnames' => $data['surnames'],
+            ]);
+
+            // Notifica al usuario su registro mediante un correo electrónico
+            // y envía la contraseña en el correo.
+            $user->notify(new UserRegistered($password));
+        });
+    }
+}
+
+Beneficios de la documentación:
+
+-Claridad: Cualquier desarrollador que lea el código podrá entender rápidamente
+qué hace el método y cómo funciona.
+
+-Mantenibilidad: Facilita la actualización y corrección del código en el futuro.
+
+-Colaboración: Ayuda a los miembros del equipo a trabajar de manera más
+eficiente, ya que todos entienden el propósito y funcionamiento del código.
+
+Fuentes
+=======
+
+Deepseek
+
+https://jsdoc.app/
