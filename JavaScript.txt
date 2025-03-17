@@ -3214,19 +3214,31 @@ indefinido; sin importar que el navegador se cierre.
 
 -------------------------------------
 
-<!-- The split() method is used to split a string into an array of substrings, and returns the new array.
-Tip: If an empty string ("") is used as the separator, the string is split between each character. -->
+
+El método split() se utiliza para dividir una cadena en un arreglo de subcadenas
+y devuelve el nuevo arreglo.
+
+Consejo: Si se usa una cadena vacía ("") como separador, la cadena se divide
+entre cada carácter.
+
 <!DOCTYPE html>
 <html>
 <body>
-<p>Cadena = "How are you doing today?</p>
-<p>Click the button to display the array values after the split.</p>
-<button onclick="myFunction()">Try it</button>
+<p>Cadena = "How are you doing today?"</p>
+<p>Haz clic en el botón para mostrar los valores del arreglo después de la división.</p>
+<button onclick="myFunction()">Probar</button>
 <p id="demo"></p>
+
 <script>
+// Función que se ejecuta al hacer clic en el botón
 function myFunction() {
+    // Cadena de texto original
     var str = "How are you doing today?";
+
+    // Dividir la cadena en un arreglo usando el espacio (" ") como separador
     var res = str.split(" ");
+
+    // Mostrar el arreglo resultante en el elemento con id "demo"
     document.getElementById("demo").innerHTML = res;
 }
 </script>
@@ -3235,16 +3247,28 @@ function myFunction() {
 
 -------------------------------------
 
-<!-- The split() method other example -->
+El método split() se utiliza para dividir una cadena en un arreglo de subcadenas
+y devuelve el nuevo arreglo.
+
+En este caso, se usa una cadena vacía ("") como separador, lo que divide la
+cadena entre cada carácter.
+
 <!DOCTYPE html>
 <html>
 <body>
-Cadena = How are you doing today?
+<p>Cadena = "How are you doing today?"</p>
 <p id="demo"></p>
+
 <script>
+// Función que se ejecuta cuando la página termina de cargar
 window.onload = function() {
+  // Cadena de texto original
   var str = "How are you doing today?";
+
+  // Dividir la cadena en un arreglo usando una cadena vacía ("") como separador
   var res = str.split("");
+
+  // Mostrar el arreglo resultante en el elemento con id "demo"
   document.getElementById("demo").innerHTML = res;
 }
 </script>
@@ -3290,6 +3314,44 @@ function myFunction() {
 </body>
 </html>
 
+-------------------------------------
+
+Extraer el Año de una Fecha con split en Js
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Extraer Año de una Fecha</title>
+</head>
+<body>
+    <!-- Campo de entrada para la fecha -->
+    <label for="fromDateField">Ingresa una fecha (formato YYYY-MM-DD):</label>
+    <input type="text" id="fromDateField" value="2022-01-01">
+
+    <!-- Botón para extraer el año -->
+    <button onclick="extraerAnio()">Extraer Año</button>
+
+    <!-- Aquí se mostrará el año extraído -->
+    <p id="resultado"></p>
+
+    <script>
+        // Función que se ejecuta al hacer clic en el botón
+        function extraerAnio() {
+            // Obtener el valor del campo de entrada
+            const fromDate = document.getElementById("fromDateField").value; // Ejemplo: "2022-01-01"
+
+            // Dividir la cadena usando el guion ("-") como separador y tomar el primer elemento (el año)
+            const fromYear = fromDate.split("-")[0]; // Resultado: "2022"
+
+            // Mostrar el año en el elemento con id "resultado"
+            document.getElementById("resultado").innerHTML = `El año extraído es: <strong>${fromYear}</strong>`;
+
+            // También imprimir el año en la consola
+            console.log(fromYear); // Esto imprimirá "2022"
+        }
+    </script>
+</body>
+</html>
 
 -------------------------------------
 
