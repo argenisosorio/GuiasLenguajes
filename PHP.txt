@@ -2941,3 +2941,138 @@ Fuente
 ======
 
 https://www.php.net/manual/es/function.strtotime.php
+
+
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+==============================================================================
+Script de php que permite hacer la conversión de un monto de una moneda a otra
+==============================================================================
+
+/**
+ * Clase que representa una tasa de cambio entre dos monedas.
+ */
+class ExchangeRate
+{
+    public $from_currency_id;
+    public $to_currency_id;
+    public $amount;
+    public $start_at;
+    public $end_at;
+
+    /**
+     * Constructor de la clase ExchangeRate
+     *
+     * @param int $from_currency_id ID de la moneda de origen
+     * @param int $to_currency_id ID de la moneda de destino
+     * @param float $amount Tasa de cambio
+     * @param string $start_at Fecha de inicio de la tasa de cambio
+     * @param string|null $end_at Fecha de fin de la tasa de cambio (opcional)
+     */
+    public function __construct($from_currency_id, $to_currency_id, $amount, $start_at, $end_at = null)
+    {
+        $this->from_currency_id = $from_currency_id;
+        $this->to_currency_id = $to_currency_id;
+        $this->amount = $amount;
+        $this->start_at = $start_at;
+        $this->end_at = $end_at;
+    }
+}
+
+/**
+ * Clase que representa una moneda.
+ */
+class Currency
+{
+    public $id;
+    public $decimal_places;
+
+    /**
+     * Constructor de la clase Currency
+     *
+     * @param int $id ID de la moneda
+     * @param int $decimal_places Número de decimales para la moneda
+     */
+    public function __construct($id, $decimal_places)
+    {
+        $this->id = $id;
+        $this->decimal_places = $decimal_places;
+    }
+}
+
+/**
+ * Convierte una cantidad de una moneda a otra
+ *
+ * @param float $amount Cantidad a convertir
+ * @param string $date Fecha de la conversión
+ * @param int $fromCurrencyId ID de la moneda de origen
+ * @param Currency $toCurrency Objeto de la moneda de destino
+ * @return float|null Cantidad convertida o null si no se encuentra la tasa de cambio
+ */
+function currency_converter($amount, $date, $fromCurrencyId, $toCurrency)
+{
+    // Verificar si la moneda de destino es válida
+    if (!$toCurrency) {
+        return null;
+    }
+
+    // Si las monedas son iguales, no es necesario convertir
+    if ($fromCurrencyId == $toCurrency->id) {
+        return $amount;
+    }
+
+    // Simulación de la consulta a la base de datos
+    $exchangeRates = [
+        new ExchangeRate(1, 2, 0.85, '2025-01-01', '2025-12-31'), // 1 USD = 0.85 EUR
+        new ExchangeRate(1, 3, 0.75, '2025-01-01', '2025-12-31'), // 1 USD = 0.75 GBP
+        new ExchangeRate(4, 1, 1/70, '2025-01-01', '2025-12-31'), // 1 Bs = 1/70 USD
+    ];
+
+    // Buscar la tasa de cambio correspondiente
+    $exchangeRate = null;
+    foreach ($exchangeRates as $rate) {
+        if ($rate->from_currency_id == $fromCurrencyId &&
+            $rate->to_currency_id == $toCurrency->id &&
+            $rate->start_at <= $date &&
+            ($rate->end_at >= $date || $rate->end_at === null)
+        ) {
+            $exchangeRate = $rate;
+            break;
+        }
+    }
+
+    // Si no se encuentra una tasa de cambio, devolver null
+    if (!$exchangeRate) {
+        return null;
+    }
+
+    // Realizar la conversión y formatear el resultado
+    return number_format($amount * $exchangeRate->amount, $toCurrency->decimal_places, '.', '');
+}
+
+// Datos de prueba
+$amount = 70; // Monto a convertir (ejemplo: 70 Bs)
+$date = '2025-03-25'; // Fecha de la conversión
+$fromCurrencyId = 4; // ID de la moneda de origen (Bs)
+
+// Moneda de destino (USD)
+$toCurrency = new Currency(1, 2); // ID: 1, Decimales: 2
+
+// Llamar al método
+$convertedAmount = currency_converter($amount, $date, $fromCurrencyId, $toCurrency);
+
+// Mostrar el resultado
+echo "<h1>Prueba de Conversión de Moneda</h1>";
+echo "<p>Monto original: $amount Bs</p>";
+echo "<p>Monto convertido: $convertedAmount USD</p>";
+
+?>
+
+Fuente
+======
+
+Juan R.
+Deepseek
