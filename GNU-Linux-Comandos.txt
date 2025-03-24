@@ -11691,3 +11691,52 @@ Fuente
 ======
 
 https://proyectopinguino.blogspot.com/2008/09/calculadoras-para-linux.html
+
+============================================================
+Enviar un archivo de manera segura por correo usando cifrado
+============================================================
+
+1. Comprimir y cifrar el archivo con GPG (GNU Privacy Guard)
+
+GPG es una herramienta de cifrado ampliamente utilizada y confiable. Puedes
+cifrar el archivo .sql con una contraseña o usando una clave pública del
+destinatario.
+
+Pasos:
+
+1- Instalar GPG (si no lo tienes instalado):
+
+$ sudo apt update
+
+$ sudo apt install gnupg
+
+Cifrar el archivo con una contraseña:
+
+$ gpg -c archivo.sql
+
+Esto generará un archivo cifrado llamado archivo.sql.gpg.
+
+Te pedirá una contraseña para cifrar el archivo. Asegúrate de compartirla con el
+destinatario de forma segura (por ejemplo, por otro medio como un mensaje de
+texto o una llamada).
+
+Enviar el archivo cifrado:
+
+Adjunta el archivo archivo.sql.gpg en el correo.
+
+Descifrar en el destino:
+
+El destinatario puede descifrar el archivo con:
+
+$ gpg -d archivo.sql.gpg > archivo.sql
+
+Se le pedirá la contraseña que usaste para cifrar.
+
+Nota: Si se hace la prueba localmente para descifrar es posible que no pida la
+contraseña ya que puede que la contraseña ya está agregada localmente por eso se
+debe probar en otra pc.
+
+Fuente
+======
+
+Deepseek
