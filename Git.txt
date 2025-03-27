@@ -668,6 +668,12 @@ delante, se hará un merge o una mezcla del repo local y el remoto y así tendra
 todos los cambios listos, luego en el status del repo local, pedirá hacer un
 push para estabilizar todos los cambios en el repo remoto.
 
+-----
+
+Abortar el merge y volver al estado anterior:
+
+$ git merge --abort
+
 ======================
 Borrando ramas remotas
 ======================
@@ -1526,3 +1532,68 @@ Fuente
 ======
 
 https://www.conventionalcommits.org/es/v1.0.0-beta.3/
+
+=================================
+Resolución de conflictos en merge
+=================================
+
+$ git merge master
+Auto-fusionando app/sales/views.py
+CONFLICTO (contenido): Conflicto de fusión en app/sales/views.py
+Fusión automática falló; arregle los conflictos y luego realice un commit con el
+resultado.
+
+El mensaje que estás viendo indica que Git no pudo fusionar automáticamente los
+cambios entre las ramas debido a conflictos en app/sales/views.py.
+
+Aquí te explico cómo resolverlo paso a paso:
+
+Pasos para resolver el conflicto Identifica los archivos con conflictos:
+
+$ git status
+
+Verás que app/sales/views.py aparece como "both modified".
+
+1- Abre el archivo conflictivo, busca las marcas de conflicto que Git ha
+insertado, que se ven así:
+
+    <<<<<<< HEAD
+    # Tus cambios locales (en la rama actual)
+    =======
+    # Cambios de master (los que estás tratando de fusionar)
+    >>>>>>> master
+
+2- Edita el archivo para resolver el conflicto:
+
+Decide qué cambios mantener (puede ser uno u otro, o una combinación de ambos)
+
+Elimina las marcas <<<<<<<, ======= y >>>>>>>
+
+Guarda el archivo
+
+3- Marca el conflicto como resuelto:
+
+$ git add app/sales/views.py
+
+Si hay más conflictos, repite los pasos anteriores para cada archivo.
+
+4- Finaliza el merge:
+
+$ git commit -m "Resueltos los conflictos"
+
+Consejos adicionales:
+
+Si necesitas ayuda para entender los cambios en conflicto:
+
+# Muestra todos los archivos con conflictos
+
+$ git diff --name-only --diff-filter=U
+
+Si quieres abortar el merge y volver al estado anterior:
+
+$ git merge --abort
+
+Fuente
+======
+
+Deepseek
