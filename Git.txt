@@ -95,6 +95,32 @@ $ git commit -m "Primer commit del proyecto"
 
 -----
 
+El comando $ git commit -a -m "Mensaje del commit" se utiliza en Git para
+guardar los cambios realizados en tu repositorio local. Desglosando cada parte:
+
+-git commit: Este es el comando principal para crear una nueva "instantánea" de
+tu proyecto, registrando los cambios que has realizado.
+
+-a o --all: Esta opción le dice a Git que incluya automáticamente todos los
+archivos modificados y eliminados (pero no los archivos nuevos que aún no han
+sido rastreados por Git) en el próximo commit. Es una forma abreviada de
+ejecutar git add . antes del commit para todos los cambios rastreados.
+
+-m "Mensaje del commit" o --message="Mensaje del commit": Esta opción te
+permite especificar un mensaje descriptivo para el commit directamente en la
+línea de comandos. Es muy importante escribir mensajes de commit claros y
+concisos que expliquen qué cambios se realizaron y por qué. El texto entre las
+comillas dobles (o simples) será el mensaje asociado con este commit.
+
+$ git commit -a -m "Mensaje del commit"
+
+Fuente
+======
+
+Gemini IA
+
+-----
+
 Podemos ver todos los commits que se han hecho a un proyecto, fecha,
 autor, etc...
 
