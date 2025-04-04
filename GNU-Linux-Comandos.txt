@@ -11740,3 +11740,88 @@ Fuente
 ======
 
 Deepseek
+
+===========================================
+Instalar y usar el paquete OpenVPN en Linux
+===========================================
+
+1. Instalación:
+
+$ sudo apt update
+
+$ sudo apt install openvpn
+
+2. Configuración:
+
+Para usar OpenVPN como cliente, necesitarás un archivo de configuración (.ovpn)
+proporcionado por el servidor VPN al que deseas conectarte. Este archivo
+contiene la información necesaria para establecer la conexión, como la dirección
+del servidor, los certificados y las claves.
+
+Generalmente, recibirás este archivo de tu proveedor de VPN. Guárdalo en una
+ubicación accesible en tu sistema, por ejemplo, en la carpeta
+/etc/openvpn/client/ o en tu directorio personal.
+
+3. Conexión:
+
+Una vez que tengas el archivo de configuración, puedes conectarte al servidor
+VPN utilizando el siguiente comando en la terminal:
+
+$ sudo openvpn --config /ruta/al/archivo.ovpn
+
+Reemplaza /ruta/al/archivo.ovpn con la ubicación real de tu archivo de
+configuración.
+
+Es posible que se te solicite tu nombre de usuario y contraseña si el servidor
+VPN lo requiere y no están incrustados en el archivo de configuración.
+
+4. Desconexión:
+
+Para desconectarte de la VPN, simplemente cierra la ventana de la terminal donde
+se está ejecutando el comando openvpn. También puedes presionar Ctrl + C en la
+terminal.
+
+Otras consideraciones:
+
+-Interfaz gráfica: Algunas distribuciones de Linux ofrecen interfaces gráficas
+para gestionar conexiones OpenVPN a través del Network Manager. Puedes buscar en
+la configuración de red de tu sistema la opción para importar archivos .ovpn o
+configurar una conexión VPN de tipo OpenVPN.
+
+-Servicio OpenVPN: OpenVPN también se puede configurar para ejecutarse como un
+servicio en segundo plano, lo que permite que la conexión se establezca
+automáticamente al inicio del sistema. La configuración para esto es más
+avanzada y generalmente se utiliza para configurar un servidor VPN.
+
+-Permisos: Asegúrate de tener los permisos necesarios para leer el archivo de
+configuración y ejecutar el comando openvpn con sudo si es necesario.
+
+Recuerda que la configuración específica puede variar dependiendo de tu
+proveedor de VPN y tus necesidades particulares. Siempre es recomendable seguir
+las instrucciones proporcionadas por tu proveedor de VPN.
+
+Ejemplo de una conexión exitosa:
+
+$ sudo openvpn --config /etc/openvpn/client/my-config.ovpn
+2025-04-04 11:14:57 OpenVPN 2.6.3 x86_64-pc-linux-gnu [SSL (OpenSSL)] [LZO] [LZ4] [EPOLL] [PKCS11] [MH/PKTINFO] [AEAD] [DCO]
+2025-04-04 11:14:57 library versions: OpenSSL 3.0.15 3 Sep 2024, LZO 2.10
+2025-04-04 11:14:57 DCO version: N/A
+Enter Auth Username: aosorio
+Enter Auth Password: **************
+2025-04-04 11:15:02 TCP/UDP: Preserving recently used remote address: [AF_INET]190.188.22.5:25143
+2025-04-04 11:15:02 UDPv4 link local: (not bound)
+2025-04-04 11:15:02 UDPv4 link remote: [AF_INET]190.188.22.5:25143
+2025-04-04 11:15:02 WARNING: this configuration may cache passwords in memory -- use the auth-nocache option to prevent this
+2025-04-04 11:15:02 [OpenVPN] Peer Connection Initiated with [AF_INET]190.199.22.5:52143
+2025-04-04 11:15:03 Options error: Unrecognized option or missing or extra parameter(s) in [PUSH-OPTIONS]:2: block-outside-dns (2.6.3)
+2025-04-04 11:15:03 Options error: Unrecognized option or missing or extra parameter(s) in [PUSH-OPTIONS]:3: register-dns (2.6.3)
+2025-04-04 11:15:03 TUN/TAP device tun0 opened
+2025-04-04 11:15:03 net_iface_mtu_set: mtu 1500 for tun0
+2025-04-04 11:15:03 net_iface_up: set tun0 up
+2025-04-04 11:15:03 net_addr_v4_add: 10.110.110.238/24 dev tun0
+2025-04-04 11:15:03 Initialization Sequence Completed
+
+Fuente
+======
+
+Gemini IA
