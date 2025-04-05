@@ -11825,3 +11825,88 @@ Fuente
 ======
 
 Gemini IA
+
+Pasar las credenciales directamente en el archivo de configuración
+==================================================================
+
+En un archivo de configuración .ovpn de OpenVPN, puedes incluir las credenciales
+(usuario y contraseña) directamente en el archivo o referenciar un archivo
+externo que las contenga. Aquí están las opciones disponibles:
+
+1. Variables/opciones para autenticación de usuario y contraseña en el .ovpn:
+
+a) auth-user-pass
+
+Es la directiva principal para indicar cómo se proporcionarán las credenciales:
+
+-Solicitar interactivamente:
+ 
+auth-user-pass
+
+(OpenVPN pedirá el usuario y contraseña por consola al iniciar la conexión).
+
+-Leer desde un archivo de texto:
+
+auth-user-pass /ruta/al/archivo.txt
+
+El archivo debe tener:
+
+usuario
+contraseña
+
+(Primera línea: usuario, segunda línea: contraseña).
+
+b) auth-nocache
+
+Evita que las credenciales se guarden en memoria (recomendado para mayor seguridad):
+
+auth-nocache
+
+Ejemplo:
+
+client
+dev tun
+proto udp
+remote servidor.openvpn.com 1194
+resolv-retry infinite
+nobind
+persist-key
+persist-tun
+auth-user-pass /etc/openvpn/credenciales.txt  # Archivo externo con credenciales
+auth-nocache
+remote-cert-tls server
+cipher AES-256-CBC
+verb 3
+
+3. Recomendaciones de seguridad:
+
+Nunca incluyas username y password directamente en el .ovpn.
+
+Usa auth-user-pass con un archivo externo y restringe permisos:
+
+$ chmod 600 /etc/openvpn/credenciales.txt
+
+Si necesitas máxima seguridad, usa certificados SSL + autenticación de
+usuario/contraseña.
+
+Comentarios en un archivo .ovpn
+
+En un archivo de configuración .ovpn (que sigue la sintaxis estándar de OpenVPN)
+los comentarios se indican con el símbolo # (almohadilla o numeral) al inicio
+de la línea. Todo lo que esté después de # en esa línea será ignorado por
+OpenVPN.
+
+Ejemplos de comentarios:
+
+# Esto es un comentario en una línea
+client # Esto también es un comentario (pero solo la parte después del #)
+dev tun
+proto udp
+
+# Configuración del servidor remoto:
+remote vpn.example.com 1194
+
+Fuente
+======
+
+Deepseek
