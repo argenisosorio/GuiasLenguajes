@@ -385,6 +385,24 @@ function bootstrap_js() {
 }
 add_action('wp_enqueue_scripts','bootstrap_js');
 
+La forma que me funciono
+========================
+
+En wp-content/themes/my_theme/functions.php agregar al final
+
+add_action ('wp_enqueue_scripts',function () {
+	wp_enqueue_style ('bootstrap', 'https://argenisosorio.github.io/inmensidad-gaitera/assets/dist/css/bootstrap.min.css');
+});
+
+Luego en wp-content/themes/my_theme/patterns/footer.php
+
+Agregar al final la llamada al bootstrap js externo:
+
+<script src="https://argenisosorio.github.io/inmensidad-gaitera/assets/dist/js/bootstrap.bundle.min.js"></script>
+<!-- /wp:group -->
+
+Esto hará que se llame el css arriba y el js al final como lo requiere Bootstrap.
+
 ===========================
 Tips sobre gestión de temas
 ===========================
