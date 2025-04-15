@@ -433,3 +433,89 @@ Este error da al ejecutar npm run dev, se soluciona ejecutando lo siguiente:
 $ npm i @popperjs/core
 
 $ npm run dev
+
+===========================================
+Probar node como sistema backend o API REST
+===========================================
+
+Versiones usadas:
+
+NodeJS: v20.11.0
+NPM: v10.2.4
+
+Ejemplo práctico paso a paso para crear un servidor API REST básico con Node.js
+(usando Express, el framework más popular).
+
+1- Inicializa tu proyecto:
+
+Crea carpeta y entra en ella
+
+$ mkdir mi-backend && cd mi-backend
+
+Inicializa proyecto Node (crea package.json)
+
+$ npm init -y
+
+-2 Instala Express:
+
+Instala el framework web
+
+$ npm install express
+
+3- Crea el archivo principal
+
+Crea un archivo llamado server.js y pega este código:
+
+-----
+
+const express = require('express');
+const app = express();
+const PORT = 3000;
+
+// Middleware para parsear JSON
+app.use(express.json());
+
+// Ruta GET de ejemplo
+app.get('/', (req, res) => {
+  res.send('¡Hola desde Node.js! 🌟');
+});
+
+// Ruta POST para recibir datos
+app.post('/saludar', (req, res) => {
+  const { nombre } = req.body;
+  res.json({ mensaje: `Hola, ${nombre || 'desconocido'}!` });
+});
+
+// Inicia el servidor
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT} 🚀`);
+});
+
+-----
+
+4- Ejecuta el servidor
+
+$ node server.js
+
+Verás este mensaje en consola:
+
+Servidor corriendo en http://localhost:3000 🚀
+
+5- Prueba tu API
+
+GET: Abre tu navegador en http://localhost:3000
+
+Verás: ¡Hola desde Node.js! 🌟
+
+POST: Usa Postman o curl para enviar datos:
+
+$ curl -X POST http://localhost:3000/saludar -H "Content-Type: application/json" -d '{"nombre":"TuNombre"}'
+
+Respuesta:
+
+{ "mensaje": "Hola, TuNombre!" }
+
+Fuente
+======
+
+Deepseek
