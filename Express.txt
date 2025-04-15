@@ -167,3 +167,278 @@ Fuente
 ======
 
 Deepseek
+
+==========================================
+Ejemplo más complejo, un crud de películas
+==========================================
+
+Ejemplo Completo: CRUD de Películas en Memoria con Node.js y Express
+
+Ejemplo más complejo que simule una aplicación de gestión de películas con
+operaciones CRUD (Create, Read, Update, Delete), almacenando los datos en
+memoria (simulando una base de datos).
+
+Estructura del Proyecto
+=======================
+
+movie-api/
+├── server.js          # Punto de entrada principal
+├── package.json
+├── controllers/       # Lógica de manejo de rutas
+│   └── movies.js
+├── routes/            # Definición de rutas
+│   └── movies.js
+└── models/            # Modelo de datos
+    └── movie.js
+
+Paso a Paso
+===========
+
+1- Inicializar el proyecto
+
+$ mkdir movie-api && cd movie-api
+
+$ npm init -y
+
+$ npm install express uuid
+
+2- Crear el archivo principal (server.js)
+
+const express = require('express');
+const moviesRouter = require('./routes/movies');
+const app = express();
+const PORT = 3000;
+
+// Middleware
+app.use(express.json());
+
+// Rutas
+app.use('/movies', moviesRouter);
+
+// Manejo de errores
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Algo salió mal!' });
+});
+
+// Iniciar servidor
+app.listen(PORT, () => {
+  console.log(`Servidor de películas corriendo en http://localhost:${PORT} 🎬`);
+});
+
+3- Crear el modelo (models/movie.js)
+
+const { v4: uuidv4 } = require('uuid');
+
+// "Base de datos" en memoria
+let moviesDB = [
+  {
+    id: '1',
+    title: 'El Padrino',
+    description: 'Crime drama about the Corleone mafia family',
+    year: 1972
+  },
+  {
+    id: '2',
+    title: 'Pulp Fiction',
+    description: 'Interconnected stories of criminals in Los Angeles',
+    year: 1994
+  }
+];
+
+class Movie {
+  static getAll() {
+    return moviesDB;
+  }
+
+  static getById(id) {
+    return moviesDB.find(movie => movie.id === id);
+  }
+
+  static create(movieData) {
+    const newMovie = {
+      id: uuidv4(),
+      ...movieData
+    };
+    moviesDB.push(newMovie);
+    return newMovie;
+  }
+
+  static update(id, updateData) {
+    const movieIndex = moviesDB.findIndex(movie => movie.id === id);
+    if (movieIndex === -1) return null;
+
+    moviesDB[movieIndex] = {
+      ...moviesDB[movieIndex],
+      ...updateData
+    };
+
+    return moviesDB[movieIndex];
+  }
+
+  static delete(id) {
+    const movieIndex = moviesDB.findIndex(movie => movie.id === id);
+    if (movieIndex === -1) return false;
+
+    moviesDB.splice(movieIndex, 1);
+    return true;
+  }
+}
+
+module.exports = Movie;
+
+4- Crear el controlador (controllers/movies.js)
+
+const Movie = require('../models/movie');
+
+const getAllMovies = (req, res) => {
+  try {
+    const movies = Movie.getAll();
+    res.json(movies);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getMovieById = (req, res) => {
+  try {
+    const movie = Movie.getById(req.params.id);
+    if (!movie) {
+      return res.status(404).json({ error: 'Película no encontrada' });
+    }
+    res.json(movie);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const createMovie = (req, res) => {
+  try {
+    const { title, description, year } = req.body;
+
+    if (!title || !description || !year) {
+      return res.status(400).json({ error: 'Faltan campos obligatorios' });
+    }
+
+    const newMovie = Movie.create({ title, description, year });
+    res.status(201).json(newMovie);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const updateMovie = (req, res) => {
+  try {
+    const updatedMovie = Movie.update(req.params.id, req.body);
+    if (!updatedMovie) {
+      return res.status(404).json({ error: 'Película no encontrada' });
+    }
+    res.json(updatedMovie);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const deleteMovie = (req, res) => {
+  try {
+    const success = Movie.delete(req.params.id);
+    if (!success) {
+      return res.status(404).json({ error: 'Película no encontrada' });
+    }
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  getAllMovies,
+  getMovieById,
+  createMovie,
+  updateMovie,
+  deleteMovie
+};
+
+5- Crear las rutas (routes/movies.js)
+
+const express = require('express');
+const router = express.Router();
+const {
+  getAllMovies,
+  getMovieById,
+  createMovie,
+  updateMovie,
+  deleteMovie
+} = require('../controllers/movies');
+
+// CRUD Routes
+router.get('/', getAllMovies);          // Obtener todas las películas
+router.get('/:id', getMovieById);       // Obtener una película por ID
+router.post('/', createMovie);          // Crear una nueva película
+router.put('/:id', updateMovie);        // Actualizar una película
+router.delete('/:id', deleteMovie);     // Eliminar una película
+
+module.exports = router;
+
+6- Ejecutar la aplicación
+
+$ node server.js
+
+7- Ejemplos de Uso con CURL
+
+Obtener todas las películas:
+
+$ curl http://localhost:3000/movies
+
+-----
+
+Obtener una película específica
+
+$ curl http://localhost:3000/movies/1
+
+-----
+
+Crear una nueva película
+
+$ curl -X POST http://localhost:3000/movies -H "Content-Type: application/json" -d '{"title":"XXXXX","description":"XXXXXXX","year":2010}'
+
+-----
+
+Actualizar una película
+
+$ curl -X PUT http://localhost:3000/movies/1 -H "Content-Type: application/json" -d '{"description":"ZZZZZZZZZZZ"}'
+
+-----
+
+Eliminar una película
+
+$ curl -X DELETE http://localhost:3000/movies/1
+
+Características avanzadas incluidas
+===================================
+
+-Validación básica de datos en las solicitudes
+
+-Manejo de errores centralizado
+
+-Generación de IDs únicos con UUID
+
+-Estructura modular (rutas, controladores, modelos)
+
+-Código de estado HTTP apropiados para cada respuesta
+
+-Simulación de base de datos en memoria con persistencia durante la ejecución
+
+Este ejemplo proporciona una base sólida para construir una API REST más
+compleja, con posibilidad de añadir autenticación, paginación, búsqueda y
+conexión a una base de datos real en el futuro.
+
+Fuente
+======
+
+Deepseek
+
+CRUD de Películas en Postgresql con Node.js y Express
+=====================================================
+
+https://github.com/argenisosorio/node_backend_hello_world/tree/test_crud_psql
