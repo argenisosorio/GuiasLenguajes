@@ -412,6 +412,74 @@ number = 3;
 result = (number == 1) ? "Valgo 1" : (number == 2) ? "Valgo 2" : 'No valgo ni 1 ni 2';
 "No valgo ni 1 ni 2"
 
+====================================================================
+Entendiendo el operador ?? (Nullish Coalescing) vs Operador Ternario
+====================================================================
+
+Ejemplo sencillo que muestra la diferencia entre estos dos operadores:
+
+Operador Ternario (Condicional)
+
+// Sintaxis: condición ? valorSiVerdadero : valorSiFalso
+
+const edad = 25;
+const mensaje = edad >= 18 ? "Mayor de edad" : "Menor de edad";
+
+console.log(mensaje); // "Mayor de edad"
+
+Operador Nullish Coalescing (??)
+================================
+
+// Sintaxis: valorPosiblementeNull ?? valorAlternativo
+
+const nombre = null;
+const nombreMostrar = nombre ?? "Invitado";
+
+console.log(nombreMostrar); // "Invitado"
+
+const nombre2 = "Robe";
+const nombreMostrar2 = nombre2 ?? "Invitado";
+console.log(nombreMostrar2); // "Invitado"
+
+Comparación directa
+===================
+
+const valor = 0;
+
+// Operador ternario
+const resultadoTernario = valor ? valor : "valor por defecto";
+console.log(resultadoTernario); // "valor por defecto" (porque 0 es falsy)
+
+// Nullish coalescing
+const resultadoNullish = valor ?? "valor por defecto";
+console.log(resultadoNullish); // 0 (porque solo usa el valor alternativo para null/undefined)
+
+// Ejemplo con undefined
+const noDefinido = undefined;
+console.log(noDefinido ?? "alternativo"); // "alternativo"
+console.log(noDefinido ? noDefinido : "alternativo"); // "alternativo"
+
+Diferencia clave
+================
+
+-Ternario: Evalúa cualquier condición booleana
+
+-Nullish Coalescing: Solo verifica si el valor es null o undefined (no otros
+valores "falsy" como 0, "" o false)
+
+Cuándo usar cada uno
+====================
+
+-Usa ternario cuando tengas una condición lógica compleja.
+
+-Usa ?? cuando solo quieras manejar casos null/undefined y mantener otros
+valores falsy.
+
+Fuente
+======
+
+DeepSeek
+
 ==================
 Declaración switch
 ==================
