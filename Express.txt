@@ -1,0 +1,514 @@
+=====================
+Guía de Express by dM
+=====================
+
+==============
+Qué es Express
+==============
+
+Express es un framework de aplicaciones web minimalista y flexible para Node.js. 
+Se ha convertido en el estándar de facto para construir aplicaciones web y APIs 
+(interfaces de programación de aplicaciones) con Node.js.
+
+Características principales de Express:
+=======================================
+
+-Minimalista y no opinionado: Express proporciona las funcionalidades esenciales 
+para construir una aplicación web sin imponer una estructura o decisiones 
+arquitectónicas específicas. Esto te da mucha libertad para elegir las 
+herramientas y la organización que mejor se adapten a tu proyecto.
+
+-Sistema de enrutamiento robusto: Permite definir cómo la aplicación responde a 
+las peticiones de los clientes (navegadores, otras aplicaciones) a diferentes 
+URLs (rutas) y con diferentes métodos HTTP (GET, POST, PUT, DELETE, etc.).
+
+-Middleware: Es una de las características más potentes de Express. El 
+middleware son funciones que tienen acceso al objeto de la petición (req), al 
+objeto de la respuesta (res) y a la siguiente función de middleware en el ciclo 
+de petición-respuesta de la aplicación. Esto permite realizar tareas como:
+    
+-Autenticación y autorización.
+
+-Análisis del cuerpo de la petición (por ejemplo, datos de formularios o 
+JSON).
+
+-Registro de logs.
+
+-Compresión de respuestas.
+
+-Servir archivos estáticos.
+
+-Manejo de errores.
+
+-Sistema de plantillas (Templating): Soporta varios motores de plantillas (como 
+EJS, Handlebars, Pug) que facilitan la generación dinámica de páginas HTML en el 
+servidor.
+
+-Manejo de archivos estáticos: Permite servir fácilmente archivos como CSS, 
+JavaScript, imágenes, etc.
+
+-Fácil extensibilidad: Su naturaleza minimalista permite extender sus 
+funcionalidades a través de una gran cantidad de middleware de terceros 
+disponibles a través de npm (Node Package Manager).
+
+-Alto rendimiento: Al estar construido sobre Node.js, hereda su naturaleza no 
+bloqueante y orientada a eventos, lo que lo hace adecuado para aplicaciones de 
+alto tráfico.
+
+¿Por qué usar Express?
+======================
+
+-Simplicidad y rapidez de desarrollo: Facilita la creación de servidores web y 
+APIs de manera rápida y con menos código en comparación con el uso directo de 
+los módulos HTTP de Node.js.
+
+-Gran comunidad y ecosistema: Cuenta con una comunidad activa y una gran 
+cantidad de recursos, documentación y middleware disponibles.
+
+-Ampliamente utilizado: Es la base de muchos otros frameworks y herramientas de 
+Node.js, lo que significa que hay mucha experiencia y soporte disponible.
+
+-Parte de stacks populares: Es un componente fundamental de stacks de desarrollo 
+full-stack como MEAN (MongoDB, Express.js, Angular, Node.js), MERN (MongoDB, 
+Express.js, React, Node.js) y MEVN (MongoDB, Express.js, Vue.js, Node.js).
+
+En resumen, Express.js simplifica la construcción de aplicaciones web y APIs en 
+Node.js, proporcionando las herramientas esenciales para manejar rutas, 
+middleware, plantillas y archivos estáticos, a la vez que ofrece la flexibilidad 
+para adaptarse a las necesidades específicas de cada proyecto.
+
+Fuente
+======
+
+Gemini IA
+
+===========================================
+Probar node como sistema backend o API REST
+===========================================
+
+Versiones usadas:
+
+NodeJS: v20.11.0
+NPM: v10.2.4
+
+Ejemplo práctico paso a paso para crear un servidor API REST básico con Node.js
+(usando Express, el framework más popular).
+
+1- Inicializa tu proyecto:
+
+Crea carpeta y entra en ella
+
+$ mkdir mi-backend && cd mi-backend
+
+Inicializa proyecto Node (crea package.json)
+
+$ npm init -y
+
+-2 Instala Express:
+
+Instala el framework web
+
+$ npm install express
+
+3- Crea el archivo principal
+
+Crea un archivo llamado server.js y pega este código:
+
+-----
+
+const express = require('express');
+const app = express();
+const PORT = 3000;
+
+// Middleware para parsear JSON
+app.use(express.json());
+
+// Ruta GET de ejemplo
+app.get('/', (req, res) => {
+  res.send('¡Hola desde Node.js! 🌟');
+});
+
+// Ruta POST para recibir datos
+app.post('/saludar', (req, res) => {
+  const { nombre } = req.body;
+  res.json({ mensaje: `Hola, ${nombre || 'desconocido'}!` });
+});
+
+// Inicia el servidor
+app.listen(PORT, () => {
+  console.log(`Servidor corriendo en http://localhost:${PORT} 🚀`);
+});
+
+-----
+
+4- Ejecuta el servidor
+
+$ node server.js
+
+Verás este mensaje en consola:
+
+Servidor corriendo en http://localhost:3000 🚀
+
+5- Prueba tu API
+
+GET: Abre tu navegador en http://localhost:3000
+
+Verás: ¡Hola desde Node.js! 🌟
+
+POST: Usa Postman o curl para enviar datos:
+
+$ curl -X POST http://localhost:3000/saludar -H "Content-Type: application/json" -d '{"nombre":"TuNombre"}'
+
+Respuesta:
+
+{ "mensaje": "Hola, TuNombre!" }
+
+Fuente
+======
+
+Deepseek
+
+==========================================
+Ejemplo más complejo, un crud de películas
+==========================================
+
+Ejemplo Completo: CRUD de Películas en Memoria con Node.js y Express
+
+Ejemplo más complejo que simule una aplicación de gestión de películas con
+operaciones CRUD (Create, Read, Update, Delete), almacenando los datos en
+memoria (simulando una base de datos).
+
+Estructura del Proyecto
+=======================
+
+movie-api/
+├── server.js          # Punto de entrada principal
+├── package.json
+├── controllers/       # Lógica de manejo de rutas
+│   └── movies.js
+├── routes/            # Definición de rutas
+│   └── movies.js
+└── models/            # Modelo de datos
+    └── movie.js
+
+Paso a Paso
+===========
+
+1- Inicializar el proyecto
+
+$ mkdir movie-api && cd movie-api
+
+$ npm init -y
+
+$ npm install express uuid
+
+2- Crear el archivo principal (server.js)
+
+const express = require('express');
+const moviesRouter = require('./routes/movies');
+const app = express();
+const PORT = 3000;
+
+// Middleware
+app.use(express.json());
+
+// Rutas
+app.use('/movies', moviesRouter);
+
+// Manejo de errores
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Algo salió mal!' });
+});
+
+// Iniciar servidor
+app.listen(PORT, () => {
+  console.log(`Servidor de películas corriendo en http://localhost:${PORT} 🎬`);
+});
+
+3- Crear el modelo (models/movie.js)
+
+const { v4: uuidv4 } = require('uuid');
+
+// "Base de datos" en memoria
+let moviesDB = [
+  {
+    id: '1',
+    title: 'El Padrino',
+    description: 'Crime drama about the Corleone mafia family',
+    year: 1972
+  },
+  {
+    id: '2',
+    title: 'Pulp Fiction',
+    description: 'Interconnected stories of criminals in Los Angeles',
+    year: 1994
+  }
+];
+
+class Movie {
+  static getAll() {
+    return moviesDB;
+  }
+
+  static getById(id) {
+    return moviesDB.find(movie => movie.id === id);
+  }
+
+  static create(movieData) {
+    const newMovie = {
+      id: uuidv4(),
+      ...movieData
+    };
+    moviesDB.push(newMovie);
+    return newMovie;
+  }
+
+  static update(id, updateData) {
+    const movieIndex = moviesDB.findIndex(movie => movie.id === id);
+    if (movieIndex === -1) return null;
+
+    moviesDB[movieIndex] = {
+      ...moviesDB[movieIndex],
+      ...updateData
+    };
+
+    return moviesDB[movieIndex];
+  }
+
+  static delete(id) {
+    const movieIndex = moviesDB.findIndex(movie => movie.id === id);
+    if (movieIndex === -1) return false;
+
+    moviesDB.splice(movieIndex, 1);
+    return true;
+  }
+}
+
+module.exports = Movie;
+
+4- Crear el controlador (controllers/movies.js)
+
+const Movie = require('../models/movie');
+
+const getAllMovies = (req, res) => {
+  try {
+    const movies = Movie.getAll();
+    res.json(movies);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getMovieById = (req, res) => {
+  try {
+    const movie = Movie.getById(req.params.id);
+    if (!movie) {
+      return res.status(404).json({ error: 'Película no encontrada' });
+    }
+    res.json(movie);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const createMovie = (req, res) => {
+  try {
+    const { title, description, year } = req.body;
+
+    if (!title || !description || !year) {
+      return res.status(400).json({ error: 'Faltan campos obligatorios' });
+    }
+
+    const newMovie = Movie.create({ title, description, year });
+    res.status(201).json(newMovie);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const updateMovie = (req, res) => {
+  try {
+    const updatedMovie = Movie.update(req.params.id, req.body);
+    if (!updatedMovie) {
+      return res.status(404).json({ error: 'Película no encontrada' });
+    }
+    res.json(updatedMovie);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const deleteMovie = (req, res) => {
+  try {
+    const success = Movie.delete(req.params.id);
+    if (!success) {
+      return res.status(404).json({ error: 'Película no encontrada' });
+    }
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  getAllMovies,
+  getMovieById,
+  createMovie,
+  updateMovie,
+  deleteMovie
+};
+
+5- Crear las rutas (routes/movies.js)
+
+const express = require('express');
+const router = express.Router();
+const {
+  getAllMovies,
+  getMovieById,
+  createMovie,
+  updateMovie,
+  deleteMovie
+} = require('../controllers/movies');
+
+// CRUD Routes
+router.get('/', getAllMovies);          // Obtener todas las películas
+router.get('/:id', getMovieById);       // Obtener una película por ID
+router.post('/', createMovie);          // Crear una nueva película
+router.put('/:id', updateMovie);        // Actualizar una película
+router.delete('/:id', deleteMovie);     // Eliminar una película
+
+module.exports = router;
+
+6- Ejecutar la aplicación
+
+$ node server.js
+
+7- Ejemplos de Uso con CURL
+
+Obtener todas las películas:
+
+$ curl http://localhost:3000/movies
+
+-----
+
+Obtener una película específica
+
+$ curl http://localhost:3000/movies/1
+
+-----
+
+Crear una nueva película
+
+$ curl -X POST http://localhost:3000/movies -H "Content-Type: application/json" -d '{"title":"XXXXX","description":"XXXXXXX","year":2010}'
+
+-----
+
+Actualizar una película
+
+$ curl -X PUT http://localhost:3000/movies/1 -H "Content-Type: application/json" -d '{"description":"ZZZZZZZZZZZ"}'
+
+-----
+
+Eliminar una película
+
+$ curl -X DELETE http://localhost:3000/movies/1
+
+Características avanzadas incluidas
+===================================
+
+-Validación básica de datos en las solicitudes
+
+-Manejo de errores centralizado
+
+-Generación de IDs únicos con UUID
+
+-Estructura modular (rutas, controladores, modelos)
+
+-Código de estado HTTP apropiados para cada respuesta
+
+-Simulación de base de datos en memoria con persistencia durante la ejecución
+
+Este ejemplo proporciona una base sólida para construir una API REST más
+compleja, con posibilidad de añadir autenticación, paginación, búsqueda y
+conexión a una base de datos real en el futuro.
+
+Fuente
+======
+
+Deepseek
+
+CRUD de Películas en Postgresql con Node.js y Express
+=====================================================
+
+https://github.com/argenisosorio/node_backend_hello_world/tree/test_crud_psql
+
+==================================================
+Archivo .gitignore en un proyecto NodeJS + Express
+==================================================
+
+# Archivo .gitignore para proyecto Node.js + PostgreSQL
+
+## Dependencias ##
+node_modules/
+npm-debug.log
+yarn-error.log
+.pnp*
+.yarn-integrity
+
+## Entorno ##
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+## Editor/IDE ##
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+## Sistema ##
+.DS_Store
+Thumbs.db
+
+## Logs ##
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+## Testing ##
+coverage/
+.nyc_output/
+
+## Build/Output ##
+dist/
+build/
+*.exe
+*.out
+
+## Database ##
+# Archivos de configuración local de DB
+database.ini
+*.dump
+*.sql
+*.sqlite
+
+## Docker ##
+docker-compose.override.yml
+
+## Misceláneo ##
+*.pid
+*.seed
+*.pid.lock
+*.pem
+
+## Archivos temporales ##
+*.tmp
+*~

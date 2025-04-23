@@ -385,6 +385,111 @@ function bootstrap_js() {
 }
 add_action('wp_enqueue_scripts','bootstrap_js');
 
+La forma que me funciono
+========================
+
+En wp-content/themes/my_theme/functions.php agregar al final
+
+add_action ('wp_enqueue_scripts',function () {
+	wp_enqueue_style ('bootstrap', 'https://argenisosorio.github.io/inmensidad-gaitera/assets/dist/css/bootstrap.min.css');
+});
+
+Luego en wp-content/themes/my_theme/patterns/footer.php
+
+Agregar al final la llamada al bootstrap js externo:
+
+<script src="https://argenisosorio.github.io/inmensidad-gaitera/assets/dist/js/bootstrap.bundle.min.js"></script>
+<!-- /wp:group -->
+
+Esto hará que se llame el css arriba y el js al final como lo requiere Bootstrap.
+
+Otra forma 2025
+===============
+
+Método correcto (recomendado): Usar functions.php y colas de WordPress
+
+1- Copia el archivo: Guarda bootstrap.css en la carpeta de tu tema,
+preferiblemente en una subcarpeta de assets:
+
+wp-content/themes/tu_tema/assets/css/bootstrap.css
+
+2- Agrega este código al functions.php de tu tema:
+
+function agregar_bootstrap() {
+    // Registra el estilo
+    wp_register_style(
+        'bootstrap-css', // Identificador único
+        get_template_directory_uri() . '/assets/css/bootstrap.css', // Ruta al archivo
+        array(), // Dependencias (ninguna en este caso)
+        '5.3.0' // Versión de Bootstrap (cámbiala según tu versión)
+    );
+
+    // Encola el estilo
+    wp_enqueue_style('bootstrap-css');
+}
+
+add_action('wp_enqueue_scripts', 'agregar_bootstrap');
+
+Con esto debería cargar bootstrap css en el tema.
+
+Ahora agregaremos a bootstrap.bundle.min.js:
+
+Forma 1
+=======
+
+1- Copia el archivo: Guarda bootstrap.bundle.min.js en la carpeta de tu tema,
+preferiblemente en una subcarpeta de assets:
+
+wp-content/themes/tu_tema/assets/js/bootstrap.bundle.min.js
+
+2- Agrega este código al functions.php de tu tema:
+
+function agregar_bootstrap_js() {
+    // Registra el JS (con dependencia de Popper.js incluida en el bundle)
+    wp_register_script(
+        'bootstrap-js', // Handle
+        get_template_directory_uri() . '/assets/js/bootstrap.bundle.min.js', // Ruta
+        array('jquery'), // Dependencias (jQuery viene en WP por defecto)
+        '5.2.3', // Versión
+        true // Cargar en el footer (después del <body>)
+    );
+
+    // Encola el script
+    wp_enqueue_script('bootstrap-js');
+}
+
+add_action('wp_enqueue_scripts', 'agregar_bootstrap_js');
+
+Con esto debería cargar bootstrap js en el tema.
+
+Recuerda que bootstrap.bundle debe ir después del body en la carga para que
+funcione, una manera de verificar que cargo bien es poner la pantalla en modo
+mobile y ver si el botón de la navbar despliega las opciones del menú al hacer
+click.
+
+Forma 2
+=======
+
+1- Copia el archivo: Guarda bootstrap.bundle.min.js en la carpeta de tu tema,
+preferiblemente en una subcarpeta de assets:
+
+wp-content/themes/tu_tema/assets/js/bootstrap.bundle.min.js
+
+2- Agrega este código al footer.php de tu tema:
+
+<script src="<?php echo get_template_directory_uri(); ?>/assets/js/bootstrap.bundle.min.js"></script>
+
+Recuerda que bootstrap.bundle debe ir después del body en la carga para que
+funcione, una manera de verificar que cargo bien es poner la pantalla en modo
+mobile y ver si el botón de la navbar despliega las opciones del menú al hacer
+click.
+
+Fuente
+======
+
+-Deepseek
+-Github Copilot
+
 ===========================
 Tips sobre gestión de temas
 ===========================
@@ -692,6 +797,27 @@ y lo podemos llamar en la plantilla con:
 <i class="fab fa-wordpress"></i>
 
 Lista de íconos pro > https://fontawesome.com/v5/search
+
+La forma en que me funcionó
+===========================
+
+En el archivo wp-content/themes/my_theme/parts/header.html agregar al princio a
+la llamada externa:
+
+<link rel="stylesheet" href="https://argenisosorio.github.io/inmensidad-gaitera/assets/font-awesome-6/css/fontawesome.css">
+<link rel="stylesheet" href="https://argenisosorio.github.io/inmensidad-gaitera/assets/font-awesome-6/css/all.css">
+
+Sin llamada externa sería:
+
+<link rel="stylesheet" href="wp-content/themes/mj3/assets/css/fontawesome.css">
+<link rel="stylesheet" href="wp-content/themes/mj3/assets/font-awesome-6/css/all.css">
+
+Siempre y cuando en local el wordpress se despliegue en 127.0.0.1 si por ejemeplo
+está en la carpeta /var/www/html/wordpress/ entonces será:
+
+<link rel="stylesheet" href="/wordpress/wp-content/themes/mj3/assets/css/fontawesome.css">
+
+<link rel="stylesheet" href="/wordpress/wp-content/themes/mj3/assets/font-awesome-6/css/all.css">
 
 ===========================
 Llamada desde los estáticos
