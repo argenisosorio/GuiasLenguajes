@@ -1324,22 +1324,13 @@ router/DHCP no le haya asignado una dirección ip, entonces modificamos el mismo
 fichero para que quede así:
 
 auto lo
-iface lo inet loopback
-auto eth0
-iface eth0 inet dhcp
-
-Y reiniciamos las interfaces de red, con suerte obtendremos una dirección ip de
-la red.
-
-Podemos intentar un ifup para ver si el dhcp le asigna la dirección ip sin
-necesidad de reiniciar la maquina o las interfaces de red:
-
+iface lo inet loopbackresolv.conf
 # ifup eth0
 
 Luego # ip addr a ver si ya tiene ip, si no es así entonces reiniciaremos las
 conexiones de red del sistema con los comandos descritos arriba.
 
-Si lo demás no a servido, se puede editar el /etc/resolv.conf de la máquina
+Si lo demás no ha servido, se puede editar el /etc/resolv.conf de la máquina
 virtual a ver si hagarra internet, a veces el dhcp le asigna ip pero no tiene
 conexión a internet, entonces:
 
@@ -11935,6 +11926,108 @@ proto udp
 
 # Configuración del servidor remoto:
 remote vpn.example.com 1194
+
+Fuente
+======
+
+Deepseek
+
+===========================
+El archivo /etc/resolv.conf
+===========================
+
+El archivo /etc/resolv.conf en Linux es un archivo de configuración fundamental
+que controla cómo el sistema resuelve los nombres de dominio (DNS).
+
+¿Qué contiene y para qué sirve?
+
+Propósito principal: Define los servidores DNS (Domain Name System) que el
+sistema usará para traducir nombres de dominio (ej. google.com) a direcciones
+IP (ej. 142.250.190.78).
+
+Contenido típico (ejemplo):
+
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+search example.com
+options timeout:2 attempts:3
+
+nameserver: Dirección IP del servidor DNS (puede haber múltiples, se consultan en orden).
+
+Ejemplo: 8.8.8.8 (DNS público de Google).
+
+search: Dominio predeterminado para búsquedas cortas (ej. si pones servidor,
+intentará servidor.example.com).
+
+options: Parámetros de comportamiento:
+
+timeout: Tiempo de espera (en segundos) antes de intentar el siguiente DNS.
+
+attempts: Número de reintentos.
+
+¿Cómo se modifica?
+
+Edición manual (temporal, se pierde al reiniciar):
+
+$ sudo nano /etc/resolv.conf
+
+En muchas distribuciones modernas, este archivo es generado automáticamente por
+servicios como systemd-resolved, NetworkManager o dhclient.
+
+Cambio permanente (depende de tu distro):
+
+En sistemas con NetworkManager:
+
+$ nmcli connection modify <nombre-conexión> ipv4.dns "8.8.8.8 8.8.4.4"
+
+$ nmcli connection up <nombre-conexión>
+
+En sistemas con systemd-resolved:
+
+Edita /etc/systemd/resolved.conf y luego:
+
+$ sudo systemctl restart systemd-resolved
+
+Verificar DNS actual:
+
+$ cat /etc/resolv.conf
+
+Casos especiales
+
+Si el archivo es un enlace simbólico:
+
+En distribuciones como Ubuntu, /etc/resolv.conf puede ser un enlace a /run/systemd/resolve/stub-resolv.conf. Usa:
+
+$ ls -l /etc/resolv.conf  # Para ver su origen real.
+
+Protegido contra ediciones:
+
+Si el archivo tiene el atributo immutable (ej. en Alpine Linux):
+
+$ lsattr /etc/resolv.conf  # Ver atributos
+
+$ sudo chattr -i /etc/resolv.conf  # Deshabilitar protección antes de editar
+
+Comandos útiles relacionados
+
+Probar resolución DNS:
+
+$ nslookup google.com
+
+$ dig google.com
+
+Ver DNS activos:
+
+$ systemd-resolve --status  # Para systemd-resolved
+
+¿Por qué es importante?
+
+Si resolv.conf está mal configurado, el sistema no podrá acceder a internet por
+nombres de dominio (solo por IPs directas). Ejemplo de error común:
+
+$ ping google.com
+
+$ ping: google.com: Name or service not known
 
 Fuente
 ======
