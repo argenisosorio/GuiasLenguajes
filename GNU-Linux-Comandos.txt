@@ -11225,6 +11225,36 @@ Fuente
 
 Deepseek
 
+=============================
+Convertir un video MP4 a WebM
+=============================
+
+1. FFmpeg (Opción profesional)
+
+$ ffmpeg -i entrada.mp4 -c:v libvpx-vp9 -crf 30 -b:v 0 -c:a libopus -f webm salida.webm
+
+Explicación de parámetros:
+
+-c:v libvpx-vp9: Usa el códec VP9 (equivalente a WebP para video).
+
+-crf 30: Calidad (0=mejor, 63=peor; 30 es buen equilibrio).
+
+-b:v 0: Bitrate variable para optimizar tamaño.
+
+-c:a libopus: Códec de audio eficiente (como Opus en WebM).
+
+Si usas el video en una página web, añade también un fallback en MP4 para Safari:
+
+<video controls>
+  <source src="video.webm" type="video/webm">
+  <source src="video.mp4" type="video/mp4">
+</video>
+
+Fuente
+======
+
+Deepseek
+
 =============================================
 Fuentes tipográficas en Debian y en GNU Linux
 =============================================
