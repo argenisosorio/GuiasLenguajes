@@ -3550,3 +3550,206 @@ Fuente
 
 DeepSeek
 
+==================================================
+Diferencia entre Plan de Pruebas y Casos de Prueba
+==================================================
+
+1. Plan de Pruebas (Test Plan)
+
+Es Documento estratégico que define el enfoque, alcance, recursos y cronograma
+de las actividades de testing para un proyecto.
+
+Propósito: Guiar todo el proceso de pruebas para asegurar que se cumplan los
+objetivos de calidad.
+
+Contenido típico:
+
+-Objetivos y alcance de las pruebas.
+
+-Estrategia (tipos de pruebas: funcionales, de rendimiento, seguridad, etc.)
+
+-Entornos de prueba requeridos.
+
+-Cronograma y asignación de responsabilidades.
+
+.-Criterios de inicio/finalización (ej.: "Pruebas terminadas cuando el 95% de
+los casos pasen")
+
+-Riesgos y mitigaciones.
+
+2. Casos de Prueba (Test Cases)
+
+Conjunto de pasos detallados para validar una funcionalidad específica del
+software.
+
+-Propósito: Verificar que cada componente cumpla con los requisitos definidos.
+
+Contenido típico:
+
+-ID y nombre del caso.
+
+-Precondiciones.
+
+-Pasos para ejecutar la prueba.
+
+-Datos de entrada esperados.
+
+-Resultado esperado vs. resultado real.
+
+-Prioridad (ej.: alta, media, baja).
+
+Ejemplo Práctico
+================
+
+Plan de Pruebas:
+
+"Realizar pruebas de regresión en el módulo de pagos antes del release"
+
+Caso de Prueba:
+
+"Caso 1: Probar transferencia bancaria con monto válido (expectativa:
+transacción exitosa)".
+
+Relación entre Ambos
+====================
+
+-El Plan de Pruebas es el "mapa general" del testing.
+
+-Los Casos de Prueba son las "herramientas" para ejecutar ese plan.
+
+=============================
+Ejemplo de un plan de pruebas
+=============================
+
+Plan de Pruebas
+===============
+
+Sistema: [Nombre del Sistema Web]
+Versión: 1.0
+Responsable: [Nombre del Analista de QA]
+Fecha: [DD/MM/AAAA]
+
+-----
+
+1. Objetivo
+
+Validar el correcto funcionamiento del formulario de inicio de sesión, garantizando:
+
+• Usabilidad y accesibilidad.
+• Seguridad frente a entradas inválidas.
+• Integración con el sistema de autenticación.
+
+2. Alcance
+
+Funcionalidades a probar:
+
+• Campo Usuario (texto).
+• Campo Contraseña (password).
+• Botón Iniciar Sesión.
+• Enlaces ¿Olvidó su contraseña? y Registrarse.
+
+Exclusiones:
+
+• No incluye pruebas de recuperación de contraseña.
+• No cubre autenticación con redes sociales.
+
+3. Estrategia
+
+• Pruebas manuales para validación funcional.
+• Pruebas de seguridad básicas (ej.: inyección SQL).
+• Navegadores compatibles: Chrome, Firefox, Edge.
+• Dispositivos: Escritorio y móvil (viewport responsive).
+
+4. Casos de Prueba
+
+CP-01: Validación de Campos Obligatorios
+• Precondición: Formulario vacío.
+• Pasos:
+    1. Dejar ambos campos vacíos.
+    2. Hacer clic en Iniciar Sesión.
+• Resultado Esperado: Mensaje de error: "Usuario y contraseña son requeridos".
+
+-----
+
+CP-02: Usuario Inválido
+• Precondición: Contraseña válida ingresada.
+• Pasos:
+    1. Ingresar usuario inexistente (ej.: "usuario_falso").
+    2. Ingresar contraseña válida.
+    3. Hacer clic en Iniciar Sesión.
+• Resultado Esperado: Mensaje: "Usuario o contraseña incorrectos".
+
+-----
+
+CP-03: Contraseña Inválida
+• Precondición: Usuario válido registrado.
+• Pasos:
+    1. Ingresar usuario válido.
+    2. Ingresar contraseña incorrecta (ej.: "123456").
+    3. Hacer clic en Iniciar Sesión.
+• Resultado Esperado: Mensaje: "Usuario o contraseña incorrectos".
+
+-----
+
+CP-04: Autenticación Exitosa
+• Precondición: Credenciales válidas registradas.
+• Pasos:
+    1. Ingresar usuario y contraseña válidos.
+    2. Hacer clic en Iniciar Sesión.
+• Resultado Esperado: Redirección a página de inicio del sistema.
+
+-----
+
+CP-05: Seguridad - Inyección SQL
+• Pasos:
+    1. En campo Usuario, ingresar: ' OR '1'='1.
+    2. En campo Contraseña, ingresar cualquier valor.
+    3. Hacer clic en Iniciar Sesión.
+• Resultado Esperado: Mensaje de error genérico (sin detalles técnicos).
+
+-----
+
+CP-06: Usabilidad - Tecla Enter
+• Pasos:
+    1. Ingresar credenciales válidas.
+    2. Presionar Enter en lugar de clic al botón.
+• Resultado Esperado: Redirección exitosa (mismo comportamiento que CP-04).
+
+-----
+
+CP-07: Accesibilidad
+• Pasos:
+    1. Navegar el formulario solo con teclado (Tab/Shift+Tab).
+    2. Verificar etiquetas <label> asociadas a campos.
+• Resultado Esperado:
+    1. Foco visible en cada elemento.
+    2. Screen readers anuncian correctamente los campos.
+
+-----
+
+CP-08: Rendimiento - Carga con Conexión Lenta
+• Pasos:
+    1. Simular red 3G (Herramientas DevTools > Throttling).
+    2. Enviar credenciales válidas.
+• Resultado Esperado:
+    1. Tiempo de respuesta < 3 segundos.
+    2. Spinner de carga visible durante la espera.
+
+-----
+
+5. Criterios de Aprobación
+
+• Todos los casos críticos (CP-01 a CP-05) deben pasar.
+• 100% de los bugs reportados con severidad Alta resueltos.
+
+6. Entorno de Pruebas
+
+• URL: https://ejemplo.com/login
+• Datos de Prueba:
+    ◦ Usuario válido: test_user
+    ◦ Contraseña válida: P@ssw0rd2024
+
+Fuente
+======
+
+DeepSeek
