@@ -3243,6 +3243,248 @@ Fuente
 
 Deepseek
 
+===========================================
+Checklist de Testing para Formularios HTML5
+===========================================
+
+"Rereceta de testing" estructurada para probar formularios HTML5 con los campos
+más comunes.
+
+-----
+
+1- Campo de tipo texto
+
+-Validar longitud máxima/mínima (atributos maxlength, minlength).
+
+-Probar caracteres especiales (ej. @, #, <script>), números y espacios.
+
+-Verificar si es obligatorio (required).
+
+-----
+
+2- Campo tipo área de texto
+
+-Probar saltos de línea, tabs y texto largo (sin truncar).
+
+-Validar máximo de caracteres y tamaño adecuado del campo en pantalla así como
+comodidad para hacer scroll y mostrar la información.
+
+-----
+
+3- Campo de tipo email
+
+-Introducir formatos válidos (ej. usuario@dominio.com).
+
+-Probar formatos inválidos (ej. usuario@, sinarroba.com).
+
+-----
+
+4- Campo de tipo Teléfono
+
+-Probar formatos internacionales (ej. +58 412-XXX-XXXX).
+
+-Validar autocompletado en móviles (sugerencias de teléfonos).
+
+-----
+
+5- Campos numéricos
+
+-Probar valores enteros, decimales y negativos.
+
+-Validar límites (min, max).
+
+-Intentar ingresar texto (ej. "abc") o símbolos.
+
+-----
+
+6- Fechas y Horas
+
+-Probar selección manual y formato correcto (ej. YYYY-MM-DD).
+
+-Verificar con diferentes configuraciones regionales (ej. DD/MM/YYYY vs
+MM/DD/YYYY).
+
+-Validar rangos (ej. fechas pasadas/futuras bloqueadas).
+
+-Probar entrada manual con formatos inválidos.
+
+-----
+
+7- Campo de Selección
+
+-Verificar que todas las opciones estén disponibles.
+
+-Probar selección múltiple (si aplica).
+
+-Validar comportamiento al teclear en datalist.
+
+-Si es campo de selección con búsqueda probar rendimiento de la búsqueda (Tiempo
+de respuesta).
+
+-Validar si son obligatorios (required en grupos de opciones).
+
+-----
+
+8- Campos de Archivos
+
+-Probar formatos permitidos (Ejemplo: pdf, .jpg).
+
+-Validar tamaño máximo (max-size).
+
+-Intentar subir archivos corruptos o no permitidos.
+
+-----
+
+9- Campos de tipo URL
+
+-Verificar protocolos (http://, https://).
+
+-Probar URLs inválidas (ej. google.com sin protocolo).
+
+-----
+
+10- Campo de selector de color
+
+-Validar que el valor se guarde en formato HEX (ej: FFFFFF).
+
+-Probar selección manual y entrada directa.
+
+-----
+
+11- Campo tipo hidden (Oculto)
+
+-Validar que el valor se envía correctamente en el submit.
+
+-Probar manipulación manual (ej. cambiar el valor via DevTools).
+
+-----
+
+12- Botón reset de los formularios
+
+-Verificar que limpie todos los campos del formulario.
+
+-Probar en formularios con campos dinámicos.
+
+-----
+
+13- Campo tipo password
+
+-Validar ocultamiento de caracteres (no plaintext).
+
+-Probar políticas de contraseñas (ej. mix de mayúsculas/números).
+
+-Verificar funcionalidad de "mostrar contraseña".
+
+-----
+
+14- Campo con máscara (ej. tarjetas de crédito ####-####-####):
+
+-Validar que la máscara no bloquee datos válidos.
+
+-Probar copiar/pegar desde otros orígenes.
+
+-----
+
+15- Validación y UX
+
+Atributos HTML5:
+
+-required: Dejar campos vacíos y verificar mensajes.
+
+-pattern: Probar regex (ej. contraseñas con [A-Za-z0-9]).
+
+-placeholder o sugerencia del campo: Confirmar que se muestre correctamente.
+
+-Autofocus: Verificar que el campo que se requiera tenga foco al cargar la
+página.
+
+-----
+
+16- Mensajes de error
+
+-Verificar claridad y ubicación adecuada en pantalla (móvil, tablet,
+escritorio).
+
+-Probar que desaparecen al corregir el error.
+
+-Probar que los datos del formulario no se limpien al mostrar mensajes de error,
+evitar que el usuario tenga que rellenar todo de nuevo.
+
+-----
+
+17- Accesibilidad
+
+-Comprobar que la navegación con teclado (Tab, Enter) se haga secuencialmente.
+
+-Traducciones: Validar placeholders/mensajes en multi-idioma.
+
+-----
+
+18- Compatibilidad
+
+-Probar en diferentes navegadores web: Chrome, Firefox, Edge, Safari.
+
+-Confirmar que el formulario sea responsive (móvil, tablet, escritorio).
+
+-----
+
+19- Pruebas de seguridad
+
+-Probar inyecciones de código (XSS) en campos de texto.
+
+-Validar sanitización de datos en el backend (Verificar que el servidor
+(backend) procese y limpie correctamente los datos enviados desde el formulario,
+para prevenir vulnerabilidades o errores).
+
+-Verificar protección contra CSRF (Cross-Site Request Forgery).
+
+-----
+
+20- Pruebas de usabilidad
+
+-Confirmar que los mensajes de error sean intuitivos.
+
+-Probar funcionalidad de autocompletado.
+
+-Validar identificación clara de campos obligatorios.
+
+-----
+
+21- Pruebas de Rendimiento
+
+-Medir tiempo de carga del formulario.
+
+-Probar envío con grandes volúmenes de datos.
+
+-Validar comportamiento con conexiones lentas.
+
+-----
+
+22- Pruebas de campos dinámicos
+
+-Validar campos generados dinámicamente (por JavaScript).
+
+-Probar visibilidad/habilitación según condiciones.
+
+-----
+
+23- Pruebas de envío
+
+-Verificar protección contra múltiples envíos (debouncing).
+
+-Probar comportamiento al presionar "Enter" en diferentes campos.
+
+-Offline: Probar guardado temporal si se pierde conexión (localStorage).
+
+Fuentes
+=======
+
+Ing. Argenis Osorio
+
+Deepseek
+
+Copilot
+
 ================
 El formato .webp
 ================
@@ -3302,6 +3544,210 @@ Alternativas modernas:
 -Ideal para sitios web que priorizan velocidad de carga.
 
 -No recomendado para edición profesional (usar MOV o ProRes).
+
+Fuente
+======
+
+DeepSeek
+
+==================================================
+Diferencia entre Plan de Pruebas y Casos de Prueba
+==================================================
+
+1. Plan de Pruebas (Test Plan)
+
+Es Documento estratégico que define el enfoque, alcance, recursos y cronograma
+de las actividades de testing para un proyecto.
+
+Propósito: Guiar todo el proceso de pruebas para asegurar que se cumplan los
+objetivos de calidad.
+
+Contenido típico:
+
+-Objetivos y alcance de las pruebas.
+
+-Estrategia (tipos de pruebas: funcionales, de rendimiento, seguridad, etc.)
+
+-Entornos de prueba requeridos.
+
+-Cronograma y asignación de responsabilidades.
+
+.-Criterios de inicio/finalización (ej.: "Pruebas terminadas cuando el 95% de
+los casos pasen")
+
+-Riesgos y mitigaciones.
+
+2. Casos de Prueba (Test Cases)
+
+Conjunto de pasos detallados para validar una funcionalidad específica del
+software.
+
+-Propósito: Verificar que cada componente cumpla con los requisitos definidos.
+
+Contenido típico:
+
+-ID y nombre del caso.
+
+-Precondiciones.
+
+-Pasos para ejecutar la prueba.
+
+-Datos de entrada esperados.
+
+-Resultado esperado vs. resultado real.
+
+-Prioridad (ej.: alta, media, baja).
+
+Ejemplo Práctico
+================
+
+Plan de Pruebas:
+
+"Realizar pruebas de regresión en el módulo de pagos antes del release"
+
+Caso de Prueba:
+
+"Caso 1: Probar transferencia bancaria con monto válido (expectativa:
+transacción exitosa)".
+
+Relación entre Ambos
+====================
+
+-El Plan de Pruebas es el "mapa general" del testing.
+
+-Los Casos de Prueba son las "herramientas" para ejecutar ese plan.
+
+=============================
+Ejemplo de un plan de pruebas
+=============================
+
+Plan de Pruebas
+===============
+
+Sistema: [Nombre del Sistema Web]
+Versión: 1.0
+Responsable: [Nombre del Analista de QA]
+Fecha: [DD/MM/AAAA]
+
+-----
+
+1. Objetivo
+
+Validar el correcto funcionamiento del formulario de inicio de sesión, garantizando:
+
+• Usabilidad y accesibilidad.
+• Seguridad frente a entradas inválidas.
+• Integración con el sistema de autenticación.
+
+2. Alcance
+
+Funcionalidades a probar:
+
+• Campo Usuario (texto).
+• Campo Contraseña (password).
+• Botón Iniciar Sesión.
+• Enlaces ¿Olvidó su contraseña? y Registrarse.
+
+Exclusiones:
+
+• No incluye pruebas de recuperación de contraseña.
+• No cubre autenticación con redes sociales.
+
+3. Estrategia
+
+• Pruebas manuales para validación funcional.
+• Pruebas de seguridad básicas (ej.: inyección SQL).
+• Navegadores compatibles: Chrome, Firefox, Edge.
+• Dispositivos: Escritorio y móvil (viewport responsive).
+
+4. Casos de Prueba
+
+CP-01: Validación de Campos Obligatorios
+• Precondición: Formulario vacío.
+• Pasos:
+    1. Dejar ambos campos vacíos.
+    2. Hacer clic en Iniciar Sesión.
+• Resultado Esperado: Mensaje de error: "Usuario y contraseña son requeridos".
+
+-----
+
+CP-02: Usuario Inválido
+• Precondición: Contraseña válida ingresada.
+• Pasos:
+    1. Ingresar usuario inexistente (ej.: "usuario_falso").
+    2. Ingresar contraseña válida.
+    3. Hacer clic en Iniciar Sesión.
+• Resultado Esperado: Mensaje: "Usuario o contraseña incorrectos".
+
+-----
+
+CP-03: Contraseña Inválida
+• Precondición: Usuario válido registrado.
+• Pasos:
+    1. Ingresar usuario válido.
+    2. Ingresar contraseña incorrecta (ej.: "123456").
+    3. Hacer clic en Iniciar Sesión.
+• Resultado Esperado: Mensaje: "Usuario o contraseña incorrectos".
+
+-----
+
+CP-04: Autenticación Exitosa
+• Precondición: Credenciales válidas registradas.
+• Pasos:
+    1. Ingresar usuario y contraseña válidos.
+    2. Hacer clic en Iniciar Sesión.
+• Resultado Esperado: Redirección a página de inicio del sistema.
+
+-----
+
+CP-05: Seguridad - Inyección SQL
+• Pasos:
+    1. En campo Usuario, ingresar: ' OR '1'='1.
+    2. En campo Contraseña, ingresar cualquier valor.
+    3. Hacer clic en Iniciar Sesión.
+• Resultado Esperado: Mensaje de error genérico (sin detalles técnicos).
+
+-----
+
+CP-06: Usabilidad - Tecla Enter
+• Pasos:
+    1. Ingresar credenciales válidas.
+    2. Presionar Enter en lugar de clic al botón.
+• Resultado Esperado: Redirección exitosa (mismo comportamiento que CP-04).
+
+-----
+
+CP-07: Accesibilidad
+• Pasos:
+    1. Navegar el formulario solo con teclado (Tab/Shift+Tab).
+    2. Verificar etiquetas <label> asociadas a campos.
+• Resultado Esperado:
+    1. Foco visible en cada elemento.
+    2. Screen readers anuncian correctamente los campos.
+
+-----
+
+CP-08: Rendimiento - Carga con Conexión Lenta
+• Pasos:
+    1. Simular red 3G (Herramientas DevTools > Throttling).
+    2. Enviar credenciales válidas.
+• Resultado Esperado:
+    1. Tiempo de respuesta < 3 segundos.
+    2. Spinner de carga visible durante la espera.
+
+-----
+
+5. Criterios de Aprobación
+
+• Todos los casos críticos (CP-01 a CP-05) deben pasar.
+• 100% de los bugs reportados con severidad Alta resueltos.
+
+6. Entorno de Pruebas
+
+• URL: https://ejemplo.com/login
+• Datos de Prueba:
+    ◦ Usuario válido: test_user
+    ◦ Contraseña válida: P@ssw0rd2024
 
 Fuente
 ======
