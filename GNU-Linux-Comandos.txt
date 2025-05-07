@@ -7028,6 +7028,40 @@ $ parecord --channels=1 -d alsa_output.pci-0000_00_1b.0.analog-stereo.monitor gr
 
 Con Ctrl + c detenemos la grabación.
 
+Nota: En Linux Debian 12 ya no funciona porque el sistema migró a PipeWire, que
+reemplaza a PulseAudio en muchas distribuciones modernas (Fedora, Ubuntu, etc.).
+
+Otra opción es usar es usa ffmpeg
+
+========================================
+Grabar el audio de la máquina con ffmpeg
+========================================
+
+1. Identificar el dispositivo de monitorización:
+
+$ pactl list short sources
+
+Salida:
+
+50	alsa_output.pci-0000_00_1b.0.analog-stereo.monitor	PipeWire	s32le 2ch 48000Hz	IDLE
+51	alsa_input.pci-0000_00_1b.0.analog-stereo	PipeWire	s32le 2ch 48000Hz	SUSPENDED
+
+En tu lista aparece:
+50 alsa_output.pci-0000_00_1b.0.analog-stereo.monitor
+
+Este es el dispositivo que necesitas (termina en .monitor).
+
+2- Grabar el audio con ffmpeg:
+
+$ ffmpeg -f pulse -i alsa_output.pci-0000_00_1b.0.analog-stereo.monitor -c:a pcm_s16le grabacion.wav
+
+Esto creara el archivo grabacion.wav.
+
+Fuente
+======
+
+DeepSeek
+
 ===============================================
 Particionado recomendado de discos en GNU/Linux
 ===============================================
