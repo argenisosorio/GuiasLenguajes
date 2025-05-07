@@ -128,17 +128,68 @@ especifíquen como app.js y app.css por ejemplo.
 
 $ npm run prod
 
+====================================
 Diferencias entre run dev y run prod
 ====================================
 
-run dev: Compilar para desarrollo, los archivos resultantes mantienen el código
+run dev
+=======
+
+Compilar para desarrollo, los archivos resultantes mantienen el código
 fuente desminificados. Las herramientas usadas en el navegador identifican los
 objetos y componentes para poder depurar el código.
 
-run prod -> compilar para producción, los archivos resultantes estan
+Qué hace:
+
+-Compila los assets (Vue, JS, SCSS, etc.) sin optimizaciones agresivas.
+-Genera source maps (mapeo del código original para debugging).
+-No minifica los archivos resultantes (JS/CSS quedan legibles).
+-Hace el build más rápido, pero los archivos son más grandes.
+-Incluye mensajes de warning y errores detallados en la consola.
+
+Ejemplo de salida:
+
+-Archivos como app.js y app.css no están minificados.
+-Puedes ver el código original en las DevTools del navegador.
+
+run prod
+========
+
+Compilar para producción, los archivos resultantes estan
 minificados. Las herramientas de desarrollo usadas en el navegador no pueden
 acceder a los componentes u objetos por lo que es complicado poder interactuar
 con ellos a través del navegador.
+
+Qué hace:
+
+-Minifica y comprime JavaScript y CSS (reduce tamaño de archivos).
+-Elimina código muerto (Tree Shaking: quita lo que no se usa).
+-No genera source maps (el código queda ofuscado).
+-Aplica optimizaciones avanzadas (scope hoisting, etc.).
+-Los archivos resultantes tienen hashes en el nombre (ej: app.1a2b3c4d.js) para
+evitar problemas de caché.
+
+Ejemplo de salida:
+
+-Archivos como app.1a2b3c4d.js (minificados y con hash).
+-Código ofuscado (ej: variables renombradas a a, b, c).
+
+Recomendaciones:
+
+-Siempre usa npm run prod en producción para mejor rendimiento.
+
+-No mezcles dev y prod en el mismo entorno (puede causar errores).
+
+-Si usas Laravel Mix, revisa tu webpack.mix.js para ajustar configuraciones:
+
+mix.js('resources/js/app.js', 'public/js')
+   .sass('resources/sass/app.scss', 'public/css')
+   .version(); // Añade hashes (útil en producción)
+
+Fuente
+======
+
+DeepSeek
 
 -----
 

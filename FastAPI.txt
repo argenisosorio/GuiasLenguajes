@@ -1,0 +1,118 @@
+=====================
+Guía de FastAPI by dM
+=====================
+
+FastAPI es un framework web moderno, rápido (de alto rendimiento) y fácil de
+usar para construir APIs en Python, basado en estándares abiertos como OpenAPI
+y JSON Schema.
+
+Características principales
+===========================
+
+Alto rendimiento:
+
+-Basado en Starlette (para manejo asíncrono) y Pydantic (para validación de
+datos).
+
+-Comparable en velocidad a Node.js y Go gracias a su soporte nativo para
+async/await.
+
+Generación automática de documentación:
+
+-Crea documentación interactiva (Swagger UI y ReDoc) automáticamente gracias a
+OpenAPI.
+
+Ejemplo:
+
+from fastapi import FastAPI
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+Al correr el servidor (uvicorn main:app --reload), la documentación estará en:
+
+Swagger: http://127.0.0.1:8000/docs
+
+ReDoc: http://127.0.0.1:8000/redoc
+
+Validación automática de datos:
+
+Usa Pydantic para definir modelos de datos con tipado estático (Python type
+hints).
+
+Ejemplo:
+
+from pydantic import BaseModel
+
+class Item(BaseModel):
+    name: str
+    price: float
+
+@app.post("/items/")
+def create_item(item: Item):
+    return item
+
+FastAPI valida automáticamente los datos entrantes y genera errores detallados
+si no coinciden con el esquema.
+
+Soporte para ASGI:
+
+-Compatible con el estándar ASGI (Asynchronous Server Gateway Interface), ideal
+para conexiones asíncronas (WebSockets, HTTP/2).
+
+Fácil de aprender:
+
+-Diseño intuitivo similar a Flask, pero con capacidades más avanzadas.
+
+¿Cuándo usar FastAPI?
+=====================
+
+Para construir APIs RESTful rápidas y escalables.
+
+Cuando necesitas documentación automática.
+
+Si trabajas con microservicios o aplicaciones con alta concurrencia.
+
+Para integrar sistemas con GraphQL (mediante librerías como strawberry).
+
+Limitaciones:
+
+-No es un framework full-stack (como Django): está enfocado en APIs.
+
+-Menor cantidad de librerías de terceros comparado con Flask o Django (aunque
+está creciendo rápidamente).
+
+Ejemplo básico de una API con FastAPI:
+
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/items/{item_id}")
+async def read_item(item_id: int, q: str = None):
+    return {"item_id": item_id, "q": q}
+
+Endpoints: Define rutas con decoradores como @app.get(), @app.post(), etc.
+
+Parámetros: Soporta parámetros de ruta (item_id), query (q), cuerpos de
+solicitud (POST), etc.
+
+Cómo empezar:
+
+Instala FastAPI y un servidor ASGI (como Uvicorn o Hypercorn):
+
+$ pip install fastapi uvicorn
+
+Corre tu aplicación:
+
+$ uvicorn main:app --reload
+
+FastAPI es ideal si buscas rendimiento, simplicidad y modernidad en el
+desarrollo de APIs con Python.
+
+Fuente
+======
+
+Deepseek

@@ -10169,3 +10169,81 @@ Fuentes
 
 -DeepSeek
 -GitHub Copilot
+
+=================
+Método includes()
+=================
+
+En JavaScript, el método includes() se utiliza para determinar si un string
+(cadena de texto) o un array (arreglo) contiene un elemento específico,
+devolviendo true o false según el caso. Aquí te explico cómo usarlo en ambos
+contextos:
+
+1. includes() en Strings
+
+Verifica si una cadena contiene una subcadena (distingue entre mayúsculas y
+minúsculas).
+
+Sintaxis:
+
+cadena.includes(subcadena, índiceDeInicio);
+
+-subcadena: Texto a buscar.
+
+-índiceDeInicio (opcional): Posición desde donde comenzar la búsqueda (por
+defecto es 0).
+
+Ejemplos:
+
+const frase = "JavaScript es poderoso";
+
+console.log(frase.includes("Java"));     // true
+console.log(frase.includes("Java"));     // true
+console.log(frase.includes("script"));   // false (distingue mayúsculas)
+console.log(frase.includes("poderoso")); // true
+
+2. includes() en Arrays
+
+Comprueba si un array incluye un determinado elemento.
+Sintaxis:
+
+array.includes(elemento, índiceDeInicio);
+
+elemento: Valor a buscar.
+
+índiceDeInicio (opcional): Índice desde donde inicia la búsqueda.
+
+Ejemplos:
+
+const numeros = [1, 2, 3, 4, 5];
+
+console.log(numeros.includes(3));      // true
+console.log(numeros.includes(10));     // false
+
+Con objetos y referencias:
+
+includes() no funciona bien con objetos (a menos que sea la misma referencia):
+
+const usuarios = [{ id: 1 }, { id: 2 }];
+console.log(usuarios.includes({ id: 1 })); // false (objetos diferentes)
+
+const user = { id: 1 };
+console.log([user].includes(user));        // true (misma referencia)
+
+Diferencias clave con otros métodos:
+
+includes() vs indexOf():
+
+includes() devuelve true/false, mientras que indexOf() devuelve el índice o -1
+si no lo encuentra.
+
+includes() maneja NaN correctamente:
+
+const arr = [NaN];
+console.log(arr.includes(NaN));   // true
+console.log(arr.indexOf(NaN));    // -1 (no lo encuentra)
+
+Fuente
+======
+
+DeepSeek
