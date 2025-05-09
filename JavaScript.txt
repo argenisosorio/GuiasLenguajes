@@ -10247,3 +10247,101 @@ Fuente
 ======
 
 DeepSeek
+
+============================================================================
+Incluir llamar inyectar cargar código html en una página desde un archivo js
+============================================================================
+
+index.html
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My site</title>
+    <style>
+    /* Estilos CSS */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+</head>
+<body>
+    <main>
+    </main>
+    <script src="header.js"></script>
+    <script src="about.js"></script>
+    <script src="footer.js"></script>
+</body>
+</html>
+
+-----
+
+header.js
+
+// Espera a que el contenido del DOM esté completamente cargado antes de ejecutar el código.
+document.addEventListener("DOMContentLoaded", () => {
+    // Define el contenido HTML del header como una cadena de texto.
+    const headerHTML = `
+        <header style="background-color: red;">
+            <h2 class="section-title">Header</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </header>
+    `;
+
+    // Inserta el contenido del header al inicio del elemento <main> en el documento HTML.
+    // insertAdjacentHTML permite agregar contenido HTML sin reemplazar el contenido existente.
+    document.querySelector("main").insertAdjacentHTML("afterbegin", headerHTML);
+});
+
+-----
+
+about.js
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Define el contenido HTML del .about como una cadena de texto.
+    const aboutHTML = `
+        <section class="about" id="about" style="background-color: blue;">
+            <h2 class="section-title">Sobre Nosotros</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </section>
+    `;
+
+    // Inserta la sección "about" después del header
+    document.querySelector("header").insertAdjacentHTML("afterend", aboutHTML);
+});
+
+-----
+
+footer.js
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Define el contenido HTML del footer como una cadena de texto.
+    const footerHTML = `
+        <footer style="background-color: green;">
+            <h2 class="section-title">Footer</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </footer>
+    `;
+
+    // Inserta el footer después de la sección "about".
+    document.querySelector(".about").insertAdjacentHTML("afterend", footerHTML);
+});
+
+Fuente
+======
+
+GitHub Copilot
