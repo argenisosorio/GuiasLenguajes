@@ -137,10 +137,47 @@ sistema.
 
 -----
 
-Este comando muestra todos los puertos USB y los detalles acerca de los
-dispositivos conectados a ellos.
+Este comando muestra los dispositivos USB conectados al equipo, organizados por
+buses y dispositivos lógicos. Este comando no te dice cuántos puertos USB
+físicos tiene el computador.
 
 $ lsusb
+
+Ejemplo de salida:
+
+$ lsusb
+
+Bus 002 Device 005: ID 0a5c:5800 Broadcom Corp. BCM5880 Secure Applications Processor
+Bus 002 Device 006: ID 258a:003a SINO WEALTH Gaming KB
+Bus 002 Device 003: ID 1bcf:08a0 Sunplus Innovation Technology Inc. Gaming mouse [Philips SPK9304]
+Bus 002 Device 002: ID 8087:0024 Intel Corp. Integrated Rate Matching Hub
+Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+Bus 001 Device 004: ID 1bcf:2802 Sunplus Innovation Technology Inc. Laptop_Integrated_Webcam_FHD
+Bus 001 Device 002: ID 8087:0024 Intel Corp. Integrated Rate Matching Hub
+Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
+
+Lo que vemos aquí son:
+
+-Buses: El sistema organiza los puertos USB en buses (Bus 001 y Bus 002 en este
+caso).
+
+-Dispositivos raíz (root hubs): Cada bus tiene un "root hub" (identificado con
+Linux Foundation) que gestiona las conexiones. Estos no son puertos físicos a
+los que conectas tus dispositivos.
+
+-Dispositivos conectados: Los otros dispositivos listados son los periféricos
+que actualmente están conectados a tus puertos USB (webcam, mouse, teclado,
+etc.) o componentes internos que utilizan la interfaz USB.
+
+-----
+
+Herramienta poderosa para obtener información detallada sobre los conectores
+físicos presentes en la placa base de tu computadora. Sirve para contar
+por ejemplo los puertos USB físicos, pero no necesarimente son solo los que
+se usan para colocar pendirves por ejemplo, hay más puertos USB que se usan
+como por ejemplo para la webcam internamente, entre otros.
+
+$ sudo dmidecode -t connector
 
 -----
 
