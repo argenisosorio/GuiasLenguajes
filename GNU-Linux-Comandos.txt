@@ -2998,6 +2998,37 @@ del archivo:
 
 Guardamos y listo.
 
+==========================
+Editar el hosts en Windows
+==========================
+
+El hosts permite redirigir nombres de dominio a IPs específicas sin depender de
+servidores DNS, útil para pruebas locales de servidores, bloquear sitios web,
+acceder a recursos internos de red con nombres personalizados.
+
+Nota: Probado en 7 y 10
+
+Editamos como administradores con el blog de notas el fichero que está en:
+
+C:\Windows\system32\drivers\etc\hosts
+
+Nos encontraremos con algo como esto:
+
+127.0.0.1       localhost
+127.0.0.1       localhost
+127.0.0.1       localhost
+
+Agrega las entradas necesarias al final del archivo, siguiendo este formato:
+
+[IP del servidor]    [nombre de dominio]
+
+Ejemplo:
+
+192.168.1.100    kavac.iahula.com
+
+Guardamos y listo, al entrar a kavac.iahula.com deberíamos ver lo que se sirve
+desde 192.168.1.100
+
 ======================================================
 Bloquear acceso localmente a una página web en Windows
 ======================================================
@@ -12104,3 +12135,60 @@ Fuente
 ======
 
 Deepseek
+
+================================
+Configurar ip estática en Debian
+================================
+
+Para configurar una IP estática en Debian, puedes editar el archivo
+/etc/network/interfaces y añadir la configuración de la interfaz de red.
+Primero, identifica el nombre de tu interfaz de red (por ejemplo, eth0, enp0s3,
+o wlan0). Luego, edita el archivo /etc/network/interfaces como administrador
+(usando sudo nano /etc/network/interfaces o similar) y agrega la información de
+la IP estática, máscara de subred, gateway, y DNS.
+
+Pasos detallados:
+
+1. Identificar la interfaz de red: Abre la terminal y utiliza el comando:
+
+$ ip a
+
+Esto permite ver las interfaces de red disponibles. Elige la que deseas
+configurar.
+
+2. Hacer una copia de seguridad: Antes de editar el archivo, es recomendable
+hacer una copia de seguridad del archivo original. Por ejemplo:
+
+$ sudo cp /etc/network/interfaces /etc/network/interfaces.bak.
+
+3. Editar el archivo /etc/network/interfaces: Abre el archivo con un editor de
+texto como administrador:
+
+$ sudo nano /etc/network/interfaces.
+
+4. Configurar la interfaz (ejemplo): Si no existe una configuración para la
+interfaz, agregala. Por ejemplo, si tu interfaz es enp0s3:
+
+auto enp0s3
+iface enp0s3 inet static
+    address 192.168.1.100 # Tu IP estática
+    netmask 255.255.255.0 # Máscara de subred
+    gateway 192.168.1.1 # Puerta de enlace (gateway)
+    dns-nameservers 8.8.8.8 8.8.8.8 # Servidores DNS
+
+Si ya existe una configuración, cambia los valores para DHCP a los valores
+estáticos.
+
+Guardar y reiniciar la red (o reiniciar el servidor): Guarda el archivo
+(usando Ctrl+X en nano, luego Y para confirmar) y reinicia el servicio de red.
+Puedes hacerlo con
+
+$ sudo systemctl restart networking
+
+Opcionalmente, puedes reiniciar el servidor para asegurar que la configuración
+se aplique correctamente.
+
+Fuente
+======
+
+Gemini IA
