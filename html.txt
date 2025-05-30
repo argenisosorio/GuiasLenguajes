@@ -8654,3 +8654,1090 @@ Fuente
 ======
 
 GitHub Copilot
+
+==============================================
+Empareja las Palabras arrastrando con el mouse
+==============================================
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empareja las Palabras</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #ff6b6b;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .game-container {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px auto;
+            max-width: 800px;
+        }
+        
+        .word-column {
+            display: flex;
+            flex-direction: column;
+            width: 40%;
+            min-height: 300px;
+            background-color: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .word-item {
+            background-color: #74b9ff;
+            color: white;
+            padding: 15px;
+            margin: 10px;
+            border-radius: 10px;
+            cursor: grab;
+            font-size: 20px;
+            user-select: none;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        
+        .word-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .word-item:active {
+            cursor: grabbing;
+            background-color: #0984e3;
+        }
+        
+        .word-item.matched {
+            background-color: #55efc4;
+            cursor: default;
+        }
+        
+        .word-item.english {
+            background-color: #ff7675;
+        }
+        
+        .word-item.english.matched {
+            background-color: #55efc4;
+        }
+        
+        #canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .game-wrapper {
+            position: relative;
+        }
+        
+        .feedback {
+            margin-top: 20px;
+            font-size: 24px;
+            min-height: 30px;
+        }
+        
+        .correct {
+            color: #27ae60;
+        }
+        
+        .incorrect {
+            color: #e74c3c;
+        }
+        
+        button {
+            background-color: #fdcb6e;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            margin: 10px;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: scale(1.1);
+            background-color: #ffeaa7;
+        }
+    </style>
+</head>
+<body>
+    <h1>¡Empareja las Palabras!</h1>
+    <p>Arrastra las palabras en español hacia su traducción en inglés</p>
+    
+    <div class="game-wrapper">
+        <canvas id="canvas"></canvas>
+        <div class="game-container">
+            <div class="word-column" id="spanish-words">
+                <div class="word-item" data-word="perro">perro</div>
+                <div class="word-item" data-word="gato">gato</div>
+                <div class="word-item" data-word="casa">casa</div>
+            </div>
+            
+            <div class="word-column" id="english-words">
+                <div class="word-item english" data-word="house">house</div>
+                <div class="word-item english" data-word="dog">dog</div>
+                <div class="word-item english" data-word="cat">cat</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="feedback" id="feedback"></div>
+    <button id="check-btn">Verificar Respuestas</button>
+    <button id="reset-btn">Reiniciar Juego</button>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const spanishWords = document.getElementById('spanish-words');
+            const englishWords = document.getElementById('english-words');
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+            const feedback = document.getElementById('feedback');
+            const checkBtn = document.getElementById('check-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            
+            // Ajustar tamaño del canvas
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            
+            // Definir las parejas correctas
+            const correctPairs = {
+                'perro': 'dog',
+                'gato': 'cat',
+                'casa': 'house'
+            };
+            
+            let draggedItem = null;
+            let connections = [];
+            let activeLine = null;
+            
+            // Eventos para los elementos en español
+            const spanishItems = document.querySelectorAll('#spanish-words .word-item');
+            spanishItems.forEach(item => {
+                item.addEventListener('mousedown', startDrag);
+                item.addEventListener('touchstart', startDrag);
+            });
+            
+            // Eventos para los elementos en inglés
+            const englishItems = document.querySelectorAll('#english-words .word-item');
+            englishItems.forEach(item => {
+                item.addEventListener('mouseup', dropItem);
+                item.addEventListener('touchend', dropItem);
+            });
+            
+            document.addEventListener('mousemove', dragItem);
+            document.addEventListener('touchmove', dragItem);
+            document.addEventListener('mouseup', endDrag);
+            document.addEventListener('touchend', endDrag);
+            
+            checkBtn.addEventListener('click', checkAnswers);
+            resetBtn.addEventListener('click', resetGame);
+            
+            function startDrag(e) {
+                if (e.target.classList.contains('matched')) return;
+                
+                draggedItem = e.target;
+                draggedItem.style.opacity = '0.5';
+                
+                // Crear una línea temporal
+                activeLine = {
+                    start: getCenterPosition(draggedItem),
+                    end: e.type === 'mousedown' ? 
+                        { x: e.clientX, y: e.clientY } : 
+                        { x: e.touches[0].clientX, y: e.touches[0].clientY }
+                };
+                
+                e.preventDefault(); // Prevenir selección de texto
+            }
+            
+            function dragItem(e) {
+                if (!draggedItem) return;
+                
+                // Actualizar posición final de la línea
+                activeLine.end = e.type === 'mousemove' ? 
+                    { x: e.clientX, y: e.clientY } : 
+                    { x: e.touches[0].clientX, y: e.touches[0].clientY };
+                
+                drawConnections();
+            }
+            
+            function dropItem(e) {
+                if (!draggedItem) return;
+                
+                const target = e.target;
+                if (target.classList.contains('english') && !target.classList.contains('matched')) {
+                    // Crear conexión
+                    connections.push({
+                        spanish: draggedItem.dataset.word,
+                        english: target.dataset.word,
+                        startElement: draggedItem,
+                        endElement: target,
+                        startPos: getCenterPosition(draggedItem),
+                        endPos: getCenterPosition(target)
+                    });
+                    
+                    // Marcar elementos como emparejados
+                    draggedItem.classList.add('matched');
+                    target.classList.add('matched');
+                    
+                    // Actualizar feedback
+                    feedback.textContent = '';
+                }
+                
+                endDrag();
+            }
+            
+            function endDrag() {
+                if (!draggedItem) return;
+                
+                draggedItem.style.opacity = '1';
+                draggedItem = null;
+                activeLine = null;
+                drawConnections();
+            }
+            
+            function getCenterPosition(element) {
+                const rect = element.getBoundingClientRect();
+                return {
+                    x: rect.left + rect.width / 2,
+                    y: rect.top + rect.height / 2
+                };
+            }
+            
+            function drawConnections() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Dibujar conexiones establecidas
+                ctx.strokeStyle = '#636e72';
+                ctx.lineWidth = 3;
+                
+                connections.forEach(conn => {
+                    ctx.beginPath();
+                    ctx.moveTo(conn.startPos.x, conn.startPos.y);
+                    ctx.lineTo(conn.endPos.x, conn.endPos.y);
+                    ctx.stroke();
+                });
+                
+                // Dibujar línea temporal si hay un arrastre en curso
+                if (activeLine) {
+                    ctx.strokeStyle = '#00cec9';
+                    ctx.lineWidth = 3;
+                    ctx.setLineDash([5, 5]);
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(activeLine.start.x, activeLine.start.y);
+                    ctx.lineTo(activeLine.end.x, activeLine.end.y);
+                    ctx.stroke();
+                    
+                    ctx.setLineDash([]);
+                }
+            }
+            
+            function checkAnswers() {
+                let allCorrect = true;
+                let correctCount = 0;
+                
+                connections.forEach(conn => {
+                    if (correctPairs[conn.spanish] === conn.english) {
+                        correctCount++;
+                    } else {
+                        allCorrect = false;
+                    }
+                });
+                
+                if (connections.length < Object.keys(correctPairs).length) {
+                    feedback.textContent = `¡Tienes ${correctCount} de ${Object.keys(correctPairs).length} correctas! Sigue intentando.`;
+                    feedback.className = 'feedback';
+                } else if (allCorrect) {
+                    feedback.textContent = '¡Felicidades! Todas las respuestas son correctas.';
+                    feedback.className = 'feedback correct';
+                } else {
+                    feedback.textContent = `¡Tienes ${correctCount} de ${Object.keys(correctPairs).length} correctas! Intenta nuevamente.`;
+                    feedback.className = 'feedback incorrect';
+                }
+            }
+            
+            function resetGame() {
+                // Limpiar conexiones
+                connections = [];
+                
+                // Restablecer elementos
+                document.querySelectorAll('.word-item').forEach(item => {
+                    item.classList.remove('matched');
+                });
+                
+                // Limpiar canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Limpiar feedback
+                feedback.textContent = '';
+                feedback.className = 'feedback';
+                
+                // Mezclar palabras en inglés
+                const englishContainer = document.getElementById('english-words');
+                const englishItems = Array.from(englishContainer.children);
+                englishItems.sort(() => Math.random() - 0.5);
+                
+                // Volver a agregar elementos mezclados
+                englishItems.forEach(item => englishContainer.appendChild(item));
+            }
+            
+            // Mezclar palabras en inglés al cargar la página
+            resetGame();
+        });
+    </script>
+</body>
+</html>
+
+Fuente
+======
+
+DeepSeek
+
+Otro ejemplo:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Match Game</title>
+</head>
+<style>
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+    overflow: hidden; /* Prevent scroll issues with canvas */
+}
+
+.game-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;
+    z-index: 1; /* Ensure game content is above canvas */
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.columns-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 40px;
+    margin-bottom: 30px;
+}
+
+.column {
+    background-color: #e9e9e9;
+    padding: 20px;
+    border-radius: 8px;
+    width: 200px;
+    min-height: 200px;
+}
+
+h2 {
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.word-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.word-item {
+    background-color: #007bff;
+    color: #fff;
+    padding: 12px 15px;
+    border-radius: 5px;
+    cursor: grab;
+    transition: background-color 0.2s ease;
+    user-select: none; /* Prevent text selection */
+}
+
+.word-item:hover {
+    background-color: #0056b3;
+}
+
+.word-item.dragging {
+    opacity: 0.6;
+    border: 2px dashed #333;
+}
+
+.word-item.matched {
+    background-color: #28a745; /* Green for matched words */
+    cursor: default;
+}
+
+.word-item.correct {
+    border: 2px solid #28a745;
+}
+
+.word-item.incorrect {
+    border: 2px solid #dc3545;
+}
+
+#game-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Behind game content */
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background-color 0.2s ease;
+}
+
+#check-button {
+    background-color: #28a745;
+    color: #fff;
+}
+
+#check-button:hover {
+    background-color: #218838;
+}
+
+#reset-button {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+#reset-button:hover {
+    background-color: #c82333;
+}
+
+#message {
+    margin-top: 20px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+}
+</style>
+<body>
+    <div class="game-container">
+        <h1>Match the Words!</h1>
+        <div class="columns-container">
+            <div class="column left-column">
+                <h2>Español</h2>
+                <div class="word-list" id="spanish-words">
+                    <div class="word-item" data-word="hello" draggable="true">Hola</div>
+                    <div class="word-item" data-word="dog" draggable="true">Perro</div>
+                    <div class="word-item" data-word="cat" draggable="true">Gato</div>
+                </div>
+            </div>
+            <div class="column right-column">
+                <h2>English</h2>
+                <div class="word-list" id="english-words">
+                    <div class="word-item" data-word="cat">Cat</div>
+                    <div class="word-item" data-word="hello">Hello</div>
+                    <div class="word-item" data-word="dog">Dog</div>
+                </div>
+            </div>
+        </div>
+        <button id="check-button">Check Answers</button>
+        <button id="reset-button">Reset</button>
+        <p id="message"></p>
+    </div>
+    <canvas id="game-canvas"></canvas>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+        const spanishWordsContainer = document.getElementById('spanish-words');
+        const englishWordsContainer = document.getElementById('english-words');
+        const checkButton = document.getElementById('check-button');
+        const resetButton = document.getElementById('reset-button');
+        const messageDisplay = document.getElementById('message');
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let draggedItem = null;
+        let connections = []; // Stores { spanishWordElement, englishWordElement }
+
+        // --- Mueve la declaración de redrawLines aquí ---
+        const redrawLines = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.lineWidth = 3;
+
+            connections.forEach(conn => {
+                const spanishRect = conn.spanishWordElement.getBoundingClientRect();
+                const englishRect = conn.englishWordElement.getBoundingClientRect();
+
+                // Calculate center points relative to the canvas
+                const startX = spanishRect.right + window.scrollX;
+                const startY = spanishRect.top + spanishRect.height / 2 + window.scrollY;
+                const endX = englishRect.left + window.scrollX;
+                const endY = englishRect.top + englishRect.height / 2 + window.scrollY;
+
+                ctx.beginPath();
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(endX, endY);
+
+                // Set color based on correctness (if checked)
+                if (conn.isCorrect !== undefined) {
+                    ctx.strokeStyle = conn.isCorrect ? '#28a745' : '#dc3545';
+                } else {
+                    ctx.strokeStyle = '#007bff'; // Default color
+                }
+                ctx.stroke();
+            });
+        };
+        // --- Fin de la reubicación ---
+
+        // Resize canvas to fill the window
+        const resizeCanvas = () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            redrawLines();
+        };
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas(); // Initial resize
+
+        // Shuffle function for the English words
+        const shuffleArray = (array) => {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        };
+
+        // Initial setup of words (shuffle English words)
+        const setupWords = () => {
+            const englishWords = Array.from(englishWordsContainer.children);
+            const shuffledEnglishWords = shuffleArray(englishWords);
+            englishWordsContainer.innerHTML = ''; // Clear current words
+            shuffledEnglishWords.forEach(word => englishWordsContainer.appendChild(word));
+
+            // Reset all word states
+            document.querySelectorAll('.word-item').forEach(item => {
+                item.classList.remove('matched', 'correct', 'incorrect');
+                item.style.backgroundColor = '#007bff'; // Reset background color
+                item.style.cursor = 'grab'; // Make draggable again
+            });
+
+            messageDisplay.textContent = '';
+            connections = [];
+            redrawLines();
+        };
+
+        setupWords(); // Call on initial load
+
+        // Drag start event
+        spanishWordsContainer.addEventListener('dragstart', (e) => {
+            if (e.target.classList.contains('word-item') && !e.target.classList.contains('matched')) {
+                draggedItem = e.target;
+                e.target.classList.add('dragging');
+                e.dataTransfer.setData('text/plain', e.target.dataset.word); // Set data for drop
+            }
+        });
+
+        // Drag end event
+        spanishWordsContainer.addEventListener('dragend', (e) => {
+            if (draggedItem) {
+                draggedItem.classList.remove('dragging');
+                draggedItem = null;
+            }
+        });
+
+        // Allow drop on English word containers
+        englishWordsContainer.addEventListener('dragover', (e) => {
+            e.preventDefault(); // Necessary to allow drop
+        });
+
+        // Drop event
+        englishWordsContainer.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const targetItem = e.target.closest('.word-item'); // Get the word-item even if dropped on text inside
+            if (draggedItem && targetItem && !targetItem.classList.contains('matched')) {
+                // Check if this Spanish word is already connected
+                const existingConnectionIndex = connections.findIndex(conn => conn.spanishWordElement === draggedItem);
+                if (existingConnectionIndex !== -1) {
+                    // Remove existing connection for this Spanish word
+                    connections.splice(existingConnectionIndex, 1);
+                }
+
+                // Add new connection
+                connections.push({
+                    spanishWordElement: draggedItem,
+                    englishWordElement: targetItem
+                });
+
+                draggedItem.classList.add('matched');
+                targetItem.classList.add('matched');
+                draggedItem.style.backgroundColor = '#28a745'; // Indicate a connection has been made
+                targetItem.style.backgroundColor = '#28a745'; // Indicate a connection has been made
+                draggedItem.style.cursor = 'default'; // No longer draggable
+                redrawLines();
+            }
+        });
+
+        // Check answers button
+        checkButton.addEventListener('click', () => {
+            let allCorrect = true;
+            if (connections.length < spanishWordsContainer.children.length) {
+                messageDisplay.textContent = 'Please connect all words!';
+                messageDisplay.style.color = '#dc3545';
+                return;
+            }
+
+            connections.forEach(conn => {
+                const spanishData = conn.spanishWordElement.dataset.word;
+                const englishData = conn.englishWordElement.dataset.word;
+
+                if (spanishData === englishData) {
+                    conn.isCorrect = true;
+                    conn.spanishWordElement.classList.add('correct');
+                    conn.englishWordElement.classList.add('correct');
+                } else {
+                    conn.isCorrect = false;
+                    conn.spanishWordElement.classList.add('incorrect');
+                    conn.englishWordElement.classList.add('incorrect');
+                    allCorrect = false;
+                }
+            });
+
+            redrawLines(); // Redraw lines with correct/incorrect colors
+
+            if (allCorrect) {
+                messageDisplay.textContent = '¡Felicidades! ¡Todas las respuestas son correctas!';
+                messageDisplay.style.color = '#28a745';
+            } else {
+                messageDisplay.textContent = '¡Algunas respuestas son incorrectas! Intenta de nuevo.';
+                messageDisplay.style.color = '#dc3545';
+            }
+        });
+
+        // Reset button
+        resetButton.addEventListener('click', () => {
+            setupWords(); // Reshuffle and reset game state
+        });
+
+        // Add an observer to redraw lines when words position changes (e.g., due to dynamic content or layout shifts)
+        const observer = new MutationObserver(redrawLines);
+        observer.observe(spanishWordsContainer, { childList: true, subtree: true, attributes: true });
+        observer.observe(englishWordsContainer, { childList: true, subtree: true, attributes: true });
+        observer.observe(document.body, { attributes: true, childList: true, subtree: true }); // Observe body for general layout changes
+
+        // Initial draw in case elements are rendered before JS fully loads
+        setTimeout(redrawLines, 100);
+    });
+    </script>
+</body>
+</html>
+
+Fuente
+======
+
+Gemini
+
+----------
+
+Image Puzzle Game
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Puzzle Game</title>
+</head>
+<style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #e0f2f7; /* Light blue background */
+    color: #333;
+}
+
+.game-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 90%;
+    max-width: 1000px;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+}
+
+.puzzle-columns {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.image-column, .drop-column {
+    flex: 1;
+    background-color: #f8fcfd;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.image-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    color: #34495e;
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #a8dadc;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.image-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    align-items: center;
+}
+
+.draggable-image {
+    width: 120px; /* Adjust image size as needed */
+    height: auto;
+    border: 2px solid #a8dadc;
+    border-radius: 8px;
+    cursor: grab;
+    transition: transform 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.draggable-image:hover {
+    transform: translateY(-3px);
+    border-color: #457b9d;
+}
+
+.draggable-image.dragging {
+    opacity: 0.5;
+    border-style: dashed;
+    border-color: #2a9d8f;
+}
+
+/* Drop Zones */
+.drop-zones {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Smaller gap for the puzzle pieces */
+    width: 100%;
+    /* Example for a horizontal puzzle */
+    /* If your puzzle is vertical, use: flex-direction: column; */
+}
+
+.drop-zone {
+    width: 250px; /* Adjust drop zone width to match your images */
+    height: 80px; /* Adjust drop zone height for puzzle pieces */
+    border: 2px dashed #a8dadc;
+    background-color: #f1faee; /* Light background for empty zones */
+    border-radius: 5px;
+    display: flex; /* To center dropped image if needed */
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    margin: 0 auto; /* Center the drop zones */
+}
+
+.drop-zone.drag-over {
+    background-color: #e0f7fa; /* Highlight on drag over */
+    border-color: #457b9d;
+}
+
+.drop-zone.correct {
+    border-color: #28a745; /* Green for correct placement */
+    background-color: #d4edda;
+}
+
+.drop-zone.incorrect {
+    border-color: #dc3545; /* Red for incorrect placement */
+    background-color: #f8d7da;
+}
+
+.drop-zone img {
+    max-width: 100%;
+    max-height: 100%;
+    border: none; /* Remove border from dropped image */
+    cursor: default; /* Not draggable anymore */
+    border-radius: 0; /* No border radius when part of puzzle */
+}
+
+/* Buttons and Message */
+button {
+    padding: 12px 25px;
+    font-size: 1em;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: bold;
+}
+
+#check-button {
+    background-color: #2a9d8f;
+    color: #fff;
+}
+
+#check-button:hover {
+    background-color: #217d72;
+    transform: translateY(-2px);
+}
+
+#reset-button {
+    background-color: #e63946;
+    color: #fff;
+}
+
+#reset-button:hover {
+    background-color: #c9303d;
+    transform: translateY(-2px);
+}
+
+#message {
+    margin-top: 25px;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #457b9d;
+}
+</style>
+<body>
+    <div class="game-container">
+        <h1>Drag and Drop to Complete the Image!</h1>
+
+        <div class="puzzle-columns">
+            <div class="image-column">
+                <h2>Images</h2>
+                <div class="image-list">
+                    <img src="1.jpg" alt="Puzzle Piece 1" class="draggable-image" draggable="true" data-id="piece1">
+                    <img src="2.jpg" alt="Puzzle Piece 2" class="draggable-image" draggable="true" data-id="piece2">
+                    <img src="3.jpg" alt="Puzzle Piece 3" class="draggable-image" draggable="true" data-id="piece3">
+                    <img src="4.png" alt="Puzzle Piece 4" class="draggable-image" draggable="true" data-id="piece4">
+                    <img src="5.jpg" alt="Puzzle Piece 5" class="draggable-image" draggable="true" data-id="piece5">
+                </div>
+            </div>
+
+            <div class="drop-column">
+                <h2>Puzzle Area</h2>
+                <div class="drop-zones">
+                    <div class="drop-zone" data-id="piece1"></div>
+                    <div class="drop-zone" data-id="piece2"></div>
+                    <div class="drop-zone" data-id="piece3"></div>
+                    <div class="drop-zone" data-id="piece4"></div>
+                    <div class="drop-zone" data-id="piece5"></div>
+                </div>
+            </div>
+        </div>
+
+        <button id="check-button">Check Puzzle</button>
+        <button id="reset-button">Reset Puzzle</button>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const draggableImages = document.querySelectorAll('.draggable-image');
+    const dropZones = document.querySelectorAll('.drop-zone');
+    const checkButton = document.getElementById('check-button');
+    const resetButton = document.getElementById('reset-button');
+    const messageDisplay = document.getElementById('message');
+    const imageList = document.querySelector('.image-list'); // Parent of original images
+
+    let draggedImage = null; // Stores the image currently being dragged
+
+    // --- Drag Start Event ---
+    draggableImages.forEach(image => {
+        image.addEventListener('dragstart', (e) => {
+            draggedImage = e.target;
+            // Store the data-id of the dragged image
+            e.dataTransfer.setData('text/plain', draggedImage.dataset.id);
+            draggedImage.classList.add('dragging');
+            // Optionally, hide the default drag image for a cleaner feel
+            e.dataTransfer.setDragImage(new Image(), 0, 0);
+        });
+
+        // Add dragend to clean up the 'dragging' class
+        image.addEventListener('dragend', () => {
+            if (draggedImage) {
+                draggedImage.classList.remove('dragging');
+                draggedImage = null;
+            }
+        });
+    });
+
+    // --- Drop Zone Events ---
+    dropZones.forEach(zone => {
+        // Prevent default to allow dropping
+        zone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            zone.classList.add('drag-over'); // Visual feedback
+        });
+
+        // Remove highlight when drag leaves the zone
+        zone.addEventListener('dragleave', () => {
+            zone.classList.remove('drag-over');
+        });
+
+        // Handle the drop
+        zone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            zone.classList.remove('drag-over'); // Remove highlight
+
+            if (draggedImage) {
+                // Get the ID of the dragged image
+                const draggedId = e.dataTransfer.getData('text/plain');
+
+                // Check if the drop zone already contains an image
+                if (zone.children.length > 0) {
+                    // If it does, move the existing image back to the image list
+                    const existingImage = zone.querySelector('img');
+                    if (existingImage) {
+                        existingImage.classList.remove('dropped'); // Remove dropped class
+                        existingImage.style.display = 'block'; // Make it visible again
+                        // Find the original spot for this image in the left column
+                        const originalImages = Array.from(document.querySelectorAll('.draggable-image'));
+                        const originalImage = originalImages.find(img => img.dataset.id === existingImage.dataset.id);
+                        if(originalImage) {
+                            // Replace its placeholder (if any) or just append
+                            // For simplicity, we just append it back to the list
+                            // A more robust solution would re-insert it at its original index.
+                            imageList.appendChild(existingImage);
+                        } else {
+                            // If somehow it wasn't an original image, just append to list
+                            imageList.appendChild(existingImage);
+                        }
+                    }
+                }
+
+                // Append the dragged image to the drop zone
+                zone.appendChild(draggedImage);
+                draggedImage.classList.add('dropped'); // Add a class to indicate it's placed
+                draggedImage.style.display = 'block'; // Ensure visibility if it was hidden
+            }
+        });
+    });
+
+    // --- Check Puzzle Button ---
+    checkButton.addEventListener('click', () => {
+        let allCorrect = true;
+        messageDisplay.textContent = ''; // Clear previous messages
+
+        dropZones.forEach(zone => {
+            const placedImage = zone.querySelector('img'); // Get image inside the zone
+            const zoneId = zone.dataset.id; // Get the ID this zone expects
+
+            // Remove previous correctness indicators
+            zone.classList.remove('correct', 'incorrect');
+            if (placedImage) {
+                placedImage.classList.remove('correct', 'incorrect');
+            }
+
+            if (placedImage && placedImage.dataset.id === zoneId) {
+                // Correct match
+                zone.classList.add('correct');
+                placedImage.classList.add('correct');
+            } else {
+                // Incorrect or empty
+                zone.classList.add('incorrect');
+                if (placedImage) {
+                    placedImage.classList.add('incorrect');
+                }
+                allCorrect = false;
+            }
+        });
+
+        if (allCorrect) {
+            messageDisplay.textContent = '¡Felicidades! ¡Has completado la imagen correctamente!';
+            messageDisplay.style.color = '#28a745';
+        } else {
+            messageDisplay.textContent = '¡Sigue intentándolo! Algunas piezas no están en su lugar.';
+            messageDisplay.style.color = '#dc3545';
+        }
+    });
+
+    // --- Reset Puzzle Button ---
+    resetButton.addEventListener('click', () => {
+        // Move all images back to the image-list
+        draggableImages.forEach(image => {
+            imageList.appendChild(image); // Append back to original list
+            image.classList.remove('dropped', 'correct', 'incorrect');
+            image.style.display = 'block'; // Ensure visibility
+        });
+
+        // Clear all drop zones and their classes
+        dropZones.forEach(zone => {
+            zone.innerHTML = ''; // Remove any child elements (images)
+            zone.classList.remove('correct', 'incorrect', 'drag-over');
+        });
+
+        messageDisplay.textContent = ''; // Clear message
+        messageDisplay.style.color = '#457b9d'; // Reset message color
+    });
+
+    // Initial shuffle of images in the left column (optional, but good for replayability)
+    const shuffleImages = () => {
+        const imagesArray = Array.from(draggableImages);
+        // Fisher-Yates shuffle
+        for (let i = imagesArray.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            imageList.insertBefore(imagesArray[j], imagesArray[i]); // Re-insert at new position
+        }
+    };
+    shuffleImages(); // Call on page load
+});
+    </script>
+</body>
+</html>
+
+Fuente
+======
+
+Gemini IA

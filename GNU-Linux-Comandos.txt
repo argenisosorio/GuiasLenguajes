@@ -2998,6 +2998,37 @@ del archivo:
 
 Guardamos y listo.
 
+==========================
+Editar el hosts en Windows
+==========================
+
+El hosts permite redirigir nombres de dominio a IPs específicas sin depender de
+servidores DNS, útil para pruebas locales de servidores, bloquear sitios web,
+acceder a recursos internos de red con nombres personalizados.
+
+Nota: Probado en 7 y 10
+
+Editamos como administradores con el blog de notas el fichero que está en:
+
+C:\Windows\system32\drivers\etc\hosts
+
+Nos encontraremos con algo como esto:
+
+127.0.0.1       localhost
+127.0.0.1       localhost
+127.0.0.1       localhost
+
+Agrega las entradas necesarias al final del archivo, siguiendo este formato:
+
+[IP del servidor]    [nombre de dominio]
+
+Ejemplo:
+
+192.168.1.100    kavac.iahula.com
+
+Guardamos y listo, al entrar a kavac.iahula.com deberíamos ver lo que se sirve
+desde 192.168.1.100
+
 ======================================================
 Bloquear acceso localmente a una página web en Windows
 ======================================================
@@ -7589,6 +7620,85 @@ Imaginemos que queremos ejecutarlo cada 5 minutos:
 
 */5 2 * * 1-5 /bin/ejecutar/script.sh
 
+===============================================================
+Ejemplo real de ejecución de script en Linux Debian con crontab
+===============================================================
+
+1. Haz el script ejecutable
+
+Primero, asegúrate de que tu script tenga permisos de ejecución. Abre una
+terminal, navega hasta el directorio donde guardaste el script y ejecuta el
+siguiente comando:
+
+$ chmod +x tu_script_de_respaldo.sh
+
+Reemplaza tu_script_de_respaldo.sh con el nombre real de tu script.
+
+2. Edita la tabla cron
+
+Para agregar una tarea a cron, necesitas editar tu "crontab" personal. Hazlo con
+este comando:
+
+$ crontab -e
+
+Si es la primera vez que usas crontab -e, es posible que te pida elegir un
+editor de texto. Te recomiendo nano si no estás familiarizado con vi o vim.
+
+3. Agrega la entrada cron
+
+Una vez que se abra el editor, agrega una nueva línea al final del archivo. La
+sintaxis de cron sigue un formato específico:
+
+minuto hora día_del_mes mes día_de_la_semana comando_a_ejecutar
+
+Aquí tienes algunos ejemplos para tu script:
+
+Para ejecutar el script todos los días a las 3:00 AM:
+
+0 3 * * * /ruta/completa/a/tu_script_de_respaldo.sh
+
+Asegúrate de reemplazar /ruta/completa/a/tu_script_de_respaldo.sh con la ruta
+absoluta donde guardaste tu script (por ejemplo,
+/home/tu_usuario/scripts/respaldo_db.sh).
+
+Para ejecutar el script de lunes a viernes a las 11:00 PM:
+
+0 23 * * 1-5 /ruta/completa/a/tu_script_de_respaldo.sh
+
+Para ejecutar el script el primer día de cada mes a la medianoche (00:00):
+
+0 0 1 * * /ruta/completa/a/tu_script_de_respaldo.sh
+
+Consejo: Si quieres que la salida del script (los mensajes de éxito o error) se
+registren, puedes redirigirla a un archivo de log. Por ejemplo:
+
+0 3 * * * /ruta/completa/a/tu_script_de_respaldo.sh >> /var/log/respaldo_db.log 2>&1
+
+Esto enviará tanto la salida estándar como los errores al archivo
+/var/log/respaldo_db.log.
+
+4. Guarda y sal del editor
+
+Si usas nano: Presiona Ctrl + O para guardar, luego Enter, y finalmente
+Ctrl + X para salir.
+
+5. Verificación (Opcional)
+
+Puedes verificar si tu tarea cron se ha agregado correctamente ejecutando de
+nuevo:
+
+$ crontab -l
+
+Esto listará todas las tareas cron programadas para tu usuario.
+
+¡Y listo! Cron se encargará de ejecutar tu script de respaldo de PostgreSQL a
+la hora programada. Recuerda que la ruta del script debe ser la ruta absoluta.
+
+Fuente
+======
+
+Gemini IA
+
 ===================
 Palabras reservadas
 ===================
@@ -12104,3 +12214,60 @@ Fuente
 ======
 
 Deepseek
+
+================================
+Configurar ip estática en Debian
+================================
+
+Para configurar una IP estática en Debian, puedes editar el archivo
+/etc/network/interfaces y añadir la configuración de la interfaz de red.
+Primero, identifica el nombre de tu interfaz de red (por ejemplo, eth0, enp0s3,
+o wlan0). Luego, edita el archivo /etc/network/interfaces como administrador
+(usando sudo nano /etc/network/interfaces o similar) y agrega la información de
+la IP estática, máscara de subred, gateway, y DNS.
+
+Pasos detallados:
+
+1. Identificar la interfaz de red: Abre la terminal y utiliza el comando:
+
+$ ip a
+
+Esto permite ver las interfaces de red disponibles. Elige la que deseas
+configurar.
+
+2. Hacer una copia de seguridad: Antes de editar el archivo, es recomendable
+hacer una copia de seguridad del archivo original. Por ejemplo:
+
+$ sudo cp /etc/network/interfaces /etc/network/interfaces.bak.
+
+3. Editar el archivo /etc/network/interfaces: Abre el archivo con un editor de
+texto como administrador:
+
+$ sudo nano /etc/network/interfaces.
+
+4. Configurar la interfaz (ejemplo): Si no existe una configuración para la
+interfaz, agregala. Por ejemplo, si tu interfaz es enp0s3:
+
+auto enp0s3
+iface enp0s3 inet static
+    address 192.168.1.100 # Tu IP estática
+    netmask 255.255.255.0 # Máscara de subred
+    gateway 192.168.1.1 # Puerta de enlace (gateway)
+    dns-nameservers 8.8.8.8 8.8.8.8 # Servidores DNS
+
+Si ya existe una configuración, cambia los valores para DHCP a los valores
+estáticos.
+
+Guardar y reiniciar la red (o reiniciar el servidor): Guarda el archivo
+(usando Ctrl+X en nano, luego Y para confirmar) y reinicia el servicio de red.
+Puedes hacerlo con
+
+$ sudo systemctl restart networking
+
+Opcionalmente, puedes reiniciar el servidor para asegurar que la configuración
+se aplique correctamente.
+
+Fuente
+======
+
+Gemini IA
