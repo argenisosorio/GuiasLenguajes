@@ -12277,3 +12277,52 @@ Fuente
 ======
 
 Gemini IA
+
+=============================================
+¿Cómo saber la mac física de mi pc en debian?
+=============================================
+
+En Debian (y en la mayoría de las distribuciones Linux), puedes saber la
+dirección MAC física de tu PC usando algunos comandos en la terminal.
+
+1. Usando el comando ip:
+
+Este es el comando moderno y preferido en sistemas Linux. Abre una terminal y escribe:
+
+$ ip a
+
+o, si quieres ver solo las direcciones MAC:
+
+$ ip link show
+
+Busca las interfaces de red (generalmente eth0 o enpXs0 para Ethernet cableada,
+wlan0 o similar para Wi-Fi). La dirección MAC estará listada junto a
+"link/ether". Por ejemplo:
+
+2: enp0s31f6: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 00:1a:2b:3c:4d:5e brd ff:ff:ff:ff:ff:ff
+
+En este ejemplo, 00:1a:2b:3c:4d:5e sería la dirección MAC de la interfaz enp0s31f6.
+
+2. Usando el comando ifconfig:
+
+Aunque ifconfig está siendo reemplazado por ip, todavía es muy común y funciona en muchas instalaciones de Debian.
+
+3. Leyendo directamente desde el sistema de archivos (útil si quieres ver la dirección MAC "verdadera" incluso si ha sido cambiada temporalmente):
+
+Las direcciones MAC físicas se almacenan en el sistema de archivos bajo /sys/class/net/. Puedes ver las interfaces disponibles con:
+Bash
+
+$ ls /sys/class/net/
+
+Luego, para ver la dirección MAC de una interfaz específica (por ejemplo,
+enp4s0):
+
+$ cat /sys/class/net/enp4s0/address
+
+Esto mostrará solo la dirección MAC de esa interfaz.
+
+Fuente
+======
+
+Gemini
