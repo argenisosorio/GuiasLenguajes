@@ -10540,3 +10540,125 @@ Fuente
 ======
 
 Deepseek
+
+===============
+Logs en Laravel
+===============
+
+¿Qué son los logs?
+==================
+
+Registros de eventos de tu aplicación (errores, advertencias, información de
+depuración). Laravel los guarda automáticamente cuando ocurren excepciones o
+cuando tú los generas manualmente.
+
+Ubicación de los Logs
+=====================
+
+storage/logs/laravel.log
+
+storage/logs/laravel-YYYY-MM-DD.log  # Versiones anteriores
+
+Logs por canal: Si usas canales como daily, se crean archivos por fecha:
+
+storage/logs/laravel-2025-06-16.log
+
+Cómo escribir en los Logs
+=========================
+
+Usa la facade Log en tus controladores, modelos o cualquier archivo:
+
+use Illuminate\Support\Facades\Log;
+
+// Ejemplos:
+Log::emergency("Mensaje de emergencia");  // Nivel más crítico
+Log::error("Error al procesar el pago", ['user_id' => 1]);
+Log::warning("Alerta: espacio en disco bajo");
+Log::info("Usuario registrado", ['email' => 'user@example.com']);
+Log::debug("Variable X: " . json_encode($data));
+
+Estos se pueden incluir en el controlador o donde haga falta para escribir en
+los logs.
+
+Cómo Leer/Probar los Logs
+=========================
+
+Opción 1: Ver el archivo directamente
+
+$ less storage/logs/laravel.log
+
+Opción 2: Usar Tinker (consola interactiva)
+
+$ php artisan tinker
+
+> file_get_contents(storage_path('logs/laravel.log'));
+
+Opción 3: Ver el archivo con tail (Muestra poca información)
+
+$ tail -f storage/logs/laravel.log
+
+Fuente
+======
+
+Deepseek
+
+===============================================================
+Probar el envío correcto de correo desde una aplicación Laravel
+===============================================================
+
+Para probar el funcionamiento de las notificaciones por correo y la correcta
+configuración en las variables descritas se recomienda ejecutar algunas
+instrucciones en la consola de tinker para lo cual se debe ejecutar el comando:
+
+$ php artisan tinker
+
+Una vez ejecutado este comando se debe indicar la siguiente instrucción:
+
+Mail::raw(
+    'A través de este correo se esta probando las notificaciones del sistema',
+    function($msg) {
+        $msg->to('usuario@correo.com')->subject('Correo de prueba');
+    }
+);
+
+Donde usuario@correo.com se debe sustituir por una dirección de correo
+electrónico real para verificar que esten llegando las notificaciones y los
+mensajes por correo.
+
+Al ejecutar esta instrucción la consola de tinker arrojará 2 posibles resultados
+el primero un valor null lo cual indica que la comunicación con el servidor de
+correo electrónico ha sido satisfactoria, y el segundo posible resultado es un
+mensaje de error el cual dará indicios de las posibles acciones a realizar para
+corregir esto a nivel de comunicación entre el servidor en el que se encuentra
+la aplicación y el servidor de correo.
+
+Si en la consola de tinker se muestran algunos mensajes con la etiqueta
+DEPRECATED se debe omitir esto ya que no afecta el funcionamiento de las
+notificaciones y por lo general sucede en versiones de PHP >= 8.4
+
+Ejemplo mejorado:
+
+try {
+    $result = Mail::raw(
+        'A través de este correo se está probando las notificaciones del sistema KAVAC',
+        function($msg) {
+            $msg->to('user@mail.com')->subject('Correo de prueba');
+        }
+    );
+
+    if ($result === null) {
+        echo "\033[32m✔️ Correo enviado con éxito\033[0m\n";
+        echo "Por favor verifica la bandeja de entrada (y spam) de user@mail.com\n";
+    }
+} catch (\Exception $e) {
+    echo "\033[31m✖️ Error al enviar el correo:\033[0m\n";
+    echo $e->getMessage() . "\n";
+    echo "Revisa la configuración SMTP en tu archivo .env\n";
+}
+
+Fuentes
+=======
+
+README del KAVAC
+
+DeepSeek
