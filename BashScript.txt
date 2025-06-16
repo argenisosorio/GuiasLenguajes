@@ -1042,3 +1042,47 @@ Limpiar la pantalla
 Para limpiar la pantalla desde un script de bash, puedes usar el comando:
 
 clear
+
+========================================================
+Script para saber el nivel de la batería en Linux Debian
+========================================================
+
+#!/bin/bash
+
+# Script para ver el nivel de batería en Debian Linux
+
+# Ruta común a los archivos de batería en /sys
+BAT_PATH="/sys/class/power_supply/BAT0/"
+
+# Verificar si existe la ruta de batería
+if [ ! -d "$BAT_PATH" ]; then
+    echo "No se encontró información de batería."
+    echo "¿Estás usando una computadora portátil?"
+    exit 1
+fi
+
+# Leer los valores necesarios
+capacity=$(cat "${BAT_PATH}capacity")
+status=$(cat "${BAT_PATH}status")
+
+# Traducir estado al español
+case $status in
+    "Charging") status_es="Cargando" ;;
+    "Discharging") status_es="Descargando" ;;
+    "Full") status_es="Completamente cargada" ;;
+    *) status_es="Estado desconocido" ;;
+esac
+
+# Mostrar resultados con emojis para mejor visualización
+echo "🔋 Nivel de batería: $capacity%"
+echo "⚡ Estado: $status_es"
+
+# Opcional: Mostrar advertencia si la batería está baja
+if [ "$capacity" -lt 20 ] && [ "$status" = "Discharging" ]; then
+    echo "⚠️ ¡Advertencia! Batería baja. Conecta el cargador."
+fi
+
+Fuente
+======
+
+DeepSeek
