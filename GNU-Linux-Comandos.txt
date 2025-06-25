@@ -11437,7 +11437,7 @@ Deepseek
 Fuentes tipográficas en Debian y en GNU Linux
 =============================================
 
-ALGUNOS TIPOS DE FUENTES EXISTENTES
+Algunos tipos de fuentes existentes
 ===================================
 
 En Linux podemos instalar varios tipos de fuentes. Los tipos de fuentes más
@@ -11472,8 +11472,8 @@ Este tipo de fuentes son una evolución del formato de fuentes TrueType y
 Postscript, y las reconocerán fácilmente porque cuando las descarguen verán que
 tienen el formato otf.
 
-PROCEDIMIENTOS PARA INSTALAR FUENTES EN GNU/LINUX
-=================================================
+Procedimientos para instalar fuentes en Linux
+=============================================
 
 Los distintos métodos que podemos usar en GNU/Linux para instalar fuentes se
 detallan a continuación.
@@ -11499,6 +11499,7 @@ Algunos de los paquetes presentes en una distribución Linux que considero útil
 instalar son los siguientes:
 
 Instalar las fuentes de Microsoft
+=================================
 
 En el caso que queramos o tengamos necesidad de instalar algunas de las fuentes
 de Microsoft, tan solo tenemos que abrir una terminal y ejecutar el siguiente comando:
@@ -11525,7 +11526,7 @@ el siguiente comando en la terminal:
 
 $ sudo fc-cache -f -v
 
-SACAR UN LISTADO DE LA TOTALIDAD DE FUENTES INSTALADAS EN NUESTRO EQUIPO
+Sacar un listado de la totalidad de fuentes instaladas en nuestro equipo
 ========================================================================
 
 En el caso que precisen sacar un listado de la totalidad de fuentes instaladas,
@@ -11547,6 +11548,41 @@ Fuente
 ======
 
 https://geekland.eu/instalar-fuentes-en-debian-linux/
+
+========================================
+Instalar una fuente manualmente en Linux
+========================================
+
+1. Instalar la fuente para todos los usuarios
+
+$ sudo cp tu_fuente.ttf /usr/share/fonts/truetype/
+
+(Si el directorio truetype no existe, puedes crearlo con
+
+$ sudo mkdir -p /usr/share/fonts/truetype
+
+2- Actualiza la caché de fuentes:
+
+$ sudo fc-cache -fv
+
+3- Verifica la instalación:
+
+$ fc-list | grep "Nombre-de-tu-fuente"
+
+Notas adicionales:
+
+-Si no ves la fuente en algunas aplicaciones (como LibreOffice), reinícialas.
+
+-Las fuentes se pueden instalar en varios formatos (.ttf, .otf, .woff, etc.),
+pero .ttf y .otf son los más comunes en Linux.
+
+-Si prefieres una interfaz gráfica, algunas distribuciones permiten instalar
+fuentes haciendo doble clic en el archivo .ttf y seleccionando "Instalar".
+
+Fuente
+======
+
+DeepSeek
 
 ============================================================
 Reducir el tamaño o bajar el peso de un archivo de video mp4
