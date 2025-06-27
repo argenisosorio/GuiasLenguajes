@@ -12363,3 +12363,53 @@ Fuente
 ======
 
 Gemini
+
+============================================================
+Renombrar de manera masiva los nombre de archivos con rename
+============================================================
+
+El comando rename es una herramienta poderosa en Linux para renombrar múltiples
+archivos de manera rápida y eficiente usando expresiones regulares. Es ideal
+cuando necesitas cambiar patrones de nombres en lotes.
+
+Instalarlo si no está instalado:
+
+$ sudo apt install rename
+
+Sintaxis básica
+===============
+
+$ rename [opciones] 's/patrón-a-reemplazar/nuevo-patrón/' archivos
+
+s/: Indica una sustitución (como en sed).
+
+patrón-a-reemplazar: Texto o regex a buscar.
+
+nuevo-patrón: Texto que lo reemplazará.
+
+Ejemplo sencillo
+================
+
+Objetivo: Cambiar la extensión .txt a .md en varios archivos.
+
+Paso 1: Crear archivos de prueba
+
+$ touch archivo1.txt archivo2.txt archivo3.txt
+
+Paso 2: Ejecutar el renombrado (real)
+
+$ rename 's/\.txt/\.md/' *.txt
+
+Otro ejemplo:
+
+Tengo archivos PDF con este nombre ****-clc-07-25-Estudiante.pdf donde ****
+representan números únicos, necesito cambiar el nombre de todos los archivos de
+****-clc-07-25-Estudiante.pdf a ****-clc-06-25-Estudiante.pdf osea cambiar el 07
+por 06, el comando sería:
+
+$ rename 's/clc-07-25/clc-06-25/' *.pdf
+
+Fuente
+======
+
+DeepSeek
