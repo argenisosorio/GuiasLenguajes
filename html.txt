@@ -9741,3 +9741,140 @@ Fuente
 ======
 
 Gemini IA
+
+----------
+
+Formulario de preguntas donde se validan las respuestas de verdadero y falso con
+js
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz sobre Relaciones Naturales</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            text-align: center;
+        }
+        .question-container {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .question {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .options {
+            margin: 10px 0;
+            text-align: left;
+            display: inline-block;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px 0;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="question-container">
+        <h1>Quiz sobre Relaciones Naturales</h1>
+
+        <div class="question">
+            <p>1. ¿El sol se relaciona con el día?</p>
+            <div class="options">
+                <label>
+                    <input type="radio" name="sol-dia" value="true" required> Verdadero
+                </label>
+                <label>
+                    <input type="radio" name="sol-dia" value="false"> Falso
+                </label>
+            </div>
+        </div>
+
+        <div class="question">
+            <p>2. ¿El arcoíris se relaciona con la noche?</p>
+            <div class="options">
+                <label>
+                    <input type="radio" name="arcoiris-noche" value="true"> Verdadero
+                </label>
+                <label>
+                    <input type="radio" name="arcoiris-noche" value="false"> Falso
+                </label>
+            </div>
+        </div>
+
+        <button onclick="checkAnswers()">Verificar respuestas</button>
+    </div>
+
+    <script>
+        function checkAnswers() {
+            // Obtener las respuestas seleccionadas
+            const solDia = document.querySelector('input[name="sol-dia"]:checked');
+            const arcoirisNoche = document.querySelector('input[name="arcoiris-noche"]:checked');
+
+            // Verificar que ambas preguntas tengan respuesta
+            if (!solDia || !arcoirisNoche) {
+                alert('Por favor responde ambas preguntas');
+                return;
+            }
+
+            // Convertir valores a booleanos
+            const respuesta1 = solDia.value === "true";
+            const respuesta2 = arcoirisNoche.value === "true";
+
+            // Respuestas correctas
+            const correcto1 = true;   // El sol SÍ se relaciona con el día
+            const correcto2 = false;  // El arcoíris NO se relaciona con la noche
+
+            // Verificar respuestas
+            if (respuesta1 === correcto1 && respuesta2 === correcto2) {
+                alert('¡Perfecto! 🌟\nAmbas respuestas son correctas:\n1. El sol sí está relacionado con el día\n2. El arcoíris no aparece de noche');
+            } else {
+                let mensaje = '❌ Alguna respuesta es incorrecta:\n';
+
+                if (respuesta1 !== correcto1) {
+                    mensaje += '\n- El sol SÍ está relacionado con el día (es lo que produce la luz diurna)';
+                }
+                if (respuesta2 !== correcto2) {
+                    mensaje += '\n- El arcoíris NO está relacionado con la noche (se produce por refracción de luz solar en gotas de agua)';
+                }
+
+                alert(mensaje);
+            }
+        }
+    </script>
+</body>
+</html>
+
+Fuente
+======
+
+DeepSeek
