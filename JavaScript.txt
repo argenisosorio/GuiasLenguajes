@@ -10358,3 +10358,57 @@ Fuente
 ======
 
 GitHub Copilot
+
+============================
+Salto de línea en JavaScript
+============================
+
+En JavaScript, hay varias formas de hacer un salto de línea en el texto de una
+variable:
+
+1. Usando el carácter de escape \n (salto de línea)
+
+let texto = "Hola,\nesto es un\nejemplo de salto de línea.";
+console.log(texto);
+
+2. Usando plantillas literales (backticks `)
+
+let texto = `Hola,
+esto es un
+ejemplo de salto de línea.`;
+console.log(texto);
+
+3. Si estás mostrando el texto en HTML, usa <br>
+
+let texto = "Hola,<br>esto es un<br>ejemplo de salto de línea.";
+document.getElementById("miElemento").innerHTML = texto;
+
+Ejemplo completo:
+
+// Opción 1: \n para consola
+let mensaje1 = "Línea 1\nLínea 2\nLínea 3";
+console.log(mensaje1);
+
+// Opción 2: Plantillas literales
+let mensaje2 = `Línea 1
+Línea 2
+Línea 3`;
+console.log(mensaje2);
+
+// Opción 3: <br> para HTML
+let mensaje3 = "Línea 1<br>Línea 2<br>Línea 3";
+document.body.innerHTML = mensaje3;
+
+Diferencia clave:
+
+\n funciona en consola y alertas, pero no en HTML.
+
+<br> funciona en HTML, pero no en consola.
+
+Las plantillas literales preservan los saltos de línea exactamente como los
+escribes.
+
+Fuente
+======
+
+DeepSeek
