@@ -3196,6 +3196,273 @@ Fuentes
 
 Curso en línea de Firma electrónica con Murachí de CENDITEL.
 
+==============================================================
+Generar un certificado .p12 con curva elíptica en Debian Linux
+==============================================================
+
+Para generar un certificado .p12 (PKCS#12) usando criptografía de curva elíptica
+(ECC), sigue estos pasos:
+
+1. Generar una clave privada ECC
+
+Usa openssl para crear una clave privada con un algoritmo de curva elíptica
+(ej: secp384r1 o prime256v1):
+
+$ openssl ecparam -name secp384r1 -genkey -noout -out clave-privada-ecc.key
+
+Opciones comunes de curvas:
+
+-prime256v1 (NIST P-256, ampliamente compatible).
+
+-secp384r1 (NIST P-384, mayor seguridad).
+
+-secp521r1 (NIST P-521, aún más robusta).
+
+2. Generar un CSR (Certificate Signing Request)
+
+Crea una solicitud de firma para tu clave ECC:
+
+$ openssl req -new -key clave-privada-ecc.key -out solicitud.csr
+
+Se te pedirá ingresar datos como país, organización, etc.
+
+3. Opciones para el certificado:
+
+Auto-firmarlo (para pruebas):
+
+$ openssl req -x509 -key clave-privada-ecc.key -in solicitud.csr -out certificado-ecc.crt -days 365
+
+Obtenerlo firmado por una CA (ej: Let's Encrypt):
+
+Envía el .csr a tu entidad certificadora.
+
+4. Generar el archivo .p12
+
+Combina la clave privada y el certificado en un PKCS#12:
+
+$ openssl pkcs12 -export -inkey clave-privada-ecc.key -in certificado-ecc.crt -out certificado-ecc.p12
+
+Te pedirá una contraseña para proteger el archivo .p12.
+
+5. Verificar el contenido del .p12
+
+$ openssl pkcs12 -info -in certificado-ecc.p12
+
+Notas importantes:
+
+-Compatibilidad: Asegúrate que los sistemas/clientes soporten ECC (la mayoría
+modernos sí).
+
+-Rendimiento: Las claves ECC son más eficientes que RSA para un mismo nivel de
+seguridad.
+
+-Herramientas alternativas: Si usas certbot (Let's Encrypt), añade el flag
+--key-type ecdsa para generar certificados ECC automáticamente.
+
+Fuente
+======
+
+DeepSeek
+
+=====================================================
+Creación de claves de curva elíptica mediante OpenSSL
+=====================================================
+
+Probado En Debian 12.11
+Paquete: openssl
+Versión: 3.0.16-1~deb12u1
+
+1) Instalación de la librería OPENSSL.
+
+$ sudo aptitude install openssl
+
+2) Generación de una clave privada de curva elíptica mediante OpenSSL
+
+Para empezar, deberá elegir la curva con la que trabajará. Puede usar el
+siguiente comando para ver una lista de nombres y descripciones de curvas
+compatibles.
+
+$ openssl ecparam -list_curves
+
+  secp112r1 : SECG/WTLS curve over a 112 bit prime field
+  secp112r2 : SECG curve over a 112 bit prime field
+  secp128r1 : SECG curve over a 128 bit prime field
+  secp128r2 : SECG curve over a 128 bit prime field
+  secp160k1 : SECG curve over a 160 bit prime field
+  secp160r1 : SECG curve over a 160 bit prime field
+  secp160r2 : SECG/WTLS curve over a 160 bit prime field
+  secp192k1 : SECG curve over a 192 bit prime field
+  secp224k1 : SECG curve over a 224 bit prime field
+  secp224r1 : NIST/SECG curve over a 224 bit prime field
+  secp256k1 : SECG curve over a 256 bit prime field
+  secp384r1 : NIST/SECG curve over a 384 bit prime field
+  secp521r1 : NIST/SECG curve over a 521 bit prime field
+  prime192v1: NIST/X9.62/SECG curve over a 192 bit prime field
+  prime192v2: X9.62 curve over a 192 bit prime field
+  prime192v3: X9.62 curve over a 192 bit prime field
+  prime239v1: X9.62 curve over a 239 bit prime field
+  prime239v2: X9.62 curve over a 239 bit prime field
+  prime239v3: X9.62 curve over a 239 bit prime field
+  prime256v1: X9.62/SECG curve over a 256 bit prime field
+  sect113r1 : SECG curve over a 113 bit binary field
+  sect113r2 : SECG curve over a 113 bit binary field
+  sect131r1 : SECG/WTLS curve over a 131 bit binary field
+  sect131r2 : SECG curve over a 131 bit binary field
+  sect163k1 : NIST/SECG/WTLS curve over a 163 bit binary field
+  sect163r1 : SECG curve over a 163 bit binary field
+  sect163r2 : NIST/SECG curve over a 163 bit binary field
+  sect193r1 : SECG curve over a 193 bit binary field
+  sect193r2 : SECG curve over a 193 bit binary field
+  sect233k1 : NIST/SECG/WTLS curve over a 233 bit binary field
+  sect233r1 : NIST/SECG/WTLS curve over a 233 bit binary field
+  sect239k1 : SECG curve over a 239 bit binary field
+  sect283k1 : NIST/SECG curve over a 283 bit binary field
+  sect283r1 : NIST/SECG curve over a 283 bit binary field
+  sect409k1 : NIST/SECG curve over a 409 bit binary field
+  sect409r1 : NIST/SECG curve over a 409 bit binary field
+  sect571k1 : NIST/SECG curve over a 571 bit binary field
+  sect571r1 : NIST/SECG curve over a 571 bit binary field
+  c2pnb163v1: X9.62 curve over a 163 bit binary field
+  c2pnb163v2: X9.62 curve over a 163 bit binary field
+  c2pnb163v3: X9.62 curve over a 163 bit binary field
+  c2pnb176v1: X9.62 curve over a 176 bit binary field
+  c2tnb191v1: X9.62 curve over a 191 bit binary field
+  c2tnb191v2: X9.62 curve over a 191 bit binary field
+  c2tnb191v3: X9.62 curve over a 191 bit binary field
+  c2pnb208w1: X9.62 curve over a 208 bit binary field
+  c2tnb239v1: X9.62 curve over a 239 bit binary field
+  c2tnb239v2: X9.62 curve over a 239 bit binary field
+  c2tnb239v3: X9.62 curve over a 239 bit binary field
+  c2pnb272w1: X9.62 curve over a 272 bit binary field
+  c2pnb304w1: X9.62 curve over a 304 bit binary field
+  c2tnb359v1: X9.62 curve over a 359 bit binary field
+  c2pnb368w1: X9.62 curve over a 368 bit binary field
+  c2tnb431r1: X9.62 curve over a 431 bit binary field
+  wap-wsg-idm-ecid-wtls1: WTLS curve over a 113 bit binary field
+  wap-wsg-idm-ecid-wtls3: NIST/SECG/WTLS curve over a 163 bit binary field
+  wap-wsg-idm-ecid-wtls4: SECG curve over a 113 bit binary field
+  wap-wsg-idm-ecid-wtls5: X9.62 curve over a 163 bit binary field
+  wap-wsg-idm-ecid-wtls6: SECG/WTLS curve over a 112 bit prime field
+  wap-wsg-idm-ecid-wtls7: SECG/WTLS curve over a 160 bit prime field
+  wap-wsg-idm-ecid-wtls8: WTLS curve over a 112 bit prime field
+  wap-wsg-idm-ecid-wtls9: WTLS curve over a 160 bit prime field
+  wap-wsg-idm-ecid-wtls10: NIST/SECG/WTLS curve over a 233 bit binary field
+  wap-wsg-idm-ecid-wtls11: NIST/SECG/WTLS curve over a 233 bit binary field
+  wap-wsg-idm-ecid-wtls12: WTLS curve over a 224 bit prime field
+  Oakley-EC2N-3: 
+	IPSec/IKE/Oakley curve #3 over a 155 bit binary field.
+	Not suitable for ECDSA.
+	Questionable extension field!
+  Oakley-EC2N-4: 
+	IPSec/IKE/Oakley curve #4 over a 185 bit binary field.
+	Not suitable for ECDSA.
+	Questionable extension field!
+  brainpoolP160r1: RFC 5639 curve over a 160 bit prime field
+  brainpoolP160t1: RFC 5639 curve over a 160 bit prime field
+  brainpoolP192r1: RFC 5639 curve over a 192 bit prime field
+  brainpoolP192t1: RFC 5639 curve over a 192 bit prime field
+  brainpoolP224r1: RFC 5639 curve over a 224 bit prime field
+  brainpoolP224t1: RFC 5639 curve over a 224 bit prime field
+  brainpoolP256r1: RFC 5639 curve over a 256 bit prime field
+  brainpoolP256t1: RFC 5639 curve over a 256 bit prime field
+  brainpoolP320r1: RFC 5639 curve over a 320 bit prime field
+  brainpoolP320t1: RFC 5639 curve over a 320 bit prime field
+  brainpoolP384r1: RFC 5639 curve over a 384 bit prime field
+  brainpoolP384t1: RFC 5639 curve over a 384 bit prime field
+  brainpoolP512r1: RFC 5639 curve over a 512 bit prime field
+  brainpoolP512t1: RFC 5639 curve over a 512 bit prime field
+  SM2       : SM2 curve over a 256 bit prime field
+
+En este ejemplo, estoy usando prime256v1 (secp256r1), que es adecuado para la
+firma JWT, esta es la curva utilizada para ES256.
+
+3) Ahora puedes generar una clave privada:
+
+$ openssl ecparam -name prime256v1 -genkey -noout -out private-key.pem
+
+Esto debería proporcionarle un archivo PEM que contiene su clave privada EC, que se parece a lo siguiente:
+
+-----BEGIN EC PRIVATE KEY-----
+MHcCAQEEIKEubpBiHkZQYlORbCy8gGTz8tzrWsjBJA6GfFCrQ98coAoGCCqGSM49
+AwEHoUQDQgAEOr6rMmRRNKuZuwws/hWwFTM6ECEEaJGGARCJUO4UfoURl8b4JThG
+t8VDFKeR2i+ZxE+xh/wTBaJ/zvtSqZiNnQ==
+-----END EC PRIVATE KEY-----
+
+4) Creación de una clave pública EC a partir de una clave privada mediante
+OpenSSL.
+
+Ahora que tienes tu clave privada, puedes usarla para generar otro PEM, que
+contenga solo tu clave pública.
+
+$ openssl ec -in private-key.pem -pubout -out public-key.pem
+
+Esto debería proporcionarle otro archivo PEM, que contiene la clave pública:
+
+-----BEGIN PUBLIC KEY-----
+MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEOr6rMmRRNKuZuwws/hWwFTM6ECEE
+aJGGARCJUO4UfoURl8b4JThGt8VDFKeR2i+ZxE+xh/wTBaJ/zvtSqZiNnQ==
+-----END PUBLIC KEY-----
+
+5) Creación de un certificado autofirmado EC mediante OpenSSL
+
+Ahora que tiene una clave privada, puede usarla para generar un certificado
+autofirmado. Esto no es obligatorio, pero le permite usar la clave para la
+autenticación de servidor/cliente o para obtener funcionalidades específicas de
+X509 en tecnologías como JWT y SAML.
+
+$ openssl req -new -x509 -key private-key.pem -out cert.pem -days 360
+
+Esto generará nuevamente otro archivo PEM, esta vez conteniendo el certificado
+creado por su clave privada:
+
+-----BEGIN CERTIFICATE-----
+MIIB4DCCAYWgAwIBAgIUH53ssiPt4JEGx+VJyntCpHL+TdAwCgYIKoZIzj0EAwIw
+RTELMAkGA1UEBhMCQVUxEzARBgNVBAgMClNvbWUtU3RhdGUxITAfBgNVBAoMGElu
+dGVybmV0IFdpZGdpdHMgUHR5IEx0ZDAeFw0yMDA3MTgxMTE4NDNaFw0yMTA3MTMx
+MTE4NDNaMEUxCzAJBgNVBAYTAkFVMRMwEQYDVQQIDApTb21lLVN0YXRlMSEwHwYD
+VQQKDBhJbnRlcm5ldCBXaWRnaXRzIFB0eSBMdGQwWTATBgcqhkjOPQIBBggqhkjO
+PQMBBwNCAAQ6vqsyZFE0q5m7DCz+FbAVMzoQIQRokYYBEIlQ7hR+hRGXxvglOEa3
+xUMUp5HaL5nET7GH/BMFon/O+1KpmI2do1MwUTAdBgNVHQ4EFgQU9yjFBqAZOMv+
+cD6a3KHTWuYrcFEwHwYDVR0jBBgwFoAU9yjFBqAZOMv+cD6a3KHTWuYrcFEwDwYD
+VR0TAQH/BAUwAwEB/zAKBggqhkjOPQQDAgNJADBGAiEAwCpA5Nx083qqUqU6LUd0
+vzZLK4etuInxNvXohXH5LiACIQDSI63J4DiN3dq2sPPLw5iQi9MMefcV1iAySbKT
+B9BaAw==
+-----END CERTIFICATE-----
+
+6) Puedes dejar las cosas ahí, pero quizás prefieras un archivo PFX que contenga
+tanto el certificado como la clave privada para exportar y usar.
+
+Puedes hacer esto usando el comando pkcs12 de OpenSSL:
+
+$ openssl pkcs12 -export -inkey private-key.pem -in cert.pem -out cert.pfx
+
+OpenSSL le pedirá que cree una contraseña para el archivo PFX. Puede dejarla en
+blanco.
+
+Esto debería dejarle con un certificado .pfx.
+
+¿Qué es el formato de certificado PFX?
+======================================
+
+Un archivo de intercambio de información personal (.pfx) es un certificado de
+archivo protegido por contraseña que se utiliza comúnmente para firmar código en
+aplicaciones. Se deriva del certificado de formato de archivo PKCS 12 y almacena
+múltiples objetos criptográficos en un solo archivo:
+
+Certificados de clave pública X.509
+Claves privadas X.509
+CRL X.509
+datos genéricos
+
+Existen otros tipos de formatos de certificados como .pem, .cert, .crt y algunos
+de ellos incluso pueden convertirse a .pfx y usarse para firmar código, mientras
+que otros solo pueden usarse para SSL (páginas web).
+
+Fuente
+======
+
+https://www.scottbrady.io/openssl/creating-elliptical-curve-keys-using-openssl
+
 =====
 rsync
 =====

@@ -1834,3 +1834,32 @@ servidor o permitir el uso de nuestro dominio sin usar las famosas "www".
 
 En wordpress el archivo .htaccess viene creado por defecto en el directorio raíz
 de wordpress.
+
+=========================================================
+Añadir el tipo mime para los tipos de archivos permitidos
+=========================================================
+
+1- Ubicar a Ajustes > Mime types.
+
+2- Para añadir el tipo MIME video/mp4 con la extensión mp4, simplemente agrega
+en el formulario a:
+
+video/mp4 mp4
+
+El formato es:
+[tipo-mime] [extensión]
+
+Así quedaría tu archivo con el nuevo tipo añadido, por ejemplo:
+
+audio/ac3 ac3
+audio/MPA mpa
+video/x-flv flv
+video/mp4 mp4
+
+Este es el tipo MIME estándar para archivos MP4 según IANA. Algunos sistemas
+también usan video/mpeg4, pero video/mp4 es el más ampliamente aceptado.
+
+Fuente
+======
+
+DeepSeek
