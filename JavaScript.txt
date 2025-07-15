@@ -1041,9 +1041,9 @@ console.log(myArray[1]);
 Como se muestra en el ejemplo, cambiar el valor de un ítem de un array es
 posible.
 
------
-
+======================================
 Añadir elementos a un array con push()
+======================================
 
 var myArray = ['hello','world'];
 console.log(myArray);
@@ -1059,6 +1059,37 @@ Método join y split en arrays
 var myArray = [ 'h', 'e', 'l', 'l', 'o' ];
 var myString = myArray.join('');   // 'hello'
 var mySplit = myString.split('');  // [ 'h', 'e', 'l', 'l', 'o' ]
+
+===================================
+Eliminar el último elemento (pop())
+===================================
+
+let myArray = ['hello', 'world', 'new'];
+console.log(myArray); // Array [ "hello", "world", "new" ]
+
+myArray.pop(); // Elimina el último elemento
+console.log(myArray); // Array [ "hello", "world" ]
+
+=====================================
+Eliminar el primer elemento (shift())
+=====================================
+
+let myArray = ['hello', 'world', 'new'];
+console.log(myArray); // Array [ "hello", "world", "new" ]
+
+myArray.shift(); // Elimina el primer elemento
+console.log(myArray); // Array [ "world", "new" ]
+
+=====================================================
+Eliminar todos los elementos que coincidan (filter())
+=====================================================
+
+let myArray = ['hello', 'world', 'new', 'world'];
+console.log(myArray); // Array [ "hello", "world", "new", "world" ]
+
+// Crea un nuevo array sin los elementos 'world'
+let filteredArray = myArray.filter(item => item !== 'world');
+console.log(filteredArray); // Array [ "hello", "new" ]
 
 =======
 Objetos
