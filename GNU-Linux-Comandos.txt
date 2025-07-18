@@ -11898,7 +11898,7 @@ $ ffmpeg -i input.mp4 -vcodec libx264 -crf 23 -preset slower output.mp4.
 Para reducir la resolución, puedes combinar el filtro scale con el códec. Por
 ejemplo, para convertir a 720p:
 
-$ ffmpeg -i input.mp4 -vf "scale=-1:720" -vcodec libx264 -crf 23 output.mp4.
+$ ffmpeg -i input.mp4 -vf "scale=-1:720" -vcodec libx264 -crf 23 output.mp4
 
 El valor -1 mantiene la relación de aspecto automáticamente. Si necesitas
 cambiar el framerate para ahorrar espacio, usa -r 30 para establecer 30 fps.
