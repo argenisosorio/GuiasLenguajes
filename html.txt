@@ -4820,6 +4820,87 @@ Imagen como spinner de carga, da vueltas
 </body>
 </html>
 
+================================================================
+Imagen como spinner de carga, da vueltas y desaparece suavemente
+================================================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spinner</title>
+  <style>
+    /* Creamos el diseño del spinner y lo centramos en la página */
+    .spinner-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #00a4e1; /* Fondo gris oscuro con opacidad */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999; /* Asegura que el spinner esté en la parte superior */
+      opacity: 1;
+      transition: opacity 1s ease; /* Transición suave de opacidad */
+    }
+
+    /* Modificamos el tamaño de la imagen para que sea más grande */
+    .spinner-img {
+      width: 100px;
+      height: 100px;
+      animation: spin 1s infinite linear; /* Agregamos la animación */
+    }
+
+    /* Pasos de la animación con keyframes */
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Clase para detener la animación */
+    .stop-spin {
+      animation-play-state: paused;
+    }
+  </style>
+</head>
+<body>
+  <!-- Mostramos la imagen como spinner de carga -->
+  <div class="spinner-container" id="spinnerContainer">
+    <!-- Cambiamos el div con la clase "spinner" por una imagen -->
+    <img src="robot.png" alt="Spinner" class="spinner-img">
+  </div>
+
+  <!-- Contenido de la página -->
+  <h1>Contenido de la página</h1>
+  <p>Este es un ejemplo de página con un spinner.</p>
+
+  <script>
+    // Función para ocultar el spinner después de 5 segundos
+    window.addEventListener('load', function() {
+      var spinnerContainer = document.getElementById('spinnerContainer');
+      var spinnerImg = document.querySelector('.spinner-img');
+
+      // Retraso de 5 segundos (5000 milisegundos)
+      setTimeout(function() {
+        spinnerImg.classList.add('stop-spin'); // Detiene la animación
+        spinnerContainer.style.opacity = '0';   // Inicia el desvanecimiento
+
+        // Opcional: después de la transición, oculta el spinner completamente
+        setTimeout(function() {
+          spinnerContainer.style.display = 'none';
+        }, 1000); // 1000ms = duración de la transición
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
+
 ========================
 Insertar videos en html5
 ========================
