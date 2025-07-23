@@ -1635,3 +1635,40 @@ Fuente
 ======
 
 Deepseek
+
+==========================================
+Agrupar commits con squash o aplastamiento
+==========================================
+
+En Git, puedes agrupar múltiples commits en uno solo (squash) durante un merge
+usando la opción --squash. Esto es útil para mantener un historial limpio al
+integrar ramas con muchos commits pequeños. Aquí te explico cómo hacerlo:
+
+1. Squash durante merge:
+
+# Desde la rama destino (ej: main):
+
+$ git checkout main
+
+$ git merge --squash nombre-de-la-rama
+
+Git combinará los cambios de la rama en un único commit pendiente.
+
+2- Hacer el commit:
+
+$ git commit -m "Mensaje descriptivo del squash"
+
+Qué hace esto:
+
+-Combina todos los commits de la rama nombre-de-la-rama en un solo conjunto de
+cambios.
+
+-No preserva el historial individual de commits de la rama fuente
+nombre-de-la-rama.
+
+-Requiere un git commit explícito para finalizar el proceso.
+
+Fuente
+======
+
+Deepseek
