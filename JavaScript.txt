@@ -1,6 +1,6 @@
-=========================
-Guía de JavaScript  by dM
-=========================
+========================
+Guía de JavaScript by dM
+========================
 
 La sintaxis de JavaScript es muy similar a la de otros lenguajes de programación
 como Java y C. Las normas básicas que definen la sintaxis de JavaScript son las
@@ -3025,8 +3025,7 @@ no este vacío -->
 </body>
 </html>
 
--------------------------------------
-
+====
 JSON
 ====
 
@@ -8671,6 +8670,23 @@ var oJson = {
   "res_linkedin": "GwebSearch"
 }
 alert(oJson.jobtitle);
+
+JSON.parse()
+============
+
+Puedes usa JSON.parse() Para "descomprimir" un texto json comprimido y verlo en
+formato árbol (usando JavaScript):
+
+Comprimido:
+{"peliculas":[{"año":1994,"autores":[{"nombre":"Quentin Tarantino","generos":[{"nombre":"Crimen"},{"nombre":"Thriller"}]}],"titulo":"Pulp Fiction"},{"año":2008,"autores":[{"nombre":"Christopher Nolan","generos":[{"nombre":"Acción"},{"nombre":"Ciencia Ficción"}]}],"titulo":"The Dark Knight"},{"año":1997,"autores":[{"nombre":"James Cameron","generos":[{"nombre":"Romance"},{"nombre":"Drama"}]}],"titulo":"Titanic"},{"año":2021,"autores":[{"nombre":"Denis Villeneuve","generos":[{"nombre":"Ciencia Ficción"},{"nombre":"Aventura"}]}],"titulo":"Dune"}]}
+
+Descomprimir:
+console.log(JSON.parse('{"peliculas":[{"año":1994,"autores":[{"nombre":"Quentin Tarantino","generos":[{"nombre":"Crimen"},{"nombre":"Thriller"}]}],"titulo":"Pulp Fiction"},{"año":2008,"autores":[{"nombre":"Christopher Nolan","generos":[{"nombre":"Acción"},{"nombre":"Ciencia Ficción"}]}],"titulo":"The Dark Knight"},{"año":1997,"autores":[{"nombre":"James Cameron","generos":[{"nombre":"Romance"},{"nombre":"Drama"}]}],"titulo":"Titanic"},{"año":2021,"autores":[{"nombre":"Denis Villeneuve","generos":[{"nombre":"Ciencia Ficción"},{"nombre":"Aventura"}]}],"titulo":"Dune"}]}'));
+
+Fuente
+======
+
+DeepSeek
 
 =========================================
 Obtener fecha y hora actual en JavaScript
