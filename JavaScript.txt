@@ -1,6 +1,6 @@
-=========================
-Guía de JavaScript  by dM
-=========================
+========================
+Guía de JavaScript by dM
+========================
 
 La sintaxis de JavaScript es muy similar a la de otros lenguajes de programación
 como Java y C. Las normas básicas que definen la sintaxis de JavaScript son las
@@ -3025,8 +3025,7 @@ no este vacío -->
 </body>
 </html>
 
--------------------------------------
-
+====
 JSON
 ====
 
@@ -8672,6 +8671,23 @@ var oJson = {
 }
 alert(oJson.jobtitle);
 
+JSON.parse()
+============
+
+Puedes usa JSON.parse() Para "descomprimir" un texto json comprimido y verlo en
+formato árbol (usando JavaScript):
+
+Comprimido:
+{"peliculas":[{"año":1994,"autores":[{"nombre":"Quentin Tarantino","generos":[{"nombre":"Crimen"},{"nombre":"Thriller"}]}],"titulo":"Pulp Fiction"},{"año":2008,"autores":[{"nombre":"Christopher Nolan","generos":[{"nombre":"Acción"},{"nombre":"Ciencia Ficción"}]}],"titulo":"The Dark Knight"},{"año":1997,"autores":[{"nombre":"James Cameron","generos":[{"nombre":"Romance"},{"nombre":"Drama"}]}],"titulo":"Titanic"},{"año":2021,"autores":[{"nombre":"Denis Villeneuve","generos":[{"nombre":"Ciencia Ficción"},{"nombre":"Aventura"}]}],"titulo":"Dune"}]}
+
+Descomprimir:
+console.log(JSON.parse('{"peliculas":[{"año":1994,"autores":[{"nombre":"Quentin Tarantino","generos":[{"nombre":"Crimen"},{"nombre":"Thriller"}]}],"titulo":"Pulp Fiction"},{"año":2008,"autores":[{"nombre":"Christopher Nolan","generos":[{"nombre":"Acción"},{"nombre":"Ciencia Ficción"}]}],"titulo":"The Dark Knight"},{"año":1997,"autores":[{"nombre":"James Cameron","generos":[{"nombre":"Romance"},{"nombre":"Drama"}]}],"titulo":"Titanic"},{"año":2021,"autores":[{"nombre":"Denis Villeneuve","generos":[{"nombre":"Ciencia Ficción"},{"nombre":"Aventura"}]}],"titulo":"Dune"}]}'));
+
+Fuente
+======
+
+DeepSeek
+
 =========================================
 Obtener fecha y hora actual en JavaScript
 =========================================
@@ -10438,6 +10454,116 @@ Diferencia clave:
 
 Las plantillas literales preservan los saltos de línea exactamente como los
 escribes.
+
+Fuente
+======
+
+DeepSeek
+
+==========================
+localStorage del navegador
+==========================
+
+El localStorage del navegador permite almacenar datos de forma persistente en el
+cliente (el navegador web) usando JavaScript. Las operaciones básicas que puedes
+realizar son:
+
+1. Guardar un dato (setItem)
+
+Almacena un valor con una clave específica. Los datos se guardan como strings.
+
+localStorage.setItem('clave', 'valor');
+
+// Ejemplo:
+localStorage.setItem('usuario', 'Juan Pérez');
+localStorage.setItem('edad', '30'); // Los números se convierten a string
+
+2. Obtener un dato (getItem)
+
+Recupera el valor almacenado bajo una clave específica. Si no existe, devuelve
+null.
+
+const valor = localStorage.getItem('clave');
+
+// Ejemplo:
+const usuario = localStorage.getItem('usuario'); // "Juan Pérez"
+const edad = localStorage.getItem('edad'); // "30" (como string)
+
+3. Eliminar un dato (removeItem)
+
+Borra un elemento específico del localStorage usando su clave.
+
+localStorage.removeItem('clave');
+// Ejemplo:
+localStorage.removeItem('edad'); // Elimina el dato con clave 'edad'
+
+4. Limpiar todo (clear)
+
+Elimina todos los datos almacenados en el localStorage del dominio actual.
+
+localStorage.clear();
+
+5. Obtener la cantidad de elementos (length)
+
+Devuelve el número de elementos almacenados.
+
+const cantidad = localStorage.length;
+console.log(cantidad); // Ejemplo: 2
+
+6. Obtener una clave por índice (key)
+
+Recupera el nombre de la clave en una posición específica (útil para iterar).
+
+const clave = localStorage.key(indice);
+
+// Ejemplo:
+localStorage.setItem('nombre', 'Ana');
+localStorage.setItem('ciudad', 'Madrid');
+
+console.log(localStorage.key(0)); // "nombre" (puede variar según el navegador)
+
+Ejemplo completo:
+
+// Guardar datos
+localStorage.setItem('language', 'es');
+localStorage.setItem('theme', 'dark');
+
+// Obtener datos
+console.log(localStorage.getItem('language')); // "es"
+
+// Eliminar un dato
+localStorage.removeItem('theme');
+
+// Iterar sobre todas las claves
+for (let i = 0; i < localStorage.length; i++) {
+  const clave = localStorage.key(i);
+  console.log(`${clave}: ${localStorage.getItem(clave)}`);
+}
+
+// Limpiar todo
+localStorage.clear();
+
+Consideraciones importantes¨
+
+-Solo almacena strings: Si necesitas guardar objetos o arrays, usa
+JSON.stringify() y JSON.parse():
+
+const usuario = { nombre: "Ana", edad: 25 };
+localStorage.setItem('usuario', JSON.stringify(usuario));
+
+// Recuperar el objeto
+const usuarioGuardado = JSON.parse(localStorage.getItem('usuario'));
+
+-Límite de almacenamiento: Generalmente 5MB por dominio (depende del navegador).
+
+-Persistencia: Los datos no expiran, a menos que se borren manualmente o el
+usuario limpie el almacenamiento del navegador.
+
+-Acceso solo desde el mismo origen: Un dominio no puede acceder al localStorage
+de otro.
+
+Estas operaciones son suficientes para manejar el almacenamiento local en la
+mayoría de aplicaciones web.
 
 Fuente
 ======

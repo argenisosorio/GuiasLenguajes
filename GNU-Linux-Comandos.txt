@@ -1506,10 +1506,96 @@ Ver que puertos de la pc que estan escuchando:
 
 $ sudo nmap -sT -O localhost
 
+Otros comandos:
+
+1. Escaneo Simple
+
+$ nmap <IP_o_Dominio>
+
+Ejemplo: nmap 192.168.1.1
+
+Qué hace: Escaneo rápido de puertos abiertos (solo los 1000 más comunes).
+
+2. Escaneo a Todos los Puertos (1-65535)
+
+$ nmap -p- <IP>
+
+Ejemplo: nmap -p- 192.168.1.100
+
+Qué hace: Escanea todos los puertos (puede ser lento).
+
+3. Escaneo Rápido (Puertos Comunes + Timing Agresivo)
+
+$nmap -T4 -F <IP>
+
+-T4: Modo rápido (mayor velocidad, menor precisión).
+
+-F: Escanea solo los 100 puertos más comunes.
+
+4. Detección de Sistema Operativo y Servicios
+bash
+
+$ nmap -A <IP>
+
+-A: Activa detección de OS (Operating System), versiones de servicios y scripts básicos.
+
+5. Escaneo Solo a Puertos Específicos
+
+nmap -p 22,80,443 <IP>
+
+Ejemplo: nmap -p 22,80,443 192.168.1.1
+
+Qué hace: Escanea solo SSH (22), HTTP (80) y HTTPS (443).
+
+6. Escaneo de Red Completa (Subred)
+
+$ nmap 192.168.1.0/24
+
+Qué hace: Escanea todos los dispositivos en la red 192.168.1.1 a 192.168.1.254.
+
+7. Escaneo con Scripts de Nmap (NSE)
+
+$ nmap --script <nombre_script> <IP>
+
+Ejemplo:
+nmap --script vuln 192.168.1.1  # Busca vulnerabilidades conocidas
+nmap --script http-enum 192.168.1.100  # Enumera directorios web
+
+8. Escaneo Sigiloso (Sin Ping + Timing Lento)
+
+$ nmap -Pn -T2 <IP>
+
+-Pn: Omite el descubrimiento de hosts (útil si el firewall bloquea ICMP).
+
+-T2: Modo lento (para evitar detección por IDS/IPS).
+
+9. Guardar Resultados en un Archivo
+
+nmap -oN resultado.txt <IP>      # Formato normal
+nmap -oX resultado.xml <IP>      # Formato XML (para herramientas como Metasploit)
+nmap -oG resultado.grep <IP>     # Formato "grepeable"
+
+10. Detección de Firewall/IDS
+
+$ nmap -sS -f <IP>                 # Fragmenta paquetes para evadir firewalls
+
+$ nmap --script firewall-bypass <IP>
+
+Bonus: Comando para Auditar Seguridad Básica
+
+$ nmap -A -T4 -p- -v <IP>
+
+-A: Detección agresiva (OS + servicios).
+
+-T4: Velocidad alta.
+
+-v: Modo verbose (muestra detalles en tiempo real).
+
 Fuente
 ======
 
 ChatGPT
+DeepSeek
 
 ========
 Iproute2
