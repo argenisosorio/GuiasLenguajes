@@ -9620,7 +9620,36 @@ Luego de nuevo:
 
 # dpkg -i zoom_amd64.deb
 
+Si da este error
+================
+
+dpkg -i zoom_amd64.deb
+dpkg: atención: `ldconfig' no se ha encontrado en el PATH o no es ejecutable
+dpkg: atención: `start-stop-daemon' no se ha encontrado en el PATH o no es ejecutable
+dpkg: error: no se ha encontrado 2 en el PATH o no es ejecutable
+NOTA: El PATH de root debería incluir habitualmente /usr/local/sbin, /usr/sbin y /sbin.
+
+Ejecute:
+
+# export PATH=$PATH:/usr/sbin:/sbin:/usr/local/sbin
+
+$ sudo apt-get install --reinstall debianutils libc-bin dpkg
+
+$ sudo apt-get install -f  # Para corregir dependencias rotas si se requiere.
+
+Luego de nuevo:
+
+# dpkg -i zoom_amd64.deb
+
+Preparando para desempaquetar zoom_amd64.deb ...
+Desempaquetando zoom (X.X.X.XXXX) ...
+
 Listo!
+
+Fuente
+======
+
+DeepSeek
 
 ===========================================
 Ejecutar comandos en segundo plano en Linux
