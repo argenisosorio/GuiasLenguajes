@@ -3753,3 +3753,98 @@ Fuente
 ======
 
 DeepSeek
+
+=========
+Changelog
+=========
+
+En el desarrollo de software, un changelog (o "registro de cambios") es un
+archivo o documento que enumera de manera estructurada todas las modificaciones,
+actualizaciones y correcciones realizadas en una aplicación o proyecto a lo
+largo de sus diferentes versiones. Su objetivo principal es comunicar claramente
+a los usuarios, colaboradores o equipos internos qué cambios se han
+implementado, mejorado o corregido en cada lanzamiento.
+
+Características clave de un changelog:
+======================================
+
+1- Organizado por versiones:
+
+-Cada entrada corresponde a una versión específica del software (ej: v1.2.0).
+
+-Sigue convenciones como Semantic Versioning (Mayor.Minor.Patch: MAJOR.MINOR.PATCH).
+
+2- Tipos de cambios:
+
+-Nuevas características (Added).
+
+-Correcciones de errores (Fixed).
+
+-Mejoras (Improved).
+
+-Funciones obsoletas (Deprecated).
+
+-Cambios disruptivos (Breaking Changes).
+
+3- Audiencia clara:
+
+Dirigido a usuarios finales, desarrolladores o stakeholders.
+
+Ejemplo de un changelog (CHANGELOG.md) en markdown:
+
+# Changelog
+
+## [v1.2.0] - 2024-07-30
+### Added
+- Soporte para autenticación con Google.  
+- Nueva API para gestión de perfiles.  
+
+### Fixed
+- Error crítico al exportar PDF en dispositivos móviles.  
+
+### Deprecated
+- La función `loginLegacy()` será eliminada en v2.0.  
+
+---
+
+## [v1.1.3] - 2024-06-15
+### Improved
+- Rendimiento en la carga de imágenes.  
+
+¿Por qué es importante?
+=======================
+
+-Transparencia: Los usuarios saben qué esperar en cada actualización.
+
+-Mantenimiento: Ayuda a los desarrolladores a rastrear cambios históricos.
+
+-Comunicación: Reduce confusiones en equipos distribuidos.
+
+Herramientas para generar changelogs:
+=====================================
+
+Automáticos:
+
+-GitHub Releases.
+
+-Conventional Commits + standard-version.
+
+Manuales:
+
+-Archivo CHANGELOG.md en el repositorio (formato Markdown).
+
+Mejores prácticas:
+==================
+
+-Mantén un formato consistente (ej: Keep a Changelog).
+
+-Incluye fechas y enlaces a commits/PRs relevantes.
+
+-Actualízalo con cada release.
+
+Un buen changelog es la bitácora de tu proyecto.
+
+Fuente
+======
+
+DeepSeek

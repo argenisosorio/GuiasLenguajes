@@ -5065,6 +5065,53 @@ trasero entonces logre que un audio se reproduciera con:
     });
 </script>
 
+Estilos en la tag de audio
+==========================
+
+html:
+
+<div class="audio-container">
+  <audio controls class="custom-audio">
+    <source src="../../static/audio/voice-robot-cenditel.mp3" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+</div>
+
+css:
+
+/* Estilos generales */
+.custom-audio {
+  width: 100%;
+  max-width: 400px; /* Ancho máximo para desktop */
+  margin: 1rem 0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Cambiar colores (navegadores compatibles) */
+.custom-audio::-webkit-media-controls-panel {
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+.custom-audio::-webkit-media-controls-play-button,
+.custom-audio::-webkit-media-controls-mute-button {
+  filter: brightness(0.8);
+}
+
+/* Media Query para móviles */
+@media (max-width: 768px) {
+  .custom-audio {
+    max-width: 100%; /* Ocupa todo el ancho en móviles */
+    border-radius: 5px;
+  }
+}
+
+Fuente
+======
+
+DeepSeek
+
 =========================================================================
 Insertar video como fonde de un section, tipo section hero en una landing
 =========================================================================
