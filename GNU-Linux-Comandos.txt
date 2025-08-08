@@ -3610,6 +3610,54 @@ total size is 0  speedup is 0.00
 
 Fichero copiado al servidor!
 
+Comando avanzado de rsync
+=========================
+
+El comando rsync -avR --progress es una combinación de opciones muy utilizada
+con la herramienta rsync, que sirve para sincronizar archivos y directorios
+entre ubicaciones (local o remota) de manera eficiente. Aquí está el desglose de
+cada opción:
+
+Opciones:
+
+1. -a (archive mode)
+
+Activa el modo "archivo", que equivale a varias opciones combinadas:
+
+-r: Copia recursiva (incluye subdirectorios).
+
+-l: Preserva enlaces simbólicos.
+
+-p: Preserva permisos de archivos.
+
+-t: Preserva timestamps (fechas de modificación).
+
+-g: Preserva el grupo propietario.
+
+-o: Preserva el usuario propietario (requiere permisos adecuados).
+
+-D: Incluye dispositivos especiales (solo para superusuarios).
+
+2. -v (verbose)
+
+Muestra detalles durante la transferencia (archivos copiados, errores, etc.).
+
+3. -R (relative paths)
+
+Preserva la estructura relativa de las rutas. Por ejemplo, si sincronizas
+/foo/bar/file.txt y el destino es /backup, se creará /backup/foo/bar/file.txt en
+lugar de solo /backup/file.txt. Útil para mantener jerarquías exactas.
+
+4. --progress
+
+Muestra el progreso de la transferencia para cada archivo (útil para monitorear
+operaciones largas).
+
+Fuente
+======
+
+DeepSeek
+
 ====================================
 CCLive - Descargar videos de youtube
 ====================================
