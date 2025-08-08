@@ -10006,3 +10006,71 @@ Fuente
 ======
 
 DeepSeek
+
+----------
+
+Ordenar bloques en el html según como esté el tamaño de la pantalla.
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+    <style>
+    main {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-1 {
+      background-color: yellow;
+      height: 300px;
+      order: 1; /* Orden normal para desktop */
+    }
+    .section-2 {
+      background-color: blue;
+      height: 300px;
+      order: 2; /* Orden normal para desktop */
+    }
+    .section-3 {
+      background-color: red;
+      height: 300px;
+      order: 3; /* Orden normal para desktop */
+    }
+
+    /* Para móviles (menos de 600px de ancho) */
+    @media (max-width: 600px) {
+      .section-1 {
+        order: 2; /* En móvil va segundo */
+      }
+      .section-2 {
+        order: 1; /* En móvil va primero */
+      }
+      .section-3 {
+        order: 3; /* En móvil va tercero */
+      }
+    }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="section-1">
+            <p>Sección 1.</p>
+        </section>
+
+        <section class="section-2">
+            <p>Sección 2.</p>
+        </section>
+
+        <section class="section-3">
+            <p>Sección 3.</p>
+        </section>
+    </main>
+</body>
+</html>
+
+Fuente
+======
+
+DeepSeek

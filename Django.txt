@@ -8049,6 +8049,161 @@ myproject/
 
 -URLs (urls.py): Mapeo de rutas a vistas.
 
+Crear una carpeta llamada modules para incluir dentro las apps
+==============================================================
+
+Para que Django reconozca correctamente tu aplicación myapp dentro de la carpeta
+modules, sigue estos pasos:
+
+1. Asegura la estructura correcta de directorios
+
+Tu proyecto debe lucir así:
+
+myproject/
+├── modules/          # Carpeta contenedora
+│   └── myapp/        # Tu aplicación
+│       ├── __init__.py
+│       ├── apps.py
+│       ├── models.py
+│       └── ...
+├── myproject/
+│   ├── settings.py
+│   └── ...
+└── manage.py
+
+2. Configura INSTALLED_APPS en `settings.py
+
+Registra la app usando la ruta completa (incluyendo modules):
+
+INSTALLED_APPS = [
+    ...,
+    'modules.myapp',  # Ruta completa: modules + nombre de la app
+]
+
+3. Verifica la clase AppConfig en myapp/apps.py
+
+Asegúrate de que el atributo name refleje la ruta completa:
+
+# modules/myapp/apps.py
+from django.apps import AppConfig
+
+class MyappConfig(AppConfig):
+    name = 'modules.myapp'  # ¡Coincide con INSTALLED_APPS!
+
+Nota: Da error consiguiendo el template que está en modules/myapp/home.html aún
+no logro como solucionarlo.
+
+Fuente
+======
+
+DeepSeek
+
+=========================================================
+Crear un usuario administrador (superusuario) en Django 5
+=========================================================
+
+Asegúrate de tener las migraciones aplicadas (esto crea las tablas necesarias,
+incluida la de usuarios):
+
+$ python manage.py migrate
+
+Ejecuta el comando para crear el superusuario:
+
+$ python manage.py createsuperuser
+
+Completa los datos solicitados:
+
+Username (leave blank to use 'yourusername'): admin
+Email address: admin@example.com
+Password: ********
+Password (again): ********
+
+Acceder al panel de administración, inicia el servidor si no está en ejecución:
+
+$ python manage.py runserver
+
+Visita la URL del admin: http://127.0.0.1:8000/admin/
+
+Inicia sesión con las credenciales que acabas de crear.
+
+¿Olvidaste la contraseña?
+=========================
+
+Cámbiala con:
+
+$ python manage.py changepassword <username>
+
+Fuente
+======
+
+DeepSeek
+
+============================================================
+Incluir Bootstrap 5 en el proyecto de Django de manera local
+============================================================
+
+Antes se llamaba desde un CDN en la plantilla base:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Person CRUD</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
+
+Para cambiar de usar Bootstrap desde el CDN a una versión local (estática) en tu
+proyecto Django, sigue estos pasos:
+
+1. Descargar los archivos de Bootstrap
+
+Descarga los archivos CSS y JS de Bootstrap desde su sitio oficial:
+https://getbootstrap.com/docs/5.3/getting-started/download/
+
+2. Estructura de directorios
+
+Crea una estructura de directorios estáticos en tu proyecto Django:
+
+tu_proyecto/
+├── static/
+│   ├── css/
+│   │   └── bootstrap.min.css
+│   └── js/
+│       └── bootstrap.bundle.min.js
+
+3. Configuración de settings.py
+
+Asegúrate de tener configurado correctamente los archivos estáticos en settings.py:
+
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / "static"]  # Para desarrollo
+STATIC_ROOT = BASE_DIR / "staticfiles"    # Para producción (collectstatic)
+
+4. Modificar el template base.html
+
+Actualiza tu template para usar los archivos locales:
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Person CRUD</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
+
 Fuente
 ======
 
