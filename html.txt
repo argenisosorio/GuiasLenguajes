@@ -7394,6 +7394,20 @@ Texto con efecto de tecleo
     }
 }
 
+/* Tablet 800x1280 - Orientación horizontal */
+@media (min-width: 1280px) and (max-width: 800px) and (orientation: landscape) {
+  .botones {
+    border: ridge 1px red !important;
+  }
+}
+
+/* Tablet 800x1280 - Orientación vertical */
+@media (min-width: 800px) and (max-width: 1280px) and (orientation: portrait) {
+  .botones {
+    border: ridge 1px red !important;
+  }
+}
+
 Fuente
 ======
 
@@ -10069,6 +10083,20 @@ Ordenar bloques en el html según como esté el tamaño de la pantalla.
     </main>
 </body>
 </html>
+
+Explicación:
+
+Flexbox: Convertimos el main en un contenedor flex con dirección de columna.
+
+Orden inicial: Asignamos un orden lógico (1, 2, 3) para pantallas grandes.
+
+Media Query: Para pantallas menores a 600px (móviles), reordenamos:
+
+Sección 2 → order: 1 (primera posición)
+
+Sección 1 → order: 2 (segunda posición)
+
+Sección 3 → order: 3 (tercera posición, se mantiene igual)
 
 Fuente
 ======
