@@ -10102,3 +10102,57 @@ Fuente
 ======
 
 DeepSeek
+
+=================================================
+Layout Shift (Cambio de Diseño) en Desarrollo Web
+=================================================
+
+El Layout Shift (CLS - Cumulative Layout Shift) es un problema de rendimiento y
+experiencia de usuario que ocurre cuando los elementos de una página web se
+mueven repentinamente mientras el usuario está interactuando con ella. Esto
+puede ser molesto, especialmente si el usuario estaba a punto de hacer clic en
+un botón o leer un texto, y de repente el contenido se desplaza inesperadamente.
+
+Causas comunes del Layout Shift:
+
+-Imágenes o videos sin dimensiones definidas: Si una imagen o video no tiene
+width y height explícitos, el navegador no reserva espacio hasta que se carga,
+causando un desplazamiento cuando finalmente aparece.
+
+-Contenido dinámico que se carga después (ads, widgets, iframes).
+
+-Fuentes personalizadas que tardan en cargar: Si una fuente web (@font-face) no
+está precargada, el navegador puede mostrar un texto con una fuente temporal y
+luego cambiarlo, alterando el diseño.
+
+-Animaciones o cambios de tamaño con CSS/JavaScript mal implementados.
+
+Cómo solucionarlo (mejorar el CLS):
+===================================
+
+-Definir dimensiones fijas para imágenes y videos:
+
+<img src="imagen.jpg" width="600" height="400" alt="Ejemplo">
+<!-- O en CSS -->
+<style>
+  img { width: 100%; height: auto; aspect-ratio: 16/9; }
+</style>
+
+-Precargar fuentes críticas:
+
+<link rel="preload" href="fuente.woff2" as="font" type="font/woff2" crossorigin>
+
+-Evitar inserción dinámica de contenido arriba del "viewport" (zona visible).
+
+-Usar transform en lugar de propiedades que afecten el layout (width, top, left).
+
+Importancia en SEO y UX
+=======================
+
+Google considera el CLS como una métrica clave en Core Web Vitals, por lo que un
+alto Layout Shift puede afectar el posicionamiento de tu sitio.
+
+Fuente
+======
+
+DeepSeek
