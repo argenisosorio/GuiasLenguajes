@@ -3076,3 +3076,34 @@ Fuente
 
 Juan R.
 Deepseek
+
+==================
+Error de PDO_PgSQL
+==================
+
+No hay extensión
+Ninguna de las extensiones PHP soportadas (PgSQL, PDO_PgSQL) está disponible.
+
+Este error ocurre cuando PHP no tiene instaladas o habilitadas las extensiones
+necesarias para conectarse a una base de datos PostgreSQL (PgSQL o PDO_PgSQL).
+Es común en aplicaciones web (como WordPress, Drupal, o sistemas personalizados)
+que requieren PostgreSQL como backend.
+
+Solución en Debian:
+
+Sigue estos pasos para instalar y habilitar las extensiones PHP para PostgreSQL:
+
+1. Instalar las extensiones PHP-PostgreSQL
+
+$ sudo apt update
+
+$ sudo apt install php-pgsql
+
+2. Reiniciar el servidor web, en este caso Apache.
+
+$ sudo systemctl restart apache2
+
+Fuente
+======
+
+DeepSeek
