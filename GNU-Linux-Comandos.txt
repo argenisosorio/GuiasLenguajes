@@ -6130,6 +6130,12 @@ deb <respository server/mirror> <repository name> <sub branches of the repo>
 #deb http://http.us.debian.org/debian unstable main non-free contrib
 #deb-src http://http.us.debian.org/debian unstable main non-free contrib
 
+#===== Debian GNU/Linux 13 (Trixie) =====
+
+deb https://deb.debian.org/debian trixie main non-free-firmware
+deb https://security.debian.org/debian-security trixie-security main non-free-firmware
+deb https://deb.debian.org/debian trixie-updates main non-free-firmware
+
 #===== Debian GNU/Linux 12 (Bookworm) =====
 
 deb http://deb.debian.org/debian bookworm main contrib non-free non-free-firmware
@@ -12896,6 +12902,126 @@ representan números únicos, necesito cambiar el nombre de todos los archivos d
 por 06, el comando sería:
 
 $ rename 's/clc-07-25/clc-06-25/' *.pdf
+
+Fuente
+======
+
+DeepSeek
+
+=======
+TCPDump
+=======
+
+TCPDump es una herramienta de línea de comandos que permite capturar y analizar
+tráfico de red en tiempo real. Funciona escuchando paquetes que pasan por una
+interfaz de red y los muestra o guarda en un archivo para su posterior análisis.
+
+Es ampliamente utilizado por administradores de sistemas y profesionales de
+seguridad para:
+
+-Diagnóstico de problemas de red.
+
+-Detección de tráfico malicioso.
+
+-Análisis de protocolos (HTTP, DNS, SSH, etc.).
+
+-Auditoría de seguridad.
+
+2. Instalación en Debian Linux
+
+TCPDump suele estar instalado por defecto en muchas distribuciones, pero si no
+lo está, se puede instalar con:
+
+$ sudo apt update && sudo apt install tcpdump
+
+-----
+
+Verificar instalación:
+
+$ tcpdump --version
+
+-----
+
+3. Uso básico de TCPDump
+
+A. Capturar tráfico en una interfaz específica
+
+sudo tcpdump -i eth0
+
+-i eth0 Escucha en la interfaz eth0 (puede ser wlan0 para Wi-Fi).
+
+B. Capturar solo un número limitado de paquetes
+
+$ sudo tcpdump -i eth0 -c 10
+
+-c 10 Captura solo 10 paquetes y luego se detiene.
+
+-----
+
+Capturar solo 10 paquetes y luego se detiene pero de una ip específica.
+
+$ sudo tcpdump src 192.168.1.110 -c 10
+
+3. Filtros avanzados
+
+TCPDump permite filtrar por:
+
+IP de origen/destino:
+
+$ sudo tcpdump src 192.168.1.100  # Tráfico desde 192.168.1.100
+
+$ sudo tcpdump dst 8.8.8.8        # Tráfico hacia Google DNS
+
+Puerto específico (HTTP, SSH, DNS, etc.):
+
+$ sudo tcpdump port 80            # Captura tráfico HTTP
+
+$ sudo tcpdump port 22            # Captura tráfico SSH
+
+Protocolos (ICMP, TCP, UDP, etc.):
+
+$ sudo tcpdump icmp               # Solo paquetes ICMP (ping)
+
+$ sudo tcpdump tcp                # Solo tráfico TCP
+
+Combinar filtros (ej: HTTP desde una IP específica):
+
+$ sudo tcpdump "src 192.168.1.100 and port 80"
+
+5. Ejemplos prácticos
+
+Ver todo el tráfico HTTP (puerto 80):
+
+$ sudo tcpdump -i eth0 port 80 -A
+
+(-A muestra el contenido en ASCII).
+
+-----
+
+Capturar tráfico DNS (puerto 53):
+
+$ sudo tcpdump -i eth0 port 53
+
+-----
+
+Detectar conexiones SSH entrantes:
+
+$ sudo tcpdump -i eth0 dst port 22
+
+4. Alternativas a TCPDump
+
+Wireshark (GUI para análisis avanzado).
+
+TShark (versión CLI de Wireshark).
+
+ngrep (filtrado de tráfico con expresiones regulares).
+
+Conclusión
+==========
+
+TCPDump es una herramienta poderosa y esencial para el análisis de red en Linux.
+Con los filtros adecuados, puedes diagnosticar problemas, monitorear tráfico y
+mejorar la seguridad de tu sistema.
 
 Fuente
 ======
