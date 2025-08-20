@@ -1672,3 +1672,72 @@ Fuente
 ======
 
 Deepseek
+
+==============================================
+Soluciones para eliminar estas ramas obsoletas
+==============================================
+
+1. Sincronizar referencias remotas (Recomendado)
+
+$ git fetch --prune
+
+Este comando:
+
+-Actualiza todas las referencias remotas
+
+-Elimina automáticamente las ramas remotas que ya no existen en el repositorio
+remoto.
+
+-Es la solución más limpia y segura
+
+2. Eliminar ramas remotas específicas manualmente
+
+# Para eliminar una rama remota específica localmente
+
+$ git branch -d -r origin/nombre-de-la-rama
+
+# Ejemplo:
+
+$ git branch -d -r origin/feat/transplant-request-manual-create
+
+3. Configurar Git para hacer prune automáticamente
+
+# Configurar Git para que siempre haga prune al hacer fetch
+
+$ git config --global fetch.prune true
+
+# O solo para este repositorio
+
+$ git config fetch.prune true
+
+4. Limpiar ramas remotas obsoletas manualmente
+
+# Verificar qué ramas remotas existen realmente en el remoto
+
+$ git ls-remote --heads origin
+
+# Comparar con tus ramas remotas locales
+
+$ git branch -r
+
+5. Forzar la actualización completa
+
+# Si el prune normal no funciona
+
+$ git fetch --all --prune
+
+¿Por qué pasa esto?
+
+Git mantiene una copia local de las referencias remotas para:
+
+-Saber el estado de las ramas sin tener que contactar al remoto constantemente
+
+-Permitir comparaciones offline entre commits locales y remotos
+
+Recomendación: Ejecuta git fetch --prune regularmente o configura el prune
+automático para mantener tu repositorio limpio.
+
+Fuente
+======
+
+DeepSeek
