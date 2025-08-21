@@ -8795,6 +8795,22 @@ y finalmente instalamos:
 
 $ sudo apt-get install opera-stable
 
+===================================
+Instalar Opera browser en Debian 13
+===================================
+
+$ wget -qO- https://deb.opera.com/archive.key | gpg --dearmor | sudo tee /usr/share/keyrings/opera-archive-keyring.gpg >/dev/null
+
+$ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/opera-archive-keyring.gpg] https://deb.opera.com/opera-stable/ stable non-free" | sudo tee /etc/apt/sources.list.d/opera.list
+
+Antes de instalar, actualizamos los repositorios:
+
+$ sudo apt update
+
+y finalmente instalamos:
+
+$ sudo apt-get install opera-stable
+
 Actualizar Opera
 ================
 
