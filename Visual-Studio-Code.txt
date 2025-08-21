@@ -48,6 +48,22 @@ $ sudo apt update
 
 $ sudo apt install code
 
+======================================================
+Instalar Visual Studio Code en Debian 13 (Actualizado)
+======================================================
+
+$ sudo apt-get install wget gpg curl
+
+$ curl -sSL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /usr/share/keyrings/microsoft.gpg > /dev/null
+
+$ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/vscode stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
+
+$ sudo apt install apt-transport-https
+
+$ sudo apt update
+
+$ sudo apt install code
+
 =======================================
 Actualizar Visual Studio Code en Debian
 =======================================
@@ -113,6 +129,26 @@ PostgreSQL, SQLite, Redis y ElasticSearch.
 -Project Manager: Creado por Alessandro Fraganani, permite cambiarse entre
 proyectos con solo un click, se guardar los directorios o proyectos y luego se
 listan para cambiarse entre ellos.
+
+Ejemplo:
+
+[
+    {
+        "name": "Project 2",
+        "rootPath": "/home/user/Documentos/project_1",
+        "paths": [],
+        "tags": [],
+        "enabled": true
+    },
+    {
+        "name": "Project 2",
+        "rootPath": "/home/user/Documentos/project_2",
+        "paths": [],
+        "tags": [],
+        "enabled": true
+    }
+]
+
 
 -Rainbow CSV: Mejorar la legibilidad de los datos csv en vscode.
 
