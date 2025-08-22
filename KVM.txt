@@ -81,23 +81,22 @@ el botón "Adelante"
 y pulsamos el botón "Adelante"
 
 14- Ya estando en la etapa 5 le ponemos nombre a la VM, se nos muestra un
-resumen de la VM que vamos a crear y ahora damos click en el botón "Finalizar"
-esto creara la VM de manera automática e inmediatamane nos saldrá la pantalla
-para instalar el SO que hayamos seleccionado en el paso de la ISO.
+resumen de la VM que vamos a crear, le damos a configurar antes de iniciar y
+ahora damos click en el botón "Finalizar" esto creara la VM de manera automática
+(Leer las notas).
+
+Nota 1: Antes de iniciar la VM y para prevenir un posible error en el arranque
+relacionado con que no consigue el disco o el cd vaya a la configuración de la
+VM, busca la sección de "Opciones de arranque" o "Boot Options". Marca la
+opción de "CD-ROM" o "Optical Drive" y colócala como el primer dispositivo en la
+lista de arranque. Esto obliga a la VM a intentar arrancar desde la ISO antes de
+intentar el disco duro vacío. Guarda los cambios e inicia la máquina virtual.
 
 Nota 1: Si al iniciar una máquina virtual se muestra un error relacionado con
 la red o con la conexión, como que no la encuentra o no la reconoce, se puede
 solucionar yendo al virtmanager > Editar > Detalles de la conexión y buscar
 el botón con ícono de "Play" y darle click, y en la pestaña de Redes virtuales
 se puede seleccionar por defecto a "Autoiniciar al arrancar".
-
-Nota 2: Si al iniciar una máquina virtual se muestra un error relacionado con
-que no consigue el disco o el cd puede que este relacionado con las opciones
-de arranque, en la configuración de la VM, busca la sección de "Opciones de
-arranque" o "Boot Options". Marca la opción de "CD-ROM" o "Optical Drive" y
-colócala como el primer dispositivo en la lista de arranque. Esto obliga a la VM
-a intentar arrancar desde la ISO antes de intentar el disco duro vacío.
-Guarda los cambios y reinicia la máquina virtual.
 
 Fuentes
 =======
