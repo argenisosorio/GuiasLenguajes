@@ -2417,9 +2417,30 @@ probar:
 
 dd("Mensajes de prueba");
 
+-----
+
+Obtener todo el contenido del objeto request
+
 dd($request());
 
+-----
+
+dd($request->all());
+
+Devuelve todos los datos de la request incluyendo:
+
+-Datos de formulario (POST, PUT, PATCH)
+-Query strings (GET parameters)
+-Route parameters
+-Archivos subidos (pero como instancias de UploadedFile)
+
+-----
+
 dd($request->input());
+
+-Sin parámetros: Igual que all()
+-Con parámetro: Devuelve un valor específico o valor por defecto
+-NO incluye archivos en la colección cuando se usa sin parámetros
 
 =================
 Función hasFile()
