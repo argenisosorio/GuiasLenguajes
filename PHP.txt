@@ -3109,3 +3109,38 @@ Fuente
 ======
 
 DeepSeek
+
+================================================================
+Comprobar el tipo de valor de una variable (array, json, string)
+================================================================
+
+// Array simple de PHP
+$data = [
+    "nombre" => "Juan",
+    "edad" => 30,
+    "ciudad" => "Madrid"
+];
+
+// Ejemplo de JSON
+#$data = '{"nombre": "Ana", "edad": 25, "ciudad": "Barcelona"}';
+
+// Ejemplo de string
+#$data = "Hola, esto es un string simple.";
+
+// Decodifica el JSON para poder validarlo. Si no es un JSON válido, json_decode() devuelve null.
+# $decodedData = json_decode($data);
+
+if (is_array($data)) {
+    echo "La variable es un array. \n";
+} elseif (is_string($data) && json_last_error() === JSON_ERROR_NONE && $decodedData !== null) {
+    echo "La variable es un JSON. \n";
+} elseif (is_string($data)) {
+    echo "La variable es un string. \n";
+} else {
+    echo "La variable no es ni un array, ni un string ni un JSON. \n";
+}
+
+Fuente
+======
+
+Gemini IA
