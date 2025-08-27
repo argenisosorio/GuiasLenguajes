@@ -753,6 +753,16 @@ sola cadena que debe ser buscada. En este caso, el comando buscará la cadena
 
 -----
 
+$ grep --color -n -Ir -F "\$('.directions"
+
+pdf-flip.js:15:                    $('.directions .prev-button').click();
+pdf-flip.js:18:                    $('.directions .next-button').click();
+
+El \ al principio escapa el carácter $ para que grep lo interprete literalmente
+y no como un metacarácter de expresiones regulares.
+
+-----
+
 Otra forma de busqueda.
 
 $ egrep -r "Saludo" .
