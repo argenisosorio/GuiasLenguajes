@@ -3597,3 +3597,93 @@ for i in range(n_mons):
     h = mon.get_height_mm()/25.4
     d = ((w**2)+(h**2))**(0.5)
     print(("\t").join([mon_name]+[str(round(n, 1)) for n in [w, h, d]]))
+
+=======================
+Servidor http de Python
+=======================
+
+El comando python3 -m http.server es un servidor HTTP simple incorporado en
+Python que sirve archivos estáticos desde el directorio actual. Es similar a
+http-server de Node.js pero usando Python.
+
+¿Qué hace exactamente?
+======================
+
+-Inicia un servidor web en el puerto 8000 por defecto
+
+-Sirve todos los archivos del directorio actual y sus subdirectorios
+
+-Crea un listado de archivos si no hay un index.html
+
+-Accesible desde http://0.0.0.0:8000/ o quizás http://localhost:8000
+
+Ejecución básica:
+
+# Navega a tu directorio de proyecto
+
+$ cd /ruta/a/tu/proyecto
+
+# Ejecuta el servidor
+
+$ python3 -m http.server
+
+Salida esperada:
+
+Serving HTTP on 0.0.0.0 port 8000 (http://0.0.0.0:8000/) ...
+
+Opciones útiles:
+
+# Especificar puerto diferente
+$ python3 -m http.server 8080
+
+# Especificar dirección IP y puerto
+
+$ python3 -m http.server 3000 -b 0.0.0.0
+
+# Solo localhost (no accesible desde otras máquinas)
+
+$ python3 -m http.server 8000 -b 127.0.0.1
+
+# Con directorio específico
+
+$ python3 -m http.server --directory /ruta/especifica
+
+Ventajas:
+
+-No requiere instalación adicional (Python ya viene preinstalado en macOS/Linux)
+
+-Zero configuration - funciona inmediatamente
+
+-Ligero - no consume muchos recursos
+
+-Perfecto para desarrollo y pruebas locales
+
+Limitaciones:
+
+-Solo para archivos estáticos (no ejecuta código del lado del servidor)
+
+-No recarga automática (a diferencia de live-server)
+
+-Básico - sin características avanzadas
+
+Alternativas si no funciona:
+===========================
+
+# Si python3 no está disponible, prueba con:
+
+$ python -m http.server
+
+# O instala un servidor alternativo:
+
+$ npm install http-server
+
+$ http-server -p 8080
+
+Conclusión: python3 -m http.server es la forma más rápida y sencilla de servir
+archivos estáticos localmente cuando tienes Python instalado, perfecto para
+desarrollo y testing.
+
+Fuente
+======
+
+DeepSeek
