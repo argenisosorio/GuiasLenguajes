@@ -528,3 +528,111 @@ Fuente
 ======
 
 Deepseek
+
+======================
+El paquete http-server
+======================
+
+El paquete http-server es un servidor HTTP estático muy simple y ligero, de
+línea de comandos (CLI), que sirve para servir archivos estáticos (HTML, CSS,
+JavaScript, imágenes, etc.) a través de HTTP.
+
+¿Qué hace exactamente?
+
+-Sirve archivos estáticos: Crea un servidor web local que sirve cualquier
+archivo que esté en el directorio desde donde lo ejecutes.
+
+-Zero-configuration: No requiere configuración compleja. Con solo ejecutar el
+comando, ya tienes un servidor funcionando.
+
+-Útil para desarrollo: Perfecto para probar proyectos web localmente antes de
+subirlos a producción.
+
+¿Por qué se usa?
+================
+
+Problema que resuelve:
+
+Cuando abres un archivo HTML directamente desde el sistema de archivos
+(con file:///), algunas funcionalidades no funcionan correctamente debido a
+restricciones de seguridad de los navegadores:
+
+-AJAX/Fetch requests pueden estar restringidos
+
+-Módulos JavaScript (ES6 imports) no funcionan
+
+-CORS (Cross-Origin Resource Sharing) puede bloquear recursos
+
+-Algunas APIs web tienen comportamiento limitado
+
+Solución:
+
+Al servir los archivos através de HTTP (http://localhost:puerto), el navegador
+trata tu proyecto como un sitio web real, evitando estas restricciones.
+
+Cómo se usa:
+
+# 1. Navega a tu proyecto
+
+$ cd /ruta/a/mi/proyecto
+
+# 2. Instala y ejecuta el servidor
+
+$ npm install http-server
+
+$ http-server
+
+# 3. Abre tu navegador en la dirección que muestra
+# Por ejemplo: http://localhost:8080
+
+Opciones comunes:
+
+# Especificar puerto
+$ http-server -p 3000
+
+# Especificar dirección IP (útil para acceso desde otros dispositivos)
+
+$ http-server -a 0.0.0.0
+
+# Abrir automáticamente en el navegador
+
+$ http-server -o
+
+# Usar HTTPS
+
+$ http-server -S
+
+# Ver todas las opciones
+
+$ http-server --help
+
+Ejemplo de uso con tu proyecto:
+
+# Instalar (si no lo has hecho -g es para instalarlo de manera global)
+
+$ npm install -g http-server
+
+# Navegar al directorio de tu revista digital
+
+$ cd /ruta/a/tu/revista/digital
+
+# Ejecutar el servidor
+$ http-server -p 8080 -o
+
+Esto iniciará un servidor y abrirá automáticamente tu navegador en
+http://localhost:8080, donde podrás ver y probar tu lector de revistas digitales en un entorno adecuado para desarrollo.
+
+Alternativas:
+
+(Si tienes Python instalado)
+
+$ python3 -m http.server
+
+Conclusión: http-server es una herramienta esencial para desarrollo web que
+soluciona problemas de restricciones de seguridad de los navegadores al servir
+archivos localmente.
+
+Fuente
+======
+
+DeepSeek
