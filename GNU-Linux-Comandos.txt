@@ -753,6 +753,31 @@ sola cadena que debe ser buscada. En este caso, el comando buscará la cadena
 
 -----
 
+Puedes usar la opción -i. La opción -i hace que la búsqueda sea insensible a
+mayúsculas y minúsculas.
+
+El comando modificado es:
+
+$ grep --color -n -iIr debian
+
+Resultado:
+
+test.txt:100 Debian 12
+test.txt:250: on-debian
+
+Explicación de las opciones:
+
+-n	Muestra el número de línea donde se encuentra la coincidencia.
+
+-i	Ignora las diferencias entre mayúsculas y minúsculas al buscar.
+
+-I	Ignora los archivos binarios. Esto es útil para evitar que grep se queje de
+que no puede leer archivos que no son de texto.
+
+-r	Busca recursivamente en todos los archivos de los subdirectorios.
+
+-----
+
 $ grep --color -n -Ir -F "\$('.directions"
 
 pdf-flip.js:15:                    $('.directions .prev-button').click();
