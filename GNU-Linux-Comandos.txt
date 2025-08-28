@@ -13075,3 +13075,235 @@ Herramientas > Gestor de extensiones > Buscar el .oxt descargado
 
 En este caso lo he probado con spanish-dictionary.oxt que es la extensión para
 que funcione la correción de errores.
+
+=====================
+PulseAudio y PipeWire
+=====================
+
+Son servidores de sonido en Linux. Su función principal es actuar como un
+intermediario o "middleware" entre las aplicaciones y el hardware de sonido de
+tu computadora. Esto permite que varias aplicaciones reproduzcan audio al mismo
+tiempo, mezclen diferentes fuentes de sonido y controlen el volumen
+individualmente para cada una.
+
+PulseAudio:
+
+PulseAudio fue el servidor de sonido estándar en la mayoría de las
+distribuciones de Linux durante muchos años. Fue un gran avance en comparación
+con sistemas anteriores, ya que introdujo funcionalidades importantes como:
+
+-Mezcla de audio: Permite que múltiples aplicaciones (como tu reproductor de
+música, un navegador web y un juego) emitan sonido simultáneamente a través de
+la misma tarjeta de sonido.
+
+-Control por aplicación: Te permite ajustar el volumen de cada aplicación de
+forma independiente.
+
+-Streaming de red: Ofrece la capacidad de transmitir audio a otras computadoras
+en la red.
+
+-Control dinámico: Permite cambiar el dispositivo de salida de audio sobre la
+marcha, por ejemplo, de los altavoces a unos auriculares Bluetooth, sin tener
+que reiniciar las aplicaciones.
+
+A pesar de sus beneficios, PulseAudio tenía algunas limitaciones, especialmente
+en entornos de audio profesional donde se requiere baja latencia (retraso).
+También tenía algunos problemas conocidos con el alto uso de CPU y la gestión de
+dispositivos Bluetooth.
+
+PipeWire:
+
+PipeWire es un servidor de sonido más moderno y ha reemplazado a PulseAudio en
+muchas distribuciones de Linux recientes, Fue diseñado para resolver las
+deficiencias de PulseAudio y de otro servidor de sonido profesional llamado
+JACK, que se usa para producción musical.
+
+Las principales ventajas de PipeWire son:
+
+-Baja latencia: Proporciona un rendimiento mucho mejor para aplicaciones de
+audio profesional, lo que lo hace ideal para músicos y productores.
+
+-Manejo unificado: Reemplaza tanto a PulseAudio como a JACK, permitiendo que las
+aplicaciones de uso general y las de audio profesional funcionen juntas sin
+conflictos.
+
+-Gestión de video: A diferencia de PulseAudio, PipeWire también maneja
+transmisiones de video, lo que lo hace esencial para funciones como la captura
+de pantalla y el screencasting en entornos modernos como Wayland.
+
+-Mejor soporte para Bluetooth: Resuelve muchos de los problemas de conexión y
+calidad de audio que eran comunes con PulseAudio.
+
+PipeWire es compatible con las aplicaciones diseñadas para PulseAudio, lo que
+significa que puedes cambiar a PipeWire sin perder la funcionalidad de tus
+aplicaciones existentes. En la práctica, actúa como una capa de compatibilidad
+que "imita" a PulseAudio, lo que hace que la transición sea casi transparente
+para el usuario final.
+
+¿Cómo saber si uso pipewire o pulseaudio?
+========================================
+
+Escribe el siguiente comando y presiona Enter:
+
+$ pactl info | grep "Server Name"
+
+Si el resultado dice Server Name: PulseAudio (on PipeWire...), significa que
+estás usando PipeWire con una capa de compatibilidad para PulseAudio. Este es el
+comportamiento por defecto en Debian 12. Si el resultado es solo Server Name:
+PulseAudio, entonces estás usando PulseAudio.
+
+Revisar procesos en ejecución: También puedes verificar qué servicio se está
+ejecutando en segundo plano con este comando:
+
+$ ps -e | grep -E "pipewire|pulseaudio"
+
+Si ves pipewire o pipewire-pulse en la lista, estás usando PipeWire. Si ves
+pulseaudio, entonces ese es tu servidor de sonido. En muchos casos, verás ambos
+lo que confirma que PipeWire está activo para manejar el audio de PulseAudio.
+
+En resumen, la mayoría de los usuarios de Debian 12 usan PipeWire por defecto,
+ya que se ha convertido en el servidor de sonido principal de la distribución.
+
+Debian baja el volumen solo
+===========================
+
+Este problema generalmente ocurre en Debian 12 debido a la función de reducción
+automática de volumen incorporada en el servidor de sonido, que está diseñada
+para evitar la sobrecarga de sonido o para nivelar el audio de diferentes
+fuentes.
+
+Causas y Solución:
+
+La razón más común por la que el volumen se baja solo es la configuración de un
+límite de volumen o la nivelación automática de audio. Esto puede ser manejado
+por PulseAudio o PipeWire, que son los sistemas de sonido más comunes en Debian.
+Para evitar que el volumen se baje automáticamente, tienes que deshabilitar esta
+función en la configuración.
+
+A continuación, te muestro cómo hacerlo:
+
+Si usas PulseAudio
+
+$ sudo nano /etc/pulse/daemon.conf
+
+Busca la línea que contiene enable-volume-adjust o volume-limit y coméntala
+(añade un # al inicio) o cámbiale el valor a no o false. Si no encuentras una
+línea similar, puedes añadir la siguiente línea al final del archivo para
+asegurarte de que esta característica está deshabilitada:
+
+enable-volume-adjust = no
+
+Guarda el archivo y reinicia el servicio de PulseAudio para que los cambios
+surtan efecto:
+
+$ pulseaudio -k
+
+$ pulseaudio --start
+
+Si lo anterior no funciona, intenta reiniciar el sistema:
+
+$ sudo systemctl restart pulseaudio
+
+Si usas PipeWire
+
+Debian 12 usa PipeWire por defecto, por lo que es más probable que esta sea la
+causa del problema. En este caso, la solución es similar.
+
+Abre el archivo de configuración de PipeWire para el control de volumen:
+
+$ sudo nano /etc/pipewire/media-session.d/wireplumber.conf
+
+Dentro de este archivo, busca la sección [module] o [settings] y desactiva
+cualquier función relacionada con la nivelación de volumen, como
+auto-volume-adjust o volume-limiter. A menudo, esta función está controlada por
+el módulo libvolume-adjust.so o similar.
+
+Guarda los cambios y reinicia el servicio de PipeWire:
+
+$ sudo systemctl --user restart pipewire pipewire-pulse
+
+Si el problema persiste, es posible que tengas que reiniciar el sistema para que
+la configuración se aplique completamente.
+
+Que pasa si no consigo la variable para configurar el volumen
+=============================================================
+
+Si la variable enable-volume-adjust o volume-limit, no está presente. Esto es
+porque el archivo daemon.conf solo muestra los valores por defecto del demonio
+de PulseAudio.
+
+La sección que controla el volumen automático es 
+
+flat-volumes, pero en tu archivo está comentada. Esto significa que el sistema
+está usando la configuración por defecto, que puede estar causando que el
+volumen se ajuste solo.
+
+Solución
+
+Abre el archivo de configuración de PulseAudio nuevamente:
+
+$ sudo nano /etc/pulse/daemon.conf
+
+Busca la línea que dice 
+
+; flat-volumes = no.
+
+Descomenta la línea (quita el ; al principio) y cambia el valor de no a yes para
+ver si resuelve el problema. La línea debería quedar así:
+
+flat-volumes = yes
+
+Al establecer flat-volumes = yes, PulseAudio gestionará el volumen de manera más
+plana, lo que podría evitar los ajustes automáticos.
+
+Guarda el archivo y reinicia PulseAudio.
+
+$ pulseaudio -k
+
+$ pulseaudio --start
+
+Si el problema persiste, es probable que la nivelación de volumen esté siendo
+controlada por otro componente, como un módulo de PulseAudio o por PipeWire, que
+es el servidor de sonido predeterminado en Debian 12. En ese caso, te recomiendo
+seguir los pasos que te di antes para configurar PipeWire, ya que es el sistema
+que probablemente esté causando el problema.
+
+$ pulseaudio -k
+
+bash: pulseaudio: orden no encontrada
+
+El error "orden no encontrada" significa que el comando pulseaudio -k no está
+disponible en tu sistema. Esto es un indicio de que PipeWire es el servidor de
+sonido que se está ejecutando en tu Debian 12, ya que ha reemplazado a
+PulseAudio como la opción predeterminada en muchas instalaciones. Para reiniciar
+los servicios de audio y aplicar cambios de configuración, debes usar los
+comandos de PipeWire.
+
+Cómo reiniciar los servicios de PipeWire:
+
+Para reiniciar los servicios de audio de PipeWire, utiliza el siguiente comando
+en la terminal. Este comando reinicia tanto el servicio principal de PipeWire
+como su capa de compatibilidad para PulseAudio.
+
+$ systemctl --user restart wireplumber pipewire pipewire-pulse
+
+-systemctl --user: Este es el gestor de servicios de systemd para el usuario.
+Se utiliza para gestionar los servicios que se ejecutan a nivel de usuario, como
+los de audio.
+
+-restart: Le indica a systemctl que reinicie los servicios especificados.
+
+-wireplumber: Es el gestor de sesiones de PipeWire que se encarga de la
+configuración del audio.
+
+-pipewire y pipewire-pulse: Son el servicio principal de PipeWire y la capa de
+compatibilidad con PulseAudio, respectivamente.
+
+Al ejecutar este comando, los cambios que hayas hecho en los archivos de
+configuración de PipeWire se aplicarán sin necesidad de reiniciar todo el
+sistema.
+
+Fuente
+======
+
+Gemini IA
