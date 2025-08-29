@@ -10683,3 +10683,162 @@ Fuentes
 README del KAVAC
 
 DeepSeek
+
+=============================
+Programar tareas en Laravel 8
+=============================
+
+Puedes programar tareas (tareas recurrentes o "cron jobs") utilizando el
+scheduler integrado del framework.
+
+1. Definir tareas en App\Console\Kernel.php
+
+Laravel usa el archivo Kernel.php (en app/Console) para configurar tareas
+programadas.
+
+protected function schedule(Schedule $schedule)
+{
+    // Ejecutar un comando Artisan diariamente
+    $schedule->command('emails:send')->daily();
+
+    // Ejecutar una closure cada hora
+    $schedule->call(function () {
+        DB::table('recent_users')->delete();
+    })->hourly();
+
+    // Ejecutar un script del sistema cada día a las 15:00
+    $schedule->exec('node /path/to/script.js')->dailyAt('15:00');
+
+    // Programar una tarea entre semana cada 5 minutos
+    $schedule->job(new MyJob)->weekdays()->everyFiveMinutes();
+}
+
+2. Registrar el scheduler en el cron del sistema
+
+Agrega esta entrada al cron de tu servidor (usa crontab -e):
+
+* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+
+Esto ejecutará el comando schedule:run cada minuto, y Laravel se encargará de
+trigger las tareas según su frecuencia.
+
+3. Frecuencias disponibles
+
+Laravel ofrece métodos intuitivos para programar tareas:
+Método	Descripción
+->everyMinute()	Cada minuto.
+->everyFiveMinutes()	Cada 5 minutos.
+->daily()	Una vez al día (medianoche).
+->dailyAt('13:00')	Diariamente a una hora específica.
+->twiceDaily(1, 13)	Dos veces al día (1:00 y 13:00).
+->weekly()	Una vez por semana.
+->monthly()	Una vez al mes.
+->weekdays()	Solo días de semana (lunes-viernes).
+
+4. Ejemplo de tareas personalizadas:
+
+-Comandos Artisan: Crea comandos con php artisan make:command MyCommand y
+programalos.
+
+-Jobs: Usa $schedule->job(new MyJob)->daily() para despachar jobs.
+
+-Scripts externos: Usa $schedule->exec() para ejecutar scripts.
+
+5. Monitoreo y logs
+
+-Agrega ->appendOutputTo('/path/log.txt') para guardar logs.
+
+-Usa ->emailOutputTo('admin@example.com') para recibir notificaciones por
+correo.
+
+Ejemplo completo:
+
+// En App\Console\Kernel.php
+protected function schedule(Schedule $schedule)
+{
+    $schedule->command('users:cleanup')->dailyAt('03:00');
+    $schedule->job(new ProcessPayments)->weeklyOn(1, '8:00'); // Todos los lunes a las 8:00
+    $schedule->call(function () {
+        // Tarea personalizada
+    })->everySixHours();
+}
+
+Otro ejemplo
+============
+
+Tarea programada en Laravel 8 para actualizar el campo active a false del
+usuario con id = 1 una vez al día.
+
+Paso 1: Crear un comando Artisan
+
+Genera un comando personalizado para realizar la acción:
+
+php artisan make:command DeactivateUser
+
+Paso 2: Definir la lógica en el comando
+
+Edita el archivo app/Console/Commands/DeactivateUser.php:
+
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+use App\Models\User;
+
+class DeactivateUser extends Command
+{
+    protected $signature = 'user:deactivate';
+    protected $description = 'Desactiva al usuario con ID 1';
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function handle()
+    {
+        // Buscar al usuario con ID 1 y actualizar su campo 'active'
+        User::where('id', 1)->update(['active' => false]);
+
+        $this->info('Usuario con ID 1 desactivado correctamente.');
+    }
+}
+
+Paso 3: Programar la tarea en App\Console\Kernel.php
+
+Registra el comando para que se ejecute diariamente:
+
+protected function schedule(Schedule $schedule)
+{
+    $schedule->command('user:deactivate')->daily();
+}
+
+Paso 4: Configurar el cron del sistema
+
+Asegúrate de que el scheduler de Laravel se ejecute cada minuto en tu servidor.
+Agrega esto al cron (ejecuta crontab -e):
+
+* * * * * cd /ruta/a/tu/proyecto && php artisan schedule:run >> /dev/null 2>&1
+
+Resultado:
+
+-El comando user:deactivate se ejecutará una vez al día (a la medianoche por
+defecto).
+
+-Actualizará el campo active a false del usuario con id = 1.
+
+Notas:
+
+-Si quieres cambiar la hora específica, usa dailyAt('HH:MM'):
+
+$schedule->command('user:deactivate')->dailyAt('15:00'); // 3:00 PM
+
+-Verifica que la tabla users y el campo active existan en tu base de datos.
+
+¡Listo! Tu tarea programada quedará funcionando automáticamente.
+
+Fuente
+======
+
+DeepSeek
