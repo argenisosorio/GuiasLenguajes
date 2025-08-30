@@ -10684,6 +10684,85 @@ README del KAVAC
 
 DeepSeek
 
+=============================================
+Creación y ejecución de comandos en Laravel 8
+=============================================
+
+1. Crear un comando
+
+Usar Artisan
+
+$ php artisan make:command ChangePassword
+
+Esto creará un archivo en: app/Console/Commands/ChangePassword.php
+
+2. Editar el archivo app/Console/Commands/ChangePassword.php poniendo especial
+atención en signature, descriptiony handle que es dond está la lógica que el
+comando hará cuando sea ejecutado.
+
+<?php
+
+namespace App\Console\Commands;
+
+use Illuminate\Console\Command;
+use App\Models\User;
+
+class ChangePassword extends Command
+{
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'user:change-password';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Cambia la contraseña de un usuario específico';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
+    public function handle()
+    {
+        $user = User::find(1);
+        if ($user) {
+            $user->password = bcrypt('12345678');
+            $user->save();
+        }
+        $this->info("¡Contraseña del usuario {$user->name} cambiada exitosamente!");
+        return 0;
+    }
+}
+
+3. Registrar el comando
+
+En app/Console/Kernel.php, agregar el comando al array $commands:
+
+protected $commands = [
+    Commands\ChangePassword::class,
+    // Otros comandos...
+];
+
+4. Ejecutar el comando
+
+$ php artisan user:change-password
+
 =============================
 Programar tareas en Laravel 8
 =============================
@@ -10763,21 +10842,21 @@ protected function schedule(Schedule $schedule)
     })->everySixHours();
 }
 
-Otro ejemplo
-============
+Ejemplo más sencillo
+====================
 
-Tarea programada en Laravel 8 para actualizar el campo active a false del
-usuario con id = 1 una vez al día.
+Tarea programada en Laravel 8 para actualizar la contraseña del usuario con id =
+1 una vez al día a una hora específica 1 vez al día.
 
-Paso 1: Crear un comando Artisan
+1- Crear un comando Artisan
 
 Genera un comando personalizado para realizar la acción:
 
-php artisan make:command DeactivateUser
+$ php artisan make:command ChangePassword
 
-Paso 2: Definir la lógica en el comando
+2- Definir la lógica en el comando
 
-Edita el archivo app/Console/Commands/DeactivateUser.php:
+Edita el archivo app/Console/Commands/ChangePassword.php:
 
 <?php
 
@@ -10786,57 +10865,360 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Models\User;
 
-class DeactivateUser extends Command
+class ChangePassword extends Command
 {
-    protected $signature = 'user:deactivate';
-    protected $description = 'Desactiva al usuario con ID 1';
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
+    protected $signature = 'user:change-password';
 
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Cambia la contraseña de un usuario específico';
+
+    /**
+     * Create a new command instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * Execute the console command.
+     *
+     * @return int
+     */
     public function handle()
     {
-        // Buscar al usuario con ID 1 y actualizar su campo 'active'
-        User::where('id', 1)->update(['active' => false]);
-
-        $this->info('Usuario con ID 1 desactivado correctamente.');
+        $user = User::find(1);
+        if ($user) {
+            $user->password = bcrypt('12345678');
+            $user->save();
+        }
+        $this->info("¡Contraseña del usuario {$user->name} cambiada exitosamente!");
+        return 0;
     }
 }
 
-Paso 3: Programar la tarea en App\Console\Kernel.php
+3- Programar la tarea en App\Console\Kernel.php
 
-Registra el comando para que se ejecute diariamente:
+Registra el comando para que se ejecute diariamente a una hora específica
+(11:30am):
 
-protected function schedule(Schedule $schedule)
+<?php
+
+namespace App\Console;
+
+use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+
+class Kernel extends ConsoleKernel
 {
-    $schedule->command('user:deactivate')->daily();
+    /**
+     * The Artisan commands provided by your application.
+     *
+     * @var array
+     */
+    protected $commands = [
+        Commands\ChangePassword::class,
+    ];
+
+    /**
+     * Define the application's command schedule.
+     *
+     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @return void
+     */
+    protected function schedule(Schedule $schedule)
+    {
+        // $schedule->command('inspire')->hourly();
+        $schedule->command('user:change-password')->dailyAt('11:30');
+    }
+
+    /**
+     * Register the commands for the application.
+     *
+     * @return void
+     */
+    protected function commands()
+    {
+        $this->load(__DIR__.'/Commands');
+
+        require base_path('routes/console.php');
+    }
 }
 
-Paso 4: Configurar el cron del sistema
+4- Configurar el cron del sistema
 
-Asegúrate de que el scheduler de Laravel se ejecute cada minuto en tu servidor.
+Asegúrate de que el scheduler de Laravel se ejecute en tu servidor en una hora
+específica.
+
 Agrega esto al cron (ejecuta crontab -e):
 
-* * * * * cd /ruta/a/tu/proyecto && php artisan schedule:run >> /dev/null 2>&1
+30 11 * * * cd /ruta/a/tu/proyecto && php artisan schedule:run
+
+Explicación de la programación:
+
+30 = Minuto 30 (11:30)
+
+11 = Hora 11 (11 AM)
+
+* = Todos los días del mes
+
+* = Todos los meses
+
+* = Todos los días de la semana
+
+¿Qué significa esto?
+
+-Se ejecutará exactamente a las 11:30AM todos los días
+
+-Solo una vez al día.
+
+Revisará el scheduler de Laravel y ejecutará cualquier tarea programada para las
+11:30AM
 
 Resultado:
 
--El comando user:deactivate se ejecutará una vez al día (a la medianoche por
-defecto).
+-El comando user:change-passwordse ejecutará una vez al día (a la hora
+especificada).
 
--Actualizará el campo active a false del usuario con id = 1.
-
-Notas:
-
--Si quieres cambiar la hora específica, usa dailyAt('HH:MM'):
-
-$schedule->command('user:deactivate')->dailyAt('15:00'); // 3:00 PM
-
--Verifica que la tabla users y el campo active existan en tu base de datos.
+-Actualizará el password de usuario con id = 1.
 
 ¡Listo! Tu tarea programada quedará funcionando automáticamente.
+
+Verificar el scheduler actual:
+
+# Ver todos los comandos programados y sus próximas ejecuciones
+
+$ php artisan schedule:list
+
+# Ejemplo de output:
+# 0 0 * * *  php artisan backup:run .......... Next due: today at 00:00
+# 30 11 * * * php artisan user:change-password Next due: today at 11:30
+
+Crontab vs Scheduler
+====================
+
+Quien se ejecuta primero crontab o scheduler? El que se va a ejecutar es el
+crontab a las 11:30AM por ejemplo, pero un comando de laravel configurado como
+$schedule->command('user:change-password')->daily(); NO se ejecutará a menos que
+esté programado para esa hora en el scheduler de Laravel es decir a las 11:30AM.
+
+Explico con un diagrama:
+
+CRONTAB (11:30 AM) -> php artisan schedule:run -> LARAVEL SCHEDULER ->
+Revisa qué comandos están programados para EJECUTARSE AHORA
+
+Escenario actual:
+1. Crontab (ejecuta a las 11:30 AM)
+
+30 11 * * * cd /ruta/a/proyecto && php artisan schedule:run
+
+Se ejecuta puntualmente a las 11:30 AM
+
+2. Laravel Scheduler (en app/Console/Kernel.php)
+
+$schedule->command('user:change-password')->daily();
+
+-daily() = se ejecuta a medianoche (00:00)
+
+-A las 11:30 AM, el scheduler dice: "Este comando no está programado para ahora"
+
+Resultado: El comando NO se ejecutará a las 11:30 AM
+Soluciones:
+
+Opción 1: Cambiar el scheduler para que coincida con el crontab
+
+// Para ejecutar a las 11:30 AM
+$schedule->command('user:change-password')->dailyAt('11:30');
+
+// O si quieres que sea a las 11:30 AM
+$schedule->command('user:change-password')->at('11:30');
+
+Opción 2: Mantener crontab minuto a minuto (recomendado)
+bash
+
+# Ejecutar cada minuto (mejor práctica)
+* * * * * cd /ruta/a/proyecto && php artisan schedule:run
+
+// Y en el scheduler defines la hora exacta
+$schedule->command('user:change-password')->dailyAt('11:30');
+
+¿Por qué la opción 2 es la mejor?
+
+-El crontab ejecuta schedule:run cada minuto
+
+-Laravel decide inteligentemente qué comandos ejecutar basado en su programación.
+
+-Puedes tener múltiples comandos a diferentes horas sin modificar el crontab
+
+Conclusión: El crontab solo dice "cuándo revisar", pero el scheduler de Laravel
+decide "qué ejecutar". Para que tu comando se ejecute a las 11:30 AM, necesitas
+que ambos estén coordinados.
+
+Fuente
+======
+
+DeepSeek
+
+==================================================
+Impacto en el servidor del crontab minuto a minuto
+==================================================
+
+crontab minuto a minuto no genera carga significativa en el servidor. razones:
+
+schedule:run es extremadamente ligero:
+
+-Solo verifica la hora actual
+-Consulta la lista de comandos programados
+-Ejecuta SOLO los comandos que deben ejecutarse en ese minuto exacto
+-Si no hay comandos programados para ese minuto, termina inmediatamente
+
+El overhead es mínimo:
+
+-Un proceso de PHP que dura milisegundos
+
+-Consume muy pocos recursos de CPU y memoria
+
+-Mucho más eficiente que tener múltiples entradas crontab
+
+Es la práctica recomendada por Laravel:
+
+-Los creadores de Laravel diseñaron así el sistema
+-Es usado por miles de aplicaciones en producción
+-Optimizado para este uso específico
+
+Fuente
+======
+
+DeepSeek
+
+====================================
+Verificar hora del sistema y Laravel
+====================================
+
+1. Comandos directos en el servidor
+
+Ver hora actual del sistema:
+
+$ date
+
+Hora con más detalle:
+
+$ timedatectl status
+
+# Hora en formato específico
+
+$ date +"%Y-%m-%d %H:%M:%S"
+
+# Zona horaria
+
+$ cat /etc/timezone
+
+Ver hora desde PHP/Laravel:
+
+$ php artisan tinker
+>>> echo date('Y-m-d H:i:s');
+>>> echo config('app.timezone');
+
+==================================================================
+Que hacer si no coincide la hora del sistema con la de Laravel/PHP
+==================================================================
+
+$ date
+sáb 30 ago 2025 11:56:39 -04
+
+y
+
+$ php artisan tinker
+Psy Shell v0.11.11 (PHP 8.2.29 — cli) by Justin Hileman
+> echo date('Y-m-d H:i:s');
+2025-08-30 15:57:01⏎
+>
+
+Hay una discrepancia de horas
+
+Resultados de la verificación:
+
+Hora del sistema:
+
+sáb 30 ago 2025 11:56:39 -04 (hora local, UTC-4)
+
+Hora de Laravel/PHP:
+
+2025-08-30 15:57:01 (UTC, 4 horas adelante)
+
+Problema identificado: Diferente zona horaria
+
+-El sistema está en UTC-4 (hora local)
+-PHP/Laravel está usando UTC (hora universal)
+
+Solución:
+
+1. Verificar configuración actual de Laravel:
+
+php artisan tinker
+
+> echo config('app.timezone');
+
+2. Corregir la zona horaria en Laravel:
+
+Edita config/app.php:
+
+'timezone' => 'America/Caracas', // Para UTC-4
+// o
+'timezone' => 'UTC', // Si quieres que coincida con UTC (y ajustar el sistema)
+
+3. Zonas horarias comunes para UTC-4:
+
+'America/Caracas'      // Venezuela
+'America/La_Paz'       // Bolivia
+'America/Santiago'     // Chile (en verano)
+'America/Asuncion'     // Paraguay
+'America/Cuiaba'       // Brasil (parte)
+'America/Manaus'       // Brasil (parte)
+
+4. Verificar después del cambio:
+
+$ php artisan config:clear
+
+$ php artisan tinker
+
+> echo date('Y-m-d H:i:s');
+> echo config('app.timezone');
+
+# Verificar
+
+$ date
+
+¿Qué significa para tu scheduler?
+
+Si no corriges esto:
+
+-Tu comando programado para las 11:30 se ejecutará a las 15:30 hora local
+
+-Porque Laravel piensa que son las 15:30 cuando el sistema dice 11:30
+
+Comando rápido para verificar ambas zonas:
+
+$ echo "Sistema: $(date) | Laravel: $(php artisan tinker --execute="echo date('Y-m-d H:i:s');") | Zona: $(php artisan tinker --execute="echo config('app.timezone');")"
+
+Importante:
+
+Después de cambiar config/app.php, ejecuta:
+
+$ php artisan config:clear
+
+$ php artisan cache:clear
 
 Fuente
 ======
