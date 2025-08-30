@@ -10792,14 +10792,28 @@ protected function schedule(Schedule $schedule)
     $schedule->job(new MyJob)->weekdays()->everyFiveMinutes();
 }
 
+Nota:
+
+Hora exacta de ejecución:
+daily() = 00:00 (medianoche)
+dailyAt('11:30') = 11:30 AM (hora específica)
+
+Alternativas a daily():
+
+$schedule->command('comando')->hourly();      // Cada hora
+$schedule->command('comando')->everyMinute(); // Cada minuto
+$schedule->command('comando')->weekly();      // Cada semana (domingo 00:00)
+$schedule->command('comando')->monthly();     // Cada mes (día 1, 00:00)
+$schedule->command('comando')->quarterly();   // Cada trimestre
+$schedule->command('comando')->yearly();      // Cada año (Enero 1, 00:00)
+
 2. Registrar el scheduler en el cron del sistema
 
 Agrega esta entrada al cron de tu servidor (usa crontab -e):
 
-* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
+* * * * * cd /path-to-your-project && php artisan schedule:run
 
-Esto ejecutará el comando schedule:run cada minuto, y Laravel se encargará de
-trigger las tareas según su frecuencia.
+Esto ejecutará el comando schedule:run cada minuto.
 
 3. Frecuencias disponibles
 
