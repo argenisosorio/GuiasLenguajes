@@ -13336,3 +13336,141 @@ Fuente
 ======
 
 Gemini IA
+
+==============================
+GParted (GNU Partition Editor)
+==============================
+
+Es un editor de particiones de disco gratuito y de código abierto. Es una
+herramienta muy poderosa y popular que se utiliza para crear, eliminar,
+redimensionar, mover, verificar y copiar particiones en un disco duro.
+
+¿Para qué se usa?
+=================
+
+Básicamente, GParted te permite gestionar cómo está dividido el espacio de tu
+disco duro. Algunas tareas comunes incluyen:
+
+-Redimensionar una partición: Por ejemplo, hacer la partición de Windows más
+pequeña para crear espacio y instalar Linux en una nueva partición.
+
+-Crear una nueva partición: Dividir un disco en varias secciones para organizar
+tus datos (por ejemplo, una partición para el sistema operativo y otra para tus
+archivos personales).
+
+-Formatear una partición: Cambiar el sistema de archivos (por ejemplo, de NTFS a
+FAT32 o ext4).
+
+-Eliminar o recuperar particiones.
+
+-Alinear particiones para optimizar el rendimiento en discos SSD.
+
+Características clave:
+======================
+
+-Gratuito y de Código Abierto: Es parte del proyecto GNU y cualquiera puede
+usarlo, estudiarlo o modificarlo libremente.
+
+-Multiplataforma: Funciona con una gran variedad de sistemas de archivos (NTFS
+de Windows, ext4, btrfs de Linux, FAT32, HFS+ de macOS, y muchos más).
+
+-Se ejecuta desde un Live USB/CD: Dado que no puedes modificar las particiones
+de un sistema operativo que está en uso (como no puedes cortar una tabla en la
+que estás sentado), GParted normalmente se ejecuta desde un medio externo. Esto
+significa que arrancas tu computadora desde un USB o CD que contiene GParted,
+permitiéndote modificar todas las particiones de tu disco.
+
+-Se pude instalar localmente.
+
+Instalación
+===========
+
+$ sudo apt-get install gparted
+
+Fuente
+======
+
+DeepSeek
+
+=================================================
+Formatear un pendrive en FAT32 o NTFS con GParted
+=================================================
+
+1- Iniciamos dparted desde el menú de aplicaciones o en un terminal
+
+$ sudo gparted
+
+Nos solicita la contraseña en el terminal o gráficamente si lo hemos lanzado del
+menú de aplicaciones.
+
+autentificacion-gparted
+
+Una vez en Gparted lo primero que visualizamos es la estructura de particiones
+del disco duro principal del equipo
+
+Si tenemos más dispositivos de almacenamiento (discos duros, pendrives, tarjetas
+de memorias flash,…) conectados al PC podemos acceder a través del menú que se
+muestra al pulsar encima de la casilla donde puede visualizarse "/dev/sda" que
+está ubicada en la parte superior derecha del interfaz gráfico de Gparted.
+
+Ahora conetamos en un puerto USB el pendrive que queremos formatear, le damos
+unos segundos para que lo reconozca. Pulsamos el botón del menú principal
+«Gparted» y «Refrescar dispositivos».
+
+Comienza a buscar los dispositivos de almacenamiento conectados al PC.
+
+Cuando termine volvemos a pinchar en «/dev/sda» y tenemos un nuevo dispositivo,
+el pendrive, seleccionamos el pendrive.
+
+Si es un pendrive que hemos estado usando para su uso habitual seguramente
+tenemos una partición en fat o en ntfs ,pero también podemos encontrarnos con
+varias particiones de diferentes formatos, en cualquiera de las 2 situaciones
+crearemos una nueva tabla de particiones con lo que eliminaremos todas las
+particiones y el contenido de las mismas. Es muy importante que seas consciente
+que con lo que vamos a hacer borraremos el contenido del pendrive, así que si
+tienes algo importante debes hacer una copia de seguridad previo a este paso.
+
+Asegurate que en la parte superior derecha tengamos seleccionado el pendrive,
+en este caso «/dev/sdb». Si tienes seleccionado otro disco duro es posible que
+borres todo el contenido. No me hago responsable de una mala elección, por esto
+os insisto en que debemos ser muy cautos.
+
+Pinchamos en «Dispositivo» y «Crear tabla nueva de particiones».
+
+Advertencia de GParted, si estamos seguros pinchamos en «Aplicar».
+
+Crea tabla de particiones y vuelve a reconocer dispositivos.
+
+Pinchamos con el botón derecho encima del espacio etiquetado como «sin asignar»
+o de la linea que comienza por lo mismo, en la imagen pinchamos encima de la
+linea. En el menú desplegable pinchamos en «Nueva» para crear una nueva
+partición.
+
+Simplemente cambiamos en «Sistema de archivos» la opción «ext4» que es la que
+muestra por defecto por «fat32» y pinchamos en «Añadir». (Si quieres que el
+formato de la nueva partición sea «ntfs» tienes que seleccionar «ntfs».)
+
+Vemos una previsualización de como quedará el Pendrive una vez terminado el
+proceso. Yo veo la partición en fat32 que es lo que he elegido, si has elegido
+ntfs la verás como ntfs.
+
+Pinchamos en «Aplicar todas las operaciones».
+
+Confirmamos pinchando en «Aplicar».
+
+Vemos el proceso.
+
+Hasta que nos muestra el mensaje de finalizado y pinchamos en «Cerrar».
+
+Nuevo reconocimiento buscando discos duros conectados al PC.
+
+Y al terminar podemos ver como nuestro pendrive contiene una partición en
+formato «fat32», si has elegido «ntfs» lo verás como «ntfs».
+
+Llegados hasta aquí ya puedes cerrar GParted, ya tienes tu pendrive en formato
+fat32 o ntfs.
+
+Fuente
+======
+
+https://experienciasubuntu.wordpress.com/2017/03/17/formatear-pendrive-fat32-ntfs-gparted-ubuntu-16-04-y-diferentes-sabores/
