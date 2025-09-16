@@ -3754,6 +3754,132 @@ Fuente
 
 DeepSeek
 
+======================
+Versionado de software
+======================
+
+El versionado de software es un sistema estructurado para asignar números de
+versión a tus lanzamientos, lo que permite comunicar claramente el tipo de
+cambios incluidos. El estándar más utilizado es Semantic Versioning (SemVer).
+
+Semantic Versioning (SemVer) - Estándar Recomendado
+===================================================
+
+Estructura: MAYOR.MENOR.PATCH
+
+-MAYOR (X.0.0): Cambios incompatibles con versiones anteriores.
+
+-MENOR (0.X.0): Nuevas funcionalidades compatibles con versiones anteriores.
+
+-PATCH (0.0.X): Correcciones de bugs compatibles con versiones anteriores.
+
+Ejemplo: 2.5.3 -> Versión mayor 2, versión menor 5, parche 3.
+
+Cómo Implementar Versionado Semántico
+=====================================
+
+1. Versión Inicial
+
+# Comienza con la versión 0.1.0 para desarrollo inicial
+v0.1.0  # Primera versión de desarrollo
+
+2. Incrementa Versiones Según Cambios
+
+# Corrección de bug -> Incrementa PATCH
+v1.0.0 -> v1.0.1
+
+# Nueva funcionalidad compatible -> Incrementa MENOR
+v1.0.1 -> v1.1.0
+
+# Cambio incompatible -> Incrementa MAYOR
+v1.1.0 -> v2.0.0
+
+3. Etiquetas de Pre-lanzamiento (Opcional)
+
+v2.0.0-alpha    # Versión alpha (inestable)
+v2.0.0-beta     # Versión beta (testing)
+v2.0.0-rc.1     # Release candidate 1
+
+Herramientas para Versionado
+============================
+
+Control de Versiones con Git
+
+# Crear tag de versión
+
+$ git tag -a v1.2.3 -m "Versión 1.2.3: Nuevas funcionalidades de exportación"
+
+# Subir tags al repositorio
+
+$ git push --tags
+
+Automatización con Comandos
+
+# NPM (para JavaScript)
+npm version patch  # 1.2.3 -> 1.2.4
+npm version minor  # 1.2.3 -> 1.3.0
+npm version major  # 1.2.3 -> 2.0.0
+
+Otras Herramientas
+
+-GitFlow: Flujo de trabajo para ramas
+
+-Conventional Commits: Estándar para mensajes de commit
+
+-GitHub Actions: Automatización de releases
+
+Ejemplo Práctico de Evolución
+=============================
+
+v0.1.0 - Versión inicial de desarrollo
+v0.2.0 - Agregado módulo de usuarios
+v0.3.0 - Integración con API externa
+v1.0.0 - Primera versión estable
+v1.0.1 - Corrección de bug en login
+v1.1.0 - Nuevo panel de administración
+v1.1.1 - Fix en seguridad
+v2.0.0 - Cambio en base de datos (incompatible)
+
+Mejores Prácticas
+=================
+
+-Documenta los cambios en un CHANGELOG.md
+
+-Usa tags firmados para mayor seguridad
+
+-Mantén consistencia en el esquema de versionado
+
+-Comunica claramente los cambios incompatibles
+
+--Automátiza el proceso cuando sea posible
+
+Ejemplo de CHANGELOG.md
+=======================
+
+markdown
+
+# Changelog
+
+## [2.0.0] - 2024-01-15
+### Changed
+- Cambio incompatible en API de autenticación
+
+## [1.1.0] - 2024-01-10
+### Added
+- Nuevo módulo de reportes
+
+## [1.0.1] - 2024-01-05
+### Fixed
+- Corrección de vulnerabilidad XSS
+
+El versionado semántico es el estándar más aceptado porque comunica claramente
+el impacto de los cambios tanto a desarrolladores como a usuarios finales.
+
+Fuente
+======
+
+DeepSeek
+
 =========
 Changelog
 =========
