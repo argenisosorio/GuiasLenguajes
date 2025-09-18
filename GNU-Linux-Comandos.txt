@@ -4068,10 +4068,36 @@ Fuente
 ChatGPT
 
 ========================================================
-Imágenes .iso de todas las versiones de GNU/Linux Debian
+Imágenes ISO de todas las versiones de GNU/Linux Debian
 ========================================================
 
-https://cdimage.debian.org/cdimage/archive/
+Repositorio oficial: https://cdimage.debian.org/cdimage/archive/
+
+Consideraciones importantes para instalación de versiones antiguas:
+
+Si descarga una imagen ISO antigua e intenta realizar una instalación estándar,
+el proceso fallará durante la instalación de las utilidades del sistema. Esto
+ocurre porque el instalador intentará conectarse a repositorios y direcciones
+que ya no se encuentran disponibles.
+
+Procedimiento recomendado:
+
+1. Instalar solo el sistema base directamente desde la imagen DVD
+2. Acceder al sistema una vez finalizada la instalación mínima
+3. Configurar manualmente los repositorios archive de Debian
+4. Instalar software adicional desde los repositorios archive
+
+Configuración de repositorios archive:
+
+Ejemplos de configuración para /etc/apt/sources.list:
+
+### Para Debian Jessie (8):
+
+deb http://archive.debian.org/debian/ jessie main contrib
+
+### Para Debian Bullseye (11):
+
+deb http://archive.debian.org/debian/ bullseye main contrib
 
 =====
 jigdo
