@@ -24,7 +24,7 @@ y también permite la inclusión de campos tipo BLOB.
 Línea de comandos de sqlite3
 ============================
 
-# apt-get install sqlite3
+$ sudo apt install sqlite3
 
 Para abrir la línea de comandos:
 
@@ -105,3 +105,26 @@ sqlite3 db.sqlite3 <<EOF
 .mode csv
 .import data.csv table_name
 EOF
+
+=======================================================
+Exportar una tabla en formato csv con un script de bash
+=======================================================
+
+#!/bin/bash
+
+# exportar_tabla.sh
+echo "Exportando tabla de SQLite a CSV..."
+
+# Solicitar nombre de la tabla
+read -p "Nombre de la tabla: " tabla_nombre
+
+# Exportar
+sqlite3 db.sqlite3 <<EOF
+.headers on
+.mode csv
+.output ${tabla_nombre}.csv
+SELECT * FROM ${tabla_nombre};
+.quit
+EOF
+
+echo "Exportación completada: ${tabla_nombre}.csv"

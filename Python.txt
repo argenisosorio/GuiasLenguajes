@@ -3693,3 +3693,47 @@ Fuente
 ======
 
 DeepSeek
+
+===========================================================================
+Script para encontrar registros duplicados basados en las columnas cedula y
+evento_curso
+===========================================================================
+
+Permita recorrer un csv con estas columnas: id, nombre_completo, cedula,
+evento_curso, rol, certificado, uploaded_at y saber que registros están
+repetidos en la columna cedula y evento_curso.
+
+-----
+
+# -*- coding: utf-8 -*-
+import csv
+
+def main():
+    archivo_csv = 'registro_certificado.csv'  # Cambia por tu archivo
+
+    # Leer CSV y encontrar duplicados
+    duplicados = {}
+    registros = []
+
+    with open(archivo_csv, 'r', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            registros.append(row)
+            clave = (row['cedula'], row['evento_curso'])
+            if clave not in duplicados:
+                duplicados[clave] = []
+            duplicados[clave].append(row)
+
+    # Mostrar resultados
+    print(f"Total registros: {len(registros)}")
+    print("Duplicados encontrados:")
+
+    for clave, grupo in duplicados.items():
+        if len(grupo) > 1:
+            cedula, evento = clave
+            print(f"\nCedula: {cedula}, Evento: {evento} - {len(grupo)} repeticiones")
+            for registro in grupo:
+                print(f"  ID: {registro.get('id', 'N/A')}, Nombre: {registro.get('nombre_completo', 'N/A')}")
+
+if __name__ == "__main__":
+    main()
