@@ -11238,3 +11238,39 @@ Fuente
 ======
 
 DeepSeek
+
+==========================================
+Ruta para devolver la versión del software
+==========================================
+
+1) Crear un archivo con nombre VERSION.txt en la raíz del proyecto.
+
+2) En el archivo routes/web.php agregar lo siguiente:
+
+use Illuminate\Http\JsonResponse;
+
+Auth::routes();
+
+Route::group(['middleware' => ['auth']], function () {
+
+    // Ruta que devuelve la versión del software.
+    Route::get('/version', function () {
+        $versionFile = base_path('VERSION.txt');
+
+        if (file_exists($versionFile)) {
+            $version = trim(file_get_contents($versionFile));
+            return new JsonResponse(['version' => $version]);
+        }
+
+        return new JsonResponse(['version' => 'No disponible'], 404);
+    })->name('version');
+
+3- Probar la ruta: Una vez implementado, puedes probar la ruta accediendo a:
+
+http://tudominio.com/version
+
+Deberías obtener una respuesta JSON como:
+
+{
+    "version": "1.0.0"
+}
