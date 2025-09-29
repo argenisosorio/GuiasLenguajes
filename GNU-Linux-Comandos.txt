@@ -2270,6 +2270,20 @@ necesarias.
 
 -----
 
+Reparar dependencias rotas
+
+$ sudo apt --fix-broken install
+
+Este es el comando más común y efectivo para resolver problemas de dependencias.
+
+Alternativa equivalente:
+
+$ sudo apt install -f
+
+La opción -f es la abreviatura de --fix-broken.
+
+-----
+
 Saber la version de algun paquete que tengamos instalado.
 
 $ xxx --version
@@ -13591,3 +13605,218 @@ Fuente
 ======
 
 https://experienciasubuntu.wordpress.com/2017/03/17/formatear-pendrive-fat32-ntfs-gparted-ubuntu-16-04-y-diferentes-sabores/
+
+========================================
+¿Cómo funciona un gestor de contraseñas?
+========================================
+
+Un gestor de contraseñas es una herramienta que almacena y gestiona credenciales
+de forma segura.
+
+Arquitectura básica
+===================
+
+Componentes principales:
+
+-Base de datos cifrada - Donde se almacenan todas las contraseñas
+
+-Master Password - Clave maestra que desbloquea el gestor
+
+-Algoritmos de cifrado - Para proteger los datos
+
+-Generador de contraseñas - Crea contraseñas fuertes
+
+-Auto-completado - Rellena formularios automáticamente
+
+Cómo funciona el cifrado
+========================
+
+Proceso de almacenamiento:
+
+# Pseudocódigo del proceso en python
+contraseña_maestra = "tu_clave_maestra"
+contraseña_sitio_web = "password123"
+
+# 1. Derivar clave de cifrado desde la master password
+clave_cifrado = derivar_clave(contraseña_maestra, salt_aleatorio)
+
+# 2. Cifrar la contraseña
+contraseña_cifrada = aes256_cifrar(contraseña_sitio_web, clave_cifrado)
+
+# 3. Almacenar en base de datos
+base_datos.guardar({
+    'sitio': 'google.com',
+    'usuario': 'tu_email@gmail.com',
+    'contraseña': contraseña_cifrada,
+    'iv': vector_inicialization  # Para AES
+})
+
+Proceso de recuperación en python
+
+# 1. Usuario ingresa master password
+clave_cifrado = derivar_clave(contraseña_maestra, salt_almacenado)
+
+# 2. Descifrar la contraseña
+contraseña_descifrada = aes256_descifrar(contraseña_cifrada, clave_cifrado, iv)
+
+# 3. Entregar al usuario o auto-completar
+
+Tipos de gestores de contraseñas
+================================
+
+1. Basados en la nube (LastPass, 1Password, Bitwarden)
+
+-Ventaja: Sincronización entre dispositivos
+
+-Desventaja: Dependes de un tercero
+
+-Cifrado: Zero-knowledge (ellos no pueden ver tus contraseñas)
+
+2. Locales (KeePass, Enpass)
+
+Ventaja: Control total sobre tus datos
+
+Desventaja: Tú gestionas las copias de seguridad
+
+Almacenamiento: Archivo local cifrado
+
+3. Integrados en navegadores (Chrome, Firefox, Safari)
+
+Ventaja: Conveniencia
+
+Desventaja: Menor seguridad que dedicados
+
+Sincronización: Con cuenta del navegador
+
+Algoritmos de seguridad utilizados (Cifrado)
+
+-AES-256 - Estándar militar para cifrado
+
+-PBKDF2 - Deriva claves desde la master password
+
+-HMAC - Verificación de integridad
+
+Ejemplo de derivación de clave en python:
+
+# PBKDF2 aplica hash múltiples veces para hacer ataques de fuerza bruta más lentos
+clave = pbkdf2(
+    password=master_password,
+    salt=salt_aleatorio,
+    iterations=100000,  # ≈ 0.5 segundos de procesamiento
+    hash_algorithm='SHA256'
+)
+
+Características clave
+=====================
+
+1. Generador de contraseñas en python
+
+def generar_contraseña_fuerte(longitud=16):
+    caracteres = string.ascii_letters + string.digits + "!@#$%^&*"
+    return ''.join(secrets.choice(caracteres) for i in range(longitud))
+
+# Ejemplo: "x7!kP9@q2$mZ5#rW"
+
+2. Auto-completado seguro
+
+-Detecta campos de login
+
+-Rellena solo cuando se solicita
+
+-Previene phishing comparando dominios
+
+3. Auditoría de contraseñas
+
+-Detecta contraseñas débiles
+
+-Identifica contraseñas repetidas
+
+-Alerta sobre brechas de seguridad
+
+Flujo de trabajo típico
+=======================
+
+Registro en un nuevo sitio:
+
+-Usuario crea cuenta en un sitio web
+
+-Gestor sugiere contraseña fuerte
+
+-Contraseña se cifra y almacena
+
+-Datos se sincronizan entre dispositivos
+
+Login en un sitio existente:
+
+-Usuario visita sitio web
+
+-Gestor detecta campo de login
+
+-Usuario selecciona cuenta
+
+-Gestor auto-completa credenciales
+
+Consideraciones de seguridad
+
+Ventajas:
+
+-Contraseñas únicas y fuertes para cada sitio
+
+-No necesitas memorizar múltiples contraseñas
+
+-Protección contra phishing
+
+-Alerta de brechas de seguridad
+
+Riesgos:
+
+-Single point of failure - Si pierdes la master password, pierdes todo
+
+-Ataques a la master password - Debe ser muy fuerte
+
+-Vulnerabilidades del software - Aunque son raras
+
+Mejores prácticas:
+
+-Usa una master password muy fuerte (frase de paso)
+
+-Habilita 2FA en el gestor de contraseñas
+
+-Copia de seguridad regular de la base de datos
+
+-Actualiza el software regularmente
+
+Ejemplo con Bitwarden (open source) en python:
+
+# Arquitectura simplificada
+class Bitwarden:
+    def __init__(self):
+        self.db_cifrada = AES256Cipher()
+        self.sincronizacion = CloudSync()
+        self.generador = PasswordGenerator()
+
+    def guardar_credencial(self, sitio, usuario, contraseña):
+        contraseña_cifrada = self.db_cifrada.cifrar(contraseña)
+        self.db_cifrada.guardar(sitio, usuario, contraseña_cifrada)
+        self.sincronizacion.sincronizar()
+
+Conclusión
+==========
+
+Un gestor de contraseñas es como una caja fuerte digital donde:
+
+-Solo tú tienes la llave maestra
+
+-Cifrado fuerte protege tus datos
+
+-Sincronización entre dispositivos
+
+-Protección contra ataques y phishing
+
+Recomendación: Usa un gestor de contraseñas. La conveniencia y seguridad superan
+ampliamente los riesgos cuando se usa adecuadamente.
+
+Fuente
+======
+
+DeepSeek
