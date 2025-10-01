@@ -3970,7 +3970,79 @@ Mejores prácticas:
 
 Un buen changelog es la bitácora de tu proyecto.
 
-Ejemplo real: https://github.com/laravel/laravel/blob/12.x/CHANGELOG.md
+-Ejemplo real: https://github.com/laravel/laravel/blob/12.x/CHANGELOG.md
+
+-Ejemplo propio:
+
+# Historial de Liberaciones y Actualizaciones del SINIDOT
+
+## v1.1.0 (06/10/2025)
+
+Nuevas Funcionalidades:
+
+* Gestión completa de Listas de espera (activos/inactivos) con reportes PDF.
+* Módulo de trasplantes realizados y no realizados con formularios específicos.
+* Registro de solicitudes de trasplante manuales por FUNDAVENE.
+* Gestión de recepción de sueros con cambio automático de estatus.
+* Campos para exámenes HLA y PRA con historial de resultados en Solicitudes de trasplante.
+* Funcionalidad de Urgencia cero para casos renales prioritarios.
+* Formulario para registrar No Donantes por Negativas Familiares.
+* Filtros mejorados por Tipo de donante y presencia resultados de HLA.
+* Módulo de Gestión de imágenes para reportes PDF.
+* Modal de ayuda informativa en tablas de Gestión de solicitudes.
+
+Ajustes y Mejoras:
+
+* Actualización de imágenes en reportes PDF.
+* Ordenamiento prioritario por Urgencia cero.
+* Permisología por roles mejorada en todos los módulos.
+* Conteo de tiempo en diálisis en solicitudes.
+* Corrección en panel estadístico de personas en espera de trasplante.
+* Eliminación de listas independientes por filtros unificados.
+* Campo de observación para trasplantes no realizados.
+* Remoción de botones innecesarios en trasplantes realizados.
+* Mejoras de rendimiento en consultas.
+* Compatibilidad mantenida con registros existentes.
+
+## v1.0.0 (17/07/2023)
+
+Primera versión del SINIDOT que incluye:
+
+* Módulo de Autenticación.
+* Módulo de Recuperación de contraseña.
+* Módulo de Perfil de usuario.
+* Módulo de Cambio de contraseña.
+* Panel Estadístico.
+* Módulo de Gestión de usuarios.
+* Módulo de Carga Inicial.
+    * Nivel académico.
+    * Grupo Sanguíneo.
+    * Parentesco.
+    * Ocupación.
+    * Órgano.
+    * Tipo de trasplante.
+    * Centro asistencial de diálisis.
+    * Centro de trasplante.
+    * Centro generador de órganos y tejidos.
+    * Médico especialista en trasplante.
+* Módulo de Gestión SINIDOT.
+    * Gestión de Donantes.
+        * Donantes voluntarios.
+        * Donantes potenciales.
+        * Donantes efectivos.
+        * No Donantes.
+        * No Donantes Por Negativa Familiar.
+        * Donantes no aptos.
+    * Gestión de Solicitudes.
+        * Solicitudes de trasplante.
+        * Solicitudes procesadas.
+        * Solicitudes en espera de suero.
+        * Lista de espera (activos).
+        * Lista de espera (inactivos).
+        * Pacientes con donante vivo (Aptos y No Aptos).
+        * Trasplantes realizados.
+        * Solicitudes rechazadas.
+* API que retorna conteos para el Panel estadístico del Portal web de FUNDAVENE.
 
 Fuente
 ======
