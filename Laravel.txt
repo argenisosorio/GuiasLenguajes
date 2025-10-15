@@ -10792,6 +10792,17 @@ protected function schedule(Schedule $schedule)
     $schedule->job(new MyJob)->weekdays()->everyFiveMinutes();
 }
 
+// Ejecutar a horas exactas.
+protected function schedule(Schedule $schedule)
+{
+    $schedule->command('aplicant:update-status')
+        ->dailyAt('8:00')
+        ->dailyAt('10:00')
+        ->dailyAt('12:00')
+        ->dailyAt('14:00')
+        ->dailyAt('15:25');
+}
+
 Nota:
 
 Hora exacta de ejecución:
@@ -10969,6 +10980,10 @@ class Kernel extends ConsoleKernel
         require base_path('routes/console.php');
     }
 }
+
+// Tarea programada para que se ejecute 4 veces al día:
+// a las 08:00am, 10:00am, 12:00am y 14:00pm o 02:00pm
+$schedule->command('aplicant:update-status')->cron('0 8,10,12,14 * * *');
 
 4- Configurar el cron del sistema
 

@@ -8174,9 +8174,32 @@ Esto listará todas las tareas cron programadas para tu usuario.
 ¡Y listo! Cron se encargará de ejecutar tu script de respaldo de PostgreSQL a
 la hora programada. Recuerda que la ruta del script debe ser la ruta absoluta.
 
-# Ver logs del cron
+Nota: se debe crear el archivo del log porque no se crea automáticamente:
 
-$ sudo grep CRON /var/log/syslog
+$ sudo touch /var/log/respaldo_db.log
+
+$ sudo chown user:user /var/log/respaldo_db.log
+
+$ sudo chmod 644 /var/log/respaldo_db.log
+
+# Ver el log creado:
+
+$ tail -f /var/log/crontabtasks.log
+
+ó
+
+$ less /var/log/crontabtasks.log
+
+Nota: Agregar etiqueta de tiempo al log:
+
+* * * * * (date +"\%Y-\%m-\%d \%H:\%M:\%S: " ; cd /home/aosorio/Documentos/Desarrollo/Laravel/sinidot/Software/sinidot_app && php artisan schedule:run) >> /var/log/crontabtasks.log 2>&1
+
+Salida:
+
+2025-10-14 14:30:01: 
+No scheduled commands are ready to run.
+2025-10-14 14:31:01: 
+No scheduled commands are ready to run.
 
 Fuente
 ======
