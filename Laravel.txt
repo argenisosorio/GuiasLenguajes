@@ -8868,6 +8868,41 @@ if ($send_mails === true) {
     $user->notify(new UserRegistered($password));
 }
 
+Caso práctico real
+==================
+
+En el .env:
+
+# Indica cuando la aplicación debe enviar correos electrónicos.
+SEND_MAILS=true
+
+-----
+
+Crear una función helper en app/Helpers.php
+
+/* Determina si la aplicación debe enviar correos electrónicos */
+if (!function_exists('shouldSendMails')) {
+    function shouldSendMails()
+    {
+        // Si SEND_MAILS no existe en .env, retorna true
+        if (env('SEND_MAILS') === null) {
+            return true;
+        }
+
+        // Si existe, retorna su valor convertido a booleano
+        return env('SEND_MAILS') === 'true' || env('SEND_MAILS') === true;
+    }
+}
+
+-----
+
+En el controlador:
+
+// Determina si la aplicación debe enviar el correo electrónico.
+if (shouldSendMails()) {
+    // Enviar notificación...
+}
+
 =============================================================
 Obtener el valor de una variable del archivo .env desde blade
 =============================================================
