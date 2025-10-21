@@ -10827,6 +10827,17 @@ protected function schedule(Schedule $schedule)
     $schedule->job(new MyJob)->weekdays()->everyFiveMinutes();
 }
 
+// Ejecutar a horas exactas.
+protected function schedule(Schedule $schedule)
+{
+    $schedule->command('aplicant:update-status')
+        ->dailyAt('8:00')
+        ->dailyAt('10:00')
+        ->dailyAt('12:00')
+        ->dailyAt('14:00')
+        ->dailyAt('15:25');
+}
+
 Nota:
 
 Hora exacta de ejecución:
@@ -11004,6 +11015,10 @@ class Kernel extends ConsoleKernel
         require base_path('routes/console.php');
     }
 }
+
+// Tarea programada para que se ejecute 4 veces al día:
+// a las 08:00am, 10:00am, 12:00am y 14:00pm o 02:00pm
+$schedule->command('aplicant:update-status')->cron('0 8,10,12,14 * * *');
 
 4- Configurar el cron del sistema
 
@@ -11308,4 +11323,58 @@ Deberías obtener una respuesta JSON como:
 
 {
     "version": "1.0.0"
+}
+
+===================================================================
+Seeder para probar el envío correcto de correos desde la aplicación
+===================================================================
+
+$ php artisan db:seed --class=SendTestEmailSeeder
+
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
+
+class SendTestEmailSeeder extends Seeder
+{
+    /**
+     * Ejecuta el seeder que solicita un correo y envía un email de prueba.
+     *
+     * Uso:
+     * php artisan db:seed --class=SendTestEmailSeeder
+     */
+    public function run()
+    {
+        // Pide al usuario que ingrese un correo por consola
+        $email = $this->command->ask('Ingrese el correo de prueba para enviar la notificación');
+
+        // Valida formato del correo
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $this->command->error("Correo inválido: {$email}");
+            return;
+        }
+
+        $subject = 'Prueba de envío de correo - Sinidot';
+        $body = "Este es un correo de prueba enviado por el seeder SendTestEmailSeeder.\n\n"
+            . "Si recibe este mensaje, la configuración de correo está funcionando correctamaente.\n\n"
+            . "Fecha: " . now();
+
+        try {
+            // Enviar correo en texto plano
+            Mail::raw($body, function ($message) use ($email, $subject) {
+                $message->to($email)
+                        ->subject($subject);
+            });
+
+            $this->command->info("Correo de prueba enviado correctamente a: {$email}");
+        } catch (\Exception $e) {
+            // Log y mensaje de error en consola
+            Log::error("SendTestEmailSeeder error: " . $e->getMessage());
+            $this->command->error("Error al enviar el correo: " . $e->getMessage());
+        }
+    }
 }
