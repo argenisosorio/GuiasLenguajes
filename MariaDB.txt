@@ -236,6 +236,91 @@ Restaurar una base de datos
 
 $ mysql -u usuario -p nombre_base_de_datos < nombre_base_de_datos.sql
 
+Ejemplo de archivo .sql para probar la importación correcta, crear un archivo
+.sql con el siguiente contenido, para la importación correcta la base de datos
+debe estar creada y vacía dentro de MaríaDB:
+
+-- Crear base de datos
+CREATE DATABASE IF NOT EXISTS cine_db;
+USE cine_db;
+
+-- Tabla de categorías
+CREATE TABLE categorias (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Tabla de directores
+CREATE TABLE directores (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(100) NOT NULL,
+    nacionalidad VARCHAR(50)
+);
+
+-- Tabla de películas
+CREATE TABLE peliculas (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    titulo VARCHAR(150) NOT NULL,
+    año YEAR,
+    duracion INT, -- en minutos
+    categoria_id INT,
+    director_id INT,
+    FOREIGN KEY (categoria_id) REFERENCES categorias(id),
+    FOREIGN KEY (director_id) REFERENCES directores(id)
+);
+
+-- Insertar categorías
+INSERT INTO categorias (nombre) VALUES
+('Drama'),
+('Ciencia Ficción'),
+('Acción'),
+('Comedia'),
+('Terror'),
+('Romance'),
+('Aventura'),
+('Animación'),
+('Thriller'),
+('Fantasía');
+
+-- Insertar directores
+INSERT INTO directores (nombre, nacionalidad) VALUES
+('Christopher Nolan', 'Británico'),
+('Steven Spielberg', 'Estadounidense'),
+('Hayao Miyazaki', 'Japonés'),
+('James Cameron', 'Canadiense'),
+('Quentin Tarantino', 'Estadounidense'),
+('Guillermo del Toro', 'Mexicano'),
+('Martin Scorsese', 'Estadounidense'),
+('Alfonso Cuarón', 'Mexicano'),
+('Jane Campion', 'Neozelandesa'),
+('Denis Villeneuve', 'Canadiense');
+
+-- Insertar películas
+INSERT INTO peliculas (titulo, año, duracion, categoria_id, director_id) VALUES
+('El Origen', 2010, 148, 2, 1),
+('La Lista de Schindler', 1993, 195, 1, 2),
+('El Viaje de Chihiro', 2001, 125, 8, 3),
+('Avatar', 2009, 162, 2, 4),
+('Pulp Fiction', 1994, 154, 9, 5),
+('El Laberinto del Fauno', 2006, 118, 10, 6),
+('El Irlandés', 2019, 209, 1, 7),
+('Gravity', 2013, 91, 2, 8),
+('El Piano', 1993, 121, 1, 9),
+('Dune', 2021, 155, 2, 10);
+
+-- Consulta para verificar los datos
+SELECT
+    p.titulo AS 'Película',
+    p.año AS 'Año',
+    p.duracion AS 'Duración (min)',
+    c.nombre AS 'Categoría',
+    d.nombre AS 'Director',
+    d.nacionalidad AS 'Nacionalidad'
+FROM peliculas p
+LEFT JOIN categorias c ON p.categoria_id = c.id
+LEFT JOIN directores d ON p.director_id = d.id
+ORDER BY p.año DESC;
+
 ====================================
 Crear una tabla en una base de datos
 ====================================
