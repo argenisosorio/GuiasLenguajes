@@ -12212,6 +12212,56 @@ Fuente
 
 DeepSeek
 
+=======================
+Conversión de MKV a MP4
+=======================
+
+$ ffmpeg -i entrada.mkv salida.mp4
+
+Conversión con opciones recomendadas:
+
+$ ffmpeg -i entrada.mkv -c copy salida.mp4
+
+La opción -c copy es clave: Copia los flujos de video y audio sin re-codificar,
+lo que hace la conversión:
+
+-Mucho más rápida (solo cambia el contenedor)
+-Sin pérdida de calidad
+-Mismo tamaño de archivo
+
+Otras opciones útiles:
+
+Forzar reconversión (si hay problemas de compatibilidad)
+
+$ ffmpeg -i entrada.mkv -vcodec libx264 -acodec aac salida.mp4
+
+----
+
+Convertir solo el video (sin audio)
+
+$ ffmpeg -i entrada.mkv -vcodec copy -an salida.mp4
+
+----
+
+Convertir solo el audio (mantener video original)
+
+$ ffmpeg -i entrada.mkv -acodec copy -vn salida_audio.mp4
+
+Consideraciones importantes:
+
+-Compatibilidad: MP4 es más compatible con reproductores y dispositivos
+-Codecs: Ambos formatos soportan H.264, H.265, AAC, etc.
+-Metadatos: Se preservan en la mayoría de los casos
+
+¿El archivo MKV tiene codecs específicos? Puedes verlos con:
+
+$ ffmpeg -i entrada.mkv
+
+Fuente
+======
+
+DeepSeek
+
 ======================================================
 Reducir el tamaño de un archivo de wav o pasarlo a mp3
 ======================================================
