@@ -12173,18 +12173,17 @@ El parámetro -preset determina la relación entre velocidad de codificación y
 eficiencia de compresión. Los valores disponibles son: ultrafast, superfast,
 veryfast, faster, fast, medium (predeterminado), slow, slower y veryslow.
 
-Por ejemplo, -preset slower generará archivos más pequeños pero tardará más
 tiempo en procesar. La sintaxis sería:
 
 $ ffmpeg -i input.mp4 -vcodec libx264 -crf 23 -preset slower output.mp4.
 
 Para reducir la resolución, puedes combinar el filtro scale con el códec. Por
+Por ejemplo, -preset slower generará archivos más pequeños pero tardará más
 ejemplo, para convertir a 720p:
 
 $ ffmpeg -i input.mp4 -vf "scale=-1:720" -vcodec libx264 -crf 23 output.mp4
 
 El valor -1 mantiene la relación de aspecto automáticamente. Si necesitas
-cambiar el framerate para ahorrar espacio, usa -r 30 para establecer 30 fps.
 
 La compresión de audio también influye en el tamaño final. El parámetro -acodec
 aac -b:a 128k configura el códec de audio AAC con bitrate de 128 kbps. Para
@@ -12193,10 +12192,25 @@ códec H.265 (libx265) en lugar de H.264, aunque requiere más potencia de
 procesamiento: ffmpeg -i input.mp4 -vcodec libx265 -crf 28 output.mp4 (nota que
 el CRF escala diferente en x265).
 
+Cambiar el framerate para ahorrar espacio, usa -r 30 para establecer 30 fps.
+
 Fuente
 ======
 
 ChatGPT
+
+============================================================
+Reducir el tamaño o bajar el peso de un archivo de video mp4
+============================================================
+
+$ ffmpeg -i file.mkv -vcodec libx264 -crf 26 -preset medium -acodec aac -b:a 128k file_converted.mkv
+
+Un archivo de 2,4GB lo bajó a 1,5GB.
+
+Fuente
+======
+
+DeepSeek
 
 ======================================================
 Reducir el tamaño de un archivo de wav o pasarlo a mp3
