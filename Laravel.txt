@@ -11379,3 +11379,47 @@ class SendTestEmailSeeder extends Seeder
         }
     }
 }
+
+=====================================================================
+Validar si hubo cambios al actualizar un registro en el método update
+=====================================================================
+
+use Illuminate\Support\Facades\Log;
+
+/*
+|--------------------------------------------------------------------------
+| UPDATE
+|--------------------------------------------------------------------------
+*/
+public function update(Request $request, Project $project)
+{
+    $request->validate([
+        'name' => 'required',
+        'introduction' => 'required',
+    ]);
+
+    // Guardar el estado original antes de actualizar
+    $originalData = $project->getOriginal();
+
+    $project->update($request->all());
+
+    // Verificar si hubo cambios
+    if ($project->wasChanged()) {
+        Log::info("----- Hubo cambios en el registro del proyecto -----");
+    } else {
+        Log::info("No hubo cambios en el registro del proyecto.");
+    }
+
+    return response()->json('Project updated!');
+}
+
+-----
+
+Ver el log:
+
+$ tail -f storage/logs/laravel.log
+
+Fuente
+======
+
+DeepSeek
