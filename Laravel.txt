@@ -11380,7 +11380,81 @@ class SendTestEmailSeeder extends Seeder
     }
 }
 
-=====================================================================
+============
+wasChanged()
+============
+
+Propósito: Verificar si hubo cambios en los atributos del modelo durante la
+última operación de guardado.
+
+$user = User::find(1);
+$user->name = 'Nuevo nombre';
+$user->save();
+
+// Verifica si hubo cambios en el último save()
+if ($user->wasChanged()) {
+    echo "Sí hubo cambios";
+}
+
+// También puedes verificar campos específicos
+if ($user->wasChanged('name')) {
+    echo "El nombre cambió";
+}
+
+if ($user->wasChanged(['name', 'email'])) {
+    echo "Nombre o email cambiaron";
+}
+
+============
+getChanges()
+============
+
+Obtener un array con los atributos que cambiaron y sus valores nuevos (solo los
+que realmente se modificaron).
+
+$user = User::find(1);
+$user->name = 'Juan Pérez';
+$user->email = 'juan@mail.com';
+$user->save();
+
+// Obtiene los campos que cambiaron y sus nuevos valores
+$changes = $user->getChanges();
+// Resultado: ['name' => 'Juan Pérez', 'email' => 'juan@mail.com']
+
+EJEMPLO PRÁCTICO COMPLETO
+=========================
+
+$project = Project::find(1);
+
+// Estado original
+echo $project->name; // "Proyecto Viejo"
+echo $project->status; // "pending"
+
+// Modificar algunos campos
+$project->name = "Proyecto Actualizado";
+$project->status = "completed";
+// NOTA: description NO se modifica
+
+$project->save();
+
+// Verificaciones
+if ($project->wasChanged()) {
+    echo "Hubo cambios\n";
+}
+
+if ($project->wasChanged('name')) {
+    echo "El nombre cambió\n";
+}
+
+if ($project->wasChanged('description')) {
+    echo "Esto NO se ejecutará - description no cambió\n";
+}
+
+// Obtener cambios específicos
+$changes = $project->getChanges();
+// Resultado: ['name' => 'Proyecto Actualizado', 'status' => 'completed']
+// NOTA: description NO aparece en getChanges()
+
 Validar si hubo cambios al actualizar un registro en el método update
 =====================================================================
 
