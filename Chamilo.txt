@@ -67,25 +67,37 @@ mysql> show databases;
 Manual de instalación de Chamilo 1.11.32 en entorno local
 =========================================================
 
-Notas:
-Repositorio oficial de la v1.11.32: ​https://github.com/chamilo/chamilo-lms/tree/v1.11.32
-Guía de Instalación oficial de Chamilo 1.11: ​https://11.chamilo.org/documentation/installation_guide_es_ES.html
-Usaremos $ para describir los comandos que se ejecutaran con un usuario regular.
-Usaremos # para describir los comandos que se ejecutaran con un super usuario.
-Usaremos > para describir los comandos que se ejecutaran en la consola de MariaDB.
+Manual de instalación de Chamilo 1.11.32 en entorno local
 
 
-Requisitos del Sistema Operativo:
+Notas
 
-GNU/Linux Debian 13
-Git (La versión que esté disponible) ​Cómo instalar Git
-Apache v2.x ​Cómo instalar Apache
-MariaDB (La versión que esté disponible) ​Cómo instalar MariaDB.
-PHP v7.4 ​Cómo instalar PHP
+    Repositorio oficial de la v1.11.32: ​https://github.com/chamilo/chamilo-lms/tree/v1.11.32
+    Guía de Instalación oficial de Chamilo 1.11: ​https://11.chamilo.org/documentation/installation_guide_es_ES.html
+    Usaremos $ para describir los comandos que se ejecutaran con un usuario regular.
+    Usaremos # para describir los comandos que se ejecutaran con un super usuario.
+    Usaremos > para describir los comandos que se ejecutaran en la consola de MariaDB. 
 
-Pasos a seguir para la instalación
 
-1- Instalar PHP 7.4 en Debian 13:
+Requisitos del Sistema Operativo
+
+    GNU/Linux Debian 13
+    Git (La versión que esté disponible) ​Cómo instalar Git
+    Apache v2.x ​Cómo instalar Apache
+    MariaDB (La versión que esté disponible) ​Cómo instalar MariaDB.
+    PHP v7.4 ​Cómo instalar PHP 
+
+
+1. Instalación de Apache Http Sever
+
+$ sudo apt install apache2
+
+Esto creara el directorio /var/www/html/
+
+
+2. Instalación de PHP 7.4
+
+Configurar repositorio de PHP Sury
 
 $ sudo apt-get install apt-transport-https lsb-release ca-certificates
 
@@ -95,36 +107,88 @@ $ echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /
 
 $ sudo apt-get update
 
-Si da problema con la firma, volver a ejecutar:
+Solución de problemas con firma GPG
+
+Si encuentras errores relacionados con la firma GPG, ejecuta:
 
 $ sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
---2019-03-18 21:28:18--  https://packages.sury.org/php/apt.gpg
 
-y probar de nuevo el update, luego:
+$ sudo apt-get update
+
+Instalar PHP 7.4
 
 $ sudo apt-get install php7.4
 
-Verificar la correcta instalación:
+Verificar instalación
 
 $ php -v
 
-2- Descargar el código fuente de de Chamilo v1.11.32 usando Git.
+El comando debe mostrar información de PHP 7.4 si la instalación fue exitosa.
+
+
+3. Configuración de Base de Datos MariaDB
+
+Instalar MariaDB
+
+$ sudo apt update
+
+$ sudo apt install mariadb-server
+
+Verificar instalación
+
+$ mysql -V
+
+Configurar usuario y base de datos
+
+Accede a la consola de MariaDB:
+
+$ sudo mysql -u root
+
+Ejecuta los siguientes comandos dentro de la consola MariaDB:
+
+Crear usuario específico para Chamilo
+
+> CREATE USER 'chamilo'@'localhost' IDENTIFIED BY '123456';
+
+Crear base de datos
+
+> CREATE DATABASE chamilo;
+
+Asignar privilegios completos al usuario
+
+> GRANT ALL PRIVILEGES ON chamilo.* TO 'chamilo'@'localhost';
+
+Aplicar cambios de privilegios
+
+> FLUSH PRIVILEGES;
+
+
+4. Descarga del Código Fuente
+
+Clonar repositorio oficial
 
 $ git clone -b 1.11.x --single-branch https://github.com/chamilo/chamilo-lms.git chamilo-1.11
 
-Si la clonación se realizo con éxito nos debe quedar una carpeta con nombre chamilo-1.11
+Tras una clonación exitosa, se creará el directorio chamilo-1.11.
 
-3- Otorgar permisos a la carpeta de Apache.:
+
+5. Preparación del Entorno Web
+
+Configurar permisos del directorio web
 
 $ sudo chmod -R 777 /var/www/html/
 
-4- Ahora movemos la carpeta chamilo-1.11 a la carpeta de Apache:
+Mover y configurar Chamilo
+
+Mover a directorio web
 
 $ mv chamilo-1.11 /var/www/html/
 
-Y ahora renombramos la carpeta de chamilo-1.11 por chamilo.
+Renombrar directorio
 
 $ mv /var/www/html/chamilo-1.11 /var/www/html/chamilo
+
+Ajustar permisos y propiedad
 
 $ sudo chmod -R 777 /var/www/html/chamilo
 
@@ -132,100 +196,147 @@ $ sudo chown -R www-data:www-data /var/www/html/chamilo/
 
 $ sudo chmod -R 755 /var/www/html/chamilo/
 
-5- Instalar las siguientes dependencias del SO:
+
+6. Instalación de Extensiones PHP Requeridas
+
+Instalar dependencias PHP necesarias
 
 $ sudo apt install php7.4 php7.4-fpm php7.4-common php7.4-sqlite3 php7.4-curl php7.4-intl php7.4-mbstring php7.4-xmlrpc php7.4-mysql php7.4-gd php7.4-xml php7.4-cli php7.4-ldap php7.4-apcu php7.4-zip php7.4-json php7.4-tokenizer libapache2-mod-php7.4 php7.4-bcmath php7.4-soap
 
-6- Editamos el fichero php.ini, la ubicación del archivo es /etc/php/7.4/apache2/php.ini:
 
-Modificamos el valor de las variables
+7. Configuración de PHP
+
+Verificación de ruta del archivo php.ini
+
+Crear el archivo testphp.php
+
+$ nano /var/www/html/testphp.php
+
+Agrega las lineas siguientes al archivo y guárdalo:
+
+<?php
+// Muestra toda la información, por defecto INFO_ALL
+phpinfo();
+?>
+
+Para ver este archivo abre tu navegador web y teclea la IP de tu servidor seguido del archivo que acabas de crear, por ejemplo: ​http://127.0.0.1/testphp.php
+
+Si aparece la pagina azul pastel de PHP donde muestra detalles de la versión, etc, entonces se instalo correctamente además podrás ver la ruta exacta del archivo php.ini que está usando el Apache.
+
+Ajustar parámetros en php.ini
+
+Edita el archivo /etc/php/7.4/apache2/php.ini o bien en la ruta que indique el archivo testphp.php en pantalla con los siguientes valores:
 
 max_execution_time = 300
 max_input_time = 600
 memory_limit = 256M
 post_max_size = 100M
-upload_max_filesize = 100M;
-short_open_tag = Off // Agregarla
+upload_max_filesize = 100M
+short_open_tag = Off
 session.cookie_httponly = on
 date.timezone = "America/Caracas"
 
-Guardamos el fichero php.ini y reiniciamos apache
+Aplicar cambios
 
 $ sudo systemctl reload apache2.service
 
-7- Activar el modulo rewrite de Apache con los siguientes comandos:
+
+8. Configuración de Apache
+
+Habilitar módulo rewrite
 
 $ sudo /usr/sbin/a2enmod rewrite
 
 $ sudo systemctl reload apache2.service
 
-8- Ahora modificamos el fichero /etc/apache2/apache2.conf buscamos el siguiente bloque y modificamos el bloque, nos debe quedar así:
+Modificar configuración principal
+
+Edita /etc/apache2/apache2.conf y asegúrate de que estas secciones tengan la siguiente configuración:
 
 <Directory />
-        Options FollowSymLinks
-        AllowOverride All
-        Require all granted
+    Options FollowSymLinks
+    AllowOverride All
+    Require all granted
 </Directory>
 
 <Directory /usr/share>
-        AllowOverride None
-        Require all granted
+    AllowOverride None
+    Require all granted
 </Directory>
 
 <Directory /var/www/>
-        Options Indexes FollowSymLinks
-        AllowOverride All
-        Require all granted
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
 </Directory>
 
-Guardamos el fichero y luego reiniciamos Apache con:
+Aplicar cambios
 
 $ sudo systemctl reload apache2.service
 
-9- Cree /etc/apache2/conf-available/htaccessForChamilo.conf con estas líneas:
+Crear configuración específica para Chamilo
+
+Crea el archivo /etc/apache2/conf-available/htaccessForChamilo.conf con este contenido:
 
 <Directory /var/www/html/chamilo>
-	AllowOverride All
+    AllowOverride All
 </Directory>
 
-Guarde habilite y reinicie el servicio de Apache
+Habilitar y aplicar configuración
 
 $ sudo a2enconf htaccessForChamilo
 
 $ sudo systemctl restart apache2.service
 
-10- Instalar Composer
 
-Descargamos composer:
+9. Instalación de Composer
+
+Descargar e instalar Composer
 
 $ php -r "readfile('https://getcomposer.org/installer');" | php
 
-El comando anterior nos descarga el fichero "composer.phar"
-
-Movemos composer a /usr/local/bin, lo cual nos permitirá que este disponible desde donde sea que lo necesitemos:
-
 $ sudo mv composer.phar /usr/local/bin/composer
 
-Comprobamos la instalación con el siguiente comando:
+Verificar instalación
 
 $ composer
 
-Solo si da error el comando anterior, hay que crear un enlace simbólico porque el sistema está buscando en script en /usr/bin/composer.
+Solución alternativa para enlace simbólico
+
+Si el comando anterior muestra error, crea un enlace simbólico:
 
 $ sudo ln -s /usr/local/bin/composer /usr/bin/composer
+
+
+10. Instalación de Dependencias de Chamilo
+
+Preparar entorno de Chamilo
 
 $ cd /var/www/html/chamilo
 
 $ composer config --global audit.block-insecure false
 
-Ahora instalar:
+Instalar dependencias
 
 $ composer install --no-dev --optimize-autoloader
 
+Otorgar permisos a los nuevos directorios creados
 
-11- Probar la instalación.
+$ sudo chmod -R 777 /var/www/html/chamilo
 
-Ahora accedemos a 127.0.0.1/chamilo desde el navegador para ver la plataforma.
+
+11. Instalación por Interfaz Web
+
+Acceder al instalador
+
+Abre tu navegador web, visita: ​http://127.0.0.1/chamilo
+
+Selecciona el idioma de instalación preferido y darle a Siguiente 
+
+Fuente
+======
+
+https://apropiacion.cenditel.gob.ve/cursos/wiki/migracion-chamilo-lms/man-inst-1-11-32-ent-dev
 
 =========================
 Instalación usando Apache
@@ -238,6 +349,8 @@ Instalamos apache.
 ====================================================
 Instalación de PHP y los módulos de PHP+MySQL+Apache
 ====================================================
+
+Instalación antigua NO RECOMENDADA
 
 Instalamos php, en este caso el 5
 # apt-get install php5 php5-gd php5-mysql libapache2-mod-php5 php5-intl
