@@ -7074,6 +7074,205 @@ Fuente
 -ChatGPT
 -Github Copilot
 
+=======
+fade-in
+=======
+
+Para que las secciones aparezcan en su sitio sin movimiento desde los lados,
+pero con un efecto suave de aparición, puedes usar.
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efecto aparición de secciones con scroll</title>
+    <style>
+    /* Estilos CSS */
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    section {
+        opacity: 0;
+        transition: opacity 0.8s ease-out, transform 1s ease-out;
+        will-change: opacity, transform;
+    }
+
+    /* Efecto de aparición suave - solo fade in */
+    .visible {
+        opacity: 1;
+    }
+
+    /* Para un efecto aún más suave con ligero zoom */
+    section {
+        transform: scale(0.98);
+    }
+    
+    section.visible {
+        transform: scale(1);
+    }
+
+    .about {
+        padding: 2rem 1rem;
+        text-align: center;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition-delay: 0.1s;
+    }
+
+    .section-title {
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .about p {
+        margin: 0.5rem 0;
+        color: white;
+        font-size: 1.1rem;
+        max-width: 800px;
+        line-height: 1.6;
+    }
+
+    /* Colores para las secciones */
+    section:nth-child(1) { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); }
+    section:nth-child(2) { background: linear-gradient(135deg, #4ecdc4, #44a08d); }
+    section:nth-child(3) { background: linear-gradient(135deg, #ffe66d, #ffd166); }
+    section:nth-child(4) { background: linear-gradient(135deg, #1a936f, #114b5f); }
+    section:nth-child(5) { background: linear-gradient(135deg, #9d4edd, #5a189a); }
+    section:nth-child(6) { background: linear-gradient(135deg, #f15bb5, #ff006e); }
+    section:nth-child(7) { background: linear-gradient(135deg, #00bbf9, #0077b6); }
+    section:nth-child(8) { background: linear-gradient(135deg, #fb5607, #ff9e00); }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="about" id="section1">
+            <h2 class="section-title">Sobre Nosotros</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+            <p>Laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+        </section>
+
+        <section class="about" id="section2">
+            <h2 class="section-title">Nuestra Misión</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+            <p>Laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+        </section>
+
+        <section class="about" id="section3">
+            <h2 class="section-title">Nuestra Visión</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+            <p>Laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+        </section>
+
+        <section class="about" id="section4">
+            <h2 class="section-title">Nuestros Valores</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+            <p>Laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+        </section>
+
+        <section class="about" id="section5">
+            <h2 class="section-title">Nuestro Equipo</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+            <p>Laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+        </section>
+
+        <section class="about" id="section6">
+            <h2 class="section-title">Nuestra Historia</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+            <p>Laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+        </section>
+
+        <section class="about" id="section7">
+            <h2 class="section-title">Logros y Reconocimientos</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+            <p>Laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+        </section>
+
+        <section class="about" id="section8">
+            <h2 class="section-title">Contáctanos</h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+            <p>Laboris nisi ut aliquip ex ea commodo consequat.</p>
+            <p>Duis aute irure dolor in reprehenderit in voluptate velit.</p>
+        </section>
+    </main>
+    <script>
+        // Script JavaScript para efecto de aparición suave
+        const sections = document.querySelectorAll('section');
+        
+        // Configuración del Intersection Observer
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Añade la clase visible con un pequeño retraso para un efecto escalonado
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, 100);
+                    
+                    // Opcional: dejar de observar una vez que se ha hecho visible
+                    // observer.unobserve(entry.target);
+                } else {
+                    // Opcional: remover la clase cuando sale de la vista
+                    // entry.target.classList.remove('visible');
+                }
+            });
+        }, {
+            threshold: 0.1, // Se activa cuando el 10% del elemento es visible
+            rootMargin: '0px 0px -50px 0px' // Se activa un poco antes de que entre completamente
+        });
+        
+        // Observar todas las secciones
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Opcional: Añadir un efecto de aparición para la primera sección al cargar
+        window.addEventListener('DOMContentLoaded', () => {
+            const firstSection = document.querySelector('section');
+            if (firstSection) {
+                setTimeout(() => {
+                    firstSection.classList.add('visible');
+                }, 300);
+            }
+        });
+    </script>
+</body>
+</html>
+
 ===========================
 Etiquetas de HTML Semántico
 ===========================
