@@ -9735,6 +9735,20 @@ $ wget -nc https://dl.winehq.org/wine-builds/Release.key
 
 $ sudo apt-key add Release.key
 
+----
+Para Debian 13:
+
+# 1. Download the key and convert it to the new format
+
+$ wget -nc https://dl.winehq.org/wine-builds/Release.key
+
+$ sudo gpg --dearmor -o /usr/share/keyrings/winehq-archive-keyring.gpg < Release.key
+
+# 2. Add the repository to your sources list
+echo "deb [signed-by=/usr/share/keyrings/winehq-archive-keyring.gpg] https://dl.winehq.org/wine-builds/debian/ trixie main" | sudo tee /etc/apt/sources.list.d/winehq.list
+
+-----
+
 Add this on /etc/apt/sources.list save changes and update repos:
 deb https://dl.winehq.org/wine-builds/debian/ jessie main
 

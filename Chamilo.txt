@@ -67,25 +67,22 @@ mysql> show databases;
 Manual de instalación de Chamilo 1.11.32 en entorno local
 =========================================================
 
-Manual de instalación de Chamilo 1.11.32 en entorno local
+Notas:
 
-
-Notas
-
-    Repositorio oficial de la v1.11.32: ​https://github.com/chamilo/chamilo-lms/tree/v1.11.32
-    Guía de Instalación oficial de Chamilo 1.11: ​https://11.chamilo.org/documentation/installation_guide_es_ES.html
-    Usaremos $ para describir los comandos que se ejecutaran con un usuario regular.
-    Usaremos # para describir los comandos que se ejecutaran con un super usuario.
-    Usaremos > para describir los comandos que se ejecutaran en la consola de MariaDB. 
+Repositorio oficial de la v1.11.32: ​https://github.com/chamilo/chamilo-lms/tree/v1.11.32
+Guía de Instalación oficial de Chamilo 1.11: ​https://11.chamilo.org/documentation/installation_guide_es_ES.html
+Usaremos $ para describir los comandos que se ejecutaran con un usuario regular.
+Usaremos # para describir los comandos que se ejecutaran con un super usuario.
+Usaremos > para describir los comandos que se ejecutaran en la consola de MariaDB. 
 
 
 Requisitos del Sistema Operativo
 
-    GNU/Linux Debian 13
-    Git (La versión que esté disponible) ​Cómo instalar Git
-    Apache v2.x ​Cómo instalar Apache
-    MariaDB (La versión que esté disponible) ​Cómo instalar MariaDB.
-    PHP v7.4 ​Cómo instalar PHP 
+GNU/Linux Debian 13
+Git (La versión que esté disponible) ​Cómo instalar Git
+Apache v2.x ​Cómo instalar Apache
+MariaDB (La versión que esté disponible) ​Cómo instalar MariaDB.
+PHP v7.4 ​Cómo instalar PHP 
 
 
 1. Instalación de Apache Http Sever
@@ -93,7 +90,6 @@ Requisitos del Sistema Operativo
 $ sudo apt install apache2
 
 Esto creara el directorio /var/www/html/
-
 
 2. Instalación de PHP 7.4
 
@@ -124,7 +120,6 @@ Verificar instalación
 $ php -v
 
 El comando debe mostrar información de PHP 7.4 si la instalación fue exitosa.
-
 
 3. Configuración de Base de Datos MariaDB
 
@@ -162,7 +157,6 @@ Aplicar cambios de privilegios
 
 > FLUSH PRIVILEGES;
 
-
 4. Descarga del Código Fuente
 
 Clonar repositorio oficial
@@ -170,7 +164,6 @@ Clonar repositorio oficial
 $ git clone -b 1.11.x --single-branch https://github.com/chamilo/chamilo-lms.git chamilo-1.11
 
 Tras una clonación exitosa, se creará el directorio chamilo-1.11.
-
 
 5. Preparación del Entorno Web
 
@@ -196,13 +189,11 @@ $ sudo chown -R www-data:www-data /var/www/html/chamilo/
 
 $ sudo chmod -R 755 /var/www/html/chamilo/
 
-
 6. Instalación de Extensiones PHP Requeridas
 
 Instalar dependencias PHP necesarias
 
 $ sudo apt install php7.4 php7.4-fpm php7.4-common php7.4-sqlite3 php7.4-curl php7.4-intl php7.4-mbstring php7.4-xmlrpc php7.4-mysql php7.4-gd php7.4-xml php7.4-cli php7.4-ldap php7.4-apcu php7.4-zip php7.4-json php7.4-tokenizer libapache2-mod-php7.4 php7.4-bcmath php7.4-soap
-
 
 7. Configuración de PHP
 
@@ -239,7 +230,6 @@ date.timezone = "America/Caracas"
 Aplicar cambios
 
 $ sudo systemctl reload apache2.service
-
 
 8. Configuración de Apache
 

@@ -234,6 +234,18 @@ $ mysqldump -u nombre_de_usuario -p nombre_base_de_datos > nombredelarchivo.sql
 Restaurar una base de datos
 ===========================
 
+Nota: la base de datos debe estar creada y vacía en MariaDB:
+
+$ sudo mysql -u root
+
+> CREATE DATABASE nombre_base_de_datos;
+
+> GRANT ALL PRIVILEGES ON nombre_base_de_datos.* TO 'chamilo'@'localhost';
+
+> FLUSH PRIVILEGES;
+
+Ahora se procede con la importación:
+
 $ mysql -u usuario -p nombre_base_de_datos < nombre_base_de_datos.sql
 
 Ejemplo de archivo .sql para probar la importación correcta, crear un archivo
