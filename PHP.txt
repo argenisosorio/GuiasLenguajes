@@ -31,6 +31,22 @@ y probar de nuevo el update, luego:
 
 $ sudo apt-get install php8
 
+======================================
+Configurar solo la arquitectura 64Bits
+======================================
+
+1- Edita el archivo php.list
+
+$ sudo nano /etc/apt/sources.list.d/php.list
+
+2- Verás una línea parecida a esta: deb https://packages.sury.org/php/ trixie main
+
+Modifícala agregando [arch=amd64] justo después de deb, quedando así:
+
+deb [arch=amd64] https://packages.sury.org/php/ trixie main
+
+3- Guarda y listo.
+
 ============================================
 Instalar php 7.4 en GNU/Linux Debian 10 y 11
 ============================================
