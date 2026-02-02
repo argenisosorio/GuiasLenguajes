@@ -6520,6 +6520,67 @@ Fuente
 
 https://addons.mozilla.org/es/firefox/addon/web-dev-form-filler/
 
+================================
+Instalar VirtualBox en Debian 13
+================================
+
+1- Descargar VirtualBox desde la fuente oficial
+
+Descargar el .deb desde https://www.virtualbox.org/wiki/Linux_Downloads
+
+2- Resolvemos cualquier dependencia rota
+
+$ sudo apt --fix-broken install
+
+3- Instalar paquetes necesarios para el correcto funcionamiento:
+
+$ sudo apt install linux-headers-amd64 build-essential dkms
+
+4- Instalar el pequete .deb:
+
+$ sudo dpkg -i virtualbox-7.2_7.2.6-172322~Debian~trixie_amd64.deb
+
+Si hay errores en dependencias correr de nuevo --fix-broken
+
+5- Reconstruir los módulos de VirtualBox
+
+Una vez que termine la instalación anterior, debes ejecutar el comando para
+reintentar la configuración:
+
+$ sudo /sbin/vboxconfig
+
+Error de compatibilidad con KVM
+===============================
+
+Si el VB da un erro de intefaz que dice que hay que desactivar algo de KVM y
+recompilar no se que, este error es muy específico y confirma que tu CPU (Intel)
+tiene la virtualización activada, pero otro programa la está usando y no deja
+entrar a VirtualBox.
+
+El mensaje dice: VT-x is being used by another hypervisor... Please disable the
+KVM kernel extension.
+
+En Linux, el sistema operativo trae su propio virtualizador llamado KVM, y este
+se carga automáticamente al arrancar, "secuestrando" la virtualización.
+VirtualBox y KVM no suelen llevarse bien al mismo tiempo.
+
+Aquí tienes la solución:
+Paso 1: Solución inmediata (sin reiniciar)
+
+Debemos "apagar" el módulo KVM temporalmente para liberar el procesador. Abre tu
+terminal y ejecuta:
+
+$ sudo rmmod kvm_intel
+
+$ sudo rmmod kvm
+
+Fuentes
+=======
+
+https://www.virtualbox.org/wiki/Linux_Downloads
+
+Gemini IA
+
 ===========================================================================
 Instalación de Virtualbox 6 con el .run de la página en GNU/Linux Debian 11
 ===========================================================================
