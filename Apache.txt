@@ -338,3 +338,48 @@ Un buen archivo .htaccess combinado con unos permisos adecuados en nuestros
 archivos son una buena barrera de defensa contra ataques y accesos no
 autorizados, si bien la seguridad total no se puede garantizar, al menos se lo
 pondremos algo más difícil a aquéllos que no tienen muy buenas intenciones.
+
+===========================================
+Cambiar la versión de PHP que usa el Apache
+===========================================
+
+Para cambiar la versión de PHP que utiliza Apache en Debian, no basta con tener
+instalado el paquete, debes "apagar" el módulo de la versión vieja y "encender"
+el de la nueva.
+
+Aquí tienes los pasos exactos para pasar de la 8.3 a la 8.4
+
+1. Desactivar el módulo actual
+
+Primero, le decimos a Apache que deje de usar PHP 8.3:
+
+$ sudo a2dismod php8.3
+
+2. Activar el módulo nuevo
+
+Ahora, activamos el soporte para PHP 8.4:
+
+$ sudo a2enmod php8.4
+
+3. Reiniciar Apache
+
+Para que los cambios surtan efecto, reinicia el servicio:
+
+$ sudo systemctl restart apache2
+
+Verificar con el test de php.
+
+Bonus: Cambiar PHP también en la Terminal (CLI)
+
+Apache y la Terminal funcionan de forma independiente. Si quieres que al
+escribir php -v en la consola también te salga la 8.4, usa este comando
+interactivo:
+
+$ sudo update-alternatives --config php
+
+Selecciona el número que corresponda a la versión 8.4
+
+Fuente
+======
+
+Gemini IA

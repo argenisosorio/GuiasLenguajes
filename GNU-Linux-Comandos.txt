@@ -4221,8 +4221,8 @@ $ ssh 192.168.200.xxx
 Estando conectados al servidor, podemos enviar mensajes o abrir programas
 remotamente, ejemplo:
 
- Enviar mensaje a traves del shell a otro usuario, en el servidor o local, debe
- haber un shell abierto que sea receptor.
+Enviar mensaje a traves del shell a otro usuario, en el servidor o local, debe
+haber un shell abierto que sea receptor.
 
 echo "mensaje" > /dev/pts/2
 
@@ -4651,6 +4651,68 @@ no debería pedir contraseña.
 
 Es funcional, pero hubo una vez que no se que coño paso y no quizo funcionar,
 las demas pruebas si fueron exitosas.
+
+==========================================================================
+Saber si alguien está conectado a tu máquina por SSH en Debian 13 (Trixie)
+==========================================================================
+
+Tienes varias herramientas que van desde lo más simple hasta lo más detallado.
+
+Aquí tienes los métodos más efectivos:
+
+1. El comando who (Rápido y sencillo)
+
+Muestra quién está logueado actualmente en el sistema.
+
+$ who
+
+Qué buscar: Si ves una dirección IP entre paréntesis al final de una línea (ej.
+(192.168.1.15)), esa es una conexión remota. Si solo dice :0 o nada, es un
+usuario local.
+
+2. El comando ss (El estándar moderno)
+
+Este comando reemplaza al antiguo netstat y es muy preciso para ver conexiones
+de red activas.
+
+$ ss -tna | grep :22
+
+Explicación:
+
+-t: Solo conexiones TCP.
+
+-n: Muestra números (IPs) en lugar de nombres de host.
+
+-a: Muestra todos los estados (conectado, escuchando).
+
+Resultado: Busca líneas que digan ESTAB (Establecida). Si ves una IP externa
+bajo "Peer Address", hay alguien conectado.
+
+3. El comando w (Información completa)
+
+Es el favorito de los administradores porque combina quién está conectado con qué está haciendo.
+
+$ w
+
+En la columna FROM, verás la IP de origen del usuario SSH.
+
+4. Revisar el historial de logs (Para ver quién entró antes)
+
+Si sospechas que alguien entró y ya salió, debes mirar los registros de
+autenticación del sistema:
+
+$ sudo journalctl -t sshd
+
+O, para ver específicamente los inicios de sesión exitosos más recientes:
+
+$ last | grep "still logged in"
+
+Resumen de comandos útiles
+Comando	Lo que verás
+who	Nombre de usuario e IP de origen.
+w	Usuario, IP, tiempo de inactividad y qué comando ejecuta.
+ss -tp	Lista de procesos y conexiones (útil para ver el PID del SSH).
+last	Historial de todos los que han entrado y salido.
 
 ========================================
 Copias de directorios o ficheros por scp
