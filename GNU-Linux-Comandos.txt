@@ -14093,3 +14093,89 @@ Fuente
 ======
 
 DeepSeek
+
+==========================================
+El comando sudo chown -R www-data:www-data
+==========================================
+
+El comando sudo chown -R www-data:www-data /var/www/html/project/
+realiza las siguientes acciones:
+
+Desglose del comando:
+
+sudo - Ejecuta el comando con privilegios de administrador (superusuario)
+
+chown - Cambia el propietario (CHange OWNer) de archivos/directorios
+
+-R - Opción recursiva (aplica los cambios a TODOS los archivos y subdirectorios)
+
+www-data:www-data - Nuevo propietario y grupo
+  -Primero www-data = usuario propietario
+  -Segundo www-data = grupo propietario
+
+/var/www/html/project - Ruta objetivo del cambio
+
+Propósito principal:
+
+Cambiar el propietario y grupo de todos los archivos y directorios dentro de
+/var/www/html/project al usuario y grupo www-data.
+
+Casos de uso típicos:
+
+1. Servidores web (Apache/Nginx)
+
+-El usuario www-data es el usuario por defecto que ejecuta los procesos de
+Apache en Debian/Ubuntu.
+
+-Permite que el servidor web pueda leer, escribir y ejecutar archivos en ese
+directorio.
+
+2. Permisos de aplicación web
+
+-Cuando subes archivos via FTP/SSH con tu usuario personal.
+
+-Necesitas que el servidor web (que corre como www-data) pueda acceder a ellos.
+
+-Previene errores como "Permiso denegado" en aplicaciones web.
+
+3. Seguridad
+
+-Evita que el servidor web ejecute archivos como root
+
+-Limita los permisos solo a lo necesario para www-data
+
+Ejemplo práctico:
+
+Antes del comando:
+
+drwxr-xr-x 5 tu_usuario tu_grupo 4096 ...
+
+Después del comando:
+
+drwxr-xr-x 5 www-data www-data 4096 ...
+
+Precauciones importantes:
+
+-El uso de -R es POTENTE - afecta a todo el árbol de directorios
+-No ejecutes esto en directorios críticos del sistema
+-Considera si realmente necesitas cambiar TODOS los archivos
+-A veces es mejor ajustar solo los permisos (chmod) en lugar del propietario
+
+Alternativas más seguras:
+
+Cambiar solo el grupo (manteniendo tu como propietario)
+
+$ sudo chgrp -R www-data /var/www/html/project
+
+Dar permisos de escritura al grupo
+
+sudo chmod -R g+w /var/www/html/project
+
+Cambiar solo directorios (no archivos)
+
+$ find /var/www/html/project -type d -exec sudo chown www-data:www-data {} \;
+
+Fuente
+======
+
+DeepSeek
