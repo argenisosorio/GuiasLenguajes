@@ -45,6 +45,7 @@
 - Vuetify
 - webpack
 - Laravel
+- FastAPI
 - Leaflet
 - MariaDB
 - htmlErb

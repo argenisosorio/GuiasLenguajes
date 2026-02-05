@@ -22,41 +22,6 @@ Generación automática de documentación:
 -Crea documentación interactiva (Swagger UI y ReDoc) automáticamente gracias a
 OpenAPI.
 
-Ejemplo:
-
-from fastapi import FastAPI
-app = FastAPI()
-
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-Al correr el servidor (uvicorn main:app --reload), la documentación estará en:
-
-Swagger: http://127.0.0.1:8000/docs
-
-ReDoc: http://127.0.0.1:8000/redoc
-
-Validación automática de datos:
-
-Usa Pydantic para definir modelos de datos con tipado estático (Python type
-hints).
-
-Ejemplo:
-
-from pydantic import BaseModel
-
-class Item(BaseModel):
-    name: str
-    price: float
-
-@app.post("/items/")
-def create_item(item: Item):
-    return item
-
-FastAPI valida automáticamente los datos entrantes y genera errores detallados
-si no coinciden con el esquema.
-
 Soporte para ASGI:
 
 -Compatible con el estándar ASGI (Asynchronous Server Gateway Interface), ideal
@@ -84,31 +49,6 @@ Limitaciones:
 -Menor cantidad de librerías de terceros comparado con Flask o Django (aunque
 está creciendo rápidamente).
 
-Ejemplo básico de una API con FastAPI:
-
-from fastapi import FastAPI
-
-app = FastAPI()
-
-@app.get("/items/{item_id}")
-async def read_item(item_id: int, q: str = None):
-    return {"item_id": item_id, "q": q}
-
-Endpoints: Define rutas con decoradores como @app.get(), @app.post(), etc.
-
-Parámetros: Soporta parámetros de ruta (item_id), query (q), cuerpos de
-solicitud (POST), etc.
-
-Cómo empezar:
-
-Instala FastAPI y un servidor ASGI (como Uvicorn o Hypercorn):
-
-$ pip install fastapi uvicorn
-
-Corre tu aplicación:
-
-$ uvicorn main:app --reload
-
 FastAPI es ideal si buscas rendimiento, simplicidad y modernidad en el
 desarrollo de APIs con Python.
 
@@ -116,3 +56,184 @@ Fuente
 ======
 
 Deepseek
+
+=====================
+Hola mundo en FastAPI
+=====================
+
+1- Instalar el gestor de paquetes pip
+
+$ sudo apt install pip
+
+2- Instalación de fastapi
+
+$ pip install "fastapi[standard]"
+
+El comando anterior nos va a dar error, pero tiene una explicación, el clásico
+error de externally-managed-environment! no te preocupes, esto pasa porque las
+versiones modernas de Debian (y otras distros como Ubuntu) protegen el Python
+del sistema para que no lo rompas instalando librerías sueltas.
+
+La solución correcta y profesional es usar un entorno virtual. Es como crear
+una "burbuja" aislada para tu proyecto de FastAPI.
+
+3- Crear un entorno virtual con Python 3
+
+Instalar python3-venv
+
+$ sudo apt install python3-venv
+
+Crear el entorno virtual:
+
+$ python3 -m venv fastapienv
+
+Activar el entorno:
+
+$ source fastapienv/bin/activate
+
+4- Instalación de fastapi dentro del entorno virtual
+
+(fastapienv) $ pip install "fastapi[standard]"
+
+Este comando colectara y descargara una serie de paquetes de python para que el
+fastapi quede funcional.
+
+5- Comprobar la instalación y la versión
+
+(fastapienv) $ pip show fastapi
+Name: fastapi
+Version: 0.128.1
+
+También podemos usar el comando pip listpara ver una lista rápida de todos los
+paquetes instalados en el entorno y sus versiones:
+
+(fastapienv) $ pip list
+
+También podemos hacer una comprobación rápida con Python
+
+Si quieres estar 100% seguro de que Python puede "ver" la librería, puedes
+ejecutar este comando rápido que imprime la versión directamente:
+
+(fastapienv) $ python -c "import fastapi; print(fastapi.__version__)"
+
+0.128.1
+
+6- Ahora vamos a escribir un script básico de python para hacer un hola mundo:
+
+Crea un archivo llamado main.py y pega el siguiente código:
+
+from fastapi import FastAPI
+
+# Creamos la instancia de la aplicación
+app = FastAPI()
+
+# Definimos una ruta (endpoint)
+@app.get("/")
+def read_root():
+    return {"Hola": "Mundo"}
+
+Ejecuta el servidor
+
+Vuelve a la terminal y arranca tu aplicación con este comando:
+
+$ fastapi dev main.py
+
+¡Prueba tu API!
+
+Una vez que el servidor esté corriendo, puedes ver los resultados en dos lugares:
+
+El resultado: Abre tu navegador en http://127.0.0.1:8000. Verás el JSON:
+{"Hola": "Mundo"}.
+
+La documentación interactiva: Ve a http://127.0.0.1:8000/docs. FastAPI crea
+automáticamente una interfaz de Swagger UI donde puedes probar tus rutas
+directamente.
+
+--- ¿Qué pasó aquí? ---
+
+app = FastAPI(): Es el corazón de tu aplicación.
+
+@app.get("/"): Es un "decorador" que le dice a FastAPI que la función de abajo
+se encargará de las peticiones que lleguen a la raíz (/) usando el método GET.
+
+El retorno: FastAPI convierte automáticamente los diccionarios de Python a
+formato JSON, que es el estándar de la web.
+
+Ejemplo con parámetros en la URL:
+
+Los parámetros de URL son la forma en que haces que tu API sea dinámica. En
+FastAPI, esto es muy intuitivo porque usas la misma sintaxis que los "f-strings"
+de Python.
+
+Existen dos formas principales de recibir datos en una URL: Path Parameters
+(dentro de la ruta) y Query Parameters (después del signo ?).
+
+1. Path Parameters (Parámetros de ruta)
+
+Se usan cuando el dato es parte esencial de la dirección. Por ejemplo:
+127.0.0.1/saludo/Pepe.
+
+Modifica tu archivo main.py así:
+
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/saludo/{nombre}")
+def say_hello(nombre: str):
+    return {"mensaje": f"Hola {nombre}, bienvenido a FastAPI"}
+
+Explicación:
+
+{nombre}: Define una variable en la ruta.
+
+nombre: str: FastAPI valida automáticamente que sea una cadena de texto. Si
+esperas un número, podrías poner int.
+
+Probar: Escribe en la url http://127.0.0.1:8000/saludo/Pepe
+
+El api retorna el json {"mensaje":"Hola pepe, bienvenido a FastAPI"}
+
+2. Query Parameters (Parámetros de consulta)
+
+Se usan para valores opcionales, filtros o búsquedas. Por ejemplo:
+127.0.0.1/saludo?nombre=Pepe&edad=30.
+
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/personalizado/")
+def saludo_completo(nombre: str, edad: int):
+    return {
+        "usuario": nombre,
+        "edad_proxima": edad + 1,
+        "nota": "Fíjate cómo FastAPI sumó 1 porque definimos edad como int"
+    }
+
+¡Pruébalo ahora mismo!
+
+Asegúrate de que tu servidor esté corriendo (fastapi dev main.py).
+
+Ve a tu navegador y entra en: http://127.0.0.1:8000/personalizado/?nombre=Pepe&edad=25
+
+El api retorna el json {"usuario":"Pepe","edad_proxima":26,"nota":"Fíjate cómo
+FastAPI sumó 1 porque definimos edad como int"}
+
+La magia de la validación:
+
+Si intentas entrar a /personalizado/?nombre=Pepe&edad=Diez, FastAPI te
+devolverá un error 422 Unprocessable Entity avisándote que edad debe ser un
+número entero. ¡Te ahorra mucho trabajo de validación manual!
+
+Devuelve el json:
+
+{"detail":[{"type":"int_parsing","loc":["query","edad"],"msg":"Input should be a
+valid integer, unable to parse string as an integer","input":"Diez"}]}
+
+Fuentes
+=======
+
+Gemini IA
+
+Web oficial: https://fastapi.tiangolo.com/
