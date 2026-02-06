@@ -6,6 +6,32 @@ FastAPI es un framework web moderno, rápido (de alto rendimiento) y fácil de
 usar para construir APIs en Python, basado en estándares abiertos como OpenAPI
 y JSON Schema.
 
+Según la web oficial las características principales son:
+
+-Rápido: Rendimiento muy alto, comparable a NodeJS y Go (gracias a Starlette y
+Pydantic). Uno de los frameworks de Python más rápidos disponibles .
+
+-Rápido para codificar: aumenta la velocidad para desarrollar funciones entre un
+200% y un 300%.*
+
+-Menos errores: reduce aproximadamente el 40% de los errores inducidos por
+humanos (desarrolladores). *
+
+-Intuitivo: Excelente compatibilidad con el editor. Finalización en todas
+partes. Menos tiempo de depuración.
+
+-Fácil: Diseñado para ser fácil de usar y aprender. Menos tiempo leyendo
+documentos.
+
+-En resumen: Minimiza la duplicación de código. Múltiples funciones en cada
+declaración de parámetro. Menos errores.
+
+-Robusto: Obtenga código listo para producción. Con documentación interactiva
+automática.
+
+-Basado en estándares: basado en (y totalmente compatible con) los estándares
+abiertos para API: OpenAPI (anteriormente conocido como Swagger) y JSON Schema .
+
 Características principales
 ===========================
 
@@ -502,6 +528,107 @@ prefiere FastAPI para eso porque es más moderno, ligero y rápido de programar.
 Sin embargo, si tu proyecto necesita un sistema de gestión de contenidos,
 perfiles de usuario complejos y un panel de administración en 5 minutos, Django
 sigue siendo el rey indiscutible.
+
+Fuente
+======
+
+Gemini IA
+
+============================================================
+CRUD (Create, Read, Update, Delete) funcional usando FastAPI
+============================================================
+
+Para que esto funcione en un solo archivo main.py de forma sencilla,
+utilizaremos una lista en memoria como "base de datos".
+
+Código del archivo main.py
+
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from typing import Optional, List
+
+app = FastAPI(title="CRUD de Estudiantes")
+
+# Modelo de datos
+class Estudiante(BaseModel):
+    id: Optional[int] = None
+    nombre: str
+    edad: int
+
+# Base de datos ficticia (en memoria)
+db_estudiantes = []
+id_counter = 1
+
+@app.get("/", tags=["Inicio"])
+def read_root():
+    return {"mensaje": "Bienvenido a la API de Estudiantes"}
+
+# 1. CREATE: Registrar un estudiante
+@app.post("/estudiantes/", response_model=Estudiante, tags=["Estudiantes"])
+def crear_estudiante(estudiante: Estudiante):
+    global id_counter
+    estudiante.id = id_counter
+    db_estudiantes.append(estudiante)
+    id_counter += 1
+    return estudiante
+
+# 2. READ: Obtener todos los estudiantes
+@app.get("/estudiantes/", response_model=List[Estudiante], tags=["Estudiantes"])
+def obtener_estudiantes():
+    return db_estudiantes
+
+# 3. READ: Obtener un estudiante por ID
+@app.get("/estudiantes/{estudiante_id}", response_model=Estudiante, tags=["Estudiantes"])
+def obtener_estudiante(estudiante_id: int):
+    estudiante = next((e for e in db_estudiantes if e.id == estudiante_id), None)
+    if not estudiante:
+        raise HTTPException(status_code=404, detail="Estudiante no encontrado")
+    return estudiante
+
+# 4. UPDATE: Actualizar datos de un estudiante
+@app.put("/estudiantes/{estudiante_id}", response_model=Estudiante, tags=["Estudiantes"])
+def actualizar_estudiante(estudiante_id: int, estudiante_actualizado: Estudiante):
+    for index, e in enumerate(db_estudiantes):
+        if e.id == estudiante_id:
+            estudiante_actualizado.id = estudiante_id
+            db_estudiantes[index] = estudiante_actualizado
+            return estudiante_actualizado
+    raise HTTPException(status_code=404, detail="Estudiante no encontrado")
+
+# 5. DELETE: Eliminar un estudiante
+@app.delete("/estudiantes/{estudiante_id}", tags=["Estudiantes"])
+def eliminar_estudiante(estudiante_id: int):
+    for index, e in enumerate(db_estudiantes):
+        if e.id == estudiante_id:
+            del db_estudiantes[index]
+            return {"mensaje": f"Estudiante con ID {estudiante_id} eliminado"}
+    raise HTTPException(status_code=404, detail="Estudiante no encontrado")
+
+-----
+
+Cómo ejecutarlo y probarlo:
+
+Corre el servidor: Ejecuta el siguiente comando en tu terminal:
+
+$ fastapi dev main.py
+
+Prueba la API (Interfaz Interactiva): FastAPI genera documentación automática.
+Abre tu navegador en:
+
+http://127.0.0.1:8000/docs (Swagger UI)
+
+Desde ahí puedes hacer clic en "Try it out" para enviar nombres y edades.
+
+Puntos clave del código:
+
+Pydantic (BaseModel): Lo usamos para definir la estructura del estudiante y que
+FastAPI valide que el nombre sea texto y la edad un número automáticamente.
+
+HTTP Status Codes: Si intentas buscar o borrar un ID que no existe, el sistema
+devuelve un error 404 real, no solo un mensaje vacío.
+
+Tags: Los añadí para que en la documentación de Swagger todo se vea organizado
+por categorías.
 
 Fuente
 ======
