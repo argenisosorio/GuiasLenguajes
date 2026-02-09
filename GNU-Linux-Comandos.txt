@@ -4113,9 +4113,14 @@ que ya no se encuentran disponibles.
 
 Procedimiento recomendado:
 
-1. Instalar solo el sistema base directamente desde la imagen DVD
-2. Acceder al sistema una vez finalizada la instalación mínima
-3. Configurar manualmente los repositorios archive de Debian
+1. Instalar solo el sistema base directamente desde la imagen DVD, es decir no
+seleccionar nada al momento de que salga el seleccionar programas a instalar
+en el instalador de Debian.
+
+2. Acceder al sistema una vez finalizada la instalación mínima.
+
+3. Configurar manualmente los repositorios archive de Debian.
+
 4. Instalar software adicional desde los repositorios archive
 
 Configuración de repositorios archive:
@@ -4128,6 +4133,18 @@ deb http://archive.debian.org/debian/ bullseye main contrib
 deb http://deb.debian.org/debian bullseye main
 deb http://security.debian.org/debian-security bullseye-security main
 deb http://deb.debian.org/debian bullseye-updates main
+
+Instalar gnoem con todas sun funciones:
+
+# apt install task-gnome-desktop
+
+# apt install task-spanish-desktop
+
+# apt install gnome-shell
+
+# apt install gnome-core
+
+# apt install gnome
 
 =====
 jigdo
