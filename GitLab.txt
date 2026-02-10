@@ -511,3 +511,160 @@ Fuente
 ======
 
 https://docs.gitlab.com/ee/user/project/merge_requests/squash_and_merge.html
+
+====================
+Claves SSH en GitLab
+====================
+
+Las claves SSH le permiten establecer una conexión segura entre su computadora y
+GitLab. Las huellas digitales SSH verifican que el cliente se conecta al host
+correcto.
+
+SSH utiliza dos claves, una clave pública y una clave privada.
+
+-La clave pública se puede distribuir.
+-La clave privada debe estar protegida.
+
+Para usar SSH para comunicarse con GitLab, necesita
+
+-El cliente OpenSSH, que viene preinstalado en GNU/Linux, macOS y Windows 10.
+-Versión SSH 6.5 o posterior. Las versiones anteriores utilizaban una firma MD5, que no es segura.
+
+Para ver la versión de SSH instalada en su sistema, ejecute:
+
+$ ssh -V
+
+Tipos de claves SSH compatibles
+===============================
+
+Para comunicarse con GitLab, puede utilizar los siguientes tipos de claves SSH:
+
+ED25519
+ED25519_SK
+ECDSA_SK
+RSA
+ECDSA (Como se señala en Criptografía práctica con Go , los problemas de
+seguridad relacionados con DSA también se aplican a ECDSA).
+
+Generarlas las llaves ssh en Debian
+===================================
+
+En Debian, el comando estándar es ssh-keygen. Sigue estos pasos:
+
+Abre la terminal y ejecuta:
+
+$ ssh-keygen -t ed25519 -C "tu_correo@ejemplo.com"
+
+(Usamos ed25519 porque es el algoritmo más moderno, rápido y seguro actualmente).
+
+Configuración:
+
+-Te pedirá una ruta para guardar el archivo. Presiona Enter para usar la ruta
+por defecto (/home/usuario/.ssh/id_ed25519).
+
+-Te pedirá una passphrase (contraseña para la clave). Es opcional, pero muy
+recomendable: añade una capa de seguridad extra si alguien roba tu archivo de
+clave privada.
+
+Tus claves se habrán creado en la carpeta oculta .ssh, para ver tus claves:
+
+$ ls .ssh/
+
+id_ed25519
+id_ed25519.pub (Pública: Esta es la que compartes)
+
+Añade una clave SSH a tu cuenta de GitLab
+=========================================
+
+Para usar SSH con GitLab, copia tu clave pública a tu cuenta de GitLab:
+
+Copia el contenido de tu archivo de clave pública, para copiar una clave ED25519
+al portapapeles:
+
+Una opción es copiar al portapapeles en Linux (requiere el paquete xclip
+instalado)
+
+$ xclip -sel clip < ~/.ssh/id_ed25519.pub
+
+La otra opción es manualmente con:
+
+$ cat .ssh/id_ed25519.pub
+
+Copia el contenido de la clave, sera algo como esto.
+
+ssh-ed25519 XXXXXXXXXXXXXXXXXXX tu_correo@ejemplo.com
+
+Inicia sesión en GitLab y busca la sección de Claves SSH.
+
+Selecciona Añadir nueva clave.
+
+En el cuadro Clave, pega el contenido de tu clave pública. Si copiaste la clave
+manualmente, asegúrate de copiarla completa.
+
+En el cuadro Título, escribe una descripción, como Portátil del trabajo o
+Estación de trabajo en casa.
+
+Opcional. Selecciona el tipo de uso de la clave. Se puede usar para
+autenticación, firma o ambas. Autenticación y firma es el valor predeterminado.
+
+Opcional. Actualizar la fecha de caducidad para modificar la fecha de caducidad
+predeterminada.
+
+Los administradores pueden ver las fechas de caducidad y usarlas como guía al
+eliminar claves.
+
+Seleccionar "Añadir clave".
+
+Si se añadio correctamente debe aparecer la llave creada en la lista.
+
+Verifica que puedes conectarte
+==============================
+
+Los siguientes comandos usan el nombre de host de ejemplo gitlab.example.com.
+Reemplaza este nombre de host de ejemplo por el nombre de host de tu instancia
+de GitLab, por ejemplo, git@gitlab.com. De forma predeterminada, GitLab usa el
+nombre de usuario git para la autenticación. Puede ser diferente si el
+administrador lo ha cambiado.
+
+Para asegurarte de que te estás conectando al servidor correcto, comprueba la
+huella digital de las claves de host SSH del servidor.
+
+Para:
+
+GitLab.com, consulta la documentación sobre huellas digitales de claves de host SSH.
+
+GitLab.com u otra instancia de GitLab,
+consulta gitlab.example.com/help/instance_configuration#ssh-host-keys-fingerprints, donde gitlab.example.com es gitlab.com (para GitLab.com) o la dirección de la instancia de GitLab.
+
+Abre una terminal y ejecuta este comando, reemplazando gitlab.example.com con la
+URL de tu instancia de GitLab:
+$ ssh -T git@gitlab.example.com
+
+Si es la primera vez que te conectas, debes verificar la autenticidad del host
+de GitLab. Si ves un mensaje como este:
+
+No se puede establecer la autenticidad del host 'gitlab.example.com
+(35.231.145.151)'.
+
+La huella de la clave ECDSA es SHA256:HbW3g8zUjNSksFbqTiUWPWg2Bq1x8xdGUrliXFzSnUw.
+
+¿Seguro que deseas continuar con la conexión (sí/no)? Sí
+
+Advertencia: Se ha añadido permanentemente 'gitlab.example.com' (ECDSA) a la lista de hosts conocidos.
+
+Escribe Sí y pulsa Intro.
+
+Ejecuta el comando ssh -T git@gitlab.example.com de nuevo. Deberías recibir el
+mensaje "¡Bienvenido a GitLab, @nombreusuario!".
+
+Si no aparece el mensaje de bienvenida, puedes solucionar el problema ejecutando
+ssh en modo detallado:
+
+$ ssh -Tvvv git@gitlab.example.com
+
+Fuentes
+=======
+
+Gemini IA
+
+https://docs.gitlab.com/18.1/user/ssh/#add-an-ssh-key-to-your-gitlab-account

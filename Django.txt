@@ -8024,8 +8024,8 @@ $ python manage.py migrate   # Aplica migraciones iniciales
 $ python manage.py runserver
 
 Abre tu navegador en http://127.0.0.1:8000 y verás el mensaje ¡Hola, Django 5!.
+
 Estructura final del proyecto
-text
 
 myproject/
 ├── myproject/
@@ -8233,3 +8233,172 @@ Fuente
 ======
 
 DeepSeek
+
+=============================================================
+Configurar un entorno virtual y crear un proyecto de Django 6
+=============================================================
+
+Para instalar la última versión de Django en tu sistema, sigue estos pasos:
+
+1. Verifica que tienes Python instalado
+
+Django es un framework de Python, así que necesitas tener Python 3.8 o superior.
+Verifica tu versión ejecutando:
+
+$ python --version
+
+o
+
+$ python3 --version
+
+Si no lo tienes instalado, descárgalo desde python.org.
+
+2. Instala Django usando pip
+
+La forma más sencilla es mediante pip (el gestor de paquetes de Python). Ejecuta:
+
+$ pip install django
+
+Si usas Python 3 y pip no funciona, prueba con:
+
+$ pip3 install django
+
+Instalar la versión más reciente (asegurándote de actualizar pip)
+
+$ pip install --upgrade pip
+
+$ pip install django
+
+3. Verifica la instalación
+
+Ejecuta el siguiente comando para confirmar que Django se instaló correctamente:
+
+$ python -m django --version
+
+o
+
+$ django-admin --version
+
+Deberías ver la última versión disponible (ejemplo: 6.0.2).
+
+4. (Opcional) Crear un entorno virtual (recomendado)
+
+Para evitar conflictos con otros proyectos, usa un entorno virtual:
+
+$ python -m venv myenv       # Crea el entorno
+
+$ source myenv/bin/activate  # Actívalo (Linux/macOS)
+
+Luego instala Django dentro del entorno:
+
+$ pip install django
+
+5. Actualizar Django a la última versión
+
+Si ya lo tienes instalado y quieres actualizarlo:
+
+$ pip install --upgrade django
+
+Notas importantes
+
+-Sistema Operativo: Los comandos son válidos para Windows, macOS y Linux.
+
+-Versión LTS: Si prefieres la versión de soporte extendido (LTS), instala
+específicamente:
+
+$ pip install django==4.2  # Última LTS al 2023
+
+-Requisitos: Django requiere Python ≥ 3.8. Si usas una versión anterior,
+actualiza Python primero.
+
+Ejemplo de uso rápido:
+
+Después de instalar, puedes crear un proyecto Django:
+
+$ django-admin startproject myproject
+
+cd myproject
+
+$ python manage.py runserver
+
+Abre tu navegador en http://127.0.0.1:8000 y verás la página de bienvenida de
+Django.
+
+Si tienes problemas, revisa la documentación oficial de Django. ¡Listo para
+desarrollar!
+
+Crear la primera app
+====================
+
+En Django 6, crear una aplicación con vistas y templates sigue un flujo
+estructurado. A continuación, te muestro paso a paso cómo hacerlo:
+
+1. Crear una aplicación dentro del proyecto
+
+$ python manage.py startapp myapp
+
+2. Registrar la aplicación en settings.py
+
+Abre myproject/settings.py y agrega 'myapp' a INSTALLED_APPS:
+
+INSTALLED_APPS = [
+    ...,
+    'myapp',  # Añade esta línea
+]
+
+3. Definir una vista en myapp/views.py
+
+Crea una función que renderice un template:
+
+from django.shortcuts import render
+
+def home(request):
+    context = {
+        'message': '¡Hola, Django 6!',
+    }
+    return render(request, 'myapp/home.html', context)
+
+4. Crear un template en myapp/templates/myapp/home.html
+
+-Crea la carpeta templates/myapp dentro de myapp.
+
+-Dentro, crea el archivo home.html:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mi primera app</title>
+</head>
+<body>
+    <h1>{{ message }}</h1>  <!-- Muestra la variable del contexto -->
+</body>
+</html>
+
+5. Configurar una URL en myapp/urls.py
+
+Crea el archivo myapp/urls.py:
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),  # Ruta principal
+]
+
+Incluye las URLs de la app en myproject/urls.py:
+
+from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('myapp.urls')),  # Incluye las URLs de "myapp"
+]
+
+7. Ejecutar el servidor y probar
+
+$ python manage.py migrate   # Aplica migraciones iniciales
+
+$ python manage.py runserver
+
+Abre tu navegador en http://127.0.0.1:8000 y verás el mensaje ¡Hola, Django 6!.
