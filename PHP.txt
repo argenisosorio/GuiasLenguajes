@@ -10,6 +10,33 @@ Usaremos $ para describir los comandos que se usaran con usuario regular.
 
 Usaremos # para describir los comandos que se usaran con superusuario.
 
+=========================
+Instalar PHP en Debian 13
+=========================
+
+$ sudo apt-get update
+
+$ sudo apt-get install -y lsb-release ca-certificates curl
+
+$ sudo curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg
+
+$ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/php.list
+
+$ sudo apt-get update
+
+$ sudo apt-get install php8.4
+
+$ php -v
+
+O agrega la línea manual en el php.list
+
+deb [arch=amd64 signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ bookworm main
+
+Fuente
+======
+
+Gemini IA
+
 =====================================
 Instalar php 8 en GNU/Linux Debian 11
 =====================================
@@ -34,6 +61,10 @@ $ sudo apt-get install php8
 ======================================
 Configurar solo la arquitectura 64Bits
 ======================================
+
+Error: N: Omitiendo el uso del fichero configurado «main/binary-i386/Packages»
+ya que el repositorio «https://packages.sury.org/php bookworm InRelease» no
+admite la arquitectura «i386»
 
 1- Edita el archivo php.list
 
