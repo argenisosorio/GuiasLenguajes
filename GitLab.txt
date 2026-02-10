@@ -617,50 +617,110 @@ Seleccionar "Añadir clave".
 
 Si se añadio correctamente debe aparecer la llave creada en la lista.
 
-Verifica que puedes conectarte
-==============================
+Verificación
+============
 
-Los siguientes comandos usan el nombre de host de ejemplo gitlab.example.com.
-Reemplaza este nombre de host de ejemplo por el nombre de host de tu instancia
-de GitLab, por ejemplo, git@gitlab.com. De forma predeterminada, GitLab usa el
-nombre de usuario git para la autenticación. Puede ser diferente si el
-administrador lo ha cambiado.
+Para verificar que todo quedó perfecto, escribe esto en tu terminal:
 
-Para asegurarte de que te estás conectando al servidor correcto, comprueba la
-huella digital de las claves de host SSH del servidor.
+$ ssh -T git@gitlab.com
 
-Para:
+Si todo está bien, GitLab te responderá:
 
-GitLab.com, consulta la documentación sobre huellas digitales de claves de host SSH.
+Welcome to GitLab, @tu_usuario!
 
-GitLab.com u otra instancia de GitLab,
-consulta gitlab.example.com/help/instance_configuration#ssh-host-keys-fingerprints, donde gitlab.example.com es gitlab.com (para GitLab.com) o la dirección de la instancia de GitLab.
+Prueba con push
+===============
 
-Abre una terminal y ejecuta este comando, reemplazando gitlab.example.com con la
-URL de tu instancia de GitLab:
-$ ssh -T git@gitlab.example.com
+Ahora que ya tienes las llaves, Gitlab y tu computadora tienen ya "se conocen"
+lo que sigue es empezar a trabajar con tus repositorios usando la dirección SSH
+en lugar de la HTTPS.
 
-Si es la primera vez que te conectas, debes verificar la autenticidad del host
-de GitLab. Si ves un mensaje como este:
+1. Clonar un proyecto existente
 
-No se puede establecer la autenticidad del host 'gitlab.example.com
-(35.231.145.151)'.
+Si ya tienes un proyecto en GitLab que quieres bajar a tu computadora:
 
-La huella de la clave ECDSA es SHA256:HbW3g8zUjNSksFbqTiUWPWg2Bq1x8xdGUrliXFzSnUw.
+Ve a la página del proyecto en GitLab.
 
-¿Seguro que deseas continuar con la conexión (sí/no)? Sí
+Haz clic en el botón azul Code.
 
-Advertencia: Se ha añadido permanentemente 'gitlab.example.com' (ECDSA) a la lista de hosts conocidos.
+Copia el link debajo de Clone with SSH (se ve algo como
+git@gitlab.com:user/project.git).
 
-Escribe Sí y pulsa Intro.
+En tu terminal, escribe: git clone git@gitlab.com:usuario/proyecto.git
 
-Ejecuta el comando ssh -T git@gitlab.example.com de nuevo. Deberías recibir el
-mensaje "¡Bienvenido a GitLab, @nombreusuario!".
+2. Conectar un proyecto local que ya tienes
 
-Si no aparece el mensaje de bienvenida, puedes solucionar el problema ejecutando
-ssh en modo detallado:
+Si ya tienes una carpeta con código en tu PC y quieres subirla a un repo nuevo
+en GitLab:
 
-$ ssh -Tvvv git@gitlab.example.com
+Entra a tu carpeta en la terminal.
+
+Si no has iniciado git, usa git init.
+
+Agrega el "remote" usando la dirección SSH:
+
+$ git remote add origin git@gitlab.com:tu_usuario/tu_proyecto.git
+
+Ahora ya puedes hacer git push -u origin main sin que te pida contraseña.
+
+Hacer push con un repositorio local ya existente anteriormente
+==============================================================
+
+En un .git/config como este no sirve el push que haga uso de las llaves ssh:
+
+[core]
+    repositoryformatversion = 0
+    filemode = true
+    bare = false
+    logallrefupdates = true
+[remote "origin"]
+    url = https://gitlab.com/user/project
+    fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master 
+
+El "problema" es que tu archivo de configuración todavía tiene la dirección
+HTTPS grabada. Por eso, Git sigue intentando entrar por la puerta principal
+pidiendo usuario y contraseña, en lugar de usar el túnel SSH que acabas de
+configurar.
+
+Fíjate en esta línea de tu archivo: url = https://gitlab.com/user/project
+
+Cómo solucionarlo? Cambiando el Remote
+
+No necesitas editar el archivo manualmente (aunque podrías). Es más seguro y
+rápido ejecutar este comando en tu terminal, dentro de la carpeta de tu proyecto:
+
+$ git remote set-url origin git@gitlab.com:user/project.git
+
+¿Qué acabamos de hacer?
+
+Hemos cambiado el protocolo de comunicación. Si revisas de nuevo tu .git/config,
+verás que la URL ahora empieza con git@gitlab.com....
+
+Verificación final
+
+[core]
+    repositoryformatversion = 0
+    filemode = true
+    bare = false
+    logallrefupdates = true
+[remote "origin"]
+    url = git@gitlab.com:user/project.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master
+
+Una vez que ejecutes ese comando, intenta hacer un push:
+
+$ git push origin master
+
+Nota importante: Si al crear tu llave SSH le pusiste una "passphrase"
+(contraseña de la llave), Git te la pedirá una vez por sesión. Pero ojo, esa es
+la contraseña de tu archivo de llave en tu PC, no tu contraseña de la página de
+GitLab.
 
 Fuentes
 =======
