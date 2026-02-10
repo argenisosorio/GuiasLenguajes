@@ -728,3 +728,147 @@ Fuentes
 Gemini IA
 
 https://docs.gitlab.com/18.1/user/ssh/#add-an-ssh-key-to-your-gitlab-account
+
+====================================================
+¿Qué son las claves GPG y para que sirven en GitLab?
+====================================================
+
+Si las llaves SSH sirven para identificarte al entrar (como una tarjeta de
+acceso al edificio), las llaves GPG sirven para firmar tu trabajo (como un sello
+notarial en un contrato).
+
+¿Qué es una clave GPG?
+======================
+
+GPG (GNU Privacy Guard) es una herramienta que permite cifrar y firmar
+digitalmente tus datos. En el contexto de GitLab, se usa para verificar tu
+identidad como autor de los cambios (commits) que subes.
+
+Cualquier persona puede configurar su nombre y correo en Git así:
+
+$ git config --global user.name "Mr Miyagi"
+
+$ git config --global user.email "mrmiyagi@mail.com"
+
+Sin GPG, GitLab aceptará ese commit y parecerá que Mr Miyagi escribió el código.
+GPG evita esta suplantación.
+
+¿Para qué se usan en GitLab?
+============================
+
+1. Obtener el distintivo "Verified"
+
+Cuando firmas tus commits con GPG y subes tu llave pública a GitLab, aparecerá
+un escudo verde que dice "Verified" al lado de tus cambios. Esto le dice a tu
+equipo: "Este código realmente lo escribió Mr Miyagi y nadie lo alteró en el
+camino".
+
+2. Integridad del código
+
+Asegura que el código no ha sido modificado por un tercero desde que lo firmaste
+hasta que llegó al servidor. Es un estándar de seguridad en proyectos de código
+abierto o en empresas con normas de auditoría estrictas.
+
+Generar las llaves GPG y configurarlas
+======================================
+
+1. Generar el par de llaves GPG
+
+Ejecuta el siguiente comando y sigue las instrucciones:
+
+$ gpg --full-generate-key
+
+Tipo de llave: Presiona 1 y Enter para elegir la opción (RSA).
+
+Tamaño: Escribe 4096.
+
+Validez: Presiona 0 (para que no caduque nunca) y confirma con y.
+
+Nombre y Correo: Importante: Usa el mismo correo que tienes configurado en GitLab.
+
+Passphrase: Elige una contraseña segura (la necesitarás cada vez que hagas un commit).
+
+2. Obtener el ID de tu llave
+
+Para que Git sepa qué llave usar, necesitamos su ID. Lista tus llaves con:
+
+$ gpg --list-secret-keys --keyid-format LONG
+
+Busca la línea que empieza por sec. Verás algo como esto: sec rsa4096/ABC1234567890XYZ 2024-05-20 [SC]
+
+Tu ID es la parte después de la barra: ABC1234567890XYZ.
+
+3. Exportar la llave pública a GitLab
+
+Ahora dile a GitLab quién eres. Primero, muestra tu llave pública en la terminal:
+
+$ gpg --armor --export ABC1234567890XYZ
+
+(Sustituye el ID por el tuyo).
+
+Copia todo el bloque de texto (incluyendo las líneas de BEGIN y END) y pégalo
+en: GitLab > Settings > GPG Keys > Add new key.
+
+4. Configurar Git para firmar automáticamente
+
+Ahora configura tu computadora local para que use esa llave siempre:
+
+# Indicarle a Git qué llave usar
+
+git config --global user.signingkey ABC1234567890XYZ
+
+# Obligar a Git a firmar cada commit automáticamente
+
+$ git config --global commit.gpgsign true
+
+Ejecutemos este comando para rafirmar la configuración para que no de un error
+común.
+
+$ git config --global user.signingkey ABC1234567890XYZ
+
+5. ¡A probar!
+
+Haz un cambio en tu código y haz un commit:
+
+$ git commit -m "Mi primer commit firmado"
+
+Te aparecerá una ventana pidiendo la passphrase que creaste en el paso 1.
+
+Luego haz el push:
+
+$ git push origin master
+
+Verificación Visual en la Web
+==============================
+
+Entra a tu proyecto en GitLab.com.
+
+Ve a Code > Commits.
+
+Verás la lista de cambios. Al lado de tu último commit ("Mi primer commit
+firmado"), debería aparecer un pequeño botón verde o un escudo que dice Verified.
+Para que salga en verde el correo de la cuenta de gitlab debe coincidir con el
+correo configurado en la creación de las llaves GPP de lo contrario saldrá la
+etiqueta gris de Firmado pero sin verificar.
+
+Si haces clic en ese botón, GitLab te mostrará los detalles de tu llave GPG
+(el ID que configuramos antes).
+
+2. Verificación en tu Terminal (Local)
+
+Si quieres estar 100% seguro sin salir de la consola, puedes usar este comando
+que muestra el log con los detalles de la firma:
+
+$ git log --show-signature -1
+
+Deberías ver una salida similar a esta:
+
+commit 95fdcc5...
+gpg: Signature made Tue Feb 10 2026
+gpg:                using RSA key 60BF441B78BDD02F
+gpg: Good signature from "Tu Nombre <tu_correo@ejemplo.com>" [ultimate]
+
+Fuente
+======
+
+Gemini IA
