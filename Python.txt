@@ -3762,3 +3762,59 @@ Fuente
 ======
 
 DeepSeek
+
+====================================
+Python 2.7 en Debian 13 usando pyenv
+====================================
+
+Pyenv te permite instalar versiones de Python de forma aislada sin romper el
+sistema.
+
+Instala las dependencias de compilación:
+
+$ sudo apt update
+
+$ sudo apt install build-essential libssl-dev zlib1g-dev
+
+$ sudo apt install libbz2-dev libreadline-dev libsqlite3-dev curl \
+
+$ sudo apt install libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+Instala pyenv:
+
+$ curl https://pyenv.run | bash
+
+Configura pyenv:
+
+$ echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+
+$ echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+
+$ echo 'eval "$(pyenv init - bash)"' >> ~/.bashrc
+
+$ echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+
+Y para aplicar los cambios sin cerrar la terminal, como indica el texto de abajo:
+
+$ source ~/.bashrc
+
+Instala Python 2.7.18:
+
+$ pyenv install 2.7.18
+
+$ pyenv global 2.7.18
+
+Crea el entorno virtual: Como Python 2 no tiene el módulo venv, instalamos virtualenv:
+
+$ pip install virtualenv
+
+$ virtualenv mi_entorno_py2
+
+Activa el entorno:
+
+$ source mi_entorno_py2/bin/activate
+
+Fuente
+======
+
+Gemini IA
