@@ -49,6 +49,72 @@ acabamos de introducir.
 
 $ git config --list
 
+============================
+Configuración Local y Global
+============================
+
+Git maneja la configuración en diferentes niveles para que puedas tener una
+identidad general, pero también adaptarte a las necesidades específicas de cada
+proyecto.
+
+Aparte de Global y Local, existe un tercer nivel llamado System (para todos los
+usuarios del equipo), global y local son los que usarás el 99% del tiempo.
+
+Aquí tienes el desglose de sus diferencias y cómo aplicarlos:
+
+1. Configuración Global (--global)
+
+Es la configuración "por defecto" para tu usuario en toda la computadora. Se
+guarda en un archivo oculto en tu carpeta de inicio (usualmente ~/.gitconfig).
+
+Cuándo usarlo: Para tu nombre, tu correo principal y tus preferencias de editor de texto.
+
+Efecto: Se aplica a todos los repositorios donde no hayas definido algo distinto.
+
+Comandos de ejemplo:
+
+Establecer tu identidad:
+
+$ git config --global user.name "Tu Nombre"
+
+$ git config --global user.email "tu_correo@ejemplo.com"
+
+Ver la configuración global:
+
+$ git config --global --list
+
+2. Configuración Local (--local)
+
+Esta configuración vive exclusivamente dentro de un repositorio específico, en
+la carpeta .git/config.
+
+Cuándo usarlo: Cuando trabajas en un proyecto de la empresa (necesitas tu correo
+corporativo) pero el resto de tus proyectos son personales. También sirve para
+configurar reglas específicas de ese proyecto.
+
+Efecto: Tiene prioridad absoluta. Si hay un nombre en global y otro en local,
+Git usará el local.
+
+Comandos de ejemplo:
+
+Establecer correo corporativo en un repo específico:
+
+$ git config --local user.email "nombre.apellido@empresa.com"
+
+Ver la configuración de este proyecto: git config --local --list
+
+Si quieres ver qué valor está tomando Git finalmente (considerando la
+jerarquía), puedes usar:
+
+$ git config user.email
+
+Sin flags, Git te mostrará el valor que tiene más peso en ese momento
+
+Fuente
+======
+
+Gemini IA
+
 -----
 
 Crear un directorio, dentro del directorio ejecutar para crear un nuevo
