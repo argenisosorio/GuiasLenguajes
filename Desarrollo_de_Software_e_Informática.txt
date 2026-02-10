@@ -4085,3 +4085,64 @@ Fuente
 ======
 
 DeepSeek
+
+====================
+Pruebas de regresión
+====================
+
+En desarrollo de software, las pruebas de regresión son un tipo de mantenimiento
+preventivo. Su objetivo principal es asegurar que el código nuevo o las
+actualizaciones no hayan roto las funcionalidades que ya funcionaban
+correctamente.
+
+Imagina que arreglas una gotera en el techo de una casa y, al terminar,
+verificas que las luces sigan encendiendo. Esa verificación es una prueba de
+regresión.
+
+¿Por qué son necesarias?
+
+Cuando se modifica el software (ya sea para añadir una función, corregir un
+error o mejorar el rendimiento), existe el riesgo de crear "efectos secundarios"
+no deseados. Las pruebas de regresión actúan como una red de seguridad.
+
+¿Cuándo se deben realizar?
+
+-Después de corregir un bug: Para confirmar que el arreglo no afectó otras
+partes del sistema.
+
+-Al añadir nuevas funciones: Para asegurar que lo nuevo convive en paz con lo
+viejo.
+
+-Cambios en el entorno: Por ejemplo, si actualizas la versión de la base de
+datos o el sistema operativo del servidor.
+
+-Refactorización: Cuando limpias el código interno sin cambiar lo que el usuario
+ve.
+
+Tipos de Pruebas de Regresión:
+
+No siempre es eficiente probar todo el sistema cada vez que cambias una línea de
+código. Por eso existen diferentes estrategias:
+
+-Regresión completa: Se ejecutan todos los casos de prueba existentes. Se suele
+hacer antes de un lanzamiento importante (release).
+
+-Selección de pruebas: Solo se ejecutan los casos de prueba que están
+relacionados con el área que fue modificada.
+
+-Priorización de casos: Se ejecutan primero las pruebas de las funciones
+críticas (por ejemplo, el proceso de pago en una tienda online) y luego el
+resto.
+
+La importancia de la automatización
+
+Hacer estas pruebas manualmente cada vez que hay un cambio es agotador y
+propenso a errores humanos. Por eso, en el desarrollo moderno (especialmente en
+CI/CD o Integración Continua), las pruebas de regresión suelen estar
+automatizadas. Cada vez que un programador sube código, un robot ejecuta cientos
+de pruebas en segundos para dar el "visto bueno".
+
+Fuente
+======
+
+Gemini IA
