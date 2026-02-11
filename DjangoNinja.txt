@@ -1,0 +1,101 @@
+=================================
+Guía Django Rest Framework by dM
+=================================
+
+Django Ninja es un framework para construir APIs con Python que combina lo mejor
+de dos mundos: la robustez y madurez de Django con la velocidad y modernidad de
+FastAPI.
+
+Básicamente, es una alternativa a Django REST Framework (DRF) que utiliza
+declaraciones de tipos (type hints) de Python para hacer el desarrollo más
+rápido y menos propenso a errores.
+
+¿Por qué es especial?
+=====================
+
+A diferencia de otros frameworks, Django Ninja se siente increíblemente ligero y
+"pitónico". Aquí sus pilares principales:
+
+-Tipado con Pydantic: Utiliza modelos de Pydantic para la validación de datos.
+Si defines que un campo es un int, el framework se encarga de validar que lo
+sea.
+
+Velocidad de ejecución: Está diseñado para ser extremadamente rápido. En muchos
+benchmarks, supera significativamente a DRF.
+
+Documentación automática: Al igual que FastAPI, genera automáticamente una
+interfaz de Swagger y Redoc para que puedas probar tus rutas sin configurar nada
+extra.
+
+Asíncrono por naturaleza: Soporta async de forma nativa, permitiéndote manejar
+peticiones concurrentes de manera eficiente.
+
+Comparativa rápida
+==================
+
+DRF:
+
+-Validación: Serializers (clases propias)
+-Documentación: Requiere librerías extra (drf-yasg)
+-Sintaxis: Basada en clases (generalmente)
+-Curva de aprendizaje: Media/Alta
+
+Django Ninja:
+
+-Validación: Tipos de Python (Pydantic)
+-Documentación: Nativa y automática (Swagger)
+-Sintaxis: Basada en funciones y decoradores
+-Curva de aprendizaje: Baja (si conoces Python moderno)
+
+Es una excelente opción si estás empezando un proyecto nuevo y quieres
+aprovechar las ventajas del tipado de Python 3.10+ sin perder las herramientas
+de administración y el ORM que hacen que Django sea tan potente.
+
+
+Django ninja es un sustituto de django o se puede usar django + django ninja?
+=============================================================================
+
+Django Ninja no es un sustituto de Django, sino una librería que se instala
+dentro de Django. Piensa en Django como el motor y el chasis de tu coche, y en
+Django Ninja como un kit de alto rendimiento diseñado específicamente para
+construir las puertas (las APIs) de forma más rápida y moderna.
+
+¿Cómo conviven?
+===============
+
+Para usar Django Ninja, necesitas tener un proyecto de Django funcionando. No
+son excluyentes; de hecho, Django Ninja depende totalmente del núcleo de Django
+para funcionar.
+
+Lo que cada uno aporta al equipo:
+
+-Django pone la base: Se encarga de la conexión a la base de datos (ORM), la
+seguridad, la gestión de usuarios, el panel de administración y la estructura
+del proyecto.
+
+-Django Ninja pone la interfaz: Se encarga de recibir las peticiones HTTP,
+validar que los datos que envía el usuario sean correctos (usando Pydantic) y
+devolver las respuestas en formato JSON.
+
+¿Puedo mezclar Django tradicional con Django Ninja?
+===================================================
+
+Sí, totalmente. Esta es una de sus mayores ventajas. En un mismo proyecto puedes
+tener:
+
+-Vistas clásicas: Páginas que renderizan HTML (templates de toda la vida).
+
+-Django Ninja: Una API moderna para tu aplicación móvil o tu frontend en
+React/Vue.
+
+-Django REST Framework (DRF): Incluso podrías tener DRF y Django Ninja
+instalados al mismo tiempo si estás migrando de uno a otro poco a poco.
+
+Fuentes
+======
+
+Gemini IA
+
+https://django-ninja.dev/
+
+https://www.django-rest-framework.org/
