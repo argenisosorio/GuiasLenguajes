@@ -8049,54 +8049,80 @@ myproject/
 
 -URLs (urls.py): Mapeo de rutas a vistas.
 
-Crear una carpeta llamada modules para incluir dentro las apps
+Crear una carpeta llamada apps para incluir dentro las apps
 ==============================================================
 
-Para que Django reconozca correctamente tu aplicación myapp dentro de la carpeta
-modules, sigue estos pasos:
+Organizar tus aplicaciones dentro de una carpeta apps es una excelente práctica
+para mantener el proyecto limpio, especialmente cuando empieza a crecer.
+Sin embargo, como Django busca las apps en la raíz por defecto, hay que hacer un
+par de ajustes para que no se rompa nada.
 
-1. Asegura la estructura correcta de directorios
+1. Crear la carpeta y mover las apps
 
-Tu proyecto debe lucir así:
+Primero, crea el directorio y mueve tus carpetas person y product dentro.
 
-myproject/
-├── modules/          # Carpeta contenedora
-│   └── myapp/        # Tu aplicación
-│       ├── __init__.py
-│       ├── apps.py
-│       ├── models.py
-│       └── ...
-├── myproject/
-│   ├── settings.py
-│   └── ...
-└── manage.py
+Crea la carpeta apps/ en la raíz (al mismo nivel que manage.py).
 
-2. Configura INSTALLED_APPS en `settings.py
+Importante: Crea un archivo vacío llamado __init__.py dentro de apps/ para que
+Python lo reconozca como un paquete.
 
-Registra la app usando la ruta completa (incluyendo modules):
+Mueve las carpetas person y product dentro de apps/.
+
+Tu estructura debería verse así:
+.
+├── apps
+│   ├── __init__.py
+│   ├── person
+│   └── product
+├── manage.py
+└── Django_6_crud
+
+2. Configurar apps.py en cada aplicación
+
+Django necesita saber que ahora el "camino" (path) de la app ha cambiado. Debes
+modificar el atributo name en el archivo apps.py de cada una:
+
+En apps/person/apps.py:
+
+class PersonConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'apps.person' # <--- Agrega 'apps.'
+
+En apps/product/apps.py:
+
+class ProductConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'apps.product' # <--- Agrega 'apps.'
+
+3. Actualizar settings.py
+
+Ahora registra las aplicaciones con su nueva ruta en la lista INSTALLED_APPS:
 
 INSTALLED_APPS = [
-    ...,
-    'modules.myapp',  # Ruta completa: modules + nombre de la app
+    # ...
+    'apps.person',
+    'apps.product',
 ]
 
-3. Verifica la clase AppConfig en myapp/apps.py
+4. Ajustar las importaciones (URLs y más)
 
-Asegúrate de que el atributo name refleje la ruta completa:
+Debes revisar cualquier lugar donde estés importando estas apps. El cambio más
+común es en el archivo urls.py principal de tu proyecto (Django_6_crud/urls.py):
 
-# modules/myapp/apps.py
-from django.apps import AppConfig
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('person/', include('apps.person.urls')), # <--- Actualiza aquí
+    path('product/', include('apps.product.urls')), # <--- Actualiza aquí
+]
 
-class MyappConfig(AppConfig):
-    name = 'modules.myapp'  # ¡Coincide con INSTALLED_APPS!
-
-Nota: Da error consiguiendo el template que está en modules/myapp/home.html aún
-no logro como solucionarlo.
+Nota técnica: Si en tus views.py o models.py haces importaciones entre apps
+(ej. from person.models import ...), ahora deberás usar
+from apps.person.models import ....
 
 Fuente
 ======
 
-DeepSeek
+Gemini IA
 
 =========================================================
 Crear un usuario administrador (superusuario) en Django 5
