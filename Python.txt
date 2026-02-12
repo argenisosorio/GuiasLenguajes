@@ -340,6 +340,26 @@ Linea 2
 Linea 3
 Linea 4
 
+======================
+Hola mundo en Python 3
+======================
+
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Script: hola_mundo.py
+Descripción: Ejemplo básico de un "Hola Mundo" con estructura estándar.
+"""
+
+def main():
+    # El mensaje clásico
+    mensaje = "¡Hola Mundo!"
+    print(mensaje)
+
+if __name__ == "__main__":
+    main()
+
 ###################
 ##### Función #####
 ###################
@@ -3762,6 +3782,136 @@ Fuente
 ======
 
 DeepSeek
+
+=============================================
+Guía Definitiva de pyenv para Desarrolladores
+=============================================
+
+¿Qué es pyenv y por qué usarlo?
+===============================
+
+En el desarrollo profesional con Python, es común trabajar en múltiples
+proyectos simultáneamente. El problema surge cuando el "Proyecto A" necesita
+Python 3.8 y la librería Django 3.0, mientras que el "Proyecto B" requiere
+Python 3.12 y Django 5.0.
+
+Si instalas todo en el Python de tu sistema operativo, crearás conflictos
+("Dependency Hell") y podrías romper herramientas del sistema. Pyenv soluciona
+esto permitiéndote:
+
+1.​ Instalar múltiples versiones de Python en paralelo (3.8, 3.10, 3.12, etc.) en
+tu carpeta de usuario, sin tocar el sistema.
+
+2.​ Cambiar entre versiones globalmente, por carpeta o por sesión de terminal.
+
+3.​ (Con el plugin pyenv-virtualenv) Crear entornos virtuales aislados asociados
+a esas versiones.
+
+Instalación Paso a Paso
+=======================
+
+Instala las dependencias de compilación:
+
+$ sudo apt update
+
+$ sudo apt install build-essential libssl-dev zlib1g-dev
+
+$ sudo apt install libbz2-dev libreadline-dev libsqlite3-dev curl
+
+$ sudo apt install libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+Instala pyenv:
+
+$ curl https://pyenv.run | bash
+
+Configura pyenv:
+
+$ echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+
+$ echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+
+$ echo 'eval "$(pyenv init - bash)"' >> ~/.bashrc
+
+$ echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+
+Estos comandos sirven para configurar tu entorno de terminal para que reconozca
+y ejecute automáticamente pyenv, que es una herramienta para gestionar múltiples
+versiones de Python en un mismo sistema. Estas líneas no instalan Python, sino
+que preparan tu terminal para que, una vez instalado pyenv, este funcione
+correctamente cada vez que la abras.
+
+Y para aplicar los cambios sin cerrar la terminal, como indica el texto de abajo:
+
+$ source ~/.bashrc
+
+Verificar y Actualizar
+
+$ pyenv --version
+
+Para mantener pyenv al día en el futuro, solo necesitas ejecutar:
+
+$ pyenv update​
+
+Instalar una versión específica de Python:
+
+Supongamos que tu nuevo proyecto requiere la última versión estable
+(ej. 3.12.1).
+
+$ pyenv install 3.12.1​
+
+Crear el entorno virtual (Virtualenv)
+=====================================
+
+1. Usa el siguiente comando. Reemplaza mi-entorno-2.7 por el nombre que
+prefieras:
+
+$ pyenv virtualenv 3.12.1​ mi-entorno-vistual
+
+2. Activar el entorno
+
+$ pyenv activate mi-entorno-vistual
+
+Ahora podrás instalar librerías sin problemas:
+
+(mi-entorno-vistual) $ pip install nombre-de-la-libreria
+
+Ver los entornos virtuales y las versiones de Python
+====================================================
+
+Este comando te muestra tanto las versiones de Python como los entornos
+virtuales (virtualenvs) que has creado:
+
+$ pyenv versions
+
+Ver solo entornos virtuales
+===========================
+
+Si solo quieres ver la lista específica de los entornos virtuales (sin las
+instalaciones base de Python), usa:
+
+$ pyenv virtualenvs
+
+Desactivar el entorno
+=====================
+
+Para desactivar un entorno virtual que activaste con pyenv, el comando es muy
+sencillo:
+
+$ pyenv deactivate
+
+Eliminar entorno
+================
+
+Usa el comando uninstall. Es el mejor porque pyenv te pedirá una confirmación
+antes de borrar nada.
+
+$ pyenv uninstall mi-entorno-2.7
+
+Fuentes
+=======
+
+Natanel
+Gemini IA
 
 ====================================
 Python 2.7 en Debian 13 usando pyenv

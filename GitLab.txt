@@ -624,7 +624,8 @@ Para verificar que todo quedó perfecto, escribe esto en tu terminal:
 
 $ ssh -T git@gitlab.com
 
-Si todo está bien, GitLab te responderá:
+Si usaste frase de paso te pedira la misma, si todo está bien, GitLab te
+responderá:
 
 Welcome to GitLab, @tu_usuario!
 
@@ -794,7 +795,9 @@ Para que Git sepa qué llave usar, necesitamos su ID. Lista tus llaves con:
 
 $ gpg --list-secret-keys --keyid-format LONG
 
-Busca la línea que empieza por sec. Verás algo como esto: sec rsa4096/ABC1234567890XYZ 2024-05-20 [SC]
+Busca la línea que empieza por sec. Verás algo como esto:
+
+sec rsa4096/ABC1234567890XYZ 2024-05-20 [SC]
 
 Tu ID es la parte después de la barra: ABC1234567890XYZ.
 
