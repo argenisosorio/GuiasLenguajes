@@ -8428,3 +8428,81 @@ $ python manage.py migrate   # Aplica migraciones iniciales
 $ python manage.py runserver
 
 Abre tu navegador en http://127.0.0.1:8000 y verás el mensaje ¡Hola, Django 6!.
+
+=====================================
+Arquitectura desacoplada Django + Vue
+=====================================
+
+Para una arquitectura desacoplada (Headless), el objetivo es que Django funcione
+exclusivamente como una API (REST o GraphQL) y Nuxt.js actúe como un cliente
+independiente que consume esos datos.
+
+1. Estructura de Carpetas (Monorepo)
+
+Aunque son tecnologías distintas, es común mantenerlas en un mismo repositorio
+bajo carpetas separadas para facilitar el despliegue y la gestión de versiones.
+
+proyecto-root/
+│
+├── backend/               # Proyecto Django (API)
+│   ├── manage.py
+│   ├── core/              # Configuración (settings, wsgi, asgi)
+│   ├── apps/              # Tus aplicaciones (person, product, etc.)
+│   ├── requirements.txt
+│   └── .env               # Variables de entorno backend
+│
+├── frontend/              # Proyecto Nuxt.js
+│   ├── components/        # Componentes Vue
+│   ├── pages/             # Rutas de Nuxt
+│   ├── store/             # Gestión de estado (Pinia)
+│   ├── nuxt.config.ts     # Configuración de Nuxt
+│   └── .env               # Variables de entorno frontend (API_URL)
+│
+└── docker-compose.yml     # Para orquestar ambos servicios
+
+2. Capa de Backend: Django (REST Framework)
+
+En esta arquitectura, Django ya no renderiza HTML (no usas templates).
+
+Django REST Framework (DRF): Es la herramienta estándar para crear los Endpoints.
+
+Serializers: Actúan como el "traductor" que convierte tus modelos de base de
+datos en formato JSON.
+
+Autenticación: En lugar de sesiones basadas en cookies tradicionales, se suele
+usar JWT (JSON Web Tokens) o Djoser para que Nuxt pueda mantener la sesión.
+
+CORS (Cross-Origin Resource Sharing): Debes instalar django-cors-headers para
+permitir que el dominio de Nuxt (ej. localhost:3000) haga peticiones a Django
+(ej. localhost:8000).
+
+3. Capa de Frontend: Nuxt.js
+
+Nuxt se encarga de todo lo visual y de la lógica de navegación.
+
+-SSR (Server Side Rendering): Nuxt permite que el primer renderizado ocurra en
+el servidor para mejorar el SEO, algo vital si tu app es pública.
+
+-Data Fetching: Utiliza useFetch o useAsyncData para llamar a los endpoints de
+Django.
+
+Middleware: Para proteger rutas. Por ejemplo, si no hay un token de Django, el
+middleware de Nuxt redirige al /login.
+
+Flujo de Comunicación
+=====================
+
+Petición: El usuario entra en tu-app.com/productos.
+
+Lógica: Nuxt realiza una petición GET a api.tu-app.com/v1/products/.
+
+Respuesta: Django procesa la petición, consulta la DB, el Serializer lo
+convierte a JSON y lo envía de vuelta.
+
+Renderizado: Nuxt recibe el JSON y lo dibuja en pantalla usando componentes de
+Vue.
+
+Fuente
+======
+
+Gemini IA

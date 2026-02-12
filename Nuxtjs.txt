@@ -1565,3 +1565,102 @@ Fuente
 ======
 
 ChatGPT
+
+=========================
+Nuxtjs desde cero en 2026
+=========================
+
+Para empezar con Nuxt.js usando npm, el proceso es muy directo. A diferencia de
+otros frameworks, Nuxt tiene un asistente de instalación que configura todo lo
+necesario por ti.
+
+Nota: Node debe estar instalado al menos en la versión v20.20.0
+
+1. Inicializar el proyecto
+
+Abre tu terminal y ejecuta el siguiente comando:
+
+$ npx nuxi@latest init hello-world-nuxt
+
+Nota: nuxi es la herramienta de línea de comandos de Nuxt.
+
+El asistente te preguntará varias cosas:
+
+◆  Which template would you like to use?
+│  ○ content – Content-driven website
+│  ● minimal – Minimal setup for Nuxt 4 (recommended)
+│  ○ module – Nuxt module
+│  ○ ui – App using Nuxt UI
+
+¿Cuál elegir?
+
+Selecciona la opción minimal ¿Por qué? Porque al trabajar con Django, tú vas a
+manejar los datos, la lógica y los modelos desde el backend. La opción minimal
+te da el lienzo en blanco perfecto sin agregar herramientas que quizás no uses
+(como el módulo de Content o UI preconfigurado).
+
+Luego seleccionar npm como gestor de paquetes de node, al seleccionar npm
+el asistente comenzara a instalar las dependencias automáticamente.
+
+Selecciona No en la pregunta de los módulos por ahora. Es mejor instalarlos
+manualmente a medida que los necesitemos para no llenar el proyecto de cosas
+innecesarias. Al terminar, verás un mensaje de éxito indicando que el proyecto
+ha sido creado.
+
+$ cd hello-world-nuxt
+
+Corremos el servidor en local
+
+$ npm run dev
+
+Nuxt 4.3.1 (with Nitro 2.13.1, Vite 7.3.1 and Vue 3.5.28)
+➜ Local:    http://localhost:3000/
+
+Al visitar la url veremos la página de inicio del proyecto.
+
+Crear un Hola Mundo
+===================
+
+Por defecto, Nuxt viene con un archivo app.vue que trae este contenido:
+
+<template>
+  <div>
+    <NuxtRouteAnnouncer />
+    <NuxtWelcome />
+  </div>
+</template>
+
+Vamos a modificarlo para que muestre nuestro mensaje. Abre el archivo app.vue
+en tu editor y sustituye el código por este:
+
+<template>
+  <div>
+    <h1>¡Hola Mundo desde Nuxt.js!</h1>
+  </div>
+</template>
+
+<style scoped>
+div {
+  font-family: sans-serif;
+  text-align: center;
+  margin-top: 50px;
+}
+h1 {
+  color: #00dc82; /* El color verde característico de Nuxt */
+}
+</style>
+
+Ejecutar el servidor de desarrollo
+
+$ npm run dev
+
+Nuxt 4.3.1 (with Nitro 2.13.1, Vite 7.3.1 and Vue 3.5.28)
+➜ Local:    http://localhost:3000/
+
+Al visitar la url veremos nuestro mensaje.
+
+
+Fuente
+======
+
+Gemini IA
