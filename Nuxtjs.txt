@@ -1693,6 +1693,9 @@ logs
 .env.*
 !.env.example
 
+# EsLlint
+.eslintcache
+
 =====================================
 Crear 2 páginas y moverse entre ellas
 =====================================
@@ -2156,6 +2159,130 @@ dirá: "Oye, en Navbar.vue declaraste una variable que no estás usando" o
 En VS Code (Recomendado): Instala la extensión oficial de ESLint. Esto hará que
 los errores aparezcan con una línea roja ondulada mientras escribes, igual que
 un error de ortografía en Word.
+
+Hacer que ESLint se ejecute junto con npm run dev
+=================================================
+
+$ npm install -D vite-plugin-eslint2
+
+En nuxt.config.ts debe quedar así:
+
+export default defineNuxtConfig({
+  compatibilityDate: '2025-07-15',
+  devtools: { enabled: true },
+
+  css: [
+    'assets/css/main.css'
+  ],
+
+  modules: ['@nuxt/eslint'],
+
+  eslint: {
+    checker: true
+  }
+})
+
+Ahora cuando ejecutes npm run dev ESLint mostrará los errores en la consola de
+Nuxt.
+
+Integrar las etiquetas meta globales
+====================================
+
+Para integrar las etiquetas meta globales en tu archivo de configuración, debes
+añadir la propiedad app que contiene el objeto head. Aquí es donde definiremos
+el título, el idioma y las metas principales.
+
+En nuxt.config.ts debe quedar así:
+
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default defineNuxtConfig({
+  compatibilityDate: '2025-07-15',
+  devtools: { enabled: false },
+
+  // Configuración de etiquetas Meta Globales
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'es' // Define el idioma del sitio
+      },
+      title: 'Mi Aplicación Nuxt + Django', // Título por defecto
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: 'Panel de administración de usuarios conectado a backend Django' },
+        { name: 'format-detection', content: 'telephone=no' },
+        { name: 'author', content: 'Tu Nombre o Empresa' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      ]
+    }
+  },
+
+  css: [
+    'assets/css/main.css'
+  ],
+
+  modules: ['@nuxt/eslint'],
+
+  eslint: {
+    checker: true
+  }
+})
+
+Detalles importantes de esta configuración:
+
+htmlAttrs: Es vital para el SEO y la accesibilidad indicar que tu sitio está en
+español (lang: 'es').
+
+title: Este será el nombre que aparezca en la pestaña del navegador si la página
+específica no define uno propio.
+
+hid: 'description': El hid (identificador de hidratación) es una buena práctica.
+Si luego en una página específica (como el perfil de un usuario) quieres cambiar
+la descripción, Nuxt usará este ID para reemplazar la global en lugar de
+duplicarla.
+
+viewport: Ya viene por defecto en Nuxt, pero declararlo explícitamente te
+asegura que Bootstrap se vea bien en móviles desde el primer segundo.
+
+Cambiar el título en cada página de forma independiente
+=======================================================
+
+Para cambiar el título en cada página de forma independiente, tienes dos caminos
+principales. Ambos son muy sencillos y se adaptan a si prefieres escribirlo
+dentro de tu lógica JavaScript o directamente en el HTML.
+
+1. Usando el Composable useHead (Recomendado)
+
+Es la forma más común en Nuxt 3/4. Se coloca dentro del bloque <script setup>.
+Es ideal porque te permite usar variables o lógica de programación.
+
+Ejemplo en app/pages/about.vue:
+
+<script setup>
+useHead({
+  title: 'Acerca de Nosotros'
+})
+</script>
+
+<template>
+  <h1>Nuestra Empresa</h1>
+</template>
+
+2. Usando el componente <Title> (Estilo HTML)
+
+Si prefieres un enfoque más visual y directo en el template, Nuxt te permite
+usar etiquetas especiales que funcionan como si estuvieras en el <head> de un
+HTML normal.
+
+Ejemplo en app/pages/contact.vue:
+<template>
+  <div>
+    <Title>Contáctanos</Title>
+    <h1>Formulario de contacto</h1>
+  </div>
+</template>
 
 Fuente
 ======
