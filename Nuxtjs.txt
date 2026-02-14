@@ -1784,3 +1784,380 @@ Fuente
 ======
 
 Gemini IA
+
+Crear componente reusable
+=========================
+
+Crear componentes reutilizables es muy sencillo gracias a la auto-importación.
+1. Crear el componente GoBack
+
+Como estamos usando la estructura de Nuxt 4, asegúrate de crear la carpeta
+components dentro de app/.
+
+Archivo: app/components/GoBack.vue
+
+<script setup>
+// Usamos el router de Nuxt para acceder al historial de navegación
+const router = useRouter()
+
+const navegarAtras = () => {
+  // .back() funciona exactamente como el botón "atrás" del navegador
+  router.back()
+}
+</script>
+
+<template>
+  <button @click="navegarAtras" class="btn-back">
+    ⬅ Volver atrás
+  </button>
+</template>
+
+<style scoped>
+.btn-back {
+  background-color: #f3f4f6;
+}
+</style>
+
+2. Cómo usarlo en tus páginas
+
+Gracias a la magia de Nuxt, no necesitas importar el componente con una línea de
+código. Solo úsalo directamente como una etiqueta HTML en cualquier página.
+
+Por ejemplo, en tu página de detalle app/pages/users/[id].vue:
+<template>
+  <div>
+    <GoBack />
+
+    <div v-if="pending">Cargando...</div>
+    <div v-else>
+      <h1>Perfil de: {{ user.name }}</h1>
+      </div>
+  </div>
+</template>
+
+Otros componentes:
+
+// Navbar.vue
+
+<template>
+  <header>
+    <nav class="main-nav">
+      <NuxtLink to="/">Home</NuxtLink>
+      <span class="divider">|</span>
+      <NuxtLink to="/users">Users</NuxtLink>
+    </nav>
+    <hr />
+  </header>
+</template>
+
+<style scoped>
+/* Usamos a y .router-link-active que Nuxt aplica automáticamente */
+a {
+  color: red;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 10px;
+}
+
+.router-link-active {
+  color: #00dc82; /* Color verde Nuxt cuando la ruta está activa */
+}
+</style>
+
+// Footer.vue
+
+<template>
+  <div>
+    <hr />
+    <footer>
+      <p>© 2026 My Nuxt App</p>
+    </footer>
+  </div>
+</template>
+
+<style scoped>
+</style>
+
+Por lo cual app.vue quedaría asi:
+
+<template>
+  <div>
+    <Navbar />
+    <NuxtPage />
+    <Footer />
+  </div>
+</template>
+
+<style>
+a {
+  color: red;
+  text-decoration: none;
+  font-weight: bold;
+}
+</style>
+
+Ejemplo completo: https://github.com/argenisosorio/hello-world-nuxt/tree/feat/reusable-component
+
+Fuente
+======
+
+Gemini IA
+
+====================================
+Agregar Bootstrap localmente en Nuxt
+====================================
+
+Para agregar Bootstrap localmente en Nuxt (sin depender de un CDN que podría
+fallar o ser lento), lo ideal es usar el ecosistema de npm. Esto permite que el
+código de Bootstrap se compile y se optimice junto con tu aplicación.
+1. Instalar Bootstrap
+
+Abre tu terminal en la raíz del proyecto y ejecuta:
+
+$ npm install bootstrap
+
+2. Configurar el archivo de estilos
+
+Nuxt 4 necesita saber dónde está el archivo CSS de Bootstrap. Lo más limpio es
+crear un archivo de entrada para tus estilos.
+
+Crea una carpeta llamada assets dentro de tu carpeta app/.
+
+Crea una carpeta css dentro de assets/.
+
+Crea un archivo llamado main.css.
+
+Archivo: app/assets/css/main.css
+
+/* Importamos Bootstrap desde node_modules */
+@import "bootstrap/dist/css/bootstrap.min.css";
+
+/* Aquí puedes agregar tus propios estilos globales después */
+body {
+  background-color: #FAFAFA;
+}
+
+3. Registrar los estilos en nuxt.config.ts
+
+Ahora debemos decirle a Nuxt que cargue ese archivo en todas las páginas. Edita
+tu archivo de configuración en la raíz:
+
+nuxt.config.ts
+
+export default defineNuxtConfig({
+  compatibilityDate: '2025-07-15',
+  devtools: { enabled: true },
+  // Registramos el CSS global
+  css: [
+    'assets/css/main.css' // Quita el ~/app/
+  ],
+})
+
+4. Agregar el JavaScript de Bootstrap
+
+Si vas a usar componentes que requieren interactividad (como Modales, Dropdowns
+o el menú hamburguesa), necesitas el JS.
+
+En Nuxt, la forma más sencilla de cargar el JS de Bootstrap globalmente es
+mediante un Plugin.
+
+Crea la carpeta app/plugins/.
+
+Crea el archivo bootstrap.client.ts (el .client es vital para que solo cargue en
+el navegador).
+
+Archivo: app/plugins/bootstrap.client.ts
+
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+
+export default defineNuxtPlugin(() => {
+  // Ahora Bootstrap está disponible en el cliente
+})
+
+5. ¡A probarlo!
+
+Ahora puedes ir a tus componentes y usar las clases de Bootstrap. Por ejemplo:
+un botón que abre un modal que hace uso de estilos css y funciones js de
+bootstrap.
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+Ejemplo completo: https://github.com/argenisosorio/hello-world-nuxt/tree/feat/added-bootstrap
+
+Agregar estáticos como imágenes
+===============================
+
+1. La opción recomendada: Carpeta public/
+
+Esta es la forma más sencilla. Todo lo que pongas en la carpeta public/ (que
+debe estar en la raíz de tu proyecto, fuera de la carpeta app) se sirve en la
+ruta raíz /.
+
+Pasos:
+
+Crea una carpeta llamada public/ en la raíz (al lado de package.json).
+
+Crea una subcarpeta images/ (opcional, por orden).
+
+Guarda tu imagen ahí, por ejemplo: logo.png.
+
+Uso en el componente:
+
+
+<img src="/images/logo.png" alt="Mi Logo" class="img-fluid" />
+
+Métodos globales cd js para usarse en cualquier componente
+==========================================================
+
+La mejor forma de hacerlo en Nuxt es utilizando Composables. En Nuxt, cualquier
+archivo que crees dentro de la carpeta app/composables/ se auto-importará
+globalmente. Esto significa que podrás usar tus funciones en cualquier página o
+componente sin escribir una sola línea de import.
+
+1. Crear el archivo de funciones globales
+
+Crea una carpeta llamada composables dentro de tu carpeta app/ y crea un archivo
+(por ejemplo utils.js).
+
+Archivo: app/composables/utils.js
+
+// Exportamos funciones individuales
+export const utils = () => {
+  
+  // Tu función de sumar
+  const sumar = (a, b) => {
+    return a + b
+  }
+
+  // Tu función de restar
+  const restar = (x, y) => {
+    return x - y
+  }
+
+  return {
+    sumar,
+    restar
+  }
+}
+
+2. Cómo usarlo en tus páginas o componentes
+
+Ahora puedes llamar a estas funciones directamente en el bloque <script setup>
+de cualquier archivo .vue.
+
+Ejemplo en app/pages/users.vue:
+Fragmento de código
+
+<template>
+  <div>
+    <h1>Users List</h1>
+    <div class="alert alert-info">
+      <p>El resultado de la suma es: <strong>{{ resultado_suma }}</strong></p>
+      <p>El resultado de la suma es: <strong>{{ resultado_resta }}</strong></p>
+    </div>
+  </div>
+</template>
+
+<script setup>
+const { sumar, restar } = utils()
+
+const resultado_suma = sumar(10, 5)
+const resultado_resta = restar(100, 75)
+</script>
+
+¿Por qué usar Composables y no un simple archivo .js?
+
+-Auto-importación: Te ahorras cientos de líneas de import en proyectos grandes.
+
+-Reactividad: Si dentro de tu composable usas ref o reactive, puedes compartir
+estados (variables) que cambien en tiempo real en toda la app.
+
+-Estándar de Nuxt: Es la forma oficial de organizar la lógica de negocio fuera
+de los componentes visuales.
+
+Ejemplo completo: https://github.com/argenisosorio/hello-world-nuxt/tree/test/global-js-methods
+
+Instalar el paquete ESLint
+==========================
+
+ESLint es, en pocas palabras, un "corrector ortográfico" para tu código. Es una
+herramienta que analiza tu JavaScript/Vue para encontrar errores comunes, malas
+prácticas y asegurar que siempre escribas con el mismo estilo (por ejemplo, que
+siempre uses comillas simples o que nunca dejes variables sin usar).
+
+En Nuxt, es fundamental porque te ayuda a atrapar errores de Vue antes de que
+siquiera intentes verlos en el navegador.
+
+Cómo incluirlo en tu proyecto (Método Nuxt 4)
+
+Nuxt tiene un módulo oficial llamado @nuxt/eslint que simplifica todo el proceso
+de configuración, que solía ser un dolor de cabeza.
+
+1. Instala el módulo
+
+$ npx nuxi module add eslint
+
+Este comando instalará las dependencias necesarias y lo agregará automáticamente
+a tu nuxt.config.ts.
+
+2. Configuración inicial
+
+Una vez instalado, el módulo te pedirá (o creará automáticamente) un archivo
+llamado eslint.config.mjs en la raíz de tu proyecto. Ábrelo y asegúrate de que
+tenga esta estructura básica:
+
+// eslint.config.mjs
+import withNuxt from './.nuxt/eslint.config.mjs'
+
+export default withNuxt({
+  // Aquí puedes agregar reglas personalizadas si quieres
+  rules: {
+    'vue/multi-word-component-names': 'off', // Para que no se queje de nombres como "Navbar"
+  }
+})
+
+3. Agrega un script para limpiar
+
+En tu archivo package.json, añade esta línea en la sección de "scripts" para que
+puedas limpiar todo tu proyecto con un solo comando:
+
+"scripts": {
+  "lint": "eslint ."
+}
+
+¿Cómo se usa?
+
+En la terminal: Ejecuta npm run lint. ESLint revisará todos tus archivos y te
+dirá: "Oye, en Navbar.vue declaraste una variable que no estás usando" o
+"Te faltó un punto y coma".
+
+En VS Code (Recomendado): Instala la extensión oficial de ESLint. Esto hará que
+los errores aparezcan con una línea roja ondulada mientras escribes, igual que
+un error de ortografía en Word.
+
+Fuente
+======
+
+Gemini IA
