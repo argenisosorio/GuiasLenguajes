@@ -28,7 +28,7 @@ Proyectos que necesiten un prototipo rápido.
 Es muy útil para sacar una idea de negocio o hacer un test de manera bastante
 rápida.
 
-Proyectos que sean el medianos y grandes.
+Proyectos que sean medianos y grandes.
 
 Si nuestro proyecto va a tener desarrollo continuo y largo en el tiempo, es muy
 aconsejable utilizar este tipo de frameworks, ya que tiene un mantenimiento
@@ -1659,6 +1659,126 @@ Nuxt 4.3.1 (with Nitro 2.13.1, Vite 7.3.1 and Vue 3.5.28)
 
 Al visitar la url veremos nuestro mensaje.
 
+Fuente
+======
+
+Gemini IA
+
+====================
+.gitignore en Nuxtjs
+====================
+
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+=====================================
+Crear 2 páginas y moverse entre ellas
+=====================================
+
+Nuxt 4 ha cambiado su configuración por defecto y espera que la carpeta de la
+aplicación (páginas, componentes, etc.) esté dentro de un directorio llamado
+app/.
+
+Mueve tu carpeta pages (y la de components si la creaste) dentro de una nueva
+carpeta llamada app. Tu estructura debe quedar así:
+
+hello-world-nuxt/
+├── app/                 <-- Crear esta carpeta
+│   ├── pages/           <-- Mover aquí
+│   │   ├── index.vue
+│   │   └── users.vue
+│   ├── components/      <-- Mover aquí (opcional)
+│   └── app.vue          <-- Mover aquí
+├── nuxt.config.ts
+├── package.json
+└── ...
+
+Ejemplo completo: https://github.com/argenisosorio/hello-world-nuxt/tree/feat/2-new-pages
+
+Simular un api de users
+=======================
+
+Ahora que tus páginas están conectadas, el siguiente nivel en una arquitectura
+desacoplada es dejar de usar texto falso (Lorem Ipsum) y traer datos reales.
+
+Para que tu frontend empiece a comportarse como una aplicación de verdad, vamos
+a simular lo que hará Django enviando una lista de usuarios.
+
+1. Preparar users.vue para recibir datos
+
+En Nuxt (y Vue 3), usamos el bloque <script setup> para manejar la lógica.
+Vamos a usar useFetch, que es la herramienta oficial de Nuxt para pedir datos.
+
+Modifica tu pages/users.vue así:
+
+<script setup>
+// Simularemos una llamada a la API de Django usando una API de prueba real
+// Luego cambiaremos esta URL por la de tu servidor Django local
+const { data: usuarios, pending, error } = await useFetch('https://jsonplaceholder.typicode.com/users')
+</script>
+
+<template>
+  <div>
+    <h1>Lista de Usuarios</h1>
+
+    <p v-if="pending">Cargando usuarios desde el backend...</p>
+
+    <p v-else-if="error" style="color: red;">Hubo un error al conectar con Django</p>
+
+    <ul v-else>
+      <li v-for="user in usuarios" :key="user.id">
+        <strong>{{ user.name }}</strong> - {{ user.email }}
+      </li>
+    </ul>
+
+    <hr>
+    <p>Estos datos vienen de una API externa, simulando tu Backend.</p>
+  </div>
+</template>
+
+¿Qué está pasando aquí?
+
+useFetch: Es "mágico". Maneja por ti el estado de carga (pending) y los posibles
+errores. Además, en Nuxt, si recargas la página, el servidor hace la petición
+por ti (SSR) para que Google pueda ver el contenido.
+
+v-if / v-else: Son directivas de Vue para mostrar u ocultar elementos
+dependiendo de si los datos ya llegaron.
+
+v-for: Es el equivalente al for user in users de los templates de Django.
+Recorre la lista y crea un <li> por cada usuario.
+
+2. El reto de la arquitectura desacoplada
+
+Cuando conectes esto con tu Django real, te enfrentarás a dos retos que podemos
+preparar desde ya:
+
+CORS: Django bloqueará a Nuxt por seguridad a menos que instalemos
+django-cors-headers.
+
+URL Base: No querrás escribir http://127.0.0.1:8000 en cada página.
 
 Fuente
 ======
