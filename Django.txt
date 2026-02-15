@@ -8119,6 +8119,8 @@ Nota técnica: Si en tus views.py o models.py haces importaciones entre apps
 (ej. from person.models import ...), ahora deberás usar
 from apps.person.models import ....
 
+Ejemplo completo: https://github.com/argenisosorio/Django_6_crud/tree/feat/2-apps
+
 Fuente
 ======
 
@@ -8501,6 +8503,110 @@ convierte a JSON y lo envía de vuelta.
 
 Renderizado: Nuxt recibe el JSON y lo dibuja en pantalla usando componentes de
 Vue.
+
+Fuente
+======
+
+Gemini IA
+
+======================================
+Probando API con Django Rest Framework
+======================================
+
+Para transformar tu CRUD tradicional de Django en una API que tu proyecto Nuxt pueda consumir, la forma estándar y más eficiente es usar Django REST Framework (DRF).
+
+DRF se encarga de convertir tus modelos de Django a formato JSON (un proceso llamado serialización).
+
+Aquí tienes los pasos para convertir tu modelo Person en una API:
+1. Instalación y Configuración
+
+Primero, instala DRF en tu entorno virtual:
+
+$ pip install djangorestframework django-cors-headers
+
+Luego, añádelos a tus INSTALLED_APPS en settings.py. También añadiremos corsheaders para que Nuxt pueda hacer peticiones a Django sin bloqueos de seguridad.
+Python
+
+# settings.py
+INSTALLED_APPS = [
+    ...
+    'rest_framework',
+    'corsheaders',
+    'apps.person',
+]
+
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # Debe ir arriba de todo
+    'django.middleware.common.CommonMiddleware',
+    ...
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000", # La URL de tu app frontend
+]
+
+2. Crear el Serializador
+
+Crea un archivo llamado apps/person/serializers.py. El serializador define qué campos de tu modelo se enviarán como JSON.
+
+from rest_framework import serializers
+from .models import Person
+
+class PersonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Person
+        fields = '__all__' # O puedes listar ['id', 'name', 'email', 'age']
+
+3. Crear las API Views
+
+Vamos a simplificar tus 5 funciones de views.py en un solo ViewSet. Esto manejará el GET (lista y detalle), POST, PUT y DELETE automáticamente.
+
+Modifica apps/person/views.py:
+
+from rest_framework import viewsets
+from .models import Person
+from .serializers import PersonSerializer
+
+class PersonViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint que permite ver, editar o eliminar personas.
+    """
+    queryset = Person.objects.all().order_by('-created_at')
+    serializer_class = PersonSerializer
+
+4. Configurar las URLs de la API
+
+En lugar de crear una URL por cada función, usamos un Router.
+
+Modifica apps/person/urls.py:
+
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import PersonViewSet
+
+router = DefaultRouter()
+router.register(r'', PersonViewSet) # Esto crea las rutas automáticas
+
+urlpatterns = [
+    path('', include(router.urls)),
+]
+
+5. En el archivo raíz Django_6_crud/urls.py:
+
+Asegúrate de incluir las rutas de la app con un prefijo de API:
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/person/', include('apps.person.urls')), # Aquí conectas la app
+]
+
+3. Prueba de fuego
+
+Una vez realizados estos cambios, reinicia tu servidor y visita en tu navegador:
+http://127.0.0.1:8000/api/person/
 
 Fuente
 ======
