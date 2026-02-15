@@ -8541,8 +8541,20 @@ MIDDLEWARE = [
     ...
 ]
 
+
+
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000", # La URL de tu app frontend
+]
+
+
+Configuración de CORS para Nuxt 4, a veces usa el puerto 3000 o el 5173
+dependiendo de la consola, estonces mejor añdidimos ambos para evitar bloqueos:
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
 ]
 
 2. Crear el Serializador

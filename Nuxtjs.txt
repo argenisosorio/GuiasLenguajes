@@ -2620,6 +2620,184 @@ watch(pending, (newVal) => {
 }, { immediate: true }) // immediate asegura que si empieza cargando, el loader se active de una vez
 </script>
 
+=========================================
+Crear variables de configuración globales
+=========================================
+
+Configurar runtimeConfig es la forma correcta de manejar variables de entorno y
+URLs en Nuxt. Esto te permite cambiar de localhost a un dominio real
+(producción) sin tocar el código de tus componentes.
+
+1. Modifica tu nuxt.config.ts
+
+Añade la propiedad runtimeConfig dentro del objeto de configuración. Se divide
+en dos partes: public (disponible en el cliente y servidor) y las de primer
+nivel (solo disponibles en el servidor, como claves API secretas). Asi quedaría
+el archivo:
+
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default defineNuxtConfig({
+  compatibilityDate: '2025-07-15',
+  devtools: { enabled: false },
+
+  runtimeConfig: {
+    // Las variables dentro de 'public' son accesibles desde el navegador
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://127.0.0.1:8000/api'
+    }
+  },
+
+  // Configuración de etiquetas Meta Globales
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'es' // Define el idioma del sitio
+      },
+      title: 'My Nuxt app', // Título por defecto
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', content: 'Nuxt 4 examples' },
+        { name: 'format-detection', content: 'telephone=no' },
+        { name: 'author', content: 'Ing. Argenis Osorio' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      ]
+    }
+  },
+
+  css: [
+    'assets/css/main.css'
+  ],
+
+  modules: ['@nuxt/eslint'],
+
+  eslint: {
+    checker: true
+  }
+})
+
+2. Crea un archivo .env
+
+En la raíz de tu proyecto, crea un archivo llamado .env. Nuxt lo leerá
+automáticamente. Esto es útil para que cada desarrollador tenga su propia
+configuración:
+
+# Variables de entorno para Nuxt 4
+
+# Url base de la API de Django
+NUXT_PUBLIC_API_BASE=http://127.0.0.1:8000/api
+
+Nota: Por ejemplo, si en tu .env tienes
+NUXT_PUBLIC_API_BASE=https://mi-api-real.com Nuxt sobrescribirá el valor por
+defecto (http://127.0.0.1:8000/api) que pusiste en el nuxt.config.ts. Esto
+permite que tu aplicación sea portátil: el mismo código funciona en tu laptop y
+en la nube simplemente cambiando el .env.
+
+-----
+
+3. Cómo usarlo en tus páginas (.vue)
+
+Ahora, en lugar de escribir la URL a mano, invocas a useRuntimeConfig():
+
+<template>
+  <div>
+    <GoBack /> |
+    <NuxtLink to="/users/create">
+      <button>Create person</button>
+    </NuxtLink>
+
+    <h1>Users List</h1>
+
+    <div v-if="error" class="alert alert-danger">
+      Error al cargar usuarios. Inténtalo de nuevo.
+    </div>
+
+    <table v-else>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Age</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="user in users_list" :key="user.id">
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.age }}</td>
+          <td>
+            <NuxtLink :to="`/users/${user.id}`">Detail</NuxtLink> |
+            <NuxtLink :to="`/users/update/${user.id}`">Update</NuxtLink> |
+            <button @click="deleteUser(user.id, user.name)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<script setup>
+// Inicializa el acceso a la variable de entorno para la URL base del backend.
+const config = useRuntimeConfig()
+
+// Ahora 'apiBase' contiene la URL base de la API configurada en el .env
+const apiBase = config.public.apiBase
+
+// 1. Estado global para controlar el loader
+const loader = useState('loader')
+
+// 2. Configuramos el título de la página
+useHead({
+  title: 'Users',
+})
+
+// Simularemos una llamada a la API de Backend usando una API de prueba real
+// 'pending' es un booleano reactivo que cambia automáticamente
+const { data: response, pending, error, refresh} = await useFetch(`${apiBase}/person/`, {
+  lazy: true
+})
+
+// 3. Mapeamos los resultados (JSONPlaceholder devuelve un Array directo)
+const users_list = computed(() => response.value || [])
+
+// Función para eliminar una persona
+const deleteUser = async (id, name) => {
+  // 1. Confirmación de seguridad
+  if (!confirm(`¿Estás seguro de que deseas eliminar a ${name}?`)) return
+
+  try {
+    loader.value = true // Activamos el spinner
+    // 2. Petición DELETE a Django
+    await $fetch(`${apiBase}/person/${id}/`, {
+      method: 'DELETE'
+    })
+
+    // 3. Refrescar la lista automáticamente sin recargar la página
+    await refresh()
+
+  } catch (err) {
+    console.error('Error al eliminar:', err)
+    alert('No se pudo eliminar al usuario')
+    loader.value = false // Apagamos el spinner
+  } finally {
+    loader.value = false // Apagamos el spinner
+  }
+}
+
+// 4. Observamos 'pending' y asignamos su valor directamente al loader
+watch(pending, (newVal) => {
+  loader.value = newVal
+}, { immediate: true }) // immediate asegura que si empieza cargando, el loader se active de una vez
+</script>
+
+<style scoped>
+</style>
+
 Fuente
 ======
 
