@@ -2284,6 +2284,342 @@ Ejemplo en app/pages/contact.vue:
   </div>
 </template>
 
+=================================
+Crear un spinner loader en Nuxt 4
+=================================
+
+En la carpeta components creamos el archivo Loader.vue con este contenido:
+
+<template>
+  <div class="loader-overlay">
+    <div class="spinner" />
+  </div>
+</template>
+
+<style scoped>
+/* 1. El fondo que cubre toda la pantalla */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7); /* Oscurecemos el fondo */
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;     /* Centra verticalmente */
+  z-index: 10000;
+  backdrop-filter: blur(4px); /* Efecto desenfoque moderno */
+}
+
+/* 2. El círculo animado */
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid rgba(255, 255, 255, 0.1); /* Círculo de fondo tenue */
+  border-left-color: #7d47ff; /* El color morado que pediste */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Animación de rotación */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
+
+Luego en app.vue agregamos el componente Loader:
+
+<template>
+  <div>
+    <!-- El loader se muestra condicionalmente según el estado global 'loader' -->
+    <Loader v-if="loader" />
+    <div class="container">
+      <Navbar />
+      <NuxtPage />
+      <Footer />
+    </div>
+  </div>
+</template>
+
+<script setup>
+/* Estado global para controlar la visibilidad del loader
+ * Inicialmente el loader está visible
+*/
+const loader = useState('loader', () => true)
+</script>
+
+<style>
+a {
+  color: red;
+  text-decoration: none;
+  font-weight: bold;
+}
+</style>
+
+Ahora podemos llamar el estado global del componente que es activo y lo
+controlamos con el valor de loader.value para desactivarlo:
+
+<template>
+  <div>
+    <h1>Welcome page</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+  </div>
+</template>
+
+<script setup>
+useHead({
+  title: 'Home'
+})
+
+// Estado global para controlar la visibilidad del loader
+const loader = useState('loader')
+
+setTimeout(function() {
+  // Ocultamos el loader después de 3 segundos
+  loader.value = false
+}, 3000);
+</script>
+
+Ejemplo completo: https://github.com/argenisosorio/hello-world-nuxt/tree/test/loading-on-off-function
+
+Ejemplo completo usando onMounted: https://github.com/argenisosorio/hello-world-nuxt/tree/feat/added-loader-real
+
+=============================================
+Hooks del Ciclo de Vida y Composables de Nuxt
+=============================================
+
+1. El Ciclo de Vida (Lifecycle Hooks)
+
+Representan los momentos exactos desde que la página nace hasta que se destruye.
+Los más usados en Nuxt son:
+
+onMounted(): Se ejecuta solo en el navegador, una vez que el HTML ya está
+dibujado. Es el lugar perfecto para setTimeout, librerías de gráficos o
+manipular el DOM.
+
+onUnmounted(): Se ejecuta cuando el usuario se va a otra página. Úsalo para
+limpiar timers o cancelar peticiones.
+
+onBeforeMount(): Justo antes de que el componente aparezca en pantalla.
+
+2. Estados Reactivos (Data)
+
+En lugar de data(), usamos:
+
+ref(): Para valores simples (strings, números, booleanos).
+
+reactive(): Para objetos complejos.
+
+useState(): (Exclusivo de Nuxt) Para que el estado sobreviva a la navegación
+entre páginas y sea compartido.
+
+3. Métodos (Funciones)
+
+En <script setup>, cualquier función normal de JavaScript se convierte en un
+"método" que puedes usar en tu HTML.
+
+Diferencia clave: SSR vs Client
+===============================
+
+En Nuxt, el código dentro de <script setup> corre dos veces: una en el servidor
+(para generar el HTML inicial) y otra en el cliente (para hacerlo interactivo).
+
+Tabla de Equivalencias
+Vue 2 (Options API)	| Nuxt 4 (Composition API)
+data() | ref() o useState()
+methods: | const miFuncion = () => {}
+mounted() | onMounted(() => {})
+computed: | const total = computed(() => ...)
+watch: | watch(variable, (newVal) => ...)
+
+Ejemplo real:
+
+<template>
+  <div>
+    <h1>Welcome page</h1>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+
+    <img
+      src="/images/star.png"
+      alt="star"
+      class="img-fluid mb-3"
+      width="50px"
+    >
+    <br>
+
+    <p>Contador: {{ contador }}</p>
+    <button class="btn btn-primary" @click="incrementar">Sumar</button>
+
+    <br>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    <div id="exampleModal" class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 id="exampleModalLabel" class="modal-title">Modal title</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+// 1. COMPOSABLES (Configuración de Nuxt)
+useHead({
+  title: 'Home'
+})
+
+// 2. ESTADO (Variables)
+const loader = useState('loader')
+const contador = ref(0) // Estado local de esta página
+
+// 3. MÉTODOS (Lógica)
+const incrementar = () => {
+  contador.value++
+}
+
+// 4. CICLO DE VIDA (Lifecycle)
+onMounted(() => {
+  console.log("Paso 1: La página ya es visible en el navegador")
+
+  setTimeout(() => {
+    loader.value = false
+    console.log("Paso 2: Han pasado 3 segundos y quité el loader")
+  }, 3000)
+})
+
+onUnmounted(() => {
+  console.log("Paso 3: El usuario se fue de Home")
+})
+</script>
+
+Ejemplo completo: https://github.com/argenisosorio/hello-world-nuxt/tree/feat/lifecycle-example
+
+Test probando un api backend para traer datos
+=============================================
+
+<template>
+  <div>
+    <GoBack />
+    <h1 class="my-4">Users List</h1>
+
+    <div v-if="error" class="alert alert-danger">
+      Error al cargar usuarios. Inténtalo de nuevo.
+    </div>
+
+    <div v-else class="row">
+      <div v-for="user in listaUsuarios" :key="user.login.uuid" class="col-md-4 mb-3">
+        <div class="card h-100 shadow-sm">
+          <img :src="user.picture.large" class="card-img-top" alt="User Image">
+          <div class="card-body">
+            <h5 class="card-title">{{ user.name.first }} {{ user.name.last }}</h5>
+            <p class="card-text text-muted">{{ user.email }}</p>
+            <NuxtLink :to="`/users/${user.login.uuid}`" class="btn btn-primary btn-sm">
+              Ver Perfil
+            </NuxtLink>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="alert alert-info">
+      Datos obtenidos de <strong>randomuser.me</strong>
+    </div>
+  </div>
+</template>
+
+<script setup>
+// 1. Estado global para controlar el loader
+const loader = useState('loader')
+
+useHead({
+  title: 'Directorio de Usuarios'
+})
+
+// 2. Fetch de datos
+// 'pending' es un booleano reactivo que cambia automáticamente
+const { data: response, pending, error } = await useFetch('https://randomuser.me/api/?results=3', {
+  lazy: true
+})
+
+// 3. Mapeamos los resultados
+const listaUsuarios = computed(() => response.value?.results || [])
+
+// 4. Watch corregido
+// Observamos 'pending' y asignamos su valor directamente al loader
+watch(pending, (newVal) => {
+  loader.value = newVal
+}, { immediate: true }) // immediate asegura que si empieza cargando, el loader se active de una vez
+</script>
+
+Otro test pero integrando el loader:
+
+<template>
+  <div>
+    <GoBack />
+    <h1>Users List</h1>
+
+    <div v-if="error" class="alert alert-danger">
+      Error al cargar usuarios. Inténtalo de nuevo.
+    </div>
+
+    <ul v-else>
+      <li v-for="user in users_list" :key="user.id">
+        {{ user.name }} 
+        <NuxtLink :to="`/users/${user.id}`">Detail</NuxtLink>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<script setup>
+// 1. Estado global para controlar el loader
+const loader = useState('loader')
+
+// 2. Configuramos el título de la página
+useHead({
+  title: 'Users',
+})
+
+// Simularemos una llamada a la API de Backend usando una API de prueba real
+// 'pending' es un booleano reactivo que cambia automáticamente
+const { data: response, pending, error } = await useFetch('https://jsonplaceholder.typicode.com/users', {
+  lazy: true
+})
+
+// 3. Mapeamos los resultados (JSONPlaceholder devuelve un Array directo)
+const users_list = computed(() => response.value || [])
+
+// 4. Observamos 'pending' y asignamos su valor directamente al loader
+watch(pending, (newVal) => {
+  loader.value = newVal
+}, { immediate: true }) // immediate asegura que si empieza cargando, el loader se active de una vez
+</script>
+
 Fuente
 ======
 
