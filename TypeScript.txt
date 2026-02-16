@@ -1,0 +1,280 @@
+========================
+Guía de TypeScript by dM
+========================
+
+Si ya sabes JavaScript, estás a punto de recibir un "superpoder" que te ahorrará
+horas de depuración. Piénsalo como JavaScript con un asistente personal muy
+estricto que te avisa de los errores antes de que siquiera guardes el archivo.
+
+¿Qué es TypeScript?
+===================
+
+TypeScript es un superset (supra-conjunto) de JavaScript. Esto significa que
+todo el código JS es válido en TS, pero TS añade una capa de tipado estático.
+
+JavaScript: Es dinámico. Puedes decir que una variable es un número y luego
+cambiarla a un texto sin que el lenguaje se queje... hasta que la app explota en
+producción.
+
+TypeScript: Es estático. Si dices que algo es un número, debe ser un número. Si
+intentas hacer algo raro, el compilador te detiene en seco.
+
+Nota importante: Los navegadores no entienden TypeScript. Por eso, el código TS
+se "transpila" (se traduce) a JavaScript puro antes de ejecutarse.
+
+¿Para qué se usa?
+=================
+
+Se utiliza principalmente para:
+
+-Evitar errores comunes: Como intentar acceder a una propiedad que no existe
+(undefined).
+
+Autocompletado inteligente: Al saber qué tipo de dato estás usando, tu editor
+(como VS Code) te sugiere exactamente qué métodos puedes usar.
+
+Documentación viva: El código se explica por sí mismo. Al leer una función,
+sabes exactamente qué recibe y qué devuelve.
+
+Comparación: JS vs. TS
+======================
+
+Imagina que quieres sumar dos números.
+
++----------------------+-----------------------------+------------------------------+
+| Característica       | JavaScript                  | TypeScript                   |
++----------------------+-----------------------------+------------------------------+
+| Tipo de error        | Errores en tiempo de        | Errores en tiempo de         |
+|                      | ejecución (Runtime).        | compilación.                 |
++----------------------+-----------------------------+------------------------------+
+| Mantenimiento        | Difícil en proyectos        | Muy robusto y escalable.     |
+|                      | grandes.                    |                              |
++----------------------+-----------------------------+------------------------------+
+| Curva de aprendizaje | Baja.                       | Media (hay que aprender      |
+|                      |                             | sintaxis nueva).             |
++----------------------+-----------------------------+------------------------------+
+
+Ejemplo de error silencioso en JS:
+
+function sumar(a, b) {
+  return a + b;
+}
+
+console.log(sumar(5, "5")); // Resultado: "55" (¡Ups!)
+
+Ejemplo de seguridad en TS:
+
+TypeScript
+
+function sumar(a: number, b: number): number {
+  return a + b;
+}
+
+// sumar(5, "5"); // ERROR: El argumento de tipo 'string' no es asignable al parámetro 'number'.
+
+Conceptos Clave con Ejemplos
+============================
+
+Tipos Básicos
+
+let nombre: string = "Alex";
+let edad: number = 25;
+let esProgramador: boolean = true;
+let hobbies: string[] = ["Gym", "Coding", "Gaming"];
+
+Interfaces y Types
+
+Sirven para definir la "forma" de un objeto. Son fundamentales para estructurar
+tus datos.
+
+interface Usuario {
+    id: number;
+    username: string;
+    email?: string; // El '?' significa que es opcional
+}
+
+const nuevoUsuario: Usuario = {
+    id: 1,
+    username: "dev_user"
+};
+
+Recomendaciones para empezar
+============================
+
+-No abuses de any: El tipo any le dice a TS que ignore esa variable. Si usas any
+en todo, básicamente estás volviendo a JavaScript y pierdes todas las ventajas.
+
+-Configura bien tu tsconfig.json: Es el archivo que le dice al compilador cómo comportarse. Empieza con el modo strict: true para aprender buenas prácticas desde el inicio.
+
+-Usa la inferencia: TypeScript es inteligente. No necesitas poner : string a
+todo; si inicializas let ciudad = "Madrid", TS ya sabe que es un string.
+
+Ejemplo sencillo
+================
+
+Imagina que tienes un carrito de compras pequeño con exactamente 3 productos.
+
+1. El escenario en JavaScript (El riesgo)
+
+En JS, podrías escribir algo así. El problema es que JavaScript no sabe qué hay
+dentro de los objetos hasta que el código se ejecuta.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+</body>
+<script>
+// JavaScript Puro
+function calcularTotal(p1, p2, p3) {
+    return p1.precio + p2.precio + p3.precio;
+}
+
+const item1 = { nombre: "Teclado", precio: 50 };
+const item2 = { nombre: "Mouse", precio: "25" }; // ¡Error común! Es un string
+const item3 = { nombre: "Monitor" }; // ¡Se nos olvidó el precio!
+
+console.log("Total: " + calcularTotal(item1, item2, item3)); 
+// Resultado: "Total: 5025undefined" 
+// (Un desastre total para la lógica de una tienda)
+</script>
+</html>
+
+2. El escenario en TypeScript (La seguridad)
+
+Ahora, vamos a definir reglas. Usaremos una interface para obligar a que cada
+producto sea válido.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Probando TypeScript</title>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <h1>Mira la consola (F12)</h1>
+
+    <script type="text/babel">
+        interface Producto {
+            nombre: string;
+            precio: number;
+        }
+
+        function calcularTotal(p1: Producto, p2: Producto, p3: Producto): number {
+            return p1.precio + p2.precio + p3.precio;
+        }
+
+        const item1: Producto = { nombre: "Teclado", precio: 50 };
+        const item2: Producto = { nombre: "Mouse", precio: 25 }; 
+        const item3: Producto = { nombre: "Monitor", precio: 150 };
+
+        const total = calcularTotal(item1, item2, item3);
+        console.log("Total calculado en TS:", total);
+        document.body.innerHTML += `<h2>El total es: ${total}</h2>`;
+    </script>
+</body>
+</html>
+
+Resumen de la diferencia:
+
+-JavaScript: "Confía en mí, sé lo que hago (aunque a veces me equivoque)".
+
+-TypeScript: "Muéstrame el contrato (la interfaz) y yo me aseguro de que nadie
+lo rompa".
+
+¿Cómo empezar a usarlo?
+=======================
+
+Para un proyecto local, supongamos que tenemos la carpeta test, dentro vamos a
+instalar typescript:
+
+$ npm install typescript
+
+Esto nos deja esto dentro de la carpeta test:
+
+node_modules  package.json  package-lock.json
+
+Ahroa crea un archivo script.ts
+
+$ touch script.ts
+
+y dentro vamos a agregar este contenido:
+
+// 1. Definimos la estructura del Producto
+interface Producto {
+    nombre: string;
+    precio: number;
+}
+
+// 2. Tipamos los parámetros y el retorno de la función
+function calcularTotal(p1: Producto, p2: Producto, p3: Producto): number {
+    return p1.precio + p2.precio + p3.precio;
+}
+
+// 3. Creamos los datos
+const item1: Producto = { nombre: "Teclado", precio: 50 };
+const item2: Producto = { nombre: "Mouse", precio: 25 }; 
+const item3: Producto = { nombre: "Monitor", precio: 150 };
+
+// 4. Ejecutamos con seguridad
+const total = calcularTotal(item1, item2, item3);
+console.log(`El total es: ${total}`); // Resultado: 225
+
+Ahora vamos a compilar el archivo .ts
+
+$ npx tsc script.ts
+
+Esto generará un archivo script.js
+
+Enlaza el JS en tu HTML <script src="script.js"></script> para hacerlo creamos
+a index.html con este contenido:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi App con TS</title>
+</head>
+<body>
+    <h1>Abra la consola para ver el total</h1>
+    <script src="script.js"></script>
+</body>
+</html>
+
+Hasta ahora nuestro carpeta test debe contener:
+
+index.html  node_modules  package.json  package-lock.json  script.js  script.ts
+
+Abrimos index.html y veremos en la consola de j:
+
+El total es: 225
+
+El modo "Observador"
+===================
+
+Estar escribiendo el comando cada vez que cambias una coma es aburrido. Usa el
+modo watch para que TypeScript compile automáticamente cada vez que guardes el
+archivo:
+
+$ npx tsc script.ts --watch
+
+Ahora, cada vez que presiones Ctrl + S en tu archivo .ts, el .js se actualizará
+solo.
+
+Prueba:
+
+-Si intentas poner un string en precio, TypeScript te subrayará el código en
+rojo inmediatamente y en la consola con el watch saltara el error.
+
+-Si olvidas una propiedad, el editor y la consola watch te dirán: "Falta la
+propiedad 'x' en el objeto".
+
+Fuente
+======
+
+Gemini IA
