@@ -2802,3 +2802,56 @@ Fuente
 ======
 
 Gemini IA
+
+==================
+TypeScript en Nuxt
+==================
+
+Si ya ves un archivo nuxt.config.ts y un tsconfig.json en tu lista de archivos
+ya tienes TypeScript integrado. Nuxt 4 vienen con soporte nativo para TypeScript
+desde el primer segundo. No necesitas instalar nada extra ni configurar
+compiladores manuales como hicimos con el comando tsc. Nuxt se encarga de todo
+"bajo el capó".
+
+1. ¿Cómo usarlo en tus componentes?
+
+Para que Nuxt sepa que quieres usar TypeScript dentro de un archivo .vue, solo
+tienes que añadir el atributo lang="ts" a la etiqueta <script setup>.
+
+Ruta sugerida: app/pages/CalculadoraPrecio.vue:
+
+<script setup lang="ts">
+// 1. Definimos la interfaz aquí mismo o la importamos
+interface Producto {
+  nombre: string;
+  precio: number;
+}
+
+// 2. Usamos tipos en nuestras variables reactivas
+const item1 = ref<Producto>({ nombre: "Teclado", precio: 50 });
+const item2 = ref<Producto>({ nombre: "Mouse", precio: 25 });
+const item3 = ref<Producto>({ nombre: "Monitor", precio: 150 });
+
+// 3. Función tipada
+const calcularTotal = (p1: Producto, p2: Producto, p3: Producto): number => {
+  return p1.precio + p2.precio + p3.precio;
+};
+
+const total = computed(() => calcularTotal(item1.value, item2.value, item3.value));
+</script>
+
+<template>
+  <div>
+    <h1>Total del Carrito: ${{ total }}</h1>
+  </div>
+</template>
+
+Nota: Para los archivos de componentes y páginas, debes añadir lang="ts"
+manualmente en cada etiqueta <script setup>. No hay una configuración global
+para omitir esto, ya que el compilador de Vue necesita saber específicamente
+cómo procesar ese bloque de código.
+
+Fuente
+======
+
+Gemini IA
