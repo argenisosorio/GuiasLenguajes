@@ -100,6 +100,81 @@ https://django-ninja.dev/
 
 https://www.django-rest-framework.org/
 
+===========================
+Hola mundo con Django Ninja
+===========================
+
+1- Instalación
+
+Primero, asegúrate de tener la librería instalada:
+
+$ pip install django-ninja
+
+Usamos el comando de pip para saber que nos instalo y las versiones específicas:
+
+$ pip freeze
+annotated-types==0.7.0
+asgiref==3.11.1
+Django==6.0.2
+django-ninja==1.5.3
+pydantic==2.12.5
+pydantic_core==2.41.5
+sqlparse==0.5.5
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+
+2. Crea el archivo de la API
+
+Dentro de tu aplicación de Django (donde tengas tu archivo models.py), crea un
+nuevo archivo llamado api.py. Aquí es donde definiremos los "endpoints".
+
+# mi_app/api.py
+from ninja import NinjaAPI
+
+api = NinjaAPI()
+
+@api.get("/hello")
+def hello_world(request):
+    return {"message": "¡Hola mundo desde Django Ninja!"}
+
+3. Conecta la API a las URLs de Django
+
+Ahora necesitas decirle a Django dónde debe "escuchar" estas peticiones. Ve a tu
+archivo urls.py principal (el que está en la carpeta del proyecto):
+
+# mi_proyecto/urls.py
+from django.contrib import admin
+from django.urls import path
+from mi_app.api import api  # Importa la instancia que creaste
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path("api/", api.urls),  # <--- Registras todas las rutas de la API aquí
+]
+
+4. ¡Pruébalo!
+
+Ejecuta tu servidor: python manage.py runserver
+
+Abre tu navegador y ve a: http://127.0.0.1:8000/api/hello
+
+Verás un JSON como este: {"message": "¡Hola mundo desde Django Ninja!"}
+
+5. El "bonus" de Django Ninja
+
+Una de las mejores cosas de usar Ninja es que ya tienes documentación
+automática. Ve a esta dirección mientras el servidor corre:
+
+http://127.0.0.1:8000/api/docs
+
+Ahí verás la interfaz de Swagger donde puedes probar tu endpoint directamente
+sin usar herramientas externas como Postman.
+
+Fuente
+======
+
+Gemini IA
+
 =====================================================
 Probando Django Ninja en un proyecto crud de Django 6
 =====================================================
@@ -177,7 +252,7 @@ class Person(models.Model):
     def __str__(self):
         """
         String representation of the Person model.
-        
+
         Returns:
             str: The person's name for easy identification in admin and queries.
         """
