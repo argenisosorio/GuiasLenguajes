@@ -370,9 +370,10 @@ from apps.person.api import router as person_router
 api = NinjaAPI(title="Mi Proyecto CRUD API")
 
 # 2. Añadimos los routers de cada app (puedes añadir el de products luego)
-api.add_router("/people/", person_router)
+api.add_router("/person/", person_router)
 
 urlpatterns = [
+    # Admin route
     path('admin/', admin.site.urls),
 
     # Tus rutas de templates/vistas tradicionales
@@ -424,3 +425,9 @@ Fuente
 ======
 
 Gemini IA
+
+=====================================
+Integrar Django + Django Ninja + Nuxt
+=====================================
+
+Ejemplo completo: https://github.com/argenisosorio/Django_6_Ninja_Nuxt4_Bootstrap_5
