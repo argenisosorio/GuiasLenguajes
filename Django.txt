@@ -2482,7 +2482,8 @@ Un filtro con argumentos se ve de este modo:
 HTML; a single newline becomes # an HTML line break (<br>) and a new line
 followed by a blank line becomes a paragraph break (</p>).
 
-Converts all newlines in a piece of plain text to HTML line breaks (<br>).
+Convierte todas las nuevas líneas en un fragmento de texto sin formato en saltos
+de línea HTML (<br>).
 
 {{ value|linebreaksbr }}
 
@@ -2493,6 +2494,40 @@ Displays text with line numbers.
 Contar la cantidad de palabras.
 
 {{ my_test | wordcount }}
+
+
+========================================================================
+La cadena "vacío" se ve como &quot;vacío&quot; en reporte PDF de pdfmake
+========================================================================
+
+El problema ocurre porque Django, por seguridad, escapa automáticamente los
+caracteres especiales (como las comillas ") para evitar ataques XSS,
+convirtiéndolos en entidades HTML como &quot;.
+
+Cuando pasas ese texto a pdfmake dentro de un bloque de JavaScript, la librería
+recibe el texto "sucio" con el código HTML en lugar del carácter real.
+
+Para solucionarlo, puedes usar el filtro safe (La más directa)
+
+En tu archivo .html, busca donde generas el contenido para el PDF.
+
+Debes indicarle a Django que no escape el contenido de esa variable usando el
+filtro |safe.
+
+Si en tu docDefinition tienes algo como esto:
+JavaScript
+
+{ text: '{{ x.description }}' },
+
+Cámbialo por:
+
+{ text: '{{ x.description|safe|escapejs }}' },
+
+safe: Evita que las comillas se conviertan en &quot;.
+
+escapejs: Es vital aquí. Si el texto tiene un salto de línea o una comilla
+simple y no usas escapejs, romperás el código JavaScript y el PDF no se
+generará.
 
 ======================
 Herencia de plantillas
