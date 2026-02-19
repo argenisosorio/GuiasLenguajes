@@ -318,25 +318,25 @@ class PersonCreateSchema(Schema):
 # --- ENDPOINTS (CRUD) ---
 
 # 1. Listar personas (GET)
-@router.get("/people", response=List[PersonSchema])
+@router.get("/", response=List[PersonSchema])
 def list_people(request):
     return Person.objects.all()
 
 # 2. Obtener una persona (GET por ID)
-@router.get("/people/{person_id}", response=PersonSchema)
+@router.get("/{person_id}", response=PersonSchema)
 def get_person(request, person_id: int):
     person = get_object_or_404(Person, id=person_id)
     return person
 
 # 3. Crear una persona (POST)
-@router.post("/people", response=PersonSchema)
+@router.post("/", response=PersonSchema)
 def create_person(request, data: PersonCreateSchema):
     # .dict() convierte el esquema de Pydantic en un diccionario de Python
     person = Person.objects.create(**data.dict())
     return person
 
 # 4. Actualizar una persona (PUT)
-@router.put("/people/{person_id}", response=PersonSchema)
+@router.put("/{person_id}", response=PersonSchema)
 def update_person(request, person_id: int, data: PersonCreateSchema):
     person = get_object_or_404(Person, id=person_id)
     for attr, value in data.dict().items():
@@ -345,7 +345,7 @@ def update_person(request, person_id: int, data: PersonCreateSchema):
     return person
 
 # 5. Eliminar una persona
-@router.delete("/people/{person_id}")
+@router.delete("/{person_id}")
 def delete_person(request, person_id: int):
     person = get_object_or_404(Person, id=person_id)
     person.delete()
@@ -380,7 +380,7 @@ urlpatterns = [
     path('products/', include('apps.product.urls')),
 
     # 3. La ruta para TODA la API y su documentación
-    path("api/v1/", api.urls),
+    path("api/", api.urls),
 ]
 
 -----
@@ -394,7 +394,7 @@ Inicia tu servidor:
 
 $python manage.py runserver
 
-Abre tu navegador en: http://127.0.0.1:8000/api/v1/docs
+Abre tu navegador en: http://127.0.0.1:8000/api/docs
 
 Desde esa interfaz (Swagger), podrás:
 
@@ -404,10 +404,10 @@ Desde esa interfaz (Swagger), podrás:
 
 -Enviar un JSON para crear una persona y ver la respuesta en tiempo real.
 
-- Listar personas: http://127.0.0.1:8000/api/v1/people/people
+- Listar personas: http://127.0.0.1:8000/api/person/
 
 -Obtener una persona por su ID:
-http://127.0.0.1:8000/api/v1/people/people/{person_id}
+http://127.0.0.1:8000/api/person/{person_id}
 
 Resumen de flujo
 ================
