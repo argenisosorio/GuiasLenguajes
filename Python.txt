@@ -2309,7 +2309,7 @@ $ pip install --upgrade Package package==1.x.x
 
 -----
 
-Listar los paquetes instalado y sus versiones exactas.
+Listar los paquetes instalados y sus versiones exactas.
 
 $ pip freeze
 
@@ -3862,18 +3862,22 @@ $ pyenv install 3.12.1​
 Crear el entorno virtual (Virtualenv)
 =====================================
 
-1. Usa el siguiente comando. Reemplaza mi-entorno-2.7 por el nombre que
+1. Instala la versión de Python específica
+
+$ pyenv install 3.12.1​
+
+Ahora Usa el siguiente comando. Reemplaza mi-entorno-virtual por el nombre que
 prefieras:
 
-$ pyenv virtualenv 3.12.1​ mi-entorno-vistual
+$ pyenv virtualenv 3.12.1​ mi-entorno-virtual
 
 2. Activar el entorno
 
-$ pyenv activate mi-entorno-vistual
+$ pyenv activate mi-entorno-virtual
 
 Ahora podrás instalar librerías sin problemas:
 
-(mi-entorno-vistual) $ pip install nombre-de-la-libreria
+(mi-entorno-virtual) $ pip install nombre-de-la-libreria
 
 Ver los entornos virtuales y las versiones de Python
 ====================================================

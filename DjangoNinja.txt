@@ -99,3 +99,328 @@ Gemini IA
 https://django-ninja.dev/
 
 https://www.django-rest-framework.org/
+
+===========================
+Hola mundo con Django Ninja
+===========================
+
+1- Instalación
+
+Primero, asegúrate de tener la librería instalada:
+
+$ pip install django-ninja
+
+Usamos el comando de pip para saber que nos instalo y las versiones específicas:
+
+$ pip freeze
+annotated-types==0.7.0
+asgiref==3.11.1
+Django==6.0.2
+django-ninja==1.5.3
+pydantic==2.12.5
+pydantic_core==2.41.5
+sqlparse==0.5.5
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+
+2. Crea el archivo de la API
+
+Dentro de tu aplicación de Django (donde tengas tu archivo models.py), crea un
+nuevo archivo llamado api.py. Aquí es donde definiremos los "endpoints".
+
+# mi_app/api.py
+from ninja import NinjaAPI
+
+api = NinjaAPI()
+
+@api.get("/hello")
+def hello_world(request):
+    return {"message": "¡Hola mundo desde Django Ninja!"}
+
+3. Conecta la API a las URLs de Django
+
+Ahora necesitas decirle a Django dónde debe "escuchar" estas peticiones. Ve a tu
+archivo urls.py principal (el que está en la carpeta del proyecto):
+
+# mi_proyecto/urls.py
+from django.contrib import admin
+from django.urls import path
+from mi_app.api import api  # Importa la instancia que creaste
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path("api/", api.urls),  # <--- Registras todas las rutas de la API aquí
+]
+
+4. ¡Pruébalo!
+
+Ejecuta tu servidor: python manage.py runserver
+
+Abre tu navegador y ve a: http://127.0.0.1:8000/api/hello
+
+Verás un JSON como este: {"message": "¡Hola mundo desde Django Ninja!"}
+
+5. El "bonus" de Django Ninja
+
+Una de las mejores cosas de usar Ninja es que ya tienes documentación
+automática. Ve a esta dirección mientras el servidor corre:
+
+http://127.0.0.1:8000/api/docs
+
+Ahí verás la interfaz de Swagger donde puedes probar tu endpoint directamente
+sin usar herramientas externas como Postman.
+
+Fuente
+======
+
+Gemini IA
+
+=====================================================
+Probando Django Ninja en un proyecto crud de Django 6
+=====================================================
+
+1- Partiendo de esta estructura de proyecto:
+
+├── Django_6_crud
+│   ├── asgi.py
+│   ├── __init__.py
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── manage.py
+├── README.md
+├── requirements.txt
+└── static
+    ├── css
+    ├── images
+    └── js
+├── apps
+│   ├── person
+│   │   ├── admin.py
+│   │   ├── apps.py
+│   │   ├── forms.py
+│   │   ├── models.py
+│   │   ├── templates
+│   │   │   └── person
+│   │   │       ├── base.html
+│   │   │       ├── create.html
+│   │   │       ├── delete.html
+│   │   │       ├── detail.html
+│   │   │       ├── home.html
+│   │   │       └── update.html
+│   │   ├── urls.py
+│   │   └── views.py
+│   └── product
+│       ├── admin.py
+│       ├── apps.py
+│       ├── forms.py
+│       ├── __init__.py
+│       ├── models.py
+│       ├── templates
+│       │   └── product
+│       │       ├── base.html
+│       │       ├── create.html
+│       │       ├── delete.html
+│       │       ├── detail.html
+│       │       ├── home.html
+│       │       └── update.html
+│       ├── urls.py
+│       └── views.py
+├── db.sqlite3
+
+y partiendo de este modelo:
+
+------
+
+from django.db import models
+
+class Person(models.Model):
+    """
+    Represents a person in the system.
+
+    This model stores basic information about individuals including their name,
+    email, age, and timestamps for record creation and updates.
+    """
+
+    # Personal Information Fields
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    age = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        """
+        String representation of the Person model.
+
+        Returns:
+            str: The person's name for easy identification in admin and queries.
+        """
+        return self.name
+
+------
+
+Proyecto de base: https://github.com/argenisosorio/Django_6_crud
+
+2- Instalación
+
+Para integrar Django Ninja en tu proyecto de Django 6 con el modelo Person,
+sigue estos pasos:
+
+Primero, asegúrate de tener la librería instalada:
+
+$ pip install django-ninja
+
+Usamos el comando de pip para saber que nos instalo y las versiones específicas:
+
+$ pip freeze
+annotated-types==0.7.0
+asgiref==3.11.1
+Django==6.0.2
+django-ninja==1.5.3
+pydantic==2.12.5
+pydantic_core==2.41.5
+sqlparse==0.5.5
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+
+2. Definir los Schemas y la API
+
+En Django Ninja, los Schemas actúan como los "Serializers" de DRF. Definen cómo
+se ven los datos al entrar y salir.
+
+Crea un archivo llamado api.py en tu aplicación (donde está models.py) con este
+contenido:
+
+------
+
+from ninja import Router, ModelSchema, Schema
+from django.shortcuts import get_object_or_404
+from typing import List
+from .models import Person
+
+router = Router()
+
+# --- SCHEMAS ---
+
+class PersonSchema(ModelSchema):
+    """Schema basado en el modelo para devolver datos (Output)"""
+    class Meta:
+        model = Person
+        fields = ['id', 'name', 'email', 'age', 'created_at', 'updated_at']
+
+class PersonCreateSchema(Schema):
+    """Schema para recibir datos al crear o actualizar (Input)"""
+    name: str
+    email: str
+    age: int
+
+# --- ENDPOINTS (CRUD) ---
+
+# 1. Listar personas (GET)
+@router.get("/people", response=List[PersonSchema])
+def list_people(request):
+    return Person.objects.all()
+
+# 2. Obtener una persona (GET por ID)
+@router.get("/people/{person_id}", response=PersonSchema)
+def get_person(request, person_id: int):
+    person = get_object_or_404(Person, id=person_id)
+    return person
+
+# 3. Crear una persona (POST)
+@router.post("/people", response=PersonSchema)
+def create_person(request, data: PersonCreateSchema):
+    # .dict() convierte el esquema de Pydantic en un diccionario de Python
+    person = Person.objects.create(**data.dict())
+    return person
+
+# 4. Actualizar una persona (PUT)
+@router.put("/people/{person_id}", response=PersonSchema)
+def update_person(request, person_id: int, data: PersonCreateSchema):
+    person = get_object_or_404(Person, id=person_id)
+    for attr, value in data.dict().items():
+        setattr(person, attr, value)
+    person.save()
+    return person
+
+# 5. Eliminar una persona
+@router.delete("/people/{person_id}")
+def delete_person(request, person_id: int):
+    person = get_object_or_404(Person, id=person_id)
+    person.delete()
+    return {"success": True, "message": f"Person {person_id} deleted successfully"}
+
+------
+
+3. Registrar la API en las URLs
+
+Ahora, debes conectar este router a las URLs globales de tu proyecto. En tu
+archivo urls.py principal:
+
+-----
+
+from django.contrib import admin
+from django.urls import include, path
+from ninja import NinjaAPI
+# Importamos el router de la app person
+from apps.person.api import router as person_router
+
+# 1. Instanciamos la API
+api = NinjaAPI(title="Mi Proyecto CRUD API")
+
+# 2. Añadimos los routers de cada app (puedes añadir el de products luego)
+api.add_router("/people/", person_router)
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+
+    # Tus rutas de templates/vistas tradicionales
+    path('', include('apps.person.urls')),
+    path('products/', include('apps.product.urls')),
+
+    # 3. La ruta para TODA la API y su documentación
+    path("api/v1/", api.urls),
+]
+
+-----
+
+4. ¿Cómo probarlo? (La mejor parte)
+
+Una de las ventajas de Django Ninja es que genera documentación interactiva
+automáticamente.
+
+Inicia tu servidor:
+
+$python manage.py runserver
+
+Abre tu navegador en: http://127.0.0.1:8000/api/v1/docs
+
+Desde esa interfaz (Swagger), podrás:
+
+-Ver todos tus endpoints.
+
+-Hacer clic en "Try it out" y probar todos los métodos.
+
+-Enviar un JSON para crear una persona y ver la respuesta en tiempo real.
+
+- Listar personas: http://127.0.0.1:8000/api/v1/people/people
+
+-Obtener una persona por su ID:
+http://127.0.0.1:8000/api/v1/people/people/{person_id}
+
+Resumen de flujo
+================
+
++--------------+-------------------------------------------+
+| Componente   | Función                                   |
++--------------+-------------------------------------------+
+| Model        | La estructura en la base de datos.        |
+| Schema       | Valida y da formato a los datos (JSON).   |
+| Router/API   | Maneja la lógica de las rutas y respuestas|
++--------------+-------------------------------------------+
+
+Fuente
+======
+
+Gemini IA
