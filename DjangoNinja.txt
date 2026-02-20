@@ -431,3 +431,29 @@ Integrar Django + Django Ninja + Nuxt
 =====================================
 
 Ejemplo completo: https://github.com/argenisosorio/Django_6_Ninja_Nuxt4_Bootstrap_5
+
+=============================
+Tipado con Django Ninja (API)
+=============================
+
+Si este método fuera parte de tu API con Django Ninja, el tipado es obligatorio
+porque Ninja lo usa para validar la entrada y generar la documentación Swagger
+automáticamente. 
+Python
+
+from ninja import Router
+from .models import Person
+from django.shortcuts import get_object_or_404
+
+router = Router()
+
+@router.get("/person/{int:pk}")
+def detail_person(request, pk: int):
+    # Django Ninja validará que 'pk' sea un entero antes de entrar aquí
+    person = get_object_or_404(Person, pk=pk)
+    return {"id": person.id, "name": person.name}
+
+Fuente
+======
+
+Google IA

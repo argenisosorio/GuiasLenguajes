@@ -8658,3 +8658,97 @@ Fuente
 ======
 
 Gemini IA
+
+================
+Typado en Django
+================
+
+1. ¿Qué es el Tipado en Django?
+
+El tipado (o Type Hinting) es una característica de Python que te permite
+declarar explícitamente qué tipo de dato espera una función y qué tipo de dato
+va a devolver.
+
+En Django, aunque el framework es muy flexible, usar tipado ayuda a que
+herramientas como VS Code o PyCharm entiendan la estructura del proyecto y te
+den autocompletado inteligente.
+
+2. ¿Para qué se usa?
+
+-Evitar errores humanos: Si una función espera un número de identificación
+(int) y le pasas una letra, el editor te avisará antes de que ejecutes el
+código.
+
+Documentación automática: El código se vuelve "autodocumentado". Cualquier
+compañero que lea tu plan de actividades y luego el código entenderá qué hace
+cada función.
+
+-Mantenimiento: Facilita las pruebas de calidad ya que reduce comportamientos
+inesperados.
+
+3. Ejemplos Prácticos
+
+A. Tipado en Modelos
+
+Aunque Django define tipos en los campos (IntegerField, CharField), puedes tipar
+métodos personalizados dentro del modelo:
+
+from django.db import models
+
+class Person(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+
+    # Tipamos que devuelve un string (str)
+    def get_greeting(self) -> str:
+        return f"Hola, soy {self.name}"
+
+    # Tipamos que recibe un entero y devuelve un booleano
+    def is_older_than(self, target_age: int) -> bool:
+        return self.age > target_age
+
+B. Tipado en Vistas (Views)
+
+Este es el uso más común. Importamos HttpRequest y HttpResponse para que Django
+sepa exactamente con qué objetos estamos trabajando.
+
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render, get_object_or_404
+from .models import Person
+
+def detail_person(request: HttpRequest, pk: int) -> HttpResponse:
+    """
+    Recibe un objeto HttpRequest y un entero pk.
+    Devuelve un objeto HttpResponse.
+    """
+    person = get_object_or_404(Person, pk=pk)
+    return render(request, 'person/detail.html', {'person': person})
+
+¿Qué ganamos aquí?
+
+-request: HttpRequest: Te permite ver todos los métodos del objeto request
+(como .user, .method, .GET) mientras escribes. 
+
+-pk: int: Asegura que cualquier lógica interna trate a pk como un entero. 
+
+--> HttpResponse: Indica que la función debe retornar una respuesta válida de
+Django. 
+
+C. Tipado en Formularios
+
+Puedes tipar los métodos de limpieza de datos (clean) para asegurar que la
+validación sea correcta.
+
+from django import forms
+
+class PersonForm(forms.ModelForm):
+    # Tipamos que el valor de retorno debe ser un diccionario
+    def clean(self) -> dict:
+        cleaned_data = super().clean()
+        # lógica de validación aquí
+        return cleaned_data
+
+FuenteFuente
+======
+
+Google IA
