@@ -8748,7 +8748,73 @@ class PersonForm(forms.ModelForm):
         # lógica de validación aquí
         return cleaned_data
 
-FuenteFuente
+Fuente
+======
+
+Google IA
+
+=====================
+Django 6 y PostgreSQL
+=====================
+
+Para conectar tu proyecto de Django 6 a una base de datos PostgreSQL, necesitas
+realizar tres pasos fundamentales: instalar el adaptador, crear la base de datos
+en Postgres y configurar tu settings.py.
+
+Paso 1: Instalar el adaptador
+
+Django no puede hablar con PostgreSQL directamente; necesita una librería puente
+llamada psycopg. Para Django 6, se recomienda la versión más moderna:
+
+$ pip install psycopg[binary]
+
+Paso 2: Configurar settings.py
+
+En tu archivo de configuración, debes reemplazar el bloque DATABASES que usa
+SQLite por el de PostgreSQL. Localiza la línea donde está sqlite3 y cámbiala por
+esto:
+
+# Database
+# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'nombre_de_tu_db',     # La base de datos que creaste
+        'USER': 'tu_usuario_postgres',  # Por defecto suele ser 'postgres'
+        'PASSWORD': 'tu_contraseña',
+        'HOST': '127.0.0.1',           # O 'localhost'
+        'PORT': '5432',                # Puerto por defecto de Postgres
+    }
+}
+
+Paso 3: Crear la base de datos y migrar
+
+Antes de ejecutar el servidor, debes asegurarte de que la base de datos exista
+en tu sistema y configurar los datos en el settings.py.
+    
+Aplica las migraciones en tu terminal de Django para crear las tablas:
+    
+$ python manage.py makemigrations
+
+$ python manage.py migrate
+
+Tabla por defecto en Django
+===========================
+
+auth_group
+auth_group_permissions
+auth_permission
+auth_user
+auth_user_groups
+auth_user_user_permissions
+django_admin_log
+django_content_type
+django_migrations
+django_session
+person_person (Un modelo creado por el desarrollador en models.py)
+
+Fuente
 ======
 
 Google IA
