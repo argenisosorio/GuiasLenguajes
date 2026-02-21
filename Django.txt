@@ -8818,3 +8818,75 @@ Fuente
 ======
 
 Google IA
+
+=========================================
+Migrar de Laravel (PHP) a Django (Python)
+=========================================
+
+Es un salto tecnológico interesante. Se está pasando de una arquitectura basada
+en Eloquent ORM a una basada en el Django ORM.
+
+1. Análisis de la Estructura de Datos (Mapping)
+
+Laravel y Django manejan ciertas convenciones de forma distinta. Debes mapear
+cómo se transformarán las tablas:
+
+Convenciones de Nombres: Laravel usa snake_case y plural para las tablas (ej.
+people). Django usa appname_modelname en minúsculas (ej. person_person). 
+
+Timestamps: Laravel usa created_at y updated_at por defecto. En Django, debes
+asegurarte de definirlos manualmente en tus modelos usando auto_now_add=True y
+auto_now=True.
+
+Contraseñas: Laravel usa Bcrypt por defecto. Django también lo soporta, pero
+podrías necesitar configurar el PASSWORD_HASHERS en tu settings.py para que los
+usuarios de la V1 puedan iniciar sesión en la V2 sin resetear su clave.
+
+2. Estrategia de Migración: ¿Cómo mover los datos?
+
+Tienes tres caminos principales según la complejidad:
+
+A. El camino "Limpio" (Scripts de Python)
+
+Es el más recomendado, consiste en exportar los datos de Laravel a JSON o CSV y
+luego importarlos usando un script de Django.
+
+Ventaja: Puedes limpiar y validar los datos mientras los importas usando los
+validadores de tus nuevos modelos de Django.
+
+Herramienta: Usa scripts de gestión de Django (python manage.py runscript).
+
+B. El camino "Directo" (SQL a SQL)
+
+Si la base de datos es muy grande, puedes intentar conectar Django a la base de
+datos existente de Laravel.
+
+Herramienta: python manage.py inspectdb. Este comando lee tus tablas de Postgres
+de Laravel y genera automáticamente el código de los modelos de Django. Es un
+excelente punto de partida para ahorrar tiempo.
+
+C. Herramientas ETL
+
+Si la transformación de datos es muy compleja (por ejemplo, si cambias mucho la
+lógica de las tablas de apps.product o apps.person), usa una herramienta de
+Extract, Transform, Load.
+
+3. Puntos Críticos a Revisar
+
++----------------+--------------------------+----------------------------+-----------------------------+
+| Elemento       | En Laravel 8             | En Django 6                | Riesgo                      |
++----------------+--------------------------+----------------------------+-----------------------------+
+| Relaciones M:M | Tabla pivote manual o    | Django crea la tabla       | Duplicidad de tablas        |
+|                | belongsToMany.           | intermedia automáticamente.| pivote.                    |
++----------------+--------------------------+----------------------------+-----------------------------+
+| Soft Deletes   | SoftDeletes trait.       | No existe nativo (requiere | Perder datos "borrados"     |
+|                |                          | django-softdelete).        | pero útiles.                |
++----------------+--------------------------+----------------------------+-----------------------------+
+| UUIDs          | Muy común en Laravel.    | Debe definirse             | Incompatibilidad de         |
+|                |                          | explícitamente en el modelo| tipos de ID.                |
++----------------+--------------------------+----------------------------+-----------------------------+
+
+Fuente
+======
+
+Google IA

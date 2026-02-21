@@ -406,3 +406,152 @@ Fuente
 ======
 
 Curso en Línea técnico de despliegue del sistema ERP KAVAC
+
+========================
+Ejemplo de logs en Nginx
+========================
+
+190.160.10.1 - - [20/Feb/2026:14:30:01 +0000] "GET /post/guia-linux HTTP/1.1" 200 4523 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0" # Chile
+200.55.128.5 - - [20/Feb/2026:14:31:15 +0000] "GET /contacto HTTP/1.1" 200 1240 "https://google.com.ar/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)" # Argentina
+95.122.34.12 - - [20/Feb/2026:14:32:45 +0000] "GET /category/tech HTTP/1.1" 200 3102 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64)" # España
+187.189.45.67 - - [20/Feb/2026:14:34:20 +0000] "GET /post/recetas-ia HTTP/1.1" 200 5678 "https://facebook.com/" "Mozilla/5.0 (iPhone; CPU iPhone OS 17_2 like Mac OS X)" # México
+8.25.160.10 - - [20/Feb/2026:14:35:50 +0000] "GET / HTTP/1.1" 200 8900 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0" # EE.UU.
+186.155.20.44 - - [20/Feb/2026:14:37:05 +0000] "GET /post/guia-linux HTTP/1.1" 200 4523 "https://t.co/xyz" "Mozilla/5.0 (Android 14; Mobile; rv:120.0)" # Colombia
+2.15.255.1 - - [20/Feb/2026:14:38:12 +0000] "GET /about HTTP/1.1" 200 2100 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_2)" # Francia
+1.0.64.50 - - [20/Feb/2026:14:39:40 +0000] "GET /post/novedades-2026 HTTP/1.1" 404 560 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Edge/120.0.0.0" # Japón
+177.126.10.5 - - [20/Feb/2026:14:41:00 +0000] "GET / HTTP/1.1" 200 8900 "-" "Mozilla/5.0 (X11; Fedora; Linux x86_64)" # Brasil
+80.248.208.1 - - [20/Feb/2026:14:42:25 +0000] "GET /post/guia-linux HTTP/1.1" 200 4523 "https://bing.com/" "Mozilla/5.0 (Windows NT 11.0; Win64; x64)" # Italia
+
+==========================================
+Saber el país de una IP en un log de Nginx
+==========================================
+
+Ejemplo de Log de Nginx (10 Países diferentes)
+==============================================
+
+190.160.10.1 - - [20/Feb/2026:14:30:01 +0000] "GET /post/guia-linux HTTP/1.1" 200 4523 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0"
+200.55.128.5 - - [20/Feb/2026:14:31:15 +0000] "GET /contacto HTTP/1.1" 200 1240 "https://google.com.ar/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)"
+95.122.34.12 - - [20/Feb/2026:14:32:45 +0000] "GET /category/tech HTTP/1.1" 200 3102 "-" "Mozilla/5.0 (X11; Ubuntu; Linux x86_64)"
+187.189.45.67 - - [20/Feb/2026:14:34:20 +0000] "GET /post/recetas-ia HTTP/1.1" 200 5678 "https://facebook.com/" "Mozilla/5.0 (iPhone; CPU iPhone OS 17_2 like Mac OS X)"
+8.25.160.10 - - [20/Feb/2026:14:35:50 +0000] "GET / HTTP/1.1" 200 8900 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0"
+186.155.20.44 - - [20/Feb/2026:14:37:05 +0000] "GET /post/guia-linux HTTP/1.1" 200 4523 "https://t.co/xyz" "Mozilla/5.0 (Android 14; Mobile; rv:120.0)"
+2.15.255.1 - - [20/Feb/2026:14:38:12 +0000] "GET /about HTTP/1.1" 200 2100 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 14_2)"
+1.0.64.50 - - [20/Feb/2026:14:39:40 +0000] "GET /post/novedades-2026 HTTP/1.1" 404 560 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Edge/120.0.0.0"
+177.126.10.5 - - [20/Feb/2026:14:41:00 +0000] "GET / HTTP/1.1" 200 8900 "-" "Mozilla/5.0 (X11; Fedora; Linux x86_64)"
+80.248.208.1 - - [20/Feb/2026:14:42:25 +0000] "GET /post/guia-linux HTTP/1.1" 200 4523 "https://bing.com/" "Mozilla/5.0 (Windows NT 11.0; Win64; x64)"
+
+Identificar el país de una IP en un archivo de logs
+===================================================
+
+Necesitas consultar una base de datos de geolocalización IP. Las IPs no tienen
+el país "escrito" en su código; funcionan más como un número de teléfono donde
+el prefijo te indica la zona.
+
+1- Organizar el log en un archivo .csv, debe quedar así:
+
+ip,fecha,metodo,ruta,status,browser
+190.160.10.1,20/Feb/2026:14:30:01,GET,/post/guia-linux,200,Chrome
+200.55.128.5,20/Feb/2026:14:31:15,GET,/contacto,200,Safari
+95.122.34.12,20/Feb/2026:14:32:45,GET,/category/tech,200,Firefox
+187.189.45.67,20/Feb/2026:14:34:20,GET,/post/recetas-ia,200,Mobile Safari
+8.25.160.10,20/Feb/2026:14:35:50,GET,/,200,Firefox
+186.155.20.44,20/Feb/2026:14:37:05,GET,/post/guia-linux,200,Mobile Firefox
+2.15.255.1,20/Feb/2026:14:38:12,GET,/about,200,Safari
+1.0.64.50,20/Feb/2026:14:39:40,GET,/post/novedades-2026,404,Edge
+177.126.10.5,20/Feb/2026:14:41:00,GET,/,200,Firefox
+80.248.208.1,20/Feb/2026:14:42:25,GET,/post/guia-linux,200,Chrome
+
+Lo guardamos con el nombre datos_log.csv
+
+2- Script de Python:
+
+Lo mejor es un pequeño script. La librería más estándar es geoip2 que usa la
+base de datos de MaxMind (GeoLite2), que es gratuita pero requiere descargar un
+archivo de base de datos (.mmdb).
+
+2.1- Instalar paquetes requeridos:
+
+$ pip install pandas geoip2 user-agents
+
+2.2- Código en Python:
+
+-----
+
+import pandas as pd
+import geoip2.database
+
+# 1. Cargamos el CSV que creamos antes
+df = pd.read_csv('datos_log.csv')
+
+# 2. Conectamos con la base de datos de MaxMind (el archivo .mmdb)
+# Si tu archivo se llama diferente, ajusta el nombre aquí:
+reader = geoip2.database.Reader('GeoLite2-Country.mmdb')
+
+def obtener_pais(ip):
+    try:
+        # Buscamos la IP en la base de datos
+        response = reader.country(ip)
+        return response.country.name
+    except:
+        return "Desconocido"
+
+# 3. Creamos una nueva columna llamada 'pais' aplicando la función a cada IP
+df['pais'] = df['ip'].apply(obtener_pais)
+
+# 4. Mostramos los resultados finales
+print("--- Visitas por País ---")
+resumen_paises = df['pais'].value_counts()
+print(resumen_paises)
+
+print("\n--- Detalle de IPs y sus Países ---")
+print(df[['ip', 'pais', 'ruta']])
+
+# Cerramos el lector de la base de datos
+reader.close()
+
+-----
+
+Asegúrate de tener el archivo GeoLite2-Country.mmdb en la misma carpeta que este script.
+
+Nota sobre la base de datos: El archivo .mmdb se puede obtener oficialmente en
+MaxMind.com bajo licencia gratuita GeoLite2, o mediante repositorios de
+confianza que mantienen versiones actualizadas.
+
+3- Ejecutar el código:
+
+$ python test.py
+
+Salida del comando:
+
+--- Visitas por País ---
+pais
+France           2
+Chile            1
+Cuba             1
+Spain            1
+Mexico           1
+United States    1
+Colombia         1
+Japan            1
+Brazil           1
+Name: count, dtype: int64
+
+--- Detalle de IPs y sus Países ---
+              ip           pais                  ruta
+0   190.160.10.1          Chile      /post/guia-linux
+1   200.55.128.5           Cuba             /contacto
+2   95.122.34.12          Spain        /category/tech
+3  187.189.45.67         Mexico      /post/recetas-ia
+4    8.25.160.10  United States                     /
+5  186.155.20.44       Colombia      /post/guia-linux
+6     2.15.255.1         France                /about
+7      1.0.64.50          Japan  /post/novedades-2026
+8   177.126.10.5         Brazil                     /
+9   80.248.208.1         France      /post/guia-linux
+
+Fuentes
+=======
+
+Gemini IA
+
+https://github.com/mojolabs-id/GeoLite2-Database/releases/tag/2026.02.19
