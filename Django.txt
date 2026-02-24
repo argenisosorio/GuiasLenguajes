@@ -8548,9 +8548,12 @@ Gemini IA
 Probando API con Django Rest Framework
 ======================================
 
-Para transformar tu CRUD tradicional de Django en una API que tu proyecto Nuxt pueda consumir, la forma estándar y más eficiente es usar Django REST Framework (DRF).
+Para transformar tu CRUD tradicional de Django en una API que tu proyecto Nuxt
+pueda consumir, la forma estándar y más eficiente es usar Django REST Framework
+(DRF).
 
-DRF se encarga de convertir tus modelos de Django a formato JSON (un proceso llamado serialización).
+DRF se encarga de convertir tus modelos de Django a formato JSON (un proceso
+llamado serialización).
 
 Aquí tienes los pasos para convertir tu modelo Person en una API:
 1. Instalación y Configuración
@@ -8559,8 +8562,9 @@ Primero, instala DRF en tu entorno virtual:
 
 $ pip install djangorestframework django-cors-headers
 
-Luego, añádelos a tus INSTALLED_APPS en settings.py. También añadiremos corsheaders para que Nuxt pueda hacer peticiones a Django sin bloqueos de seguridad.
-Python
+Luego, añádelos a tus INSTALLED_APPS en settings.py. También añadiremos
+corsheaders para que Nuxt pueda hacer peticiones a Django sin bloqueos de
+seguridad.
 
 # settings.py
 INSTALLED_APPS = [
@@ -8593,7 +8597,8 @@ CORS_ALLOWED_ORIGINS = [
 
 2. Crear el Serializador
 
-Crea un archivo llamado apps/person/serializers.py. El serializador define qué campos de tu modelo se enviarán como JSON.
+Crea un archivo llamado apps/person/serializers.py. El serializador define qué
+campos de tu modelo se enviarán como JSON.
 
 from rest_framework import serializers
 from .models import Person
@@ -8605,7 +8610,8 @@ class PersonSerializer(serializers.ModelSerializer):
 
 3. Crear las API Views
 
-Vamos a simplificar tus 5 funciones de views.py en un solo ViewSet. Esto manejará el GET (lista y detalle), POST, PUT y DELETE automáticamente.
+Vamos a simplificar tus 5 funciones de views.py en un solo ViewSet. Esto
+manejará el GET (lista y detalle), POST, PUT y DELETE automáticamente.
 
 Modifica apps/person/views.py:
 
