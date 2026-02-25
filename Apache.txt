@@ -127,6 +127,60 @@ $ sudo systemctl restart apache2
 
 -----
 
+$ sudo a2ensite mysite.conf
+
+Este comando significa "Apache2 Enable Site".
+
+¿Qué hace?: Le dice a Apache que empiece a prestar atención al archivo de
+configuración mysite.conf que creaste en la carpeta de sitios disponibles.
+
+En términos simples: Es como "encender el interruptor" para que el servidor
+reconozca que tu sitio existe y debe estar al aire.
+
+2. $ sudo systemctl reload apache2
+
+¿Qué hace?: Recarga la configuración del servidor Apache.
+
+¿Por qué "reload" y no "restart"?: El reload es más suave; lee los cambios en
+los archivos de configuración sin desconectar a los usuarios que estén navegando
+en ese momento. Se usa aquí para aplicar el comando anterior.
+
+3. $ sudo a2enmod rewrite
+
+Este comando significa "Apache2 Enable Module Rewrite".
+
+¿Qué hace?: Activa el módulo mod_rewrite.
+
+¿Para qué sirve?: Permite que las URLs sean "limpias" o amigables (por ejemplo,
+que en lugar de ver una dirección llena de símbolos raros, veas algo como
+tusitio.com/cursos/matematicas).
+
+4. $ sudo systemctl restart apache2
+
+¿Qué hace?: Reinicia completamente el servicio de Apache.
+
+Diferencia: A diferencia del reload, el restart detiene y arranca el proceso de
+nuevo. Se recomienda después de activar módulos (como el rewrite) para asegurar
+que todo el motor del servidor cargue las nuevas funciones correctamente.
+
+Resumen del flujo de trabajo
+============================
+
+a2ensite	Habilita el archivo del sitio web.
+
+reload	Aplica cambios de configuración ligeros.
+
+a2enmod	Activa una función especial del servidor (reescritura de URLs).
+
+restart	Reinicia todo para asegurar que los módulos funcionen.
+
+Fuente
+======
+
+Gemini IA
+
+-----
+
 Detener el servicio de Apache:
 
 $ sudo systemctl stop apache2
