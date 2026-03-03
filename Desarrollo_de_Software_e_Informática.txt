@@ -243,7 +243,7 @@ Fuentes
 Pruebas de caja blanca
 ======================
 
-En programación, se denomina cajas blancas a un tipo de pruebas de software qu
+En programación, se denomina cajas blancas a un tipo de pruebas de software que
 se realiza sobre las funciones internas de un módulo. Así como las pruebas de
 caja negra ejercitan los requisitos funcionales desde el exterior del módulo,
 las de caja blanca están dirigidas a las funciones internas. Entre las técnicas
@@ -272,6 +272,128 @@ Fuentes
 =======
 
 -https://es.wikipedia.org/wiki/Caja_blanca_(sistemas)
+
+Más información...
+
+==========================================
+Análisis de Caja Blana (White Box Testing)
+==========================================
+
+El análisis de caja blanca, también conocido como pruebas de caja blanca,
+pruebas estructurales o pruebas de glass box, es una técnica de prueba de
+software que examina la estructura interna, el diseño y la implementación del
+código fuente de una aplicación.
+
+Características principales
+===========================
+
+-Acceso al código fuente: El evaluador conoce y puede examinar la estructura
+interna del software, incluyendo algoritmos, flujos de control, estructuras de
+datos y lógica de programación.
+
+-Enfoque estructural: Se centra en cómo funciona el software internamente,
+verificando caminos lógicos, bucles, condiciones y flujos de datos.
+
+-Cobertura de código: Busca ejecutar y validar diferentes aspectos del código
+como:
+
+  -Cobertura de sentencias: Ejecutar cada línea de código al menos una vez
+
+  -Cobertura de decisiones/bifurcaciones: Probar todas las rutas posibles
+  (if-else, casos switch)
+
+  -Cobertura de condiciones: Evaluar todas las combinaciones de condiciones
+  booleanas
+
+  -Cobertura de caminos: Probar todas las rutas posibles de ejecución
+
+Objetivos del análisis de caja blanca
+=====================================
+
+-Identificar errores en la lógica interna del software
+
+-Verificar la correcta implementación de algoritmos
+
+-Detectar problemas de seguridad (como desbordamiento de buffer)
+
+-Encontrar errores en estructuras de datos
+
+-Validar el flujo correcto de datos a través del sistema
+
+-Asegurar que todos los caminos de código se ejecutan correctamente
+
+Técnicas comunes:
+
+-Pruebas unitarias: Verificar funciones y métodos individuales
+
+-Pruebas de integración: Examinar cómo interactúan los componentes
+
+-Análisis de mutación: Modificar el código para verificar la efectividad de las
+pruebas
+
+-Pruebas de camino básico: Identificar y probar caminos linealmente independientes
+
+Ejemplo práctico:
+
+def calcular_descuento(precio, es_miembro):
+    if es_miembro:
+        if precio > 100:
+            descuento = 0.20  # 20% para miembros con compra > 100
+        else:
+            descuento = 0.10  # 10% para miembros
+    else:
+        descuento = 0.05  # 5% para no miembros
+
+    return precio * (1 - descuento)
+
+Un análisis de caja blanca probaría:
+
+-Todos los caminos (miembro/no miembro, precio mayor/menor a 100)
+
+-Valores límite (precio = 100, precio = 0, precio negativo)
+
+- Combinaciones de condiciones
+
+Diferencia con Caja Negra:
+
++--------------------------------------------------+--------------------------------------------------+
+|                    Caja Blanca                   |                    Caja Negra                    |
++--------------------------------------------------+--------------------------------------------------+
+| Examina el código interno                         | Examina funcionalidad externa                     |
++--------------------------------------------------+--------------------------------------------------+
+| Requiere conocimiento de programación             | No requiere conocer el código                     |
++--------------------------------------------------+--------------------------------------------------+
+| Se enfoca en la estructura                        | Se enfoca en requisitos y entradas/salidas       |
++--------------------------------------------------+--------------------------------------------------+
+| Detecta errores lógicos y de implementación       | Detecta errores funcionales                       |
++--------------------------------------------------+--------------------------------------------------+
+| Pruebas unitarias, de integración                 | Pruebas funcionales, de sistema, aceptación       |
++--------------------------------------------------+--------------------------------------------------+
+
+Ventajas:
+
+-Permite optimizar el código eliminando caminos muertos
+
+-Detecta errores ocultos difíciles de encontrar con caja negra
+
+-Garantiza alta cobertura de código
+
+Desventajas:
+
+-Requiere tiempo y conocimiento profundo del código
+
+-Puede ser costosa para sistemas grandes
+
+-No garantiza que se cumplan todos los requisitos funcionales
+
+En resumen, el análisis de caja blanca es fundamental para garantizar la calidad
+interna del software, complementando las pruebas funcionales de caja negra para
+lograr un producto robusto y confiable.
+
+Fuente
+======
+
+DeepSeek
 
 =====================
 Pruebas de caja negra
