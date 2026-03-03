@@ -8896,3 +8896,99 @@ Fuente
 ======
 
 Google IA
+
+===============================
+Arquitectura de Capas en Django
+===============================
+
+Este proyecto se desvía del patrón estándar de Django, en su lugar, implementa
+una Arquitectura de Capas (a menudo denominada Service Layer Pattern o Clean
+Architecture).
+
+Este enfoque desacopla la lógica empresarial central del marco HTTP (Django), lo
+que hace que la aplicación sea significativamente más fácil de probar, mantener
+y escalar a medida que crece.
+
+Las capas
+=========
+
+Controladores ( controllers/):
+
+-Actúa como punto de entrada para solicitudes HTTP
+(reemplazando las vistas tradicionales de Django). Responsable únicamente de
+manejar solicitudes HTTP, validar la entrada, llamar al Servicio apropiado y
+devolver una respuesta HTTP (representando una plantilla o redirigiendo).
+
+-No contienen ninguna lógica empresarial .
+
+Solicitudes ( requests/) :
+
+-Manejar la validación de datos HTTP entrantes (por ejemplo, datos POST).
+
+-Generalmente se implementa mediante formularios Django para garantizar que los
+datos estén limpios y válidos antes de que lleguen a la capa de lógica
+empresarial.
+
+DTO - Objetos de transferencia de datos ( dtos/) :
+
+-Estructuras de datos simples (a menudo Python) dataclasses o clases estándar
+que se utilizan para pasar datos entre la capa del controlador y la capa de
+servicio.
+
+-Se aseguran de que la capa de Servicio no dependa de objetos específicos de
+HTTP como request.POST o formularios Django.
+
+Servicios ( services/) :
+
+-El corazón de la aplicación. Esta capa contiene toda la lógica de negocio y los
+casos de uso.
+
+-Los servicios toman DTO como entrada, realizan las operaciones necesarias (como
+crear un empleado, enviar correos electrónicos, calcular salarios) e interactúan
+con la base de datos a través de modelos o selectores.
+
+Selectores ( selectors/) :
+
+-Dedicado a consultas de bases de datos complejas y obtención de datos
+(operaciones de lectura).
+
+-Si bien las consultas simples pueden residir en los Servicios, los Selectores
+mantienen limpia la capa de Servicio abstrayendo búsquedas ORM complejas.
+
+Modelos ( models/) :
+
+-Modelos ORM estándar de Django.
+
+-Representan las tablas y relaciones de la base de datos, pero se mantienen
+"simples" (desprovistas de lógica empresarial compleja).
+
+¿Por qué este patrón?
+=====================
+
+-Separación de preocupaciones: la lógica HTTP está separada de la lógica
+empresarial.
+
+-Capacidad de prueba: puede probar servicios y DTO de forma aislada sin
+necesidad de una solicitud HTTP simulada o un servidor web.
+
+-Reutilización: la lógica de negocios en los servicios se puede llamar desde
+cualquier lugar (controladores, tareas de Celery, comandos de administración,
+API) sin duplicar código.
+
+Cambios respecto a una app convencional de django
+=================================================
+
+-settings.py se mantiene igual
+
+-urls.py globales se mantien igual
+
+-models.py se mantiene igual
+
+-Dentro de la app crear una carpeta controllers/ y dentro crear a
+person_controller.py
+
+-Dentro de la carpeta de la app crear una carpeta dtos/ y dentro crear a
+person_dto.py
+
+-Dentro de la carpeta de la app crear una carpeta requests/ y dentro crear a
+create_person.py y update_person.py
