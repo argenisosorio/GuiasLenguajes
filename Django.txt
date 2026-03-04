@@ -8982,7 +8982,12 @@ Cambios respecto a una app convencional de django
 
 -urls.py globales se mantien igual
 
--models.py se mantiene igual
+-Modificar las urls.py de la app ahora el llamado cambia.
+
+-Los archivos views.py, forms.py y models.py se eliminan de la carpeta de la
+app.
+
+-Dentro de la app crear la carpeta models y dentro crear a person.py
 
 -Dentro de la app crear una carpeta controllers/ y dentro crear a
 person_controller.py
@@ -8992,3 +8997,104 @@ person_dto.py
 
 -Dentro de la carpeta de la app crear una carpeta requests/ y dentro crear a
 create_person.py y update_person.py
+
+-Dentro de la carpeta de la app crear una carpeta selectors/ y dentro crear nada
+todavía...
+
+-Dentro de la carpeta de la app crear una carpeta services/ y dentro crear a
+person_service.py
+
+Ejemplo completo y documentado en: https://github.com/argenisosorio/Django_6_CRUD_Layered_Architecture
+
+======================================
+Enviar correos electrónicos con Django
+======================================
+
+Vamos a hacer un ejemplo de envío desde views.py, cómo y qué configurar para que
+el correo realmente salga de tu sistema.
+
+1. Actualización de views.py
+
+Cuando llamas a form.save(), Django crea la instancia en la base de datos y te
+la devuelve. Podemos guardar ese objeto en una variable (por ejemplo, person)
+para acceder a su atributo email.
+
+from django.core.mail import send_mail
+from django.conf import settings
+from .forms import PersonForm # Asegúrate de importar tu formulario
+
+def create_person(request):
+    if request.method == 'POST':
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            # 1. Guardamos el objeto y lo asignamos a una variable
+            person = form.save()
+            
+            # 2. Enviamos el correo
+            send_mail(
+                subject="¡Bienvenido a nuestro sistema!",
+                message=f"Hola {person.name}, tu registro ha sido exitoso.",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[person.email],
+                fail_silently=False, # Ponlo en True en producción si no quieres que la web falle si el mail falla
+            )
+            
+            return redirect('person:home')
+    else:
+        form = PersonForm()
+    
+    context = {'form': form}
+    return render(request, 'person/create.html', context)
+
+2. Configuración en settings.py
+
+Django no sabe mágicamente por qué "túnel" enviar el correo. Necesitas
+configurar un servidor SMTP. Para desarrollo, lo más cómodo es ver los correos
+en la consola en lugar de enviarlos realmente:
+
+# Para ver los correos en la terminal (Desarrollo)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'webmaster@tuapp.com'
+
+Si ya quieres enviarlos usando Gmail u otro servicio, usarías algo como esto:
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'tu-correo@gmail.com'
+EMAIL_HOST_PASSWORD = 'tu-password-de-aplicacion' # No es tu clave normal
+DEFAULT_FROM_EMAIL = 'Tu App <tu-correo@gmail.com>'
+
+Si planeas crear personas desde otros lugares (como el Panel de Administración
+de Django o una API), es mejor usar Signals (post_save). De esta forma, el
+correo se envía siempre que se crea una Person, sin importar si fue desde esta
+vista específica o no.
+
+Salida
+======
+
+Si usamos la opción de la consola la salida sería algo como esto:
+
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Subject: =?utf-8?q?=C2=A1Bienvenido?= a nuestro sistema!
+From: webmaster@tuapp.com
+To: person_mail@gmail.com
+Date: Wed, 04 Mar 2026 19:20:20 +0000
+Message-ID: <177265202040.63514.17092831153131556703@debian>
+
+Hola Person Name, tu registro ha sido exitoso.
+
+Si usamos por ejemplo la configuración para Gmail recibiremos esto por correo:
+
+¡Bienvenido a nuestro sistema!
+Django 6 CRUD <cenditelmail@gmail.com>
+
+Hola Name Person, tu registro ha sido exitoso.
+
+Fuente
+======
+
+Gemini IA
