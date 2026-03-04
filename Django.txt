@@ -9094,6 +9094,108 @@ Django 6 CRUD <cenditelmail@gmail.com>
 
 Hola Name Person, tu registro ha sido exitoso.
 
+Personalizar el correo con un templat html
+==========================================
+
+Para enviar correos electrónicos con un diseño personalizado en Django, debes
+utilizar render_to_string para procesar un archivo HTML y la función
+EmailMessage (o send_mail con el parámetro html_message).
+
+1. Crear el Template HTML
+
+Crea un archivo en tu carpeta de templates (por ejemplo,
+templates/emails/welcome_email.html). Puedes usar variables de Django como en
+cualquier otra vista:
+
+<html>
+  <body style="font-family: Arial, sans-serif; color: #333;">
+    <h1 style="color: #2d3748;">¡Hola, {{ person.name }}!</h1>
+    <p>Gracias por registrarte en nuestro sistema.</p>
+    <div style="background-color: #f7fafc; padding: 15px; border-radius: 8px;">
+        <p>Tu correo de registro es: <strong>{{ person.email }}</strong></p>
+    </div>
+    <p>Saludos,<br>El equipo de Django App</p>
+  </body>
+</html>
+
+2. Actualizar views.py
+
+Para integrar esto, importamos render_to_string y actualizamos la lógica de envío:
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Person
+from .forms import PersonForm
+from django.core.mail import send_mail
+from django.conf import settings
+from django.utils.html import strip_tags
+from django.template.loader import render_to_string
+
+def create_person(request):
+    if request.method == 'POST':
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            # 1. Guardamos el objeto y lo asignamos a una variable
+            person = form.save()
+
+            # 2. Definir el contexto y renderizar el HTML
+            context = {'person': person}
+            html_message = render_to_string('emails/welcome_email.html', context)
+
+            # 3. Crear una versión en texto plano (para clientes que no soportan HTML)
+            plain_message = strip_tags(html_message)
+
+            # 4. Enviar el correo
+            send_mail(
+                subject="¡Bienvenido a nuestro sistema!",
+                message=plain_message, # Versión texto plano
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[person.email],
+                html_message=html_message, # Versión HTML
+                fail_silently=False,
+            )
+            return redirect('person:home')
+    else:
+        form = PersonForm()
+
+    context = {'form': form}
+    return render(request, 'person/create.html', context)
+
+¿Qué cambió y por qué?
+
+render_to_string: Carga el template y le pasa los datos (la instancia person),
+convirtiéndolo en un string de HTML puro.
+
+strip_tags: Es una utilidad de Django que elimina las etiquetas HTML para
+generar una versión de "solo texto". Es una buena práctica incluirla por si el
+gestor de correo del usuario es muy antiguo o tiene bloqueado el HTML.
+
+html_message: Este parámetro dentro de send_mail le indica a Django que el
+correo debe enviarse con formato Multipart, incluyendo tanto el texto plano
+como el diseño visual.
+
+Recibiras un correo con este contenido:
+
+¡Bienvenido a nuestro sistema!
+
+Django 6 crud <youemail@gmail.com>
+
+¡Hola, Name Person!
+Gracias por registrarte en nuestro sistema.
+Tu correo de registro es: youemail@mail.com
+
+Saludos,
+El equipo de Django App
+
+Imágenes y CSS
+==============
+
+CSS: No uses archivos .css externos. Los estilos deben ir inline (dentro del
+atributo style="" de cada etiqueta) porque muchos clientes de correo (como
+Gmail o Outlook) ignoran las hojas de estilo externas o etiquetas <style>.
+
+Imágenes: Debes usar URLs absolutas (ej. https://tuweb.com/logo.png) para que
+las imágenes se carguen correctamente en la bandeja de entrada del destinatario.
+
 Fuente
 ======
 
