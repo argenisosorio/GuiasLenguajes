@@ -2851,6 +2851,77 @@ manualmente en cada etiqueta <script setup>. No hay una configuración global
 para omitir esto, ya que el compilador de Vue necesita saber específicamente
 cómo procesar ese bloque de código.
 
+==========================================
+Agregar font-awesome a un proyecto de Nuxt
+==========================================
+
+1. Instalación de dependencias
+
+Primero, necesitas el núcleo de FontAwesome, el componente para Vue y los
+paquetes de iconos que quieras usar (Solid, Regular, Brands, etc.).
+
+$ npm install @fortawesome/fontawesome-svg-core @fortawesome/vue-fontawesome@latest @fortawesome/free-solid-svg-icons
+
+2. Configurar el Plugin
+
+Crea un archivo llamado fontawesome.ts dentro de tu carpeta plugins/. Esto
+registrará el componente de forma global para que puedas usarlo en cualquier
+página o componente sin importarlo cada vez.
+
+Archivo: plugins/fontawesome.ts
+
+import { library, config } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faUser, faHouse } from '@fortawesome/free-solid-svg-icons' // Importa los iconos que necesites
+
+// Esto evita que FontAwesome inserte su propio CSS automáticamente, 
+// permitiendo que Nuxt lo maneje mejor y evitando saltos visuales (FOUC).
+config.autoAddCss = false
+
+// Añade los iconos a la librería
+library.add(faUser, faHouse)
+
+export default defineNuxtPlugin((nuxtApp) => {
+  nuxtApp.vueApp.component('font-awesome-icon', FontAwesomeIcon)
+})
+
+3. Cargar el CSS en Nuxt Config
+
+Como desactivamos el autoAddCss en el plugin, debemos importar el CSS
+manualmente en tu configuración global para que esté disponible desde el primer
+segundo.
+
+Archivo: nuxt.config.ts
+
+export default defineNuxtConfig({
+  css: [
+    '@fortawesome/fontawesome-svg-core/styles.css'
+  ],
+  // ... resto de tu configuración
+})
+
+4. Uso en tus componentes
+
+¡Listo! Ahora puedes usar el componente <font-awesome-icon /> en cualquier parte
+de tu proyecto:
+
+<template>
+  <div>
+    <font-awesome-icon icon="fa-solid fa-house" />
+    <font-awesome-icon :icon="['fas', 'user']" />
+  </div>
+</template>
+
+Tips:
+
+-Tree-shaking: No importes paquetes completos como fas (todo el set solid) si tu
+proyecto es grande. Es mejor importar solo los iconos específicos en el plugin
+(como hicimos con faUser) para mantener tu bundle ligero.
+
+-Iconos de Marcas: Si necesitas logos (Facebook, WhatsApp, etc.), recuerda
+instalar @fortawesome/free-brands-svg-icons y agregarlos a la library de la
+misma forma.
+
 Fuente
 ======
 
