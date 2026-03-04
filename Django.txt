@@ -8896,3 +8896,205 @@ Fuente
 ======
 
 Google IA
+
+===============================
+Arquitectura de Capas en Django
+===============================
+
+Este proyecto se desvía del patrón estándar de Django, en su lugar, implementa
+una Arquitectura de Capas (a menudo denominada Service Layer Pattern o Clean
+Architecture).
+
+Este enfoque desacopla la lógica empresarial central del marco HTTP (Django), lo
+que hace que la aplicación sea significativamente más fácil de probar, mantener
+y escalar a medida que crece.
+
+Las capas
+=========
+
+Controladores ( controllers/):
+
+-Actúa como punto de entrada para solicitudes HTTP
+(reemplazando las vistas tradicionales de Django). Responsable únicamente de
+manejar solicitudes HTTP, validar la entrada, llamar al Servicio apropiado y
+devolver una respuesta HTTP (representando una plantilla o redirigiendo).
+
+-No contienen ninguna lógica empresarial .
+
+Solicitudes ( requests/) :
+
+-Manejar la validación de datos HTTP entrantes (por ejemplo, datos POST).
+
+-Generalmente se implementa mediante formularios Django para garantizar que los
+datos estén limpios y válidos antes de que lleguen a la capa de lógica
+empresarial.
+
+DTO - Objetos de transferencia de datos ( dtos/) :
+
+-Estructuras de datos simples (a menudo Python) dataclasses o clases estándar
+que se utilizan para pasar datos entre la capa del controlador y la capa de
+servicio.
+
+-Se aseguran de que la capa de Servicio no dependa de objetos específicos de
+HTTP como request.POST o formularios Django.
+
+Servicios ( services/) :
+
+-El corazón de la aplicación. Esta capa contiene toda la lógica de negocio y los
+casos de uso.
+
+-Los servicios toman DTO como entrada, realizan las operaciones necesarias (como
+crear un empleado, enviar correos electrónicos, calcular salarios) e interactúan
+con la base de datos a través de modelos o selectores.
+
+Selectores ( selectors/) :
+
+-Dedicado a consultas de bases de datos complejas y obtención de datos
+(operaciones de lectura).
+
+-Si bien las consultas simples pueden residir en los Servicios, los Selectores
+mantienen limpia la capa de Servicio abstrayendo búsquedas ORM complejas.
+
+Modelos ( models/) :
+
+-Modelos ORM estándar de Django.
+
+-Representan las tablas y relaciones de la base de datos, pero se mantienen
+"simples" (desprovistas de lógica empresarial compleja).
+
+¿Por qué este patrón?
+=====================
+
+-Separación de preocupaciones: la lógica HTTP está separada de la lógica
+empresarial.
+
+-Capacidad de prueba: puede probar servicios y DTO de forma aislada sin
+necesidad de una solicitud HTTP simulada o un servidor web.
+
+-Reutilización: la lógica de negocios en los servicios se puede llamar desde
+cualquier lugar (controladores, tareas de Celery, comandos de administración,
+API) sin duplicar código.
+
+Cambios respecto a una app convencional de django
+=================================================
+
+-settings.py se mantiene igual
+
+-urls.py globales se mantien igual
+
+-Modificar las urls.py de la app ahora el llamado cambia.
+
+-Los archivos views.py, forms.py y models.py se eliminan de la carpeta de la
+app.
+
+-Dentro de la app crear la carpeta models y dentro crear a person.py
+
+-Dentro de la app crear una carpeta controllers/ y dentro crear a
+person_controller.py
+
+-Dentro de la carpeta de la app crear una carpeta dtos/ y dentro crear a
+person_dto.py
+
+-Dentro de la carpeta de la app crear una carpeta requests/ y dentro crear a
+create_person.py y update_person.py
+
+-Dentro de la carpeta de la app crear una carpeta selectors/ y dentro crear nada
+todavía...
+
+-Dentro de la carpeta de la app crear una carpeta services/ y dentro crear a
+person_service.py
+
+Ejemplo completo y documentado en: https://github.com/argenisosorio/Django_6_CRUD_Layered_Architecture
+
+======================================
+Enviar correos electrónicos con Django
+======================================
+
+Vamos a hacer un ejemplo de envío desde views.py, cómo y qué configurar para que
+el correo realmente salga de tu sistema.
+
+1. Actualización de views.py
+
+Cuando llamas a form.save(), Django crea la instancia en la base de datos y te
+la devuelve. Podemos guardar ese objeto en una variable (por ejemplo, person)
+para acceder a su atributo email.
+
+from django.core.mail import send_mail
+from django.conf import settings
+from .forms import PersonForm # Asegúrate de importar tu formulario
+
+def create_person(request):
+    if request.method == 'POST':
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            # 1. Guardamos el objeto y lo asignamos a una variable
+            person = form.save()
+            
+            # 2. Enviamos el correo
+            send_mail(
+                subject="¡Bienvenido a nuestro sistema!",
+                message=f"Hola {person.name}, tu registro ha sido exitoso.",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[person.email],
+                fail_silently=False, # Ponlo en True en producción si no quieres que la web falle si el mail falla
+            )
+            
+            return redirect('person:home')
+    else:
+        form = PersonForm()
+    
+    context = {'form': form}
+    return render(request, 'person/create.html', context)
+
+2. Configuración en settings.py
+
+Django no sabe mágicamente por qué "túnel" enviar el correo. Necesitas
+configurar un servidor SMTP. Para desarrollo, lo más cómodo es ver los correos
+en la consola en lugar de enviarlos realmente:
+
+# Para ver los correos en la terminal (Desarrollo)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'webmaster@tuapp.com'
+
+Si ya quieres enviarlos usando Gmail u otro servicio, usarías algo como esto:
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'tu-correo@gmail.com'
+EMAIL_HOST_PASSWORD = 'tu-password-de-aplicacion' # No es tu clave normal
+DEFAULT_FROM_EMAIL = 'Tu App <tu-correo@gmail.com>'
+
+Si planeas crear personas desde otros lugares (como el Panel de Administración
+de Django o una API), es mejor usar Signals (post_save). De esta forma, el
+correo se envía siempre que se crea una Person, sin importar si fue desde esta
+vista específica o no.
+
+Salida
+======
+
+Si usamos la opción de la consola la salida sería algo como esto:
+
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+Subject: =?utf-8?q?=C2=A1Bienvenido?= a nuestro sistema!
+From: webmaster@tuapp.com
+To: person_mail@gmail.com
+Date: Wed, 04 Mar 2026 19:20:20 +0000
+Message-ID: <177265202040.63514.17092831153131556703@debian>
+
+Hola Person Name, tu registro ha sido exitoso.
+
+Si usamos por ejemplo la configuración para Gmail recibiremos esto por correo:
+
+¡Bienvenido a nuestro sistema!
+Django 6 CRUD <cenditelmail@gmail.com>
+
+Hola Name Person, tu registro ha sido exitoso.
+
+Fuente
+======
+
+Gemini IA

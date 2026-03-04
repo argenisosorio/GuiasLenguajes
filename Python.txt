@@ -3859,8 +3859,8 @@ Supongamos que tu nuevo proyecto requiere la última versión estable
 
 $ pyenv install 3.12.1​
 
-Crear el entorno virtual (Virtualenv)
-=====================================
+Crear el entorno virtual de Python con pyenv
+=============================================
 
 1. Instala la versión de Python específica
 
@@ -4071,6 +4071,64 @@ Actualizar la version de pip
 ============================
 
 $ python -m pip install --upgrade pip
+
+====================================
+Python 3.X en Debian 13 usando pyenv
+====================================
+
+Pyenv te permite instalar versiones de Python de forma aislada sin romper el
+sistema.
+
+Instala las dependencias de compilación:
+
+$ sudo apt update
+
+$ sudo apt install build-essential libssl-dev zlib1g-dev
+
+$ sudo apt install libbz2-dev libreadline-dev libsqlite3-dev curl
+
+$ sudo apt install libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+
+Instala pyenv:
+
+$ curl https://pyenv.run | bash
+
+Configura pyenv:
+
+$ echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+
+$ echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+
+$ echo 'eval "$(pyenv init - bash)"' >> ~/.bashrc
+
+$ echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bashrc
+
+Estos comandos sirven para configurar tu entorno de terminal para que reconozca
+y ejecute automáticamente pyenv, que es una herramienta para gestionar múltiples
+versiones de Python en un mismo sistema. Estas líneas no instalan Python, sino
+que preparan tu terminal para que, una vez instalado pyenv, este funcione
+correctamente cada vez que la abras.
+
+Y para aplicar los cambios sin cerrar la terminal, como indica el texto de abajo:
+
+$ source ~/.bashrc
+
+Instala Python 3.12.12:
+
+$ pyenv install 3.12.12
+
+Ahora usa el siguiente comando. Reemplaza mi-entorno-virtual por el nombre que
+prefieras:
+
+$ pyenv virtualenv 3.12.12  mi-entorno-virtual
+
+2. Activar el entorno
+
+$ pyenv activate mi-entorno-virtual
+
+Ahora podrás instalar librerías sin problemas:
+
+(mi-entorno-virtual) $ pip install nombre-de-la-libreria
 
 Fuente
 ======
