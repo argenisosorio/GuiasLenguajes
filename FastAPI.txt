@@ -679,3 +679,33 @@ Fuente
 ======
 
 Gemini IA
+
+Cors
+====
+
+Para que una app del front como Nuxt pueda leer los datos de tu FastAPI local,
+debes habilitar CORS en tu main.py de Python. Si no lo haces, la función
+que consultara el API puede fallar por lo tanto main.py debe qiedar así:
+
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+# Configurar CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # En producción cambia esto por la URL de tu Nuxt
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Definimos una ruta (endpoint)
+@app.get("/")
+def read_root():
+    return {"Hola": "Mundo"}
+
+Fuente
+======
+
+Gemini IA
