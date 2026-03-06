@@ -9202,3 +9202,646 @@ Fuente
 ======
 
 Gemini IA
+
+===================================
+Probar el User de Django en un CRUD
+===================================
+
+1- Crear una aplicación con nombre users y declararla en el settings.py
+
+2- Incluir las urls de la app users en las url principales:
+
+from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    # Admin route
+    path('admin/', admin.site.urls),
+
+    # Include the URLs from person app.
+    path('', include('apps.person.urls')),
+
+    # Include the URLs from product app.
+    path('products/', include('apps.product.urls')),
+
+    # Include the URLs from users app.
+    path('users/', include('apps.users.urls')),
+]
+
+3- Modificamos el archivo urls.py de la app users, debe quedar así:
+
+from django.urls import path
+from apps.users.views import (
+    UserCreateView,
+    UserDeleteView,
+    UserDetailView,
+    UserListView,
+    UserUpdateView,
+)
+
+app_name = "users"
+
+urlpatterns = [
+    path("", UserListView.as_view(), name="user_list"),
+    path("<int:pk>/", UserDetailView.as_view(), name="user_detail"),
+    path("create/", UserCreateView.as_view(), name="user_create"),
+    path("update/<int:pk>/", UserUpdateView.as_view(), name="user_update"),
+    path("delete/<int:pk>/", UserDeleteView.as_view(), name="user_delete"),
+]
+
+4- En models.py no hacemos nada porque el modelo es User que ya es creado por
+defecto en Django. Los campos del user de django y la table auth_user son:
+
+id
+password
+last_login
+is_superuser
+first_name
+last_name
+email
+is_staff
+is_active
+date_joined
+username
+
+5- Modificamos forms.py con este contenido:
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ["username", "email", "first_name", "last_name"]
+
+6- Ahora modificamos views.py con las operaciones CRUD con el User de Django,
+debe quedar de esta manera:
+
+from django.contrib.auth.models import User
+from django.urls import reverse_lazy
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+)
+
+
+class UserListView(ListView):
+    model = User
+    template_name = "users/user_list.html"
+    context_object_name = "users"
+
+
+class UserDetailView(DetailView):
+    model = User
+    template_name = "users/user_detail.html"
+    context_object_name = "user"
+
+
+class UserCreateView(CreateView):
+    model = User
+    template_name = "users/user_form.html"
+    fields = ["username", "email", "first_name", "last_name"]
+    success_url = reverse_lazy("users:user_list")
+
+
+class UserUpdateView(UpdateView):
+    model = User
+    template_name = "users/user_form.html"
+    fields = ["username", "email", "first_name", "last_name"]
+    success_url = reverse_lazy("users:user_list")
+
+
+class UserDeleteView(DeleteView):
+    model = User
+    template_name = "users/user_confirm_delete.html"
+    success_url = reverse_lazy("users:user_list")
+
+7- Ahora creamos dentro de templates la carpeta users y dentro creamos estos
+archivos:
+
+user_confirm_delete.html
+user_detail.html
+user_form.html
+user_list.html
+
+El contenido de los archivos es:
+
+user_list.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+</head>
+<body>
+    <header>
+        <h2>User Management</h2>
+    </header>
+
+    <main>
+        <nav aria-label="User actions">
+            <a href="{% url 'users:user_create' %}">Add New User</a>
+        </nav>
+
+        <section aria-labelledby="users-table-title">
+            <h3 id="users-table-title">Existing Users</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th scope="col">Username</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
+                        <td>
+                            <a href="{% url 'users:user_detail' user.pk %}" aria-label="View details of {{ user.username }}">View</a> |
+                            <a href="{% url 'users:user_update' user.pk %}" aria-label="Edit {{ user.username }}">Edit</a> |
+                            <a href="{% url 'users:user_delete' user.pk %}" aria-label="Delete {{ user.username }}">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">No users found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>
+
+user_form.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if object %}Edit{% else %}Create{% endif %} User</title>
+</head>
+<body>
+    <header>
+        <h2>{% if object %}Edit User: {{ object.username }}{% else %}Create New User{% endif %}</h2>
+    </header>
+
+    <main>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save User</button>
+            <a href="{% url 'users:user_list' %}">Cancel</a>
+        </form>
+    </main>
+</body>
+</html>
+
+user_detail.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Detail</title>
+</head>
+<body>
+    <header>
+        <h2>User Detail: {{ user.username }}</h2>
+    </header>
+
+    <main>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>First Name:</strong> {{ user.first_name }}</p>
+        <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+        <a href="{% url 'users:user_list' %}">Back to User List</a>
+    </main>
+</body>
+</html>
+
+user_confirm_delete.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete User</title>
+</head>
+<body>
+    <header>
+        <h2>Confirm Deletion</h2>
+    </header>
+
+    <main>
+        <p>Are you sure you want to delete the user <strong>"{{ object.username }}"</strong>?</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" style="color: red;">Yes, Delete</button>
+            <a href="{% url 'users:user_list' %}">Cancel</a>
+        </form>
+    </main>
+</body>
+</html>
+
+8- Al navegar a http://127.0.0.1:8000/users/ podras probar el crud del User 
+de Django.
+
+Ejemplo completo en: https://github.com/argenisosorio/Django_6_crud/tree/feat/django-users-crud
+
+=====================================================
+Agregando un nuevo campo al User de Django en un CRUD
+=====================================================
+
+1- Crear una aplicación con nombre users y declararla en el settings.py además
+agregar la siguiente variable al final del settings.py
+
+# Custom user model
+AUTH_USER_MODEL = "users.User"
+
+2- Incluir las urls de la app users en las url principales:
+
+from django.contrib import admin
+from django.urls import include, path
+
+urlpatterns = [
+    # Admin route
+    path('admin/', admin.site.urls),
+
+    # Include the URLs from person app.
+    path('', include('apps.person.urls')),
+
+    # Include the URLs from product app.
+    path('products/', include('apps.product.urls')),
+
+    # Include the URLs from users app.
+    path('users/', include('apps.users.urls')),
+]
+
+3- Modificamos el archivo urls.py de la app users, debe quedar así:
+
+from django.urls import path
+from apps.users.views import (
+    UserCreateView,
+    UserDeleteView,
+    UserDetailView,
+    UserListView,
+    UserUpdateView,
+)
+
+app_name = "users"
+
+urlpatterns = [
+    path("", UserListView.as_view(), name="user_list"),
+    path("<int:pk>/", UserDetailView.as_view(), name="user_detail"),
+    path("create/", UserCreateView.as_view(), name="user_create"),
+    path("update/<int:pk>/", UserUpdateView.as_view(), name="user_update"),
+    path("delete/<int:pk>/", UserDeleteView.as_view(), name="user_delete"),
+]
+
+4- En models.py debe quedar así:
+
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+
+
+"""
+Modelo de usuario personalizado para la aplicación users.
+
+Este módulo define un modelo User que extiende el AbstractUser de Django para
+incluir un campo role opcional. El modelo mantiene el comportamiento de
+autenticación predeterminado, pero permite almacenar un rol de cadena simple
+para cada usuario.
+"""
+
+
+class User(AbstractUser):
+    """
+    Modelo de usuario específico de la aplicación.
+
+    Hereda todos los campos y comportamientos del `AbstractUser` de Django y
+    añade un campo role opcional para capturar el rol del usuario dentro de la
+    aplicación.
+    """
+
+    role = models.CharField(max_length=3, blank=True, null=True)
+
+    def __str__(self) -> str:
+        """
+        Devuelve el nombre de usuario como una representación de cadena.
+        """
+
+        return self.username
+
+
+Cuando ejecutemos las migración de la app users se creara la tabla users_user
+que contendrá estos campos:
+
+id
+password
+last_login
+is_superuser
+username
+first_name
+last_name
+email
+is_staff
+is_active
+date_joined
+role
+
+5. Modificamos forms.py con este contenido:
+
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+from .models import User
+
+"""
+Formularios para crear y actualizar el modelo "Usuario" personalizado.
+
+Este módulo proporciona dos clases de formulario que encapsulan los formularios
+de usuario integrados de Django y los dirigen al modelo "Usuario" del proyecto.
+Exhiben los campos de usuario comunes y el campo "rol" específico de la
+aplicación.
+"""
+
+
+class CustomUserCreationForm(UserCreationForm):
+    """
+    Formulario utilizado para crear nuevas instancias de User.
+
+    Utiliza el comportamiento UserCreationForm de Django, pero se dirige al
+    modelo User personalizado del proyecto y expone los campos username,
+    email, first_name, last_name y role.
+    """
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "first_name", "last_name", "role")
+
+
+class CustomUserChangeForm(UserChangeForm):
+    """
+    Formulario utilizado para editar instancias de User existentes.
+
+    Contiene el UserChangeForm de Django para el modelo User del proyecto y
+    expone el mismo conjunto de campos editables que el formulario de creación.
+    """
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "first_name", "last_name", "role")
+
+6- Ahora modificamos views.py con las operaciones CRUD con el User de Django,
+debe quedar de esta manera:
+
+from django.contrib.auth import get_user_model
+from django.urls import reverse_lazy
+from apps.users.forms import CustomUserChangeForm, CustomUserCreationForm
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+)
+
+
+"""
+Vistas basadas en clases para operaciones CRUD de usuarios.
+
+Este módulo expone un pequeño conjunto de vistas genéricas basadas en clases que
+operan en el modelo de usuario personalizado del proyecto. Cada vista establece
+un template_name y cuando corresponde, una clase de formulario y una
+success_url para las redirecciones tras operaciones exitosas.
+"""
+
+
+class UserListView(ListView):
+    model = get_user_model()
+    template_name = "users/user_list.html"
+    context_object_name = "users"
+
+
+class UserDetailView(DetailView):
+    model = get_user_model()
+    template_name = "users/user_detail.html"
+    context_object_name = "user"
+
+
+class UserCreateView(CreateView):
+    model = get_user_model()
+    template_name = "users/user_form.html"
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy("users:user_list")
+
+
+class UserUpdateView(UpdateView):
+    model = get_user_model()
+    template_name = "users/user_form.html"
+    form_class = CustomUserChangeForm
+    success_url = reverse_lazy("users:user_list")
+
+
+class UserDeleteView(DeleteView):
+    model = get_user_model()
+    template_name = "users/user_confirm_delete.html"
+    success_url = reverse_lazy("users:user_list")
+
+7- Ahora creamos dentro de templates la carpeta users y dentro creamos estos
+archivos:
+
+user_confirm_delete.html
+user_detail.html
+user_form.html
+user_list.html
+
+El contenido de los archivos es:
+
+user_list.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User List</title>
+</head>
+<body>
+    <header>
+        <h2>User Management</h2>
+    </header>
+
+    <main>
+        <nav aria-label="User actions">
+            <a href="{% url 'users:user_create' %}">Add New User</a>
+        </nav>
+
+        <section aria-labelledby="users-table-title">
+            <h3 id="users-table-title">Existing Users</h3>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Is Superuser</th>
+                        <th scope="col">Is Staff</th>
+                        <th scope="col">Is Active</th>
+                        <th scope="col">Last Login</th>
+                        <th scope="col">Date Joined</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.first_name }}</td>
+                        <td>{{ user.last_name }}</td>
+                        <td>{{ user.is_superuser }}</td>
+                        <td>{{ user.is_staff }}</td>
+                        <td>{{ user.is_active }}</td>
+                        <td>{{ user.last_login }}</td>
+                        <td>{{ user.date_joined }}</td>
+                        <td>{{ user.role }}</td>
+                        <td>
+                            <a href="{% url 'users:user_detail' user.pk %}" aria-label="View details of {{ user.username }}">View</a> |
+                            <a href="{% url 'users:user_update' user.pk %}" aria-label="Edit {{ user.username }}">Edit</a> |
+                            <a href="{% url 'users:user_delete' user.pk %}" aria-label="Delete {{ user.username }}">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="12">No users found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>
+
+user_form.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if object %}Edit{% else %}Create{% endif %} User</title>
+</head>
+<body>
+    <header>
+        <h2>{% if object %}Edit User: {{ object.username }}{% else %}Create New User{% endif %}</h2>
+    </header>
+
+    <main>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save User</button>
+            <a href="{% url 'users:user_list' %}">Cancel</a>
+        </form>
+    </main>
+</body>
+</html>
+
+user_detail.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Detail</title>
+</head>
+<body>
+    <header>
+        <h2>User Detail: {{ user.username }}</h2>
+    </header>
+
+    <main>
+        <p><strong>ID:</strong> {{ user.id }}</p>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>First Name:</strong> {{ user.first_name }}</p>
+        <p><strong>Last Name:</strong> {{ user.last_name }}</p>
+        <p><strong>Is Superuser:</strong> {{ user.is_superuser }}</p>
+        <p><strong>Is Staff:</strong> {{ user.is_staff }}</p>
+        <p><strong>Is Active:</strong> {{ user.is_active }}</p>
+        <p><strong>Last Login:</strong> {{ user.last_login }}</p>
+        <p><strong>Date Joined:</strong> {{ user.date_joined }}</p>
+        <p><strong>Role:</strong> {{ user.role }}</p>
+        <a href="{% url 'users:user_list' %}">Back to User List</a>
+    </main>
+</body>
+</html>
+
+user_confirm_delete.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Delete User</title>
+</head>
+<body>
+    <header>
+        <h2>Confirm Deletion</h2>
+    </header>
+
+    <main>
+        <p>Are you sure you want to delete the user <strong>"{{ object.username }}"</strong>?</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" style="color: red;">Yes, Delete</button>
+            <a href="{% url 'users:user_list' %}">Cancel</a>
+        </form>
+    </main>
+</body>
+</html>
+
+8- Editar el archivo admin.py para ver el los usuarios desde el administrador
+de Django, debe quedar así:
+
+from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from .models import User
+from .forms import CustomUserCreationForm, CustomUserChangeForm
+
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
+    add_form = CustomUserCreationForm
+    form = CustomUserChangeForm
+    model = User
+    # Añadimos el campo role a los formularios del admin
+    fieldsets = UserAdmin.fieldsets + (
+        ("Información Adicional", {"fields": ("role",)}),
+    )
+
+Ejecuta lo siguiente para crear un super usuario:
+
+$ python manage.py createsuperuser
+
+9- Al navegar a http://127.0.0.1:8000/users/ podras probar el crud del Custom
+User de Django y http://127.0.0.1:8000/admin/ para ver el panel administrativo
+de Django.
+
+Ejemplo completo en: https://github.com/argenisosorio/Django_6_crud/tree/feat/django-users-crud-added-field
