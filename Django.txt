@@ -10312,3 +10312,121 @@ Fuente
 ======
 
 Gemini IA
+
+==============================
+Relaciones sencillas en Django
+==============================
+
+Supongamos que queremos relacionar un parsona con un producto, mientras que en
+Laravel se declaran las relaciones en el modelo con el siguiente formato:
+
+// Se declara la relación en el modelo de Personas
+public function product()
+{
+    return $this->belongsTo(Product::class);
+}
+
+// Se declara la llave foránea aparte en la migración
+$table->foreignId('product_id')
+        ->nullable()
+        ->constrained('products')
+        ->nullOnDelete();
+
+// Se declara la relación en el modelo de Productos
+public function people()
+{
+    return $this->hasMany(Person::class);
+}
+
+En Django se declara tanto la llave foránea como las relaciones en el modelo con
+el siguiente formato:
+
+product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True, related_name='people')
+
+Esta línea de código define una Relación de Clave Foránea (ForeignKey), que en
+bases de datos representa una relación 1:N (Uno a Muchos).
+
+Significa que muchas personas pueden estar asociadas a un mismo producto, pero
+cada persona solo puede tener un producto asignado.
+
+1. Product (El primer argumento)
+
+Es el modelo con el que te estás relacionando. Le dice a Django: "Este campo
+guardará una referencia a la tabla de Productos" y en la tabla persons el campo
+por convención será product_id.
+
+2. on_delete=models.SET_NULL
+
+Define qué sucede con la Persona si el Producto relacionado se elimina de la
+base de datos.
+
+SET_NULL: Si borras el producto, la persona no se borra. Simplemente, su campo
+product pasará a estar vacío (NULL). Es ideal para no perder registros de
+personas si un producto deja de existir.
+
+3. null=True y blank=True
+
+Ambos permiten que el campo sea opcional, pero en niveles distintos:
+
+null=True (Base de datos): Permite que la columna en la base de datos acepte
+valores NULL. Es obligatorio ponerlo si usas on_delete=models.SET_NULL.
+
+blank=True (Formularios/Admin): Permite que, al crear una persona en el panel de
+administración o en un formulario, puedas dejar el campo de producto vacío sin
+que te dé un error de "campo obligatorio".
+
+4. related_name='people'
+
+Esta es una de las partes más útiles para la programación. Define el nombre de
+la relación inversa.
+
+Sin esto, para saber qué personas tienen el producto "X", tendrías que escribir:
+producto.person_set.all().
+
+Con related_name='people', puedes acceder de forma mucho más natural:
+producto.people.all().
+
+Básicamente, le da un nombre al "hijo" desde la perspectiva del "padre".
+
+Resumen del comportamiento:
+
+Si tienes un producto llamado "Guitarra" (ID 1) y tres personas (Juan, María y
+Pedro) asociadas a él:
+
+-En Personas: Cada una tiene en su columna product_id el valor 1.
+
+-Si borras la "Guitarra": Juan, María y Pedro seguirán existiendo, pero ahora su
+product_id será NULL.
+
+-Desde el código: Si tienes el objeto de la guitarra, puedes ver a los tres
+simplemente llamando a guitarra.people.all().
+
+La principal diferencia radica en que los modelos en Django son más completos y
+versátiles que en Laravel, no dependen de migraciones aparte para crear
+relaciones entre modelos, ya que se declaran en el mismo modelo; lo que facilita
+el desarrollo y mantenimiento de las aplicaciones.
+
+Otra diferencia es que en Laravel se utilizan métodos como belongsTo, hasMany,
+hasOne, belongsToMany para declarar el tipo de relación, mientras que en Django
+se utilizan tipos de campo como ForeignKey, OneToOneField, ManyToManyField.
+
+Lo interesante aquí es que para poder relacionar de manera simétrica una
+relación de 1:N | N:1, no es necesario declarar una relación inversa de manera
+explícita, basta con declararla en uno de ellos y que especifiques el parámetro
+related_name.
+
+¿Por qué sucede esto? Así como Laravel funciona con un método llamado
+getRelationType(), Django obtiene la relación inversa gracias a los flags que
+tienen asignados cada tipo de campo.
+
+Cuando por ejemplo definimos el related_name='people', Django crea un objeto
+virtual en el modelo Product. Ese objeto virtual tendrá el flag
+one_to_many = True. Así es como Django sabe que product.people.all() debe
+devolver una lista y no un solo objeto.
+
+Ejemplo completo: https://github.com/argenisosorio/Django_6_crud/tree/test/related-models
+
+Fuente
+======
+
+Gemini IA

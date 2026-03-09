@@ -198,3 +198,30 @@ Fuente
 https://odoo-devops.readthedocs.io/en/latest/git/github-telegram-notifications.html
 
 ChatGPT
+
+====================================================================
+Incorporar una rama de un fork externo directamente a tu repositorio
+====================================================================
+
+Hacer que la rama del fork aparezca en tu lista de ramas y no solo como un Pull
+Request, el método más limpio es añadir el fork como un remoto secundario.
+
+Aquí tienes los pasos desde tu terminal:
+
+Agrega el fork como remoto:
+
+$ git remote add nombre-del-usuario https://github.com
+
+Trae la información del fork:
+
+$ git fetch nombre-del-usuario
+
+Crea una rama local basada en la del fork:
+
+$ git checkout -b mi-nueva-rama nombre-del-usuario/nombre-de-la-rama-del-fork
+
+Sube la rama a tu propio repositorio en GitHub:
+
+$ git push origin mi-nueva-rama
+
+!Listo¡ ya con esto debes poder ver la rama en tu repositorio en GitHub.
