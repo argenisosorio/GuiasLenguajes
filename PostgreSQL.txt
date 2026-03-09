@@ -714,12 +714,13 @@ $ psql -h localhost -U <username> -d <dbname> -1 -f <filename>.sql
 Copiar datos de una tabla a un fichero .csv
 ===========================================
 
-Creamos un fichero .csv, en este ejemplo será "x.csv" y lo guardamos en el
-/home/user/ luego le damos permisos con:
+Creamos un fichero .csv, en este ejemplo será "x.csv" y lo guardamos en /tmp
 
-$ touch x.csv
+$ sudo touch /tmp/x.csv
 
-$ sduo chmod 777 x.csv
+Ahora el damos permisos
+
+$ sudo chmod 777 /tmp/x.csv
 
 Luego, desde la línea de comandos de postgres, nos conectamos a la db y ahí
 ponemos el comando de copia de la tabla que queremos:
@@ -728,15 +729,10 @@ Nos pasará los datos de la name_tabla al fichero .csv, separando los datos por
 filas y comas ",". Si se lanza de nuevo el comando el fichero se sobreescribe,
 no se duplica la data.
 
-db_name=# \copy name_table to 'x.csv' csv header;
+db_name=# \copy name_tabla to '/tmp/x.csv' csv header;
 
------
-
-Pasándole la ruta absoluta del fichero.
-
-db_name=# \copy name_table to '/home/user/x.csv' csv header;
-
--Nota: A veces falla en la copia: xxxxx.csv: Permiso denegado, por lo que se recomienda mover el .csv a /home/user/tmp/ para que no haya problema, y en el comando meter la ruta absoluta del fichero.
+Nota: Se copia en /tmp porque es el directorio que tiene permisos para este tipo
+de operaciones.
 
 ==========================================================
 Copiar datos de una tabla where x='xxxx' a un fichero .csv

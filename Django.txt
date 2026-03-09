@@ -9847,3 +9847,736 @@ User de Django y http://127.0.0.1:8000/admin/ para ver el panel administrativo
 de Django.
 
 Ejemplo completo en: https://github.com/argenisosorio/Django_6_crud/tree/feat/django-users-crud-added-field
+
+==================================================
+Implementando un login y logout sencillo en Django
+==================================================
+
+1- En el settings.py vamos a agreagrar estas variables:
+
+# Configuración de autenticación
+LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'users:user_list'
+LOGOUT_REDIRECT_URL = 'users:login'
+
+Estas tres variables en el archivo settings.py de Django son fundamentales para
+controlar el flujo de navegación y seguridad de tu aplicación.
+
+LOGIN_URL
+
+Define la dirección a la que Django redirigirá automáticamente a un usuario si
+intenta acceder a una vista protegida (por ejemplo, una vista que use
+@login_required o LoginRequiredMixin) y no ha iniciado sesión.
+
+En este caso: Cuando alguien intente entrar a una ruta privada, Django lo
+enviará a la vista que tenga el nombre login dentro de la app users.
+
+LOGIN_REDIRECT_URL
+
+Establece el destino por defecto del usuario justo después de iniciar sesión
+correctamente, siempre y cuando no haya sido redirigido previamente por intentar
+entrar a una página privada.
+
+-En este caso: Una vez que el usuario pone sus credenciales correctas, será
+enviado a la lista de usuarios (users:user_list).
+
+-Si el usuario intentó entrar a una URL específica (ej. /users/update/1/) sin
+estar logueado, Django guardará esa ruta en un parámetro llamado next. Al
+loguearse, Django ignorará esta variable y lo llevará a la ruta de edición que
+quería originalmente.
+
+LOGOUT_REDIRECT_URL
+
+Determina a dónde debe ser enviado el usuario inmediatamente después de cerrar
+su sesión.
+
+-En este caso: Al hacer clic en "Salir" o "Logout", la aplicación lo devolverá
+a la pantalla de inicio de sesión (users:login). Esto es ideal para aplicaciones
+que requieren autenticación obligatoria para ver cualquier contenido.
+
+¿Por qué es importante agregarlas?
+
+Si no defines estas variables, Django utilizará valores por defecto que suelen ser:
+
+LOGIN_URL = '/accounts/login/'
+
+LOGIN_REDIRECT_URL = '/accounts/profile/'
+
+Si tu estructura de carpetas y nombres de URL no coinciden con esos valores por
+defecto (como en tu caso, donde usas users:), el sistema arrojará un error 404
+Not Found cada vez que un usuario intente loguearse o salir.
+
+2- Ahora en las url principales agregamos a
+
+from django.shortcuts import redirect
+
+# Redirigir la raíz al login de users
+    path('', lambda request: redirect('users:login'), name='root'),
+
+Quedarían así:
+
+from django.contrib import admin
+from django.urls import include, path
+from django.shortcuts import redirect
+
+urlpatterns = [
+    # Admin route
+    path('admin/', admin.site.urls),
+
+    # Redirigir la raíz al login de users
+    path('', lambda request: redirect('users:login'), name='root'),
+
+    # Include the URLs from person app.
+    path('', include('apps.person.urls')),
+
+    # Include the URLs from product app.
+    path('products/', include('apps.product.urls')),
+
+    # Include the URLs from users app.
+    path('users/', include('apps.users.urls')),
+]
+
+Esta modificación tiene como objetivo definir el comportamiento de la página de
+inicio (la raíz /) de tu proyecto.
+
+1. Control de la "Puerta de Entrada"
+
+Por defecto, si entras a http://127.0.0.1:8000/ y no tienes nada definido en la
+raíz, Django podría mostrarte su página de bienvenida o un error 404.
+Con la línea path('', lambda request: redirect('users:login'), name='root'),
+estás forzando a que cualquier usuario que intente entrar a la dirección base
+sea enviado inmediatamente al formulario de Login.
+
+2. Uso de una Función Lambda
+
+En lugar de crear una vista formal en un archivo views.py solo para una
+redirección, se utiliza una función lambda (una función anónima y rápida):
+
+-lambda request: Recibe la petición del navegador.
+
+-redirect('users:login'): Devuelve una respuesta de redirección hacia la URL
+nombrada login dentro del espacio de nombres users.
+
+3. Orden de Prioridad en urlpatterns
+
+Es importante notar que se ha colocado esta redirección antes de
+include('apps.person.urls').
+
+-Django recorre la lista de URLs de arriba hacia abajo.
+
+-Al encontrar path('', ...) primero, la redirección tomará el control de la raíz.
+
+-Nota importante: Si la aplicación person también tiene una ruta vacía
+(path('', ...)), esta nunca se ejecutará porque la redirección lambda "atrapa"
+la petición primero.
+
+4. Experiencia de Usuario (UX) y Seguridad
+
+Esta modificación es común en sistemas tipo Dashboard o Intranets donde no
+existe una "Landing Page" pública. La premisa es: "Si no estás dentro del
+sistema, no puedes ver nada; primero identifícate".
+
+Resumen del flujo:
+
+-El usuario ingresa a mi-dominio.com/.
+
+-Django encuentra la coincidencia en la raíz ''.
+
+-Se ejecuta la instrucción redirect.
+
+-El navegador del usuario cambia automáticamente la URL a
+mi-dominio.com/users/login/.
+
+3- Ahora creamos a login.html en users/templates/users con este contenido:
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+    <form method="post" action="{% url 'users:login' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">Usuario:</label>
+            <input type="text" name="username" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña:</label>
+            <input type="password" name="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+</body>
+</html>
+
+4- En users_list.html podemos agregar lo siguiente para consultar los datos
+del usuario autenticado y también para que pueda cerrar sesión:
+
+{% if user.is_authenticated %}
+    ¡Hola! {{ user.username }} ({{ user.email }}) |
+    <a href="{% url 'users:logout' %}">Logout</a>
+{% else %}
+    <a href="{% url 'users:login' %}">Login</a>
+{% endif %}
+
+5- En las uls de users agregamos
+
+from apps.users import views
+
+# URLs de autenticación
+    path("login/", views.LoginView.as_view(), name="login"),
+    path("logout/", views.LogoutView.as_view(), name="logout"),
+
+Quedando así:
+
+from django.urls import path
+from apps.users import views
+from apps.users.views import (
+    UserCreateView,
+    UserDeleteView,
+    UserDetailView,
+    UserListView,
+    UserUpdateView,
+)
+
+app_name = "users"
+
+urlpatterns = [
+    # URLs de autenticación
+    path("login/", views.LoginView.as_view(), name="login"),
+    path("logout/", views.LogoutView.as_view(), name="logout"),
+    # Urls CRUD de usuarios
+    path("", UserListView.as_view(), name="user_list"),
+    path("<int:pk>/", UserDetailView.as_view(), name="user_detail"),
+    path("create/", UserCreateView.as_view(), name="user_create"),
+    path("update/<int:pk>/", UserUpdateView.as_view(), name="user_update"),
+    path("delete/<int:pk>/", UserDeleteView.as_view(), name="user_delete"),
+]
+
+6- y en las views agregamos decoradores a las vistas que requieren protección
+de autenticación, quedando así:
+
+from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView as AuthLoginView
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+    View,
+)
+from apps.users.forms import CustomUserChangeForm, CustomUserCreationForm
+
+
+"""
+Vistas basadas en clases para operaciones CRUD de usuarios y autenticación.
+
+Este módulo expone vistas genéricas basadas en clases que operan en el modelo
+de usuario personalizado del proyecto, así como vistas para login y logout.
+"""
+
+
+# ==================== VISTAS DE AUTENTICACIÓN ====================
+
+class LoginView(AuthLoginView):
+    """
+    Vista para iniciar sesión de usuarios.
+    """
+    template_name = "users/login.html"
+    redirect_authenticated_user = True
+
+    def get_success_url(self):
+        """Redirigir a la lista de usuarios después del login"""
+        return reverse_lazy("users:user_list")
+
+
+class LogoutView(View):
+    """
+    Vista para cerrar sesión de usuarios.
+    """
+    def get(self, request):
+        logout(request)
+        return redirect("users:login")
+
+    def post(self, request):
+        logout(request)
+        return redirect("users:login")
+
+
+# ==================== VISTAS CRUD DE USUARIOS ====================
+
+@method_decorator(login_required, name='dispatch')
+class UserListView(ListView):
+    model = get_user_model()
+    template_name = "users/user_list.html"
+    context_object_name = "users"
+
+
+@method_decorator(login_required, name='dispatch')
+class UserDetailView(DetailView):
+    model = get_user_model()
+    template_name = "users/user_detail.html"
+    context_object_name = "user"
+
+
+@method_decorator(login_required, name='dispatch')
+class UserCreateView(CreateView):
+    model = get_user_model()
+    template_name = "users/user_form.html"
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy("users:user_list")
+
+
+@method_decorator(login_required, name='dispatch')
+class UserUpdateView(UpdateView):
+    model = get_user_model()
+    template_name = "users/user_form.html"
+    form_class = CustomUserChangeForm
+    success_url = reverse_lazy("users:user_list")
+
+
+@method_decorator(login_required, name='dispatch')
+class UserDeleteView(DeleteView):
+    model = get_user_model()
+    template_name = "users/user_confirm_delete.html"
+    success_url = reverse_lazy("users:user_list")
+
+-----
+
+1. login_required
+
+Es un decorador diseñado originalmente para funciones. Su trabajo es muy simple:
+
+-Verifica si el usuario que intenta acceder a la vista ha iniciado sesión.
+
+-Si el usuario está autenticado, permite que la vista se ejecute normalmente.
+
+-Si no está autenticado, lo redirige automáticamente a la URL de inicio de
+sesión (definida en LOGIN_URL).
+
+2. dispatch
+
+En las Vistas Basadas en Clases, dispatch es el "director de tráfico". Es el
+primer método que se ejecuta cuando llega una petición a la clase.
+
+-Su función es recibir el request y decidir qué método de la clase debe
+atenderlo (si es una petición GET, lo envía al método get(); si es POST, al
+método post(), etc.).
+
+-Por qué es importante: Si quieres proteger toda una clase con una regla (como
+"estar logueado"), el mejor lugar para aplicar esa regla es en dispatch, porque
+todas las peticiones pasan por ahí obligatoriamente.
+
+3. method_decorator
+
+Aquí es donde surge un problema técnico: los decoradores como login_required
+esperan recibir una función como argumento, pero en una clase, los métodos
+(como dispatch) no son funciones sueltas, sino que pertenecen a una instancia de
+clase.
+
+method_decorator es una herramienta de Django que sirve de "puente" o
+"traductor":
+
+-Convierte un decorador de funciones (login_required) en un decorador compatible
+con métodos de clase.
+
+-El argumento name='dispatch' le dice específicamente: "Toma el decorador
+login_required y aplícalo sobre el método interno llamado dispatch de esta
+clase".
+
+@method_decorator(login_required, name='dispatch')
+class UserListView(ListView):
+
+En resumen esta línea dice "Antes de que esta clase decida si procesar un GET o
+un POST (gracias a dispatch), verifica que el usuario esté logueado (gracias a
+login_required). Si no lo está, no lo dejes pasar".
+
+Una alternativa moderna:
+
+En versiones recientes de Django, en lugar de usar method_decorator, se suele
+usar un Mixin, que es más limpio visualmente:
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class UserListView(LoginRequiredMixin, ListView):
+    # Hace exactamente lo mismo que el decorador de arriba
+    model = get_user_model()
+    ...
+
+El resultado es el mismo: proteges tu lista de usuarios para que solo personas
+autenticadas puedan verla.
+
+Con esta modificación usando LoginRequiredMixin las views quedarían así:
+
+from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView as AuthLoginView
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+    View,
+)
+from apps.users.forms import CustomUserChangeForm, CustomUserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+"""
+Vistas basadas en clases para operaciones CRUD de usuarios y autenticación.
+
+Este módulo expone vistas genéricas basadas en clases que operan en el modelo
+de usuario personalizado del proyecto, así como vistas para login y logout.
+"""
+
+
+# ==================== VISTAS DE AUTENTICACIÓN ====================
+
+class LoginView(AuthLoginView):
+    """
+    Vista para iniciar sesión de usuarios.
+    """
+    template_name = "users/login.html"
+    redirect_authenticated_user = True
+
+    def get_success_url(self):
+        """Redirigir a la lista de usuarios después del login"""
+        return reverse_lazy("users:user_list")
+
+
+class LogoutView(View):
+    """
+    Vista para cerrar sesión de usuarios.
+    """
+    def get(self, request):
+        logout(request)
+        return redirect("users:login")
+
+    def post(self, request):
+        logout(request)
+        return redirect("users:login")
+
+
+# ==================== VISTAS CRUD DE USUARIOS ====================
+
+class UserListView(LoginRequiredMixin, ListView):
+    model = get_user_model()
+    template_name = "users/user_list.html"
+    context_object_name = "users"
+
+
+class UserDetailView(LoginRequiredMixin, DetailView):
+    model = get_user_model()
+    template_name = "users/user_detail.html"
+    context_object_name = "user"
+
+
+class UserCreateView(LoginRequiredMixin, CreateView):
+    model = get_user_model()
+    template_name = "users/user_form.html"
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy("users:user_list")
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = get_user_model()
+    template_name = "users/user_form.html"
+    form_class = CustomUserChangeForm
+    success_url = reverse_lazy("users:user_list")
+
+
+class UserDeleteView(LoginRequiredMixin, DeleteView):
+    model = get_user_model()
+    template_name = "users/user_confirm_delete.html"
+    success_url = reverse_lazy("users:user_list")
+
+7- ¡Listo! ya con eso podemos porobar el inicio y cierre de sesión.
+
+Ejemplo completo en: https://github.com/argenisosorio/Django_6_crud/tree/test/custom-login-django
+
+
+Fuente
+======
+
+Gemini IA
+
+==============================
+Relaciones sencillas en Django
+==============================
+
+Supongamos que queremos relacionar un parsona con un producto, mientras que en
+Laravel se declaran las relaciones en el modelo con el siguiente formato:
+
+// Se declara la relación en el modelo de Personas
+public function product()
+{
+    return $this->belongsTo(Product::class);
+}
+
+// Se declara la llave foránea aparte en la migración
+$table->foreignId('product_id')
+        ->nullable()
+        ->constrained('products')
+        ->nullOnDelete();
+
+// Se declara la relación en el modelo de Productos
+public function people()
+{
+    return $this->hasMany(Person::class);
+}
+
+En Django se declara tanto la llave foránea como las relaciones en el modelo con
+el siguiente formato:
+
+product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True, related_name='people')
+
+Esta línea de código define una Relación de Clave Foránea (ForeignKey), que en
+bases de datos representa una relación 1:N (Uno a Muchos).
+
+Significa que muchas personas pueden estar asociadas a un mismo producto, pero
+cada persona solo puede tener un producto asignado.
+
+1. Product (El primer argumento)
+
+Es el modelo con el que te estás relacionando. Le dice a Django: "Este campo
+guardará una referencia a la tabla de Productos" y en la tabla persons el campo
+por convención será product_id.
+
+2. on_delete=models.SET_NULL
+
+Define qué sucede con la Persona si el Producto relacionado se elimina de la
+base de datos.
+
+SET_NULL: Si borras el producto, la persona no se borra. Simplemente, su campo
+product pasará a estar vacío (NULL). Es ideal para no perder registros de
+personas si un producto deja de existir.
+
+3. null=True y blank=True
+
+Ambos permiten que el campo sea opcional, pero en niveles distintos:
+
+null=True (Base de datos): Permite que la columna en la base de datos acepte
+valores NULL. Es obligatorio ponerlo si usas on_delete=models.SET_NULL.
+
+blank=True (Formularios/Admin): Permite que, al crear una persona en el panel de
+administración o en un formulario, puedas dejar el campo de producto vacío sin
+que te dé un error de "campo obligatorio".
+
+4. related_name='people'
+
+Esta es una de las partes más útiles para la programación. Define el nombre de
+la relación inversa.
+
+Sin esto, para saber qué personas tienen el producto "X", tendrías que escribir:
+producto.person_set.all().
+
+Con related_name='people', puedes acceder de forma mucho más natural:
+producto.people.all().
+
+Básicamente, le da un nombre al "hijo" desde la perspectiva del "padre".
+
+Resumen del comportamiento:
+
+Si tienes un producto llamado "Guitarra" (ID 1) y tres personas (Juan, María y
+Pedro) asociadas a él:
+
+-En Personas: Cada una tiene en su columna product_id el valor 1.
+
+-Si borras la "Guitarra": Juan, María y Pedro seguirán existiendo, pero ahora su
+product_id será NULL.
+
+-Desde el código: Si tienes el objeto de la guitarra, puedes ver a los tres
+simplemente llamando a guitarra.people.all().
+
+La principal diferencia radica en que los modelos en Django son más completos y
+versátiles que en Laravel, no dependen de migraciones aparte para crear
+relaciones entre modelos, ya que se declaran en el mismo modelo; lo que facilita
+el desarrollo y mantenimiento de las aplicaciones.
+
+Otra diferencia es que en Laravel se utilizan métodos como belongsTo, hasMany,
+hasOne, belongsToMany para declarar el tipo de relación, mientras que en Django
+se utilizan tipos de campo como ForeignKey, OneToOneField, ManyToManyField.
+
+Lo interesante aquí es que para poder relacionar de manera simétrica una
+relación de 1:N | N:1, no es necesario declarar una relación inversa de manera
+explícita, basta con declararla en uno de ellos y que especifiques el parámetro
+related_name.
+
+¿Por qué sucede esto? Así como Laravel funciona con un método llamado
+getRelationType(), Django obtiene la relación inversa gracias a los flags que
+tienen asignados cada tipo de campo.
+
+Cuando por ejemplo definimos el related_name='people', Django crea un objeto
+virtual en el modelo Product. Ese objeto virtual tendrá el flag
+one_to_many = True. Así es como Django sabe que product.people.all() debe
+devolver una lista y no un solo objeto.
+
+Ejemplo completo: https://github.com/argenisosorio/Django_6_crud/tree/test/related-models
+
+Fuente
+======
+
+Gemini IA
+
+================================
+Migrar datos de Laravel a Django
+================================
+
+1- Exportar data de una tabla de postgres generada con Laravel a un archivo csv
+
+Creamos un fichero .csv, en este ejemplo será "x.csv" y lo guardamos en /tmp
+
+$ sudo touch /tmp/x.csv
+
+Ahora le damos permisos
+
+$ sudo chmod 777 /tmp/x.csv
+
+Luego, desde la línea de comandos de postgres, nos conectamos a la db y ahí
+ponemos el comando de copia de la tabla que queremos:
+
+Nos pasará los datos de la name_tabla al fichero .csv, separando los datos por
+filas y comas ",". Si se lanza de nuevo el comando el fichero se sobreescribe,
+no se duplica la data.
+
+db_name=# \copy name_tabla to '/tmp/x.csv' csv header;
+
+Nota: Se copia en /tmp porque es el directorio que tiene permisos para este tipo
+de operaciones.
+
+2- Una vez que los datos extán exportados debe quedar un archivo csv con esta
+estructura por ejemplo:
+
+id,password,last_login,is_superuser,username,first_name,last_name,email,is_staff,is_active,date_joined,role,created_at,deleted_at,email_verified_at,name,remember_token,updated_at
+30,bcrypt$$2y$10$xxxxxxxxxxx,,f,theresa.dickinson@example.org,NESTOR, ,theresa.dickinson@example.org,f,t,2023-07-19 13:02:46,USR,2023-07-19 13:02:46,,,NESTOR ENRIQUE ZAPATA GONZALEZ,,2025-03-17 14:21:02
+
+3- Importación de los datos
+
+Con este modelo de ejemplo:
+
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+
+
+class User(AbstractUser):
+    # id = models.BigAutoField(primary_key=True)
+    name = models.CharField(max_length=255, default="")
+    # email = models.CharField(unique=True, max_length=255)
+    email_verified_at = models.DateTimeField(blank=True, null=True)
+    # password = models.CharField(max_length=255)
+    role = models.CharField(
+        max_length=255,
+        blank=True,
+        null=True,
+        db_comment="Tipo de role:\n ADM = Administrador,\n SUP = Supervisor,\n OPD = Operador de donantes,\n OPS = Operador de solicitudes,\n PIN = Personal de inmunología,\n CHO = Coordinador hospitalario\n USR = Usuario,",
+    )
+    remember_token = models.CharField(max_length=100, blank=True, null=True)
+    created_at = models.DateTimeField(blank=True, null=True)
+    updated_at = models.DateTimeField(blank=True, null=True)
+    deleted_at = models.DateTimeField(
+        blank=True,
+        null=True,
+        db_comment="Fecha y hora en la que el registro fue eliminado",
+    )
+
+    class Meta:
+        # managed = False
+        db_table = "users"
+
+Se general las migraciones, esto creara la tabla users con los siguientes
+campos:
+
+Tabla «public.users»
+      Columna      |           Tipo           | Ordenamiento | Nulable  |           Por omisión            
+-------------------+--------------------------+--------------+----------+----------------------------------
+ id                | bigint                   |              | not null | generated by default as identity
+ password          | character varying(128)   |              | not null | 
+ last_login        | timestamp with time zone |              |          | 
+ is_superuser      | boolean                  |              | not null | 
+ username          | character varying(150)   |              | not null | 
+ first_name        | character varying(150)   |              | not null | 
+ last_name         | character varying(150)   |              | not null | 
+ email             | character varying(254)   |              | not null | 
+ is_staff          | boolean                  |              | not null | 
+ is_active         | boolean                  |              | not null | 
+ date_joined       | timestamp with time zone |              | not null | 
+ name              | character varying(255)   |              | not null | 
+ email_verified_at | timestamp with time zone |              |          | 
+ role              | character varying(255)   |              |          | 
+ remember_token    | character varying(100)   |              |          | 
+ created_at        | timestamp with time zone |              |          | 
+ updated_at        | timestamp with time zone |              |          | 
+ deleted_at        | timestamp with time zone |              |          | 
+
+Ahora conectado a la base de datos de postgres con las tablas creadas y que los 
+campos coincidan con los del csv procedemos a importar los datos desde el csv.
+Para una correcta importación indicamos los campos de la tabla users en el
+comando además indicamos la rita al csv, el formato, la cabecera y el
+delimitador.
+
+Nota: En el comando \copy, el orden de las columnas entre paréntesis debe
+coincidir exactamente con el orden de las columnas dentro de tu archivo CSV, no
+necesariamente con el orden de la base de datos.
+
+db_name=# \copy users(id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, role, created_at, deleted_at, email_verified_at, name, remember_token, updated_at) FROM '/tmp/data.csv' WITH (FORMAT CSV, HEADER, DELIMITER ',');
+
+Si no hay errores los datos habrás sido copiados con éxito en la tabla de la
+base de datos, ahora se procede a verificar los datos.
+
+Sincronización de Secuencias Post-Importación
+=============================================
+
+Cuando se importan registros que incluyen el campo id (Primary Key), la
+secuencia interna de PostgreSQL no se actualiza automáticamente. Para evitar
+errores de "duplicación de llave primaria" en futuras inserciones manuales,
+ejecute:
+
+db_name=# SELECT setval(pg_get_serial_sequence('users', 'id'), coalesce(max(id), 1)) FROM users;
+
+Fuente
+======
+
+Gemini IA
+Natanael Rojo
+
+Configuración de Hashers para Compatibilidad
+===========================================
+
+Para permitir que los usuarios migrados desde Laravel se autentiquen
+correctamente con Django, es necesario configurar los algoritmos de hashing en
+settings.py.
+
+Requisitos Previos:
+
+Instale la librería necesaria en su entorno virtual:
+
+$ pip install bcrypt
+
+Configuración de PASSWORD_HASHERS:
+
+Agregue o modifique la lista PASSWORD_HASHERS en el settings.py asegurando que
+el hasher de BCrypt tenga la prioridad más alta:
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
+    'django.contrib.auth.hashers.BCryptPasswordHasher',
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+]
+
+Nota: El sistema requiere que los hashes importados tengan el prefijo bcrypt$
+para que Django los identifique correctamente.
