@@ -9845,3 +9845,468 @@ User de Django y http://127.0.0.1:8000/admin/ para ver el panel administrativo
 de Django.
 
 Ejemplo completo en: https://github.com/argenisosorio/Django_6_crud/tree/feat/django-users-crud-added-field
+
+==================================================
+Implementando un login y logout sencillo en Django
+==================================================
+
+1- En el settings.py vamos a agreagrar estas variables:
+
+# Configuración de autenticación
+LOGIN_URL = 'users:login'
+LOGIN_REDIRECT_URL = 'users:user_list'
+LOGOUT_REDIRECT_URL = 'users:login'
+
+Estas tres variables en el archivo settings.py de Django son fundamentales para
+controlar el flujo de navegación y seguridad de tu aplicación.
+
+LOGIN_URL
+
+Define la dirección a la que Django redirigirá automáticamente a un usuario si
+intenta acceder a una vista protegida (por ejemplo, una vista que use
+@login_required o LoginRequiredMixin) y no ha iniciado sesión.
+
+En este caso: Cuando alguien intente entrar a una ruta privada, Django lo
+enviará a la vista que tenga el nombre login dentro de la app users.
+
+LOGIN_REDIRECT_URL
+
+Establece el destino por defecto del usuario justo después de iniciar sesión
+correctamente, siempre y cuando no haya sido redirigido previamente por intentar
+entrar a una página privada.
+
+-En este caso: Una vez que el usuario pone sus credenciales correctas, será
+enviado a la lista de usuarios (users:user_list).
+
+-Si el usuario intentó entrar a una URL específica (ej. /users/update/1/) sin
+estar logueado, Django guardará esa ruta en un parámetro llamado next. Al
+loguearse, Django ignorará esta variable y lo llevará a la ruta de edición que
+quería originalmente.
+
+LOGOUT_REDIRECT_URL
+
+Determina a dónde debe ser enviado el usuario inmediatamente después de cerrar
+su sesión.
+
+-En este caso: Al hacer clic en "Salir" o "Logout", la aplicación lo devolverá
+a la pantalla de inicio de sesión (users:login). Esto es ideal para aplicaciones
+que requieren autenticación obligatoria para ver cualquier contenido.
+
+¿Por qué es importante agregarlas?
+
+Si no defines estas variables, Django utilizará valores por defecto que suelen ser:
+
+LOGIN_URL = '/accounts/login/'
+
+LOGIN_REDIRECT_URL = '/accounts/profile/'
+
+Si tu estructura de carpetas y nombres de URL no coinciden con esos valores por
+defecto (como en tu caso, donde usas users:), el sistema arrojará un error 404
+Not Found cada vez que un usuario intente loguearse o salir.
+
+2- Ahora en las url principales agregamos a
+
+from django.shortcuts import redirect
+
+# Redirigir la raíz al login de users
+    path('', lambda request: redirect('users:login'), name='root'),
+
+Quedarían así:
+
+from django.contrib import admin
+from django.urls import include, path
+from django.shortcuts import redirect
+
+urlpatterns = [
+    # Admin route
+    path('admin/', admin.site.urls),
+
+    # Redirigir la raíz al login de users
+    path('', lambda request: redirect('users:login'), name='root'),
+
+    # Include the URLs from person app.
+    path('', include('apps.person.urls')),
+
+    # Include the URLs from product app.
+    path('products/', include('apps.product.urls')),
+
+    # Include the URLs from users app.
+    path('users/', include('apps.users.urls')),
+]
+
+Esta modificación tiene como objetivo definir el comportamiento de la página de
+inicio (la raíz /) de tu proyecto.
+
+1. Control de la "Puerta de Entrada"
+
+Por defecto, si entras a http://127.0.0.1:8000/ y no tienes nada definido en la
+raíz, Django podría mostrarte su página de bienvenida o un error 404.
+Con la línea path('', lambda request: redirect('users:login'), name='root'),
+estás forzando a que cualquier usuario que intente entrar a la dirección base
+sea enviado inmediatamente al formulario de Login.
+
+2. Uso de una Función Lambda
+
+En lugar de crear una vista formal en un archivo views.py solo para una
+redirección, se utiliza una función lambda (una función anónima y rápida):
+
+-lambda request: Recibe la petición del navegador.
+
+-redirect('users:login'): Devuelve una respuesta de redirección hacia la URL
+nombrada login dentro del espacio de nombres users.
+
+3. Orden de Prioridad en urlpatterns
+
+Es importante notar que se ha colocado esta redirección antes de
+include('apps.person.urls').
+
+-Django recorre la lista de URLs de arriba hacia abajo.
+
+-Al encontrar path('', ...) primero, la redirección tomará el control de la raíz.
+
+-Nota importante: Si la aplicación person también tiene una ruta vacía
+(path('', ...)), esta nunca se ejecutará porque la redirección lambda "atrapa"
+la petición primero.
+
+4. Experiencia de Usuario (UX) y Seguridad
+
+Esta modificación es común en sistemas tipo Dashboard o Intranets donde no
+existe una "Landing Page" pública. La premisa es: "Si no estás dentro del
+sistema, no puedes ver nada; primero identifícate".
+
+Resumen del flujo:
+
+-El usuario ingresa a mi-dominio.com/.
+
+-Django encuentra la coincidencia en la raíz ''.
+
+-Se ejecuta la instrucción redirect.
+
+-El navegador del usuario cambia automáticamente la URL a
+mi-dominio.com/users/login/.
+
+3- Ahora creamos a login.html en users/templates/users con este contenido:
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+</head>
+<body>
+    <form method="post" action="{% url 'users:login' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="username" class="form-label">Usuario:</label>
+            <input type="text" name="username" class="form-control" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña:</label>
+            <input type="password" name="password" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
+</body>
+</html>
+
+4- En users_list.html podemos agregar lo siguiente para consultar los datos
+del usuario autenticado y también para que pueda cerrar sesión:
+
+{% if user.is_authenticated %}
+    ¡Hola! {{ user.username }} ({{ user.email }}) |
+    <a href="{% url 'users:logout' %}">Logout</a>
+{% else %}
+    <a href="{% url 'users:login' %}">Login</a>
+{% endif %}
+
+5- En las uls de users agregamos
+
+from apps.users import views
+
+# URLs de autenticación
+    path("login/", views.LoginView.as_view(), name="login"),
+    path("logout/", views.LogoutView.as_view(), name="logout"),
+
+Quedando así:
+
+from django.urls import path
+from apps.users import views
+from apps.users.views import (
+    UserCreateView,
+    UserDeleteView,
+    UserDetailView,
+    UserListView,
+    UserUpdateView,
+)
+
+app_name = "users"
+
+urlpatterns = [
+    # URLs de autenticación
+    path("login/", views.LoginView.as_view(), name="login"),
+    path("logout/", views.LogoutView.as_view(), name="logout"),
+    # Urls CRUD de usuarios
+    path("", UserListView.as_view(), name="user_list"),
+    path("<int:pk>/", UserDetailView.as_view(), name="user_detail"),
+    path("create/", UserCreateView.as_view(), name="user_create"),
+    path("update/<int:pk>/", UserUpdateView.as_view(), name="user_update"),
+    path("delete/<int:pk>/", UserDeleteView.as_view(), name="user_delete"),
+]
+
+6- y en las views agregamos decoradores a las vistas que requieren protección
+de autenticación, quedando así:
+
+from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView as AuthLoginView
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+    View,
+)
+from apps.users.forms import CustomUserChangeForm, CustomUserCreationForm
+
+
+"""
+Vistas basadas en clases para operaciones CRUD de usuarios y autenticación.
+
+Este módulo expone vistas genéricas basadas en clases que operan en el modelo
+de usuario personalizado del proyecto, así como vistas para login y logout.
+"""
+
+
+# ==================== VISTAS DE AUTENTICACIÓN ====================
+
+class LoginView(AuthLoginView):
+    """
+    Vista para iniciar sesión de usuarios.
+    """
+    template_name = "users/login.html"
+    redirect_authenticated_user = True
+
+    def get_success_url(self):
+        """Redirigir a la lista de usuarios después del login"""
+        return reverse_lazy("users:user_list")
+
+
+class LogoutView(View):
+    """
+    Vista para cerrar sesión de usuarios.
+    """
+    def get(self, request):
+        logout(request)
+        return redirect("users:login")
+
+    def post(self, request):
+        logout(request)
+        return redirect("users:login")
+
+
+# ==================== VISTAS CRUD DE USUARIOS ====================
+
+@method_decorator(login_required, name='dispatch')
+class UserListView(ListView):
+    model = get_user_model()
+    template_name = "users/user_list.html"
+    context_object_name = "users"
+
+
+@method_decorator(login_required, name='dispatch')
+class UserDetailView(DetailView):
+    model = get_user_model()
+    template_name = "users/user_detail.html"
+    context_object_name = "user"
+
+
+@method_decorator(login_required, name='dispatch')
+class UserCreateView(CreateView):
+    model = get_user_model()
+    template_name = "users/user_form.html"
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy("users:user_list")
+
+
+@method_decorator(login_required, name='dispatch')
+class UserUpdateView(UpdateView):
+    model = get_user_model()
+    template_name = "users/user_form.html"
+    form_class = CustomUserChangeForm
+    success_url = reverse_lazy("users:user_list")
+
+
+@method_decorator(login_required, name='dispatch')
+class UserDeleteView(DeleteView):
+    model = get_user_model()
+    template_name = "users/user_confirm_delete.html"
+    success_url = reverse_lazy("users:user_list")
+
+-----
+
+1. login_required
+
+Es un decorador diseñado originalmente para funciones. Su trabajo es muy simple:
+
+-Verifica si el usuario que intenta acceder a la vista ha iniciado sesión.
+
+-Si el usuario está autenticado, permite que la vista se ejecute normalmente.
+
+-Si no está autenticado, lo redirige automáticamente a la URL de inicio de
+sesión (definida en LOGIN_URL).
+
+2. dispatch
+
+En las Vistas Basadas en Clases, dispatch es el "director de tráfico". Es el
+primer método que se ejecuta cuando llega una petición a la clase.
+
+-Su función es recibir el request y decidir qué método de la clase debe
+atenderlo (si es una petición GET, lo envía al método get(); si es POST, al
+método post(), etc.).
+
+-Por qué es importante: Si quieres proteger toda una clase con una regla (como
+"estar logueado"), el mejor lugar para aplicar esa regla es en dispatch, porque
+todas las peticiones pasan por ahí obligatoriamente.
+
+3. method_decorator
+
+Aquí es donde surge un problema técnico: los decoradores como login_required
+esperan recibir una función como argumento, pero en una clase, los métodos
+(como dispatch) no son funciones sueltas, sino que pertenecen a una instancia de
+clase.
+
+method_decorator es una herramienta de Django que sirve de "puente" o
+"traductor":
+
+-Convierte un decorador de funciones (login_required) en un decorador compatible
+con métodos de clase.
+
+-El argumento name='dispatch' le dice específicamente: "Toma el decorador
+login_required y aplícalo sobre el método interno llamado dispatch de esta
+clase".
+
+@method_decorator(login_required, name='dispatch')
+class UserListView(ListView):
+
+En resumen esta línea dice "Antes de que esta clase decida si procesar un GET o
+un POST (gracias a dispatch), verifica que el usuario esté logueado (gracias a
+login_required). Si no lo está, no lo dejes pasar".
+
+Una alternativa moderna:
+
+En versiones recientes de Django, en lugar de usar method_decorator, se suele
+usar un Mixin, que es más limpio visualmente:
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class UserListView(LoginRequiredMixin, ListView):
+    # Hace exactamente lo mismo que el decorador de arriba
+    model = get_user_model()
+    ...
+
+El resultado es el mismo: proteges tu lista de usuarios para que solo personas
+autenticadas puedan verla.
+
+Con esta modificación usando LoginRequiredMixin las views quedarían así:
+
+from django.contrib.auth import get_user_model, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import LoginView as AuthLoginView
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+from django.views.generic import (
+    CreateView,
+    DeleteView,
+    DetailView,
+    ListView,
+    UpdateView,
+    View,
+)
+from apps.users.forms import CustomUserChangeForm, CustomUserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
+"""
+Vistas basadas en clases para operaciones CRUD de usuarios y autenticación.
+
+Este módulo expone vistas genéricas basadas en clases que operan en el modelo
+de usuario personalizado del proyecto, así como vistas para login y logout.
+"""
+
+
+# ==================== VISTAS DE AUTENTICACIÓN ====================
+
+class LoginView(AuthLoginView):
+    """
+    Vista para iniciar sesión de usuarios.
+    """
+    template_name = "users/login.html"
+    redirect_authenticated_user = True
+
+    def get_success_url(self):
+        """Redirigir a la lista de usuarios después del login"""
+        return reverse_lazy("users:user_list")
+
+
+class LogoutView(View):
+    """
+    Vista para cerrar sesión de usuarios.
+    """
+    def get(self, request):
+        logout(request)
+        return redirect("users:login")
+
+    def post(self, request):
+        logout(request)
+        return redirect("users:login")
+
+
+# ==================== VISTAS CRUD DE USUARIOS ====================
+
+class UserListView(LoginRequiredMixin, ListView):
+    model = get_user_model()
+    template_name = "users/user_list.html"
+    context_object_name = "users"
+
+
+class UserDetailView(LoginRequiredMixin, DetailView):
+    model = get_user_model()
+    template_name = "users/user_detail.html"
+    context_object_name = "user"
+
+
+class UserCreateView(LoginRequiredMixin, CreateView):
+    model = get_user_model()
+    template_name = "users/user_form.html"
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy("users:user_list")
+
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
+    model = get_user_model()
+    template_name = "users/user_form.html"
+    form_class = CustomUserChangeForm
+    success_url = reverse_lazy("users:user_list")
+
+
+class UserDeleteView(LoginRequiredMixin, DeleteView):
+    model = get_user_model()
+    template_name = "users/user_confirm_delete.html"
+    success_url = reverse_lazy("users:user_list")
+
+7- ¡Listo! ya con eso podemos porobar el inicio y cierre de sesión.
+
+Ejemplo completo en: https://github.com/argenisosorio/Django_6_crud/tree/test/custom-login-django
+
+
+Fuente
+======
+
+Gemini IA
