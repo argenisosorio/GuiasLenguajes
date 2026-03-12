@@ -10580,3 +10580,426 @@ PASSWORD_HASHERS = [
 
 Nota: El sistema requiere que los hashes importados tengan el prefijo bcrypt$
 para que Django los identifique correctamente.
+
+===========================
+Pruebas Unitarias en Django
+===========================
+
+unittest
+========
+
+Para realizar pruebas unitarias en Django, podemos usar el módulo unittest, que
+es un módulo de Python para crear pruebas unitarias. No es necesario instalarlo.
+
+Para utilizarlo debemos modificar el archivo test.py de la aplicación que
+queremos probar. Donde inicialmente debemos importar el Modelo a probar, las
+clases TestCase y ValidationError.
+
+from django.test import TestCase
+from .models import Person
+from django.core.exceptions import ValidationError
+
+TestCase es una clase que se utiliza para crear pruebas unitarias, y
+ValidationError es una clase que se utiliza para validar los datos del modelo.
+
+Luego debemos definir una clase que herede de TestCase y definir los métodos de
+prueba.
+
+Antes debemos tener en cuenta que existen pruebas de afirmación y pruebas de
+excepción, donde las de afirmación determinan un flujo ideal y las de excepción
+buscan explotar de alguna forma, para eso usamos ValidationError.
+
+Ejemplo en el archivo test.py
+
+-----
+
+from django.test import TestCase
+from django.core.exceptions import ValidationError
+from .models import Person
+
+class PersonModelTest(TestCase):
+    """Pruebas unitarias para la validación y creación del modelo Person."""
+
+    def setUp(self):
+        """Configuración inicial para las pruebas de integridad de datos."""
+        self.person = Person.objects.create(
+            name='Pedro',
+            email='[EMAIL_ADDRESS]',
+            age=30
+        )
+
+    def test_person_creation(self):
+        """Verifica que los atributos del modelo se asignen y persistan correctamente."""
+        self.assertEqual(self.person.name, 'Pedro')
+        self.assertEqual(self.person.email, '[EMAIL_ADDRESS]')
+        self.assertEqual(self.person.age, 30)
+
+    def test_negative_age_validation_fails(self):
+        """Verifica que el modelo restrinja edades negativas mediante full_clean()."""
+        person_invalid_age = Person(name="Error", email="[EMAIL_ADDRESS]", age=-10)
+
+        # Se captura la excepción para inspeccionar los errores por campo
+        with self.assertRaises(ValidationError) as context:
+            person_invalid_age.full_clean()
+
+        # Mejora: Verificar que el error esté específicamente en el campo 'age'
+        self.assertIn('age', context.exception.message_dict)
+
+    def test_email_uniqueness(self):
+        """Prueba adicional: Verifica que no se permitan correos duplicados si el modelo lo requiere."""
+        duplicate_person = Person(name="Juan", email='[EMAIL_ADDRESS]', age=25)
+        with self.assertRaises(ValidationError):
+            duplicate_person.full_clean()
+
+-----
+
+Aquí hemos definido una prueba que verifica que la persona se cree
+correctamente.
+
+Para ejecutar todos los tests de una app debemos ejecutar el siguiente comando:
+
+$ python manage.py test apps.myapp.tests
+
+Debería mostrar algo como:
+
+Found 3 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+...
+----------------------------------------------------------------------
+Ran 3 tests in 0.001s
+
+OK
+Destroying test database for alias 'default'...
+
+Podemos ejecutar una prueba específica con el siguiente comando:
+
+$ python manage.py test apps.myapp.tests.MyModelModelTest.test_my_model_creation
+
+Ejemplos:
+
+$ python manage.py test apps.person.tests.PersonModelTest.test_person_creation
+
+Found 1 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default'...
+
+$ python manage.py test apps.person.tests.PersonModelTest.test_negative_age_fails
+
+Found 1 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+.
+----------------------------------------------------------------------
+Ran 1 test in 0.001s
+
+OK
+Destroying test database for alias 'default'...
+
+Si queremos información detallada de las pruebas que se están ejecutando junto
+con el docstring que indicamos en cada prueba debemos añadir el flag -v 2 al
+comando, por ejemplo:
+
+$ python manage.py test apps.myapp.tests -v 2
+
+Ejemplo completo en: https://github.com/argenisosorio/Django_6_crud/tree/feat/unit-test
+
+Ahora un test.py con más restricciones:
+
+-----
+
+from django.test import TestCase
+from django.core.exceptions import ValidationError
+from .models import Person
+
+class PersonModelTest(TestCase):
+    """
+    Pruebas unitarias para la validación y creación del modelo Person.
+    Este conjunto de pruebas asegura la integridad de los datos de los ciudadanos
+    en el sistema bajo estándares de excelencia técnica.
+    """
+
+    def setUp(self):
+        """
+        Configuración inicial de la prueba.
+        El método setUp se ejecuta antes de cada prueba y es el que nos permite
+        crear una instancia del modelo. En este caso, creamos una persona con
+        nombre "Pedro", email "pedro@ejemplo.com" y edad 30. Esta persona se usará en
+        las pruebas posteriores para verificar el comportamiento del modelo.
+        """
+        self.person = Person.objects.create(
+            name='Pedro',
+            email='pedro@ejemplo.com',
+            age=30
+        )
+
+    def test_person_creation(self):
+        """
+        Verifica la persistencia correcta de los atributos del modelo.
+        Los métodos de prueba deben comenzar con "test_". En este caso será un test
+        de afirmación y debemos usar self.assert* para verificar que la prueba sea
+        correcta, comparando valores reales con valores esperados.
+        """
+        # Verifica que la persona se cree y recupere correctamente
+        self.assertEqual(self.person.name, 'Pedro')
+        self.assertEqual(self.person.email, 'pedro@ejemplo.com')
+        self.assertEqual(self.person.age, 30)
+
+    def test_negative_age_fails(self):
+        """
+        Valida que el sistema restrinja datos inconsistentes (edades negativas).
+        En este caso será un test de excepción (se usa ValidationError)
+        y usamos assertRaises para verificar que se lance una ValidationError.
+        full_clean() es un método que valida el modelo manualmente antes de guardar.
+        """
+        # CORRECCIÓN: Se usa un email válido para que Django no falle por el correo
+        # y permita que la validación llegue al campo 'age'.
+        invalid_person = Person(name="Error", email="error@ejemplo.com", age=-10)
+
+        """
+        Verifica que se lance una ValidationError al intentar validar una
+        persona con edad negativa, asegurando que el error provenga del campo 'age'.
+        """
+        with self.assertRaises(ValidationError) as context:
+            invalid_person.full_clean()
+
+        # Validación adicional: se confirma que el error está en el campo específico
+        self.assertIn('age', context.exception.message_dict)
+
+    def test_email_uniqueness(self):
+        """
+        Verifica la restricción de unicidad para el correo electrónico.
+        Garantiza que no existan registros duplicados en la base de datos,
+        manteniendo la integridad de la información.
+        """
+        # Se intenta crear una persona con el mismo email que el objeto de setUp
+        duplicate_person = Person(name="Juan", email='pedro@ejemplo.com', age=25)
+        with self.assertRaises(ValidationError):
+            duplicate_person.full_clean()
+
+-----
+
+Al ejecutar este test fallará
+
+$ python manage.py test apps.person.tests
+Found 3 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+F..
+======================================================================
+FAIL: test_email_uniqueness (apps.person.tests.PersonModelTest.test_email_uniqueness)
+Verifica la restricción de unicidad para el correo electrónico.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/aosorio/Documentos/Desarrollo/Django/Django_6_crud/apps/person/tests.py", line 67, in test_email_uniqueness
+    with self.assertRaises(ValidationError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValidationError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.030s
+
+FAILED (failures=1)
+Destroying test database for alias 'default'...
+
+Explicación del error:
+
+En el modelo el campo es este email = models.EmailField()
+
+Si el campo email no tiene la propiedad unique=True, Django permitirá que
+múltiples personas se registren con el mismo correo.
+
+Nuestro campo en el modelo no tiene esa restricción:
+
+email = models.EmailField()
+
+Ejemplo completo que falla en el test:
+https://github.com/argenisosorio/Django_6_crud/tree/feat/unit-test-fail-for-model
+
+Si lo agregamos email = models.EmailField(unique=True) y ejecutamos el test
+entonces este pasará.
+
+Otro ejemplo:
+
+$ python manage.py test apps.person.tests
+Found 3 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+.F.
+======================================================================
+FAIL: test_negative_age_fails (apps.person.tests.PersonModelTest.test_negative_age_fails)
+Valida que el sistema restrinja datos inconsistentes (edades negativas).
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/aosorio/Documentos/Desarrollo/Django/Django_6_crud/apps/person/tests.py", line 53, in test_negative_age_fails
+    with self.assertRaises(ValidationError) as context:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValidationError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.029s
+
+FAILED (failures=1)
+Destroying test database for alias 'default'...
+
+El test falló porque en el modelo está el campo age = models.IntegerField()
+y la validación test_negative_age_fails intentó guardar -10 por lo cual es un
+número negativo.
+
+Nota importante
+===============
+
+Las pruebas nos ayudan a comprobar que las validaciones que hemos hecho hagan su
+trabajo, contar con el modelo de datos antes de escribir los modelos en Django
+es fundamental para para poder agregar todas las restricciones necesarias.
+
+¿Cómo las pruebas unitarias ayudan a minimizar errores?
+=======================================================
+
+Las pruebas unitarias actúan como una "malla de seguridad" técnica:
+
+-Evitan regresiones: Este es el beneficio más grande. Una regresión es cuando
+arreglas un error en el módulo A, pero sin querer rompes el módulo B. Los tests
+detectan esto al instante.
+
+-Aíslan el problema: Al ser "unitarios", prueban piezas mínimas. Si el test de
+"edad negativa" falla, sabes exactamente que el error está en la validación del
+modelo y no en la base de datos o en la interfaz.
+
+Reducen el costo de corrección: Siguiendo el Empirismo de nuestra metodología,
+detectar un error mientras estás programando cuesta segundos. Detectarlo cuando
+el software ya está en manos del usuario (producción) puede costar días de
+trabajo y afectar la reputación del proyecto.
+
+pytest
+======
+
+Otra alternativa más moderna y menos rígida para realizar pruebas unitarias en
+Django, es usar pytest, que es un framework de pruebas para Python.
+
+Inicialmente se debe instalar pytest-django con el siguiente comando:
+
+$ pip install pytest pytest-django
+
+Debemos configurar pytest en el archivo pytest.ini en la raíz de tu proyecto:
+
+[pytest]
+# Indica el archivo de configuración de Django en tu proyecto
+DJANGO_SETTINGS_MODULE = Django_6_crud.settings
+# Indica los archivos que se considerarán como pruebas
+python_files = tests.py test_*.py *_tests.py
+
+Para utilizarlo debemos crear o modificar un archivo de pruebas (por ejemplo
+test_poc.py) en nuestra aplicación. A diferencia de unittest, con pytest no
+estamos obligados a definir una clase. Podemos definir simples funciones y hacer
+uso de fixtures para la preparación de los datos:
+
+-----
+
+import pytest
+from django.core.exceptions import ValidationError
+from .models import Person
+
+"""
+Definimos un fixture que se ejecutará para proveer la instancia a las pruebas
+que lo requieran como argumento (la función se llama "person" y devuelve una
+instancia de Person creada en la base de datos).
+"""
+@pytest.fixture
+def person():
+    return Person.objects.create(
+        name='Pedro',
+        email='[EMAIL_ADDRESS]',
+        age=30
+    )
+
+"""
+Los métodos de prueba también deben comenzar o terminar con "test", odemos pedir
+la instancia de Person usando el argumento "person" que equivale a nuestro
+fixture y se usa @pytest.mark.django_db en pruebas que requieran acceso a la
+base de datos
+"""
+@pytest.mark.django_db
+# Para el caso de un test de afirmación.
+def test_person_creation(person):
+    # En pytest usamos el assert nativo de Python para verificar la validez.
+    assert person.name == 'Pedro'
+    assert person.email == '[EMAIL_ADDRESS]'
+    assert person.age == 30
+
+"""
+Usamos pytest.raises para capturar excepciones esperadas (ValidationError en
+este caso) para el caso de un test de excepción
+"""
+def test_negative_age_fails():
+    """
+    Verifica que la validación de edad negativa falle correctamente.
+    """
+    invalid_person = Person(name="Error", email="[EMAIL_ADDRESS]", age=-10)
+
+    """
+    Se espera que al llamar a full_clean() se lance una ValidationError debido a
+    la edad negativa.
+    """
+    with pytest.raises(ValidationError):
+        invalid_person.full_clean()
+
+-----
+
+Aquí hemos definido pruebas idénticas a la versión de unittest aprovechando todo
+el potencial de pytest.
+
+¿Cómo ejecutamos las pruebas con pytest?
+
+$ pytest
+
+O podemos ejecutar un archivo de pruebas en específico indicando la ruta:
+
+$ pytest apps/person/tests.py
+
+El resultado sería:
+
+$ pytest
+=============================================================================================== test session starts ===============================================================================================
+platform linux -- Python 3.12.12, pytest-9.0.2, pluggy-1.6.0
+django: version: 6.0.2, settings: Django_6_crud.settings (from ini)
+rootdir: /home/aosorio/Documentos/Desarrollo/Django/Django_6_crud
+configfile: pytest.ini
+plugins: django-4.12.0
+collected 2 items
+
+apps/person/test_poc.py ..                                                                                                                                                                                  [100%]
+
+================================================================================================ 2 passed in 0.14s ================================================================================================
+
+Si queremos información detallada de las pruebas que se están ejecutando debemos
+añadir el flag -v al comando:
+
+$ pytest -v apps/person/tests.py
+
+$ pytest -v apps/person/test_poc.py
+=============================================================================================== test session starts ===============================================================================================
+platform linux -- Python 3.12.12, pytest-9.0.2, pluggy-1.6.0 -- /home/aosorio/.pyenv/versions/Django_6/bin/python
+cachedir: .pytest_cache
+django: version: 6.0.2, settings: Django_6_crud.settings (from ini)
+rootdir: /home/aosorio/Documentos/Desarrollo/Django/Django_6_crud
+configfile: pytest.ini
+plugins: django-4.12.0
+collected 2 items
+
+apps/person/test_poc.py::test_person_creation PASSED                                                                                                                                                        [ 50%]
+apps/person/test_poc.py::test_negative_age_fails PASSED
+
+-----
+
+Nota: Si por alguna razón no funciona el pytest, verificar si en la carpeta de
+apps se encuentra el archivo __init__.py y si no existe crearlo, para asegurarse
+que Python lo reconozca como un paquete y no se genere ningún error.
+
+Ejemplo completo en: https://github.com/argenisosorio/Django_6_crud/tree/test/pytest
