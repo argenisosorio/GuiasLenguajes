@@ -10443,7 +10443,7 @@ $ sudo touch /tmp/x.csv
 
 Ahora le damos permisos
 
-$ sudo chmod 777 /tmp/x.csv
+$ sudo chmod -R 777 /tmp/x.csv
 
 Luego, desde la línea de comandos de postgres, nos conectamos a la db y ahí
 ponemos el comando de copia de la tabla que queremos:
@@ -10462,6 +10462,138 @@ estructura por ejemplo:
 
 id,password,last_login,is_superuser,username,first_name,last_name,email,is_staff,is_active,date_joined,role,created_at,deleted_at,email_verified_at,name,remember_token,updated_at
 30,bcrypt$$2y$10$xxxxxxxxxxx,,f,theresa.dickinson@example.org,NESTOR, ,theresa.dickinson@example.org,f,t,2023-07-19 13:02:46,USR,2023-07-19 13:02:46,,,NESTOR ENRIQUE ZAPATA GONZALEZ,,2025-03-17 14:21:02
+
+3- Proceso de Sanitización de Datos (Laravel a Django)
+
+El sistema de origen (Laravel) posee una estructura de tabla de usuarios
+simplificada en comparación con el modelo de autenticación estándar de Django.
+Para una migración exitosa, se deben resolver tres discrepancias principales:
+
+-Restricciones de Integridad: Django requiere campos obligatorios como
+username e is_active que no existen en el esquema de Laravel.
+
+-Cifrado de Contraseñas: Django necesita el prefijo bcrypt$ para identificar
+correctamente el algoritmo de hash.
+
+-Mapeo de Nombres: La tabla de destino divide la identidad en first_name y
+last_name, mientras que el origen usa un campo único name.
+
+Se usará un script de Python que aplica las siguientes reglas de negocio durante
+el procesamiento de cada registro:
+
+Campos de Identidad y Acceso
+
+-Contraseña: Se concatena el prefijo bcrypt$ al hash original.
+
+-Username: Se utiliza el valor del campo email para garantizar la unicidad y el
+cumplimiento de la restricción NOT NULL.
+
+-Nombres: Se realiza un split del campo name para extraer el first_name. El
+campo last_name se inicializa con un espacio para cumplir con la restricción de
+base de datos.
+
+Estados y Permisos (Django Defaults)
+
+-is_active: Se establece en True ('t') para permitir el acceso inmediato.
+
+-is_staff / is_superuser: Se establecen en False ('f') por seguridad.
+
+-date_joined: Se mapea desde el campo created_at del sistema original.
+
+Implementación del Script de Python
+
+El siguiente código utiliza el módulo nativo csv y manejadores de contexto
+(with) para asegurar un uso eficiente de los recursos del sistema:
+
+---
+
+import csv
+
+# Configuración de rutas de archivos en WSL
+FILE_INPUT = 'usuarios_original.csv'
+FILE_OUTPUT = 'usuarios_sanitizados.csv'
+
+def sanitize_user_data():
+    """
+    Lee datos de Laravel y los adapta al esquema de Django.
+    Aplica Clean Code y manejo defensivo de diccionarios.
+    """
+    # Definición del esquema de salida (según \d users en Postgres)
+    django_fields = [
+        'id', 'password', 'last_login', 'is_superuser', 'username',
+        'first_name', 'last_name', 'email', 'is_staff', 'is_active',
+        'date_joined', 'name', 'email_verified_at', 'role',
+        'remember_token', 'created_at', 'updated_at', 'deleted_at'
+    ]
+
+    try:
+        with open(FILE_INPUT, mode='r', encoding='utf-8') as infile:
+            reader = csv.DictReader(infile)
+
+            with open(FILE_OUTPUT, mode='w', encoding='utf-8', newline='') as outfile:
+                writer = csv.DictWriter(outfile, fieldnames=django_fields)
+                writer.writeheader()
+
+                for row in reader:
+                    # Transformación de contraseña (Lógica para bcrypt de Django)
+                    raw_password = row.get('password', '')
+                    secure_password = f"bcrypt${raw_password}" if raw_password else ""
+
+                    # Construcción del nuevo registro
+                    sanitized_row = {
+                        'id': row.get('id'),
+                        'password': secure_password,
+                        'last_login': None,
+                        'is_superuser': 'f',
+                        'username': row.get('email'),
+                        'first_name': row.get('name', '').split(' ')[0],
+                        'last_name': ' ',
+                        'email': row.get('email'),
+                        'is_staff': 'f',
+                        'is_active': 't',
+                        'date_joined': row.get('created_at'),
+                        'name': row.get('name'),
+                        'email_verified_at': row.get('email_verified_at'),
+                        'role': row.get('role'),
+                        'remember_token': row.get('remember_token'),
+                        'created_at': row.get('created_at'),
+                        'updated_at': row.get('updated_at'),
+                        'deleted_at': row.get('deleted_at')
+                    }
+                    writer.writerow(sanitized_row)
+
+        print(f"Sanitización completada: {FILE_OUTPUT}")
+
+    except FileNotFoundError:
+        print(f"Error: No se encontró el archivo {FILE_INPUT}")
+    except Exception as e:
+        print(f"Error inesperado: {e}")
+
+if __name__ == "__main__":
+    sanitize_user_data()
+
+---
+
+Para ejecutar el proceso de sanitización en tu terminal:
+
+ Coloca el archivo usuarios_original.csv en la misma carpeta que el script.
+
+2.​ Ejecuta el script: python3 preparar_csv.py.
+
+3.​ Verifica la creación del archivo usuarios_sanitizados.csv.
+
+Validación de Resultados
+
+Antes de la importación final a PostgreSQL, se recomienda verificar los datos
+generados:
+
+-Inspección de Cabecera:
+
+$ head -n 1 usuarios_sanitizados.csv
+
+-Conteo de Registros:
+
+$ wc -l usuarios_sanitizados.csv
 
 3- Importación de los datos
 
@@ -10523,18 +10655,26 @@ Tabla «public.users»
 
 Ahora conectado a la base de datos de postgres con las tablas creadas y que los 
 campos coincidan con los del csv procedemos a importar los datos desde el csv.
+
 Para una correcta importación indicamos los campos de la tabla users en el
 comando además indicamos la rita al csv, el formato, la cabecera y el
 delimitador.
 
 Nota: En el comando \copy, el orden de las columnas entre paréntesis debe
 coincidir exactamente con el orden de las columnas dentro de tu archivo CSV, no
-necesariamente con el orden de la base de datos.
+necesariamente con el orden de la base de datos, si no están ordenados dará
+error.
 
 db_name=# \copy users(id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, role, created_at, deleted_at, email_verified_at, name, remember_token, updated_at) FROM '/tmp/data.csv' WITH (FORMAT CSV, HEADER, DELIMITER ',');
 
 Si no hay errores los datos habrás sido copiados con éxito en la tabla de la
 base de datos, ahora se procede a verificar los datos.
+
+Tip: Si el archivo .csv tiene comillas (ej. "valor") para proteger campos con
+comas o espacios, se recomienda añadir el parámetro QUOTE '"' al final del
+comando:
+
+... WITH (FORMAT CSV, HEADER, DELIMITER ',', QUOTE '"');
 
 Sincronización de Secuencias Post-Importación
 =============================================
@@ -10545,12 +10685,6 @@ errores de "duplicación de llave primaria" en futuras inserciones manuales,
 ejecute:
 
 db_name=# SELECT setval(pg_get_serial_sequence('users', 'id'), coalesce(max(id), 1)) FROM users;
-
-Fuente
-======
-
-Gemini IA
-Natanael Rojo
 
 Configuración de Hashers para Compatibilidad
 ===========================================
@@ -10580,6 +10714,13 @@ PASSWORD_HASHERS = [
 
 Nota: El sistema requiere que los hashes importados tengan el prefijo bcrypt$
 para que Django los identifique correctamente.
+
+=======
+Fuente
+======
+
+Gemini IA
+Natanael Rojo
 
 ===========================
 Pruebas Unitarias en Django
