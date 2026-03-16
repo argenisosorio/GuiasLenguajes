@@ -11306,3 +11306,158 @@ Pillow con pip install pillow
 Ejemplo completo:
 
 https://github.com/argenisosorio/Django_6_crud/tree/test/file-upload
+
+============================================
+Validaciones y Mensajes de error en Django 6
+============================================
+
+Las validaciones permiten controlar los datos que se ingresan en los formularios
+y mostrar mensajes de error en caso de que los datos no cumplan con las reglas
+establecidas, de esta manera se pueden evitar datos incorrectos o no validos que
+generen errores en la base de datos. Es importante que en un proyecto se
+apliquen diferentes capas de validación para garantizar la integridad de los
+datos, así como la correcta retroalimentación al usuario. Estas capas de
+validación dependen de donde se declaran las validaciones, que pueden ser en el
+modelo, el formulario o la plantilla como se muestra en los siguientes ejemplos:
+
+Validaciones en el modelo (Models)
+==================================
+
+Las validaciones a nivel de base de datos y de la estructura de datos se
+declaran directamente en los modelos (models.py). Se utilizan validadores
+nativos de Django como RegexValidator, MaxValueValidator o MinValueValidator.
+Además, en la definición de cada campo se especifica el diccionario
+error_messages para personalizar los mensajes predeterminados y posteriormente
+mostrarlos en los formularios.
+
+from django.core.validators import RegexValidator
+
+Luego, dentro de la definición de cada campo podemos utilizar estas validaciones de la siguiente manera:
+
+name = models.CharField(
+    max_length=5,
+    validators=[RegexValidator(r'\d', inverse_match=True, message='No se permiten números.')],
+    error_messages={
+        'max_length': 'Máximo 5 caracteres.',
+        'blank': 'Este campo es requerido.',
+        'required': 'Este campo es requerido.',
+    }
+)
+
+En el template sería así:
+
+{% extends 'person/base.html' %}
+
+{% block content %}
+<h1>{% if form.instance.pk %}Update{% else %}Create{% endif %} Person</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+{% endblock %}
+
+En este segmento de código aparte de declarar el campo se definen las
+validaciones y los mensajes de error que se mostrarán en caso de incumplir con
+alguna validación.
+
+-validators: Son validadores que se aplican al campo, en este caso se utiliza el
+RegexValidator que valida la expresión regular que se le pasa como parámetro.
+r'\d' valida que no se ingresen números en el campo, inverse_match=True invierte
+la validación, es decir, si la expresión regular no se cumple, se muestra el
+mensaje de error (message).
+
+error_messages: Es un diccionario que contiene los mensajes de error
+personalizados que se mostrarán si se ingresa algo que no cumpla con las
+validaciones que declaramos, como aqui por ejemplo max_length.
+
+required: Es un validador que valida que el campo sea requerido. Cuando envías
+un formulario y el campo no tiene datos. Django ni siquiera intenta validar el
+modelo todavía; el formulario lo detiene porque el campo es obligatorio por
+defecto.
+
+blank: Es un validador que valida que el campo no sea vacío. Esta es la llave
+que proteges con tus tests de pytest para que no se permitan campos vacíos.
+Cuando se llama al método full_clean() del modelo, si el modelo tiene un campo
+sin blank=True y se le pasa una cadena vacía (""), se dispara este error.
+Mientras que 'required' es para formularios web; 'blank' es para el objeto en
+Python (scripts, consola o tests).
+
+{{ form.as_p }} nos muestra los mensajes de validación de manera automática.
+
+Pero si queremos capturar los errores genéricos de Django sería de esta manera,
+no captura los mensajes personalizados solo los mensajes genéricos:
+
+<form method="post">
+    {% csrf_token %}
+    {% if form.errors %}
+        <div>
+            <ul style="margin-bottom: 0;">
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    <p>
+        <label for="id_name">Name:</label>
+        <input id="id_name" type="text" name="name">
+    </p>
+    <p>
+        <label for="id_email">Email:</label>
+        <input id="id_email" type="email" name="email">
+    </p>
+    <p>
+        <label for="id_age">Age:</label>
+        <input id="id_age" type="number" name="age" min="0">
+    </p>
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+
+Ejemplo de mensajes genericos:
+
+Name: This field is required.
+Email: This field is required.
+Age: This field is required.
+
+***********************************************************************
+******Cambiar el timezone a ver si cambia el idioma de los mensajes....
+
+Agregando una sección en el template para capturar los mensajes de error
+personalizados.
+
+<!-- create.html -->
+<form method="post">
+    {% csrf_token %}
+
+    <!-- SECCIÓN ÚNICA PARA TODOS LOS ERRORES -->
+    {% if form.errors %}
+    <div class="error-section">
+        <h3>Por favor corrige los siguientes errores:</h3>
+        <ul class="error-list">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <!-- Resto del formulario -->
+    {{ form.as_p }}
+
+    <button type="submit">Guardar</button>
+</form>
+
+Se renderiza como:
+
+Por favor corrige los siguientes errores:
+
+- No se permiten números.
+- No se permiten números.
