@@ -2878,6 +2878,25 @@ Esta es una medida de seguridad para evitar ataques de encabezado HTTP Host, que
 son posibles incluso bajo muchas configuraciones de servidor web aparentemente
 seguras.
 
+Ejemplo:
+
+ALLOWED_HOSTS = ['data.pythonanywhere.com', 'localhost', '127.0.0.1']
+
+'data.pythonanywhere.com' Es tu dominio de producción. Permite que el sitio sea
+visible en internet a través de PythonAnywhere.
+
+'localhost'	Se usa para desarrollo local. Es el nombre estándar que apunta a tu
+propia máquina.
+
+'127.0.0.1'	Es la dirección IP local (loopback). Al igual que localhost, permite
+que pruebes el sitio en tu computadora.
+
+ALLOWED_HOSTS = ['*']
+
+Usar '*' es como dejar la puerta de tu casa abierta de par en par: significa que
+aceptas peticiones desde cualquier dominio o dirección IP por lo cual no se
+recomienda.
+
 ===============================================
 Sobrescribiendo métodos de las clases genéricas
 ===============================================
@@ -11425,9 +11444,6 @@ Name: This field is required.
 Email: This field is required.
 Age: This field is required.
 
-***********************************************************************
-******Cambiar el timezone a ver si cambia el idioma de los mensajes....
-
 Agregando una sección en el template para capturar los mensajes de error
 personalizados.
 
@@ -11461,3 +11477,671 @@ Por favor corrige los siguientes errores:
 
 - No se permiten números.
 - No se permiten números.
+
+-----
+
+Validaciones y mensajes para los 3 campos:
+
+from django.db import models
+from django.core.validators import RegexValidator, MaxValueValidator
+
+class Person(models.Model):
+    """
+    Represents a person in the system.
+    
+    This model stores basic information about individuals including their name,
+    email, age, and timestamps for record creation and updates.
+    """
+
+    name = models.CharField(
+        max_length=5,
+        validators=[RegexValidator(r'\d', inverse_match=True, message='El campo nombre no permite números.')],
+        error_messages={
+            'max_length': 'El campo nombre no puede tener más de 5 caracteres.',
+            'blank': 'El campo nombre es requerido.',
+            'required': 'El campo nombre es requerido.',
+        }
+    )
+
+    email = models.EmailField(
+        max_length=254,
+        error_messages={
+            'invalid': 'El campo email no es una dirección de correo electrónico válida.',
+            'blank': 'El campo email es requerido.',
+            'required': 'El campo email es requerido.',
+        }
+    )
+
+    age = models.PositiveIntegerField(
+        validators=[MaxValueValidator(120, message='El campo edad no permite más de 120 años.')],
+        error_messages={
+            'invalid': 'El campo edad solo permite números enteros válidos .',
+            'blank': 'El campo edad es requerido.',
+            'required': 'El campo edad es requerido.',
+        }
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        """
+        String representation of the Person model.
+        
+        Returns:
+            str: The person's name for easy identification in admin and queries.
+        """
+        return self.name
+
+-----
+
+{% extends 'person/base.html' %}
+
+{% block content %}
+<h1>{% if form.instance.pk %}Update{% else %}Create{% endif %} Person</h1>
+<!-- create.html -->
+<form method="post">
+    {% csrf_token %}
+
+    <!-- SECCIÓN ÚNICA PARA TODOS LOS ERRORES -->
+    {% if form.errors %}
+    <div class="error-section">
+        <h3>Por favor corrige los siguientes errores:</h3>
+        <ul class="error-list">
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <p>
+        <label for="id_name">Name:</label>
+        <input id="id_name" type="text" name="name">
+    </p>
+    <p>
+        <label for="id_email">Email:</label>
+        <input id="id_email" type="email" name="email">
+    </p>
+    <p>
+        <label for="id_age">Age:</label>
+        <input id="id_age" type="number" name="age" min="0">
+    </p>
+
+    <button type="submit">Guardar</button>
+</form>
+{% endblock %}
+
+Glosario de validaciones en modelos
+===================================
+
+Para campos de tipo texto como CharField y TextField:
+
+max_length: Es un validador que valida que el campo no sea mayor a la longitud
+máxima especificada.
+
+min_length: Es un validador que valida que el campo no sea menor a la longitud
+mínima especificada.
+
+blank: (Booleano) Si es True, el campo puede quedar vacío en formularios. Si es
+False, Django obligará a ingresar texto.
+
+null: (Booleano) Afecta a la base de datos. Si es True, Django almacenará los
+valores vacíos como NULL. (Nota: En textos se prefiere usar blank para evitar
+estados nulos).
+
+choices: Una lista de tuplas para crear un menú desplegable. Valida que el dato
+ingresado sea exactamente uno de los permitidos.
+
+unique: (Booleano) Asegura que no existan dos registros con el mismo texto (ej:
+un código de producto o cédula).
+
+db_index: Crea un índice en la base de datos para acelerar las búsquedas por
+este campo.
+
+prohibit_null_characters: (Booleano) Evita que se guarden caracteres nulos de
+bajo nivel (\x00).
+
+Para campos de tipo numérico como IntegerField, DecimalField y FloatField:
+
+validators=[MinValueValidator(x)]: El número no puede ser menor a "x".
+
+validators=[MaxValueValidator(x)]: El número no puede ser mayor a "x".
+
+validators=[StepValueValidator(x)]: El número debe ser múltiplo del valor
+definido (ej. solo números pares si el paso es 2).
+
+max_digits: (Solo DecimalField) El número total de dígitos permitidos.
+
+decimal_places: (Solo DecimalField) El número de decimales permitidos.
+
+Para campos de tipo fecha como DateField y DateTimeField:
+
+auto_now_add: Establece la fecha de creación (inmutable después).
+
+auto_now: Actualiza la fecha cada vez que se guarda el registro (auditoría).
+
+unique_for_date: El valor debe ser único para el día especificado.
+
+unique_for_month: El valor debe ser único para el mes especificado.
+
+unique_for_year: El valor debe ser único para el año especificado.
+
+Validadores globales de django.core.validators (se aplican a los campos según la
+necesidad y el tipo):
+
+RegexValidator(regex, message=None, code=None): Valida que el campo cumpla con
+la expresión regular especificada.
+
+EmailValidator(message=None, code=None): Valida que el campo sea un correo electrónico válido.
+
+URLValidator(message=None, code=None): Valida que el campo sea una URL válida.
+
+MinValueValidator(limit_value, message=None, code=None): Valida que el campo no
+sea menor al valor especificado.
+
+MaxValueValidator(limit_value, message=None, code=None): Valida que el campo no
+sea mayor al valor especificado.
+
+StepValueValidator(limit_value, message=None, code=None): Valida que el campo
+sea múltiplo del valor especificado.
+
+validate_slug: Valida que el texto solo contenga letras, números, guiones o
+guiones bajos.
+
+validate_ipv4_address / validate_ipv6_address: Valida direcciones IP.
+
+validate_comma_separated_integer_list: Valida una lista de números separados por
+comas.
+
+FileExtensionValidator(allowed_extensions=['extension1', 'extension2'],
+message="None"): Valida que un archivo subido tenga una extensión específica
+(ej. .pdf, .jpg).
+
+Nota: Cualquiera de estos validadores se utilizan añadiendo el parámetro
+validators al campo del modelo. Por ejemplo: validators=[RegexValidator(r'\d'),
+validate_slug]
+
+Restricciones de Nivel Superior (Meta class):
+
+Estas validan la relación entre múltiples campos de una sola vez.
+
+UniqueConstraint: Crea una restricción de unicidad compuesta (ej. el par
+"nombre" y "categoría" no se puede repetir).
+
+CheckConstraint: Permite escribir expresiones lógicas complejas de base de datos
+(ej. el precio_venta debe ser siempre mayor al precio_costo).
+
+Nota sobre obligatoriedad: En Django, todos los campos son "requeridos" por
+defecto (blank=False). Para permitir que un campo sea opcional, se debe
+especificar explícitamente blank=True (para validación en formularios) y
+null=True (para integridad en la base de datos, excepto en campos de texto).
+Esto aplica para cualquier tipo de campo.
+
+Ejemplos para pruebas: https://github.com/argenisosorio/Django_6_crud/tree/feat/error-messages
+
+Validaciones en el formulario (Forms)
+=====================================
+
+Los formularios (por ejemplo, ModelForm en forms.py) heredan las validaciones
+establecidas en los modelos. También es posible definir validaciones adicionales
+o más complejas a nivel de formulario, ya sea sobreescribiendo el método
+clean_<field>() para reglas específicas de un campo o el método clean() de la
+clase para comprobaciones que relacionen varios datos a la vez. El diccionario
+error_messages también puede definirse sobrescribiendo los campos aquí, o
+directamente en la clase Meta. Esta también es una forma de evitar que se
+muestren los mensajes de error predeterminados de django y personalizarlos.
+
+En el archivo forms.py si quieres validar un solo campo (por ejemplo, que el
+nombre del producto no contenga la palabra "test"), creas un método con el
+nombre clean_ seguido del nombre del campo. Por ejemplo:
+
+from django import forms
+from .models import Product
+
+class ProductForm(forms.ModelForm):
+    """
+    A ModelForm for creating and updating Product instances.
+    """
+
+    """
+    Validación personalizada para el campo 'name' del formulario.
+    Esta función se ejecuta automáticamente durante la validación del formulario.
+    Verifica que el nombre del producto no contenga la palabra 'test' (en
+    cualquier combinación de mayúsculas y minúsculas). Si se encuentra la
+    palabra 'test', se lanza una ValidationError con un mensaje específico. Si
+    el nombre es válido, se devuelve el valor limpio del campo 'name'.
+    """
+    def clean_name(self):
+        name = self.cleaned_data.get('name')
+        if "test" in name.lower():
+            raise forms.ValidationError("No puedes usar la palabra 'test' en el nombre del producto.")
+        return name
+    
+    """
+    Validación personalizada para el campo 'price' del formulario. Esta función
+    se ejecuta automáticamente durante la validación del formulario. Verifica
+    que el precio del producto sea un número positivo. Si el precio es menor o
+    igual a cero, se lanza una ValidationError con un mensaje específico. Si el
+    precio es válido, se devuelve el valor limpio del campo 'price'.
+    """
+    def clean_price(self):
+        price = self.cleaned_data.get('price')
+        if price <= 0:
+            raise forms.ValidationError("El precio debe ser un número positivo.")
+        return price
+
+    class Meta:
+        """
+        Metadata class defining the form's relationship to the model.
+        """
+        model = Product
+
+        fields = [
+            'name',
+            'price',
+        ]
+
+Si quieres validar varios campos a la vez, creas un método con el nombre clean().
+Por ejemplo:
+
+from django import forms
+from .models import Product
+
+class ProductForm(forms.ModelForm):
+    """
+    A ModelForm for creating and updating Product instances.
+    """
+
+    """
+    Validación personalizada para el formulario de producto.
+    Si el nombre del producto contiene la palabra "test" muestra un mensaje de
+    error y si el precio es menor a 0 o mayor a 100, se genera un error de
+    validación.
+    """
+    def clean(self):
+        cleaned_data = super().clean()
+        name = cleaned_data.get('name')
+        price = cleaned_data.get('price')
+        # Validación personalizada para el campo 'name' y 'price'
+        if name and 'test' in name.lower():
+            # Agrega un error al campo 'name' si contiene la palabra "test"
+            self.add_error('name', 'El nombre del producto no puede contener la palabra "test".')
+        if price is not None and (price < 0 or price > 100):
+            # Agrega un error al campo 'price' si el precio está fuera del rango válido
+            self.add_error('price', 'El precio debe estar entre 0 y 100.')
+        return cleaned_data
+
+    class Meta:
+        """
+        Metadata class defining the form's relationship to the model.
+        """
+        model = Product
+
+        fields = [
+            'name',
+            'price',
+        ]
+
+Validaciones en la plantilla (Templates)
+========================================
+
+En los archivos HTML, se puede personalizar el renderizado de los errores. Se
+itera sobre form.errors para capturar todos los errores e imprimirlos al
+principio del formulario, dentro de un componente visible de alerta
+(<div class="alert alert-danger">). Como consecuencia, se suprime la
+visualización nativa de Django bajo la cual los errores de cada field se
+mostrarían de forma separada sobre la caja de entrada.
+
+Por ejemplo para realizar esto en el HTML, nos ubicamos donde se encuentran
+nuestros campos y antes de ellos agregamos el siguiente código:
+
+{% extends 'product/base.html' %}
+
+{% block content %}
+<h1>{% if form.instance.pk %}Update{% else %}Create{% endif %} Product</h1>
+<form method="post">
+    {% csrf_token %}
+    {% if form.errors %}
+        <div
+            class="alert alert-danger"
+            style="
+                color: #721c24;
+                background-color: #f8d7da;
+                border-color: #f5c6cb;
+                padding: 10px;
+                margin-bottom: 20px;
+                border-radius: 5px;
+            "
+        >
+            <ul style="margin-bottom: 0;">
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Save</button>
+</form>
+{% endblock %}
+
+Pero para que los errores no salgan dos veces se debe escribir los campos
+manualmente en el formulkario, es decir quitar a {{ form.as_p }}.
+
+Ejemplo completo: https://github.com/argenisosorio/Django_6_crud/tree/feat/error-messages-forms
+
+También es posible restringir ingreso de datos erróneos en el template como otra
+capa de seguridad con el uso de las Validaciones Nativas de HTML5, por ejemplo:
+required, min, max, type, pattern, etc. Por ejemplo:
+
+<input type="text" name="name" required>
+<input type="number" name="age" min="0" max="100">
+
+Para esto es necesario tener los campos a disposición en el html y no usar el
+renderizado automático de Django. Pero si queremos añadir estas validaciones y
+usar el renderizado automático de Django, podemos hacer uso de widgets en el
+formulario (forms.py):
+
+from django import forms
+from .models import Product
+
+class ProductForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = [
+            'name',
+            'price'
+        ]
+        widgets = {
+            'name': forms.TextInput(attrs={
+                'placeholder': 'Nombre del producto',
+                'minlength': '5',
+                'pattern': '^[a-zA-Z ]+$',
+                'title': 'El nombre solo debe contener letras'
+            }),
+            'price': forms.NumberInput(attrs={
+                'placeholder': 'Precio del producto',
+                'min': '1',
+                'max': '100',
+                'title': 'El precio debe ser un número entre 1 y 100'
+            })
+        }
+
+
+Glosario de validaciones nativas de HTML5
+=========================================
+
+Validaciones globales (Aplican a casi todos los inputs).
+
+required: Atributo booleano. Si está presente, el usuario no puede enviar el
+formulario si el campo está vacío.
+
+title: No es una validación como tal, pero si la validación falla, el navegador
+usa este texto como ayuda en el mensaje flotante (tooltip).
+
+Campos de Texto Corto (<input type="text">)
+
+minlength: Define el número mínimo de caracteres permitidos.
+
+maxlength: Define el número máximo de caracteres (el navegador suele bloquear la
+escritura al llegar al límite).
+
+ pattern: El más potente. Recibe una Expresión Regular (Regex). Solo permite
+ enviar el formulario si el texto coincide con el patrón.
+
+Ejemplo: pattern="[A-Z]{3}" (solo permite 3 letras mayúsculas).
+
+Campos Numéricos (<input type="number">)
+
+min: El valor numérico mínimo aceptado.
+
+max: El valor numérico máximo aceptado.
+
+step: Define el intervalo legal. Si pones step="10", solo permitirá
+10, 20, 30...
+
+Campos de Correo y URL (type="email", type="url")
+
+Validación de Formato Nativa: El navegador verifica automáticamente que el texto
+tenga una estructura válida (ej. que contenga un @ y un dominio en el caso del
+email).
+
+Areas de Texto Largo (<textarea>)
+
+minlength / maxlength: Al igual que en el texto corto, controlan la extensión
+del contenido.
+
+Nota: Las áreas de texto no soportan el atributo pattern.
+
+Validaciones en las vistas (Views)
+==================================
+
+Se pueden agregar validaciones en las vistas como otra capa de restricción donde
+limitaremos la continuidad del flujo de ejecución si no se cumplen ciertas
+condiciones, donde podemos validar antes, durante o después de procesar el
+formulario. Por ejemplo:
+
+Dentro de la clase ProductCreateView declaramos la función que utilizaremos para
+validar antes de procesar el formulario:
+
+class ProductCreateView(CreateView):
+    """Display the form and create a product"""
+    model = Product
+    form_class = ProductForm
+    template_name = 'product/create.html'
+    success_url = reverse_lazy('product:home')
+
+    def dispatch(self, request, *args, **kwargs):
+        # Validación para limitar la cantidad de productos a 100
+        if Product.objects.count() >= 2:
+            from django.core.exceptions import PermissionDenied
+            # Lanzar una excepción para indicar que se ha alcanzado el límite de productos
+            raise PermissionDenied("Límite de productos alcanzado.")
+        return super().dispatch(request, *args, **kwargs)
+
+Esto muestra un error 403 Forbidden en pantalla pues no se puede acceder a la vista por
+la restricción si ya hay 2 productos registrados.
+
+También se pueden sobreescribir los métodos form_valid() y form_invalid():
+
+class ProductCreateView(CreateView):
+    # ...
+    def form_valid(self, form):
+        # Validar antes de procesar el formulario
+        if form.is_valid():
+            # Procesar el formulario
+            form.save()
+            return super().form_valid(form)
+
+Mensajes de error automáticos según el idioma
+=============================================
+
+Django cuenta con un sistema integrado de traducciones (i18n). Si los
+error_messages no se definen manualmente ("This field is required", etc), Django
+arrojará sus mensajes de validaciones predeterminados. Si en settings.py la
+variable LANGUAGE_CODE está configurada para un localismo distinto (como 'es'
+para español) y los middlewares de Locale están habilitados, Django traducirá
+estos componentes al español u otro idioma automáticamente.
+
+Si deseamos cambiar el idioma por defecto, debemos cambiar la variable
+LANGUAGE_CODE en settings.py de LANGUAGE_CODE = 'en-us' a:
+
+LANGUAGE_CODE = 'es'
+
+Restricciones a nivel de base de datos (Constraints)
+====================================================
+
+Adicional a las validaciones de las formas o modelos normales, Django permite
+incluir en la clase Meta de los modelos configuraciones directas a las tablas de
+la base de datos SQL, mediantes la directiva constraints
+(ej. models.UniqueConstraint o models.CheckConstraint). Estas configuran reglas
+a nivel de SQL garantizando que los registros de la capa física de la base nunca
+violen la regla de negocio al forzar este chequeo desde el propio motor de la
+base de datos.
+
+Si deseamos agregar una restricción de unicidad a un campo, por ejemplo, el
+email, debemos agregar la siguiente línea en la clase Meta del modelo:
+
+class Meta:
+    constraints = [
+        models.UniqueConstraint(
+            fields=['email'],
+            name='unique_email',
+            condition=models.Q(is_active=True),
+        ),
+    ]
+
+Nota: Los constraints son una capa adicional de seguridad que si bien no
+reemplazan las validaciones de las formas o modelos normales, sí pueden ser
+útiles para garantizar que los registros no violen alguna regla de negocio al
+forzar este chequeo desde el propio motor de la base de datos.
+
+Glosario de constraints
+
+-CheckConstraint: Es una regla lógica que permite validar una condición
+específica (una expresión booleana) directamente en el motor de la base de
+datos. Sirve para asegurar que los valores de uno o varios campos cumplan con
+una lógica aritmética o comparativa antes de ser guardados.
+
+Ejemplo: Asegurar que el precio de un producto siempre sea mayor a cero.
+
+models.CheckConstraint(check=models.Q(price__gt=0), name='price_positive_check')
+
+-UniqueConstraint: Es una restricción que garantiza que el valor de un campo, o
+la combinación de varios campos, no se repita en ninguna otra fila de la tabla.
+Sirve para prevenir la duplicidad de datos críticos que deben ser únicos por
+identidad o por regla de negocio.
+
+Ejemplo: Evitar que existan dos productos con el mismo nombre exacto.
+
+models.UniqueConstraint(fields=['name'], name='unique_product_name')
+
+-UniqueConstraint (Compuesto): Es una variante que se aplica sobre un conjunto
+de campos. Sirve para permitir que un valor se repita en un campo, siempre y
+cuando la combinación con el segundo campo sea distinta.
+
+Ejemplo: Un producto puede tener el mismo nombre que otro, siempre que
+pertenezcan a categorías diferentes.
+
+models.UniqueConstraint(fields=['name', 'category'], name='unique_name_per_category')
+
+-ForeignKey Constraint (Integridad Referencial)
+
+Es una restricción que vincula una columna de una tabla con la clave primaria de
+otra. Sirve para garantizar que no existan registros huérfanos; es decir, no
+puedes asociar un producto a una categoría que no existe en la base de datos.
+
+Ejemplo: Si se elimina una categoría, decidir si se borran sus productos o si se
+impide la eliminación.
+
+category = models.ForeignKey(Category, on_delete=models.CASCADE)
+
+-primary_key Constraint: Es la restricción fundamental que identifica de forma
+unívoca cada registro en una tabla. Sirve para que el motor de la base de datos
+pueda indexar, buscar y relacionar cada fila de manera eficiente y sin
+ambigüedades. No permite valores nulos ni duplicados.
+
+Ejemplo: El campo id que Django crea automáticamente.
+
+id = models.AutoField(primary_key=True)
+
+Desactivación de validaciones del navegador (novalidate)
+========================================================
+
+A las etiquetas <form> en los templates HTML se les puede añadir el atributo
+opcional novalidate (<form method="post" novalidate>). Esto desactiva todas las
+validaciones nativas visuales del navegador al momento de pulsar Submit (como
+los pequeños tooltip que varían por explorador web previniendo formularios
+vacíos, etc). Al incluirlo, recibimos los datos del formulario directamente sin
+filtros a Django y delegamos todo el trabajo de control, la validación y el
+renderizado estético de errores a nuestro Backend.
+
+Si en algún momento se presenta el momento donde se muestra un mensaje que no
+reconoces haber creado o una validación que no se ha implementado, es posible
+que el explorador web esté intentando aplicar validaciones por defecto. En este
+caso, puedes desactivarlas agregando el atributo novalidate a la etiqueta
+<form>.
+
+Sin embargo, en algunos proyectos la validación del navegador puede funcionar
+como otra capa de seguridad, por lo que en algunos casos es preferible
+mantenerla activada.
+
+Fuente
+======
+
+https://github.com/KaimJaws/Django_6_crud/tree/test/validate-errors
+
+================================================================================
+En Django, si escribo una validación y su mensaje en el modelo y la misma en el
+form cual se ejecutará primero al enviar los datos desde el template?
+================================================================================
+
+Orden de ejecución: Primero el Form, luego el Modelo
+
+Cuando envías datos desde un template que usa un ModelForm, el orden de
+validación es:
+
+1. Validación del Form → 2. Validación del Modelo
+
+Paso a paso:
+
+Validación a nivel de Form (se ejecuta primero)
+
+-Validadores definidos en los campos del form
+
+-Métodos clean_<campo>() del form
+
+-Método clean() del form
+
+Validación a nivel de Modelo (se ejecuta después)
+
+-Validadores definidos en los campos del modelo (validators=[...])
+
+-Método clean() del modelo
+
+-Restricciones de unicidad (unique, unique_together)
+
+¿Por qué este orden?
+
+Django diseña esta jerarquía por una razón muy práctica :
+
+La validación del modelo (Model.full_clean()) se activa dentro del paso de
+validación del form, justo después de que se llama al método clean() del form.
+
+Esto significa que el form actúa como primera línea de defensa: limpia y valida
+los datos de entrada del usuario antes de pasarlos al modelo para validaciones
+más profundas o de negocio.
+
+Procedencia de mensajes de error
+
+Hay una regla crucial que debes conocer, Los mensajes de error definidos en el
+form SIEMPRE tienen prioridad sobre los mensajes definidos en el modelo.
+
+Traducción práctica: Si un campo falla la validación tanto en el form como en el
+modelo Django mostrará el mensaje de error del form. El mensaje del modelo solo
+se usa si NO hay un mensaje equivalente definido en el form.
+
+Consejo profesional
+
+Si quieres tener control total y mensajes consistentes, te recomiendo:
+
+Validaciones de formato y entrada: En el form (ej: que no tenga números el nombre)
+
+Validaciones de negocio y consistencia: En el modelo (ej: edad máxima,
+relaciones entre campos)
+
+Sobreescribe mensajes en el form si necesitas personalizar la experiencia de
+usuario
+
+Fuente
+======
+
+Gemini IA
