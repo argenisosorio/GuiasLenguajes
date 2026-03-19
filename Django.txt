@@ -10182,6 +10182,66 @@ Es un decorador diseñado originalmente para funciones. Su trabajo es muy simple
 -Si no está autenticado, lo redirige automáticamente a la URL de inicio de
 sesión (definida en LOGIN_URL).
 
+-----
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Register
+from .forms import RegisterForm
+
+@login_required
+def home(request):
+    registers = Register.objects.all()
+    context = {
+        'registers': registers,
+    }
+    return render(request, 'registers/home.html', context)
+
+@login_required
+def create_register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('registers:home')
+    else:
+        form = RegisterForm()
+    
+    context = {'form': form}
+    return render(request, 'registers/create.html', context)
+
+@login_required
+def detail_register(request, pk):
+    register = get_object_or_404(Register, pk=pk)
+    context = {'register': register}
+    return render(request, 'registers/detail.html', context)
+
+@login_required
+def update_register(request, pk):
+    register = get_object_or_404(Register, pk=pk)
+    if request.method == 'POST':
+        form = RegisterForm(request.POST, instance=register)
+        if form.is_valid():
+            form.save()
+            return redirect('registers:detail', pk=register.pk)
+    else:
+        form = RegisterForm(instance=register)
+    
+    context = {'form': form, 'register': register}
+    return render(request, 'registers/update.html', context)
+
+@login_required
+def delete_register(request, pk):
+    register = get_object_or_404(Register, pk=pk)
+    if request.method == 'POST':
+        register.delete()
+        return redirect('registers:home')
+    
+    context = {'register': register}
+    return render(request, 'registers/delete.html', context)
+
+-----
+
 2. dispatch
 
 En las Vistas Basadas en Clases, dispatch es el "director de tráfico". Es el
@@ -12140,6 +12200,50 @@ relaciones entre campos)
 
 Sobreescribe mensajes en el form si necesitas personalizar la experiencia de
 usuario
+
+Fuente
+======
+
+Gemini IA
+
+=========================
+collectstatic en Django 6
+=========================
+
+Si los archivos están físicamente en la carpeta, pero el navegador no los carga
+(probablemente ves errores 404 en la consola), el problema suele estar en que el
+servidor web (Apache o Nginx) no sabe dónde buscarlos o Django no ha "reunido"
+los archivos en la carpeta final de producción.
+
+1. Ejecutar el comando Collectstatic
+
+En desarrollo, Django busca los archivos en las carpetas de cada app, pero en
+producción (con DEBUG = False), Django espera que todos estén en una única
+carpeta central.
+
+Ejecuta esto en tu terminal dentro de la carpeta del proyecto:
+
+$ python manage.py collectstatic
+
+Esto copiará tu bootstrap.min.css desde la carpeta de desarrollo hacia la ruta
+definida en STATIC_ROOT.
+
+2. Verificar los Settings
+
+Asegúrate de que en tu settings.py tengas estas tres variables configuradas
+correctamente:
+
+# La URL que verás en el HTML (ej: /static/css/...)
+STATIC_URL = 'static/'
+
+# Las carpetas donde tú escribes tus archivos de desarrollo
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# La carpeta FÍSICA donde el servidor web buscará los archivos (Producción)
+# Generalmente fuera de la carpeta de código por seguridad
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 Fuente
 ======
