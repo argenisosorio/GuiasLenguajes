@@ -11298,3 +11298,120 @@ Pillow con pip install pillow
 Ejemplo completo:
 
 https://github.com/argenisosorio/Django_6_crud/tree/test/file-upload
+
+***Ejemplo más sencillo solo FileUpload, recomendado:
+https://github.com/argenisosorio/Django_6_crud/tree/test/file-upload
+
+==============================
+Contador de registros en tabla
+==============================
+
+Para agregar un contador de registros (una columna que enumere 1, 2, 3...), la
+forma más eficiente y nativa en Django es utilizar la variable forloop.counter
+dentro del bucle de tu plantilla.
+
+
+{% extends 'registers/base.html' %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Lista de Registros <span class="badge bg-secondary">{{ registers|length }}</span></h1>
+    <a href="{% url 'registers:create' %}" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Agregar Registro
+    </a>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover table-striped table-bordered align-middle">
+        <thead class="table-dark">
+            <tr class="text-center">
+                <th>#</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
+                <th>Cédula</th>
+                <th>Teléfono</th>
+                <th>Dirección</th>
+                <th>Parroquia</th>
+                <th>Fecha de Registro</th>
+                <th>Fecha de Despacho</th>
+                <th>Retirado por</th>
+                <th>Cantidad</th>
+                <th>Tamaño</th>
+                <th>Visitado</th>
+                <th>Documentos completos</th>
+                <th>Registro en BD</th>
+                <th>Última actualización</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for register in registers %}
+            <tr>
+                <td class="text-center fw-bold">{{ forloop.counter }}</td>
+                <td>{{ register.nombres }}</td>
+                <td>{{ register.apellidos }}</td>
+                <td>{{ register.cedula }}</td>
+                <td>{{ register.telefono }}</td>
+                <td class="small">{{ register.direccion }}</td>
+                <td>{{ register.parroquia }}</td>
+                <td class="text-center">{{ register.fecha_registro|date:"d/m/Y" }}</td>
+                <td class="text-center">
+                    {% if register.fecha_despacho %}
+                        {{ register.fecha_despacho|date:"d/m/Y" }}
+                    {% else %}
+                        <span class="text-muted italic">Pendiente</span>
+                    {% endif %}
+                </td>
+                <td>{{ register.retirado_por|default:"-" }}</td>
+                <td class="text-center">{{ register.cantidad }}</td>
+                <td>{{ register.tamano_cilindro }}</td>
+                <td class="text-center">
+                    {% if register.visitado %}
+                        <span class="badge bg-success">Sí</span>
+                    {% else %}
+                        <span class="badge bg-secondary">No</span>
+                    {% endif %}
+                </td>
+                <td class="text-center">
+                    {% if register.documentos_completos %}
+                        <span class="badge bg-success">Sí</span>
+                    {% else %}
+                        <span class="badge bg-secondary">No</span>
+                    {% endif %}
+                </td>
+                <td class="small text-muted">{{ register.created_at|date:"d/m/Y" }}</td>
+                <td class="small text-muted">{{ register.updated_at|date:"d/m/Y" }}</td>
+                <td>
+                    <div class="btn-group btn-group-sm">
+                        <a href="{% url 'registers:detail' register.pk %}" class="btn btn-info">Detalles</a>
+                        <a href="{% url 'registers:update' register.pk %}" class="btn btn-warning">Editar</a>
+                        <a href="{% url 'registers:delete' register.pk %}" class="btn btn-danger">Borrar</a>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="17" class="text-center py-4 text-muted">
+                    <i class="fas fa-info-circle"></i> No hay registros disponibles en este momento.
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+Explicación de los cambios:
+
+forloop.counter: Es una variable que Django crea automáticamente dentro de
+cualquier ciclo {% for %}. Empieza en 1 y aumenta en cada iteración. (Si
+prefieres que empiece en 0, puedes usar forloop.counter0).
+
+{{ registers|length }}: Agregué esto al lado del título principal. Es un filtro
+de Django que cuenta cuántos objetos hay en la lista, dándote un resumen rápido
+sin tener que bajar al final de la tabla.
+
+Fuente
+======
+
+Gemini IA
