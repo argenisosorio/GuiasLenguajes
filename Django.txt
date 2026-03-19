@@ -12361,3 +12361,175 @@ Fuente
 ======
 
 Gemini IA
+
+=======================================
+Filtro de búsqueda por cédula en Django
+=======================================
+
+En este ejemplo el filtro permite buscar registros por número de cédula desde el
+listado, mejorando la usabilidad del sistema al facilitar la localización rápida
+de personas.
+
+El template incluye un formulario que envía los datos vía GET a la misma vista,
+manteniendo la URL compartible y permitiendo recargar la página sin perder el
+filtro.
+
+<div class="card mb-4 shadow-sm">
+    <div class="card-body">
+        <form method="GET" action="{% url 'registers:home' %}" class="row g-3">
+            <div class="col-md-4">
+                <label for="q" class="form-label fw-bold">Buscar por Cédula</label>
+                <input
+                    type="text"
+                    name="q"
+                    id="q"
+                    class="form-control"
+                    value="{{ query_cedula }}"
+                    placeholder="Ingrese número de cédula"
+                >
+                <div class="form-text">Búsqueda parcial (ej: "123" encuentra "123456")</div>
+            </div>
+            <div class="col-md-4 d-flex align-items-end gap-2">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-filter"></i> Filtrar
+                </button>
+
+                {# Botón "Limpiar" - Solo aparece cuando hay un filtro activo #}
+                {% if query_cedula %}
+                    <a href="{% url 'registers:home' %}" class="btn btn-outline-danger">
+                        <i class="fas fa-eraser"></i> Limpiar filtro
+                    </a>
+                {% endif %}
+            </div>
+        </form>
+
+        {# Indicador de filtro activo #}
+        {% if query_cedula %}
+            <div class="mt-2 text-info">
+                <i class="fas fa-info-circle"></i> Mostrando resultados para cédula que contiene:
+                <strong>"{{ query_cedula }}"</strong>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+La vista home captura el parámetro q de la URL y lo utiliza para filtrar
+el QuerySet antes de enviarlo al template. Se utiliza icontains para permitir
+búsquedas parciales (ej: "12" encuentra "123", "512", etc.). ya con la data
+filtrada en el template consultamos los datos de registers que va en el
+contexto.
+
+@login_required
+def home(request):
+    # Capturamos los parámetros de filtrado desde la URL
+    query_cedula = request.GET.get('q', '')
+
+    # QuerySet para la TABLA (mantiene el orden cronológico)
+    registers = Register.objects.all().order_by('-created_at')
+
+    # Aplicamos filtros a los registros de la tabla
+    if query_cedula:
+        registers = registers.filter(cedula__icontains=query_cedula)
+
+    # Construcción del contexto
+    context = {
+        'registers': registers,          # Datos para la tabla
+        'query_cedula': query_cedula,
+    }
+
+    return render(request, 'registers/home.html', context)
+
+Ejemplo: https://github.com/argenisosorio/Django_6_crud/tree/app-oxigen
+
+=================================
+Exportar datos en .xlsx en Django
+=================================
+
+1- Usaremos la librería openpyxl que es una biblioteca de Python especializada en
+la lectura y escritura de archivos de Excel con formato .xlsx, .xlsm, .xltx y
+.xltm (el estándar de Microsoft Office). Debemos instalar el paquete.
+
+$ pip install openpyxl
+
+2- Modificamos el template para agregar un botón para exportar la data de la
+tabla en formato .xlsx:
+
+<a href="export=1" class="btn btn-success mb-3">
+    <i class="fas fa-file-excel"></i> Exportar .xlsx
+</a>
+
+3- Creamos la url que va a responder al botón:
+
+path('exportar/xlsx/', views.export_registers_xlsx, name='export_xlsx'),
+
+4- Creamos el método en views.py que responde a la llamada de exportación:
+
+import openpyxl
+from django.http import HttpResponse
+
+
+def export_registers_xlsx(queryset):
+    """Función auxiliar para generar el archivo .xlsx"""
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Reporte de Registros"
+
+    # Definir encabezados
+    headers = [
+        'Nombre',
+        'Email',
+        'Edad'
+    ]
+    ws.append(headers)
+
+    # Estilo básico para la cabecera (Opcional pero recomendado)
+    for cell in ws[1]:
+        cell.font = openpyxl.styles.Font(bold=True)
+
+    # Agregar los datos del QuerySet filtrado
+    for reg in queryset:
+        ws.append([
+            reg.name,
+            reg.email,
+            reg.age,
+        ])
+
+    # Ajustar ancho de columnas automáticamente
+    for col in ws.columns:
+        max_length = 0
+        column = col[0].column_letter
+        for cell in col:
+            if cell.value:
+                max_length = max(max_length, len(str(cell.value)))
+        ws.column_dimensions[column].width = max_length + 2
+
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    )
+    response['Content-Disposition'] = 'attachment; filename="report.xlsx"'
+    wb.save(response)
+
+    return response
+
+5- Modificamos la vista que lista los registros para que reciba el query
+enviando desde el template y llame al método que exporta los datos:
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Person
+from .forms import PersonForm
+import openpyxl
+from django.http import HttpResponse
+
+
+def home(request):
+    people = Person.objects.all()
+
+    if 'export' in request.GET:
+        return export_registers_xlsx(people)
+
+    context = {
+        'people': people,
+    }
+    return render(request, 'person/home.html', context)
+
+Ejemplo completo: https://github.com/argenisosorio/Django_6_crud/tree/test/export-data-xlsx
