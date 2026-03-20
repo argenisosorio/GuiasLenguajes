@@ -12533,3 +12533,55 @@ def home(request):
     return render(request, 'person/home.html', context)
 
 Ejemplo completo: https://github.com/argenisosorio/Django_6_crud/tree/test/export-data-xlsx
+
+==============================================================================
+Agregar un campo para asociar el id del usuario autenticado al registro creado
+==============================================================================
+
+En el modelo agregar el siguiente campo:
+
+from django.conf import settings # Importante para referenciar el User model
+
+# Nuevo campo para almacenar quién hizo el registro
+    user = models.ForeignKey(
+    settings.AUTH_USER_MODEL,
+    on_delete=models.CASCADE, # Si se borra el usuario, se borran sus registros (o usa SET_NULL si prefieres conservarlos)
+    related_name='registros_realizados',
+    verbose_name="Registrado por:"
+)
+
+En el form agregar lo siguiente:
+
+#fields = '__all__'
+
+# Excluimos el campo de usuario para que no aparezca en el HTML
+exclude = ['user']
+
+En el template que lista y/o detalla el registro debe quedar así:
+
+<dt class="mt-2">Usuario creador:</dt>
+<dd>{{ register.user }}</dd>
+
+y en el view de crear registro debe quedar así:
+
+def create_person(request):
+    if request.method == 'POST':
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            # 1. Creamos la instancia en memoria, NO en la base de datos aún
+            nuevo_registro = form.save(commit=False)
+
+            # 2. Asignamos el usuario que está logueado actualmente
+            nuevo_registro.user = request.user
+
+            # 3. Ahora sí, guardamos definitivamente en la BD
+            nuevo_registro.save()
+
+            return redirect('person:home')
+    else:
+        form = PersonForm()
+    
+    context = {'form': form}
+    return render(request, 'person/create.html', context)
+
+Ejemplo completo: https://github.com/argenisosorio/Django_6_crud/tree/feat/user-associated-with-record
