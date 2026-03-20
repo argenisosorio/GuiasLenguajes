@@ -12580,7 +12580,7 @@ def create_person(request):
             return redirect('person:home')
     else:
         form = PersonForm()
-    
+
     context = {'form': form}
     return render(request, 'person/create.html', context)
 
