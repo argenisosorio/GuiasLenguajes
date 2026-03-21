@@ -12257,3 +12257,270 @@ Fuente
 ======
 
 Gemini IA
+
+========================================================
+Arrancar servidor de Django automáticamente en red local
+========================================================
+
+Para lograr que tu sistema Django se ejecute automáticamente y sea accesible
+desde tu IP local 192.168.12.216, no basta con usar el comando runserver, ya que
+este es solo para desarrollo. En un entorno profesional, lo correcto es
+configurar un Servicio del Sistema (Systemd).
+
+1. Permitir la IP en Django
+
+Primero, edita tu archivo settings.py para que Django acepte peticiones desde tu
+IP de red:
+
+# settings.py
+ALLOWED_HOSTS = ['192.168.12.216', '127.0.0.1', 'localhost']
+
+2. Crear un Script de Arranque (Gunicorn)
+
+Es recomendable usar Gunicorn como servidor de aplicaciones. Instálalo en tu
+entorno virtual:
+
+$ pip install gunicorn
+
+Luego, crea un archivo llamado start_server.sh en la raíz de tu proyecto:
+
+#!/bin/bash
+
+# 1. Definir rutas absolutas confirmadas
+PROJECT_DIR="/home/aosorio/Documentos/Proyectos/Django/Django_6_crud"
+# Usamos la ruta real del binario que obtuvimos con pyenv prefix
+GUNICORN_EXEC="/home/aosorio/.pyenv/versions/Django_6/bin/gunicorn"
+
+# 2. Navegar a la carpeta del proyecto
+cd $PROJECT_DIR
+
+# 3. Ejecutar Gunicorn
+# 'exec' asegura que gunicorn reciba las señales de parada de systemd correctamente
+exec $GUNICORN_EXEC \
+    --workers 3 \
+    --bind 0.0.0.0:8000 \
+    Django_6_crud.wsgi:application
+
+Dale permisos de ejecución:
+
+$ chmod +x start_server.sh
+
+Notas:
+
+Usar 0.0.0.0 en lugar de una IP específica (como 192.168.12.216) es una práctica
+recomendada en servidores por varias razones de estabilidad y flexibilidad.
+
+En el mundo de las redes, 0.0.0.0 no es una dirección física, sino una
+instrucción que le dice a Gunicorn: "Escucha en todas las interfaces de red
+disponibles en esta máquina".
+
+Si usas 192.168.12.216: Gunicorn solo responderá a peticiones que lleguen por
+esa IP. Si mañana tu router le asigna la 192.168.12.200 a tu Debian, el servicio
+fallará al arrancar porque intentará "atarse" (bind) a una IP que ya no le
+pertenece.
+
+Si usas 0.0.0.0: Responderá a través de localhost (127.0.0.1), a través de tu
+IP de red local (192.168.1.x) e incluso a través de una VPN si la tuvieras. No
+importa si tu IP cambia, el servicio siempre encontrará la interfaz activa.
+
+3. Crear el Servicio en Systemd
+
+Ahora configuraremos Debian para que ejecute ese script al encender la
+computadora. Crea el siguiente archivo con privilegios de root:
+
+$ sudo nano /etc/systemd/system/django.service
+
+Pega el siguiente contenido (ajusta las rutas a tu realidad):
+
+[Unit]
+Description=Servicio Gunicorn para Django
+After=network.target
+
+[Service]
+User=user_maquina
+Group=www-data
+WorkingDirectory=/home/user_maquina/Documentos/Proyectos/Django/Django_6_crud
+ExecStart=/home/user_maquina/Documentos/Proyectos/Django/Django_6_crud/start_server.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+4. Habilitar y Arrancar
+
+Finalmente, registra el servicio para que inicie con el Sistema Operativo:
+
+Recargar el demonio de systemd para que reconozca el nuevo archivo
+
+$ sudo systemctl daemon-reload
+
+Habilitar para que inicie automáticamente al bootear
+
+$ sudo systemctl enable django.service
+
+Arrancar el servicio ahora mismo
+
+$ sudo systemctl start django.service
+
+5. Verificación
+
+Puedes chequear el estado con:
+
+$ sudo systemctl status django.service
+
+Si todo está en verde (active (running)), ahora cualquier equipo en tu red local
+podrá entrar a tu sistema simplemente escribiendo http://192.168.12.216:8000 en
+el navegador.
+
+Eliminar el sevicio creado
+==========================
+
+Para eliminar por completo el "demonio" (servicio de systemd) que creamos en tu
+Debian, debes seguir un orden específico para que el sistema no intente
+revivirlo o deje archivos basura en las carpetas de configuración.
+1. Detener y deshabilitar el servicio
+
+Primero, ordenamos a systemd que deje de ejecutar el proceso y que no lo inicie
+automáticamente al encender la computadora.
+
+Detener el proceso actual
+
+$ sudo systemctl stop django.service
+
+Evitar que arranque al iniciar el sistema
+
+$ sudo systemctl disable django.service
+
+2. Eliminar el archivo de configuración
+
+Ahora borramos el archivo de unidad que creamos en la carpeta del sistema.
+
+$ sudo rm /etc/systemd/system/django.service
+
+3. Limpiar el registro de systemd
+
+Como acabas de borrar un archivo que el sistema tenía "mapeado", debes recargar
+el demonio de control para que se dé cuenta de que ya no existe.
+
+$ sudo systemctl daemon-reload
+
+(Opcional) Limpia los registros de fallos anteriores
+
+$ sudo systemctl reset-failed
+
+Fuente
+======
+
+Gemini IA
+
+=========================
+collectstatic en Django 6
+=========================
+
+En Django 6, el comando collectstatic es una herramienta fundamental para el
+despliegue. Su función principal es reunir todos los archivos estáticos (CSS,
+JavaScript, imágenes de diseño) de todas tus aplicaciones en una sola carpeta
+centralizada.
+
+¿Por qué es necesario?
+
+Cuando desarrollas, cada una de tus aplicaciones (users, registers, admin) tiene
+su propia carpeta static/. Sin embargo, en un entorno de producción (usando
+Gunicorn, Nginx o Apache), el servidor web no puede estar saltando entre decenas
+de carpetas para buscar un archivo .css. Necesita un solo lugar de referencia.
+
+1. Configuración previa en settings.py
+
+Antes de ejecutar el comando, debes definir tres variables clave en tu archivo
+de configuración:
+
+# settings.py
+
+# 1. Dónde buscará Django archivos estáticos adicionales (opcional)
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# 2. La URL pública para acceder a los archivos (ej: http://tu-ip/static/)
+STATIC_URL = 'static/'
+
+# 3. LA MÁS IMPORTANTE: La carpeta física donde se reunirá todo
+# Es la carpeta que leerá Nginx o Apache en el servidor
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+2. Cómo se usa el comando
+
+Una vez configurado el STATIC_ROOT, abre tu terminal (con el entorno virtual
+activado) y ejecuta:
+
+$ python manage.py collectstatic
+
+133 static files copied to '/home/user/Django_6_crud/staticfiles'.
+
+Lo que sucedió:
+
+-Django escaneará todas tus carpetas static/ dentro de cada app.
+
+-Buscará los archivos estáticos del panel de administración
+(django.contrib.admin).
+
+-Copiara todo a la carpeta que definiste en STATIC_ROOT (en el ejemplo superior,
+una carpeta llamada staticfiles/).
+
+3. Diferencia entre Desarrollo y Producción
+
+-En Desarrollo (DEBUG = True): No necesitas usar collectstatic. Django es lo
+suficientemente inteligente para encontrar los archivos "al vuelo" en cada app.
+
+En Producción (DEBUG = False): Django deja de servir archivos estáticos por
+razones de seguridad y rendimiento. Es obligatorio ejecutar collectstatic y
+configurar tu servidor web (Nginx/Apache) para que apunte a la carpeta
+STATIC_ROOT.
+
+Consejos útiles para tu entorno Debian:
+
+-Permisos: Si ejecutas el comando y te da error de "Permission Denied",
+asegúrate de que el usuario aosorio tenga permisos de escritura en la carpeta
+del proyecto.
+
+-Limpieza: Si quieres borrar todo lo anterior antes de recolectar de nuevo,
+usa:
+
+$ python manage.py collectstatic --noinput --clear
+
+-Archivos de usuario: No confundas archivos estáticos (CSS/JS del programador)
+con archivos media (fotos subidas por los usuarios). Para las fotos de usuario
+se usa MEDIA_ROOT y MEDIA_URL, y esos no los gestiona collectstatic.
+
+Por último agregar esto en las urls principales:
+
+from django.contrib import admin
+from django.urls import include, path
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('apps.person.urls')),
+    path('products/', include('apps.product.urls')),
+]
+
+# Solo sirve estáticos mediante Django si estamos en DEBUG
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.BASE_DIR / "static")
+
+Reiniciamos el servicio para que tome los cambios de collectstatic:
+
+$ sudo systemctl daemon-reload
+
+$ sudo systemctl enable django.service
+
+$ sudo systemctl start django.service
+
+Visitamos la url dentro de la red interna, deberían cargar los estáticos sin
+problemas.
+
+Fuente
+======
+
+Gemini IA
