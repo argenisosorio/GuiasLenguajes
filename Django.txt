@@ -12342,14 +12342,17 @@ entorno virtual:
 
 $ pip install gunicorn
 
-Luego, crea un archivo llamado start_server.sh en la raíz de tu proyecto:
+Luego, crea un archivo llamado start_server.sh en la raíz de tu proyecto con
+este contenido:
+
+---
 
 #!/bin/bash
 
 # 1. Definir rutas absolutas confirmadas
-PROJECT_DIR="/home/aosorio/Documentos/Proyectos/Django/Django_6_crud"
-# Usamos la ruta real del binario que obtuvimos con pyenv prefix
-GUNICORN_EXEC="/home/aosorio/.pyenv/versions/Django_6/bin/gunicorn"
+PROJECT_DIR="/home/user/Documentos/Proyectos/Django/Django_6_crud"
+# Ruta completa al gunicorn dentro del entorno virtual
+GUNICORN_EXEC="/home/user/.pyenv/versions/Django_6/bin/gunicorn"
 
 # 2. Navegar a la carpeta del proyecto
 cd $PROJECT_DIR
@@ -12360,6 +12363,8 @@ exec $GUNICORN_EXEC \
     --workers 3 \
     --bind 0.0.0.0:8000 \
     Django_6_crud.wsgi:application
+
+---
 
 Dale permisos de ejecución:
 
@@ -12578,7 +12583,7 @@ aplicar cambios:
 $ sudo systemctl restart django.service
 
 Ahora visitamos la url dentro de la red interna, deberían cargar los estáticos
-sin problemas.
+sin problemas al igual que en /admin deben cargar todos.
 
 Fuente
 ======
