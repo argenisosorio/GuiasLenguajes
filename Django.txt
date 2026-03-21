@@ -10182,6 +10182,66 @@ Es un decorador diseñado originalmente para funciones. Su trabajo es muy simple
 -Si no está autenticado, lo redirige automáticamente a la URL de inicio de
 sesión (definida en LOGIN_URL).
 
+-----
+
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .models import Register
+from .forms import RegisterForm
+
+@login_required
+def home(request):
+    registers = Register.objects.all()
+    context = {
+        'registers': registers,
+    }
+    return render(request, 'registers/home.html', context)
+
+@login_required
+def create_register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('registers:home')
+    else:
+        form = RegisterForm()
+    
+    context = {'form': form}
+    return render(request, 'registers/create.html', context)
+
+@login_required
+def detail_register(request, pk):
+    register = get_object_or_404(Register, pk=pk)
+    context = {'register': register}
+    return render(request, 'registers/detail.html', context)
+
+@login_required
+def update_register(request, pk):
+    register = get_object_or_404(Register, pk=pk)
+    if request.method == 'POST':
+        form = RegisterForm(request.POST, instance=register)
+        if form.is_valid():
+            form.save()
+            return redirect('registers:detail', pk=register.pk)
+    else:
+        form = RegisterForm(instance=register)
+    
+    context = {'form': form, 'register': register}
+    return render(request, 'registers/update.html', context)
+
+@login_required
+def delete_register(request, pk):
+    register = get_object_or_404(Register, pk=pk)
+    if request.method == 'POST':
+        register.delete()
+        return redirect('registers:home')
+    
+    context = {'register': register}
+    return render(request, 'registers/delete.html', context)
+
+-----
+
 2. dispatch
 
 En las Vistas Basadas en Clases, dispatch es el "director de tráfico". Es el
@@ -12423,79 +12483,65 @@ JavaScript, imágenes de diseño) de todas tus aplicaciones en una sola carpeta
 centralizada.
 
 ¿Por qué es necesario?
+======================
 
-Cuando desarrollas, cada una de tus aplicaciones (users, registers, admin) tiene
-su propia carpeta static/. Sin embargo, en un entorno de producción (usando
-Gunicorn, Nginx o Apache), el servidor web no puede estar saltando entre decenas
-de carpetas para buscar un archivo .css. Necesita un solo lugar de referencia.
+Durante el desarrollo, cada una de tus aplicaciones (users, registers, admin)
+tiene su propia carpeta static/. Sin embargo, en producción (usando Gunicorn,
+Nginx o Apache), el servidor web no puede buscar archivos en decenas de carpetas
+diferentes. Necesita un solo lugar de referencia para optimizar el rendimiento.
 
-1. Configuración previa en settings.py
+1. Configuración en settings.py
 
-Antes de ejecutar el comando, debes definir tres variables clave en tu archivo
-de configuración:
+Antes de ejecutar el comando, debes definir tres variables clave. Asegúrate de
+no duplicarlas:
 
-# settings.py
+# 1. La URL pública para acceder a los archivos desde el navegador
+# Ejemplo: http://tu-ip/static/css/style.css
+STATIC_URL = 'static/'
 
-# 1. Dónde buscará Django archivos estáticos adicionales (opcional)
+# 2. Carpetas adicionales donde tú escribes tus archivos de desarrollo
+# Django buscará aquí ADEMÁS de las carpetas 'static' de cada app y de la raiz
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-# 2. La URL pública para acceder a los archivos (ej: http://tu-ip/static/)
-STATIC_URL = 'static/'
+# 3. LA MÁS IMPORTANTE: Carpeta física de destino (Producción)
+# Aquí es donde 'collectstatic' copiará todo y donde Nginx/Apache buscarán.
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# 3. LA MÁS IMPORTANTE: La carpeta física donde se reunirá todo
-# Es la carpeta que leerá Nginx o Apache en el servidor
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+2. Ejecución del Comando
 
-2. Cómo se usa el comando
-
-Una vez configurado el STATIC_ROOT, abre tu terminal (con el entorno virtual
-activado) y ejecuta:
+Una vez configurado el STATIC_ROOT ejecuta:
 
 $ python manage.py collectstatic
 
-133 static files copied to '/home/user/Django_6_crud/staticfiles'.
+Lo que sucede internamente:
 
-Lo que sucedió:
+-Django escanea las carpetas static/ de cada una de tus INSTALLED_APPS y de la
+raiz.
 
--Django escaneará todas tus carpetas static/ dentro de cada app.
-
--Buscará los archivos estáticos del panel de administración
+-Incluye los archivos estáticos del panel de administración
 (django.contrib.admin).
 
--Copiara todo a la carpeta que definiste en STATIC_ROOT (en el ejemplo superior,
-una carpeta llamada staticfiles/).
+-Busca en las carpetas listadas en STATICFILES_DIRS.
+
+-Copia absolutamente todo a la carpeta definida en STATIC_ROOT (ej.
+staticfiles/).
 
 3. Diferencia entre Desarrollo y Producción
 
--En Desarrollo (DEBUG = True): No necesitas usar collectstatic. Django es lo
-suficientemente inteligente para encontrar los archivos "al vuelo" en cada app.
+-En Desarrollo (DEBUG = True): No es obligatorio usar collectstatic. Django
+encuentra los archivos "al vuelo" en cada app para facilitar el trabajo rápido.
 
-En Producción (DEBUG = False): Django deja de servir archivos estáticos por
-razones de seguridad y rendimiento. Es obligatorio ejecutar collectstatic y
-configurar tu servidor web (Nginx/Apache) para que apunte a la carpeta
-STATIC_ROOT.
+-En Producción (DEBUG = False): Django deja de servir archivos estáticos por
+razones de seguridad. Es obligatorio ejecutar collectstatic y configurar el
+servidor web (Nginx) para que apunte a STATIC_ROOT.
 
-Consejos útiles para tu entorno Debian:
+4. Configuración de URLs Principales
 
--Permisos: Si ejecutas el comando y te da error de "Permission Denied",
-asegúrate de que el usuario aosorio tenga permisos de escritura en la carpeta
-del proyecto.
+Para que los estáticos carguen mientras pruebas con Gunicorn en tu red local
+(con DEBUG = True), debes añadir lo siguiente en tu urls.py principal:
 
--Limpieza: Si quieres borrar todo lo anterior antes de recolectar de nuevo,
-usa:
-
-$ python manage.py collectstatic --noinput --clear
-
--Archivos de usuario: No confundas archivos estáticos (CSS/JS del programador)
-con archivos media (fotos subidas por los usuarios). Para las fotos de usuario
-se usa MEDIA_ROOT y MEDIA_URL, y esos no los gestiona collectstatic.
-
-Por último agregar esto en las urls principales:
-
-from django.contrib import admin
-from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -12505,22 +12551,260 @@ urlpatterns = [
     path('products/', include('apps.product.urls')),
 ]
 
-# Solo sirve estáticos mediante Django si estamos en DEBUG
+# Servir archivos estáticos a través de Django solo durante el desarrollo
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.BASE_DIR / "static")
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-Reiniciamos el servicio para que tome los cambios de collectstatic:
+Consejos útiles para tu entorno Debian
 
-$ sudo systemctl daemon-reload
+-Permisos: Si recibes un error de Permission Denied, asegúrate de que tu usuario
+tenga permisos de escritura:
 
-$ sudo systemctl enable django.service
+$ sudo chown -R $USER:$USER /home/aosorio/tu_proyecto
 
-$ sudo systemctl start django.service
+-Limpieza Total: Si quieres borrar archivos viejos antes de recolectar los nuevos:
 
-Visitamos la url dentro de la red interna, deberían cargar los estáticos sin
-problemas.
+$ python manage.py collectstatic --clear
+
+-Estáticos vs Media: No confundas archivos estáticos (CSS/JS del sistema) con
+archivos Media (fotos subidas por usuarios). Los Media usan MEDIA_ROOT y no son
+gestionados por collectstatic.
+
+Reiniciar el Servicio en Debian
+
+Tras ejecutar collectstatic y modificar el código, reinicia tu servicio para
+aplicar cambios:
+
+$ sudo systemctl restart django.service
+
+Ahora visitamos la url dentro de la red interna, deberían cargar los estáticos
+sin problemas.
 
 Fuente
 ======
 
 Gemini IA
+
+=======================================
+Filtro de búsqueda por cédula en Django
+=======================================
+
+En este ejemplo el filtro permite buscar registros por número de cédula desde el
+listado, mejorando la usabilidad del sistema al facilitar la localización rápida
+de personas.
+
+El template incluye un formulario que envía los datos vía GET a la misma vista,
+manteniendo la URL compartible y permitiendo recargar la página sin perder el
+filtro.
+
+<div class="card mb-4 shadow-sm">
+    <div class="card-body">
+        <form method="GET" action="{% url 'registers:home' %}" class="row g-3">
+            <div class="col-md-4">
+                <label for="q" class="form-label fw-bold">Buscar por Cédula</label>
+                <input
+                    type="text"
+                    name="q"
+                    id="q"
+                    class="form-control"
+                    value="{{ query_cedula }}"
+                    placeholder="Ingrese número de cédula"
+                >
+                <div class="form-text">Búsqueda parcial (ej: "123" encuentra "123456")</div>
+            </div>
+            <div class="col-md-4 d-flex align-items-end gap-2">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-filter"></i> Filtrar
+                </button>
+
+                {# Botón "Limpiar" - Solo aparece cuando hay un filtro activo #}
+                {% if query_cedula %}
+                    <a href="{% url 'registers:home' %}" class="btn btn-outline-danger">
+                        <i class="fas fa-eraser"></i> Limpiar filtro
+                    </a>
+                {% endif %}
+            </div>
+        </form>
+
+        {# Indicador de filtro activo #}
+        {% if query_cedula %}
+            <div class="mt-2 text-info">
+                <i class="fas fa-info-circle"></i> Mostrando resultados para cédula que contiene:
+                <strong>"{{ query_cedula }}"</strong>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+La vista home captura el parámetro q de la URL y lo utiliza para filtrar
+el QuerySet antes de enviarlo al template. Se utiliza icontains para permitir
+búsquedas parciales (ej: "12" encuentra "123", "512", etc.). ya con la data
+filtrada en el template consultamos los datos de registers que va en el
+contexto.
+
+@login_required
+def home(request):
+    # Capturamos los parámetros de filtrado desde la URL
+    query_cedula = request.GET.get('q', '')
+
+    # QuerySet para la TABLA (mantiene el orden cronológico)
+    registers = Register.objects.all().order_by('-created_at')
+
+    # Aplicamos filtros a los registros de la tabla
+    if query_cedula:
+        registers = registers.filter(cedula__icontains=query_cedula)
+
+    # Construcción del contexto
+    context = {
+        'registers': registers,          # Datos para la tabla
+        'query_cedula': query_cedula,
+    }
+
+    return render(request, 'registers/home.html', context)
+
+Ejemplo: https://github.com/argenisosorio/Django_6_crud/tree/app-oxigen
+
+=================================
+Exportar datos en .xlsx en Django
+=================================
+
+1- Usaremos la librería openpyxl que es una biblioteca de Python especializada en
+la lectura y escritura de archivos de Excel con formato .xlsx, .xlsm, .xltx y
+.xltm (el estándar de Microsoft Office). Debemos instalar el paquete.
+
+$ pip install openpyxl
+
+2- Modificamos el template para agregar un botón para exportar la data de la
+tabla en formato .xlsx:
+
+<a href="export=1" class="btn btn-success mb-3">
+    <i class="fas fa-file-excel"></i> Exportar .xlsx
+</a>
+
+3- Creamos la url que va a responder al botón:
+
+path('exportar/xlsx/', views.export_registers_xlsx, name='export_xlsx'),
+
+4- Creamos el método en views.py que responde a la llamada de exportación:
+
+import openpyxl
+from django.http import HttpResponse
+
+
+def export_registers_xlsx(queryset):
+    """Función auxiliar para generar el archivo .xlsx"""
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Reporte de Registros"
+
+    # Definir encabezados
+    headers = [
+        'Nombre',
+        'Email',
+        'Edad'
+    ]
+    ws.append(headers)
+
+    # Estilo básico para la cabecera (Opcional pero recomendado)
+    for cell in ws[1]:
+        cell.font = openpyxl.styles.Font(bold=True)
+
+    # Agregar los datos del QuerySet filtrado
+    for reg in queryset:
+        ws.append([
+            reg.name,
+            reg.email,
+            reg.age,
+        ])
+
+    # Ajustar ancho de columnas automáticamente
+    for col in ws.columns:
+        max_length = 0
+        column = col[0].column_letter
+        for cell in col:
+            if cell.value:
+                max_length = max(max_length, len(str(cell.value)))
+        ws.column_dimensions[column].width = max_length + 2
+
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    )
+    response['Content-Disposition'] = 'attachment; filename="report.xlsx"'
+    wb.save(response)
+
+    return response
+
+5- Modificamos la vista que lista los registros para que reciba el query
+enviando desde el template y llame al método que exporta los datos:
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Person
+from .forms import PersonForm
+import openpyxl
+from django.http import HttpResponse
+
+
+def home(request):
+    people = Person.objects.all()
+
+    if 'export' in request.GET:
+        return export_registers_xlsx(people)
+
+    context = {
+        'people': people,
+    }
+    return render(request, 'person/home.html', context)
+
+Ejemplo completo: https://github.com/argenisosorio/Django_6_crud/tree/test/export-data-xlsx
+
+==============================================================================
+Agregar un campo para asociar el id del usuario autenticado al registro creado
+==============================================================================
+
+En el modelo agregar el siguiente campo:
+
+from django.conf import settings # Importante para referenciar el User model
+
+# Nuevo campo para almacenar quién hizo el registro
+    user = models.ForeignKey(
+    settings.AUTH_USER_MODEL,
+    on_delete=models.CASCADE, # Si se borra el usuario, se borran sus registros (o usa SET_NULL si prefieres conservarlos)
+    related_name='registros_realizados',
+    verbose_name="Registrado por:"
+)
+
+En el form agregar lo siguiente:
+
+#fields = '__all__'
+
+# Excluimos el campo de usuario para que no aparezca en el HTML
+exclude = ['user']
+
+En el template que lista y/o detalla el registro debe quedar así:
+
+<dt class="mt-2">Usuario creador:</dt>
+<dd>{{ register.user }}</dd>
+
+y en el view de crear registro debe quedar así:
+
+def create_person(request):
+    if request.method == 'POST':
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            # 1. Creamos la instancia en memoria, NO en la base de datos aún
+            nuevo_registro = form.save(commit=False)
+
+            # 2. Asignamos el usuario que está logueado actualmente
+            nuevo_registro.user = request.user
+
+            # 3. Ahora sí, guardamos definitivamente en la BD
+            nuevo_registro.save()
+
+            return redirect('person:home')
+    else:
+        form = PersonForm()
+
+    context = {'form': form}
+    return render(request, 'person/create.html', context)
+
+Ejemplo completo: https://github.com/argenisosorio/Django_6_crud/tree/feat/user-associated-with-record
