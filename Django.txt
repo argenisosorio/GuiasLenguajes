@@ -12251,6 +12251,14 @@ Gemini IA
 
 https://github.com/KaimJaws/Django_6_crud/tree/test/validate-errors
 
+Ejemplo de validaciones y mensajes robustos
+===========================================
+
+Validaciones y sus respectivos mensajes en models.py y forms.py y capturados
+en el template con el valor de form.errors.
+
+Ejemplo completo: https://github.com/argenisosorio/Django_6_crud/tree/test/api-django-ninja-capture-errors
+
 ================================================================================
 En Django, si escribo una validación y su mensaje en el modelo y la misma en el
 form cual se ejecutará primero al enviar los datos desde el template?
@@ -12813,3 +12821,65 @@ def create_person(request):
     return render(request, 'person/create.html', context)
 
 Ejemplo completo: https://github.com/argenisosorio/Django_6_crud/tree/feat/user-associated-with-record
+
+===========================================
+LANGUAGE_CODE, TIME_ZONE, USE_I18N y USE_TZ
+===========================================
+
+Configurar correctamente estas variables es el primer paso para que tu
+aplicación de Django no solo hable el idioma de tus usuarios, sino que también
+maneje el tiempo de forma profesional.
+
+1. LANGUAGE_CODE
+
+Esta variable define el idioma por defecto de la aplicación.
+
+-Determina en qué idioma se mostrarán los mensajes internos de Django (como el
+sitio de Administración) y las traducciones que tú definas.
+
+-El formato sigue el estándar BCP 47.
+
+-'es-es' indica español de España, mientras que 'es-ve' aplica regionalismos
+específicos de Venezuela si están disponibles en las traducciones de Django.
+
+2. TIME_ZONE
+
+Establece la zona horaria predeterminada para tu proyecto.
+
+-Al poner 'America/Caracas', le dices a Django que, cada vez que muestres una
+fecha o una hora en un formulario o template, debe ajustarse al desfase horario
+de Venezuela (UTC-4).
+
+-Es vital para que funciones como timezone.now() sepan en qué parte del mundo
+"viven" tus datos por defecto.
+
+3. USE_I18N
+
+Significa Internationalization (Internacionalización). El "18" es por las
+dieciocho letras que hay entre la "i" y la "n".
+
+-True: Activa el sistema de traducción de Django. Permite que la app pueda cambiar de idioma según el usuario.
+
+False: Django optimiza un poco el rendimiento al no cargar las librerías de
+traducción, mostrando todo en el idioma base.
+
+4. USE_TZ
+
+Esta es, quizás, la más importante para la integridad de tus datos. Significa
+Use Time Zones.
+
+-True (Recomendado): Django almacenará todas las fechas y horas en la base de
+datos en formato UTC (Tiempo Universal Coordinado). Solo cuando se muestran al
+usuario se convierten a la zona horaria definida en TIME_ZONE.
+
+-False: Django guardará las fechas en la base de datos usando directamente la
+hora local de TIME_ZONE.
+
+Nota de experto: Siempre mantén USE_TZ = True. Si tu app crece y tienes usuarios
+en diferentes países, será una pesadilla convertir horas si no las guardaste
+originalmente en UTC.
+
+Fuente
+======
+
+Gemini IA

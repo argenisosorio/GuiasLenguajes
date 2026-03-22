@@ -14311,3 +14311,47 @@ Fuente
 ======
 
 Gemini IA
+
+======================================
+Renombrar archivos de manera aleatoria
+======================================
+
+En Linux, la forma más eficiente y segura de hacer esto es con un pequeño bucle
+de shell.
+
+Como tus archivos tienen espacios, comillas y caracteres especiales, necesitamos
+un comando que sea "robusto" para que no se rompa al procesar nombres complejos.
+
+Puedes ejecutar este comando directamente en tu terminal dentro de la carpeta
+donde están los archivos:
+
+$ for f in *.*; do ext="${f##*.}"; name=$(head /dev/urandom | tr -dc a-z0-9 | head -c 10); mv -v "$f" "${name}.${ext}"; done
+
+¿Qué hace exactamente este comando?
+
+-for f in *.*; do: Inicia un bucle que toma cada archivo que tenga una extensión.
+
+-ext="${f##*.}": Extrae la extensión del archivo original (por ejemplo, mp3 o wav) y la guarda en una variable.
+
+-name=$(head /dev/urandom | tr -dc a-z0-9 | head -c 10):
+  -Lee datos aleatorios de /dev/urandom.
+  -Limpia el ruido para dejar solo letras minúsculas y números (a-z0-9).
+  -Corta el resultado a exactamente 10 caracteres.
+  -mv -v "$f" "${name}.${ext}": Renombra el archivo original al nuevo nombre aleatorio conservando su extensión original. El -v (verbose) te mostrará en pantalla qué archivo se cambió y por cuál.
+  -done: Finaliza el proceso.
+
+Ejemplo de resultado:
+
+CANNED HEAT - LET'S WORK TOGETHER.mp3 → x8j2m9l1p4.mp3
+Sangue da Cidade - Brilhar a Minha Estrela (HQ).wav → 7k3b5n2v9w.wav
+
+Consejo de seguridad: Siempre es buena idea hacer una copia de seguridad o
+probar primero con un echo antes del mv para ver qué pasaría sin ejecutar el
+cambio real:
+
+$ for f in *.*; do ext="${f##*.}"; name=$(head /dev/urandom | tr -dc a-z0-9 | head -c 10); echo "Renombrando $f a ${name}.${ext}"; done
+
+Fuente
+======
+
+Gemini IA
