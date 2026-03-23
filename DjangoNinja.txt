@@ -457,3 +457,38 @@ Fuente
 ======
 
 Google IA
+
+====================================================
+Devolver mensajes de validación de django con el API
+====================================================
+
+Validaciones robustas y sus respectivos mensajes en models.py y forms.py,
+capturados en api.py y devueltos en formato json como este:
+
+{
+  "errors": {
+    "email": [
+      {
+        "message": "Enter a valid email address.",
+        "code": "invalid"
+      }
+    ],
+    "name": [
+      {
+        "message": "El campo Nombre solo debe contener letras y espacios.",
+        "code": "invalid"
+      }
+    ]
+  }
+}
+
+Algunos mensajes los toma genéricos de resto toma los mensajes personalizados;
+
+Ejemplo completo: https://github.com/argenisosorio/Django_6_crud/tree/test/api-django-ninja-capture-errors
+
+================================================================================
+Ejemplo de API Django Ninja que devuelva mensajes de validación hacia un front
+en formato json y mostrarlos en el front
+================================================================================
+
+Ejemplo completo: https://github.com/argenisosorio/Django_6_Ninja_Nuxt4_Bootstrap_5/tree/feat/capture-errors-in-nuxt-page

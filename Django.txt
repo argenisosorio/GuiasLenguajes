@@ -509,8 +509,6 @@ Creamos un template donde mostraremos nuestro formulario basado en los modelos
 de la base de datos, podemos usar el modelo como base para los forms, creamos el
 template con el formulario, el metodo etc.
 
-
-
 <form method="POST"> {% csrf_token %} Este es el token de segridad.
     {{ form }}
     <input type="submit" value="Enviar">
@@ -12251,6 +12249,14 @@ Gemini IA
 
 https://github.com/KaimJaws/Django_6_crud/tree/test/validate-errors
 
+Ejemplo de validaciones y mensajes robustos
+===========================================
+
+Validaciones y sus respectivos mensajes en models.py y forms.py y capturados
+en el template con el valor de form.errors.
+
+Ejemplo completo: https://github.com/argenisosorio/Django_6_crud/tree/test/api-django-ninja-capture-errors
+
 ================================================================================
 En Django, si escribo una validación y su mensaje en el modelo y la misma en el
 form cual se ejecutará primero al enviar los datos desde el template?
@@ -12318,44 +12324,272 @@ Fuente
 
 Gemini IA
 
+========================================================
+Arrancar servidor de Django automáticamente en red local
+========================================================
+
+Para lograr que tu sistema Django se ejecute automáticamente y sea accesible
+desde tu IP local 192.168.12.216, no basta con usar el comando runserver, ya que
+este es solo para desarrollo. En un entorno profesional, lo correcto es
+configurar un Servicio del Sistema (Systemd).
+
+1. Permitir la IP en Django
+
+Primero, edita tu archivo settings.py para que Django acepte peticiones desde tu
+IP de red:
+
+# settings.py
+ALLOWED_HOSTS = ['192.168.12.216', '127.0.0.1', 'localhost']
+
+2. Crear un Script de Arranque (Gunicorn)
+
+Es recomendable usar Gunicorn como servidor de aplicaciones. Instálalo en tu
+entorno virtual:
+
+$ pip install gunicorn
+
+Luego, crea un archivo llamado start_server.sh en la raíz de tu proyecto con
+este contenido:
+
+---
+
+#!/bin/bash
+
+# 1. Definir rutas absolutas confirmadas
+PROJECT_DIR="/home/user/Documentos/Proyectos/Django/Django_6_crud"
+# Ruta completa al gunicorn dentro del entorno virtual
+GUNICORN_EXEC="/home/user/.pyenv/versions/Django_6/bin/gunicorn"
+
+# 2. Navegar a la carpeta del proyecto
+cd $PROJECT_DIR
+
+# 3. Ejecutar Gunicorn
+# 'exec' asegura que gunicorn reciba las señales de parada de systemd correctamente
+exec $GUNICORN_EXEC \
+    --workers 3 \
+    --bind 0.0.0.0:8000 \
+    Django_6_crud.wsgi:application
+
+---
+
+Dale permisos de ejecución:
+
+$ chmod +x start_server.sh
+
+Notas:
+
+Usar 0.0.0.0 en lugar de una IP específica (como 192.168.12.216) es una práctica
+recomendada en servidores por varias razones de estabilidad y flexibilidad.
+
+En el mundo de las redes, 0.0.0.0 no es una dirección física, sino una
+instrucción que le dice a Gunicorn: "Escucha en todas las interfaces de red
+disponibles en esta máquina".
+
+Si usas 192.168.12.216: Gunicorn solo responderá a peticiones que lleguen por
+esa IP. Si mañana tu router le asigna la 192.168.12.200 a tu Debian, el servicio
+fallará al arrancar porque intentará "atarse" (bind) a una IP que ya no le
+pertenece.
+
+Si usas 0.0.0.0: Responderá a través de localhost (127.0.0.1), a través de tu
+IP de red local (192.168.1.x) e incluso a través de una VPN si la tuvieras. No
+importa si tu IP cambia, el servicio siempre encontrará la interfaz activa.
+
+3. Crear el Servicio en Systemd
+
+Ahora configuraremos Debian para que ejecute ese script al encender la
+computadora. Crea el siguiente archivo con privilegios de root:
+
+$ sudo nano /etc/systemd/system/django.service
+
+Pega el siguiente contenido (ajusta las rutas a tu realidad):
+
+[Unit]
+Description=Servicio Gunicorn para Django
+After=network.target
+
+[Service]
+User=user_maquina
+Group=www-data
+WorkingDirectory=/home/user_maquina/Documentos/Proyectos/Django/Django_6_crud
+ExecStart=/home/user_maquina/Documentos/Proyectos/Django/Django_6_crud/start_server.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+4. Habilitar y Arrancar
+
+Finalmente, registra el servicio para que inicie con el Sistema Operativo:
+
+Recargar el demonio de systemd para que reconozca el nuevo archivo
+
+$ sudo systemctl daemon-reload
+
+Habilitar para que inicie automáticamente al bootear
+
+$ sudo systemctl enable django.service
+
+Arrancar el servicio ahora mismo
+
+$ sudo systemctl start django.service
+
+5. Verificación
+
+Puedes chequear el estado con:
+
+$ sudo systemctl status django.service
+
+Si todo está en verde (active (running)), ahora cualquier equipo en tu red local
+podrá entrar a tu sistema simplemente escribiendo http://192.168.12.216:8000 en
+el navegador.
+
+Eliminar el sevicio creado
+==========================
+
+Para eliminar por completo el "demonio" (servicio de systemd) que creamos en tu
+Debian, debes seguir un orden específico para que el sistema no intente
+revivirlo o deje archivos basura en las carpetas de configuración.
+1. Detener y deshabilitar el servicio
+
+Primero, ordenamos a systemd que deje de ejecutar el proceso y que no lo inicie
+automáticamente al encender la computadora.
+
+Detener el proceso actual
+
+$ sudo systemctl stop django.service
+
+Evitar que arranque al iniciar el sistema
+
+$ sudo systemctl disable django.service
+
+2. Eliminar el archivo de configuración
+
+Ahora borramos el archivo de unidad que creamos en la carpeta del sistema.
+
+$ sudo rm /etc/systemd/system/django.service
+
+3. Limpiar el registro de systemd
+
+Como acabas de borrar un archivo que el sistema tenía "mapeado", debes recargar
+el demonio de control para que se dé cuenta de que ya no existe.
+
+$ sudo systemctl daemon-reload
+
+(Opcional) Limpia los registros de fallos anteriores
+
+$ sudo systemctl reset-failed
+
+Fuente
+======
+
+Gemini IA
+
 =========================
 collectstatic en Django 6
 =========================
 
-Si los archivos están físicamente en la carpeta, pero el navegador no los carga
-(probablemente ves errores 404 en la consola), el problema suele estar en que el
-servidor web (Apache o Nginx) no sabe dónde buscarlos o Django no ha "reunido"
-los archivos en la carpeta final de producción.
+En Django 6, el comando collectstatic es una herramienta fundamental para el
+despliegue. Su función principal es reunir todos los archivos estáticos (CSS,
+JavaScript, imágenes de diseño) de todas tus aplicaciones en una sola carpeta
+centralizada.
 
-1. Ejecutar el comando Collectstatic
+¿Por qué es necesario?
+======================
 
-En desarrollo, Django busca los archivos en las carpetas de cada app, pero en
-producción (con DEBUG = False), Django espera que todos estén en una única
-carpeta central.
+Durante el desarrollo, cada una de tus aplicaciones (users, registers, admin)
+tiene su propia carpeta static/. Sin embargo, en producción (usando Gunicorn,
+Nginx o Apache), el servidor web no puede buscar archivos en decenas de carpetas
+diferentes. Necesita un solo lugar de referencia para optimizar el rendimiento.
 
-Ejecuta esto en tu terminal dentro de la carpeta del proyecto:
+1. Configuración en settings.py
 
-$ python manage.py collectstatic
+Antes de ejecutar el comando, debes definir tres variables clave. Asegúrate de
+no duplicarlas:
 
-Esto copiará tu bootstrap.min.css desde la carpeta de desarrollo hacia la ruta
-definida en STATIC_ROOT.
-
-2. Verificar los Settings
-
-Asegúrate de que en tu settings.py tengas estas tres variables configuradas
-correctamente:
-
-# La URL que verás en el HTML (ej: /static/css/...)
+# 1. La URL pública para acceder a los archivos desde el navegador
+# Ejemplo: http://tu-ip/static/css/style.css
 STATIC_URL = 'static/'
 
-# Las carpetas donde tú escribes tus archivos de desarrollo
+# 2. Carpetas adicionales donde tú escribes tus archivos de desarrollo
+# Django buscará aquí ADEMÁS de las carpetas 'static' de cada app y de la raiz
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-# La carpeta FÍSICA donde el servidor web buscará los archivos (Producción)
-# Generalmente fuera de la carpeta de código por seguridad
+# 3. LA MÁS IMPORTANTE: Carpeta física de destino (Producción)
+# Aquí es donde 'collectstatic' copiará todo y donde Nginx/Apache buscarán.
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+2. Ejecución del Comando
+
+Una vez configurado el STATIC_ROOT ejecuta:
+
+$ python manage.py collectstatic
+
+Lo que sucede internamente:
+
+-Django escanea las carpetas static/ de cada una de tus INSTALLED_APPS y de la
+raiz.
+
+-Incluye los archivos estáticos del panel de administración
+(django.contrib.admin).
+
+-Busca en las carpetas listadas en STATICFILES_DIRS.
+
+-Copia absolutamente todo a la carpeta definida en STATIC_ROOT (ej.
+staticfiles/).
+
+3. Diferencia entre Desarrollo y Producción
+
+-En Desarrollo (DEBUG = True): No es obligatorio usar collectstatic. Django
+encuentra los archivos "al vuelo" en cada app para facilitar el trabajo rápido.
+
+-En Producción (DEBUG = False): Django deja de servir archivos estáticos por
+razones de seguridad. Es obligatorio ejecutar collectstatic y configurar el
+servidor web (Nginx) para que apunte a STATIC_ROOT.
+
+4. Configuración de URLs Principales
+
+Para que los estáticos carguen mientras pruebas con Gunicorn en tu red local
+(con DEBUG = True), debes añadir lo siguiente en tu urls.py principal:
+
+from django.conf import settings
+from django.conf.urls.static import static
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('apps.person.urls')),
+    path('products/', include('apps.product.urls')),
+]
+
+# Servir archivos estáticos a través de Django solo durante el desarrollo
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+Consejos útiles para tu entorno Debian
+
+-Permisos: Si recibes un error de Permission Denied, asegúrate de que tu usuario
+tenga permisos de escritura:
+
+$ sudo chown -R $USER:$USER /home/aosorio/tu_proyecto
+
+-Limpieza Total: Si quieres borrar archivos viejos antes de recolectar los nuevos:
+
+$ python manage.py collectstatic --clear
+
+-Estáticos vs Media: No confundas archivos estáticos (CSS/JS del sistema) con
+archivos Media (fotos subidas por usuarios). Los Media usan MEDIA_ROOT y no son
+gestionados por collectstatic.
+
+Reiniciar el Servicio en Debian
+
+Tras ejecutar collectstatic y modificar el código, reinicia tu servicio para
+aplicar cambios:
+
+$ sudo systemctl restart django.service
+
+Ahora visitamos la url dentro de la red interna, deberían cargar los estáticos
+sin problemas al igual que en /admin deben cargar todos.
 
 Fuente
 ======
@@ -12652,6 +12886,63 @@ SESSION_SAVE_EVERY_REQUEST = True
 Nota técnica: Después de cambiar estos valores en settings.py, no necesitas
 hacer migraciones, pero los usuarios que ya tengan una sesión iniciada
 conservarán el tiempo viejo hasta que vuelvan a loguearse.
+=======
+===========================================
+LANGUAGE_CODE, TIME_ZONE, USE_I18N y USE_TZ
+===========================================
+
+Configurar correctamente estas variables es el primer paso para que tu
+aplicación de Django no solo hable el idioma de tus usuarios, sino que también
+maneje el tiempo de forma profesional.
+
+1. LANGUAGE_CODE
+
+Esta variable define el idioma por defecto de la aplicación.
+
+-Determina en qué idioma se mostrarán los mensajes internos de Django (como el
+sitio de Administración) y las traducciones que tú definas.
+
+-El formato sigue el estándar BCP 47.
+
+-'es-es' indica español de España, mientras que 'es-ve' aplica regionalismos
+específicos de Venezuela si están disponibles en las traducciones de Django.
+
+2. TIME_ZONE
+
+Establece la zona horaria predeterminada para tu proyecto.
+
+-Al poner 'America/Caracas', le dices a Django que, cada vez que muestres una
+fecha o una hora en un formulario o template, debe ajustarse al desfase horario
+de Venezuela (UTC-4).
+
+-Es vital para que funciones como timezone.now() sepan en qué parte del mundo
+"viven" tus datos por defecto.
+
+3. USE_I18N
+
+Significa Internationalization (Internacionalización). El "18" es por las
+dieciocho letras que hay entre la "i" y la "n".
+
+-True: Activa el sistema de traducción de Django. Permite que la app pueda cambiar de idioma según el usuario.
+
+False: Django optimiza un poco el rendimiento al no cargar las librerías de
+traducción, mostrando todo en el idioma base.
+
+4. USE_TZ
+
+Esta es, quizás, la más importante para la integridad de tus datos. Significa
+Use Time Zones.
+
+-True (Recomendado): Django almacenará todas las fechas y horas en la base de
+datos en formato UTC (Tiempo Universal Coordinado). Solo cuando se muestran al
+usuario se convierten a la zona horaria definida en TIME_ZONE.
+
+-False: Django guardará las fechas en la base de datos usando directamente la
+hora local de TIME_ZONE.
+
+Nota de experto: Siempre mantén USE_TZ = True. Si tu app crece y tienes usuarios
+en diferentes países, será una pesadilla convertir horas si no las guardaste
+originalmente en UTC.
 
 Fuente
 ======
