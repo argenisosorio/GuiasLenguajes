@@ -12585,3 +12585,75 @@ def create_person(request):
     return render(request, 'person/create.html', context)
 
 Ejemplo completo: https://github.com/argenisosorio/Django_6_crud/tree/feat/user-associated-with-record
+
+============================
+Tiempo de sesión en Django 6
+============================
+
+Por defecto, en Django 6 (al igual que en versiones anteriores), la sesión de un
+usuario dura 2 semanas (exactamente 1,209,600 segundos).
+
+Esta configuración significa que si el usuario marca "Recordarme" o simplemente
+inicia sesión, Django mantendrá la cookie válida en el navegador por ese
+periodo, a menos que el usuario cierre la sesión manualmente.
+
+¿Se puede configurar?
+
+Sí, y es muy sencillo. Todo se controla desde el archivo settings.py. Aquí
+tienes las variables más importantes para ajustar el comportamiento según lo que
+necesites para tu sistema:
+
+1. Duración fija de la sesión
+
+Si quieres que la sesión dure, por ejemplo, solo 1 hora, añade esto:
+
+# Tiempo en segundos (60 seg * 60 min = 3600)
+SESSION_COOKIE_AGE = 3600 
+
+2. Sesión al cerrar el navegador
+
+Si prefieres que la sesión se destruya apenas el usuario cierre la pestaña o el
+navegador (común en sistemas bancarios o de alta seguridad), usa:
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
+3. Renovación de sesión (Session Save)
+
+Si quieres que el tiempo de expiración se "resetee" cada vez que el usuario haga
+una acción (para que no se le cierre la sesión mientras está trabajando
+activamente), usa:
+
+SESSION_SAVE_EVERY_REQUEST = True
+
+Tipos de Expiración en Django:
+
+Es importante entender que existen dos formas en las que Django maneja esto:
+
+-Basada en tiempo (Persistent Cookies): La sesión expira en una fecha y hora
+específicas calculadas desde el login.
+
+-Basada en actividad: La sesión expira tras un periodo de inactividad (esto se
+logra combinando las variables anteriores).
+
+Ejemplo de configuración para un sistema administrativo (Seguro)
+
+Si estás montando un sistema y quieres un equilibrio entre seguridad y
+comodidad, podrías usar algo así:
+
+# La sesión dura 4 horas
+SESSION_COOKIE_AGE = 14400 
+
+# Se cierra si cierran el navegador
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True 
+
+# Se refresca con cada clic para que no expire mientras trabajan
+SESSION_SAVE_EVERY_REQUEST = True 
+
+Nota técnica: Después de cambiar estos valores en settings.py, no necesitas
+hacer migraciones, pero los usuarios que ya tengan una sesión iniciada
+conservarán el tiempo viejo hasta que vuelvan a loguearse.
+
+Fuente
+======
+
+Gemini IA
