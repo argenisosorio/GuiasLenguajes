@@ -421,7 +421,31 @@ Elimina una tabla asi como sus registros.
 
 nombredb=# DROP TABLE nombre_tabla
 
------
+========================================================================
+Eliminar todas las tablas de una BD en PostgreSQL con una sola sentencia
+========================================================================
+
+Eliminar y recrear el esquema:
+
+my_db# DROP SCHEMA public CASCADE; CREATE SCHEMA public;
+
+¿Qué hace?
+==========
+
+-Elimina TODO el esquema public (tablas, vistas, funciones, etc.)
+
+-Recrea el esquema vacío como recién creado
+
+Ventajas
+========
+
+-Una sola sentencia (bueno, dos)
+
+-Elimina ABSOLUTAMENTE todo
+
+-Es la forma más limpia
+
+------------------------------------------------------------
 
 Agregar un nuevo campo a una tabla.
 

@@ -12886,7 +12886,7 @@ SESSION_SAVE_EVERY_REQUEST = True
 Nota técnica: Después de cambiar estos valores en settings.py, no necesitas
 hacer migraciones, pero los usuarios que ya tengan una sesión iniciada
 conservarán el tiempo viejo hasta que vuelvan a loguearse.
-=======
+
 ===========================================
 LANGUAGE_CODE, TIME_ZONE, USE_I18N y USE_TZ
 ===========================================
@@ -12944,7 +12944,240 @@ Nota de experto: Siempre mantén USE_TZ = True. Si tu app crece y tienes usuario
 en diferentes países, será una pesadilla convertir horas si no las guardaste
 originalmente en UTC.
 
-Fuente
-======
+Gestión de Zonas Horarias: De Laravel a Django
+==============================================
+
+Acá se detalla las diferencias arquitectónicas entre Laravel y Django respecto
+al manejo del tiempo, explica la configuración interna de Django y documenta el
+proceso para estandarizar los datos exportados de Laravel mediante un script de
+Python durante la migración del proyecto SINIDOT.
+
+Cómo Manejan las Fechas Laravel y Django
+========================================
+
+El manejo del tiempo es uno de los mayores desafíos en la ingeniería de
+software. Aunque ambos frameworks buscan la precisión, utilizan enfoques
+distintos a nivel de base de datos.
+
+El Enfoque de Laravel (Fechas Ingenuas)
+=======================================
+
+Por defecto, Laravel utiliza la librería Carbon y configura la aplicación en
+UTC. Cuando guardas un modelo, Laravel toma la fecha, la convierte a un texto
+simple (ej. 2023-05-24 20:02:55) y la envía a PostgreSQL.
+
+Laravel instruye a la base de datos a crear columnas del tipo timestamp without
+time zone (sin zona horaria). Esto crea una "fecha ingenua": la base de datos
+guarda los números, pero no sabe a qué parte del mundo pertenecen. Laravel
+simplemente confía en que todo lo que entra y sale de esa columna es UTC.
+
+El Enfoque de Django (Fechas Conscientes)
+=========================================
+
+Django, al estar basado en Python, prefiere reglas estrictas. Si configuras tu
+proyecto para usar zonas horarias, Django exige "fechas conscientes"
+(aware datetimes).
+
+A nivel de base de datos, Django instruye a PostgreSQL a crear columnas del tipo
+timestamp with time zone. Esto significa que cada fecha guardada tiene un ancla
+geográfica absoluta (ej. 2023-05-24 20:02:55+00:00). Django nunca adivina; sabe
+con certeza matemática cuándo ocurrió un evento en la historia.
+
+Variables de Configuración en Django
+====================================
+
+En el archivo settings.py de tu proyecto, existen dos variables fundamentales
+que controlan este comportamiento.
+
+¿Qué es USE_TZ?
+===============
+
+USE_TZ es un valor booleano (True o False). Al establecer USE_TZ = True, le
+dices a Django: "Activa el motor interno de zonas horarias". Cuando esto está
+activo, Django toma cualquier fecha que los usuarios envíen, la convierte a la
+zona horaria universal (UTC) y la guarda así en la base de datos. Es la mejor
+práctica de desarrollo porque hace que tu base de datos sea inmune a cambios de
+servidor o migraciones de país.
+
+¿Qué es TIME_ZONE?
+==================
+
+TIME_ZONE define la zona horaria predeterminada de la interfaz de usuario. Al
+establecer TIME_ZONE = 'America/Caracas', le estás indicando a Django cómo
+quieres mostrar la información, no cómo quieres guardarla.
+
+Django tomará las fechas guardadas en UTC y matemáticamente les restará 4 horas
+para mostrarlas en el panel de administración, en las plantillas HTML o en las
+respuestas de una API.
+
+¿Qué es UTC? (Coordinated Universal Time / Tiempo Universal Coordinado)
+=======================================================================
+
+Es el estándar internacional de tiempo que sirve como referencia global. En
+desarrollo web, trabajar con UTC significa que todas las fechas y horas se
+almacenan y manejan en un formato único, universal y sin zonas horarias.
+
+Ejemplo Práctico: Caracas vs. Londres
+=====================================
+
+Para entender el poder de USE_TZ y TIME_ZONE, imaginemos un sistema global donde
+ocurren dos eventos.
+
+El Registro de los Eventos (Almacenamiento)
+
+1. Un usuario en Caracas hace una compra a las 10:00 AM (hora local de Caracas).
+Como Caracas es UTC-4, Django convierte esa hora y guarda en la base de datos:
+14:00:00+00:00.
+
+2. Un usuario en Londres hace una compra a las 6:00 PM (hora de Londres, que en
+invierno es UTC+0). Django guarda en la base de datos: 18:00:00+00:00.
+
+Ambos registros están ahora estandarizados en la base de datos bajo la misma
+línea de tiempo universal (UTC).
+
+La Visualización de los Eventos (Lectura)
+
+Ahora, el administrador del sistema en Venezuela (cuyo proyecto tiene
+TIME_ZONE = 'America/Caracas') abre el panel para ver las ventas.
+
+1. Para la venta de Caracas, Django lee 14:00:00+00:00, le aplica el ajuste de
+Caracas (-4 horas) y muestra en pantalla: 10:00 AM.
+
+2. Para la venta de Londres, Django lee 18:00:00+00:00, le aplica el ajuste de
+Caracas (-4 horas) y muestra en pantalla: 2:00 PM.
+
+De esta manera, el administrador en Caracas ve todos los eventos globales
+convertidos perfectamente a su propia hora local, sin importar en qué país
+ocurrió la acción original.
+
+Proceso de Estandarización mediante Script Python
+
+En lugar de alterar el esquema de la base de datos directamente, una práctica
+excelente de ingeniería es limpiar y estandarizar los datos en tránsito. Si
+exportamos los datos de Laravel a un archivo CSV, podemos usar un script en
+Python para transformar las fechas "ingenuas" en "conscientes" antes de
+importarlas al nuevo esquema de Django.
+
+La Solución: Concatenar el Offset UTC
+
+Cuando exportamos datos de Laravel, obtenemos una cadena ingenua como
+2023-05-24 20:02:55. Al concatenar +00:00 al final (2023-05-24 20:02:55+00:00),
+convertimos esta cadena al estándar internacional ISO 8601. Esto le indica
+explícitamente a PostgreSQL y a Django que esta hora pertenece a la zona UTC
+absoluta, eliminando cualquier ambigüedad.
+
+Script de Transformación
+========================
+
+A continuación, se presenta un script robusto en Python que lee el CSV original,
+añade el offset UTC a las columnas de fecha (como created_at y updated_at), y
+genera un nuevo CSV listo para ser importado:
+
+users.csv
+
+id,name,created_at,updated_at
+1,NESTOR ENRIQUE ZAPATA GONZALEZ,2023-07-19 13:02:46,2025-03-17 14:21:02
+2,Betty M Rodriguez,2023-07-19 13:15:05,2025-03-17 14:21:03
+3,Rosa María Dalias Briceño,2023-07-11 19:44:43,2025-03-17 14:21:03
+4,Sandra de Carmen Rojas Sarabia,2023-07-14 15:12:06,2025-03-17 14:21:03
+
+-----
+
+import csv
+from pathlib import Path
+from typing import Dict, Any
+
+# Definición de rutas utilizando pathlib para compatibilidad entre sistemas operativos
+SOURCE_FILE = Path('./users.csv')
+DESTINATION_FILE = Path('./users_transformado.csv')
+
+FIELDNAMES = [
+    'id', 'name', 'created_at', 'updated_at'
+]
+
+def format_datetime_to_utc(date_str: str) -> str:
+    """
+    Añade el offset UTC a una cadena de fecha y hora ingenua.
+    Retorna una cadena vacía si la entrada está vacía o es None.
+    """
+    if not date_str:
+        return ""
+
+    # Programación defensiva: si ya tiene un offset, lo retorna sin modificar
+    if '+' in date_str or 'Z' in date_str:
+        return date_str
+
+    return f"{date_str}+00:00"
+
+def transform_user_row(row: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    Aplica las reglas de negocio para transformar una fila de usuario de Laravel
+    en una fila compatible con Django.
+    """
+    password_original = row.get('password', '')
+    password_modified = f"bcrypt${password_original}" if password_original else ""
+
+    # Procesar las fechas una sola vez para usarlas en múltiples lugares
+    created_at_utc = format_datetime_to_utc(row.get('created_at', ''))
+
+    return {
+        'id': row.get('id'),
+        'name': row.get('name'),
+        'created_at': created_at_utc,
+        'updated_at': format_datetime_to_utc(row.get('updated_at', '')),
+    }
+
+def main() -> None:
+    """Función principal de ejecución para manejar la lectura y escritura de archivos."""
+    with SOURCE_FILE.open(mode='r', encoding='utf-8') as infile:
+        reader = csv.DictReader(infile)
+
+        with DESTINATION_FILE.open(mode='w', encoding='utf-8', newline='') as outfile:
+            writer = csv.DictWriter(outfile, fieldnames=FIELDNAMES)
+            writer.writeheader()
+
+            for row in reader:
+                transformed_row = transform_user_row(row)
+                writer.writerow(transformed_row)
+
+    print(f"¡Éxito! Se ha generado '{DESTINATION_FILE}' con las contraseñas y fechas actualizadas.")
+
+if __name__ == '__main__':
+    main()
+
+-----
+
+Ejecución del script:
+
+$ python3 test.py
+
+¡Éxito! Se ha generado 'users_transformado.csv' con las contraseñas y fechas actualizadas.
+
+Archivo generado:
+
+users_transformado.csv
+
+id,name,created_at,updated_at
+1,NESTOR ENRIQUE ZAPATA GONZALEZ,2023-07-19 13:02:46+00:00,2025-03-17 14:21:02+00:00
+2,Betty M Rodriguez,2023-07-19 13:15:05+00:00,2025-03-17 14:21:03+00:00
+3,Rosa María Dalias Briceño,2023-07-11 19:44:43+00:00,2025-03-17 14:21:03+00:00
+4,Sandra de Carmen Rojas Sarabia,2023-07-14 15:12:06+00:00,2025-03-17 14:21:03+00:00
+
+Importación a PostgreSQL
+========================
+
+Una vez generado el archivo transformado, cópialo a un directorio accesible
+globalmente (como /tmp/) y utiliza la consola de PostgreSQL (psql) para cargar
+los datos. Para este ejemplo estamos usando la tabla users vacía:
+
+1. Sigue los pasos definidos en Guía Técnica: Ingeniería Inversa y Estrategia
+de Migración de Modelos a Django, hasta el paso donde se generan las migraciones
+iniciales de los modelos de Django.
+
+2. Importa el CSV: \copy users FROM '/tmp/users_transformado.csv' WITH (FORMAT csv, HEADER true);
+
+Fuentes
+=======
 
 Gemini IA
+Natanael Rojo
