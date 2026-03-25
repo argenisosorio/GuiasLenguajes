@@ -13170,11 +13170,7 @@ Una vez generado el archivo transformado, cópialo a un directorio accesible
 globalmente (como /tmp/) y utiliza la consola de PostgreSQL (psql) para cargar
 los datos. Para este ejemplo estamos usando la tabla users vacía:
 
-1. Sigue los pasos definidos en Guía Técnica: Ingeniería Inversa y Estrategia
-de Migración de Modelos a Django, hasta el paso donde se generan las migraciones
-iniciales de los modelos de Django.
-
-2. Importa el CSV: \copy users FROM '/tmp/users_transformado.csv' WITH (FORMAT csv, HEADER true);
+db_name=# \copy users FROM '/tmp/users_transformado.csv' WITH (FORMAT csv, HEADER true);
 
 Fuentes
 =======
