@@ -1641,6 +1641,130 @@ Fuente
 
 https://www.conventionalcommits.org/es/v1.0.0-beta.3/
 
+Más ejemplos:
+
+• fix: Este tipo de commit se utiliza para corregir un error en el código
+fuente. Se corresponde con el número de versión PATCH en el versionado semántico. 
+
+• hotfix: Este tipo de commit se utiliza para corregir un error crítico en
+producción que requiere una solución inmediata. A diferencia de un fix
+convencional, un hotfix se aplica directamente sobre la rama principal
+(main/master) sin pasar por el flujo habitual de desarrollo, permitiendo una
+respuesta rápida ante incidentes urgentes. Se corresponde con el número de
+versión PATCH en el versionado semántico, aunque su aplicación suele generar un
+incremento de versión inmediato. 
+
+• feat: Este tipo de commit se emplea para agregar una nueva funcionalidad al
+código. Se corresponde con el número de versión MINOR en el versionado
+semántico. 
+
+• BREAKING CHANGE: Un commit que contiene el texto BREAKING CHANGE indica un
+cambio que rompe la compatibilidad con versiones anteriores del software. Este
+tipo de cambio se corresponde con el número de versión MAJOR en el versionado
+semántico. 
+
+• docs: Este tipo de commit está relacionado con modificaciones en los archivos
+de documentación del software. 
+
+• chore: Cambios en tareas de mantenimiento, configuración, dependencias o
+procesos de build que no afectan el código fuente de producción. 
+
+• refactor: Reestructuración del código sin cambiar su comportamiento externo.
+Mejora la legibilidad, mantenibilidad o rendimiento interno. 
+
+• style: Cambios relacionados con formato de código, espacios, punto y coma,
+etc. No afectan la lógica del programa. 
+
+• test: Adición, modificación o corrección de pruebas automatizadas (unitarias,
+integración, etc.).
+
+• perf: Mejoras de rendimiento que optimizan la velocidad, consumo de memoria o
+eficiencia del código. 
+
+• ci: Cambios en la configuración de integración continua (GitHub Actions,
+GitLab CI, Jenkins, etc.). 
+
+• build: Cambios que afectan el sistema de construcción o dependencias externas
+(webpack, npm, pip, etc.). 
+
+• revert: Deshace un commit anterior. Generalmente incluye el hash del commit
+revertido en el mensaje.
+      
+Ejemplos de mensajes de commits
+
+fix
+
+fix: arreglada validación de cédula que permitía letras. 
+fix: reparado cálculo de edad que mostraba años negativos.
+
+hotfix 
+
+hotfix: reparado error de login que impedía acceso a usuarios. 
+hotfix: solucionada caída del servidor al exportar reportes. 
+
+feat 
+feat: agregada búsqueda por cédula en listado de registros. 
+feat: implementada exportación de reportes a hoja de cálculo.
+
+BREAKING CHANGE 
+
+BREAKING CHANGE: Las APIs existentes deben actualizarse para enviar números en lugar de texto.
+BREAKING CHANGE: Los consultas de los clientes que consuman la API deben actualizarse. 
+
+refactor
+
+refactor: renombrado campo 'cedula' a 'cedula_identidad'. 
+
+docs 
+
+docs: actualizado manual de usuario del sistema > módulo de reportes. 
+docs: corregido error ortográfico en documentación de API. 
+
+chore 
+
+chore: actualizada versión de Django de 5.0 a 6.1. 
+chore: agregado archivo .gitignore para entornos virtuales.
+ 
+refactor 
+
+refactor: extraída lógica de validación de RIF a una función separada. 
+refactor: renombrada variable 'reg_fil' a 'registros_filtrados'. 
+
+style 
+
+style: agregados espacios entre operadores para mejor legibilidad.
+style: eliminadas líneas en blanco innecesarias. 
+
+test 
+
+test: agregadas pruebas unitarias para validación de cédula. 
+test: corregida prueba de registro que fallaba con datos vacíos. 
+
+perf 
+
+perf: optimizada consulta de listado agregando índices a la BD. 
+perf: cacheados resultados de consulta de panel de estadísticas. 
+
+ci 
+
+ci: agregado workflow para despliegue automático.
+ci: actualizada versión de Python en pipeline de CI.
+ 
+build 
+
+build: agregado requirements.txt con todas las dependencias.
+build: actualizada versión de Node.js para compilación del frontend.
+
+revert 
+
+revert: deshechos cambios de búsqueda por cédula, se revierte el commit a1b2c3d4e5f6g7h8i9j0.
+revert: deshechos cambios de cálculo de edad, se revierte el commit a1b245d4e5f6g778i9j0.
+
+Fuente
+======
+
+MDCSL v3 de CENDITEL
+
 =================================
 Resolución de conflictos en merge
 =================================
