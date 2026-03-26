@@ -271,6 +271,28 @@ const c = 1;
 console.log(a > b || c > b);
 // expected output: true
 
+Ejemplo simple:
+
+Si la variable note tiene el valor 'X' o 'Y' hacer algo, si no, hacer otra cosas
+
+if (note === 'X' || note === 'Y') {
+  console.log("Note es X o Y")
+} else {
+  console.log("Note no es X o Y")
+}
+
+=== (comparación estricta): Verifica tanto el valor como el tipo de dato. 'X' es
+string, por lo que note debe ser exactamente el string 'X' para que sea verdadero.
+
+Versión equivalente más concisa
+
+Si solo quieres asignar un valor en lugar de mostrar en consola:
+
+const message = (note === 'X' || note === 'Y') 
+  ? "Note es X o Y" 
+  : "Note no es X o Y";
+console.log(message);
+
 Operadores de comparación
 =========================
 
