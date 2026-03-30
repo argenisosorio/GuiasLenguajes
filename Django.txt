@@ -13196,3 +13196,631 @@ se pueden ejecutar comandos y scripts de Python.
 
 5- Uns vez esté instalado pip se pueden instalar las dependencias con pip como
 Django, entre otras que se necesiten.
+
+=======================================
+Probando Docker + un proyecto de Django
+=======================================
+
+¿Qué es Docker?
+===============
+
+Docker es una plataforma de virtualización (o contenedorización) a nivel del
+sistema operativo, que permite a las aplicaciones compartir el núcleo del
+sistema operativo anfitrión en lugar de ejecutar un sistema operativo invitado
+independiente, como ocurre en la virtualización tradicional. Este diseño hace
+que los contenedores de Docker sean ligeros, rápidos y portátiles, al tiempo que
+los mantiene aislados entre sí.
+
+-Escrito en el lenguaje de programación Go.
+
+-Compatible con instalaciones en Windows, macOS y Linux (Docker Engine se
+ejecuta de forma nativa en Linux).
+
+-Resuelve el problema de «funciona en mi máquina» al garantizar que el código se
+ejecute de forma idéntica en todos los entornos.
+
+-A diferencia de VMware (virtualización a nivel de hardware), Docker opera a
+nivel del sistema operativo.
+
+Antes de Docker
+===============
+
+La implementación de aplicaciones en distintos entornos solía ser complicada;
+las dependencias, las configuraciones y las variaciones entre sistemas
+operativos provocaban problemas del tipo «funciona aquí, pero no allí».
+
+La solución de Docker
+=====================
+
+Estandariza el entorno de ejecución al agrupar todo (aplicación + dependencias)
+en contenedores.
+
+-Portabilidad: Se ejecuta en cualquier lugar: en el equipo local, en la nube o
+en servidores locales.
+
+-Consistencia: Mismo comportamiento en desarrollo, pruebas y producción.
+
+-Ligereza: No se necesita un sistema operativo completo por aplicación; los
+contenedores comparten el núcleo del host.
+
+-Escalabilidad: Ideal para microservicios y orquestadores como Kubernetes y
+Docker Swarm.
+
+-Eficiencia: Se inicia en segundos y consume menos recursos del sistema.
+
+Arquitectura
+============
+
+Se comunican a través de una API REST mediante sockets UNIX o una interfaz de
+red.
+
+-Docker se basa en un modelo cliente-servidor.
+
+-El cliente de Docker envía solicitudes al demonio de Docker.
+
+-El demonio de Docker se encarga de las tareas relacionadas con el ciclo de vida
+de los contenedores.
+
+-La comunicación se realiza a través de una API REST utilizando sockets o redes.
+
+El modelo arquitectónico básico
+===============================
+
+-Cliente de Docker: El cliente de Docker es la interfaz principal para los
+usuarios. Cuando ejecutas comandos como `docker run` o `docker build`, el
+cliente los traduce en solicitudes de la API REST y los envía al demonio de
+Docker.
+
+-Host de Docker: Es la máquina donde ocurre la magia. Ejecuta el demonio de
+Docker (dockerd) y proporciona el entorno para ejecutar y gestionar
+contenedores.
+
+-Registro de Docker: Se trata de un repositorio remoto para almacenar y
+distribuir tus imágenes de Docker.
+
+Esta interacción forma un bucle sencillo pero potente: utilizas el cliente para
+enviar comandos al demonio en el host, que puede extraer imágenes de un registro
+para ejecutarlas como contenedores.
+
+Componentes de Docker
+=====================
+
+A continuación se enumeran algunos de los componentes clave de Docker:
+
+-Docker Engine: Docker Engine cuenta con un componente central, el demonio de
+Docker, que se encarga de la creación y la gestión de contenedores.
+
+-Dockerfile: es un archivo que describe los pasos para crear una imagen
+rápidamente.
+
+-Docker Image: Docker Image es una plantilla de solo lectura que se utiliza para
+crear contenedores y que contiene el código de la aplicación y sus
+dependencias.
+
+-Docker Hub: Es un repositorio basado en la nube que se utiliza para buscar y
+compartir imágenes de contenedores.
+
+-Registro de Docker: Es un sistema de distribución y almacenamiento de imágenes
+de Docker, donde se pueden almacenar las imágenes tanto en modo público como
+privado.
+
+Comandos de Docker
+==================
+
+Gracias a la introducción de los comandos esenciales de Docker, este se ha
+convertido en una potente herramienta para optimizar el proceso de gestión de
+contenedores. Contribuye a garantizar flujos de trabajo de desarrollo e
+implementación fluidos. A continuación se enumeran algunos de los comandos de
+Docker más utilizados:
+
+-Docker Run: se utiliza para iniciar contenedores a partir de imágenes,
+especificando las opciones de ejecución y los comandos.
+
+-Docker Pull: Descarga las imágenes de contenedores desde un registro de
+contenedores, como Docker Hub, a la máquina local.
+
+-Docker ps: Ayuda a mostrar los contenedores en ejecución junto con información
+importante, como el ID del contenedor, la imagen utilizada y el estado.
+
+-Docker Stop: Ayuda a detener los contenedores en ejecución, cerrando de forma
+ordenada los procesos que contienen.
+
+-Docker Start: ayuda a reiniciar los contenedores detenidos, reanudando sus
+operaciones desde el estado anterior.
+
+-Docker Login: ayuda a iniciar sesión en el registro de Docker, lo que permite
+el acceso a repositorios privados.
+
+Instalación de Docker Engine
+============================
+
+Antes de instalar Docker Engine por primera vez en un nuevo equipo host, debes
+configurar el repositorio apt de Docker. A continuación, podrás instalar y
+actualizar Docker desde el repositorio.
+
+1. Configura el repositorio apt de Docker con su firma difital:
+
+$ sudo apt update
+
+$ sudo apt install ca-certificates curl
+
+$ sudo install -m 0755 -d /etc/apt/keyrings
+
+$ sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+
+$ sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+Agrega el repositorio a las fuentes de Apt:
+
+$ sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/debian
+Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+$ sudo apt update
+
+2. Instalar los paquetes de Docker
+
+$ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+3. Verificar que la instalación sea exitosa corriendo la imagen hello-world
+
+$ sudo docker run hello-world
+
+Nota: El servicio Docker se inicia automáticamente tras la instalación. Para
+comprobar que Docker está en ejecución, utiliza:
+
+$ sudo systemctl status docker
+
+En algunos sistemas, es posible que esta función esté desactivada y sea
+necesario iniciarlo manualmente:
+
+$ sudo systemctl start docker
+
+Instalación de Docker Desktop
+
+Para instalar Docker Desktop correctamente, tu equipo host Linux debe cumplir
+los siguientes requisitos generales:
+
+-Kernel de 64 bits y CPU compatible con virtualización.
+
+-Compatibilidad con la virtualización KVM. Sigue las instrucciones de
+compatibilidad con la virtualización KVM para comprobar si los módulos del
+kernel KVM están habilitados y cómo proporcionar acceso al dispositivo KVM.
+
+-QEMU debe ser la versión 5.2 o posterior. Recomendamos actualizar a la última
+versión.
+
+-Sistema de inicio systemd.
+
+-En muchas distribuciones de Linux, el entorno GNOME no admite iconos de la
+bandeja del sistema. Para añadir compatibilidad con los iconos de la bandeja,
+debe instalar una extensión de GNOME. Por ejemplo, AppIndicator.
+
+-Al menos 4 GB de RAM.
+
+-Habilite la configuración de la asignación de ID en los espacios de nombres de
+usuario; consulte Compartir archivos. Tenga en cuenta que, para Docker Desktop
+versión 4.35 y posteriores, esto ya no es necesario.
+
+-Recomendado: Inicialice Pass para la gestión de credenciales.
+
+Para revisar si tienes los modulos de KVM activos corre este este comandos
+
+$ lsmod | grep kvm
+
+En tal caso que no lo tengas activo, hay que entrar en la configuración de la
+BIOS de la PC y activa esta opción en la BIOS/UEFI de tu sistema. Busca términos
+como «Intel Virtualization Technology» (Intel VT-x) o «Extensiones de
+virtualización» en los menús de configuración de la CPU o del chipset. Una vez
+activada, puede que sea necesario apagar completamente el equipo (desenchufar el
+cable de alimentación y, en el caso de los portátiles, retirar la batería
+temporalmente si es posible) antes de reiniciarlo.
+
+Ejemplo:
+
+$ lsmod | grep kvm
+kvm_intel             380928  0
+kvm                  1146880  1 kvm_intel
+irqbypass              16384  1 kvm
+
+El comando lsmod | grep kvm te muestra que los módulos de KVM están cargados en
+tu sistema
+
++------------+------------+-----------+--------------------------------------------------+
+| Módulo     | Tamaño     | Usado por | Significado                                      |
++------------+------------+-----------+--------------------------------------------------+
+| kvm_intel  | 380928     | 0         | Módulo específico para procesadores Intel con    |
+|            | bytes      |           | tecnología de virtualización (VT-x)              |
++------------+------------+-----------+--------------------------------------------------+
+| kvm        | 1146880    | 1         | Núcleo de KVM (Kernel-based Virtual Machine).    |
+|            | bytes      | (kvm_intel)| Es el módulo principal de virtualización        |
++------------+------------+-----------+--------------------------------------------------+
+| irqbypass  | 16384      | 1         | Permite que las interrupciones pasen             |
+|            | bytes      | (kvm)     | directamente a las máquinas virtuales,           |
+|            |            |           | mejorando el rendimiento de E/S                  |
++------------+------------+-----------+--------------------------------------------------+
+
+¿Qué significa esto?
+
+La virtualización por hardware está activada en tu sistem   a
+
+Puedes ejecutar máquinas virtuales con QEMU/KVM, VirtualBox, etc   .
+
+Tu procesador Intel soporta VT-x (tecnología de virtualización   )
+
+Notas importantes:
+
+-kvm_intel está cargado pero con 0 en la columna "Used by" - esto es normal
+porque aún no tienes máquinas virtuales ejecutándose.
+
+-kvm es usado por kvm_intel (relación de dependencia)
+
+-irqbypass mejora el rendimiento de E/S en máquinas virtuales.
+
+Docker Build y Docker Compose
+=============================
+
+Al configurar tu canalización de CI/CD, una decisión crucial a la que te
+enfrentarás es cómo compilar tus imágenes de Docker. ¿Deberías utilizar
+comandos «docker build» sin más o aprovechar «docker-compose build»? Tras haber
+implementado ambos enfoques en numerosos proyectos, voy a analizar las ventajas,
+los inconvenientes y los casos de uso ideales de cada método.
+
+La diferencia fundamental:
+
+En esencia, la elección se reduce al alcance:
+
+-Docker Build: operaciones de contenedores individuales
+
+-Docker Compose Build: orquestación de aplicaciones con múltiples contenedores
+
+Factores clave para la toma de decisiones
+=========================================
+
+Ten en cuenta estas preguntas para elegir el enfoque adecuado:
+
+¿Cuántos servicios tiene tu aplicación?
+
+1 servicio → Docker podría ser suficiente
+
+2 o más servicios → Docker Compose es mejor
+
+2. ¿Tienen los servicios dependencias?
+
+Sí → Docker Compose se encarga de esto automáticamente
+
+3. ¿Utiliza tu equipo Docker Compose para el desarrollo?
+
+Sí → Mantén la coherencia en CI/CD
+
+4. ¿Necesitas funciones avanzadas de compilación?
+
+Compilaciones en varias etapas → Docker podría ofrecer más control
+
+Prueba real con un proyecto de Django
+=====================================
+
+Estructura de archivos necesaria para la prueba:
+
+mi_proyecto_django/
+├── Dockerfile
+├── docker-compose.yml
+├── Makefile
+├── start.sh
+├── .env
+├── requirements.txt
+├── manage.py
+├── apps/
+└── ...
+
+¿Dónde crear cada archivo?
+==========================
+
++----------------------+------------------------+-----------------------+
+| Archivo              | Ubicación              | ¿Crearlo manualmente? |
++----------------------+------------------------+-----------------------+
+| Dockerfile           | Raíz del proyecto      | Sí                    |
++----------------------+------------------------+-----------------------+
+| docker-compose.yml   | Raíz del proyecto      | Sí                    |
++----------------------+------------------------+-----------------------+
+| Makefile             | Raíz del proyecto      | Sí                    |
++----------------------+------------------------+-----------------------+
+| start.sh             | Raíz del proyecto      | Sí                    |
++----------------------+------------------------+-----------------------+
+| .env                 | Raíz del proyecto      | Sí                    |
++----------------------+------------------------+-----------------------+
+| requirements.txt     | Raíz del proyecto      | Sí (si no existe)     |
++----------------------+------------------------+-----------------------+
+
+Dockerfile
+==========
+
+FROM python:3.12-slim
+
+# Establecer directorio de trabajo
+WORKDIR /app
+
+# Copiar archivos de requisitos primero (mejora la caché)
+COPY requirements.txt .
+
+# Instalar dependencias
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar el resto del código
+COPY . .
+
+# Dar permisos de ejecución al script start.sh
+RUN chmod +x start.sh
+
+# Exponer el puerto de Django
+EXPOSE 8000
+
+# Comando para ejecutar el contenedor
+CMD ["./start.sh"]
+
+docker-compose.yml
+==================
+
+services:
+  db:
+    image: postgres:15
+    container_name: django_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    container_name: django_app
+    restart: always
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    command: ["./start.sh"]
+
+volumes:
+  postgres_data:
+
+start.sh
+========
+
+#!/bin/bash
+
+echo "Esperando a que PostgreSQL esté listo..."
+sleep 5
+
+echo "Ejecutando migraciones..."
+python manage.py makemigrations --no-input
+python manage.py migrate --no-input
+
+echo "Iniciando servidor Django..."
+python manage.py runserver 0.0.0.0:8000
+
+Makefile
+========
+
+DEV_COMPOSE_FILE := docker-compose.yml
+
+# Construir la imagen
+build:
+	docker compose -f $(DEV_COMPOSE_FILE) build
+
+# Levantar los contenedores
+up:
+	docker compose -f $(DEV_COMPOSE_FILE) up
+
+# Levantar en segundo plano
+up-d:
+	docker compose -f $(DEV_COMPOSE_FILE) up -d
+
+# Detener contenedores
+down:
+	docker compose -f $(DEV_COMPOSE_FILE) down
+
+# Ver logs
+logs:
+	docker compose -f $(DEV_COMPOSE_FILE) logs -f
+
+# Ejecutar comandos dentro del contenedor
+shell:
+	docker compose -f $(DEV_COMPOSE_FILE) exec web bash
+
+# Reiniciar contenedores
+restart:
+	docker compose -f $(DEV_COMPOSE_FILE) restart
+
+# Ver estado
+ps:
+	docker compose -f $(DEV_COMPOSE_FILE) ps
+
+# Limpiar todo (volúmenes incluidos)
+clean:
+	docker compose -f $(DEV_COMPOSE_FILE) down -v
+
+.env
+====
+
+DB_NAME=test_django_db
+DB_USER=postgres
+DB_PASSWORD=postgres
+HOST=db
+PORT=5432
+
+-----
+
+La base de datos NO debe estar creada previamente.
+
+Docker Compose + PostgreSQL se encarga de crearla automáticamente.
+
+¿Qué hace Docker automáticamente?
+
+Cuando usas la imagen oficial de postgres con las variables de entorno, Docker:
+
+-Crea la base de datos automáticamente si no existe
+
+-Crea el usuario automáticamente
+
+-Asigna la contraseña automáticamente
+
+yaml
+
+environment:
+  POSTGRES_DB: test_django_db   # ← Crea esta BD
+  POSTGRES_USER: postgres      # ← Crea este usuario
+  POSTGRES_PASSWORD: postgres  # ← Asigna esta contraseña
+
+¿Qué NO hace automáticamente?
+
+Django necesita que las tablas estén creadas. Pero eso lo haces con:
+
+# Dentro del contenedor o en tu start.sh
+
+$ python manage.py makemigrations
+
+$ python manage.py migrate
+
+Flujo completo (qué pasa cuando ejecutas docker compose up -d)
+
++-------------------+--------------------------------------------------+
+| Paso              | ¿Qué sucede?                                     |
++-------------------+--------------------------------------------------+
+| 1. Inicia db      | PostgreSQL crea automáticamente la BD y el       |
+|                   | usuario definido en POSTGRES_DB, POSTGRES_USER   |
++-------------------+--------------------------------------------------+
+| 2. Inicia web     | Django intenta conectar a la BD (usa HOST=db)    |
++-------------------+--------------------------------------------------+
+| 3. start.sh       | Ejecuta makemigrations y migrate                 |
+|                   | → Crea las TABLAS dentro de la BD existente      |
++-------------------+--------------------------------------------------+
+| 4. runserver      | Django inicia el servidor                        |
++-------------------+--------------------------------------------------+
+
+Comandos útiles para verificar
+==============================
+
+1. Verificar que el contenedor de BD está corriendo
+
+$ docker compose ps
+
+2. Entrar a PostgreSQL dentro del contenedor
+
+$ docker compose exec db psql -U postgres
+
+3. Dentro de psql, listar las bases de datos
+\l
+
+4. Ver las tablas de tu BD
+\c test_django_db
+\dt
+
+requirements.txt
+================
+
+Django==6.0.0
+psycopg2-binary
+
+Pasos para ejecutar todo desde cero
+===================================
+
+Paso 1: Crear los archivos
+
+Copia cada uno de los archivos anteriores en la raíz del proyecto.
+
+Paso 2: Dar permisos de ejecución a start.sh
+
+$ chmod +x start.sh
+
+Paso 3: Construir y levantar los contenedores
+
+Opción 1: Usando Make (recomendado)
+
+$ make build
+
+$ make up-d
+
+Opción 2: Comandos directos
+
+$ docker compose build
+
+$ docker compose up -d
+
+Paso 4: Verificar que todo funciona:
+
+Ver logs
+
+$ make logs
+
+---
+
+Ver logs con docker compose
+
+$ docker compose logs -f
+
+---
+
+Ver contenedores activos
+
+$ make ps
+
+Paso 5: Acceder a la aplicación
+
+Abre tu navegador en: http://localhost:8000
+
+Errores comunes y soluciones
+============================
+
+Error 1: start.sh: Permission denied
+
+$ chmod +x start.sh
+
+$ docker compose build
+
+Error 2: Puerto 8000 ya en uso
+
+Cambiar el puerto en docker-compose.yml
+
+ports:
+  - "8001:8000"  # Cambia el puerto del host
+
+Error 3: No se puede conectar a PostgreSQL
+
+# Asegúrate de que el HOST en .env sea "db", no "localhost"
+HOST=db
+
+Error 4: make: command not found
+
+# Instalar make en Linux
+
+$ sudo apt install make
+
+O usar comandos docker directamente
+
+docker compose up -d
+
+Fuentes
+=======
+
+Fabian Palmera
+
+Deerpseek IA
