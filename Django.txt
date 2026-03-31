@@ -8511,8 +8511,6 @@ proyecto-root/
 │   ├── store/             # Gestión de estado (Pinia)
 │   ├── nuxt.config.ts     # Configuración de Nuxt
 │   └── .env               # Variables de entorno frontend (API_URL)
-│
-└── docker-compose.yml     # Para orquestar ambos servicios
 
 2. Capa de Backend: Django (REST Framework)
 
@@ -13312,6 +13310,9 @@ En Debian probablemente no lo necesites. En Linux, Docker corre de forma nativa
 y mucho más eficiente usando el CLI (la terminal). Usar Docker Desktop en Debian
 añade una capa de consumo de recursos innecesaria.
 
+Es importante aclarar que Docker Engine en Linux NO necesita KVM para funcionar
+(corre nativo sobre el kernel). KVM es un requisito para Docker Desktop.
+
 -Docker Build: Es el proceso (y comando) para crear tus propias imágenes
 personalizadas. ¿Cómo funciona? Utiliza un archivo de texto llamado Dockerfile.
 En este archivo escribes las instrucciones (instalar Python, copiar tu código
@@ -13517,6 +13518,8 @@ porque aún no tienes máquinas virtuales ejecutándose.
 
 -irqbypass mejora el rendimiento de E/S en máquinas virtuales.
 
+Nota: El paso de lsmod | grep kvm es solo si decide usar la versión Desktop.
+
 Docker Build y Docker Compose
 =============================
 
@@ -13570,7 +13573,6 @@ mi_proyecto_django/
 ├── .env
 ├── requirements.txt
 ├── manage.py
-├── apps/
 └── ...
 
 ¿Dónde crear cada archivo?
@@ -13623,7 +13625,7 @@ docker-compose.yml
 
 services:
   db:
-    image: postgres:15
+    image: postgres:17
     container_name: django_postgres
     restart: always
     environment:
@@ -13658,19 +13660,49 @@ services:
 volumes:
   postgres_data:
 
+settings.py
+===========
+
+import os
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': 'db',
+        'PORT': '5432',
+    }
+}
+
 start.sh
 ========
 
 #!/bin/bash
 
-echo "Esperando a que PostgreSQL esté listo..."
-sleep 5
+# Función para esperar a la base de datos
+# Usamos las variables de entorno que ya tienes definidas en el docker-compose
+echo "----- Esperando a que PostgreSQL esté listo en el host: $DB_HOST..."
 
-echo "Ejecutando migraciones..."
-python manage.py makemigrations --no-input
+until pg_isready -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER"
+do
+  echo "----- Postgres aún no responde... reintentando en 2 segundos"
+  sleep 2
+done
+
+echo "----- ¡PostgreSQL está listo! Procediendo con las tareas de Django..."
+
+# Ejecutando migraciones
+# --no-input evita que el script se detenga pidiendo confirmaciones
+echo "----- Revisando cambios en los modelos..."
+python manage.py makemigrations person product --no-input
+
+echo "----- Aplicando migraciones a la base de datos..."
 python manage.py migrate --no-input
 
-echo "Iniciando servidor Django..."
+# Iniciando el servidor de desarrollo
+echo "----- Iniciando servidor Django en http://0.0.0.0:8000"
 python manage.py runserver 0.0.0.0:8000
 
 Makefile
@@ -13722,7 +13754,7 @@ Nota: Por estándar histórico, Make requiere estrictamente el uso de tabuladore
 
 DB_NAME=test_django_db
 DB_USER=postgres
-DB_PASSWORD=postgres
+DB_PASSWORD=123456
 HOST=db
 PORT=5432
 
@@ -13746,7 +13778,7 @@ yaml
 
 environment:
   POSTGRES_DB: test_django_db   # ← Crea esta BD
-  POSTGRES_USER: postgres      # ← Crea este usuario
+  POSTGRES_USER: postgres      # ← Crea o usa este usuario
   POSTGRES_PASSWORD: postgres  # ← Asigna esta contraseña
 
 ¿Qué NO hace automáticamente?
@@ -13793,22 +13825,35 @@ $ docker compose exec db psql -U postgres
 \c test_django_db
 \dt
 
+5. Detener y eliminar los contenedores actuales
+
+$ docker compose down
+
+6. Levantar todo de nuevo (esto volverá a leer el settings.py corregido)
+
+$ make up-d
+
 requirements.txt
 ================
 
 Django==6.0.0
 psycopg[binary]
 
-Pasos para ejecutar todo desde cero
-===================================
+Probar todo lo anterior, la prueba de fuego
+===========================================
 
 Paso 1: Crear los archivos
 
-Copia cada uno de los archivos anteriores en la raíz del proyecto.
+Copia cada uno de los archivos necesarios (Dockerfile, docker-compose.yml,
+Makefile, etc.) en la raíz de tu proyecto.
 
 Paso 2: Dar permisos de ejecución a start.sh
 
 $ chmod +x start.sh
+
+El comando chmod +x (change mode + execute) le otorga permisos de ejecución al
+script. Sin esto, Linux lo trataría como un simple archivo de texto y no
+permitiría que Docker lo ejecute al iniciar el contenedor.
 
 Paso 3: Construir y levantar los contenedores
 
@@ -13816,31 +13861,49 @@ Opción 1: Usando Make (recomendado)
 
 $ make build
 
+Ejecuta las instrucciones del archivo Makefile. Normalmente es un atajo para
+construir las imágenes personalizadas de tu proyecto basadas en el Dockerfile.
+
 $ make up-d
+
+Levanta los servicios definidos en tu configuración. El sufijo -d (detached)
+hace que los contenedores corran en segundo plano, liberando tu terminal para
+seguir usándola.
 
 Opción 2: Comandos directos
 
 $ docker compose build
 
+Lee el archivo docker-compose.yml y descarga o construye las imágenes de cada
+servicio (base de datos, Python/Django, etc.).
+
 $ docker compose up -d
 
-Paso 4: Verificar que todo funciona:
+Crea y arranca los contenedores. Si no existen las imágenes, las construye
+primero; si ya existen, simplemente inicia los servicios.
 
-Ver logs
+Paso 4: Verificar que todo funciona
+
+Ver logs con Make
 
 $ make logs
 
----
+Muestra la salida por consola de lo que está ocurriendo dentro de tus
+contenedores (útil para ver errores de Django o conexiones a la base de datos).
 
 Ver logs con docker compose
 
 $ docker compose logs -f
 
----
+El parámetro -f (follow) mantiene la terminal "enganchada" a los logs,
+mostrándote en tiempo real lo que sucede conforme vas usando la aplicación.
 
 Ver contenedores activos
 
-$ make ps
+$ sudo make ps
+
+Listado rápido de los contenedores del proyecto. Te permite ver el Status
+(si están Up o si se reiniciaron por error) y qué Puertos están exponiendo.
 
 Paso 5: Acceder a la aplicación
 
@@ -13849,37 +13912,132 @@ Abre tu navegador en: http://localhost:8000
 Errores comunes y soluciones
 ============================
 
-Error 1: start.sh: Permission denied
+1- start.sh: Permission denied
 
 $ chmod +x start.sh
 
 $ docker compose build
 
-Error 2: Puerto 8000 ya en uso
+-----
+
+2- Puerto 8000 ya en uso
 
 Cambiar el puerto en docker-compose.yml
 
 ports:
   - "8001:8000"  # Cambia el puerto del host
 
-Error 3: No se puede conectar a PostgreSQL
+-----
+
+3- No se puede conectar a PostgreSQL
 
 # Asegúrate de que el HOST en .env sea "db", no "localhost"
 HOST=db
 
-Error 4: make: command not found
+-----
 
-# Instalar make en Linux
+4- make: command not found
+
+Instalar make en Linux
 
 $ sudo apt install make
 
 O usar comandos docker directamente
 
-docker compose up -d
+$ docker compose up -d
+
+-----
+
+5- permission denied while trying to connect to the docker API at unix:///var/run/docker.sock
+
+Clásico error de permisos de Docker en Linux. El mensaje permission denied
+indica que tu usuario actual no tiene permiso para acceder al socket de Docker
+(/var/run/docker.sock), el cual, por defecto, solo es accesible para el usuario
+root y los miembros del grupo docker.
+
+Para ejecutar comandos de Docker sin usar sudo, debes añadir tu usuario al grupo
+docker.
+
+$ sudo groupadd docker
+
+Si no existe y se crea o si indica que ya existe proceder con el siguiente
+comando.
+
+$ sudo usermod -aG docker $USER
+
+Para que el sistema reconozca el nuevo grupo sin reiniciar, ejecuta:
+  
+$ newgrp docker
+
+Verificar la creación del grupo:
+
+$ groups
+
+docker cdrom floppy audio dip video plugdev users netdev scanner bluetooth lpadmin my_user
+
+6- Error response from daemon: failed to set up container networking: driver
+failed programming external connectivity on endpoint django_postgres
+failed to bind host port 0.0.0.0:5432/tcp: address already in use
+
+Significa un conflicto de puertos. El error address already in use significa que
+ya hay algo ocupando el puerto 5432 en la máquina Debian.
+
+Lo más probable es que aya una instancia de PostgreSQL instalada directamente en
+el sistema operativo (fuera de Docker) y se está iniciando automáticamente.
+
+Identificar qué está usando el puerto:
+
+$ sudo lsof -i :5432
+
+COMMAND   PID     USER FD   TYPE DEVICE SIZE/OFF NODE NAME
+postgres 1689 postgres 6u  IPv6  11882      0t0  TCP localhost:postgresql (LISTEN)
+postgres 1689 postgres 7u  IPv4  11883      0t0  TCP localhost:postgresql (LISTEN)
+
+Se confirma que tienes un servidor de PostgreSQL instalado directamente en
+Debian que se está ejecutando en segundo plano y ha "secuestrado" el puerto
+5432.
+
+Como Docker intenta mapear el mismo puerto de tu computadora hacia el
+contenedor, chocan entre sí.
+
+Detén el servicio de Postgres local, ejecuta este comando para liberar el puerto
+inmediatamente:
+
+$ sudo systemctl stop postgresql
+
+systemctl stop le dice al sistema operativo que apague el proceso postgres con
+PID 1689 que viste en tu comando anterior.
+
+Evita que vuelva a arrancar solo
+
+Si vas a usar Docker para tus proyectos de desarrollo, no necesitas que el
+Postgres nativo se inicie cada vez que prendes la computadora:
+
+$ sudo systemctl disable postgresql
+
+disable quita el servicio del inicio automático, pero no desinstala nada.
+
+Levanta tu proyecto con Docker
+
+Ahora que el puerto está libre, el comando debería funcionar sin problemas:
+
+$ make up-d
+
+Ejemplo completo y funcional: https://github.com/argenisosorio/Django_6_crud/tree/test/deploy-docker
+
+El archivo .dockerignore
+========================
+Es fundamental para que la imagen no pese gigas innecesarios, debe contener:
+
+.git
+__pycache__
+*.pyc
+.env
+venv/
 
 Fuentes
 =======
 
 Fabian Palmera
 
-Deerpseek IA
+Deepseek IA
