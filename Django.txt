@@ -2883,10 +2883,10 @@ ALLOWED_HOSTS = ['data.pythonanywhere.com', 'localhost', '127.0.0.1']
 'data.pythonanywhere.com' Es tu dominio de producción. Permite que el sitio sea
 visible en internet a través de PythonAnywhere.
 
-'localhost'	Se usa para desarrollo local. Es el nombre estándar que apunta a tu
+'localhost' Se usa para desarrollo local. Es el nombre estándar que apunta a tu
 propia máquina.
 
-'127.0.0.1'	Es la dirección IP local (loopback). Al igual que localhost, permite
+'127.0.0.1' Es la dirección IP local (loopback). Al igual que localhost, permite
 que pruebes el sitio en tu computadora.
 
 ALLOWED_HOSTS = ['*']
@@ -13282,10 +13282,8 @@ Esta interacción forma un bucle sencillo pero potente: utilizas el cliente para
 enviar comandos al demonio en el host, que puede extraer imágenes de un registro
 para ejecutarlas como contenedores.
 
-Componentes de Docker
-=====================
-
-A continuación se enumeran algunos de los componentes clave de Docker:
+Glosario
+========
 
 -Docker Engine: Docker Engine cuenta con un componente central, el demonio de
 Docker, que se encarga de la creación y la gestión de contenedores.
@@ -13303,6 +13301,36 @@ compartir imágenes de contenedores.
 -Registro de Docker: Es un sistema de distribución y almacenamiento de imágenes
 de Docker, donde se pueden almacenar las imágenes tanto en modo público como
 privado.
+
+-Docker Desktop: Es una aplicación de interfaz gráfica (GUI) diseñada
+principalmente para Windows y macOS. ¿Qué hace? Instala un entorno completo de
+Docker, incluyendo una máquina virtual ligera (porque Windows/Mac no tienen
+kernel de Linux nativo), una interfaz para ver contenedores, imágenes y
+volúmenes, y herramientas como Kubernetes.
+
+En Debian probablemente no lo necesites. En Linux, Docker corre de forma nativa
+y mucho más eficiente usando el CLI (la terminal). Usar Docker Desktop en Debian
+añade una capa de consumo de recursos innecesaria.
+
+-Docker Build: Es el proceso (y comando) para crear tus propias imágenes
+personalizadas. ¿Cómo funciona? Utiliza un archivo de texto llamado Dockerfile.
+En este archivo escribes las instrucciones (instalar Python, copiar tu código
+de Django, instalar librerías).
+
+-Docker Compose: Es una herramienta de orquestación local para aplicaciones que
+usan varios contenedores (multi-contenedor). ¿Para qué sirve? Tu proyecto no es
+solo Django. Necesitas:
+
+-Un contenedor para PostgreSQL (Base de datos).
+-Un contenedor para Django (API).
+-Un contenedor para Nuxt 4 (Frontend).
+
+-El archivo docker-compose.yml: En lugar de ejecutar 3 comandos largos de docker
+run por separado, defines todo en un archivo YAML.
+
+-El comando mágico: Con solo escribir docker compose up -d, Docker levanta los
+tres servicios, los conecta entre sí en una red privada y configura los
+volúmenes de datos automáticamente.
 
 Comandos de Docker
 ==================
@@ -13370,20 +13398,48 @@ $ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin do
 
 $ sudo docker run hello-world
 
-Nota: El servicio Docker se inicia automáticamente tras la instalación. Para
-comprobar que Docker está en ejecución, utiliza:
+La salida del comando debe ser:
+
+$ sudo docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+4f55086f7dd0: Pull complete 
+d5e71e642bf5: Download complete 
+Digest: sha256:452a468a4bf985040037cb6d5392410206e47db9bf5b7278d281f94d1c2d0931
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+
+Este mensaje indica que su instalación parece funcionar correctamente.
+
+Para generar este mensaje, Docker realizó los siguientes pasos:
+
+1. El cliente de Docker contactó al demonio de Docker.
+
+2. El demonio de Docker descargó la imagen "hello-world" de Docker Hub.
+(amd64)
+
+3. El demonio de Docker creó un nuevo contenedor a partir de esa imagen, el cual
+ejecuta el ejecutable que produce la salida que está leyendo.
+
+4. El demonio de Docker transmitió esa salida al cliente de Docker, que la envió
+a su terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+
+$ docker run -it ubuntu bash
 
 $ sudo systemctl status docker
 
 En algunos sistemas, es posible que esta función esté desactivada y sea
-necesario iniciarlo manualmente:
+necesario iniciarlo manualmente, si es así ejecutar:
 
 $ sudo systemctl start docker
 
-Instalación de Docker Desktop
+Requerimientos y configuraciones del SO y la máquina
+====================================================
 
-Para instalar Docker Desktop correctamente, tu equipo host Linux debe cumplir
-los siguientes requisitos generales:
+Tu equipo host Linux debe cumplir los siguientes requisitos generales:
 
 -Kernel de 64 bits y CPU compatible con virtualización.
 
@@ -13446,11 +13502,11 @@ tu sistema
 
 ¿Qué significa esto?
 
-La virtualización por hardware está activada en tu sistem   a
+La virtualización por hardware está activada en tu sistema
 
-Puedes ejecutar máquinas virtuales con QEMU/KVM, VirtualBox, etc   .
+Puedes ejecutar máquinas virtuales con QEMU/KVM, VirtualBox, etc.
 
-Tu procesador Intel soporta VT-x (tecnología de virtualización   )
+Tu procesador Intel soporta VT-x (tecnología de virtualización)
 
 Notas importantes:
 
@@ -13658,6 +13714,9 @@ ps:
 clean:
 	docker compose -f $(DEV_COMPOSE_FILE) down -v
 
+Nota: Por estándar histórico, Make requiere estrictamente el uso de tabuladores
+(TAB), no espacios, para las indentaciones de los comandos.
+
 .env
 ====
 
@@ -13696,7 +13755,7 @@ Django necesita que las tablas estén creadas. Pero eso lo haces con:
 
 # Dentro del contenedor o en tu start.sh
 
-$ python manage.py makemigrations
+$ python manage.py makemigrations person product
 
 $ python manage.py migrate
 
@@ -13738,7 +13797,7 @@ requirements.txt
 ================
 
 Django==6.0.0
-psycopg2-binary
+psycopg[binary]
 
 Pasos para ejecutar todo desde cero
 ===================================
