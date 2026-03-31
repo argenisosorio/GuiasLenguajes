@@ -13199,6 +13199,8 @@ Django, entre otras que se necesiten.
 Probando Docker + un proyecto de Django
 =======================================
 
+Este manual fue probado en en Debian 13.
+
 ¿Qué es Docker?
 ===============
 
@@ -13360,83 +13362,6 @@ operaciones desde el estado anterior.
 -Docker Login: ayuda a iniciar sesión en el registro de Docker, lo que permite
 el acceso a repositorios privados.
 
-Instalación de Docker Engine
-============================
-
-Antes de instalar Docker Engine por primera vez en un nuevo equipo host, debes
-configurar el repositorio apt de Docker. A continuación, podrás instalar y
-actualizar Docker desde el repositorio.
-
-1. Configura el repositorio apt de Docker con su firma difital:
-
-$ sudo apt update
-
-$ sudo apt install ca-certificates curl
-
-$ sudo install -m 0755 -d /etc/apt/keyrings
-
-$ sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
-
-$ sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-Agrega el repositorio a las fuentes de Apt:
-
-$ sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
-Types: deb
-URIs: https://download.docker.com/linux/debian
-Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
-Components: stable
-Signed-By: /etc/apt/keyrings/docker.asc
-EOF
-
-$ sudo apt update
-
-2. Instalar los paquetes de Docker
-
-$ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-
-3. Verificar que la instalación sea exitosa corriendo la imagen hello-world
-
-$ sudo docker run hello-world
-
-La salida del comando debe ser:
-
-$ sudo docker run hello-world
-Unable to find image 'hello-world:latest' locally
-latest: Pulling from library/hello-world
-4f55086f7dd0: Pull complete 
-d5e71e642bf5: Download complete 
-Digest: sha256:452a468a4bf985040037cb6d5392410206e47db9bf5b7278d281f94d1c2d0931
-Status: Downloaded newer image for hello-world:latest
-
-Hello from Docker!
-
-Este mensaje indica que su instalación parece funcionar correctamente.
-
-Para generar este mensaje, Docker realizó los siguientes pasos:
-
-1. El cliente de Docker contactó al demonio de Docker.
-
-2. El demonio de Docker descargó la imagen "hello-world" de Docker Hub.
-(amd64)
-
-3. El demonio de Docker creó un nuevo contenedor a partir de esa imagen, el cual
-ejecuta el ejecutable que produce la salida que está leyendo.
-
-4. El demonio de Docker transmitió esa salida al cliente de Docker, que la envió
-a su terminal.
-
-To try something more ambitious, you can run an Ubuntu container with:
-
-$ docker run -it ubuntu bash
-
-$ sudo systemctl status docker
-
-En algunos sistemas, es posible que esta función esté desactivada y sea
-necesario iniciarlo manualmente, si es así ejecutar:
-
-$ sudo systemctl start docker
-
 Requerimientos y configuraciones del SO y la máquina
 ====================================================
 
@@ -13520,6 +13445,83 @@ porque aún no tienes máquinas virtuales ejecutándose.
 
 Nota: El paso de lsmod | grep kvm es solo si decide usar la versión Desktop.
 
+Instalación de Docker Engine
+============================
+
+Antes de instalar Docker Engine por primera vez en un nuevo equipo host, debes
+configurar el repositorio apt de Docker. A continuación, podrás instalar y
+actualizar Docker desde el repositorio.
+
+1. Configura el repositorio apt de Docker con su firma difital:
+
+$ sudo apt update
+
+$ sudo apt install ca-certificates curl
+
+$ sudo install -m 0755 -d /etc/apt/keyrings
+
+$ sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+
+$ sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+Agrega el repositorio a las fuentes de Apt:
+
+$ sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/debian
+Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+$ sudo apt update
+
+2. Instalar los paquetes de Docker
+
+$ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+3. Verificar que la instalación sea exitosa corriendo la imagen hello-world
+
+$ sudo docker run hello-world
+
+La salida del comando debe ser:
+
+$ sudo docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+4f55086f7dd0: Pull complete 
+d5e71e642bf5: Download complete 
+Digest: sha256:452a468a4bf985040037cb6d5392410206e47db9bf5b7278d281f94d1c2d0931
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+
+Este mensaje indica que su instalación parece funcionar correctamente.
+
+Para generar este mensaje, Docker realizó los siguientes pasos:
+
+1. El cliente de Docker contactó al demonio de Docker.
+
+2. El demonio de Docker descargó la imagen "hello-world" de Docker Hub.
+(amd64)
+
+3. El demonio de Docker creó un nuevo contenedor a partir de esa imagen, el cual
+ejecuta el ejecutable que produce la salida que está leyendo.
+
+4. El demonio de Docker transmitió esa salida al cliente de Docker, que la envió
+a su terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+
+$ docker run -it ubuntu bash
+
+$ sudo systemctl status docker
+
+En algunos sistemas, es posible que esta función esté desactivada y sea
+necesario iniciarlo manualmente, si es así ejecutar:
+
+$ sudo systemctl start docker
+
 Docker Build y Docker Compose
 =============================
 
@@ -13563,6 +13565,9 @@ Compilaciones en varias etapas → Docker podría ofrecer más control
 Prueba real con un proyecto de Django
 =====================================
 
+En este ejemplo vamos a ejecutar un proyecto de Django con una base de datos
+de Postgresql.
+
 Estructura de archivos necesaria para la prueba:
 
 mi_proyecto_django/
@@ -13597,28 +13602,62 @@ mi_proyecto_django/
 Dockerfile
 ==========
 
+#1. Define la imagen base: Usamos una versión ligera (slim) de Python 3.12.
+
 FROM python:3.12-slim
 
-# Establecer directorio de trabajo
+#2. Crea y se mueve a la carpeta /app dentro del contenedor para organizar los
+#archivos. /app no es una aplicación específica, es simplemente una carpeta
+#(directorio) dentro del contenedor. El comando indica que cree una carpeta
+#llamada 'app' en la raíz del sistema operativo del contenedor y, a partir de
+#ahora, ejecute todos los comandos ahí dentro".
+
 WORKDIR /app
 
-# Copiar archivos de requisitos primero (mejora la caché)
+#3. Copia solo el archivo de dependencias. Se hace antes para que Docker no
+#reinstale todo cada vez que cambies una línea de código (aprovecha la memoria
+#caché).
+
 COPY requirements.txt .
 
-# Instalar dependencias
+#4. Instala las librerías de Python listadas en el archivo, sin guardar archivos
+#temporales.
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar el resto del código
+
+#5. Copia todo el contenido de tu proyecto actual al directorio de trabajo del
+#contenedor.
+
 COPY . .
 
-# Dar permisos de ejecución al script start.sh
+#6. Cambia los permisos del archivo start.sh para asegurar que el sistema pueda
+#ejecutarlo.
+
 RUN chmod +x start.sh
 
-# Exponer el puerto de Django
+#7. Indica que el contenedor escuchará peticiones en el puerto 8000 (estándar de
+#Django).
+
 EXPOSE 8000
 
-# Comando para ejecutar el contenedor
+#8. Define el comando final que arranca la aplicación al iniciar el contenedor.
+
 CMD ["./start.sh"]
+
+-----
+
+¿Cómo funciona este proceso?
+
+Para visualizarlo mejor, imagina que un Dockerfile es una receta de cocina que
+construye una computadora miniatura aislada:
+
+Capas (Layers): Cada instrucción (FROM, COPY, RUN) crea una capa. Si no cambias
+el requirements.txt, Docker es inteligente y salta el paso de instalación,
+haciendo que todo sea más rápido.
+
+Aislamiento: Todo lo que instalas ahí dentro no afecta a tu computadora
+personal; vive solo dentro de esa "caja" (contenedor).
 
 docker-compose.yml
 ==================
@@ -13660,6 +13699,86 @@ services:
 volumes:
   postgres_data:
 
+-----
+
+Si el Dockerfile era la receta para crear un solo componente, el archivo
+docker-compose.yml es el director de orquesta. Su trabajo es hacer que varios
+contenedores (en este caso, tu base de datos y tu app de Django) trabajen
+untos sin que tengas que configurarlos uno por uno.
+
+Cada bloque que ves debajo de la palabra services: representa un contenedor
+independiente.
+
+1. El Servicio db (La Base de Datos)
+
+Este bloque levanta una base de datos PostgreSQL.
+
+-image: postgres:17: No necesita un Dockerfile propio; descarga la imagen
+oficial de Postgres versión 17.
+
+-environment: Aquí usa variables (como ${DB_NAME}). Docker las busca en un
+archivo llamado .env para no escribir las contraseñas reales directamente en el
+código.
+
+-volumes (postgres_data): Esto es vital. Los contenedores son volátiles (si se
+borran, se pierde todo). El volumen asegura que tus datos se guarden en tu
+disco duro real y no se borren al apagar Docker.
+
+healthcheck: Es un "examen médico". Django no intentará conectarse hasta que
+Postgres diga: "¡Estoy listo para recibir datos!".
+
+2. El Servicio web (Tu App Django)
+
+Este bloque es el que usa el Dockerfile que vimos antes.
+
+-build: .: Le dice a Docker: "Busca el Dockerfile en esta misma carpeta y
+construye la imagen".
+
+-ports: "8000:8000": Conecta el puerto 8000 de tu computadora con el 8000 del
+contenedor. Por eso puedes entrar a localhost:8000 en tu navegador.
+
+-volumes: .:/app: ¡Ojo aquí! Esto es para desarrollo. Significa que cualquier
+cambio que hagas en tu código en VS Code se reflejará instantáneamente dentro
+del contenedor sin tener que reconstruirlo.
+
+-depends_on: Le dice a la app: "No arranques hasta que la base de datos esté
+saludable (service_healthy)". Esto evita el típico error de Django intentando
+conectar a una base de datos que aún se está encendiendo.
+
+-env_file: .env: Carga todas tus configuraciones secretas (SECRET_KEY, DB_USER,
+etc.) desde el archivo .env.
+
+En resumen: ¿Qué pasa cuando haces docker-compose up?
+
+-Crea una red interna para que web y db puedan hablar entre ellos usando sus
+nombres (Django usará el host db en lugar de una IP).
+
+-Enciende Postgres y espera a que pase el "healthcheck".
+
+-Construye tu app Django usando el Dockerfile.
+
+-Conecta los cables: Mapea los puertos y monta los volúmenes para que tu código
+y tus datos estén seguros.
+
+-Nota importante: Asegúrate de tener un archivo llamado .env en la misma carpeta
+con las variables DB_NAME, DB_USER y DB_PASSWORD, de lo contrario, el servicio
+db fallará.
+
+¿Por qué se usan 2 y no metemos todo en uno solo?
+
+Aunque podrías meter todo en un solo contenedor, la filosofía de Docker es "un
+proceso por contenedor". Esto tiene varias ventajas:
+
+-Independencia: Si quieres actualizar la versión de la base de datos (por
+ejemplo, pasar de Postgres 17 a 18), puedes hacerlo sin tocar el contenedor de
+Django.
+
+-Seguridad: El contenedor web es el único que da la cara al internet (puerto
+8000). El contenedor db vive en una red interna y solo habla con web.
+
+-Recursos: Si tu app crece mucho, podrías decirle a Docker que use más memoria
+para la base de datos y menos para la web, de forma separada.
+
 settings.py
 ===========
 
@@ -13676,20 +13795,18 @@ DATABASES = {
     }
 }
 
+-----
+
+Le decimos a la Django que las variables para conectarse a la base de datos las
+va a leer en el .env
+
 start.sh
 ========
 
 #!/bin/bash
 
-# Función para esperar a la base de datos
-# Usamos las variables de entorno que ya tienes definidas en el docker-compose
-echo "----- Esperando a que PostgreSQL esté listo en el host: $DB_HOST..."
-
-until pg_isready -h "$DB_HOST" -p "$DB_PORT" -U "$DB_USER"
-do
-  echo "----- Postgres aún no responde... reintentando en 2 segundos"
-  sleep 2
-done
+echo "----- Esperando a que PostgreSQL esté listo..."
+sleep 5
 
 echo "----- ¡PostgreSQL está listo! Procediendo con las tareas de Django..."
 
@@ -13708,42 +13825,52 @@ python manage.py runserver 0.0.0.0:8000
 Makefile
 ========
 
+# Variable que define el archivo de configuración de Docker Compose a utilizar
 DEV_COMPOSE_FILE := docker-compose.yml
 
 # Construir la imagen
 build:
+	# Ejecuta la construcción de las imágenes definidas en el archivo compose
 	docker compose -f $(DEV_COMPOSE_FILE) build
 
 # Levantar los contenedores
 up:
+	# Crea e inicia los contenedores (bloquea la terminal para ver la salida)
 	docker compose -f $(DEV_COMPOSE_FILE) up
 
 # Levantar en segundo plano
 up-d:
+	# Inicia los contenedores en modo "detached" (corriendo en el fondo)
 	docker compose -f $(DEV_COMPOSE_FILE) up -d
 
 # Detener contenedores
 down:
+	# Detiene y elimina los contenedores y redes creadas por el compose
 	docker compose -f $(DEV_COMPOSE_FILE) down
 
 # Ver logs
 logs:
+	# Muestra y sigue en tiempo real las salidas/errores de los contenedores
 	docker compose -f $(DEV_COMPOSE_FILE) logs -f
 
 # Ejecutar comandos dentro del contenedor
 shell:
+	# Abre una terminal interactiva (bash) dentro del contenedor de Django
 	docker compose -f $(DEV_COMPOSE_FILE) exec web bash
 
 # Reiniciar contenedores
 restart:
+	# Detiene y vuelve a iniciar los contenedores rápidamente
 	docker compose -f $(DEV_COMPOSE_FILE) restart
 
 # Ver estado
 ps:
+	# Muestra una lista de los contenedores y si están corriendo o fallando
 	docker compose -f $(DEV_COMPOSE_FILE) ps
 
 # Limpiar todo (volúmenes incluidos)
 clean:
+	# Detiene todo y borra los volúmenes (¡Cuidado! Esto borra la base de datos)
 	docker compose -f $(DEV_COMPOSE_FILE) down -v
 
 Nota: Por estándar histórico, Make requiere estrictamente el uso de tabuladores
@@ -13759,6 +13886,8 @@ HOST=db
 PORT=5432
 
 -----
+
+Aclaraciones sonbre la base de datos:
 
 La base de datos NO debe estar creada previamente.
 
@@ -13777,9 +13906,9 @@ Cuando usas la imagen oficial de postgres con las variables de entorno, Docker:
 yaml
 
 environment:
-  POSTGRES_DB: test_django_db   # ← Crea esta BD
-  POSTGRES_USER: postgres      # ← Crea o usa este usuario
-  POSTGRES_PASSWORD: postgres  # ← Asigna esta contraseña
+  POSTGRES_DB: ${DB_NAME} # ← Crea esta BD
+  POSTGRES_USER: ${DB_USER} # ← Crea o usa este usuario
+  POSTGRES_PASSWORD: ${DB_PASSWORD} # ← Asigna esta contraseña
 
 ¿Qué NO hace automáticamente?
 
@@ -13807,37 +13936,15 @@ Flujo completo (qué pasa cuando ejecutas docker compose up -d)
 | 4. runserver      | Django inicia el servidor                        |
 +-------------------+--------------------------------------------------+
 
-Comandos útiles para verificar
-==============================
-
-1. Verificar que el contenedor de BD está corriendo
-
-$ docker compose ps
-
-2. Entrar a PostgreSQL dentro del contenedor
-
-$ docker compose exec db psql -U postgres
-
-3. Dentro de psql, listar las bases de datos
-\l
-
-4. Ver las tablas de tu BD
-\c test_django_db
-\dt
-
-5. Detener y eliminar los contenedores actuales
-
-$ docker compose down
-
-6. Levantar todo de nuevo (esto volverá a leer el settings.py corregido)
-
-$ make up-d
-
 requirements.txt
 ================
 
 Django==6.0.0
 psycopg[binary]
+
+---
+
+Son requerimientos propios del proyecto de Django los define el desarrollador.
 
 Probar todo lo anterior, la prueba de fuego
 ===========================================
@@ -13864,11 +13971,18 @@ $ make build
 Ejecuta las instrucciones del archivo Makefile. Normalmente es un atajo para
 construir las imágenes personalizadas de tu proyecto basadas en el Dockerfile.
 
+Nota: Si da un error de permission denied while trying... revisar la solución
+más abajo en la parte de errores comunes y volver acá luego.
+
 $ make up-d
 
 Levanta los servicios definidos en tu configuración. El sufijo -d (detached)
 hace que los contenedores corran en segundo plano, liberando tu terminal para
 seguir usándola.
+
+Nota: Si da un error de Error response from daemon: ...host port
+0.0.0.0:5432/tcp: address already in use... revisar la solución más abajo en la
+parte de errores comunes y volver acá luego.
 
 Opción 2: Comandos directos
 
@@ -13908,6 +14022,32 @@ Listado rápido de los contenedores del proyecto. Te permite ver el Status
 Paso 5: Acceder a la aplicación
 
 Abre tu navegador en: http://localhost:8000
+
+Comandos útiles
+===============
+
+1. Verificar que el contenedor de BD está corriendo
+
+$ docker compose ps
+
+2. Entrar a PostgreSQL dentro del contenedor
+
+$ docker compose exec db psql -U postgres
+
+3. Dentro de psql, listar las bases de datos
+\l
+
+4. Ver las tablas de tu BD
+\c test_django_db
+\dt
+
+5. Detener y eliminar los contenedores actuales
+
+$ docker compose down
+
+6. Levantar todo de nuevo (esto volverá a leer el settings.py corregido)
+
+$ make up-d
 
 Errores comunes y soluciones
 ============================
