@@ -14163,6 +14163,36 @@ Ahora que el puerto está libre, el comando debería funcionar sin problemas:
 
 $ make up-d
 
+6- Purto 8000 ocupado luego de las pruebas o reiniciar¨
+
+$ python manage.py runserver
+
+Error: That port is already in use.
+
+$ ps -ef | grep 8000
+rabbitmq     884       1  0 02:34 ?        00:00:07 /usr/lib/erlang/erts-13.1.5/bin/beam.smp -W w -MBas ageffcbf -MHas ageffcbf -MBlmbcs 512 -MHlmbcs 512 -MMmcs 30 -P 1048576 -t 5000000 -stbt db -zdbbl 128000 -sbwt none -sbwtdcpu none -sbwtdio none -- -root /usr/lib/erlang -bindir /usr/lib/erlang/erts-13.1.5/bin -progname erl -- -home /var/lib/rabbitmq -- -pa  -noshell -noinput -s rabbit boot -boot start_sasl -syslog logger [] -syslog syslog_error_logger false -kernel prevent_overlapping_partitions false
+root        2763    1764  0 02:35 ?        00:00:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 8000 -container-ip 172.18.0.2 -container-port 8000 -use-listen-fd
+root        2778    1764  0 02:35 ?        00:00:00 /usr/bin/docker-proxy -proto tcp -host-ip :: -host-port 8000 -container-ip 172.18.0.2 -container-port 8000 -use-listen-fd
+root        3419    2636  0 02:35 ?        00:00:00 python manage.py runserver 0.0.0.0:8000
+root       10625    3419  1 02:45 ?        00:00:02 /usr/local/bin/python manage.py runserver 0.0.0.0:8000
+aosorio    11571    4411  0 02:48 pts/0    00:00:00 grep 8000
+
+La forma "Manual" (Si no estás en la carpeta del proyecto)
+
+Si no estás en la carpeta Django_6_crud, puedes detenerlo directamente por su
+nombre de contenedor:
+
+$ docker stop django_app django_postgres
+
+¿Cómo saber si ya se liberó el puerto?
+
+Después de ejecutar cualquiera de los comandos anteriores, verifica de nuevo con
+el comando que usaste antes:
+
+$ ps -ef | grep 8000
+
+-----
+
 Ejemplo completo y funcional: https://github.com/argenisosorio/Django_6_crud/tree/test/deploy-docker
 
 El archivo .dockerignore
