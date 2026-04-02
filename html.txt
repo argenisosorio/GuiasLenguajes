@@ -10372,3 +10372,71 @@ Fuente
 ======
 
 DeepSeek
+
+===================================
+Notificaciones toast de Bootstrap 5
+===================================
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://argenisosorio.github.io/robotica/aprendizaje_robotica/ruta_1/static/bootstrap/css/bootstrap.min.css">
+</head>
+<body>
+    Based on the official Bootstrap 5 examples:: https://getbootstrap.com/docs/5.0/components/toasts/
+    <div aria-live="polite" aria-atomic="true" class="bg-dark position-relative bd-example-toasts">
+        <div class="toast-container position-absolute p-3 top-0 end-0" id="toastPlacement">
+            <div class="toast text-white bg-success">
+                <div class="toast-body">
+                    <b>Welcome to the system!</b>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--div aria-live="polite" aria-atomic="true" class="bg-dark position-relative bd-example-toasts">
+        <div class="toast-container position-absolute p-3 top-0 end-0" id="toastPlacement">
+            <div class="toast text-white bg-primary">
+                <div class="toast-body">
+                    <b>The export is in progress...</b>
+                </div>
+            </div>
+        </div>
+    </div-->
+</body>
+
+<!-- Bootstrap JS Bundle (includes Popper) -->
+<script src="https://argenisosorio.github.io/robotica/aprendizaje_robotica/ruta_1/static/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+
+<script>
+    // 1. Seleccionamos todos los elementos con clase .toast.
+    var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+
+    // 2. Definimos el objeto de opciones.
+    var toastOptions = {
+        animation: true,   // Aplica la transición de desvanecimiento CSS.
+        autohide: true,    // Oculta el toast automáticamente.
+        delay: 5000        // Tiempo de espera en milisegundos (5 segundos).
+    };
+
+    // 3. Inicializamos cada Toast con las opciones y lo mostramos.
+    var toastList = toastElList.map(function (toastEl) {
+        // Inicializar instancia con el objeto de opciones.
+        var toast = new bootstrap.Toast(toastEl, toastOptions);
+
+        // Mostrar el toast inmediatamente.
+        toast.show();
+
+        return toast;
+    });
+</script>
+</html>
+
+Fuente
+======
+
+https://github.com/argenisosorio/bootstrap-5-toast-notifications
