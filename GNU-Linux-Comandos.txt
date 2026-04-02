@@ -14355,3 +14355,42 @@ Fuente
 ======
 
 Gemini IA
+
+=========================
+Convertir PDF en imágenes
+=========================
+
+En Linux, puedes convertir un PDF en imágenes usando la línea de comandos. La
+herramienta más eficiente y recomendada es pdftoppm, que forma parte del paquete
+poppler-utils.
+
+1. Instala las herramientas necesarias
+
+Instala el paquete poppler-utils. Este contiene tanto pdftoppm como pdftocairo,
+que son los programas que usaremos para la conversión.
+
+$ sudo apt update
+
+$ sudo apt install poppler-utils
+
+2. Convierte el PDF a imágenes usando pdftoppm
+
+El comando pdftoppm es muy versátil y te permite extraer cada página del PDF
+como una imagen independiente.
+
+El formato básico del comando es:
+
+$ pdftoppm -formato_de_salida archivo_origen.pdf nombre_prefijo_salida
+
+Ejemplo práctico:
+
+Convertir a PNG (calidad sin pérdida, ideal para capturas de pantalla o texto):
+
+$ pdftoppm -png mi_documento.pdf pagina
+
+Este comando generará archivos como pagina-1.png, pagina-2.png, etc.
+
+Fuente
+======
+
+DeepSeek
