@@ -14049,6 +14049,75 @@ $ docker compose down
 
 $ make up-d
 
+-----
+
+$ docker images
+
+El comando $ docker images se utiliza para listar las imágenes de Docker que
+tienes descargadas o construidas localmente en tu computadora.
+
+Ejemplo:
+
++---------------------------+--------------+--------------+--------------+-------+
+| IMAGE                     | ID           | DISK USAGE   | CONTENT SIZE | EXTRA |
++---------------------------+--------------+--------------+--------------+-------+
+| django_6_crud-web:latest  | b99ab2ace5fe | 287MB        | 62.5MB       | U     |
+| hello-world:latest        | 452a468a4bf9 | 25.9kB       | 9.49kB       | U     |
+| postgres:17               | b994732fcf33 | 645MB        | 167MB        | U     |
++---------------------------+--------------+--------------+--------------+-------+
+
+En este ejemplo, el resultado muestra una tabla con las plantillas que usas para
+crear contenedores.
+
+IMAGE (Nombre): Es el nombre del repositorio y la etiqueta (tag). Por ejemplo,
+django_6_crud-web:latest. La parte después de los dos puntos (:latest o :17)
+indica la versión de la imagen.
+
+ID: Es un identificador único abreviado de la imagen (un código hash).
+
+DISK USAGE: El espacio total que la imagen ocupa en tu disco duro.
+
+CONTENT SIZE: El tamaño real de las capas de contenido de la imagen.
+
+EXTRA (U / In Use): La letra "U" que ves a la derecha significa que esa imagen
+está "In Use" (En uso). Esto indica que actualmente hay al menos un contenedor
+(activo o detenido) que depende de esa imagen.
+
+¿Cómo cambiar el estado de "In Use"?
+
+Para que una imagen deje de estar "En uso", no basta con detener el contenedor;
+debes eliminar el contenedor.
+
+Listar contenedores asociados: Primero, identifica qué contenedor está usando
+esa imagen:
+
+$ docker ps -a
+
+Ejemplo:
+
++--------------+-------------------+--------------------------+------------+-------------------------+-----------------+
+| CONTAINER ID | IMAGE             | COMMAND                  | CREATED    | STATUS                  | NAMES           |
++--------------+-------------------+--------------------------+------------+-------------------------+-----------------+
+| 7e8782e4fb75 | django_6_crud-web | "./start.sh"             | 2 days ago | Exited (127) 2 days ago | django_app      |
+| a2622a97f9c4 | postgres:17       | "docker-entrypoint.s…"   | 2 days ago | Up 13 minutes (healthy) | django_postgres |
+| 1aa099ba0d83 | hello-world       | "/hello"                 | 2 days ago | Exited (0) 2 days ago   | distracted_rit  |
++--------------+-------------------+--------------------------+------------+-------------------------+-----------------+
+
+Detener el contenedor (si está activo):
+
+$ docker stop <ID_o_nombre_del_contenedor>
+
+$ Eliminar el contenedor: Una vez eliminado, la imagen pasará automáticamente a
+estar "desocupada":
+
+$ docker rm <ID_o_nombre_del_contenedor>
+
+Para eliminarlo por completo hay que usar:
+
+$ docker rmi <ID_o_nombre_del_contenedor>
+
+Luego usar docker ps -a y docker images para verificarlo.
+
 Errores comunes y soluciones
 ============================
 
