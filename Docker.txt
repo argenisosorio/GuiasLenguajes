@@ -2,6 +2,88 @@
 Guía de instalación y configuración de Docker by dM
 ===================================================
 
+====================
+Hola mundo en Docker
+====================
+
+Haremos un Hola mundo con Python.
+
+Para hacer un "Hola Mundo" en Python desplegado con Docker, necesitas preparar
+tres archivos básicos en una misma carpeta: tu código Python, la lista de
+dependencias (aunque esté vacía) y las instrucciones para Docker (Dockerfile).
+
+Sigue estos pasos:
+
+1. Preparar los archivos
+
+Crea una carpeta nueva y dentro de ella crea estos tres archivos:
+
+A. app.py (El código)
+
+print("¡Hola Mundo desde Python dentro de Docker!")
+
+B. requirements.txt (Las dependencias)
+
+Como es un hola mundo simple, puedes dejar este archivo vacío, pero Docker lo
+necesita para seguir las buenas prácticas.
+
+C. Dockerfile (La receta de construcción)
+
+Dockerfile
+
+# 1. Usamos una imagen ligera de Python como base
+FROM python:3.12-slim
+
+# 2. Definimos el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# 3. Copiamos los archivos locales al contenedor
+COPY . /app
+
+# 4. Instalamos dependencias (en este caso nada, pero es el estándar)
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 5. Comando que se ejecuta al iniciar el contenedor
+CMD ["python", "app.py"]
+
+2. Construir la Imagen
+
+Abre una terminal en esa carpeta y ejecuta el siguiente comando. Esto leerá el
+Dockerfile y creará una imagen llamada hola-python:
+
+$ docker build -t hola-python .
+
+3. Ejecutar el Contenedor
+
+Una vez que la imagen esté lista, puedes "correr" un contenedor basado en esa
+imagen:
+
+$ docker run hola-python
+
+Resultado esperado en consola:
+¡Hola Mundo desde Python dentro de Docker!
+
+Conceptos clave que acabas de aplicar:
+
+Dockerfile: Es el archivo de texto con las instrucciones para montar tu entorno.
+
+Imagen: Es el "paquete" estático que contiene tu código y Python (como una foto
+de un sistema listo).
+
+Contenedor: Es la instancia viva de la imagen en ejecución.
+
+-----
+
+La ventaja es que no importa si tu computadora tiene instalado Python 2, Python
+3 o ninguno; al ejecutarlo con Docker, se usará exactamente la versión 3.12-slim
+que definiste en el Dockerfile, garantizando que funcione igual en cualquier
+servidor.
+
+Fuente
+======
+
+Gemini IA
+
 =======================================
 Probando Docker + un proyecto de Django
 =======================================
@@ -95,8 +177,9 @@ Glosario
 -Docker Engine: Docker Engine cuenta con un componente central, el demonio de
 Docker, que se encarga de la creación y la gestión de contenedores.
 
--Dockerfile: es un archivo que describe los pasos para crear una imagen
-rápidamente.
+-Dockerfile: Es un archivo un documento de texto que contiene todos los comandos
+e instrucciones para instalar todas las dependencias de la aplicación y describe
+los pasos para crear una imagen image.
 
 -Docker Image: Docker Image es una plantilla de solo lectura que se utiliza para
 crear contenedores y que contiene el código de la aplicación y sus
@@ -141,6 +224,8 @@ run por separado, defines todo en un archivo YAML.
 -El comando mágico: Con solo escribir docker compose up -d, Docker levanta los
 tres servicios, los conecta entre sí en una red privada y configura los
 volúmenes de datos automáticamente.
+
+-Contenedor: Es la imagen ya funcionando ya corriendo.
 
 Comandos de Docker
 ==================
