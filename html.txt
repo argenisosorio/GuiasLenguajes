@@ -10440,3 +10440,37 @@ Fuente
 ======
 
 https://github.com/argenisosorio/bootstrap-5-toast-notifications
+
+================================================================================
+Error en el mapeo fuente: request failed with status 404URL del recurso:
+http://127.0.0.1:8000/static/js/bootstrap.bundle.min.jsURL del mapa fuente:
+bootstrap.bundle.min.js.map
+================================================================================
+
+Ese error de 404 en el "mapeo fuente" (Source Map) es muy común y, la buena
+noticia, es que no afecta el funcionamiento de tu aplicación.
+
+Ocurre porque el archivo bootstrap.bundle.min.js tiene una línea al final que le
+dice al navegador: "Si quieres ver el código original sin minificar para
+depurar, busca el archivo .map aquí". Como no tienes ese archivo .map en tu
+carpeta /static/js/, el navegador lanza ese aviso en la consola.
+
+La solución rápida (Eliminar la referencia)
+
+Si no necesitas depurar el código interno de Bootstrap (que es lo más probable),
+puedes quitar la instrucción que busca ese archivo.
+
+Abre tu archivo static/js/bootstrap.bundle.min.js.
+
+Ve al final del archivo (suele ser la última línea).
+
+Busca algo que diga: //# sourceMappingURL=bootstrap.bundle.min.js.map
+
+Borra esa línea y guarda el archivo.
+
+Recarga el navegador (limpiando caché con Ctrl + F5).
+
+Fuente
+======
+
+Gemini IA
