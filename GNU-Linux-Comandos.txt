@@ -14415,3 +14415,126 @@ Fuente
 ======
 
 R
+
+================
+Comprimir con xz
+================
+
+xz es uno de los algoritmos de compresión más potentes en Linux (basado en
+LZMA2). Aunque es más lento que gzip o bzip2, el ahorro de espacio es
+significativamente mayor.
+
+Para saber si lo tienes disponible, el método más rápido y universal en Linux es
+usar el comando which o intentar ver su versión:
+
+1. Comprobación rápida
+
+$ which xz
+
+Si te devuelve una ruta (como /usr/bin/xz) o el número de versión, ¡ya lo tienes!
+
+$ xz --version
+xz (XZ Utils) 5.8.1
+liblzma 5.8.1
+
+Si dice command not found, necesitas instalar el paquete.
+
+2. ¿Qué paquete instalar?
+
+$ sudo apt update
+
+$ sudo apt install xz-utils
+
+3. ¿Qué incluye este paquete?
+
+Al instalar xz-utils, obtienes un juego completo de herramientas para manejar
+este formato:
+
+xz: La herramienta principal.
+
+unxz: Para descomprimir (es un alias de xz -d).
+
+xzcat: Para ver el contenido de un archivo comprimido sin extraerlo (como cat).
+
+xzgrep: Para buscar texto dentro de archivos comprimidos.
+
+Nota curiosa: El Ataque por puerta trasera a XZ Utils se produjo en las
+versiones 5.6.0 y 5.6.1
+
+Fuente: https://es.wikipedia.org/wiki/Ataque_por_puerta_trasera_a_XZ_Utils
+
+4. Comprimir un archivo individual
+
+Por defecto, xz comprimirá el archivo y eliminará el original, reemplazándolo
+por uno con extensión .xz.
+
+$ xz archivo.txt
+
+Esto crea archivo.txt.xz
+
+Para mantener el archivo original: usa el parámetro -k (keep).
+
+$ xz -k archivo.txt
+
+5. Comprimir un directorio completo
+
+Importante: xz por sí solo no sabe manejar carpetas (solo archivos). Para esto,
+lo más común y eficiente es usarlo junto con tar.
+
+$ tar -cJf nombre_archivo.tar.xz /ruta/del/directorio
+
+-c: Create (crear).
+
+-J: Indica que use la compresión xz.
+
+-f: File (nombre del archivo de salida).
+
+6. Niveles de compresión (El "Power" de xz)
+
+Puedes ajustar qué tanto quieres comprimir usando números del 0 al 9 (donde 6
+es el valor por defecto).
+
+Compresión extrema (usa mucha RAM y tiempo, pero el archivo queda mínimo)
+
+$ xz -9 archivo.iso
+
+Compresión rápida (menos eficiente pero veloz)
+
+$ xz -0 archivo.log
+
+7. Descomprimir
+
+Para volver a tener tu archivo original, tienes dos opciones:
+
+Usando xz:
+
+$ unxz archivo.txt.xz
+
+o también
+
+$ xz -d archivo.txt.xz
+
+Usando tar (para directorios):
+
+$ tar -xJf nombre_archivo.tar.xz
+
+Resumen de comandos útiles:
+
++---------------------------------------+----------------------------------+
+| Tarea                                 | Comando                          |
++---------------------------------------+----------------------------------+
+| Comprimir archivo (borra original)    | xz archivo                       |
+| Comprimir archivo (mantiene original) | xz -k archivo                    |
+| Comprimir directorio                  | tar -cJf carpeta.tar.xz carpeta/ |
+| Ver progreso de compresión            | xz -v archivo                    |
+| Descomprimir                          | unxz archivo.xz                  |
++---------------------------------------+----------------------------------+
+
+Un pequeño consejo de "Tech Leader": Si vas a comprimir archivos muy grandes con
+-9, asegúrate de tener suficiente memoria RAM disponible, ya que el algoritmo
+LZMA2 es bastante hambriento de recursos durante la fase de compresión.
+
+Fuente
+======
+
+Gemini IA
