@@ -199,29 +199,60 @@ https://odoo-devops.readthedocs.io/en/latest/git/github-telegram-notifications.h
 
 ChatGPT
 
-====================================================================
-Incorporar una rama de un fork externo directamente a tu repositorio
-====================================================================
+=========================================================================
+Cómo incorporar una rama de un fork externo directamente a tu repositorio
+=========================================================================
 
-Hacer que la rama del fork aparezca en tu lista de ramas y no solo como un Pull
-Request, el método más limpio es añadir el fork como un remoto secundario.
+Alguien hace un fork de tu repositorio y crea una rama con nuevas
+funcionalidades, si quieres que esa rama esté disponible directamente en tu
+lista de ramas local, el método más limpio es agregar el fork como un
+repositorio remoto secundario.
 
-Aquí tienes los pasos desde tu terminal:
+A continuación se explica el procedimiento utilizando GitHub como ejemplo.
 
-Agrega el fork como remoto:
+Paso 1: Agrega el fork como un remoto adicional
 
-$ git remote add nombre-del-usuario https://github.com
+$ git remote add nombre-del-usuario https://github.com/nombre-del-usuario/nombre-del-repositorio.git
 
-Trae la información del fork:
+
+Le indica a Git que existe otro repositorio remoto (el fork de la otra persona)
+asociado a tu proyecto local. Puedes elegir cualquier nombre para identificar
+ese remoto (por ejemplo, el nombre de usuario de la persona).
+
+Paso 2: Descarga la información del fork a tu máquina
 
 $ git fetch nombre-del-usuario
 
-Crea una rama local basada en la del fork:
+Obtiene todas las ramas y commits del fork remoto, pero sin mezclarlos aún con
+tu trabajo local. Esto te permite explorar el contenido del fork sin afectar tu
+código actual.
+
+Paso 3: Crea una rama local basada en la rama del fork
 
 $ git checkout -b mi-nueva-rama nombre-del-usuario/nombre-de-la-rama-del-fork
 
-Sube la rama a tu propio repositorio en GitHub:
+Crea una nueva rama local (con el nombre que tú elijas) que parte exactamente
+desde el estado actual de la rama del fork. De esta forma, tienes una copia
+local de esa rama sobre la cual puedes trabajar.
+
+Paso 4: Sube la nueva rama a tu repositorio remoto principal (origin)
 
 $ git push origin mi-nueva-rama
 
-!Listo¡ ya con esto debes poder ver la rama en tu repositorio en GitHub.
+¿Qué hace?
+
+Envía la rama local que acabas de crear hacia tu repositorio original en GitHub
+(el que normalmente usas como origin). Una vez hecho esto, la rama aparecerá en
+la interfaz web de GitHub, disponible para que otros colaboradores la vean y
+trabajen sobre ella.
+
+¡Listo!
+
+Con estos cuatro pasos, ya deberías poder ver la rama del fork reflejada
+directamente en tu repositorio remoto, sin necesidad de depender del Pull
+Request original.
+
+Fuente
+======
+
+Deepseek IA
