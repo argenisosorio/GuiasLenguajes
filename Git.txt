@@ -1993,3 +1993,305 @@ Fuente
 ======
 
 Deepseek IA
+
+======================
+Git (GitFlow, Commits)
+======================
+
+GitFlow es un flujo de trabajo (workflow) de diseño estricto basado en ramas,
+diseñado para gestionar el ciclo de vida de lanzamientos en proyectos de
+desarrollo de software. Fue popularizado por Vincent Driessen y es ideal para
+proyectos que tienen un ciclo de publicación estructurado (como versiones
+programadas v1.0, v2.0, etc.).
+
+A diferencia de otros flujos más simples, GitFlow asigna roles muy específicos
+a las diferentes ramas y define cómo y cuándo deben interactuar entre sí por lo
+cual usar GitFlow permite tener la siguiente estrategia de Branching (Ramas):
+
+Ramas Principales (Permanentes)
+===============================
+
+main (o master): Es la rama que contiene el código oficial que está en
+producción. Todo el código en esta rama debe ser estable y estar listo para el
+usuario final.
+
+develop: Es la rama principal de integración para el desarrollo. Aquí es donde
+se juntan todas las nuevas funcionalidades terminadas para ser probadas antes de
+pasar a producción.
+
+Ramas de Apoyo (Temporales)
+===========================
+
+feature/ (Funcionalidades): Se crean a partir de develop. Se usan para
+desarrollar nuevas características. Al terminar, se mezclan (merge) de vuelta en
+develop y se eliminan.
+
+release/ (Lanzamientos): Se crean a partir de develop cuando el software está
+casi listo para una nueva versión. Aquí solo se corrigen errores menores y se
+prepara la documentación. Finalmente, se mezcla en main y en develop.
+
+hotfix/ (Parches urgentes): Son las únicas que nacen de main. Se usan para
+corregir errores críticos en producción que no pueden esperar al siguiente ciclo
+de desarrollo. Al terminar, se mezclan en main y en develop.
+
+docs/ (Documentación): Se crean a partir de develop. Se utilizan exclusivamente
+para crear o actualizar documentación, como el README.md, manuales de usuario o
+documentación técnica interna. Al finalizar, se mezclan en develop.
+
+Ejemplos de Nombres de Ramas de apoyo
+=====================================
+
+feature/ (Funcionalidades) Se recomienda usar minúsculas y separar las palabras
+con guiones (-). Siempre deben describir una acción o componente nuevo.
+
+feature/login-jwt-authentication
+
+feature/register-user-email
+
+feature/calculate-points
+
+---
+
+docs/ (Documentación) Ideal para cambios que no afectan ni una sola línea de
+código lógico del sistema.
+
+docs/update-readme
+
+docs/added-gitflow-rules
+
+docs/documentacion-api-ninja
+
+---
+
+release/ (Lanzamientos) Suelen llevar el número de versión (siguiendo Semantic
+Versioning como v1.0.0).
+
+release/v1.0.0-beta (Lanzamiento inicial para pruebas internas)
+
+release/v1.1.0 (Para incluir nuevas funcionalidades)
+
+release/v2.0.0-project-migracion (Para migrar de versión mayor del sistema)
+
+---
+
+hotfix/ (Parches Urgentes) Deben ser muy descriptivos sobre el error crítico que
+están solucionando en main.
+
+hotfix/error-500-login
+
+hotfix/calculate-points
+
+hotfix/send-mails
+
+
+Definir el GitFlow en los Estándares de Desarrollo proporciona varias ventajas:
+
+-Orden total: Evita que código inestable llegue por error a producción.
+
+-Trabajo paralelo: Mientras unos desarrollan nuevas funciones en feature/, otros
+pueden estar puliendo la versión actual en release/.
+
+-Historial limpio: Facilita enormemente el seguimiento de qué se incluyó en cada
+versión de la aplicación.
+
+Convención de Commits
+=====================
+
+La implementación de la especificación de Conventional Commits (2025) establece
+una normativa estandarizada y ligera para la redacción de mensajes en el
+historial de cambios. Al proporcionar un conjunto de reglas claras para
+describir funcionalidades (feat), correcciones (fix) y cambios disruptivos
+(breaking changes), esta convención se alinea con el versionado semántico
+(Semantic Versioning Specification 2.0.0, 2026). Su importancia radica en que
+transforma el historial de Git en una herramienta de comunicación técnica
+legible tanto por humanos como por máquinas, facilitando la generación
+automática de registros de cambios (changelogs), simplificando los procesos de
+revisión de código y garantizando una trazabilidad impecable en la evolución del
+software.
+
+A continuación se describen algunas convenciones:
+
+El mensaje del commit debe estar estructurado de la siguiente forma:
+
+<tipo>[ámbito opcional]: <descripción>
+
+[cuerpo opcional]
+
+[nota de pie opcional]
+
+El commit contiene los siguientes elementos estructurales para comunicar la
+intención:
+
+fix: Este tipo de commit se utiliza para corregir un error en el código fuente.
+Se corresponde con el número de versión PATCH en el versionado semántico. 
+
+hotfix: Este tipo de commit se utiliza para corregir un error crítico en
+producción que requiere una solución inmediata. A diferencia de un fix
+convencional, un hotfix se aplica directamente sobre la rama principal
+(main/master) sin pasar por el flujo habitual de desarrollo, permitiendo una
+respuesta rápida ante incidentes urgentes. Se corresponde con el número de
+versión PATCH en el versionado semántico, aunque su aplicación suele generar un
+incremento de versión inmediato. 
+
+feat: Este tipo de commit se emplea para agregar una nueva funcionalidad al
+código. Se corresponde con el número de versión MINOR en el versionado
+semántico. 
+
+BREAKING CHANGE: Un commit que contiene el texto BREAKING CHANGE indica un
+cambio que rompe la compatibilidad con versiones anteriores del software. Este
+tipo de cambio se corresponde con el número de versión MAJOR en el versionado
+semántico. 
+
+docs: Este tipo de commit está relacionado con modificaciones en los archivos de
+documentación del software. 
+
+chore: Cambios en tareas de mantenimiento, configuración, dependencias o
+procesos de build que no afectan el código fuente de producción. 
+
+refactor: Reestructuración del código sin cambiar su comportamiento externo.
+Mejora la legibilidad, mantenibilidad o rendimiento interno. 
+
+style: Cambios relacionados con formato de código, espacios, punto y coma, etc.
+No afectan la lógica del programa. 
+
+test: Adición, modificación o corrección de pruebas automatizadas (unitarias,
+integración, etc.). 
+
+perf: Mejoras de rendimiento que optimizan la velocidad, consumo de memoria o
+eficiencia del código. 
+
+ci: Cambios en la configuración de integración continua (GitHub? Actions,
+GitLab? CI, Jenkins, etc.). 
+
+build: Cambios que afectan el sistema de construcción o dependencias externas
+(webpack, npm, pip, etc.). 
+
+revert: Deshace un commit anterior. Generalmente incluye el hash del commit
+revertido en el mensaje. 
+
+Ejemplos de mensajes de commits
+===============================
+
+fix
+
+fix: arreglada validación de cédula que permitía letras. 
+fix: reparado cálculo de edad que mostraba años negativos.
+
+hotfix
+
+hotfix: reparado error de login que impedía acceso a usuarios.
+hotfix: solucionada caída del servidor al exportar reportes.
+
+feat
+
+feat: agregada búsqueda por cédula en listado de registros.
+feat: implementada exportación de reportes a hoja de cálculo.
+
+BREAKING CHANGE
+
+BREAKING CHANGE: Las APIs existentes deben actualizarse para enviar números en lugar de texto.
+BREAKING CHANGE: Los consultas de los clientes que consuman la API deben actualizarse. 
+
+refactor
+
+refactor: renombrado campo 'cedula' a 'cedula_identidad'. 
+
+docs
+
+docs: actualizado manual de usuario del sistema > módulo de reportes. 
+docs: corregido error ortográfico en documentación de API. 
+
+chore
+
+chore: actualizada versión de Django de 5.0 a 6.1. 
+chore: agregado archivo .gitignore para entornos virtuales.
+
+refactor
+
+refactor: extraída lógica de validación de RIF a una función separada. 
+refactor: renombrada variable 'reg_fil' a 'registros_filtrados'. 
+
+style
+
+style: agregados espacios entre operadores para mejor legibilidad.
+style: eliminadas líneas en blanco innecesarias.
+
+test
+
+test: agregadas pruebas unitarias para validación de cédula. 
+test: corregida prueba de registro que fallaba con datos vacíos. 
+
+perf
+
+perf: optimizada consulta de listado agregando índices a la BD. 
+perf: cacheados resultados de consulta de panel de estadísticas. 
+
+ci
+
+ci: agregado workflow para despliegue automático.
+ci: actualizada versión de Python en pipeline de CI.
+
+build
+
+build: agregado requirements.txt con todas las dependencias.
+build: actualizada versión de Node.js para compilación del frontend.
+
+revert
+
+revert: deshechos cambios de búsqueda por cédula, se revierte el commit a1b2c3d4e5f6g7h8i9j0. revert: deshechos cambios de cálculo de edad, se revierte el commit a1b245d4e5f6g778i9j0.
+
+Buenas prácticas
+================
+
+-Realizar commits frecuentes con mensajes descriptivos. 
+
+-Mantener las ramas actualizadas. 
+
+-Nunca subir código que rompa la compilación del sistema. 
+
+Definir la convención de commits en los Estándares de Desarrollo es importante
+porque así el equipo de desarrollo tendrá visible las reglas a seguir.
+
+
+Ejemplo real del uso de las convenciones junto a las tareas de GitLab
+=====================================================================
+
+A continuación, se presenta un ejemplo práctico que ilustra cómo aplicar las
+convenciones de nombrado de ramas y mensajes de commit, vinculándolos con una
+tarea específica del tablero de GitLab.
+
+Contexto del ejemplo:
+
+Se asigna una tarea a un desarrollador en el tablero de GitLab. La tarea
+corresponde al identificador #1 y consiste en realizar un cambio en el archivo
+README.md del proyecto.
+
+Paso a paso:
+
+1- Creación de la rama: El desarrollador crea una nueva rama derivada de dev,
+siguiendo la convención de nomenclatura establecida. En este caso, el nombre de
+la rama es: docs/update-readme 
+
+2- Realización del cambio y commit: El desarrollador modifica el archivo
+README.md según lo solicitado y procede a realizar un commit. El mensaje de
+commit sigue la convención semántica y referencia la tarea correspondiente:
+docs: #1 Actualizado el README. 
+
+Vinculación automática con GitLab: Al incluir el identificador #1 en el mensaje
+del commit, GitLab reconoce automáticamente la relación entre el commit y la
+tarea del tablero. Esto permite: 
+
+-Visualizar el commit asociado directamente desde la tarea. 
+
+-Mantener un historial claro y trazable de los cambios realizados para cada
+requerimiento. 
+
+Resultado esperado: Gracias al uso combinado de las convenciones de ramas,
+mensajes de commit y la referencia a los identificadores de tareas, GitLab logra
+vincular de forma automática el trabajo técnico con la gestión del proyecto,
+facilitando el seguimiento, la auditoría y la colaboración dentro del equipo.
+
+Fuente
+======
+
+MDCSL v3
