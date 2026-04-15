@@ -14281,7 +14281,22 @@ Fabian Palmera
 
 Deepseek IA
 
-==================================================================================
-Implementar JWT en un proyecto de Django + Ninja como backend + Nuxt como frontend
-==================================================================================
+====================================================================
+Eliminar la carpeta migrations de todos los directorios del proyecto
+====================================================================
 
+Aquí tienes varios comandos para eliminar todas las carpetas migrations de todos
+los directorios de tu proyecto:
+
+Comando básico (recomendado):
+
+$ find . -type d -name "migrations" -exec rm -rf {} +
+
+Comando más seguro (con confirmación):
+
+$ find . -type d -name "migrations" -exec rm -ri {} +
+
+Fuente
+======
+
+Deepseek IA
