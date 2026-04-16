@@ -14314,3 +14314,23 @@ servidor real.
 -Producción: Cuando subes tu proyecto a un servidor real, nunca debes dejar la
 clave escrita directamente en el código. Lo ideal es usar una variable de
 entorno o un archivo .env para que no sea visible en repositorios de Git.
+
+====================================================================
+Eliminar la carpeta migrations de todos los directorios del proyecto
+====================================================================
+
+Aquí tienes varios comandos para eliminar todas las carpetas migrations de todos
+los directorios de tu proyecto:
+
+Comando básico (recomendado):
+
+$ find . -type d -name "migrations" -exec rm -rf {} +
+
+Comando más seguro (con confirmación):
+
+$ find . -type d -name "migrations" -exec rm -ri {} +
+
+Fuente
+======
+
+Deepseek IA
