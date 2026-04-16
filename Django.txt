@@ -14281,8 +14281,36 @@ Fabian Palmera
 
 Deepseek IA
 
-==================================================================================
-Implementar JWT en un proyecto de Django + Ninja como backend + Nuxt como frontend
-==================================================================================
+=========================
+SECRET_KEY en settings.py
+=========================
 
+La SECRET_KEY es, literalmente, la llave maestra de tu proyecto. Es una cadena
+de caracteres única que Django utiliza para garantizar la integridad de los
+datos y la seguridad de la sesión.
 
+Aquí tienes el bloque con su comentario técnico:
+
+# Clave criptográfica única para el proyecto. Se usa para firmar digitalmente
+# las sesiones, cookies, tokens de recuperación de contraseña y mensajes.
+SECRET_KEY = 'django-insecure-zbpc(XXXXXXXXXXXXXXXX'
+
+¿Por qué es importante?
+=======================
+
+Si alguien obtiene esta clave, podría:
+
+-Falsificar cookies de sesión: Entrar como cualquier usuario (incluyendo el
+administrador) sin saber la contraseña.
+
+-Manipular tokens: Crear enlaces de restablecimiento de contraseña falsos.
+
+-Descifrar datos firmados: Comprometer la seguridad de los formularios (CSRF).
+
+-"django-insecure-": Ese prefijo indica que la clave fue generada automáticamente
+por Django para desarrollo. Es un recordatorio de que no es segura para un
+servidor real.
+
+-Producción: Cuando subes tu proyecto a un servidor real, nunca debes dejar la
+clave escrita directamente en el código. Lo ideal es usar una variable de
+entorno o un archivo .env para que no sea visible en repositorios de Git.
