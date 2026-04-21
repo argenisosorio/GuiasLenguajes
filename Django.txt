@@ -14334,3 +14334,89 @@ Fuente
 ======
 
 Deepseek IA
+
+==============================================
+Plantillas para error 404 y 500 personalizadas
+==============================================
+
+Para que Django use automáticamente tu plantilla 404.html cuando alguien intente
+acceder a una ruta inexistente, no basta con tener el archivo en la carpeta de
+la aplicación; Django busca estos archivos específicamente en el directorio raíz
+de templates o espera que se lo indiques en la configuración de las URLs.
+
+Sigue estos pasos para activarlo:
+1. Configuración de settings.py
+
+Para que las páginas de error personalizadas se muestren, el modo de depuración
+debe estar desactivado.
+
+Importante: Mientras DEBUG = True, verás la página amarilla de error de Django.
+Para probar tu template, debes ponerlo en False.
+
+# settings.py
+DEBUG = False
+
+# Debes definir qué hosts pueden acceder. Para local usa:
+ALLOWED_HOSTS = ['*']
+
+TEMPLATES = [
+    {
+        # ...
+        'DIRS': [BASE_DIR / 'templates'], # Asegúrate de que Django busque aquí
+        # ...
+    },
+]
+
+2. Ubicación del archivo
+
+Django busca por defecto un archivo llamado 404.html en la raíz de tus carpetas
+de templates. Como lo tienes dentro de apps/person/templates/person/, es
+probable que no lo encuentre automáticamente a menos que lo muevas o configures
+el handler.
+
+Opción A (La más sencilla):
+
+Crea una carpeta templates/ en la raíz de tu proyecto y mueve allí el 404.html.
+
+Opción B (Configurar el Handler) Opción recomendada para no cambiar el settings:
+
+Si quieres una ubicación personalizada por ejemplo
+/apps/base/templates/base/404.html, ve al archivo urls.py principal de tu
+proyecto (el que está junto a settings.py):
+
+# urls.py (el principal)
+from django.conf.urls import handler404
+
+# Apunta a una vista que renderice tu template específico
+handler404 = 'apps.base.views.error_404'
+
+3. Crear la vista de error (Si usaste la Opción B)
+
+En tu apps/base/views.py, añade la función que renderiza el template:
+
+# apps/base/views.py
+from django.shortcuts import render
+
+def error_404(request, exception):
+    return render(request, 'base/404.html', status=404)
+
+4. Recomendación para el 404.html
+
+Asegúrate de que tu 404.html extienda correctamente de tu base, pero ten
+cuidado: si base.html usa rutas estáticas (CSS/JS) que no están bien
+configuradas para producción, el template se verá sin estilos.
+
+Resumen para probarlo en tu Debian:
+
+Pon DEBUG = False en settings.py.
+
+Pon ALLOWED_HOSTS = ['127.0.0.1', 'localhost'].
+
+Reinicia el servidor: python manage.py runserver.
+
+Escribe cualquier ruta loca en el navegador.
+
+Fuente
+======
+
+Gemini IA
