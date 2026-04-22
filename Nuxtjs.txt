@@ -2935,3 +2935,239 @@ Con esto dentro de una lógica de vue le decimos a nuxt que debe navegar a otra
 página
 
 navigateTo('/cuerdas')
+
+=================================================
+Diferencia entre npm run generate y npm run build
+=================================================
+
+En Nuxt 4 (siguiendo la evolución de Nuxt 3), la diferencia principal radica en
+dónde se ejecuta el renderizado de tu aplicación y qué archivos terminas
+subiendo a tu servidor.
+
+1. npm run build (Hybrid/Server-Side Rendering)
+
+Este comando prepara tu aplicación para ser ejecutada en un servidor Node.js o
+un entorno de Edge Computing.
+
+¿Qué hace?: Compila tu código y genera una aplicación "viva". Cuando un usuario
+visita tu web, el servidor procesa la petición en tiempo real, consulta la base
+de datos si es necesario y devuelve el HTML.
+
+Resultado: Genera una carpeta .output.
+
+Ideal para:
+
+-Sitios con contenido que cambia constantemente (redes sociales, e-commerce con
+stock dinámico).
+
+-Aplicaciones que requieren autenticación compleja en el lado del servidor.
+
+-Proyectos que usan SSR (Server-Side Rendering) o ISR (Incremental Static
+Regeneration).
+
+2. npm run generate (Static Site Generation - SSG)
+
+Este comando pre-renderiza toda tu aplicación en archivos HTML, CSS y JS
+estáticos durante el tiempo de compilación.
+
+¿Qué hace?: Nuxt "navega" por todas tus rutas, las renderiza y guarda el
+resultado en archivos .html físicos. No necesitas un servidor Node.js para
+servirlo; basta con un hosting de archivos estáticos.
+
+-Resultado: Genera una carpeta .output/public (o la clásica carpeta dist).
+
+Ideal para:
+
+-Blogs, portafolios o sitios de documentación.
+
+-Sitios donde el SEO es vital y el contenido no cambia cada segundo.
+
+-Proyectos que buscan la máxima velocidad y seguridad (al no haber servidor, no
+hay procesos que hackear).
+
+Comparativa Rápida
+
++----------------------+---------------------------+----------------------------+
+| CARACTERÍSTICA       | npm run build (SSR/Hybrid)| npm run generate (SSG)     |
++----------------------+---------------------------+----------------------------+
+| Renderizado          | Dinámico en servidor      | Estático (Pre-renderizado) |
+| Servidor Requerido   | Sí (Node.js / Nitro)      | No (Cualquier Hosting)     |
+| Carpeta de Salida    | .output                   | .output/public             |
+| Velocidad (TTFB)     | Depende del servidor      | Ultra rápida (CDN)         |
+| Datos (API)          | Al momento del fetch      | Congelados al compilar     |
+| Escalabilidad        | Requiere más recursos     | Virtualmente infinita      |
+| Caso de uso ideal    | Dashboards, E-commerce    | Blogs, Portafolios, Docs   |
++----------------------+---------------------------+----------------------------+
+
+¿Cuál elegir?
+
+-Si tu proyecto es un SaaS donde los usuarios entran a un panel de control, usa
+build.
+
+-Si estás haciendo un sitio informativo o un blog que solo actualizas de vez en
+cuando, usa generate.
+
+Nota importante: En Nuxt 4, gracias al motor Nitro, la línea es cada vez más
+delgada porque puedes configurar rutas específicas como estáticas mientras el
+resto es dinámico (Hybrid Rendering), pero los comandos siguen manteniendo estas
+filosofías base.
+
+Fuente
+======
+
+Gemini IA
+
+=================================
+Exportar app con npm run generate
+=================================
+
+Para exportar tu frontend de Nuxt 4 (que actualmente corre sobre Vue 3 y está
+integrado con tu backend en Django 6) y generar archivos estáticos que puedas
+servir con Nginx o Apache, el comando npm run generate es la opción correcta.
+
+Sin embargo, para que funcione en producción con tu configuración actual del
+proyecto, debes ajustar algunos detalles críticos:
+
+1. Configuración del .env para Producción
+
+En el desarrollo usas 127.0.0.1, pero en producción el frontend debe apuntar a
+la URL pública donde estará alojado tu backend de Django.
+
+Crea un archivo llamado .env.production (o edita el actual antes de generar):
+
+# URL real de tu API en Producción (ejemplo basado en tu infraestructura)
+NUXT_PUBLIC_API_BASE=https://mibackend.com/api
+
+Nota: Nuxt recogerá automáticamente las variables con el prefijo NUXT_PUBLIC_
+para que estén disponibles en el cliente.
+
+2. Preparar Nuxt para Generación Estática (SSG)
+
+En tu archivo nuxt.config.ts, asegúrate de definir el modo de renderizado. Para
+un sistema de gestión lo ideal es que las páginas se generen como una SPA
+(Single Page Application) dentro de contenedores estáticos:
+
+export default defineNuxtConfig({
+  ssr: false, // Desactiva el renderizado del lado del servidor para exportación estática pura
+
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE
+    }
+  },
+
+  // Asegúrate de que las rutas que requieren Auth no intenten generarse como HTML con datos
+  routeRules: {
+    '/api/**': { proxy: process.env.NUXT_PUBLIC_API_BASE + '/**' }
+  }
+})
+
+El archivo con las modificaciones quedaría así:
+
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default defineNuxtConfig({
+  // Desactiva el renderizado del lado del servidor para exportación estática (SSG)
+  ssr: false,
+
+  compatibilityDate: '2025-07-15',
+  devtools: { enabled: false },
+
+  runtimeConfig: {
+    // Las variables dentro de 'public' son accesibles desde el navegador
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://127.0.0.1:8000/api'
+    }
+  },
+
+  // Configuración de etiquetas Meta Globales
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'es' // Define el idioma del sitio
+      },
+      title: 'My Nuxt app', // Título por defecto
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', content: 'Nuxt 4 examples' },
+        { name: 'format-detection', content: 'telephone=no' },
+        { name: 'author', content: 'Ing. Argenis Osorio' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      ]
+    }
+  },
+
+  // Configuración para el despliegue estático con Nginx
+  nitro: {
+    serveStatic: true,
+    // Asegura que todas las rutas se generen correctamente
+    prerender: {
+      crawlLinks: true
+    }
+  },
+
+  css: [
+    'assets/css/main.css'
+  ],
+
+  modules: ['@nuxt/eslint'],
+
+  eslint: {
+    checker: true
+  }
+})
+
+3. Ejecutar la Generación
+
+Ejecuta el comando en tu terminal dentro de la carpeta frontend:
+
+$ npm run generate
+
+¿Qué sucederá después?
+
+  1. Nuxt compilará tu código TypeScript/Vue.
+  2. Se creará una carpeta llamada dist.
+  3. Dentro encontrarás el index.html y las carpetas de _nuxt (con tus JS y
+  CSS).
+
+4. Abrir la app en el navegador
+
+Para ver tu frontend en el navegador ahora que tienes la carpeta dist, hay un
+detalle técnico importante: no puedes abrir el archivo index.html haciendo doble
+clic directamente (protocolo file://).
+
+Debido a que las aplicaciones modernas (SPA) cargan recursos de forma asíncrona
+y gestionan rutas, necesitan ser servidas a través de un servidor web (protocolo
+http://).
+
+Servir desde la ubicación actual (Rápido para pruebas)
+
+Puedes usar un servidor HTTP ligero desde la terminal para servir el contenido
+de dist.
+
+Si tienes Python instalado, sitúate dentro de la carpeta dist y ejecuta:
+
+cd dist
+
+$ python3 -m http.server 8080
+Serving HTTP on 0.0.0.0 port 8080 (http://0.0.0.0:8080/) ...
+
+Visita http://0.0.0.0:8080/ lo cual abrirá por defecto http://127.0.0.1:8080
+agrega http://127.0.0.1:8080 al arreglo de urls del settings.py
+
+# La URL de tu app frontend
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "http://localhost:5173",
+    "http://127.0.0.1:8080",
+]
+
+y ahora si visitas http://127.0.0.1:8080 deberías ver la app corriendo.
+
+Fuente
+======
+
+Gemini IA
