@@ -24,46 +24,113 @@ y también permite la inclusión de campos tipo BLOB.
 Línea de comandos de sqlite3
 ============================
 
+Instalar el gestor de sqlite3
+
 $ sudo apt install sqlite3
+
+-----
 
 Para abrir la línea de comandos:
 
 $ sqlite3
 
+-----
+
 Acceder a una base de datos desde la consola de sqlite3.
 
 $ sqlite3 db.sqlite3
+
+-----
 
 Listar las tablas de la db a la cual se acceso.
 
 sqlite> .tables
 
-Acceder al modo csv, para poder ejecutar operaciones con estos ficheros.
+-----
+
+Acceder al modo csv, para poder ejecutar operaciones con estos ficheros como
+insertar datos.
 
 sqlite> .mode csv
 
 Importamos los datos de el fichero .csv a la tabla especifica.
 
-Obviamente deben coincidir los campos en el .csv y en la tabla.
+Obviamente deben coincidir los campos en el .csv y en la tabla, por ejemplo
+este csv:
+
+#nombres,apellidos,cedula,fecha_nacimiento,sexo,folio,libro,ano,created_at,updated_at
+Carlos Andrés,Gómez Pérez,V-18902230,1990-01-01,M,32,33,34,2026-04-10 17:12:32,2026-04-10 17:12:32
 
 sqlite> .import test.csv yourtable
+
+--- El truco del almendruco, la primera fila
+
+Un error común al usar .import es que SQLite intente importar los encabezados
+(la primera fila con los nombres de las columnas) como si fueran un registro
+más.
+
+Para evitar que tu primera fila se convierta en un usuario llamado "nombres",
+usa el comando .import con el flag --skip 1:
+
+sqlite> .import --skip 1 test.csv nombre_de_tu_tabla
+
+Nota: Esta importación falla si no se se le pasa el id, por lo cual los
+siguientes comandos si funcionan:
+
+-- 1. Asegúrate de estar en modo CSV
+.mode csv
+
+-- 2. Importa SIN el --skip si tu archivo no tiene encabezados
+-- Esto creará la tabla temp_table con columnas genéricas (field1, field2...)
+.import data.csv temp_table
+
+-- 3. Verifica que los datos están en la temporal
+SELECT * FROM temp_table LIMIT 1;
+
+-- 4. Inserta en la tabla real
+INSERT INTO registers_register (
+    nombres, 
+    apellidos, 
+    cedula, 
+    fecha_nacimiento, 
+    sexo, 
+    folio, 
+    libro, 
+    ano, 
+    created_at, 
+    updated_at
+)
+SELECT * FROM temp_table;
+
+-- 5. Limpieza
+DROP TABLE temp_table;
+
+-----
 
 Ver esquema de creación de la tabla.
 
 sqlite> .schema tablename
 
+-----
+
 Listar todos los registros de una tabla.
 
 sqlite> SELECT * FROM tablename;
+
+-----
 
 Agregar una nueva columna a una tabla existente en una base de datos.
 
 sqlite> ALTER TABLE appname_modelname ADD COLUMN name_column DEFAULT 'value';
 
+-----
+
 Acceder a la consola de sqlite3 desde dentro de un proyecto de django con una db
 ya existente.
 
 $ python manage.py dbshell
+
+-----
 
 Para salir del prompt de sqlite3.
 
