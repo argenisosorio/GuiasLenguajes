@@ -9563,6 +9563,15 @@ class User(AbstractUser):
 
         return self.username
 
+Nota: Podemos en el modelo escribir nuevas reglas sobre los campos del modelo
+user, por ejemplo hacer que el email sea único:
+
+class User(AbstractUser):
+    email = models.EmailField(unique=True)
+    nickname = models.CharField(max_length=50, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return self.username
 
 Cuando ejecutemos las migración de la app users se creara la tabla users_user
 que contendrá estos campos:
