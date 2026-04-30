@@ -3149,7 +3149,7 @@ de dist.
 
 Si tienes Python instalado, sitúate dentro de la carpeta dist y ejecuta:
 
-cd dist
+$ cd dist
 
 $ python3 -m http.server 8080
 Serving HTTP on 0.0.0.0 port 8080 (http://0.0.0.0:8080/) ...
@@ -3166,6 +3166,13 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 y ahora si visitas http://127.0.0.1:8080 deberías ver la app corriendo.
+
+Si se corre usando la extensión Live server de VSCode entonces agregar
+"http://127.0.0.1:5500",
+
+Puedes mover el contenido de la carpeta dist/ a la carpeta de Apache
+/var/www/html/ y el front debería desplegarse normalmente agregando
+"http://127.0.0.1", en el CORS_ALLOWED_ORIGINS del settings.py
 
 Fuente
 ======

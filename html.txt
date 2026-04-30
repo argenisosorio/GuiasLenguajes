@@ -11298,3 +11298,131 @@ Fondo de partículas flotando
     </script>
 </body>
 </html>
+
+-----
+
+Generar reporte PDF de manera nativa usando la función de imprimir del navegador
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de Impresión Nativa</title>
+    
+    <style>
+        /* --- ESTILOS PARA LA PANTALLA --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 40px;
+            background-color: #f0f2f5;
+        }
+
+        .no-imprimir {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* El reporte está oculto en la pantalla para que no estorbe */
+        #seccion-reporte {
+            display: none;
+        }
+
+        /* --- ESTILOS PARA LA IMPRESIÓN --- */
+        @media print {
+            /* Ocultamos todo lo que no queremos que salga en el papel */
+            .no-imprimir {
+                display: none;
+            }
+
+            /* Mostramos la sección del reporte */
+            #seccion-reporte {
+                display: block;
+                padding: 0;
+            }
+
+            h1 {
+                color: black;
+                border-bottom: 2px solid #000;
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+
+            th, td {
+                border: 1px solid #333;
+                padding: 10px;
+                text-align: left;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="no-imprimir">
+        <h1>Generador de Reportes</h1>
+        <p>Haz clic en el botón para abrir el diálogo de impresión.</p>
+        <button onclick="imprimirReporte()">Imprimir Reporte a PDF</button>
+    </div>
+
+    <div id="seccion-reporte">
+        <h1>Reporte Oficial de Ventas</h1>
+        <p>Generado el: <span id="fecha"></span></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Laptop Pro 15"</td>
+                    <td>2</td>
+                    <td>$2,400</td>
+                </tr>
+                <tr>
+                    <td>Monitor 4K</td>
+                    <td>1</td>
+                    <td>$450</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function imprimirReporte() {
+            // 1. Opcional: Actualizar datos dinámicos antes de imprimir
+            const fecha = new Date().toLocaleDateString();
+            document.getElementById('fecha').innerText = fecha;
+
+            // 2. Ejecutar el comando de impresión del sistema
+            // Esto detiene la ejecución del JS y abre la ventana del navegador
+            window.print();
+        }
+    </script>
+</body>
+</html>
