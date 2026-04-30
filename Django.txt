@@ -14429,3 +14429,55 @@ Fuente
 ======
 
 Gemini IA
+
+==================================================================================
+Validadores de contraseña (longitud mínima, similitud, numérica y común) en Django
+==================================================================================
+
+# Validadores de contraseña (longitud mínima, similitud, numérica y común).
+AUTH_PASSWORD_VALIDATORS = [
+    # Evita que la contraseña sea muy parecida al nombre de usuario, email o campos del perfil.
+    {
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    },
+    # Verifica que la contraseña tenga una longitud mínima (por defecto son 8 caracteres).
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    },
+    # Compara la contraseña con una lista de 1000 contraseñas comunes (ej: "123456", "qwerty", "password").
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    },
+    # Impide que la contraseña sea enteramente numérica (ej: "88888888").
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+]
+
+---
+
+AUTH_PASSWORD_VALIDATORS = []
+
+Al dejar la lista vacía, Django dejará de comprobar si la contraseña es corta,
+común o solo números.
+
+---
+
+Si no quieres desactivar la seguridad para todo el proyecto, sino solo hacerla
+un poco menos estricta (por ejemplo, permitir números pero exigir 4 caracteres),
+puedes configurar los validadores de forma individual en el mismo settings.py:
+
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 4,  # Ahora permite 4 caracteres en lugar de 8
+        }
+    },
+    # Eliminamos el de "CommonPassword" y "NumericPassword" de la lista
+]
+
+Fuente
+======
+
+Gemini IA
