@@ -14481,3 +14481,250 @@ Fuente
 ======
 
 Gemini IA
+
+===============================================
+¿En Django las migraciones deberían versionarse?
+===============================================
+
+La respuesta corta es un rotundo sí. En Django, las migraciones son una parte
+integral del código fuente y deben incluirse en tu sistema de control de
+versiones (Git, SVN, etc.).
+
+Esto no es opcional si trabajas en equipo o planeas llevar tu app a producción.
+
+1. La "Fuente de Verdad" de tu Base de Datos
+
+Django utiliza los archivos de migración para saber cómo transformar el estado
+actual de la base de datos al estado definido en tus modelos (models.py).
+
+-Consistencia: Si no versionas las migraciones, tus compañeros de equipo
+tendrían que generarlas localmente. Esto suele causar que el orden de los
+archivos (0001, 0002, etc.) sea distinto entre desarrolladores, rompiendo el
+historial de la base de datos.
+
+-Despliegues: Al hacer un git pull en el servidor de producción, simplemente
+ejecutas python manage.py migrate. Si las migraciones no están en el
+repositorio, el servidor no sabrá qué cambios aplicar.
+
+2. El Historial de Cambios
+
+Las migraciones funcionan como un registro histórico. Cada archivo es un paso en
+la evolución de tu esquema.
+
+-Si necesitas volver a una versión anterior del código (un "rollback"),
+necesitas que los archivos de migración de esa fecha específica estén presentes
+para poder revertir los cambios en la base de datos con migrate <app_name>
+<migration_number>.
+
+3. Evitar Conflictos de "Merge"
+
+Cuando dos personas modifican el mismo modelo, Django genera archivos de
+migración distintos. Al versionarlos, Git te avisará si hay un conflicto. Django
+incluso tiene herramientas para manejar esto:
+
+Si hay dos migraciones con el mismo número (ej. ambas son 0005), puedes usar:
+
+$ python manage.py makemigrations --merge
+
+¿Qué es lo que NO se debe versionar?
+
+Aunque los archivos de migración van al repositorio, hay un par de cosas
+relacionadas que siempre deben estar en tu .gitignore:
+
+-La base de datos local: Nunca subas el archivo db.sqlite3 (si usas SQLite).
+
+-Archivos __pycache__: Son archivos binarios compilados que no aportan nada al
+código.
+
+Resumen de Buenas Prácticas
+
++-----------------------+----------+------------------------------------------+
+| Acción                | ¿Se      | Razón                                    |
+|                       | versiona?|                                          |
++-----------------------+----------+------------------------------------------+
+| Archivos              | SÍ       | Define la estructura de la base de datos |
+| 0001_initial.py, etc. |          | en todos los entornos.                   |
++-----------------------+----------+------------------------------------------+
+| Carpeta migrations/   | SÍ       | Es un paquete de Python necesario para   |
+|                       |          | la aplicación.                           |
++-----------------------+----------+------------------------------------------+
+| Datos sensibles en    | NO       | Usa variables de entorno si haces        |
+| migraciones           |          | migraciones de datos.                    |
++-----------------------+----------+------------------------------------------+
+| El archivo __init__.py| SÍ       | Permite que Python reconozca la carpeta  |
+| (migrations/)         |          | como paquete.                            |
++-----------------------+----------+------------------------------------------+
+
+Tip: Antes de hacer un commit, asegúrate de que tus migraciones corren bien
+localmente. No hay nada más frustrante para un colega que bajar cambios y que el
+comando migrate falle porque falta una dependencia o hay un error de sintaxis en
+el archivo generado.
+
+Ejemplo real de por que y como haría un rollback
+================================================
+
+Imagina este escenario real: tienes una aplicación de comercio electrónico en
+producción. Decides que necesitas añadir un campo telefono_celular a tu modelo
+Cliente.
+
+1. El escenario del problema
+
+-Ejecutas python manage.py makemigrations.
+
+-Ejecutas python manage.py migrate.
+
+-Todo parece ir bien, pero al subir a producción, te das cuenta de que el nuevo
+campo tiene una restricción NOT NULL sin un valor por defecto.
+
+-Resultado: ¡Tu sitio web ha dejado de funcionar! Cada vez que alguien intenta
+registrarse, la aplicación lanza un error porque la base de datos no sabe qué
+poner en el nuevo campo y la aplicación se bloquea.
+
+Aquí es donde entra el rollback.
+
+2. Cómo hacer el rollback (paso a paso)
+
+Django te permite revertir las migraciones de forma muy sencilla usando el
+número de migración al que quieres volver.
+
+Paso A: Identificar la migración anterior
+
+Primero, mira tu carpeta tu_app/migrations/. Supongamos que tu migración actual
+es 0004_add_telefono_celular.py y la anterior era 0003_initial.py.
+
+Paso B: Ejecutar el rollback
+
+Para volver al estado anterior (antes del error), ejecutas este comando en tu
+terminal:
+
+$ python manage.py migrate tu_app 0003
+
+¿Qué hace Django internamente?
+
+Django busca el archivo 0004_add_telefono_celular.py, lee la sección down (o
+deshace automáticamente las operaciones de up, como AddField) y ejecuta el SQL
+necesario para eliminar esa columna de la base de datos, dejando la tabla
+Cliente exactamente como estaba en la versión 0003.
+
+3. ¿Por qué es fundamental tener esto versionado?
+
+Si no tuvieras las migraciones en Git:
+
+-No sabrías qué borrar: Tendrías que entrar manualmente a la base de datos
+(usando SQL puro como ALTER TABLE...) para eliminar la columna. Esto es
+altamente peligroso y propenso a errores humanos.
+
+-Desincronización: Si arreglas tu base de datos manualmente en producción, pero
+no arreglas el código, en el siguiente despliegue Django intentará aplicar la
+misma migración fallida y volverá a romper todo.
+
+-El equipo se pierde: Tus compañeros seguirán teniendo el código con la
+migración 0004 en sus ramas, pero la base de datos ya no la tendrá. El equipo
+entero perderá horas intentando adivinar en qué estado está cada base de datos
+local.
+
+El flujo profesional ante un error:
+
+-Detectas el fallo en producción.
+
+-Rollback inmediato usando migrate <app> <version_anterior> para restaurar el
+servicio.
+
+-Arreglas el código: Modificas el modelo o la migración (ej. agregas default='').
+
+-Pruebas en local: Borras la base de datos de pruebas, creas una nueva y
+ejecutas todas las migraciones desde cero (migrate) para asegurar que el proceso
+de creación es limpio.
+
+-Commit y Push: Subes la corrección al repositorio.
+
+-Despliegue: Al hacer git pull y migrate en el servidor, Django aplicará la
+versión corregida correctamente.
+
+Regla de oro: Nunca, bajo ninguna circunstancia, intentes "arreglar" una
+migración editando archivos .py de migración que ya fueron aplicados y subidos a
+producción. Es preferible hacer un nuevo archivo de migración que corrija el
+anterior (ej. 0005_fix_telefono_celular.py).
+
+¿Se puede echar mano a un archivo de migración que no haya sido aplicado?
+=========================================================================
+
+Exactamente. De hecho, ese es el momento ideal para hacerlo.
+
+Si tienes un archivo de migración que acabas de generar (makemigrations) pero
+aún no has ejecutado el comando migrate, tienes total libertad para editarlo. Es
+como tener un "borrador" antes de que los cambios se escriban permanentemente en
+piedra (la base de datos).
+
+A continuación dos escenarios donde esto es súper útil:
+
+1. Corregir errores antes de aplicarlos
+
+Imagina que generaste una migración para agregar un campo:
+
+# migración 0005_add_edad_usuario.py
+operations = [
+    migrations.AddField(
+        model_name='usuario',
+        name='edad',
+        field=models.IntegerField(), # ¡Ups! Olvidé poner un valor por defecto
+    ),
+]
+
+Si te das cuenta del error antes de correr migrate, puedes simplemente editar
+ese archivo .py, agregar default=0 o null=True, guardar y luego ejecutar
+python manage.py migrate. Django leerá el archivo ya corregido y aplicará esos
+cambios correctamente a la base de datos.
+
+2. Fusionar o limpiar
+
+Si hiciste makemigrations varias veces por error y tienes archivos como
+0005_auto..., 0006_auto..., y 0007_auto... que solo hacen cambios pequeños,
+puedes:
+
+-Borrar esos archivos.
+
+-Volver a ejecutar makemigrations.
+
+-Django los consolidará en un solo archivo más limpio.
+
+Lo que debes tener en cuenta (El "Regla de Oro")
+
+Lo más importante es entender en qué estado está la migración:
+
++----------------+-------------+----------------------------------------------+
+| Estado de la   | ¿Puedo      | ¿Qué pasa?                                   |
+| Migración      | editarla?   |                                              |
++----------------+-------------+----------------------------------------------+
+| No aplicada    | SÍ          | Django ejecutará el código tal cual esté en  |
+|                |             | el archivo.                                  |
++----------------+-------------+----------------------------------------------+
+| Ya aplicada    | NO          | Si la cambias, tu servidor de producción     |
+|                |             | tendrá una versión y tu base de datos otra.  |
+|                |             | Esto causará un error de inconsistencia.     |
++----------------+-------------+----------------------------------------------+
+
+¿Qué hacer si YA la aplicaste pero está mal?
+
+Si ya corriste migrate y descubres el error, no edites el archivo viejo. En su
+lugar:
+
+-Haz un rollback (como vimos antes) para revertir los cambios.
+
+-Edita el archivo original (o crea una nueva migración con los cambios correctos).
+
+-Vuelve a ejecutar migrate.
+
+¿Por qué Django permite esto?
+
+Django trata a las migraciones como código Python puro. Mientras no hayan sido
+ejecutadas, Django no tiene un "historial" de haber pasado por ahí. Una vez que
+corres migrate, Django registra en la tabla django_migrations (una tabla interna
+que el framework mantiene en tu base de datos) que el archivo 0005_... ya fue
+procesado. A partir de ese momento, la migración es "histórica" y no debe
+tocarse.
+
+Fuente
+======
+
+Gemini IA
