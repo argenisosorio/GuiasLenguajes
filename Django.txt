@@ -14324,6 +14324,102 @@ servidor real.
 clave escrita directamente en el código. Lo ideal es usar una variable de
 entorno o un archivo .env para que no sea visible en repositorios de Git.
 
+Generar una nueva SECRET_KEY
+============================
+
+Debes cambiarla si sospechas que ha sido expuesta o si simplemente quieres
+renovar la seguridad de tu proyecto. Django no depende de que la llave sea la
+original generada al crear el proyecto, solo necesita que sea una cadena de
+caracteres larga, aleatoria y secreta.
+
+1. ¿Cómo generar una nueva llave?
+
+No es recomendable escribir una llave al azar manualmente. Django incluye
+herramientas para generar una llave segura que cumpla con sus estándares. Puedes
+usar la consola de Python para obtener una nueva:
+
+$ python manage.py shell
+
+Dentro del shell de Django, ejecuta:
+
+from django.core.management.utils import get_random_secret_key
+print(get_random_secret_key())
+
+Copia el resultado y pégalo en tu archivo .env (o en tu configuración de
+variables de entorno).
+
+2. Consecuencias de cambiar la SECRET_KEY
+
+Al cambiar la llave, todas las firmas criptográficas previas dejarán de ser
+válidas. Esto tiene efectos inmediatos que debes considerar:
+
+-Sesiones de usuario: Todos los usuarios que tengan una sesión activa serán
+desconectados (el ID de la sesión en su cookie ya no coincidirá con la nueva
+firma).
+
+-Tokens de "Recuérdame": Cualquier token persistente de inicio de sesión dejará
+de funcionar.
+
+-Recuperación de contraseñas: Los enlaces de "restablecer contraseña" que se
+hayan enviado por correo y que aún no hayan expirado dejarán de ser válidos.
+
+-Mensajes de sistema: Si usas el framework de mensajes de Django, los mensajes
+pendientes de mostrarse podrían perderse.
+
+Dato importante: Cambiar la llave no afecta a las contraseñas guardadas en la
+base de datos ni a los datos mismos, ya que las contraseñas usan un sistema de
+hashing independiente.
+
+¿Cuándo es obligatorio cambiarla?
+
+-Si hiciste un commit en GitHub/GitLab con la llave: Aunque borres el commit
+después, la llave permanece en el historial del repositorio. Se considera
+comprometida.
+
+-Si un desarrollador abandonó el equipo: Por precaución, si alguien con acceso a
+las llaves de producción ya no forma parte del proyecto.
+
+-Si el servidor fue vulnerado: Si hubo un acceso no autorizado al servidor donde
+reside el archivo de configuración.
+
+¿Qué sucede si otro desarrollador clona el repositorio y la variable SECRET_KEY
+está vacía en su entorno local? ¿Cómo debería configurarla para poder ejecutar
+el proyecto correctamente?
+================================================================================
+
+Cuando otro desarrollador clone tu repositorio, no debe tener tu llave real,
+pero sí necesita una llave para que la aplicación arranque.
+
+1. El settings.py.example
+
+Como tu archivo settings.py real está ignorado por Git (gracias al .gitignore),
+tu desarrollador colega no lo verá. Lo que debes hacer es:
+
+Crear un archivo llamado settings.py.example en la raíz de tu proyecto.
+
+Escribir dentro los nombres de las variables, pero sin los valores reales:
+
+Fragmento de código
+
+# settings.py.example
+SECRET_KEY=poner_aqui_una_llave_de_desarrollo
+
+Subir este archivo a Git. Al ser un archivo de "ejemplo", cualquier
+desarrollador que clone el repositorio sabrá qué variables necesita configurar.
+
+2. El flujo del desarrollador al clonar
+
+Cuando alguien nuevo descargue tu código:
+
+Verá el archivo settings.py.example
+
+Creará su propio archivo settings.py local (copiando el contenido del ejemplo).
+
+Debe generar su propia SECRET_KEY local (usando python manage.py shell como
+vimos antes).
+
+La aplicación arrancará perfectamente en su máquina.
+
 ====================================================================
 Eliminar la carpeta migrations de todos los directorios del proyecto
 ====================================================================
