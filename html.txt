@@ -7612,6 +7612,62 @@ Fuente
 
 ChatGPT
 
+----------
+
+Ejemplo de media queries
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detector de Breakpoints - Ejemplos de media queries</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        .box {
+            width: 80%;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        /* Contenido por defecto (Móvil) */
+        .box::after { content: "MÓVIL"; }
+        .box { background-color: #ff4757; }
+
+        /* Tabletas (>= 768px) */
+        @media (min-width: 768px) {
+            .box { background-color: #ffa502; }
+            .box::after { content: "TABLETA"; }
+        }
+
+        /* Escritorio (>= 1024px) */
+        @media (min-width: 1024px) {
+            .box { background-color: #2ed573; }
+            .box::after { content: "ESCRITORIO"; }
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+</body>
+</html>
+
 ======================================
 Agregar fuentes personalizadas con css
 ======================================
