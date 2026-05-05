@@ -3184,3 +3184,233 @@ pdfmake en Nuxt
 ===============
 
 https://github.com/argenisosorio/Django_6_Ninja_Nuxt4_Bootstrap_5/tree/test/pdfmake
+
+=============
+Pinia en Nuxt
+=============
+
+Pinia es el sistema de gestión de estados (state management) oficial y
+recomendado para Vue y, por extensión, para Nuxt 4.
+
+Si lo comparamos con algo del mundo real, imagina que tu aplicación es un
+edificio y cada componente de Nuxt (una página, un botón, una barra de
+navegación) es una habitación. Normalmente, para pasar información de una
+habitación a otra, tendrías que ir por los pasillos (props y emits). Pinia es
+como una bodega central accesible desde cualquier habitación instantáneamente.
+
+¿Por qué usarlo en lugar de simples variables?
+
+En Nuxt, podrías usar useState para cosas sencillas, pero Pinia es superior
+cuando tu proyecto crece, porque ofrece:
+
+-Persistencia y Globalidad: Los datos (como la información del usuario
+autenticado o filtros de una tabla) no se pierden al navegar entre páginas.
+
+-Organización: Te permite separar la lógica de negocio de la interfaz visual.
+
+-Herramientas de Desarrollo: Se integra con las Vue DevTools, permitiéndote ver
+cómo cambian los datos en tiempo real y hacer "viajes en el tiempo" para depurar
+errores.
+
+Soporte SSR: Nuxt maneja perfectamente la hidratación de los datos desde el
+servidor al cliente sin que se desincronicen.
+
+Estructura de un Store en Pinia
+===============================
+
+Un "Store" (almacén) en Pinia tiene tres partes fundamentales que debes conocer:
+
+-State (Estado): Son los datos reactivos (como ref).
+
+Ejemplo: const user = ref(null).
+
+-Getters: Son como propiedades computadas.
+
+Ejemplo: const isAdmin = computed(() => user.value?.role === 'admin').
+
+-Actions (Acciones): Son funciones para cambiar el estado o hacer peticiones a
+la API (como tu login/logout).
+
+Ejemplo rápido en Nuxt
+======================
+
+Para tu proyecto, podrías tener un archivo en stores/auth.js:
+
+import { defineStore } from 'pinia'
+
+export const useAuthStore = defineStore('auth', () => {
+  // State
+  const user = ref(null)
+  const isAuthenticated = computed(() => !!user.value)
+
+  // Action
+  function setUser(userData) {
+    user.value = userData
+  }
+
+  function logout() {
+    user.value = null
+  }
+
+  return { user, isAuthenticated, setUser, logout }
+})
+
+Luego, en cualquier página (index.vue), simplemente lo usas así:
+
+const auth = useAuthStore()
+console.log(auth.user) // Acceso directo a los datos globales
+
+Instalación
+===========
+
+$ npm install @pinia/nuxt
+
+Agrega '@pinia/nuxt' a la sección de modules. Tu archivo debe quedar así:
+
+// https://nuxt.com/docs/api/configuration/nuxt-config
+export default defineNuxtConfig({
+  compatibilityDate: '2025-07-15',
+  devtools: { enabled: false },
+
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://127.0.0.1:8000/api'
+    }
+  },
+
+  app: {
+    head: {
+      htmlAttrs: { lang: 'es' },
+      title: 'My Nuxt app',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', content: 'Nuxt 4 examples' },
+        { name: 'format-detection', content: 'telephone=no' },
+        { name: 'author', content: 'Ing. Argenis Osorio' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      ]
+    }
+  },
+
+  css: [
+    'assets/css/main.css'
+  ],
+
+  // AGREGA EL MÓDULO DE PINIA AQUÍ
+  modules: [
+    '@nuxt/eslint',
+    '@pinia/nuxt' 
+  ],
+
+  eslint: {
+    checker: true
+  }
+})
+
+Hola mundo con Pinia dentro de Nuxt
+===================================
+
+Sigue estos pasos para crear tu primer "Hola Mundo" global.
+
+1. Crear el Store
+
+Crea el archivo en app/stores/helloworld.js. Usaremos la sintaxis de Setup
+Stores (que es la que usa ref y computed, igual que tus componentes).
+
+// app/stores/helloworld.js
+import { defineStore } from 'pinia' // Importa la función principal de Pinia para crear almacenes.
+import { ref } from 'vue'           // Importa 'ref' de Vue para crear datos reactivos.
+
+// Definimos y exportamos el store. 'helloworld' es el ID único para este almacén.
+export const useHelloWorldStore = defineStore('helloworld', () => {
+  
+  // --- STATE (Estado) ---
+  // Definimos una variable reactiva. Equivale a los datos que guardará el store.
+  const mensaje = ref('¡Hola Mundo desde Pinia!')
+
+  // --- ACTIONS (Acciones) ---
+  // Las funciones dentro del store sirven para modificar el estado (state).
+  function actualizarMensaje(nuevoTexto) {
+    // Al ser un 'ref', debemos usar .value para cambiar su contenido.
+    mensaje.value = nuevoTexto
+  }
+
+  // --- RETORNO ---
+  // Exponemos las variables y funciones para que sean accesibles desde los componentes (.vue).
+  return {
+    mensaje,            // Devolvemos la variable para poder mostrarla.
+    actualizarMensaje   // Devolvemos la función para poder ejecutarla.
+  }
+})
+
+2. Mostrarlo en la Página
+
+Ahora ve a app/pages/index.vue (o crea el archivo si no existe) e integra el
+store. Gracias a los auto-imports de Nuxt, no necesitas importar el archivo del
+store manualmente.
+
+<template>
+  <div>
+    <h1>
+      <!-- Mostramos el estado 'mensaje' del store de forma reactiva -->
+      {{ helloStore.mensaje }}
+    </h1>
+    
+    <div class="mt-4">
+      <!-- Botón que dispara la función 'cambiarTexto' definida en el script -->
+      <button 
+        class="btn btn-primary" 
+        @click="cambiarTexto"
+      >
+        Cambiar mensaje
+      </button>
+      
+      <!-- Botón que dispara la función 'resetearTexto' -->
+      <button 
+        class="btn btn-secondary ms-2" 
+        @click="resetearTexto"
+      >
+        Resetear
+      </button>
+    </div>
+  </div>
+</template>
+
+<script setup>
+// Instanciamos el store de "Hello World". Nuxt lo auto-importa desde app/stores/helloworld.js
+const helloStore = useHelloWorldStore()
+
+// Variable de estado global de Nuxt para controlar la visibilidad del componente Loader
+const loader = useState('loader')
+
+// Composable de Nuxt para configurar metadatos de la página (título de la pestaña)
+useHead({
+  title: 'Home'
+})
+
+// Función que utiliza una "Acción" definida dentro del store para modificar el estado
+const cambiarTexto = () => {
+  helloStore.actualizarMensaje('¡El estado ha cambiado globalmente!')
+}
+
+// Función que modifica el estado directamente (Pinia permite acceso directo a los refs)
+const resetearTexto = () => {
+  helloStore.mensaje = '¡Hola Mundo desde Pinia!'
+}
+</script>
+
+¿Qué está pasando aquí?
+
+Reactividad Total: Si tuvieras este mismo store abierto en un Navbar.vue o en un
+Footer.vue, al presionar el botón en index.vue, el texto cambiaría en todos los
+componentes al mismo tiempo.
+
+ID Único: El primer argumento de defineStore('helloworld', ...) es lo que verás
+en las Vue DevTools para identificar este almacén de datos.
+
+Sin Imports: Como el archivo está en app/stores/, Nuxt detecta automáticamente
+el nombre de la función exportada (useHelloWorldStore) y la pone a tu
+disposición en toda la aplicación.
