@@ -14860,3 +14860,204 @@ Tipos de pruebas de integración
 +------------------------+-----------------------------------------------------------+----------------------------------------------------------+
 
 Ejemplo de test de integración en Django: https://github.com/argenisosorio/Django_6_crud/tree/feat/integration-test
+
+=================
+El paquete Bandit
+=================
+
+Bandit es una herramienta de pruebas de seguridad de aplicaciones estáticas
+(SAST) diseñada exclusivamente para encontrar problemas de seguridad comunes en
+código Python sin necesidad de ejecutarlo.
+
+Uso e Integración con GitFlow
+=============================
+
+Instalación local:
+
+$ pip install bandit
+
+Implementación en GitFlow
+
+Bandit debe configurarse como un Pre-commit hook a nivel local.
+
+-Ramas feature/: Antes de que un desarrollador pueda hacer un commit en su rama
+de característica (feature/xxx), Bandit escaneará los cambios. Si detecta
+vulnerabilidades, el commit será bloqueado, forzando la corrección temprana.
+
+-CI/CD: Como capa de seguridad redundante, Bandit se ejecutará nuevamente en el
+pipeline durante la creación de un Merge Request (MR) hacia la rama develop.
+
+Prueba rápida (Análisis puntual)
+================================
+
+Para ejecutar Bandit sobre todo tu proyecto Django y ver qué encuentra, abre tu
+terminal en la raíz del proyecto y ejecuta:
+
+-r: recursivo (analiza todos los archivos en los subdirectorios)
+-lll: muestra solo los problemas de severidad media y alta
+
+$ bandit -r . -lll
+
+La salida será algo como esto:
+
+-----
+
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[main]	INFO	running on Python 3.12.0
+Run started:2026-05-06 01:36:51.362280+00:00
+
+Test results:
+	No issues identified.
+
+Code scanned:
+	Total lines of code: 394
+	Total lines skipped (#nosec): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 2
+		Medium: 0
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 2
+		High: 0
+Files skipped (0):
+
+-----
+
+Esto significa que hay 2 problemas de confidencia media y severidad baja, para
+saber cuales exáctamente son, se puede ejecutar:
+
+bandit -r . -v > bandit_results.txt
+
+-v (verbose): Esto te dará el detalle completo, incluyendo el nombre del
+archivo, el número de línea y el código de vulnerabilidad específico además
+guardará los resultados en un archivo con nombre bandit_results.txt para mejor
+lectura de resultados, a continuación se presenta un fragmento de los
+resultados:
+
+Test results:
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'django-insecure-zbpc(0&13*l30*fq8h-j=w_zb2tbott@8vnv=5%t4$_e0dvlbt'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./Django_6_crud/settings.py:23:13
+22	# SECURITY WARNING: keep the secret key used in production secret!
+23	SECRET_KEY = 'django-insecure-zbpc(0&13*l30*fq8h-j=w_zb2tbott@8vnv=5%t4$_e0dvlbt'
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: '123456'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./apps/person/views.py:15:15
+14	    """
+15	    password = '123456'
+16	    people = Person.objects.all()
+
+Lo cual indica que en archivo apps/person/views.py hay un posible password
+escrito directamente en el archivo, además indica que en el setting.py está
+escrita directamente la SECRET_KEY.
+
+Integración con GitFlow (Pre-commit hook)
+=========================================
+
+Lo ideal es que Bandit bloquee un commit si el código contiene vulnerabilidades.
+
+1. Instala pre-commit:
+
+$ pip install pre-commit
+
+2. Crea el archivo .pre-commit-config.yaml en la raíz de tu proyecto:
+
+repos:
+- repo: https://github.com/PyCQA/bandit
+    rev: 1.7.8 # Usa la versión más reciente
+    hooks:
+    - id: bandit
+        args: ["-lll", "-r", "."] # Solo reporta errores de severidad media/alta
+
+Otra versión más estricta con la severidad:
+
+repos:
+- repo: https://github.com/PyCQA/bandit
+  rev: 1.7.8
+  hooks:
+    - id: bandit
+      # Eliminando el '-ll', Bandit reportará todos los niveles: High, Medium y Low
+      args: ["-r", "."]
+
+3. Instala el hook:
+
+$ pre-commit install
+
+Ahora, cada vez que intentes hacer git commit, Git ejecutará Bandit
+automáticamente. Si encuentra una vulnerabilidad, el commit se cancelará y
+tendrás que corregir el problema antes de seguir.
+
+Ejemplo real:
+
+$ git commit -m "Actualizado views.py"
+bandit...................................................................Failed
+- hook id: bandit
+- exit code: 1
+
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[main]	INFO	running on Python 3.12.0
+Run started:2026-05-06 01:57:26.934523
+
+Test results:
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'django-insecure-zbpc(0&13*l30*fq8h-j=w_zb2tbott@8vnv=5%t4$_e0dvlbt'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/0.0.0/plugins/b105_hardcoded_password_string.html
+   Location: ./Django_6_crud/settings.py:23:13
+22	# SECURITY WARNING: keep the secret key used in production secret!
+23	SECRET_KEY = 'django-insecure-zbpc(0&13*l30*fq8h-j=w_zb2tbott@8vnv=5%t4$_e0dvlbt'
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: '123456'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/0.0.0/plugins/b105_hardcoded_password_string.html
+   Location: ./apps/person/views.py:15:15
+14	    """
+15	    password = '123456'
+16	    people = Person.objects.all()
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 394
+	Total lines skipped (#nosec): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 2
+		Medium: 0
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 2
+		High: 0
+Files skipped (0):
+
+-----
+
+Bandit bloqueo el commit porque encontro probleas de severidad media/baja
+
+Fuente
+======
+
+Gemini IA
