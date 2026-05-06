@@ -2300,3 +2300,87 @@ Fuente
 ======
 
 MDCSL v3
+
+==========
+pre-commit
+==========
+
+En el mundo del desarrollo de software, un pre-commit es esencialmente un
+"punto de control" automatizado que se ejecuta justo antes de que confirmes tus
+cambios en un sistema de control de versiones (como Git).
+
+Imagina que es un guardia de seguridad que revisa tu código antes de dejarlo
+entrar al repositorio oficial. Si el guardia encuentra algo mal, te devuelve el
+código para que lo arregles; si todo está en orden, te deja pasar.
+
+¿Cómo funciona exactamente?
+===========================
+
+Técnicamente, un pre-commit es un script (un "hook" o gancho de Git) que reside
+en la carpeta oculta .git/hooks/ de tu proyecto. Cuando ejecutas el comando git
+commit, Git dispara este script automáticamente.
+
+-Si el script termina con éxito (exit 0): El commit se crea normalmente.
+
+-Si el script falla (exit 1): El commit se aborta y recibes un mensaje de error
+explicando qué falló.
+
+¿Para qué se utiliza? (Casos de uso comunes)
+============================================
+
+El objetivo principal es mantener la calidad del código y evitar que errores
+tontos lleguen al servidor. Se suele usar para:
+
+-Linting: Revisar que el código cumpla con las reglas de estilo (ej. que no
+falten puntos y coma o que la indentación sea correcta).
+
+-Formateo automático: Ejecutar herramientas como Prettier o Black para que todo
+el equipo escriba código con el mismo aspecto.
+
+-Pruebas unitarias: Correr una suite rápida de tests para asegurar que no
+rompiste nada básico.
+
+-Seguridad: Escanear el código en busca de secretos (como llaves de API o
+contraseñas) que se hayan quedado pegadas por error.
+
+-Sintaxis: Verificar que no haya errores de sintaxis obvios (como un paréntesis
+sin cerrar).
+
+El Framework "pre-commit"
+=========================
+
+Aunque puedes escribir estos scripts a mano, lo más común hoy en día es usar una
+herramienta llamada pre-commit.com.
+
+Es un framework multiplataforma que te permite gestionar estos hooks de forma
+sencilla mediante un archivo de configuración llamado .pre-commit-config.yaml.
+
+Ejemplo de flujo:
+
+-Haces un cambio en un archivo Python.
+
+-Ejecutas git commit -m "Mi mejora".
+
+-El pre-commit salta y dice: "Oye, olvidaste quitar este espacio extra".
+
+-El commit falla, corriges el espacio, y ahora sí lo intentas de nuevo.
+
+Ventajas principales
+
+-Ahorra tiempo en Code Reviews: Los revisores humanos no pierden tiempo
+señalando errores de formato.
+
+-Previene errores en producción: Filtra problemas antes de que lleguen siquiera
+a la rama de desarrollo.
+
+-Consistencia: Todo el equipo sigue las mismas reglas sin tener que recordarlas
+de memoria.
+
+-Tip pro: Si alguna vez tienes una emergencia real y necesitas saltarte estas
+revisiones, puedes usar git commit -m "mensaje" --no-verify, ¡pero úsalo con
+mucha precaución!
+
+Fuente
+======
+
+Gemini IA
