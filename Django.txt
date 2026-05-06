@@ -14934,12 +14934,11 @@ Files skipped (0):
 Esto significa que hay 2 problemas de confidencia media y severidad baja, para
 saber cuales exáctamente son, se puede ejecutar:
 
-bandit -r . -v > bandit_results.txt
+$ bandit -r . -v
 
 -v (verbose): Esto te dará el detalle completo, incluyendo el nombre del
-archivo, el número de línea y el código de vulnerabilidad específico además
-guardará los resultados en un archivo con nombre bandit_results.txt para mejor
-lectura de resultados, a continuación se presenta un fragmento de los
+archivo, el número de línea y el código de vulnerabilidad específico, a
+continuación se presenta un fragmento de los
 resultados:
 
 Test results:
@@ -14964,6 +14963,12 @@ Test results:
 Lo cual indica que en archivo apps/person/views.py hay un posible password
 escrito directamente en el archivo, además indica que en el setting.py está
 escrita directamente la SECRET_KEY.
+
+$ bandit -r . -v > bandit_results.txt
+
+guardará los resultados en un archivo con nombre bandit_results.txt para mejor
+lectura de resultados si la salida del comando es muy extensa para leerla por
+consola.
 
 Integración con GitFlow (Pre-commit hook)
 =========================================

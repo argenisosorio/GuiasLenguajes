@@ -3421,3 +3421,180 @@ Fuente
 ======
 
 Gemini IA
+
+================================================================
+El paquete eslint-plugin-security como lint de seguridad en Nuxt
+================================================================
+
+Instalación dentro de la carpeta de Frontend:
+
+$ npm install --save-dev eslint-plugin-security
+
+Uso:
+
+Agrega lo siguiente a tu archivo eslint.config.js:
+
+const pluginSecurity = require('eslint-plugin-security');
+
+module.exports = [pluginSecurity.configs.recommended];
+
+----
+
+El archivo quedaría así:
+
+// eslint.config.mjs
+import withNuxt from './.nuxt/eslint.config.mjs'
+import pluginSecurity from 'eslint-plugin-security'
+
+export default withNuxt([
+  // 1. Añadimos la configuración recomendada del plugin
+  pluginSecurity.configs.recommended,
+  
+  // 2. Mantenemos tus reglas personalizadas
+  {
+    rules: {
+      'vue/multi-word-component-names': 'off',
+    }
+  }
+])
+
+Probarlo:
+
+Agrega esto en el script de cualquier componente:
+
+const userCode = "console.log('hackeado')";
+eval(userCode); // 🚩 El hook debería saltar aquí (security/detect-eval-with-expression)
+
+Ahora ejecuta:
+
+$ npm run lint
+
+Debe mostrar
+
+/home/aosorio/Documentos/Desarrollo/Django/Django_6_Ninja_Nuxt4_Bootstrap_5/frontend/app/pages/index.vue
+  29:1  warning  eval with argument of type Identifier  security/detect-eval-with-expression
+
+✖ 1 problem (0 errors, 1 warning)
+
+Lo que significa que está funcionando.
+
+Ejemplo funcional: https://github.com/argenisosorio/Django_6_Ninja_Nuxt4_Bootstrap_5/tree/test/eslint-plugin-security
+
+Fuentes
+=======
+
+https://www.npmjs.com/package/eslint-plugin-security
+
+Gemini IA
+
+==============================================
+Usar eslint-plugin-security como un pre-commit
+==============================================
+
+Para convertir ese proceso en un pre-commit hook (es decir, que el código se
+analice automáticamente cada vez que intentes hacer un git commit y aborte si
+hay errores), la herramienta estándar en el ecosistema de Node.js es Husky
+combinada con lint-staged.
+
+1. Instalar las dependencias necesarias
+
+Necesitamos husky para gestionar los hooks de Git y lint-staged para que el
+linter solo analice los archivos que estás intentando subir (y no todo el
+proyecto, lo cual sería muy lento).
+
+$ npm install --save-dev husky lint-staged
+
+2. Inicializar Husky
+
+Ejecuta el siguiente comando para configurar Husky automáticamente:
+
+$ npx husky init
+
+Esto hará tres cosas:
+
+-Creará una carpeta .husky/ en tu raíz.
+
+-Añadirá un script prepare en tu package.json.
+
+-Creará un archivo de ejemplo llamado pre-commit dentro de .husky/.
+
+3. Configurar lint-staged
+
+En tu archivo package.json, añade la configuración para decidir qué archivos
+debe revisar el linter. Queremos que revise archivos .js, .mjs, .ts y .vue:
+
+{
+  "scripts": {
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,mjs,ts,vue}": "eslint --fix"
+  }
+}
+
+Nota: Usamos eslint --fix para que, además de buscar fallos de seguridad,
+corrija automáticamente errores de formato simples antes de subir el código.
+
+----
+
+Tip: Diferencia entre Warning y Error
+
+Por defecto, ESLint puede dejar pasar los warnings dependiendo de tu
+configuración. Si quieres que el pre-commit falle obligatoriamente aunque solo
+sea un aviso de seguridad, asegúrate de que tu comando en el package.json sea:
+
+"lint-staged": {
+  "*.{js,mjs,ts,vue}": "eslint --max-warnings 0"
+}
+
+Si solo pones "eslint", y el plugin de seguridad devuelve un warning (amarillo)
+en lugar de un error (rojo), Git considerará que todo está bien y hará el
+commit. El flag --max-warnings 0 es obligatorio para que los avisos de seguridad
+detengan el commit.
+
+4. Configurar el Hook de Git
+
+Como Git ejecutará el hook desde la raíz, pero lint-staged está dentro de
+frontend, necesitamos que el hook sepa dónde trabajar. ahora, edita el archivo
+que se creó en .husky/pre-commit y sustituye su contenido por el siguiente:
+#!/bin/sh
+cd frontend
+npx lint-staged
+
+5. Asegúrate de los permisos
+
+Desde la terminal, dale permisos de ejecución (estando dentro de la carpetafrontend):
+B
+$ chmod +x .husky/pre-commit
+
+6. Sincroniza Git con la carpeta de Husky
+
+Desde la raíz de tu proyecto, ejecuta este comando para decirle a Git dónde
+buscar los hooks:
+
+$ git config core.hooksPath frontend/.husky
+
+7. Prueba de fuego
+
+1- Modificas un archivo: Por ejemplo, añades un eval() inseguro en un componente
+Vue:
+
+// Insertar en cualquier script
+const userCode = "console.log('hackeado')";
+eval(userCode); // 🚩 El hook debería saltar aquí (security/detect-eval-with-expression)
+
+2- Haces el commit: Ejecutas git commit -m "feat: nuevo componente".
+
+3-Se dispara el Hook: Git llama a Husky, Husky llama a lint-staged.
+
+-Validación:
+
+Si hay advertencias/errores (como el de security): El proceso se detiene, el
+commit no se crea y te muestra el error en la terminal para que lo arregles.
+
+Si todo está bien: El commit se completa exitosamente.
+
+Fuente
+======
+
+Gemini IA
