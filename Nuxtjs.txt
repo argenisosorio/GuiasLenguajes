@@ -3557,14 +3557,16 @@ detengan el commit.
 Como Git ejecutará el hook desde la raíz, pero lint-staged está dentro de
 frontend, necesitamos que el hook sepa dónde trabajar. ahora, edita el archivo
 que se creó en .husky/pre-commit y sustituye su contenido por el siguiente:
+
 #!/bin/sh
 cd frontend
 npx lint-staged
 
 5. Asegúrate de los permisos
 
-Desde la terminal, dale permisos de ejecución (estando dentro de la carpetafrontend):
-B
+Desde la terminal, dale permisos de ejecución (estando dentro de la
+carpeta frontend):
+
 $ chmod +x .husky/pre-commit
 
 6. Sincroniza Git con la carpeta de Husky
@@ -3598,3 +3600,58 @@ Fuente
 ======
 
 Gemini IA
+
+================================================================================
+Usar pre-commit con bandit para el backend y eslint-plugin-security para el
+front en un mismo proyecto
+================================================================================
+
+Este error ocurre porque Git tiene un conflicto de lealtad.
+
+Hace unos momentos configuramos manualmente core.hooksPath para que Git buscara los hooks en frontend/.husky. Ahora, al ejecutar pre-commit install (la herramienta de Python), esta intenta tomar el control de los hooks de Git, pero detecta que tú ya le habías dado una ruta personalizada y, por seguridad, se niega a sobrescribirla.
+
+Para que ambos mundos (Husky para Nuxt y Pre-commit para Django) convivan, debemos limpiar esa configuración y unificarlos.
+Paso 1: Liberar el control de Git
+
+Como sugiere el mensaje de error, primero debemos eliminar la ruta manual que configuramos para Husky:
+Bash
+
+git config --unset-all core.hooksPath
+
+Paso 2: Instalar el gestor de Python (Pre-commit)
+
+Ahora que Git volvió a su estado normal, instala los hooks del archivo YAML:
+Bash
+
+pre-commit install
+
+Esto creará un archivo en .git/hooks/pre-commit que ahora será el "jefe" principal.
+Paso 3: Integrar Husky/Nuxt en el archivo YAML
+
+Para que no pierdas la validación de seguridad de Nuxt que configuramos antes, vamos a añadirla al archivo .pre-commit-config.yaml. De esta forma, una sola herramienta gestiona todo el proyecto.
+
+Edita tu .pre-commit-config.yaml en la raíz y añade este bloque al final:
+YAML
+
+  - repo: local
+    hooks:
+      - id: nuxt-security-lint
+        name: Nuxt Security Check (ESLint)
+        entry: bash -c "cd frontend && npx lint-staged"
+        language: system
+        files: ^frontend/
+        pass_filenames: false
+
+Paso 4: Limpieza de Husky
+
+Ya no necesitas que Husky intente gestionar los hooks de Git directamente (porque ahora lo hace Pre-commit). Puedes borrar la carpeta .husky si quieres mantener el proyecto limpio, o simplemente dejarla ahí, ya que pre-commit la ignorará.
+¿Por qué esta es la mejor solución?
+
+    Un solo comando: Al hacer git commit, se ejecutarán primero los hooks de Python (Black, Isort, Bandit para Django) y luego saltará tu validación de ESLint para el frontend.
+
+    Compatibilidad: Evitas conflictos entre Node.js y Python.
+
+    Orden: Centralizas toda la lógica de calidad del proyecto (monorepo) en un solo archivo visible en la raíz.
+
+Prueba final:
+Intenta hacer el commit de nuevo. Verás que ahora aparece una lista de tareas y una de ellas será "Nuxt Security Check". Si el eval() sigue ahí, el commit se detendrá.
