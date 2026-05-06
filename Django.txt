@@ -14824,3 +14824,39 @@ Fuente
 ======
 
 Gemini IA
+
+===============================================
+Prueba de Integración en Desarrollo de Software
+===============================================
+
+La prueba de integración es un nivel de testing que verifica que múltiples
+módulos, componentes o servicios del software funcionan correctamente cuando se
+combinan entre sí.
+
+Mientras las pruebas unitarias verifican cada componente de forma aislada, las
+pruebas de integración se centran en cómo interactúan esos componentes y si se
+comunican correctamente.
+
+Objetivos principales
+
++---------------------------------+-----------------------------------------------------------+
+| Objetivo                        | Descripción                                               |
++---------------------------------+-----------------------------------------------------------+
+| Detectar errores de interfaz    | Problemas en la comunicación entre módulos                |
+| Validar flujos completos        | Verificar que los datos viajan correctamente entre capas  |
+| Encontrar fallos de integración | Incompatibilidades de formatos, protocolos o datos        |
+| Verificar dependencias externas | Comprobar la interacción con APIs, bases de datos, etc.   |
++---------------------------------+-----------------------------------------------------------+
+
+Tipos de pruebas de integración
+
++------------------------+-----------------------------------------------------------+----------------------------------------------------------+
+| Tipo                   | Descripción                                               | Ejemplo                                                  |
++------------------------+-----------------------------------------------------------+----------------------------------------------------------+
+| Big Bang               | Se integran todos los componentes a la vez                | Unir todo el sistema y probar                            |
+| Incremental ascendente | Integración de módulos de abajo hacia arriba              | Probar primero DAOs, luego servicios, luego controladores|
+| Incremental descendente| Integración de módulos de arriba hacia abajo              | Probar controladores usando "stubs" para simular servicios|
+| Sándwich               | Combinación de pruebas ascendentes y descendentes         | Probar capas altas y bajas en paralelo                   |
++------------------------+-----------------------------------------------------------+----------------------------------------------------------+
+
+Ejemplo de test de integración en Django: https://github.com/argenisosorio/Django_6_crud/tree/feat/integration-test
