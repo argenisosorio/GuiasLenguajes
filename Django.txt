@@ -14420,6 +14420,72 @@ vimos antes).
 
 La aplicación arrancará perfectamente en su máquina.
 
+Proteger la SECRET_KEY del settings.py
+======================================
+
+En Django 6, al igual que en versiones anteriores, la SECRET_KEY es el corazón
+de la seguridad de tu aplicación (se usa para firmar sesiones, tokens de
+restablecimiento de contraseña y mensajes). Si se filtra, cualquiera podría
+escalar privilegios en tu sitio.
+
+1. El Método Estándar: archivo .env
+
+En la raíz de tu proyecto, crea un archivo llamado .env (asegúrate de añadirlo
+a tu .gitignore inmediatamente).
+
+SECRET_KEY=tu-clave-super-secreta-aqui
+DEBUG=False
+
+2. Usar python-dotenv que es una librería de Python que se utiliza para
+gestionar variables de entorno de manera sencilla. En lugar de tener que
+configurar manualmente las variables en tu sistema operativo cada vez que
+ejecutas tu proyecto, python-dotenv te permite almacenarlas en un archivo .env y
+las carga automáticamente en tu aplicación.
+
+$ pip install python-dotenv
+
+3: Configurar settings.py, modifica tu archivo de configuración para que lea la variable:
+
+import os
+from pathlib import Path
+from dotenv import load_dotenv
+
+# Carga el archivo .env
+load_dotenv()
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Lee la clave. Si no existe, lanza un error (ideal para producción)
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
+if not SECRET_KEY:
+    raise ValueError("¡Falta la SECRET_KEY en las variables de entorno!")
+
+Nota: si el .env se guarda dentro de la misma carpeta del setting.py
+entonces la configuración debe quedar así:
+
+from pathlib import Path
+import datetime
+import os
+from dotenv import load_dotenv
+
+# Construye rutas dentro del proyecto de esta manera: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+dotenv_path = BASE_DIR / 'config' / '.env'
+
+# Carga el archivo .env
+load_dotenv(dotenv_path=dotenv_path)
+
+# Lee la clave. Si no existe, lanza un error (ideal para producción)
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
+if not SECRET_KEY:
+    raise ValueError("Error: Debes configurar la SECRET_KEY en las variables de entorno")
+
+# ADVERTENCIA DE SEGURIDAD: ¡no ejecute con la depuración activada en producción!
+DEBUG = os.environ.get('DEBUG')
+
 ====================================================================
 Eliminar la carpeta migrations de todos los directorios del proyecto
 ====================================================================
