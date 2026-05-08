@@ -3645,32 +3645,48 @@ Edita tu .pre-commit-config.yaml en la raíz:
 # CONFIGURACIÓN DE PRE-COMMIT
 # ===========================
 
-repos:
-  # REPOSITORIO: BANDIT (Seguridad para Python/Django)
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.8
-    hooks:
-      - id: bandit
-        args: ["-r", "."] # -r: recursivo, ".": analiza desde el directorio actual
+# ==============================================================================
+# CONFIGURACIÓN DE PRE-COMMIT - SINIDOT v2
+# ==============================================================================
 
-  # REPOSITORIO: LOCAL (Hooks personalizados que no dependen de un repo externo)
+repos:
+  # REPOSITORIO: LOCAL (Hooks que se ejecutan usando las herramientas instaladas
+  # en el sistema/venv).
   - repo: local
     hooks:
-      - id: nuxt-security-lint
-        name: Nuxt Security Check (ESLint)
-
-        # Entrar al frontend y analizar el código.
-        entry: bash -c "cd frontend && npx lint-staged"
-
-        # Usar las herramientas del SO (node/npm).
+      # ------------------------------------------------------------------------
+      # BANDIT: Análisis de seguridad estático para Python/Django
+      # ------------------------------------------------------------------------
+      - id: bandit
+        name: Bandit Security Check (Python/Django)
+        # Comando base a ejecutar.
+        entry: bandit
+        # Utiliza el ejecutable 'bandit' instalado en tu entorno virtual (pyenv/venv).
         language: system
-
-        # Solo se activa si hay cambios en la carpeta 'frontend/'.
-        files: ^frontend/
-
-        # 'false' evita que pre-commit pase la lista de archivos en la salida.
+        # Argumentos: -r para recursivo sobre la carpeta del backend de Django.
+        args: ["-r", "./backend"]
+        # El hook solo se dispara si hay cambios en archivos dentro de /backend.
+        files: ^backend/
+        # Solo analiza archivos con extensión .py.
+        types: [python]
+        # Evita que pre-commit concatene la lista de archivos modificados al final del comando.
         pass_filenames: false
 
+      # ------------------------------------------------------------------------
+      # ESLINT: Análisis de seguridad y estilo para Nuxt 4
+      # ------------------------------------------------------------------------
+      - id: nuxt-security-lint
+        name: Nuxt Security Check (ESLint)
+        # Entra al directorio frontend para ejecutar las herramientas de Node.
+        entry: bash -c "cd frontend && npx lint-staged"
+        # Utiliza node/npm instalados en el sistema (requiere Node >= 24).
+        language: system
+        # Solo se activa si hay cambios en la carpeta 'frontend/'.
+        files: ^frontend/
+        # Evita pasar nombres de archivos duplicados.
+        pass_filenames: false
+
+-----
 
 Paso 4: Limpieza de Husky
 
