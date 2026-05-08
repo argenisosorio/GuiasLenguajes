@@ -709,3 +709,18 @@ Fuente
 ======
 
 Gemini IA
+
+========================================
+Corrre FastAPI en una ip local de la red
+========================================
+
+Por defecto, FastAPI (y Uvicorn) se "atan" a 127.0.0.1 (localhost), lo que
+significa que solo aceptan conexiones desde tu propia computadora. Para que sea
+accesible desde otros dispositivos en tu red local bajo la IP 192.168.12.216
+por ejemplo, debes cambiar el host.
+
+Usando el comando CLI (Recomendado)
+
+Para el modo de desarrollo, usa el parámetro --host:
+
+$ fastapi dev main.py --host 0.0.0.0
