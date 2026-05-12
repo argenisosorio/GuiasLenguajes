@@ -3739,6 +3739,29 @@ Para probarlo en tu entorno local (Linux):
 
 $ sudo apt install gitleaks
 
+Si no existe el paquete en el repositorio entonces:
+
+1. Descarga e Instala Gitleaks
+
+Como Gitleaks es un binario independiente escrito en Go, la forma más limpia en
+Linux es descargar el ejecutable:
+
+# 1. Descarga el paquete para Linux 64 bits (v8.18.2)
+
+$ wget https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks_8.18.2_linux_x64.tar.gz
+
+# 2. Descomprime el archivo
+
+$ tar -zxvf gitleaks_8.18.2_linux_x64.tar.gz
+
+# 3. Muévelo a un directorio de tu PATH
+
+$ sudo mv gitleaks /usr/local/bin/
+
+# 4. Verifica la instalación
+
+$ gitleaks version
+
 3. Pruebas
 
 Ahora vamos a forzar a que de un leak, en el archvivo frontend/app/pages/index.vue
