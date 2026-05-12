@@ -15140,3 +15140,112 @@ Fuentes
 
 -Gemini IA
 -NR
+
+============================================
+Actualización de datos con fixture en Django
+============================================
+
+Supon que tienes 2 registros guardados en base de datos en el modelo Person,
+cuyos valores son:
+
+id: 1
+name: Mario
+email: mario@mail.com
+age: 45
+
+id: 2
+name: José
+email: jose@mail.com
+age: 65
+
+y ejecutas este fixture:
+
+[
+    {
+        "model": "person.person",
+        "pk": 1,
+        "fields": {
+            "name": "Castolo",
+            "email": "castolo@mail.com",
+            "age": 99,
+            "created_at":
+            "2026-05-12T01:17:41.418Z",
+            "updated_at":
+            "2026-05-12T01:17:41.418Z"
+        }
+    },
+    {
+        "model": "person.person",
+        "pk": 2,
+        "fields": {
+            "name": "Ana",
+            "email": "Ana@mail.com",
+            "age": 100,
+            "created_at":
+            "2026-05-12T01:17:56.516Z",
+            "updated_at":
+            "2026-05-12T01:17:56.516Z"
+        }
+    }
+]
+
+$ python manage.py loaddata data.json
+Installed 2 object(s) from 1 fixture(s) 
+
+Lo que ocurrió es una operación de actualización (UPSERT). En Django, el comando
+loaddata no solo sirve para insertar datos nuevos, sino que utiliza la clave
+primaria (pk) para determinar qué hacer con cada registro.
+
+1. Sobrescritura de datos
+
+Como los registros con id: 1 e id: 2 ya existían, Django no creó filas nuevas ni
+dio un error de "duplicado". En su lugar:
+
+-Buscó la coincidencia por la pk.
+
+-Reemplazó todos los valores de los campos (name, email, age, etc.) de esos
+registros existentes con los valores definidos en tu archivo JSON.
+
+Si los datos originales eran diferentes, se perdieron y fueron reemplazados por
+los nuevos.
+
+2. Comportamiento de los campos de fecha
+
+Es importante notar que campos como updated_at (si usas auto_now=True) suelen
+ser ignorados por el fixture en favor de la fecha exacta que viene en el
+JSON.
+
+3. El contador de la consola
+
+El mensaje Installed 2 object(s) from 1 fixture(s) confirma que el proceso
+terminó con éxito. Para Django, "Installed" significa que los objetos fueron
+procesados y guardados en la base de datos, independientemente de si fueron
+creados desde cero o actualizados.
+
+¿Qué debes tener en cuenta ahora?
+
+Sincronización de Secuencias (PostgreSQL):
+
+Si estás usando PostgreSQL, después de cargar un fixture que define las pk
+manualmente, la secuencia del ID (el contador que decide cuál es el próximo ID)
+podría quedar desincronizada.
+
+-Problema: Si intentas crear un nuevo usuario desde la app, podrías obtener un
+IntegrityError porque el sistema intentará usar un ID que ya existe.
+
+-Solución: Ejecuta python
+
+$ manage.py sqlsequencereset person | python manage.py dbshell
+
+para poner el contador en orden.
+
+-Señales (Signals):
+
+Ten en cuenta que loaddata no dispara la señal post_save de tus modelos. Si
+tienes lógica automática (como enviar un correo al crear un usuario), esta no se
+ejecutó durante la carga del fixture.
+
+Fuente
+======
+
+Gemini IA
