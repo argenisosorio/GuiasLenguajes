@@ -556,8 +556,8 @@ Usa pnpm si: Tienes poco espacio en disco, trabajas en monorepos (donde pnpm
 brilla especialmente) o simplemente odias esperar minutos a que termine un
 install.
 
-Ejemplo real
-============
+Ejemplo práctico: Un "Hola Mundo" con el paquete confeti
+========================================================
 
 Para notar la ventaja real de pnpm, lo ideal es ver cómo maneja el espacio en
 disco comparado con npm. El "truco" está en que pnpm no duplica archivos; si dos
@@ -571,65 +571,221 @@ Si tienes Node.js instalado, puedes activar pnpm rápidamente:
 
 $ corepack enable
 
-# O vía npm: npm install -g pnpm
+O vía npm:
+
+$ npm install -g pnpm
 
 Paso 2: Crear el Proyecto A
 
-Vamos a crear una carpeta y a instalar una librería pesada, como cypress o
-lodash.
+Para notar la ventaja real de pnpm, vamos a usar canvas-confetti, un paquete que
+añade una animación festiva a tu index.html.
 
-$ mkdir proyecto-a && cd proyecto-a
-
-$ pnpm init
-
-$ pnpm add lodash
-
-En este momento, pnpm descarga lodash a una carpeta global en tu computadora y
-crea un enlace (link) en proyecto-a.
-
-Paso 3: Crear el Proyecto B (La magia)
-
-Ahora vamos a crear otro proyecto totalmente distinto e instalar la misma librería.
-
-$ cd ..
-
-$ mkdir proyecto-b && cd proyecto-b
+$ mkdir proyecto-confeti-a && cd proyecto-confeti-a
 
 $ pnpm init
 
-$ pnpm add lodash
+$ pnpm add canvas-confetti
+
+El comando anterior va a fallar con un error como este:
+
+Invalid package manager specification in package.json (pnpm@^11.1.1); expected a
+semver version
+
+El error ocurre porque la especificación packageManager (y en este caso, la
+extensión devEngines) no acepta rangos de versiones como ^11.1.1. Este campo
+requiere una versión exacta (un string fijo) para asegurar que todos los
+desarrolladores usen la misma versión del gestor de paquetes.
+
+Para solucionarlo, debes editar tu package.json y eliminar el símbolo ^.
+
+Modifica la sección de devEngines (o packageManager si la usaras directamente)
+para que quede así:
+
+{
+  "name": "proyecto-confeti-a",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.1.1",
+      "onFail": "download"
+    }
+  },
+  "type": "module"
+}
+
+Ejecuta de nuevo este comando para que se instale el paquete:
+
+$ pnpm add canvas-confetti
+
+Esto habrá creado la carpeta node_modules y el archivo pnpm-lock.yaml
+
+Ahora, crea un archivo index.html básico:
+
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>¡Hola Mundo con pnpm!</h1>
+  <script type="module">
+    import confetti from './node_modules/canvas-confetti/dist/confetti.module.mjs';
+    confetti();
+  </script>
+</body>
+</html>
+
+En este momento, pnpm descargó el paquete a una carpeta global y creó un enlace
+en tu proyecto.
+
+Paso 3: Probar el index.html
+
+Usaremos un servidor local, para que el navegador trate tu proyecto como un
+sitio web real, necesitas servirlo a través de un servidor local. Como ya tienes
+pnpm y Node.js, la forma más rápida es usar un paquete llamado serve o
+live-server.
+
+Ejecuta este comando en tu terminal (dentro de proyecto-a):
+
+$ pnpm dlx serve .
+
+Al abrir http://localhost:3000/ deberías ver el Hola mundo y una animación de
+confeti.
+
+Paso 4: Crear el Proyecto B
+
+Imagina que quieres otro proyecto igual, el B.
+
+$ mkdir proyecto-confeti-b && cd proyecto-confeti-b
+
+$ pnpm init
+
+$ pnpm add canvas-confetti
+
+El comando anterior va a fallar con un error como este:
+
+Invalid package manager specification in package.json (pnpm@^11.1.1); expected a
+semver version
+
+El error ocurre porque la especificación packageManager (y en este caso, la
+extensión devEngines) no acepta rangos de versiones como ^11.1.1. Este campo
+requiere una versión exacta (un string fijo) para asegurar que todos los
+desarrolladores usen la misma versión del gestor de paquetes.
+
+Para solucionarlo, debes editar tu package.json y eliminar el símbolo ^.
+
+Modifica la sección de devEngines (o packageManager si la usaras directamente)
+para que quede así:
+
+{
+  "name": "proyecto-confeti-a",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.1.1",
+      "onFail": "download"
+    }
+  },
+  "type": "module"
+}
+
+Ejecuta de nuevo este comando para que se instale el paquete:
+
+$ pnpm add canvas-confetti
+
+Esto habrá creado la carpeta node_modules y el archivo pnpm-lock.yaml
+
+Ahora, crea un archivo index.html básico:
+
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>¡Hola Mundo con pnpm!</h1>
+  <script type="module">
+    import confetti from './node_modules/canvas-confetti/dist/confetti.module.mjs';
+    confetti();
+  </script>
+</body>
+</html>
+
+En este momento, pnpm descargó el paquete a una carpeta global y creó un enlace
+en tu proyecto.
+
+Paso 5: Probar el index.html
+
+Usaremos un servidor local, para que el navegador trate tu proyecto como un
+sitio web real, necesitas servirlo a través de un servidor local. Como ya tienes
+pnpm y Node.js, la forma más rápida es usar un paquete llamado serve o
+live-server.
+
+Ejecuta este comando en tu terminal (dentro de proyecto-a):
+
+$ pnpm dlx serve .
+
+Al abrir http://localhost:3000/ deberías ver el Hola mundo y una animación de
+confeti.
 
 ¿Qué acaba de pasar?
-
-Si hubieras usado npm, en este paso el sistema habría descargado lodash otra vez
-y tendrías dos copias físicas ocupando el doble de espacio.
-
-Con pnpm, notarás que:
+====================
 
 -Es instantáneo: La instalación en el segundo proyecto toma milisegundos porque
-el archivo ya está en el "Content-addressable store" de tu disco.
+el código ya está en el almacén global de tu disco.
 
--No hay duplicados: Si revisas el espacio, verás que ambos proyectos apuntan al
-mismo archivo físico.
+-No ocupa espacio extra: Aunque veas la carpeta node_modules, no hay una segunda
+copia física del paquete. Ambos proyectos están "viendo" el mismo archivo
+centralizado.
 
-Cómo verificar la ventaja de espacio
-
-Puedes usar un comando para ver dónde guarda pnpm los archivos realmente:
+¿Cómo verificar la ventaja de espacio? Puedes ver dónde guarda pnpm los archivos
+realmente con:
 
 $ pnpm store path
 
-Esa ruta es el único lugar donde viven los paquetes. Tus carpetas node_modules
-en proyecto-a y proyecto-b son técnicamente "espejismos" (enlaces simbólicos)
-que no pesan casi nada.
+Tus carpetas node_modules son técnicamente "espejos" (enlaces simbólicos) que
+apuntan a esa ruta única.
 
-Resumen del beneficio en este ejemplo:
+Revisión de la estructura:
 
--Velocidad: El Proyecto B se instaló sin descargar nada de internet.
+$ tree
 
--Espacio: Si instalas lodash en 100 proyectos, solo ocupas el espacio de 1.
+├── index.html
+├── node_modules
+│   └── canvas-confetti -> .pnpm/canvas-confetti@1.9.4/node_modules/canvas-confetti
+├── package.json
+└── pnpm-lock.yaml
 
--Orden: Tu carpeta global de paquetes se mantiene limpia y verificada mediante
-hashes para asegurar que ningún archivo esté corrupto.
+Esa salida del comando tree es la prueba perfecta de cómo funciona pnpm por
+debajo. Fíjate en la flecha (->):
+
+canvas-confetti -> .pnpm/canvas-confetti@1.9.4/node_modules/canvas-confetti
+
+Esto confirma que canvas-confetti en tu carpeta node_modules no es una carpeta
+real con archivos dentro, sino un enlace simbólico (symlink).
+
+Resumen del beneficio:
+======================
+
+-Velocidad: El Proyecto B se configuró sin descargar nada de internet.
+
+-Espacio: Si haces 50 pequeños experimentos con confeti, solo ocupas el espacio
+de 1.
+
+-Seguridad: Tienes la certeza de que el paquete es idéntico en todos tus
+proyectos.
 
 Fuente
 ======
