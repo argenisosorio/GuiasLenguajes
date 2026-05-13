@@ -471,3 +471,167 @@ Fuentes
 https://www.npmjs.com/package/prettier
 
 https://prettier.io/docs/install
+
+===========
+npm vs pnpm
+===========
+
+Si alguna vez has sentido que tu carpeta node_modules pesa más que tu propia
+alma, entender la diferencia entre npm y pnpm te va a cambiar la vida. Ambos son
+gestores de paquetes para Node.js, pero funcionan bajo filosofías muy distintas.
+
+1. La diferencia fundamental: El almacenamiento
+
+La mayor diferencia radica en cómo guardan los paquetes en tu disco duro.
+
+-npm (Node Package Manager): Es el estándar por defecto. Si tienes 10 proyectos
+que usan lodash, npm descargará y guardará 10 copias de lodash, una en cada
+carpeta node_modules. Es ineficiente con el espacio.
+
+pnpm (Performant npm): Utiliza un almacén de contenido direccionable
+(Content-addressable store). Si 10 proyectos usan lodash, pnpm solo guarda una
+copia en una carpeta global de tu disco y crea "enlaces" (hard links) hacia
+ella.
+
+Resultado: Ahorras gigabytes de espacio y las instalaciones son ridículamente
+rápidas.
+
+2. Velocidad y Rendimiento
+
+En la mayoría de las comparativas, pnpm gana por goleada.
+
++----------------------+-------------------------------+----------------------------------+
+| Característica       | npm                           | pnpm                             |
++----------------------+-------------------------------+----------------------------------+
+| Instalación inicial  | Lenta (descarga todo de nuevo)| Muy rápida (usa el caché global) |
++----------------------+-------------------------------+----------------------------------+
+| Uso de disco         | Muy alto                      | Muy bajo (enlaces simbólicos)    |
++----------------------+-------------------------------+----------------------------------+
+| Seguridad            | Buena                         | Excelente (evita dep. fantasma)  |
++----------------------+-------------------------------+----------------------------------+
+| Madurez              | El estándar de la industria   | Cada vez más usado               |
++----------------------+-------------------------------+----------------------------------+
+
+3. El problema de las "Dependencias Fantasma"
+
+npm utiliza una estructura plana (flattened). Esto significa que si instalas el
+paquete A, y este depende del paquete B, npm pone a ambos en la raíz de
+node_modules. Esto te permite usar el paquete B en tu código aunque no lo hayas
+instalado tú directamente.
+
+pnpm no permite esto. Utiliza enlaces simbólicos para crear una estructura
+estricta. Solo puedes importar lo que declaraste explícitamente en tu
+package.json. Esto evita errores misteriosos en producción.
+
+4. Comandos básicos
+
+La buena noticia es que la curva de aprendizaje es casi nula porque los comandos
+son prácticamente idénticos:
+
+Instalar dependencias:
+
+-npm: npm install
+
+-pnpm: pnpm install
+
+Añadir un paquete:
+
+-npm: npm install express
+
+-pnpm: pnpm add express
+
+Ejecutar un script:
+
+-npm: npm run dev
+
+-pnpm: pnpm dev (ni siquiera necesitas el "run")
+
+¿Cuál deberías elegir?
+
+Usa npm si: Eres principiante, quieres evitar configurar herramientas
+adicionales o trabajas en un equipo que no quiere cambiar su flujo de trabajo
+actual.
+
+Usa pnpm si: Tienes poco espacio en disco, trabajas en monorepos (donde pnpm
+brilla especialmente) o simplemente odias esperar minutos a que termine un
+install.
+
+Ejemplo real
+============
+
+Para notar la ventaja real de pnpm, lo ideal es ver cómo maneja el espacio en
+disco comparado con npm. El "truco" está en que pnpm no duplica archivos; si dos
+proyectos usan la misma librería, solo ocupa espacio una vez.
+
+Aquí tienes un ejercicio práctico para que lo compruebes tú mismo:
+
+Paso 1: Instalación (si no lo tienes)
+
+Si tienes Node.js instalado, puedes activar pnpm rápidamente:
+
+$ corepack enable
+
+# O vía npm: npm install -g pnpm
+
+Paso 2: Crear el Proyecto A
+
+Vamos a crear una carpeta y a instalar una librería pesada, como cypress o
+lodash.
+
+$ mkdir proyecto-a && cd proyecto-a
+
+$ pnpm init
+
+$ pnpm add lodash
+
+En este momento, pnpm descarga lodash a una carpeta global en tu computadora y
+crea un enlace (link) en proyecto-a.
+
+Paso 3: Crear el Proyecto B (La magia)
+
+Ahora vamos a crear otro proyecto totalmente distinto e instalar la misma librería.
+
+$ cd ..
+
+$ mkdir proyecto-b && cd proyecto-b
+
+$ pnpm init
+
+$ pnpm add lodash
+
+¿Qué acaba de pasar?
+
+Si hubieras usado npm, en este paso el sistema habría descargado lodash otra vez
+y tendrías dos copias físicas ocupando el doble de espacio.
+
+Con pnpm, notarás que:
+
+-Es instantáneo: La instalación en el segundo proyecto toma milisegundos porque
+el archivo ya está en el "Content-addressable store" de tu disco.
+
+-No hay duplicados: Si revisas el espacio, verás que ambos proyectos apuntan al
+mismo archivo físico.
+
+Cómo verificar la ventaja de espacio
+
+Puedes usar un comando para ver dónde guarda pnpm los archivos realmente:
+
+$ pnpm store path
+
+Esa ruta es el único lugar donde viven los paquetes. Tus carpetas node_modules
+en proyecto-a y proyecto-b son técnicamente "espejismos" (enlaces simbólicos)
+que no pesan casi nada.
+
+Resumen del beneficio en este ejemplo:
+
+-Velocidad: El Proyecto B se instaló sin descargar nada de internet.
+
+-Espacio: Si instalas lodash en 100 proyectos, solo ocupas el espacio de 1.
+
+-Orden: Tu carpeta global de paquetes se mantiene limpia y verificada mediante
+hashes para asegurar que ningún archivo esté corrupto.
+
+Fuente
+======
+
+Gemini IA
