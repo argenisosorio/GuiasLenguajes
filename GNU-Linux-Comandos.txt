@@ -14576,6 +14576,10 @@ Ejemplo de salida:
 Archivo dañado/corrupto: 1.xls
 Archivo dañado/corrupto: 3.xls
 
+Comando más preciso para evitar problemas de comillas:
+
+$ find . -maxdepth 1 -name "*.xls" -print0 | xargs -0 -I {} bash -c 'file "{}" | grep -q "data" && echo "Archivo dañado/corrupto: {}"'
+
 ----
 
 Eliminar:
@@ -14586,6 +14590,10 @@ Ejemplo de salida:
 
 Eliminando 1.xls
 Eliminando 3.xls
+
+Comando más preciso para evitar problemas de comillas:
+
+$ find . -maxdepth 1 -name "*.xls" -print0 | xargs -0 -I {} bash -c 'file "{}" | grep -q "data" && echo "Eliminando: {}" && rm "{}"'
 
 Fuente
 ======
