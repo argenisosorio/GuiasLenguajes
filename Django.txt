@@ -15255,3 +15255,107 @@ Fuente
 ======
 
 Gemini IA
+
+
+=====================================================
+Cambiar la ruta del panel de administración en Django
+=====================================================
+
+Cambiar la ruta del panel de administración en Django es una de las medidas de
+seguridad básica más efectivas para evitar ataques de fuerza bruta y escaneos
+automatizados.
+
+Aquí tienes las mejores formas de lograrlo:
+
+1. Cambiar la URL en urls.py
+
+La forma más rápida y sencilla es modificar el archivo de configuración de rutas
+principal de tu proyecto (normalmente tu_proyecto/urls.py).
+
+En lugar de usar el estándar:
+
+path('admin/', admin.site.urls),
+
+Cámbialo por una cadena difícil de adivinar:
+
+path('secreto-acceso-db/', admin.site.urls),
+
+Ejemplo:
+
+urlpatterns = [
+    # Panel de administración de Django para gestión interna
+    path("PQMBBwNCAA+PQMBBwNCAA-PQMBBwNCAA-156164ad12d13ffevv/", admin.site.urls),
+]
+
+Recomendación de Seguridad
+
+No uses palabras comunes como "gestor", "panel" o "login".
+
+
+2. Otra forma:
+
+Lo ideal es usar una variable de entorno para que el nombre de la ruta no quede
+expuesto en tu repositorio de código:
+
+-----
+
+En el .env:
+
+# ------------------------------------------------------------------------------
+# URL PARA ACCEDER AL ADMIN DE DJANGO
+# ------------------------------------------------------------------------------
+
+DJANGO_ADMIN_URL = 'PQMBBwNCAAQ6vqsyZFE0q5m7DCz/'
+
+-----
+
+En las urls principales:
+
+import os
+from dotenv import load_dotenv
+
+# =============================================================================
+# Configuración de URLs del proyecto
+# =============================================================================
+
+# Si no existe DJANGO_ADMIN_URL tomar el valor por defecto.
+ADMIN_URL = os.getenv('DJANGO_ADMIN_URL', 'admin/')
+
+urlpatterns = [
+    # Ruta raíz del sistema (página de bienvenida).
+    path("", home),
+
+    # Panel de Administración de Django para gestión interna.
+    path(ADMIN_URL, admin.site.urls),
+]
+
+-----
+
+3. Restricción por IP (Nivel Servidor)
+
+Si siempre accedes desde una oficina o una IP estática, la forma más robusta es
+bloquear el acceso desde el servidor web (Nginx o Apache).
+
+Ejemplo en Nginx:
+location /mi-ruta-secreta/ {
+    allow 192.168.1.1; # Tu IP real
+    deny all;
+    proxy_pass http://tu_app_django;
+}
+
+Consideraciones Adicionales
+
+-No uses "admin" en producción: Los bots escanean /admin/, /administrator/,
+/wp-admin/, etc., constantemente.
+
+-Limita los intentos: Usa librerías como django-axes para bloquear IPs que
+fallen el login más de 3 veces.
+
+-Despliegue: Recuerda que si cambias la URL, deberás actualizar cualquier
+marcador que tengas en tu navegador y avisar a otros miembros del equipo si los
+hay.
+
+Fuente
+======
+
+Gemini IA
