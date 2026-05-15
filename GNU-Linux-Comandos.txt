@@ -4866,15 +4866,17 @@ Otros ejemplos:
 alias ll='ls -l --color'
 alias buscar='grep --color -n -iIr'
 alias texto='echo "imprimir este texto"'
-
 alias ls='ls --color=auto'
-alias buscar='grep --color -n -iIr'
 alias my_project='cd /home/user/project_app && git status'
 alias guias_lenguajes='cd /home/user/Documentos/GIT/GuiasLenguajes/'
 alias gitlab='echo "XXXXXX"'
 alias github='echo "XXXXXXXX"'
 alias MailHog='~/.go/bin/MailHog'
 alias ruta='echo /home/user | tee >(xclip -selection clipboard)'
+alias run_desktop='bash /home/aosorio/Descargas/run_desktop.sh &'
+alias psql='sudo su postgres && psql'
+alias kvm_deactivate='sudo rmmod kvm_intel && sudo rmmod kvm'
+alias clean_migrations='find . -type d -name "migrations" -exec rm -rf {} +'
 
 Para que se haga efectivo algun cambio en .bashrc es necesario reiniciar pero
 hay otra forma de actualizar el fichero sin reiniciar, entonces:

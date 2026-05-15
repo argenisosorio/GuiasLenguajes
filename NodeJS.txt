@@ -636,3 +636,66 @@ Fuente
 ======
 
 DeepSeek
+
+================================================
+¿nvm me permite gestionar las versiones de pnpm?
+================================================
+
+La respuesta corta es no.
+
+nvm (Node Version Manager) está diseñado exclusivamente para gestionar versiones
+de Node.js. Aunque pnpm se instala y corre sobre Node, nvm no tiene comandos ni
+funciones para saltar entre diferentes versiones de pnpm.
+
+¿Cómo se relaciona nvm con pnpm?
+
+Cuando usas nvm para cambiar la versión de Node.js, lo que sucede es lo
+siguiente:
+
+-Cada versión de Node instalada vía nvm tiene su propio directorio de
+node_modules globales.
+
+-Si instalaste pnpm de forma global (npm install -g pnpm) mientras usabas Node
+v18, al cambiar a Node v20 con nvm, pnpm dejará de estar disponible hasta que lo
+instales de nuevo para esa versión específica.
+
+La solución ideal: Corepack
+
+Si lo que buscas es que la versión de pnpm cambie automáticamente según el
+proyecto (similar a lo que hace nvm con Node), lo mejor es usar Corepack.
+
+Corepack viene incluido con Node.js (desde la v16.13) y es el gestor oficial
+para herramientas como pnpm y yarn.
+
+Actívalo:
+
+$ corepack enable
+
+Define la versión en tu package.json:
+
+{
+  "packageManager": "pnpm@9.1.0"
+}
+
+Uso: Cuando ejecutes comandos de pnpm, Corepack detectará la versión definida y
+la descargará/usará automáticamente, sin que tengas que gestionarla manualmente.
+
+Alternativas si quieres gestionar pnpm manualmente
+
+Si prefieres una herramienta dedicada para gestionar múltiples versiones de
+herramientas de desarrollo (incluyendo Node y pnpm) en un solo lugar, te
+recomiendo:
+
+-pnpm mismo: pnpm tiene su propio gestor de versiones de Node integrado
+(pnpm env), lo que a veces hace que nvm sea redundante.
+
+asdf: Un gestor de versiones universal para casi cualquier lenguaje o
+herramienta (Node, pnpm, Python, Elixir, etc.) mediante plugins.
+
+proto: Una alternativa moderna y muy rápida a asdf que soporta pnpm de forma
+nativa.
+
+Fuente
+======
+
+Gemini IA
