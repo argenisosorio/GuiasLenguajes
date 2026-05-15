@@ -370,6 +370,9 @@ Notas:
 automáticamente el correo a la "Dirección de Correo Electrónico de
 Administración".
 
+Funciona perfecto si envía cuando está configurada la dirección de
+Administración.
+
 Si se quiere que también envio un correo copia a otro correo se debe usar Cc
 siguiendo este ejemplo: https://contactform7.com/es/adding-cc-bcc-and-other-mail-headers/
 
@@ -1900,3 +1903,63 @@ Fuente
 ======
 
 DeepSeek
+
+===========================================================
+Para cambiar el color de fondo exclusivamente a las páginas
+===========================================================
+
+Para cambiar el color de fondo exclusivamente a las páginas (el tipo de
+contenido "page") sin afectar las entradas del blog (posts) o el resto del
+sitio, tienes un par de métodos dependiendo de tu nivel de comodidad con
+WordPress.
+
+Opción 1: Usar el Personalizador (CSS Adicional)
+
+WordPress añade automáticamente clases al cuerpo (<body>) de cada página según
+el tipo de contenido que se esté visualizando. Para las páginas estáticas, la
+clase suele ser .page.
+
+Ve a Apariencia > Personalizar.
+
+Busca la sección CSS adicional.
+
+Pega el siguiente código:
+
+/* Cambia el fondo solo de las páginas estáticas */
+body.page {
+    background-color: #f0f0f0; /* Sustituye por tu color (Hex o nombre) */
+}
+
+/* Si tu tema usa un contenedor interno para el fondo, intenta esto: */
+.page .site-content, .page .content-area {
+    background-color: #f0f0f0;
+}
+
+¿Qué pasa si no ves "Personalizar"?
+
+Si estás usando uno de los temas más nuevos (temas de bloques o Full Site
+Editing), es posible que el menú "Personalizar" esté oculto. Si este es tu caso:
+
+Truco de la URL: Puedes forzar la entrada escribiendo
+https://tu-sitio.com/wp-admin/customize.php directamente en la barra de tu
+navegador.
+
+Opción 2: Cambiar el color solo a una página específica
+
+Si solo quieres cambiar el color a una sola página y no a todas las "pages",
+WordPress asigna un ID único.
+
+Inspecciona la página en tu navegador (clic derecho > Inspeccionar).
+
+Busca en la etiqueta <body class="..."> algo como page-id-123.
+
+Usa este CSS:
+
+body.page-id-123 {
+    background-color: red;
+}
+
+Fuente
+======
+
+Gemini IA
