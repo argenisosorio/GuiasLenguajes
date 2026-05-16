@@ -14761,6 +14761,12 @@ terminal:
 
 $ python manage.py migrate tu_app 0003
 
+Ahora solo resta eliminar el archivo de migración:
+
+$ rm tu_app/migrations/0004_add_telefono_celular.py
+
+Así cuando ejecutes migrate no se vuelve a crear el campo telefono_celular.
+
 ¿Qué hace Django internamente?
 
 Django busca el archivo 0004_add_telefono_celular.py, lee la sección down (o
