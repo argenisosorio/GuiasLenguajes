@@ -15393,3 +15393,65 @@ Fuente
 ======
 
 Gemini IA
+
+================================================================================
+__All__: Por favor, introduzca un nombre de usuario y clave correctos. Observe
+que ambos campos pueden ser sensibles a mayúsculas.
+================================================================================
+
+Ese molesto __All__: (o __all__) aparece porque en Django, cuando un error no
+pertenece a un input específico (como un fallo global de contraseña/usuario
+incorrectos), Django lo agrupa bajo una clave especial llamada NON_FIELD_ERRORS.
+Al usar el filtro |title en tu plantilla, convierte esa clave del sistema en
+__All__:.
+
+Para eliminarlo y que se vea limpio debes corregir tu plantilla HTML (la
+solución ideal)
+
+En lugar de iterar a ciegas con form.errors.items (que incluye los errores
+globales mezclados), puedes separar los errores que no pertenecen a ningún campo
+usando form.non_field_errors.
+
+Así es como deberías estructurar tu bloque de errores en el HTML:
+
+<!-- SECCIÓN DE ERRORES GENERALES -->
+{% if form.errors %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>
+        <i class="fas fa-exclamation-triangle me-2"></i>
+        Por favor corrige los siguientes errores:
+    </strong>
+    <ul class="mb-0 mt-2">
+        <!-- 1. Primero mostramos los errores globales (sin nombres de campos raros) -->
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        {% endif %}
+
+        <!-- 2. Luego mostramos los errores específicos de cada campo -->
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+
+¿Por qué es mejor este cambio?
+
+-Elimina el __All__: Los errores globales ahora se muestran directamente como
+texto ("Por favor, introduzca un nombre de usuario...").
+
+Mejora visual: En lugar de mostrar el nombre técnico de la base de datos (como
+first_name), utiliza field.label para mostrar el nombre bonito y legible
+(como "Nombre").
+
+Fuente
+======
+
+Gemini IA
