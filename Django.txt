@@ -15365,3 +15365,31 @@ Fuente
 ======
 
 Gemini IA
+
+============
+verbose_name
+============
+
+El argumento verbose_name es básicamente el "nombre amigable" o la etiqueta
+legible para humanos que le das a un campo de tu base de datos.
+
+Por defecto, si no defines un verbose_name, Django toma el nombre de la variable
+y reemplaza los guiones bajos por espacios (por ejemplo, tipo_movimiento se
+vería como "Tipo movimiento"). Sin embargo, usar verbose_name te permite tener
+un control total sobre cómo se muestra ese campo en la interfaz.
+
+¿Para qué sirve exactamente?
+
+El uso de verbose_name impacta principalmente en dos áreas:
+
+-Panel de Administración (Django Admin): Es el texto que aparecerá en las
+etiquetas de los formularios y en las cabeceras de las columnas de las tablas.
+
+-Formularios (ModelForms): Si creas un formulario basado en ese modelo, la
+etiqueta (<label>) del input usará automáticamente el valor definido en
+verbose_name.
+
+Fuente
+======
+
+Gemini IA
