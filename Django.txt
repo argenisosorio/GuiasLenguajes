@@ -15389,6 +15389,16 @@ etiquetas de los formularios y en las cabeceras de las columnas de las tablas.
 etiqueta (<label>) del input usará automáticamente el valor definido en
 verbose_name.
 
+Ejemplo:
+
+# Observaciones.
+observaciones = models.TextField(
+    max_length=500,
+    null=True,
+    blank=True,
+    verbose_name="Observaciones adicionales"
+)
+
 Fuente
 ======
 
