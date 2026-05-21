@@ -11482,3 +11482,80 @@ Generar reporte PDF de manera nativa usando la función de imprimir del navegado
     </script>
 </body>
 </html>
+
+==============================
+Partes de una página dashboard
+==============================
+
+En el diseño de interfaces (UI/UX), una página tipo dashboard (tablero de
+control) tiene una estructura muy particular. A diferencia de un sitio web común
+o un blog, un dashboard es una aplicación interactiva, por lo que su anatomía
+está pensada para aprovechar cada píxel, evitar el scroll vertical infinito y
+mantener los datos a la vista.
+
+Anatomía de un Dashboard
+
++-------------------+-----------------------------------+--------------------------------------------------------------------+
+|     SECCIÓN       |       NOMBRE TÉCNICO / UI         |                        FUNCIÓN PRINCIPAL                           |
++===================+===================================+====================================================================+
+|                   |                                   |                                                                    |
+|  Barra Lateral    | Sidebar /                         | El menú principal de la aplicación. Suele ser vertical para        |
+|                   | Navigation Drawer                 | ahorrar espacio a lo ancho.                                        |
+|                   |                                   |                                                                    |
++-------------------+-----------------------------------+--------------------------------------------------------------------+
+|                   |                                   |                                                                    |
+|  Barra Superior   | Top Bar / Header                  | Contiene el buscador global, notificaciones, cambio de idioma      |
+|                   |                                   | y el perfil del usuario.                                           |
+|                   |                                   |                                                                    |
++-------------------+-----------------------------------+--------------------------------------------------------------------+
+|                   |                                   |                                                                    |
+|  Área de Trabajo  | Main Content Area /               | Donde viven los gráficos, tablas y tarjetas de datos (KPIs).       |
+|                   | Canvas                            | Es el corazón del dashboard.                                       |
+|                   |                                   |                                                                    |
++-------------------+-----------------------------------+--------------------------------------------------------------------+
+|                   |                                   |                                                                    |
+|  Filtros Globales | Filter Bar /                      | Controles (como selectores de fecha) que cambian los datos de      |
+|                   | Control Panel                     | todo el dashboard a la vez.                                        |
+|                   |                                   |                                                                    |
++-------------------+-----------------------------------+--------------------------------------------------------------------+
+|                   |                                   |                                                                    |
+|  Pie de Página    | Footer                            | En dashboards es muy minimalista. A veces ni existe, o solo        |
+|                   |                                   | muestra la versión del software y enlaces legales.                 |
+|                   |                                   |                                                                    |
++-------------------+-----------------------------------+--------------------------------------------------------------------+
+
+Para entender cómo se encajan todas estas piezas, imagínalo de la siguiente
+manera:
+
+1. El Menú Lateral (Sidebar) Es el rey de la navegación en los dashboards. Se
+prefiere vertical porque las pantallas de las computadoras son panorámicas
+(pantalla ancha), lo que deja espacio de sobra a los lados. Además, permite
+colapsarse (hacerse chiquito) para dejar solo iconos y maximizar tu área de
+trabajo.
+
+2. La Barra Superior (Top Bar) Mientras que el Sidebar te lleva de una página a
+otra, la barra superior maneja tu sesión y estado actual. Aquí es donde casi
+siempre vas a encontrar: La campana de notificaciones. El avatar del usuario con
+el menú de "Configuración" y "Cerrar sesión". Un buscador universal que rastrea
+datos dentro de la plataforma.
+
+3. El Panel de Filtros (Control/Filter Bar) Esta sección suele vivir justo
+arriba del área de trabajo. Imagina que estás viendo las ventas de tu negocio:
+necesitas un botón que diga "Últimos 30 días" o "Filtrar por país". Esta barra
+es vital porque actualiza todos los gráficos del área de trabajo al mismo tiempo
+sin recargar la página.
+
+4. Las Tarjetas de Resumen (KPI Cards / Widgets) Dentro del Área de Trabajo, lo
+primero que ve el usuario arriba del todo son las tarjetas de KPI (indicadores
+clave de rendimiento). Son bloques pequeños que muestran un número gigante
+(ej: $45,200) y una pequeña flecha verde o roja que indica si subió o bajó
+respecto al mes anterior.Un detalle sobre el Footer en Dashboards: En una página
+web normal, el footer es gigante. En un dashboard, el espacio vertical es
+sagrado. Muchas aplicaciones usan un "Scroll infinito" en sus tablas o fijan los
+elementos a la pantalla, por lo que el footer suele ser una línea diminuta abajo
+del menú lateral o simplemente se elimina para no estorbar.
+
+Fuente
+======
+
+Gemini IA
