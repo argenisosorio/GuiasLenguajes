@@ -14601,3 +14601,34 @@ Fuente
 ======
 
 Gemini IA
+
+====================
+Instalar Antigravity
+====================
+
+Instalar el agente inteligente y editor de código Antigravity de Google en
+Debian es un proceso rápido usando su repositorio oficial de paquetes (APT) Cómo
+descargar e instalar el IDE Antigravity de Google [2026].Abre tu terminal y
+ejecuta los siguientes comandos como administrador Cómo instalar Google
+Antigravity en Ubuntu 26.04, 24.04 y ...:
+
+1. Agrega la llave de seguridad del repositorio:
+
+$ curl -fsSL https://us-central1-apt.pkg.dev/doc/repo-signing-key.gpg | sudo gpg --dearmor -o /etc/apt/keyrings/antigravity-repo-key.gpg
+
+2. Registra el repositorio de Antigravity:
+
+$ echo "deb [signed-by=/etc/apt/keyrings/antigravity-repo-key.gpg] https://us-central1-apt.pkg.dev/projects/antigravity-auto-updater-dev/ antigravity-debian main" | sudo tee /etc/apt/sources.list.d/antigravity.list > /dev/null
+
+3. Actualiza la lista de paquetes:
+
+$ sudo apt update
+
+Instala la aplicación:
+
+$ sudo apt install antigravity -y
+
+Fuente
+======
+
+Gemini IA
