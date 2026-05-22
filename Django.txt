@@ -15559,7 +15559,7 @@ class Command(BaseCommand):
     help = "Imprime un amigable Hola Mundo en la terminal"
 
     def handle(self, *args, **options):
-        # Usamos self.stdout.write en lugar de print() 
+        # Usamos self.stdout.write en lugar de print()
         # para que Django maneje correctamente los colores y la salida de datos
         #self.stdout.write(self.style.SUCCESS("¡Hola Mundo desde Django 6!"))
         print("¡Hola Mundo desde Django 6!")
