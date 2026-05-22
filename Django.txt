@@ -15482,3 +15482,103 @@ Investigación, documentación y PoC sobre Django Tasks para trabajos en segundo
 plano en Django by Lully
 
 PoC: ​https://github.com/argenisosorio/Django_6_crud/tree/test/django-tasks
+
+==========================================
+Crear un comando personalizado en Django 6
+==========================================
+
+Crear un comando personalizado en Django 6 es una excelente idea para
+automatizar tareas. La estructura no ha cambiado mucho respecto a versiones
+anteriores, pero Django es muy estricto con dónde colocas los archivos para que
+pueda detectarlos automáticamente.
+
+Aquí tienes el paso a paso exacto para lograrlo.
+
+1. La estructura de carpetas (Crucial)
+
+Para que Django encuentre tu comando, el script de Python debe estar dentro de
+una aplicación registrada (en tu INSTALLED_APPS) y seguir una estructura de
+carpetas específica.
+
+Suponiendo que tu app se llama miapp, tu estructura debe verse así:
+
+mi_proyecto/
+│
+├── miapp/
+│   ├── management/
+│   │   ├── __init__.py
+│   │   └── commands/
+│   │       ├── __init__.py
+│   │       └── holamundo.py  <-- Aquí va tu script
+│   ├── __init__.py
+│   └── apps.py
+│
+└── manage.py
+
+Nota importante: No olvides crear los archivos init.py (pueden estar
+completamente vacíos). Si faltan, Python no reconocerá las carpetas como
+paquetes y Django no verá tu comando.
+
+2. El código del script (holamundo.py)
+
+Dentro de tu archivo holamundo.py, debes heredar de la clase BaseCommand de
+Django y definir el método handle. Este método es el que se ejecuta cuando
+corres el comando.
+
+Copia este código dentro de holamundo.py:
+
+"""
+Este comando personalizado de Django imprime un mensaje amigable "Hola Mundo" en
+la terminal.
+"""
+
+from django.core.management.base import BaseCommand
+
+
+class Command(BaseCommand):
+    """
+    Comando personalizado para imprimir "Hola Mundo" en la terminal.
+
+    Attributes:
+        help (str): Descripción del comando que de ayuda.
+
+    Methods:
+        handle(self, *args, **options): Método principal que se ejecuta cuando
+        se llama al comando.
+
+    Example:
+        Para ejecutar este comando, use el siguiente comando en la terminal:
+            python manage.py holamundo
+
+        Para ejecutar este comando con la ayuda de Django, use:
+            python manage.py help
+    """
+    # Descripción del comando para la ayuda de Django
+    # El atributo 'help' proporciona una descripción breve del comando que se
+    # muestra cuando se ejecuta `python manage.py help`.
+    help = "Imprime un amigable Hola Mundo en la terminal"
+
+    def handle(self, *args, **options):
+        # Usamos self.stdout.write en lugar de print() 
+        # para que Django maneje correctamente los colores y la salida de datos
+        #self.stdout.write(self.style.SUCCESS("¡Hola Mundo desde Django 6!"))
+        print("¡Hola Mundo desde Django 6!")
+
+
+3. Ejecutar el comando
+
+Una vez que el archivo esté en su lugar y tu app (miapp) esté agregada en el
+archivo settings.py, abre tu terminal en la raíz del proyecto y ejecuta:
+
+$ python manage.py holamundo
+
+Salida en la terminal:
+
+¡Hola Mundo desde Django 6!
+
+Ejemplo completo: https://github.com/argenisosorio/Django_6_crud/tree/feat/command-django-hello-world
+
+Fuente
+======
+
+Gemini IA
