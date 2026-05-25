@@ -15581,3 +15581,95 @@ Fuente
 ======
 
 Gemini IA
+
+==================================================================
+Inyectar datos mediante un fixture en Django sin especificar el ID
+==================================================================
+
+Cuando omites el campo pk (o id) en el archivo JSON del fixture, Django se
+comporta de la siguiente manera:
+
+-Autoincremento: Al cargar el fixture con python manage.py loaddata, Django
+interpretará que se trata de un registro completamente nuevo. Delegará la
+creación del ID al motor de la base de datos, el cual le asignará el siguiente
+número correlativo disponible (autoincremental).
+
+-Evita sobrescrituras accidentales: Es la forma ideal de cargar datos iniciales
+si no te importa el orden exacto de los IDs, ya que previene que pises registros
+existentes por un choque de llaves primarias.
+
+Ejemplo de cómo estructurar el fixture con ID (JSON):
+
+// data.json
+
+[
+    {
+        "model": "person.person",
+        "pk": 1,
+        "fields": {
+            "name": "José",
+            "email": "jose@mail.com",
+            "age": 45,
+            "created_at": "2026-05-25T15:52:11.206Z",
+            "updated_at": "2026-05-25T15:52:11.206Z"
+        }
+        
+    },
+    {
+        "model": "person.person",
+        "pk": 2,
+        "fields": {
+            "name": "Ana",
+            "email": "ana@maill.com",
+            "age": 78,
+            "created_at": "2026-05-25T15:52:20.698Z",
+            "updated_at": "2026-05-25T15:52:20.698Z"
+        }
+    }
+]
+
+Ejemplo de cómo estructurar el fixture sin ID (JSON):
+
+Omitiendo la propiedad "pk" a nivel de objeto, el archivo quedaría así:
+
+// data.json
+
+[
+    {
+        "model": "person.person",
+        "fields": {
+            "name": "José",
+            "email": "jose@mail.com",
+            "age": 45,
+            "created_at": "2026-05-25T15:52:11.206Z",
+            "updated_at": "2026-05-25T15:52:11.206Z"
+        }
+        
+    },
+    {
+        "model": "person.person",
+        "fields": {
+            "name": "Ana",
+            "email": "ana@maill.com",
+            "age": 78,
+            "created_at": "2026-05-25T15:52:20.698Z",
+            "updated_at": "2026-05-25T15:52:20.698Z"
+        }
+    }
+]
+
+$ python manage.py loaddata data.json
+
+Este comando inserta los datos en la base de datos. Es decir, que se insertaran
+2 filas en la tabla Person sin necesidad de poner el pk en el archivo JSON si
+no lo ponemos el id sera autoincremental.
+
+Detalle importante: Si ejecutas el comando loaddata con este fixture múltiples
+veces, Django duplicará los registros creando nuevos IDs en cada ejecución (por
+ejemplo, registrará a Carlos Pérez dos veces con IDs distintos), a diferencia de
+cuando incluyes el pk, que simplemente sobrescribe el registro existente.
+
+Fuente
+======
+
+Gemini IA
