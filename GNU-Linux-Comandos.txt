@@ -14632,3 +14632,77 @@ Fuente
 ======
 
 Gemini IA
+
+============================
+Liberar espacio en Debian 13
+============================
+
+El sistema tiende a acumular restos de instalaciones, paquetes antiguos y
+archivos de registro (logs) que ya no necesitas.
+
+1. Limpieza de paquetes (El método rápido)
+
+La herramienta de gestión de paquetes (apt) guarda copias de todo lo que
+descarga. Con el tiempo, esto se vuelve enorme. Ejecuta estos comandos en tu
+terminal con privilegios de administrador (sudo):
+
+# Elimina los paquetes de instalación (.deb) que ya no son necesarios
+
+$ sudo apt-get autoremove --purge
+
+# Borra el caché de los paquetes descargados por APT
+
+$ sudo apt-get clean
+
+¿Qué hace cada uno?
+
+2. Reducir el tamaño de los registros del sistema (Journald)
+
+Por defecto, el sistema de registro de Debian (systemd-journald) puede devorar
+gigabytes de disco guardando el historial de lo que pasa en la máquina. Puedes
+ver cuánto está ocupando con este comando:
+
+$ sudo journalctl --disk-usage
+
+Si es demasiado (por ejemplo, más de 1 GB), puedes recortarlo de forma segura.
+Para dejar solo los últimos 2 días de registros o limitar el espacio a un máximo
+de 500 MB, usa:
+
+# Limitar por tiempo
+
+$ sudo journalctl --vacuum-time=2d
+
+# O limitar por tamaño
+
+$ sudo journalctl --vacuum-size=500M
+
+3. Limpiar restos de Flatpak o Snap (Si los usas)
+
+Si instalas aplicaciones a través de Flatpak, estas suelen dejar versiones
+antiguas o entornos de ejecución (runtimes) flotando en el disco después de una
+actualización.
+
+Elimina runtimes de Flatpak que ya no se usan
+
+$ flatpak uninstall --unused
+
+Si usas Snap, este guarda por defecto varias versiones de la misma aplicación de
+respaldo. Puedes notar un gran bajón de espacio limpiando manualmente las
+revisiones antiguas de /var/lib/snapd/snaps/.
+
+
+4. Encontrar los archivos "devoradores" de espacio
+
+Si después de esto sigues sin espacio, el problema suele estar en tu propia
+carpeta personal (descargas viejas, caché de navegadores, copias de seguridad).
+Para ver gráficamente qué carpetas están pesando más sin instalar nada complejo,
+usa el comando du en tu terminal:
+
+Muestra las carpetas más pesadas en la raíz (top 10)
+
+$ sudo du -ahx / | sort -rh | head -n 10
+
+Fuente
+======
+
+Gemini IA
