@@ -15673,3 +15673,14 @@ Fuente
 ======
 
 Gemini IA
+
+==============================================
+Pequeño truco de collectstatic para Producción
+==============================================
+
+$ python manage.py collectstatic
+
+Esto creara la carpeta staticfiles que contiene todos estáticos de la app
+incluyendo los del admin, pero si en pythonanywhere por ejemplo el admin de
+django no consigue los estáticos es porque los está buscando en static no en
+staticfiles por lo cual entra a staticfiles y copia la carpeta admin a static/
