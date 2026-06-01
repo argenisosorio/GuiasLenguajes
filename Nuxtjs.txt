@@ -3174,6 +3174,127 @@ Puedes mover el contenido de la carpeta dist/ a la carpeta de Apache
 /var/www/html/ y el front debería desplegarse normalmente agregando
 "http://127.0.0.1", en el CORS_ALLOWED_ORIGINS del settings.py
 
+Exportando para usar en GitHub Page
+===================================
+
+Supongamos que el repositorio que cintiene la app front de Nuxt es
+https://github.com/user/test_dist entonces la dirección de la GitHub page sería
+https://user.github.io/test_dist como se puede apreciar es un sub directorio
+por lo cual se debe hacer una configuración extra en el archivo nuxt.config.ts
+para que funcione, debe quedar algo así
+
+
+/**
+ * Archivo de configuración principal de Nuxt 4
+ *
+ * Este archivo centraliza la gestión de módulos, configuraciones de entorno,
+ * estilos globales y metadatos de la aplicación.
+ */
+
+export default defineNuxtConfig({
+  // Define la fecha de compatibilidad para bloqueos de características de Nuxt
+  compatibilityDate: '2025-07-15',
+
+  // Desactivado el renderizado del lado del servidor para exportación estática:
+  ssr: false,
+
+  // Deshabilitado en producción para optimizar rendimiento
+  devtools: { enabled: false },
+
+  /**
+   * Configuración de variables de entorno (Runtime Config)
+   * Permite el paso de variables desde el .env al cliente y servidor.
+   */
+  runtimeConfig: {
+    public: {
+      /**
+       * URL base de la API de Django.
+       * Se prioriza la variable NUXT_PUBLIC_API_BASE del .env.
+       */
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://127.0.0.1:8000/api'
+    }
+  },
+
+  /**
+   * Configuración de la cabecera de la aplicación (SEO y Metadatos).
+   */
+  app: {
+    // Url base que usará Nitro para generar las rutas.
+    baseURL: '/test_dist/',
+    head: {
+      htmlAttrs: {
+        lang: 'es' // Localización para accesibilidad y SEO.
+      },
+      title: 'SINIDOT',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        {
+          hid: 'description',
+          name: 'description',
+          content: 'My App'
+        },
+        { name: 'format-detection', content: 'telephone=no' },
+        { name: 'author', content: 'CENDITEL' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: 'favicon.png' }
+      ]
+    }
+  },
+
+  /* Configuración para Nitro, el motor de servidor de Nuxt 4, para optimizar la
+   * entrega de contenido estático y prerenderizado.
+    */
+  nitro: {
+    // 'serveStatic: true' asegura que los archivos estáticos se sirvan correctamente.
+    serveStatic: true,
+    // Asegurar que todas las rutas se generen correctamente.
+    prerender: {
+      // 'crawlLinks: true' permite a Nitro descubrir y prerenderizar todas las
+      // rutas enlazadas.
+      crawlLinks: true
+    }
+  },
+
+  /**
+   * Carga de estilos globales
+   * El orden es importante: primero archivos de librerías, luego estilos propios.
+   */
+  css: [
+    'assets/css/main.css', // Estilos personalizados y Bootstrap CSS
+  ],
+
+  /**
+   * Módulos de Nuxt
+   */
+  modules: [
+    '@nuxt/eslint',
+    '@pinia/nuxt'
+  ],
+
+  // Configuración de Pinia para la gestión del estado global de la aplicación.
+  pinia: {
+    // 'storesDirs' define los directorios donde Pinia buscará las (stores).
+    storesDirs: ['./stores/**'],
+  },
+
+  /**
+   * Configuración de Linter para asegurar la calidad del código
+   * 'checker: true' habilita la validación en tiempo de ejecución de desarrollo.
+   */
+  eslint: {
+    checker: true
+  }
+})
+
+Adicionalmente también se debe crear dentro de la carpeta del repo el archivo
+.nojekyll, porque GitHub Pages nació originalmente para alojar sitios creados
+con Jekyll, las carpetas que empiezan con guion bajo como las que crea nuxt
+tienen un significado especial en Jekyll. El archivo .nojekyll solo lo entienden
+los servidores de despliegue de GitHub, en GitHub Pages se debe usar
+obligatoriamente si se usan carpetas con guion bajo y no usas Jekyll.
+
 Fuente
 ======
 
