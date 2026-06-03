@@ -9215,6 +9215,36 @@ las imágenes se carguen correctamente en la bandeja de entrada del destinatario
 
 Ejemplo complto en: https://github.com/argenisosorio/Django_6_crud/tree/test/send-mail
 
+==========================================
+Probar el envío de correo desde la consola
+==========================================
+
+Abre una Consola Bash en la carpeta raíz del proyecto, ejecuta el entorno
+interactivo de Django y prueba el envío manualmente corriendo esto:
+
+$ python manage.py shell
+
+Y dentro de la consola de Python (copia y pega esto sustituyendo el correo de destino):
+
+from django.core.mail import send_mail
+
+send_mail(
+    'Prueba des envío de correo',
+    'Si lees esto, la configuración de red y puertos es correcta.',
+    'tu_correo_gmail@gmail.com',  # Remitente
+    ['un_correo_cualquiera@gmail.com'],  # Destinatario de prueba
+    fail_silently=False,
+)
+
+Si te devuelve 1: El correo se envió con éxito.
+
+Si vuelve a lanzar Network is unreachable: Significa que el proxy de tu servidor
+gratuito tiene un bloqueo temporal o la IP asignada a tu cuenta de Gmail está
+fuera de la lista blanca global de PythonAnywhere para ese día. En ese caso
+extremo, la única alternativa real en el plan gratuito es mutar a la Opción 2
+(usar la API de SendGrid/Brevo por HTTP) mediante la librería django-anymail,
+ya que las peticiones web puras casi nunca fallan en esta plataforma.
+
 Fuente
 ======
 
