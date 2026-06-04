@@ -734,6 +734,135 @@ Restaurando datos de una tabla con archivo .sql
 
 $ psql -h localhost -U <username> -d <dbname> -1 -f <filename>.sql
 
+================================================================================
+Error cuando el owner de la base de datos no es el owner original de cuando se
+exporto el .sql
+================================================================================
+
+El problema es un clásico conflicto de permisos en PostgreSQL: ERROR: debe ser
+dueño de la tabla name_table.
+
+Esto significa que el usuario de la base de datos que que está configurado
+tiene permisos para leer y escribir datos, pero no es el propietario (owner) de
+esa tabla específica. En PostgreSQL, sólo el creador/dueño de la tabla o un
+superusuario pueden alterar su estructura.
+
+Soluciones más rápidas para corregirlo:
+
+Opción 1: Cambiar el propietario de la tabla (Recomendado)
+
+Si tienes acceso como superusuario (por ejemplo, con el usuario postgres),
+conéctate a la base de datos y ejecuta el siguiente comando para transferirle la
+propiedad al usuario que usa tu Laravel:
+
+# ALTER TABLE name_table OWNER TO tu_usuario_de_laravel;
+
+Reemplaza tu_usuario_de_laravel por el nombre de usuario configurado en la
+variable del dueño de la base de datos.
+
+Opción 2: Cambiar el propietario de todas las tablas en bloque
+
+Si esa tabla tiene un dueño diferente, es muy probable que te vuelva a pasar con
+otras (suele ocurrir al restaurar respaldos o si las tablas se crearon con otro
+usuario). Puedes cambiar el dueño de todas las tablas del esquema público de
+una sola vez ejecutando esto en tu cliente de base de datos (o usando una
+interfaz gráfica como pgAdmin/DBeaver):
+
+DO $$
+DECLARE
+    r RECORD;
+BEGIN
+    FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = 'public') LOOP
+        EXECUTE 'ALTER TABLE public.' || quote_ident(r.tablename) || ' OWNER TO tu_usuario_de_laravel;';
+    END LOOP;
+END $$;
+
+Opción 3: Atajo rápido en configuración (Sólo para desarrollo/local)
+
+Si estás en un entorno local o de desarrollo y necesitas resolverlo ya mismo
+para seguir trabajando, puedes editar temporalmente tu configuración de conexión
+para conectarte como el usuario administrador (postgres), correr la migración y
+luego volver a dejarlo como estaba:
+
+DB_USERNAME=postgres
+DB_PASSWORD=tu_clave_de_postgres
+
+Una vez que el usuario de tu aplicación sea el dueño de la tabla (o uses el
+superusuario), ejecuta de nuevo php artisan migrate y la migración pasará sin
+problemas.
+
+Fuente
+======
+
+Gemini IA
+
+Otra forma
+==========
+
+$ sed '/OWNER TO userowner/d' dump_userowner.sql > dump_userowner_fixed.sql
+
+$ sed -i '/GRANT.*TO userowner/d' dump_userowner_fixed.sql
+
+$ psql -U postgres -d base_destino -f dump_userowner_fixed.sql
+
+Esos comandos sirven para limpiar un respaldo de base de datos (.sql) de las
+referencias de un usuario específico (en este caso, userowner) y luego
+restaurarlo en otra base de datos usando el superusuario postgres.
+
+Esto es exactamente lo que se hace cuando quieres mudar una base de datos a otro
+entorno donde el usuario userowner no existe, evitando que la restauración falle
+por problemas de permisos.
+
+Desglose de qué hace línea por línea:
+
+1. Limpieza de Propietarios (OWNER TO)
+
+$ sed '/OWNER TO userowner/d' dump_userowner.sql > dump_userowner_fixed.sql
+
+Busca dentro del archivo original dump_userowner.sql todas las líneas que
+contengan exactamente el texto OWNER TO userowner y las elimina
+(/d significa delete).
+
+Resultado: Crea un archivo nuevo llamado dump_userowner_fixed.sql clonado del
+original, pero sin esas líneas. Al quitar el dueño, cuando restaures este
+archivo, las tablas pasarán a ser propiedad del usuario que haga la restauración.
+
+2. Limpieza de Permisos (GRANT)
+
+$ sed -i '/GRANT.*TO userowner/d' dump_userowner_fixed.sql
+
+Modifica el archivo nuevo directamente sobre sí mismo (eso hace el flag -i de
+in-place). Busca cualquier línea que empiece con GRANT, tenga lo que sea en el
+medio (.*), y termine con TO userowner, y también la elimina.
+
+Resultado: Borra todas las sentencias que le otorgaban privilegios especiales
+(como SELECT, INSERT, UPDATE) al usuario userowner.
+
+3. Restauración de la Base de Datos
+
+$ psql -U postgres -d base_destino -f dump_userowner_fixed.sql
+
+Utiliza la herramienta de terminal de PostgreSQL (psql) para ejecutar el archivo
+que acabas de limpiar.
+
+-U postgres: Se conecta usando el superusuario administrador (postgres).
+
+-d base_destino: Indica el nombre de la base de datos objetivo donde se van a
+meter las tablas.
+
+-f dump_userowner_fixed.sql: Lee y ejecuta todo el contenido de ese archivo
+modificado.
+
+En resumen, es una jugada muy limpia para "desinfectar" un script .sql de un
+usuario local/antiguo (userowner) y forzar a que todo se cree bajo el ala del
+superusuario postgres en la nueva base de datos sin lanzar errores de
+«usuario no existe» o «privilegios insuficientes».
+
+Fuente
+======
+
+Gemini IA
+
 ===========================================
 Copiar datos de una tabla a un fichero .csv
 ===========================================
