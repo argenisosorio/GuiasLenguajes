@@ -625,6 +625,12 @@ objetos. Esto es útil si no necesitas conservar los propietarios o si estás
 migrando la base de datos a un servidor donde los usuarios/roles propietarios
 no existen.
 
+En un .sql exportado con el owner nos encontramos esta sentencia donde admin es
+es el dueño original, cuando se usa --no-owner estas sentencias OWNER TO ya no
+están en el .sql:
+
+ALTER TABLE public.aplicants OWNER TO admin;
+
 Parámetro --no-acl
 ==================
 
@@ -803,8 +809,6 @@ $ sed '/OWNER TO userowner/d' dump_userowner.sql > dump_userowner_fixed.sql
 
 $ sed -i '/GRANT.*TO userowner/d' dump_userowner_fixed.sql
 
-$ psql -U postgres -d base_destino -f dump_userowner_fixed.sql
-
 Esos comandos sirven para limpiar un respaldo de base de datos (.sql) de las
 referencias de un usuario específico (en este caso, userowner) y luego
 restaurarlo en otra base de datos usando el superusuario postgres.
@@ -837,21 +841,6 @@ medio (.*), y termine con TO userowner, y también la elimina.
 
 Resultado: Borra todas las sentencias que le otorgaban privilegios especiales
 (como SELECT, INSERT, UPDATE) al usuario userowner.
-
-3. Restauración de la Base de Datos
-
-$ psql -U postgres -d base_destino -f dump_userowner_fixed.sql
-
-Utiliza la herramienta de terminal de PostgreSQL (psql) para ejecutar el archivo
-que acabas de limpiar.
-
--U postgres: Se conecta usando el superusuario administrador (postgres).
-
--d base_destino: Indica el nombre de la base de datos objetivo donde se van a
-meter las tablas.
-
--f dump_userowner_fixed.sql: Lee y ejecuta todo el contenido de ese archivo
-modificado.
 
 En resumen, es una jugada muy limpia para "desinfectar" un script .sql de un
 usuario local/antiguo (userowner) y forzar a que todo se cree bajo el ala del
