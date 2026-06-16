@@ -2384,3 +2384,34 @@ Fuente
 ======
 
 Gemini IA
+
+Ver el historial de commits que han modificado un archivo específico
+
+Para ver el historial de commits que han modificado un archivo específico
+utilizando git log, hay un par de comandos que servirán según el nivel de
+detalle se busque:
+
+1. Opción básica (Solo ver los commits)
+
+Si solo quieres listar los commits (su hash y mensaje) que afectaron a ese
+componente, usar:
+
+$ git log --oneline -- ruta/mi_achivo.extension
+
+(Nota: El uso de --oneline es opcional, pero te ayuda a ver todo de forma
+compacta. Los guiones -- sirven para indicarle a Git que lo que viene a
+continuación es la ruta de un archivo y no el nombre de una rama).
+
+$ git log -- ruta/mi_achivo.extension
+
+2. Opción detallada (Ver los cambios introducidos)
+
+Si además de saber qué commits lo tocaron, quieres ver exactamente qué líneas
+se modificaron (el "diff") en cada uno de esos commits, añade el parámetro -p:
+
+git log -p -- ruta/mi_achivo.extension
+
+Fuente
+======
+
+Gemini IA
