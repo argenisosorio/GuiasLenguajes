@@ -32,6 +32,14 @@ O agrega la línea manual en el php.list
 
 deb [arch=amd64 signed-by=/usr/share/keyrings/deb.sury.org-php.gpg] https://packages.sury.org/php/ bookworm main
 
+Si hay problemas al hacer update por la firma, probar:
+
+$ sudo curl -sSLo /usr/share/keyrings/deb.sury.org-php.gpg https://packages.sury.org/php/apt.gpg
+
+$ sudo wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
+
+$ sudo apt update
+
 Fuente
 ======
 
