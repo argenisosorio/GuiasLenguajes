@@ -14628,6 +14628,56 @@ Instala la aplicación:
 
 $ sudo apt install antigravity -y
 
+Desinstalar Antigravity
+=======================
+
+1. Desinstalar el paquete y sus archivos de configuración
+
+El comando purge elimina el programa y cualquier archivo de configuración global
+que haya instalado en el sistema:
+
+$ sudo apt purge antigravity -y
+
+Limpiar dependencias innecesarias que se hayan instalado con él:
+
+$ sudo apt autoremove --purge -y
+
+2. Eliminar el repositorio y la llave de seguridad
+
+Para dejar tu sistema limpio y evitar que apt update siga buscando
+actualizaciones de Antigravity, elimina los archivos que creaste durante la
+instalación:
+
+Quitar el repositorio:
+
+$ sudo rm /etc/apt/sources.list.d/antigravity.list
+
+Quitar la llave GPG:
+
+$ sudo rm /etc/apt/keyrings/antigravity-repo-key.gpg
+
+Actualiza la lista de paquetes para aplicar los cambios:
+
+$ sudo apt update
+
+3. Limpiar archivos de configuración locales (Opcional)
+
+Los comandos anteriores eliminan la configuración del sistema, pero los entornos
+de desarrollo suelen guardar datos de usuario, extensiones o cachés en tu
+directorio personal ($HOME).
+
+Si quieres borrar absolutamente todo rastro local de tu usuario, ejecuta:
+
+$ rm -rf ~/.config/antigravity
+
+$ rm -rf ~/.local/share/antigravity
+
+$ rm -rf ~/.cache/antigravity
+
+(Nota: Si la aplicación guarda sus datos bajo el nombre del desarrollador o de
+la suite, revisa también si existen directorios similares como
+~/.config/google-antigravity).
+
 Fuente
 ======
 
