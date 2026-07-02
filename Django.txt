@@ -12475,6 +12475,133 @@ simples por comillas dobles, lo convierte en un string de texto formateado
 Por eso se parecen tanto: ¡el JSON nació inspirado en la forma en que lenguajes
 como JavaScript y Python manejan sus objetos y diccionarios!
 
+Formatear la respuesta de form a json
+=====================================
+
+Puedo formatear el objeto form para que se convieta en un json ya que necesito
+devolver una respuesta json con los errores y los mensajes para ser capturado
+por la app frontend:
+
+def create_person(request):
+    """
+    Handle Person creation through a form.
+
+    GET: Displays an empty form for creating a new Person
+    POST: Processes the submitted form and creates a new Person
+
+    Args:
+        request (HttpRequest): The incoming HTTP request
+
+    Returns:
+        HttpResponse: Rendered form template (GET) or redirect to home (POST)
+    """
+    if request.method == 'POST':
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('person:home')
+    else:
+        form = PersonForm()
+
+    context = {'form': form}
+    return render(request, 'person/create.html', context)
+
+Sí, si estás en una vista tradicional de Django (en lugar de Django Ninja) pero
+necesitas responder con un JSON real para que tu frontend lo procese, Django
+tiene una herramienta nativa para eso llamada JsonResponse.
+
+Para transformar los errores del formulario en un JSON limpio que tu frontend
+pueda leer fácilmente, el truco está en usar el método form.errors.as_json()
+(que genera un string JSON directamente) o usar form.errors.get_json_data()
+combinado con JsonResponse.
+
+Así queda la vista create_person para que, si el formulario falla en el POST,
+devuelva un JSON con código de estado 422 (o 400) lleno de errores en lugar de
+recargar la página HTML:
+
+from django.http import JsonResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
+from .forms import PersonForm
+
+def create_person(request):
+    """
+    Handle Person creation through a form.
+    Supports standard HTML rendering and JSON error responses for the frontend.
+    """
+    if request.method == 'POST':
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+            # Si tu frontend espera una respuesta JSON en caso de éxito:
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest' or request.content_type == 'application/json':
+                return JsonResponse({'success': True, 'message': 'Persona creada correctamente'}, status=201)
+
+            return redirect('person:home')
+
+        # 🚨 ¡AQUÍ OCURRE LA MAGIA DEL JSON PARA ERRORES!
+        # Si el formulario NO es válido, extraemos los errores estructurados
+        errores_dict = form.errors.get_json_data()
+
+        # Devolvemos un JsonResponse con los errores y el status 422 (Unprocessable Entity)
+        return JsonResponse({'errors': errores_dict}, status=422)
+
+    else:
+        form = PersonForm()
+
+    context = {'form': form}
+    return render(request, 'person/create.html', context)
+
+¿Cómo estructurará Django el JSON de respuesta?
+
+Si tu frontend (por ejemplo, usando fetch o axios en Nuxt/JS) envía datos
+inválidos, recibirá una respuesta HTTP con estatus 422 y este cuerpo JSON exacto
+(con sus comillas dobles perfectas):
+
+JSON
+{
+  "errors": {
+    "name": [
+      {
+        "message": "El nombre solo debe contener letras y espacios, sin números ni caracteres especiales.",
+        "code": ""
+      }
+    ],
+    "age": [
+      {
+        "message": "La edad debe ser mayor de 18 años.",
+        "code": ""
+      }
+    ]
+  }
+}
+
+¿Cómo lo capturas en tu Frontend?
+
+En tu JavaScript/AppFront, al procesar la respuesta, podrás acceder directamente
+a los mensajes mapeando el nombre del campo. Por ejemplo:
+
+try {
+  const response = await fetch('/create/', {
+    method: 'POST',
+    body: formData
+  });
+
+  if (!response.ok) {
+    if (response.status === 422) {
+      const data = await response.json();
+      console.log(data.errors.name[0].message);
+      // "El nombre solo debe contener letras y espacios..."
+    }
+  }
+} catch (error) {
+  console.error("Error de red", error);
+}
+
+De esta manera, tu misma vista de Django queda "híbrida": puede servir el
+formulario en HTML si entran por GET, pero responde con un JSON impecable si el
+envío de datos desde el formulario web o tu app falla.
+
 Fuente
 ======
 
