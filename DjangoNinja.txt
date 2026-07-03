@@ -499,3 +499,403 @@ Django
 ================================================================================
 
 Ejemplo completo: https://github.com/argenisosorio/Django_6_Ninja_Nuxt4_Bootstrap_5/tree/feat/api-user-django-crud
+
+Validaciones personalizadas (Otro enfoque)
+==========================================
+
+Cuando trabajas con Django Ninja y un frontend desacoplado, la validación de
+formularios tradicionales de Django deja de tener sentido porque tu frontend
+espera respuestas en formato JSON estrictamente estructuradas, no HTML
+pre-renderizado.
+
+Para lograr validaciones robustas y mensajes personalizados, la herramienta
+nativa y más potente que utiliza Django Ninja es Pydantic.
+
+1. Definir la validación en el Schema (Pydantic)
+
+En lugar de forms.Form, definirás Schemas de Django Ninja. Pydantic te permite
+interceptar los datos antes de que lleguen a la base de datos y lanzar errores
+personalizados usando el decorador @field_validator.
+
+from ninja import Schema
+from pydantic import field_validator, EmailStr
+
+class UsuarioRegistroSchema(Schema):
+    username: str
+    email: EmailStr
+    edad: int
+
+    # Validación personalizada para un campo específico
+    @field_validator('username')
+    @classmethod
+    def validar_username(cls, value: str) -> str:
+        if len(value) < 4:
+            raise ValueError('El nombre de usuario debe tener al menos 4 caracteres.')
+        if 'admin' in value.lower():
+            raise ValueError('No puedes usar la palabra "admin" en tu usuario.')
+        return value
+
+    # Validación para otro campo
+    @field_validator('edad')
+    @classmethod
+    def validar_edad(cls, value: int) -> int:
+        if value < 18:
+            raise ValueError('Debes ser mayor de edad para registrarte.')
+        return value
+
+## 2. Personalizar la respuesta de error global (El "Handler")
+
+Por defecto, si una validación de Pydantic falla, Django Ninja devuelve un error
+estructurado, pero a veces el formato nativo puede ser un poco tosco para tu
+frontend.
+
+Puedes interceptar los errores de validación globalmente en tu archivo de APIs
+(api.py) para formatear la respuesta exactamente como tu frontend la necesite
+(por ejemplo, un objeto clave-valor con los errores de cada campo).
+
+from ninja import NinjaAPI
+from ninja.errors import ValidationError
+from django.http import JsonResponse
+
+api = NinjaAPI(title="Mi API Desacoplada")
+
+@api.exception_handler(ValidationError)
+def validacion_errores_custom(request, exc):
+    # Reestructuramos los errores para que el frontend los lea fácilmente
+    errores_personalizados = {}
+    
+    for error in exc.errors:
+        # error['loc'] contiene la ubicación del error, ej: ('body', 'username')
+        campo = error['loc'][-1] 
+        mensaje = error['msg']
+        
+        # Pydantic suele prefijar con "Value error, ", lo limpiamos para el front
+        if mensaje.startswith("Value error, "):
+            mensaje = mensaje.replace("Value error, ", "")
+            
+        errores_personalizados[campo] = mensaje
+
+    return JsonResponse(
+        {"status": "error", "errors": errores_personalizados}, 
+        status=422
+    )
+
+¿Cómo lo recibiría tu Frontend?
+
+Si el frontend envía datos inválidos, en lugar de recibir un HTML o un JSON
+genérico, recibirá un estado 422 Unprocessable Entity con este cuerpo:
+
+{
+  "status": "error",
+  "errors": {
+    "username": "El nombre de usuario debe tener al menos 4 caracteres.",
+    "edad": "Debes ser mayor de edad para registrarte."
+  }
+}
+
+Esto es sumamente fácil de mapear en componentes interactivos (como inputs con
+alertas en Vue, React, etc.).
+
+¿Y las validaciones que dependen de la Base de Datos? (Ej: Únicos)
+
+Las validaciones de Pydantic son excelentes para formatos, tipos y lógica pura.
+Sin embargo, para validar si un email ya existe en la base de datos, lo ideal es
+hacerlo directamente en la función del endpoint (la vista) o interactuando con
+el ORM dentro del validador si tienes el contexto, aunque en la vista suele
+quedar más limpio:
+
+@api.post("/registro")
+def registrar_usuario(request, data: UsuarioRegistroSchema):
+    # Validación de base de datos
+    if User.objects.filter(email=data.email).exists():
+        return JsonResponse(
+            {"status": "error", "errors": {"email": "Este correo electrónico ya está registrado."}}, 
+            status=400
+        )
+    
+    # Si todo está bien, creas el registro...
+    user = User.objects.create_user(**data.dict())
+    return {"success": True, "user_id": user.id}
+
+Resumen de ventajas de este enfoque:
+
+* Separación de conceptos: Django maneja la data y las reglas de negocio; tu
+front maneja la renderización.
+
+* Tipado estático: Pydantic asegura que si declaras un entero, llegue un entero.
+
+* Consistencia: Tu frontend siempre sabrá que los errores de validación vienen
+bajo la misma estructura JSON.
+
+Entiendo perfectamente el problema. Si metes toda la lógica de validación dentro
+del Schema o de la vista del endpoint, el archivo terminará siendo una masa de
+código inmanejable y difícil de mantener.
+
+Cuando la lógica y los mensajes personalizados crecen mucho, la mejor práctica
+en Django Ninja es desacoplar las validaciones del Schema y de la vista,
+centralizándolas en Servicios de Validación o Formularios de Servicio sin HTML.
+
+Aquí tienes las dos mejores estrategias arquitectónicas para resolver esto de
+forma limpia:
+
+## Estrategia 1: Centralizar en un "Validador de Servicio" (Recomendado)
+
+En lugar de escribir la lógica dentro del Schema, crea un archivo separado
+llamado validators.py o services.py. El Schema de Pydantic sólo se encargará de
+recibir y tipar los datos, y luego invocará a una clase validadora.
+
+### 1. Definir las reglas en services/validators.py
+
+Creamos una clase limpia que se encarga exclusivamente de las reglas de negocio
+y los mensajes en español. Al lanzar ValueError, Pydantic lo capturaráautomáticamente.
+
+
+# services/validators.py
+from django.contrib.auth.models import User
+
+class UsuarioValidator:
+    def __init__(self, data: dict):
+        self.data = data
+        self.errors = {}
+
+    def validar_todo(self):
+        self._validar_username()
+        self._validar_edad()
+        self._validar_unicidad()
+        
+        # Si acumulamos errores, los lanzamos todos juntos
+        if self.errors:
+            # Levantamos un ValueError estructurado
+            raise ValueError(self.errors)
+
+    def _validar_username(self):
+        username = self.data.get('username', '')
+        if len(username) < 4:
+            self.errors['username'] = 'El nombre de usuario debe tener al menos 4 caracteres.'
+        elif 'admin' in username.lower():
+            self.errors['username'] = 'No puedes usar la palabra "admin".'
+
+    def _validar_edad(self):
+        edad = self.data.get('edad', 0)
+        if edad < 18:
+            self.errors['edad'] = 'Debes ser mayor de edad para registrarte.'
+
+    def _validar_unicidad(self):
+        email = self.data.get('email', '')
+        if User.objects.filter(email=email).exists():
+            self.errors['email'] = 'Este correo electrónico ya está registrado.'
+
+### 2. Vincularlo al Schema con un model_validator
+
+Usamos el decorador @model_validator(mode='before') de Pydantic. Esto permite
+validar todo el objeto en conjunto antes de que Pydantic intente parsearlo
+formalmente, delegando el trabajo a nuestro servicio.
+
+# schemas.py
+from ninja import Schema
+from pydantic import model_validator, EmailStr
+from .services import UsuarioValidator
+
+class UsuarioRegistroSchema(Schema):
+    username: str
+    email: EmailStr
+    edad: int
+
+    @model_validator(mode='before')
+    @classmethod
+    def validar_datos(cls, data: dict) -> dict:
+        # Delegamos toda la carga pesada al validador externo
+        validator = UsuarioValidator(data)
+        validator.validar_todo()
+        return data
+
+### 3. Ajustar tu Handler Global de Errores
+
+Como ahora lanzamos un diccionario completo de errores dentro del ValueError,
+modificamos ligeramente el manejador de excepciones global en api.py para
+capturarlo limpiamente:
+
+# api.py
+from ninja.errors import ValidationError
+from django.http import JsonResponse
+import ast
+
+@api.exception_handler(ValidationError)
+def validacion_errores_custom(request, exc):
+    errores_finales = {}
+    
+    for error in exc.errors:
+        mensaje = error['msg']
+        
+        # Si el mensaje viene de nuestro validador, Pydantic lo envuelve como string de diccionario
+        if mensaje.startswith("Value error, {"):
+            # Extraemos el diccionario real del string
+            dict_str = mensaje.replace("Value error, ", "")
+            errores_finales.update(ast.literal_eval(dict_str))
+        else:
+            # Errores nativos de Pydantic (ej: formato de email inválido)
+            campo = error['loc'][-1]
+            errores_finales[campo] = mensaje
+            
+    return JsonResponse({"status": "error", "errors": errores_finales}, status=422)
+
+## Estrategia 2: Reutilizar forms.Form de Django (Sin renderizar HTML)
+
+Si ya tienes formularios de Django hechos, o te gusta mucho cómo maneja Django
+las validaciones de modelos (como los métodos clean_campo), **puedes seguir
+usándolos**. Que tu frontend sea desacoplado no significa que no puedas usar la
+lógica del Form backend; sólo significa que no vas a usar su HTML.
+
+Puedes usar el Form únicamente para validar el diccionario de datos que recibe
+Django Ninja y extraer su form.errors.get_json_data().
+
+# forms.py (Formulario tradicional de Django, pero sin tocar HTML)
+from django import forms
+from django.contrib.auth.models import User
+
+class UsuarioRegistroForm(forms.Form):
+    username = forms.CharField(min_length=4, error_messages={'min_length': 'Muy corto.'})
+    email = forms.EmailField()
+    edad = forms.IntegerField()
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        if 'admin' in username.lower():
+            raise forms.ValidationError('No puedes usar la palabra "admin".')
+        return username
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError('El email ya existe.')
+        return email
+
+Y en tu **vista/endpoint** de Django Ninja, simplemente haces esto:
+
+# api.py
+from .forms import UsuarioRegistroForm
+
+@api.post("/registro")
+def registrar_usuario(request, data: UsuarioRegistroSchema): # El schema solo valida tipos básicos
+    # Le pasamos los datos del schema al formulario tradicional de Django
+    form = UsuarioRegistroForm(data.dict())
+    
+    if not form.is_valid():
+        # form.errors.get_json_data() devuelve un JSON limpio con los errores y mensajes personalizados
+        return JsonResponse({
+            "status": "error", 
+            "errors": {k: v[0]['message'] for k, v in form.errors.get_json_data().items()}
+        }, status=422)
+
+    # Si es válido, procesas la data limpia
+    data_limpia = form.cleaned_data
+    # ... guardar en BD
+    return {"success": True}
+
+## ¿Cuál elegir?
+
+*Estrategia 1 (Validador de Servicio)vicio)** si quieres mantenerte 100% en el
+ecosistema moderno de Pydantic y Django Ninja. Es la más rápida en ejecución y
+mantiene los Schemas limpios.
+
+*Estrategia 2 (Django Forms)Forms)** si tu equipo ya domina a la perfección los
+formularios de Django, si tienes validaciones muy complejas acopladas al ORM
+antiguo, o si estás migrando una app vieja y quieres reutilizar código.
+
+¿Esto viola el principio de responsabilidad única?
+
+¡Tienes toda la razón en cuestionarlo! Y la respuesta corta es sí, viola el
+principio de responsabilidad única si somos estrictos con la arquitectura de
+software.
+
+Ese fragmento inicial planteaba una solución "directa" o pragmática (muy común
+en tutoriales rápidos), pero en un diseño de software maduro y desacoplado,
+hacerlo en la vista o en el validador de Pydantic rompe las capas.
+
+Aquí te explico exactamente por qué viola el principio y cómo se soluciona bajo
+el enfoque de la Capa de Servicio que acabamos de estructurar:
+
+## ¿Por qué viola el principio de responsabilidad?
+
+### 1. Si lo haces en la Vista (Endpoint)
+
+La responsabilidad de la vista en api.py es HTTP: recibir la petición,
+interpretar los encabezados, llamar a quien sabe procesar la lógica y escupir un
+JSON con el código de estado correcto (200, 422, 500).
+
+Si pones User.objects.filter(...) en la vista, la vista ahora tiene dos
+responsabilidades:
+ * Controlar el flujo de la petición HTTP.
+ * Conocer las reglas de negocio de la base de datos (saber qué campo es único y
+ cómo se consulta).
+
+### 2. Si lo haces en el Validador de Pydantic (Schema)
+
+La responsabilidad del Schema es la estructura y el tipo de los datos
+(contrato). Debe asegurar que un email tenga formato de email y que un string no
+sea un entero.
+
+Si metes consultas al ORM dentro de Pydantic:
+
+* Acoplas tus contratos de datos a la infraestructura (la base de datos).
+
+* Haces que tus Schemas dependan del contexto de Django, impidiendo que los
+reutilices fácilmente o que los pruebes de forma aislada en tests unitarios
+rápidos.
+
+## La solución correcta: Validar la base de datos en la Capa de Servicio
+
+Como implementamos en la respuesta anterior, la comprobación de si el email
+existe es una regla de negocio, por lo tanto, pertenece única y exclusivamente
+a la Capa de Servicio (services.py).
+
+Mira cómo interactúan las tres capas sin pisarse los pies entre ellas cuando el email ya existe:
+graph TD
+    A[Frontend] -->|1. Envía JSON| B(Capa API: api.py)
+    B -->|2. Valida tipos y formato| C(Capa Schema: schemas.py)
+    B -->|3. Pasa data limpia| D(Capa Servicio: services.py)
+    D -->|4. Valida Unicidad contra BD| E(Capa Datos: models.py)
+    D -->|5. Lanza ValidationError| B
+    B -->|6. Retorna JSON 422| A
+
+### El flujo limpio en código:
+
+1. El Schema (schemas.py) hace la validación sintáctica (formato pura):
+
+class UsuarioRegistroSchema(Schema):
+    username: str
+    email: EmailStr # Pydantic solo verifica que tenga '@' y un dominio válido.
+
+
+2. El Servicio (services.py) hace la validación semántica (de negocio/BD):
+
+class UsuarioService:
+    @classmethod
+    def registrar_nuevo_usuario(cls, datos_usuario: dict) -> User:
+        # Aquí es donde legítimamente reside la consulta
+        if User.objects.filter(email=datos_usuario['email']).exists():
+            raise ValidationError({'email': 'Este correo ya está registrado.'})
+
+        return User.objects.create_user(**datos_usuario)
+   
+   
+3. La Vista (api.py) solo atrapa el resultado:
+  
+   @api.post("/registro")
+   def registrar_usuario(request, data: UsuarioRegistroSchema):
+       try:
+           # La vista no sabe CÓMO se valida el email, solo confía en el servicio
+           user = UsuarioService.registrar_nuevo_usuario(data.dict())
+           return 201, user
+       except ValidationError as e:
+           return JsonResponse({"errors": e.message_dict}, status=422)
+   
+## Conclusión
+
+Tu intuición arquitectónica es totalmente correcta. El texto anterior proponía
+un atajo que "suele quedar más limpio" visualmente en proyectos pequeños, pero
+arquitectónicamente es un error de acoplamiento.
+
+Mantener las consultas del ORM y las validaciones de unicidad dentro de tu
+services.py es la única manera de respetar el principio de responsabilidad
+única al 100%.
