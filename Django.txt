@@ -15958,3 +15958,73 @@ Esto creara la carpeta staticfiles que contiene todos estáticos de la app
 incluyendo los del admin, pero si en pythonanywhere por ejemplo el admin de
 django no consigue los estáticos es porque los está buscando en static no en
 staticfiles por lo cual entra a staticfiles y copia la carpeta admin a static/
+
+========================================================
+Agregar mensaje personalziado a la ejecución de fixtures
+========================================================
+
+$ python manage.py loaddata modules/registers_management/registers/fixtures/academic_levels.json && python manage.py loaddata modules/registers_management/registers/fixtures/blood_groups.json && python manage.py loaddata modules/registers_management/registers/fixtures/kinships.json && python manage.py loaddata modules/registers_management/registers/fixtures/occupations.json && python manage.py loaddata modules/registers_management/registers/fixtures/organs.json && python manage.py loaddata modules/registers_management/registers/fixtures/transplantation_types.json && python manage.py loaddata modules/registers_management/registers/fixtures/states.json && python manage.py loaddata modules/registers_management/registers/fixtures/municipalities.json && python manage.py loaddata modules/registers_management/registers/fixtures/parishes.json
+
+Installed 9 object(s) from 1 fixture(s)
+Installed 4 object(s) from 1 fixture(s)
+Installed 15 object(s) from 1 fixture(s)
+Installed 382 object(s) from 1 fixture(s)
+Installed 16 object(s) from 1 fixture(s)
+Installed 8 object(s) from 1 fixture(s)
+Installed 24 object(s) from 1 fixture(s)
+Installed 336 object(s) from 1 fixture(s)
+Installed 1138 object(s) from 1 fixture(s)
+
+Django solo te muestra el número de objetos instalados, pero no te dice de
+manera muy clara qué archivo se cargó a menos que leas la ruta completa del
+comando.
+
+Como estás encadenando los comandos con && en la terminal, la forma más rápida y
+limpia de hacerlo sin modificar el código de Django es usar el comando echo de
+tu terminal para imprimir un separador personalizado antes de cada carga.
+
+Aquí tienes cómo quedaría tu cadena de comandos formateada de una manera mucho
+más legible y con mensajes personalizados:
+
+echo "=== Cargando Niveles Académicos ===" && python manage.py loaddata modules/registers_management/registers/fixtures/academic_levels.json && \
+echo "=== Cargando Grupos Sanguíneos ===" && python manage.py loaddata modules/registers_management/registers/fixtures/blood_groups.json && \
+echo "=== Cargando Parentescos ===" && python manage.py loaddata modules/registers_management/registers/fixtures/kinships.json && \
+echo "=== Cargando Ocupaciones ===" && python manage.py loaddata modules/registers_management/registers/fixtures/occupations.json && \
+echo "=== Cargando Órganos ===" && python manage.py loaddata modules/registers_management/registers/fixtures/organs.json && \
+echo "=== Cargando Tipos de Trasplantes ===" && python manage.py loaddata modules/registers_management/registers/fixtures/transplantation_types.json && \
+echo "=== Cargando Estados ===" && python manage.py loaddata modules/registers_management/registers/fixtures/states.json && \
+echo "=== Cargando Municipios ===" && python manage.py loaddata modules/registers_management/registers/fixtures/municipalities.json && \
+echo "=== Cargando Parroquias ===" && python manage.py loaddata modules/registers_management/registers/fixtures/parishes.json
+
+(Nota: Las barras invertidas \ al final de cada línea son para que puedas copiar
+y pegar todo el bloque en una terminal Linux/macOS y se ejecute de corrido sin
+romperse).
+
+Un consejo para no escribir tanto en el futuro:
+
+Esa línea de comando se está volviendo gigantesca. Si vas a ejecutar esto
+seguido, te recomiendo crear un script personalizado de Django o un comando de
+Bash/Makefile, pero la solución más nativa de Django es aprovechar que loaddata
+acepta múltiples archivos a la vez.
+
+Puedes reducir todo ese comando a una sola línea limpia:
+
+python manage.py loaddata \
+  modules/registers_management/registers/fixtures/academic_levels.json \
+  modules/registers_management/registers/fixtures/blood_groups.json \
+  modules/registers_management/registers/fixtures/kinships.json \
+  modules/registers_management/registers/fixtures/occupations.json \
+  modules/registers_management/registers/fixtures/organs.json \
+  modules/registers_management/registers/fixtures/transplantation_types.json \
+  modules/registers_management/registers/fixtures/states.json \
+  modules/registers_management/registers/fixtures/municipalities.json \
+  modules/registers_management/registers/fixtures/parishes.json
+
+Aunque esta segunda opción no te dará un mensaje intermedio por cada uno,
+Django te dará un solo resumen final sumando todos los objetos cargados, y la
+base de datos se poblará en una sola operación mucho más rápida.
+
+Fuente
+======
+
+Gemini IA
