@@ -4644,3 +4644,258 @@ Fuente
 ======
 
 Gemini IA
+
+=============================
+TDD (Test-Driven Development)
+=============================
+
+TDD (Test-Driven Development) o Desarrollo Guiado por Pruebas es una metodología
+de desarrollo de software que invierte el orden tradicional: primera escribes
+las pruebas y luego escribes el código para superarlas.
+
+El ciclo de TDD se conoce como Red-Green-Refactor y funciona como un ciclo
+constante:
+
++---------------------------------------+
+|  1. RED: Escribir una prueba fallida  | <------+
++---------------------------------------+        |
+                    |                            |
+                    v                            |
++---------------------------------------+        |
+|  2. GREEN: Código mínimo para pasar   |        |
++---------------------------------------+        |
+                    |                            |
+                    v                            |
++---------------------------------------+        |
+|  3. REFACTOR: Optimizar sin romper    | -------+
++---------------------------------------+
+
+Red (Rojo): Escribes una prueba para una funcionalidad que aún no existe. Al
+ejecutarla, obviamente fallará (alerta roja).
+
+Green (Verde): Escribes la cantidad mínima de código necesaria para que la
+prueba pase con éxito (alerta verde). No importa si no es el código más
+elegante, solo que funcione.
+
+Refactor (Refactorizar): Limpias el código, eliminas duplicados, mejoras
+nombres de variables y aseguras buenas prácticas, con la tranquilidad de que
+tienes una prueba que te avisará si rompes algo.
+
+Ejemplo Práctico en Python
+==========================
+
+Vamos a crear un validador de contraseñas muy simple. La regla será: La
+contraseña debe tener al menos 8 caracteres.
+
+Usaremos pytest, uno de los frameworks de pruebas más populares en Python.
+Paso 1: El ciclo Red (Fase de Fallo)
+
+Primero, creamos nuestro archivo de pruebas test_validador.py. Intentamos
+importar una función que aún no existe y definimos qué debería pasar.
+
+# test_validador.py
+import pytest
+from validador import validar_password
+
+def test_password_menor_de_8_caracteres_retorna_false():
+    """
+    Test para validar que un password menor de 8 caracteres retorne False.
+
+    Args:
+        password: El password a validar.
+
+    Returns:
+        bool: True si el password tiene menos de 8 caracteres, False en caso contrario.
+    """
+    assert validar_password("12345") is False
+
+def test_password_de_8_o_mas_caracteres_retorna_true():
+    """
+    Test para validar que un password de 8 o más caracteres retorne True.
+
+    Args:
+        password: El password a validar.
+
+    Returns:
+        bool: True si el password tiene 8 o más caracteres, False en caso contrario.
+    """
+    assert validar_password("abc12345") is True
+
+Si ejecutas pytest test_validador.py en tu terminal, fallará inmediatamente con
+un ModuleNotFoundError porque el archivo validador.py ni siquiera existe.
+¡Estamos en Rojo!
+
+Paso 2: El ciclo Green (Fase de Éxito)
+
+Ahora creamos el archivo validador.py y escribimos el código mínimo para que las
+pruebas pasen.
+
+# validador.py
+def validar_password(password: str) -> bool:
+    """
+    Valida que el password tenga al menos 8 caracteres. bool devuelve verdadero
+    o falso.
+
+    Args:
+        password: El password a validar.
+
+    Returns:
+        bool: 
+            - True si el password tiene al menos 8 caracteres
+            - False en caso contrario.
+    """
+    if len(password) < 8:
+        return False
+    return True
+
+Al ejecutar de nuevo en la terminal:
+
+$ pytest test_validador.py
+
+Resultado: 2 passed in 0.01s. ¡Estamos en Verde!
+
+Paso 3: El ciclo Refactor (Optimización)
+
+Ya que funciona, miramos nuestro código en validador.py y vemos que podemos
+simplificar la estructura condicional para que sea más pythonica.
+
+# validador.py (Refactorizado)
+def validar_password(password: str) -> bool:
+    """
+    Valida que el password tenga al menos 8 caracteres.
+
+    Args:
+        password: El password a validar.
+
+    Returns:
+        bool: 
+            - True si el password tiene al menos 8 caracteres
+            - False en caso contrario.
+    """
+    return len(password) >= 8
+
+Volvemos a ejecutar pytest. Si todo sigue en Verde, significa que refactorizamos
+con éxito sin romper la funcionalidad existente.
+
+Siguiente iteración (Añadiendo una nueva regla)
+===============================================
+
+¿Qué pasa si ahora el cliente pide que la contraseña también deba contener al
+menos un número? Volvemos a empezar el ciclo:
+
+1- Red: Añades una prueba en test_validador.py:
+
+def test_password_sin_numeros_retorna_false():
+    """
+    Test para validar que un password sin números retorne False.
+
+    Args:
+        password: El password a validar.
+
+    Returns:
+        bool: 
+            - True si el password tiene al menos un número
+            - False en caso contrario.
+    """
+    assert validar_password("soloLetras") is False
+
+Ejecutas pytest y falla (porque "soloLetras" tiene más de 8 caracteres y
+devuelve True).
+
+2- Green: Modificas validador.py para cumplir la nueva regla:
+
+def validar_password(password: str) -> bool:
+    """
+    Valida que el password tenga al menos 8 caracteres. bool devuelve verdadero
+    o falso.
+
+    Args:
+        password: El password a validar.
+
+    Returns:
+        bool: 
+            - True si el password tiene al menos 8 caracteres y un número.
+            - False en caso contrario.
+    """
+    tiene_largo_correcto = len(password) >= 8
+    tiene_numero = any(caracter.isdigit() for caracter in password)
+
+    # si las dos condiciones son verdaderas, devuelve True
+    # si alguna es falsa, devuelve False
+    return tiene_largo_correcto and tiene_numero
+
+Ejecutas pytest y vuelve a pasar todo.
+
+Ejemplo completo:
+
+# test_validador.py
+import pytest
+from validador import validar_password
+
+def test_password_menor_de_8_caracteres_retorna_false():
+    """
+    Test para validar que un password menor de 8 caracteres retorne False.
+
+    Args:
+        password: El password a validar.
+
+    Returns:
+        bool: True si el password tiene menos de 8 caracteres, False en caso
+        contrario.
+    """
+    assert validar_password("12345") is False
+
+def test_password_de_8_o_mas_caracteres_retorna_true():
+    """
+    Test para validar que un password de 8 o más caracteres retorne True.
+
+    Args:
+        password: El password a validar.
+
+    Returns:
+        bool: True si el password tiene 8 o más caracteres, False en caso
+        contrario.
+    """
+    assert validar_password("abc12345") is True
+
+def test_password_sin_numeros_retorna_false():
+    """
+    Test para validar que un password sin números retorne False.
+
+    Args:
+        password: El password a validar.
+
+    Returns:
+        bool: 
+            - True si el password tiene al menos un número
+            - False en caso contrario.
+    """
+    assert validar_password("soloLetras") is False
+
+----
+
+# validator.py
+def validar_password(password: str) -> bool:
+    """
+    Valida que el password tenga al menos 8 caracteres. bool devuelve verdadero
+    o falso.
+
+    Args:
+        password: El password a validar.
+
+    Returns:
+        bool: 
+            - True si el password tiene al menos 8 caracteres y un número.
+            - False en caso contrario.
+    """
+    tiene_largo_correcto = len(password) >= 8
+    tiene_numero = any(caracter.isdigit() for caracter in password)
+
+    # si las dos condiciones son verdaderas, devuelve True
+    # si alguna es falsa, devuelve False
+    return tiene_largo_correcto and tiene_numero
+
+Fuente
+======
+
+Gemini IA
