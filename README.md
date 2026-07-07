@@ -117,6 +117,7 @@ Este repositorio contiene una colección de guías, apuntes y ejemplos de códig
 - Visual Studio Code
 - Composer
 - npm
+- pnpm
 - Yarn
 - ESLint
 - MarkDown
