@@ -1,0 +1,211 @@
+================
+Guía de IA by dM
+================
+
+=============
+Agents skills
+=============
+
+Una agent skill (o habilidad de agente) es un manual de instrucciones
+reutilizable para la Inteligencia Artificial que contiene pautas, scripts y
+recursos específicos. Permite al agente saber cómo interactuar con tus datos o
+realizar tareas complejas sin que tengas que darle todo el contexto desde cero.
+
+Para entender cómo funcionan y por qué son útiles en proyectos de IA, considera
+sus características clave:
+
+-Estructura estandarizada: Se organizan en directorios (carpetas) que contienen
+un archivo base (por ejemplo, skill.md), el cual incluye directrices, listas de
+comprobación (checklists) y ejemplos.
+
+-Activación eficiente: A diferencia de las instrucciones de sistema (que
+consumen muchos tokens todo el tiempo), las skills solo se cargan en la ventana
+de contexto cuando el agente detecta semánticamente que la tarea lo requiere.
+
+-Modularidad: Un agente puede especializarse cargando, ejecutando y descargando
+diferentes skills a medida que avanza en un flujo de trabajo complejo.
+
+Plataformas líderes en IA, como los ecosistemas de agentes autónomos y los
+asistentes de código de Anthropic (Claude) y Google, han adoptado este formato
+para dotar a las inteligencias artificiales de un control estructurado y
+repetible sobre los procesos de una empresa.
+
+¿Cómo crear una skill personalizada?
+====================================
+
+Para crear una agent skill personalizada, debes empaquetar instrucciones claras
+y recursos en un formato modular que la IA pueda activar cuando sea necesario.
+
+Sigue estos cuatro pasos estructurados para construir una:
+
+1. Definir el Alcance y el Activador
+
+-Función única: Restringe la habilidad a una sola tarea (ej. "Dar formato a
+reportes financieros" o "Validar código Python").
+
+-Frases clave: Define qué palabras del usuario activarán semánticamente esta
+habilidad.
+
+2. Estructurar el Archivo Base (skill.md)
+
+Crea un archivo Markdown organizado con las siguientes secciones críticas:
+
+-Objetivo principal: Una oración corta que explique qué hace la habilidad.
+
+-Reglas obligatorias: Restricciones estrictas (ej. "Nunca uses jerga técnica",
+"Máximo 3 párrafos").
+
+-Flujo de trabajo: El proceso paso a paso que la IA debe seguir de forma
+secuencial.
+
+-Ejemplos (Few-shot): Muestras de entradas ideales y sus respuestas correctas
+para guiar el comportamiento.
+
+3. Guardar en el Directorio del Agente
+
+-Crea una carpeta exclusiva para la habilidad dentro del repositorio de tu agente
+(ej. /skills/analisis-datos/).
+
+-Guarda allí el archivo skill.md junto con los scripts o plantillas
+complementarias que necesite consumir.
+
+4. Configurar la Carga Semántica
+
+-En el código principal de tu agente, configura un validador.
+
+-Permite que el sistema lea el objetivo de la habilidad y la inyecte en el
+contexto solo cuando la consulta del usuario coincida con su propósito.
+
+Plantilla Markdown lista para rellenar con una idea
+===================================================
+
+Plantilla en formato Markdown optimizada para que la IA la entienda y ejecute a
+la perfección.Copia este bloque de texto, guárdalo como skill.md y rellena los
+campos entre corchetes:
+
+# [Nombre de la Skill, ej: Formateador de Reportes Ejecutivos]
+
+## 🎯 OBJETIVO
+[Describe en una sola frase qué problema resuelve esta habilidad. Ej:
+Transformar datos técnicos crudos en un resumen ejecutivo limpio y directo para
+la gerencia.]
+
+## 🚦 CRITERIOS DE ACTIVACIÓN
+[Indica qué palabras o peticiones del usuario deben activar esta habilidad. Ej:
+Se activa cuando el usuario pide un "resumen", "reporte ejecutivo" o "formatear
+datos para dirección".]
+
+## 🛠️ REGLAS ESTRÍCTAS (CONSTRAINTS)
+* [Regla 1: Ej. Mantener un tono formal y corporativo.]
+* [Regla 2: Ej. Prohibido usar tecnicismos innecesarios o acrónimos sin explicar.]
+* [Regla 3: Ej. El resultado final debe caber en una sola pantalla (máximo 300 palabras).]
+* [Regla 4: Ej. Terminar siempre con un llamado a la acción o siguientes pasos.]
+
+## 📋 FLUJO DE TRABAJO (PASO A PASO)
+1. **Analizar:** Leer los datos de entrada e identificar las 3 métricas más importantes.
+2. **Filtrar:** Eliminar cualquier información secundaria o ruido.
+3. **Estructurar:** Organizar la información usando el formato de salida obligatorio.
+4. **Revisar:** Validar que se cumplan todas las Reglas Estrictas antes de responder.
+
+## 📊 FORMATO DE SALIDA OBLIGATORIO
+### 📌 [Título del Reporte]
+* **Impacto Principal:** [Un solo enunciado en negrita]
+* **Métricas Clave:** 
+  * [Métrica 1]
+  * [Métrica 2]
+* **Conclusión / Acción:** [Breve recomendación]
+
+## 📝 EJEMPLO DE ENTRADA Y SALIDA (FEW-SHOT)
+### Entrada del Usuario:
+"[Inserta aquí un ejemplo de texto desordenado o crudo que enviaría el usuario]"
+
+### Respuesta Ideal del Agente:
+"[Inserta aquí exactamente cómo quieres que la IA responda basándose en el
+formato de arriba]"
+
+Ejemplo real de skill.md
+========================
+
+Para un desarrollador de Python, la mejor idea para una skill es una que
+resuelva un problema cotidiano de fricción al escribir código.
+
+Un Generador Automático de Docstrings y Tipado (Type Hints).
+
+A veces da pereza escribir la documentación interna, y esta skill transforma
+código crudo en código limpio, documentado y tipeado bajo los estándares de
+Python.
+
+Copia esta plantilla ya adaptada para tu caso de uso; solo debes personalizarla
+con tus preferencias exactas de estilo:
+
+-----
+
+# Python Code Documenter & Typer Skill
+
+## 🎯 OBJETIVO
+Transformar funciones de Python crudas o mal documentadas en código limpio,
+aplicando type hints de forma estricta y generando docstrings completos bajo el
+estándar seleccionado.
+
+## 🚦 CRITERIOS DE ACTIVACIÓN
+* Cuando el usuario envíe un bloque de código Python pidiendo "documentar",
+"añadir tipos", "poner docstrings" o "limpiar función".
+
+## 🛠️ REGLAS ESTRICTAS (CONSTRAINTS)
+* **Preservar la lógica:** Prohibido alterar el flujo de ejecución o los
+algoritmos del código original.
+* **Tipado moderno:** Usar la sintaxis de tipado moderna de Python 3.10+ (ej:
+usar `int | None` en lugar de `Optional[int]`).
+* **Estilo consistente:** Generar siempre los docstrings usando el estilo
+[Elige uno: Google Style / Sphinx / NumPy].
+* **Cumplimiento PEP 8:** El código resultante debe seguir estrictamente las
+reglas de estilo de PEP 8.
+
+## 📋 FLUJO DE TRABAJO (PASO A PASO)
+1. **Analizar:** Identificar los argumentos de entrada y el tipo de retorno de
+la función.
+2. **Inferir tipos:** Determinar los type hints adecuados para cada parámetro
+basándose en el contexto del código.
+3. **Redactar Docstring:** Escribir una descripción clara de la función, sus
+argumentos, qué retorna y qué excepciones levanta.
+4. **Ensamblar:** Reconstruir la función integrando el tipado y el docstring de
+forma limpia.
+
+## 📊 FORMATO DE SALIDA OBLIGATORIO
+```python
+# [Breve comentario sobre las mejoras realizadas si es necesario]
+[Código de la función de Python completamente documentado y formateado]
+```
+
+## 📝 EJEMPLO DE ENTRADA Y SALIDA (FEW-SHOT)
+### Entrada del Usuario:
+"ponle tipos y docstring a esto:
+def calcular_descuento(precio, porcentaje):
+    if porcentaje > 100:
+        raise ValueError("No puede ser mayor a 100")
+    return precio - (precio * (porcentaje / 100))"
+
+### Respuesta Ideal del Agente:
+```python
+def calcular_descuento(precio: float, porcentaje: float) -> float:
+    """Calcula el precio final aplicando un porcentaje de descuento.
+
+    Args:
+        precio: El valor original del producto.
+        porcentaje: El porcentaje de descuento a aplicar (0-100).
+
+    Returns:
+        El precio final tras aplicar el descuento.
+
+    Raises:
+        ValueError: Si el porcentaje es superior a 100.
+    """
+    if porcentaje > 100:
+        raise ValueError("No puede ser mayor a 100")
+    return precio - (precio * (porcentaje / 100))
+```
+
+Fuente
+======
+
+Gemini IA

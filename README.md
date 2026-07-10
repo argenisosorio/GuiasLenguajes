@@ -155,6 +155,7 @@ Este repositorio contiene una colección de guías, apuntes y ejemplos de códig
 ### IA
 
 - Ollama
+- Agents skills
 
 ## 📄 Licencia
 
