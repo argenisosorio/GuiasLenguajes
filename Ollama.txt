@@ -1,0 +1,76 @@
+==============
+Guía de Ollama
+==============
+
+Ollama es una aplicación gratuita de código abierto que te permite descargar y
+ejecutar Modelos de Lenguaje Grande (LLMs) directamente en tu propia
+computadora. A diferencia de ChatGPT o Claude, no depende de la nube, lo que te
+garantiza total privacidad, uso sin conexión a internet y cero costos de
+suscripción. Ollama se encarga de todo el proceso técnico complicado. Funciona
+como una especie de "Docker" o instalador simplificado para Inteligencia
+Artificial: te permite elegir de su catálogo y descargar modelos como DeepSeek,
+Llama, Mistral o Qwen con un solo comando.
+
+Adicionalmente también permite ejecutar modelos de la nube.
+
+Características principales
+===========================
+
+-Privacidad total: Tus datos y conversaciones nunca se envían a servidores
+externos.
+
+-Integración para desarrolladores: Incluye una API que permite conectar estos
+modelos de IA con programas en Python o JavaScript.
+
+-Multiplataforma: Funciona de manera nativa en Windows, macOS y Linux.
+
+Instalación y prueba
+====================
+
+1- Instalar Ollama localmente.
+
+$ curl -fsSL https://ollama.com/install.sh | sh
+
+2- Iniciar sesión con una cuenta de Google.
+
+$ ollama signin
+
+3- Ejecutar un modelo cloud.
+
+$ ollama run gemma4:cloud
+
+Esto abre en el terminal la interfaz para interacutar con el modelo, ejemplo:
+
+$ ollama run gemma4:cloud
+Connecting to 'gemma4:cloud' on 'ollama.com' ⚡
+>>> cuánto es 2 * 2?
+Thinking...
+*   Input: "cuánto es 2 * 2?" (Spanish)
+    *   Operation: Multiplication.
+    *   Numbers: 2 and 2.
+
+    *   $2 \times 2 = 4$
+
+    *   Language: Spanish (as requested by the input).
+    *   Answer: 4.
+...done thinking.
+
+2 * 2 = 4
+
+4- Funcionalidades de Ollama:
+
+$ ollama
+
+Usar ChatGPT (Primeras versiones actualizdo hasta 2024)
+=======================================================
+
+$ ollama run gpt-oss:120b-cloud
+
+Fuentes
+=======
+
+-Ollama Cloud ejecuta modelos LLM potentes gratis: https://www.youtube.com/shorts/SW87l0q0QP8
+
+-Web oficial de Ollama: https://ollama.com/
+
+-Modelos cloud: https://ollama.com/search?c=cloud
