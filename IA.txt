@@ -2,6 +2,196 @@
 Guía de IA by dM
 ================
 
+LLM
+===
+
+Un LLM (siglas en inglés para Large Language Model, o Modelo de Lenguaje Grande)
+es un tipo de inteligencia artificial diseñado para procesar, comprender y
+generar texto de una manera extremadamente similar a la de un ser humano.
+
+En términos sencillos, es el "cerebro" matemático que hay detrás de aplicaciones
+como ChatGPT, Claude o el propio Gemini.
+
+¿Cómo funciona en realidad?
+
+A pesar de que parece que "piensa", un LLM es, en el fondo, un sistema
+estadístico avanzado de predicción de palabras. Su funcionamiento se basa en
+tres etapas principales:
+
+-Entrenamiento Masivo: Se le alimenta con volúmenes gigantescos de texto
+(libros, artículos, páginas web, código de programación y Wikipedia). De ahí
+viene la palabra "Grande".
+
+-Aprendizaje de Patrones: Al analizar miles de millones de frases, el modelo no
+"aprende" conceptos como nosotros, sino que calcula qué palabras suelen ir
+juntas. Entiende la gramática, el contexto, el doble sentido y las sutilezas del
+idioma basándose en probabilidades.
+
+-Predicción de la Siguiente Palabra: Cuando tú le escribes una frase
+(un prompt), el modelo evalúa todo lo que le has dicho y calcula, letra por
+letra y palabra por palabra, cuál es la continuación más lógica y probable para
+responderte.
+
+Características Clave:
+
+-Arquitectura Transformer: Casi todos los LLMs modernos utilizan una
+arquitectura de red neuronal llamada Transformer (introducida por Google en
+2017). Esta tecnología cuenta con un mecanismo de atención, que le permite al
+modelo entender la relación entre palabras que están muy alejadas en un mismo
+texto, manteniendo el hilo de la conversación.
+
+-Versatilidad (Generalistas): No están programados para hacer una sola cosa. El
+mismo modelo que puede escribir un poema de amor también puede programar un
+script en Bash para Linux, traducir un texto al japonés o resumir un contrato
+legal.
+
+Capacidad de Contexto: Tienen una "memoria de trabajo" (llamada ventana de
+contexto) que determina cuánta información pueden leer y recordar en una sola
+sesión antes de empezar a olvidar los primeros mensajes.
+
+Ejemplos de LLMs conocidos:
+
+Hoy en día los LLMs se dividen principalmente en dos mundos:
+
+-Comerciales / Privados: Modelos que utilizas a través de APIs o servicios en la
+nube de grandes empresas (como GPT-4o de OpenAI, Claude 3.5 Sonnet de Anthropic
+o Gemini 1.5 Pro de Google).
+
+-Abiertos / Locales: Modelos cuyos pesos (el código del cerebro) se liberan para
+que cualquiera los descargue y corra en su propia máquina usando herramientas
+como LM Studio (como Llama 3 de Meta, Mistral o Phi de Microsoft).
+
+Fuente
+======
+
+Gemini IA
+
+==========
+Los tokens
+==========
+
+En Inteligencia Artificial y Procesamiento de Lenguaje Natural, los tokens son
+las unidades básicas de información en las que un LLM divide el texto para
+poder procesarlo y entenderlo.
+
+Los modelos de lenguaje no leen palabras completas como los humanos, ni tampoco
+leen letra por letra. Lo que hacen es fragmentar el texto en pedazos más
+pequeños llamados tokens. Un token puede ser una palabra entera, una sola
+sílaba, una parte de una palabra, o incluso un solo carácter (como una
+puntuación o un espacio).
+
+¿Cómo fragmenta el texto un LLM?
+
+Para los modelos, cada idioma tiene una equivalencia distinta, pero existe una
+regla general muy útil para el inglés y el español:
+
+-En inglés, un token equivale aproximadamente a 4 caracteres o a unas 0.75
+palabras.
+
+-En español, debido a la estructura de nuestro idioma (conjugaciones, tildes,
+etc.), las palabras suelen fragmentarse más, por lo que 1 palabra suele
+equivaler a 1.5 o 2 tokens.
+
+Ejemplo práctico de "Tokenización"
+
+Si introduces la frase:
+
+"Programar en Linux"
+
+Un algoritmo de tokenización podría dividirlo internamente de una forma similar
+a esta:
+
+ [Pro] [gramar] [ en] [ Lin] [ux]
+
+Cada uno de esos bloques entre corchetes es 1 token. Posteriormente, el modelo
+traduce cada token a un número único de su diccionario interno para poder
+realizar los cálculos matemáticos.
+
+¿Por qué son tan importantes en el día a día?
+
+Si trabajas con Inteligencia Artificial, te cruzarás con los tokens en tres
+áreas fundamentales:
+
+-La Ventana de Contexto (Context Window): Es la "memoria a corto plazo" del
+modelo. Si un LLM tiene una ventana de contexto de 128,000 tokens, significa que
+esa es la cantidad máxima de texto (sumando tu pregunta y su respuesta) que
+puede procesar al mismo tiempo sin empezar a olvidar lo que se dijo al
+principio.
+
+-El Costo de las APIs: Los proveedores de IA (OpenAI, Anthropic, Google, etc.)
+no te cobran por palabras ni por preguntas realizadas, sino por bloques de mil o
+un millón de tokens procesados (tanto de entrada como de salida).
+
+-Límites de Generación: Muchas veces el modelo deja una respuesta a la mitad.
+Esto ocurre porque ha alcanzado el límite de tokens máximos (max_tokens)
+configurado para esa salida en particular.
+
+Fuente
+======
+
+Gemini IA
+
+=========
+Un prompt
+=========
+
+Un prompt en Inteligencia Artificial es la instrucción, frase o conjunto de
+caracteres que le proporcionas a un modelo de IA para indicarle qué es lo que
+quieres que haga.
+
+En términos sencillos, es la forma en que te comunicas con la IA. Puede ser
+desde una pregunta simple hasta un conjunto de instrucciones extremadamente
+detallado con reglas, ejemplos y restricciones de formato.
+
+¿Cómo entiende un LLM tu prompt?
+
+Cuando tú envías un prompt, la IA no lo interpreta como una orden humana
+directa, sino como el contexto inicial a partir del cual debe empezar a calcular
+matemáticamente cuáles son las palabras más lógicas para continuar el texto.
+Por eso, cuanto más preciso, estructurado y claro sea tu prompt, más acertada y
+útil será la respuesta del modelo.
+
+Anatomía de un buen prompt (Ingeniería de Prompts)
+
+En el ámbito profesional (como en el desarrollo de software o la
+automatización), un prompt efectivo suele estructurarse combinando cuatro
+elementos clave:
+
+-El Rol / Actitud: Le asignas una personalidad o nivel de experiencia a la IA.
+(Ej: "Actúa como un administrador de sistemas experto en distribuciones
+Debian...")
+
+-La Tarea / Acción: La orden clara y directa de lo que debe ejecutar.
+(Ej: "...y escribe un script en Bash para automatizar respaldos...")
+
+-El Contexto / Restricciones: Las reglas del juego que debe respetar para no dar
+información genérica.
+(Ej: "...el script debe pesar menos de 2KB, no usar librerías externas y manejar
+errores si el disco está lleno.")
+
+-El Formato de Salida: Cómo quieres que te devuelva la información. (Ej:
+"Muestra el código dentro de un bloque markdown y añade comentarios breves en
+cada línea.")
+
+Tipos de prompts comunes:
+
+-Prompts Directos (Zero-shot): Le pides algo sin darle ejemplos.
+Ej: "Traduce esta frase al inglés: El software funciona bien."
+
+Prompts con Ejemplos (Few-shot): Le das un par de muestras de cómo quieres el
+resultado antes de pedirle la tarea final.  Ej: "Entrada: Feliz -> Salida:
+Positivo. Entrada: Roto -> Salida: Negativo. Entrada: Estable -> Salida:"
+(La IA responderá automáticamente "Positivo").
+
+-Prompts de Cadena de Pensamiento (Chain-of-Thought): Le pides a la IA que
+explique su razonamiento paso a paso antes de darte la respuesta final, lo cual
+reduce drásticamente los errores lógicos en tareas complejas o matemáticas.
+
+Fuente
+======
+
+Gemini IA
+
 =============
 Agents skills
 =============
@@ -204,6 +394,430 @@ def calcular_descuento(precio: float, porcentaje: float) -> float:
         raise ValueError("No puede ser mayor a 100")
     return precio - (precio * (porcentaje / 100))
 ```
+
+Fuente
+======
+
+Gemini IA
+
+======
+Ollama
+======
+
+Ollama es una aplicación gratuita de código abierto que te permite descargar y
+ejecutar Modelos de Lenguaje Grande (LLMs) directamente en tu propia
+computadora. A diferencia de ChatGPT o Claude, no depende de la nube, lo que te
+garantiza total privacidad, uso sin conexión a internet y cero costos de
+suscripción. Ollama se encarga de todo el proceso técnico complicado. Funciona
+como una especie de "Docker" o instalador simplificado para Inteligencia
+Artificial: te permite elegir de su catálogo y descargar modelos como DeepSeek,
+Llama, Mistral o Qwen con un solo comando.
+
+Adicionalmente también permite ejecutar modelos de la nube.
+
+Características principales
+===========================
+
+-Privacidad total: Tus datos y conversaciones nunca se envían a servidores
+externos.
+
+-Integración para desarrolladores: Incluye una API que permite conectar estos
+modelos de IA con programas en Python o JavaScript.
+
+-Multiplataforma: Funciona de manera nativa en Windows, macOS y Linux.
+
+Instalación y prueba
+====================
+
+1- Instalar Ollama localmente.
+
+$ curl -fsSL https://ollama.com/install.sh | sh
+
+2- Iniciar sesión con una cuenta de Google.
+
+$ ollama signin
+
+3- Ejecutar un modelo cloud.
+
+$ ollama run gemma4:cloud
+
+Esto abre en el terminal la interfaz para interacutar con el modelo, ejemplo:
+
+$ ollama run gemma4:cloud
+Connecting to 'gemma4:cloud' on 'ollama.com' ⚡
+>>> cuánto es 2 * 2?
+Thinking...
+*   Input: "cuánto es 2 * 2?" (Spanish)
+    *   Operation: Multiplication.
+    *   Numbers: 2 and 2.
+
+    *   $2 \times 2 = 4$
+
+    *   Language: Spanish (as requested by the input).
+    *   Answer: 4.
+...done thinking.
+
+2 * 2 = 4
+
+4- Funcionalidades de Ollama:
+
+$ ollama
+
+Usar ChatGPT (Primeras versiones actualizdo hasta 2024)
+=======================================================
+
+$ ollama run gpt-oss:120b-cloud
+
+Fuentes
+=======
+
+-Ollama Cloud ejecuta modelos LLM potentes gratis: https://www.youtube.com/shorts/SW87l0q0QP8
+
+-Web oficial de Ollama: https://ollama.com/
+
+-Modelos cloud: https://ollama.com/search?c=cloud
+
+========
+OpenCode
+========
+
+OpenCode (a menudo conocido por su dominio opencode.ai) es un agente de
+inteligencia artificial de código abierto enfocado en el desarrollo y la
+programación de software.
+
+A diferencia de los chats de IA tradicionales que solo responden preguntas,
+OpenCode funciona como un agente autónomo, lo que significa que puede analizar
+la estructura de un proyecto real, proponer cambios de arquitectura, leer y
+modificar tus archivos locales, e implementar código directamente en tu entorno.  
+
+Características Principales:
+
+-Orientado a la Terminal (TUI) y Escritorio: Aunque cuenta con extensiones para
+IDEs y una aplicación de escritorio, su fuerte principal es una interfaz de
+usuario basada en texto (TUI) diseñada para la terminal. Es multiplataforma
+(funciona en Linux, macOS y Windows).  
+
+-Independencia del Modelo (Multi-provider): OpenCode es solo la interfaz y el
+motor de ejecución, tú decides qué "cerebro" conectarle. Soporta proveedores
+comerciales (como Anthropic Claude, OpenAI GPT o Google Gemini) mediante sus
+API keys, y también modelos locales o de código abierto.  
+
+-Plan Mode: Al pedirle una tarea compleja, el agente entra en un estado donde
+explica detalladamente qué va a hacer, qué archivos va a modificar y cómo
+estructurará la lógica sin tocar nada aún.
+
+-Build Mode: Una vez que revisas el plan y le das el visto bueno, el agente
+ejecuta las modificaciones reales en el código de forma automática.
+
+-Soporte MCP (Model Context Protocol): Utiliza este protocolo estándar para
+extender sus capacidades, permitiendo conectarse a herramientas externas, bases
+de datos o servicios en segundo plano para asistir mejor en el flujo de
+ingeniería.
+
+-Privacidad Opcional: Al ser open-source, si lo configuras para que trabaje
+exclusivamente con modelos locales que corran en tu máquina, tu código fuente
+nunca sale de tu entorno de desarrollo.
+
+Sus servicios añadidos: Zen y Go
+
+La empresa detrás del proyecto ofrece opciones de infraestructura para facilitar
+el uso de APIs de LLMs sin lidiar con múltiples proveedores de forma
+independiente:
+
+-OpenCode Zen: Un servicio de pago por uso (pay-as-you-go) que ofrece una
+selección curada de modelos optimizados específicamente para tareas de
+desarrollo agéntico.  
+
+OpenCode Go: Una suscripción mensual de bajo costo que otorga acceso estable y
+con límites generosos a modelos de código abierto enfocados en programación.
+
+Fuente
+======
+
+Gemini IA
+
+=====
+Codex
+=====
+
+Codex es el agente de inteligencia artificial autónomo de OpenAI, diseñado
+originalmente para la ingeniería de software pero expandido para automatizar
+tareas complejas directamente en tu ordenador y en la nube.
+
+(Nota histórica: Si te suena el nombre de hace años, es porque originalmente en
+2021 nació como el modelo básico de lenguaje que daba vida a GitHub Copilot.
+Sin embargo, OpenAI lo retiró para rediseñarlo por completo y relanzarlo como un
+agente agéntico e independiente de última generación).
+
+Actualmente, Codex ya no es solo un modelo de autocompletado de texto, sino una
+plataforma agéntica completa integrada en los planes avanzados de ChatGPT
+(Plus, Pro, Team y Enterprise), en tu terminal mediante CLI, y en tu IDE a
+través de extensiones.
+
+¿Cómo funciona y qué hace?
+
+A diferencia de un chat tradicional donde tú tienes que copiar y pegar código o
+archivos constantemente, Codex opera bajo el concepto de autonomía con contexto:
+
+-Flujos de Trabajo Multi-Agente: Puedes delegarle tareas masivas en la nube y
+poner a trabajar a múltiples "agentes" en paralelo. Mientras un agente está
+refactorizando un módulo, otro puede estar creando las pruebas unitarias de un
+proyecto distinto.
+
+-Entorno Seguro (Sandboxing): Codex ejecuta el código, levanta servidores,
+procesa datos y corre tests dentro de entornos virtuales aislados en la nube
+(worktrees), asegurando que los cambios funcionen perfectamente antes de
+presentarte el resultado final.
+
+-Modo de Control de Escritorio (Computer Use): Su aplicación de escritorio
+tiene la capacidad de interactuar con el sistema operativo de forma visual:
+puede ver la pantalla, hacer clic y escribir en otras aplicaciones locales
+(como el navegador o herramientas de oficina) para automatizar tareas
+repetitivas de principio a fin.
+
+-Habilidades Personalizadas (Skills): Permite "entrenar" al agente enseñándole
+las convenciones de arquitectura, guías de estilo y metodologías específicas de
+tu equipo, logrando que el código generado se adapte a tu forma de trabajar con
+mínima supervisión.
+
+No es solo para programadores:
+
+Aunque nació en el mundo del desarrollo de software para resolver Pull Requests,
+migrar arquitecturas o monitorizar pipelines de CI/CD, Codex se ha transformado
+en una herramienta de productividad general para analistas de datos, científicos
+y "knowledge workers" (trabajadores del conocimiento).
+
+Gracias a integraciones con servicios como Google Drive o Gmail, muchas
+personas lo utilizan para procesar bases de datos masivas en Python, estructurar
+reportes complejos, auditar contratos legales o diseñar automatizaciones locales
+sin necesidad de saber programar a fondo.
+
+Fuente
+======
+
+Gemini IA
+
+===============
+Agente agéntico
+===============
+
+Cuando escuchas el término "agente agéntico" (o comportamiento agéntico, que
+viene del inglés agentic), se refiere a una IA que no solo responde preguntas,
+sino que tiene la capacidad de actuar por sí misma para resolver un objetivo
+complejo.
+
+Para entenderlo de forma sencilla, imagínalo como la evolución de un asistente
+pasivo a un trabajador autónomo.
+
+La diferencia claveIA Tradicional (Pasiva): Tú le dices "Hazme una función en
+Python para enviar un correo". La IA te genera el código, te lo muestra en
+pantalla, y tú tienes que copiarlo, pegarlo, configurar las librerías en tu
+máquina y ejecutarlo. Si falla, tienes que volver a copiar el error y
+preguntarle.
+
+IA Agéntica (Activa): Tú le dices "Envía este reporte mensual a los clientes por
+correo". La IA analiza la tarea, busca los archivos necesarios en tu sistema,
+escribe el script de Python, lo ejecuta ella misma, lee los errores si surgen,
+los corrige sobre la marcha, comprueba que los correos se enviaron y te avisa
+cuando terminó.
+
+¿Qué capacidades definen a un sistema agéntico?
+
+Para que un software o IA sea considerado "agéntico", debe cumplir con cuatro
+pilares fundamentales:
+
+-Autonomía y Toma de Decisiones: En lugar de seguir instrucciones paso a paso,
+tú le das una meta final (ej. "Migra esta base de datos de MySQL a PostgreSQL").
+El agente decide por sí mismo cuál es el mejor camino, qué herramientas usar y
+en qué orden hacer las tareas.
+
+-Uso de Herramientas: Puede interactuar con el mundo exterior. Un agente puede
+abrir la terminal de comandos, crear y modificar archivos locales, hacer
+búsquedas en la web, conectarse a APIs externas o incluso controlar el ratón y
+el teclado en la pantalla.
+
+-Ciclo de Razonamiento y Reflexión (Loop): No responde de golpe. El agente
+sigue un ciclo constante de: Planificar > Ejecutar > Evaluar > Corregir.
+Si ejecuta un código y el sistema le devuelve un error, el agente "lee" ese
+error, entiende qué falló, modifica su propio código y lo vuelve a intentar de
+forma independiente.
+
+-Persistencia y Memoria: Puede manejar tareas que toman minutos u horas. Guarda
+el contexto de lo que hizo hace diez pasos para saber qué dirección tomar en el
+siguiente, gestionando flujos de trabajo complejos sin perder el hilo.
+
+En resumen, decir que un software es "agéntico" significa que tiene iniciativa.
+Ya no es solo una caja de texto que genera palabras, sino una entidad de
+software diseñada para ejecutar acciones concretas en el mundo real o digital
+hasta cumplir una meta.
+
+Fuente
+======
+
+Gemini IA
+
+===========
+Claude Code
+===========
+
+Claude Code es la herramienta de IA agéntica desarrollada por Anthropic,
+diseñada específicamente para automatizar tareas de desarrollo directamente
+dentro de tu entorno de software. A diferencia de los asistentes virtuales
+tradicionales a los que solo les pides explicaciones o fragmentos sueltos,
+Claude Code funciona como un miembro autónomo de tu equipo. Está disponible a
+través de la terminal (CLI), extensiones de IDEs (como VS Code y JetBrains),
+aplicación de escritorio y entorno web.
+
+¿Qué puede hacer en tu proyecto?
+
+Su principal fortaleza es que entiende la base de código (codebase) completa y
+tiene permisos para actuar sobre ella:
+
+-Escribir y corregir código multianual: Puedes pedirle un cambio complejo (ej:
+"crea un sistema de autenticación") en lenguaje natural. Claude Code analizará
+la estructura actual, planificará el enfoque, modificará múltiples archivos a
+la vez y verificará que no rompa nada.
+
+-Depuración automática (Debugging) y Testeo: Si pegas un mensaje de error o
+logs de un fallo, rastrea la causa raíz a través de tu proyecto, edita los
+archivos para aplicar el fix y corre las pruebas unitarias para confirmar la
+solución. También automatiza tareas tediosas como rellenar tests para código
+que no los tiene o solucionar errores de lint.
+
+-Integración nativa con Git: Trabaja de forma directa con tu control de
+versiones. Puede preparar cambios (stage), crear ramas, escribir mensajes de
+commit descriptivos, resolver conflictos de fusión (merge conflicts) y
+abrir Pull Requests listos para producción.
+
+-Modos de razonamiento avanzados: Cuenta con un Plan Mode para detallar qué
+archivos va a tocar antes de realizar modificaciones, y soporta tareas en
+segundo plano o automatizaciones programadas (rutinas) directamente en la nube.
+
+-Protocolo MCP (Model Context Protocol): Utiliza este estándar abierto para
+conectarse fácilmente con herramientas, servidores locales o APIs externas,
+expandiendo sus capacidades para resolver flujos personalizados de ingeniería.
+
+Esencialmente, se posiciona en el ecosistema como la competencia agéntica
+directa a herramientas de desarrollo como OpenCode o OpenAI Codex, permitiendo
+delegar flujos de trabajo de principio a fin desde tu terminal u ordenador.
+
+Fuente
+======
+
+Gemini IA
+
+=========
+LM Studio
+=========
+
+LM Studio es una aplicación de escritorio diseñada para descargar, configurar y
+ejecutar modelos de lenguaje (LLMs) de forma 100% local en tu propio ordenador.
+A diferencia de plataformas como ChatGPT o Claude, que procesan tus peticiones
+en servidores externos en la nube, LM Studio transforma tu máquina en el
+servidor. Esto significa que puedes interactuar con inteligencias artificiales
+avanzadas sin conexión a internet y con la total seguridad de que tus datos o tu
+código fuente nunca saldrán de tu disco duro.
+
+¿Qué la hace una herramienta tan utilizada?
+
+-Buscador integrado de Hugging Face: No necesitas descargar archivos
+manualmente desde terminales complejas. La aplicación incluye una barra de
+búsqueda directa conectada a Hugging Face para que encuentres e instales
+modelos en formato GGUF (un formato muy optimizado para correr en hardware de
+consumo) con un solo clic.
+
+-Servidor local compatible con OpenAI: LM Studio puede levantar un servidor web
+local en tu máquina (localhost:1234). Este servidor imita exactamente la
+estructura de la API oficial de OpenAI. Gracias a esto, puedes redirigir
+cualquier script, herramienta o extensión de desarrollo (como OpenCode o
+plugins de IDEs) para que consuma el modelo que tienes corriendo localmente en
+lugar de pagar a un proveedor externo.
+
+-Aceleración por Hardware: Detecta de forma automática la potencia de tu equipo.
+Si cuentas con una tarjeta gráfica integrada o dedicada (NVIDIA CUDA, AMD ROCm o
+chips Apple Silicon de la serie M), la aplicación distribuye la carga de trabajo
+entre la memoria de la GPU (VRAM) y la CPU para que las respuestas se generen a
+máxima velocidad.
+
+-Multiplataforma: Cuenta con soporte nativo ejecutable para sistemas operativos
+Linux, macOS y Windows, adaptándose de forma muy limpia a entornos de desarrollo
+profesionales.
+
+-Control Total de Parámetros: Te permite modificar visualmente variables
+avanzadas de la inferencia como la temperatura (creatividad), el tamaño del
+contexto de tokens, el System Prompt inicial o los hilos de procesamiento
+asignados.
+
+Es, en esencia, la herramienta definitiva para desarrolladores y entusiastas que
+quieren experimentar con modelos abiertos de última generación (como Llama,
+Mistral o Phi) manteniendo el control absoluto de su entorno de computación.
+
+Fuente
+======
+
+Gemini IA
+
+=================
+Modelo multimodal
+=================
+
+Un modelo multimodal es un tipo de inteligencia artificial capaz de procesar,
+comprender y combinar diferentes tipos de datos o "modalidades" al mismo tiempo.
+
+A diferencia de los LLMs tradicionales (que son unimodales porque solo entienden
+y generan texto), un modelo multimodal puede trabajar simultáneamente con texto,
+imágenes, audio, video y código.
+
+¿Cómo funcionan?
+
+Para entenderlo, piensa en cómo aprendemos los humanos. Nosotros no solo leemos
+texto; entendemos el mundo mirando imágenes, escuchando sonidos y observando
+videos.
+
+Un modelo multimodal imita esto unificando la información:
+
+-Entrada mixta: Recibe diferentes formatos (por ejemplo, una foto de una
+factura y un texto que dice "Súmame los totales").
+
+-Espacio vectorial común: Traduce tanto la imagen como el texto a un "idioma
+matemático interno" común, permitiendo que la IA entienda cómo se relaciona lo
+que ve con lo que lee.
+
+-Resultado: Genera una respuesta que puede ser un texto explicativo, una nueva
+imagen, un archivo de audio o código modificado.
+
+Capacidades reales: ¿Qué pueden hacer?
+
+La multimodalidad es lo que permite que las inteligencias artificiales salgan de
+la caja de texto y asistan en tareas del mundo real:
+
+-Visión Computacional y Texto: Puedes subirle el diagrama de arquitectura de una
+base de datos o una red, y pedirle que te escriba el código de configuración en
+limpio. O tomarle una foto a un error en una pantalla y preguntarle cómo
+solucionarlo.
+
+-Audio y Voz Directa: Permite hablar con la IA con voz natural, captando la
+entonación, la velocidad del habla y respondiendo en milisegundos con voz
+humana, sin necesidad de transcribir primero el audio a texto.
+
+-Análisis de Video: Puedes proporcionarle un clip de video de unos minutos y
+pedirle: "Dime en qué segundo exacto aparece el coche rojo" o "Hazme un resumen
+de lo que pasó en la reunión".
+
+Ejemplos de modelos multimodales nativos
+
+Hoy en día, los modelos más potentes se diseñan como multimodales desde su
+origen (nativo), en lugar de pegar parches de visión sobre un modelo de texto:
+
+-Gemini (Google): Diseñado desde cero para ser nativamente multimodal, lo que le
+permite procesar contextos gigantescos combinando horas de video, audio y texto
+en la misma consulta.
+
+-GPT-4o (OpenAI): Un modelo unificado que procesa texto, visión y audio en
+tiempo real con una latencia extremadamente baja.
+
+-Claude 3.5 Sonnet (Anthropic): Destaca por sus capacidades de visión avanzadas
+para analizar gráficos, diagramas técnicos y transcribir documentos complejos.
 
 Fuente
 ======
