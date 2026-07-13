@@ -192,6 +192,85 @@ Fuente
 
 Gemini IA
 
+=====================
+Agentes y Sub Agentes
+=====================
+
+En Inteligencia Artificial, los conceptos de agente y subagente son
+fundamentales para entender cómo se diseñan los sistemas que no solo procesan
+datos, sino que también toman decisiones y actúan.
+
+La diferencia principal radica en la jerarquía y en el alcance de sus tareas: un
+agente es el responsable del objetivo general, mientras que los subagentes son
+especialistas enfocados en resolver partes específicas de ese gran objetivo.
+
+1. ¿Qué es un Agente en IA?
+
+Un agente de IA es una entidad autónoma capaz de percibir su entorno (a través
+de datos, sensores o entradas de texto), procesar esa información, tomar
+decisiones y ejecutar acciones para alcanzar un objetivo específico.
+
+Un agente no es solo un modelo de lenguaje estático (como un GPT básico que solo
+responde preguntas); es un sistema que puede planificar, usar herramientas
+externas (buscar en internet, ejecutar código, consultar bases de datos) y
+aprender de sus errores.
+
+Ejemplo cotidiano: Piensa en un Agente de Viajes IA. Tu objetivo es "organizar
+unas vacaciones de 7 días en Japón con un presupuesto de $2,000". El agente
+principal recibe esta orden y se encarga de coordinar todo el plan.
+
+2. ¿Qué es un Subagente?
+
+Un subagente es un módulo o un agente especializado de menor jerarquía que
+trabaja bajo la dirección del agente principal. Se crea para resolver una tarea
+muy acotada y específica que requiere un nivel de detalle o experiencia
+particular.
+
+En arquitecturas complejas (conocidas como sistemas multi-agente), el agente
+principal divide el problema grande en subtareas y delega cada una a un
+subagente diseñado exclusivamente para esa función.
+
+La Relación: Agente vs. Subagente
+
++------------------------+------------------------------------+------------------------------------------+
+| Característica         | Agente Principal (Coordinador)     | Subagente (Especialista)                 |
++------------------------+------------------------------------+------------------------------------------+
+| Jerarquía              | Nivel Superior (Líder/Orquestador) | Nivel Inferior (Subordinado / Módulo)    |
+|                        |                                    |                                          |
+| Alcance del objetivo   | General y macro. Resuelve el       | Específico y micro. Resuelve una tarea   |
+|                        | problema completo del usuario.     | acotada delegada por el agente.          |
+|                        |                                    |                                          |
+| Toma de decisiones     | Planifica la estrategia global y   | Toma decisiones tácticas limitadas a su  |
+|                        | evalúa el resultado final.         | área de especialización.                 |
+|                        |                                    |                                          |
+| Control de Herramientas| Administra el flujo de trabajo y   | Solo tiene acceso a las herramientas     |
+|                        | distribuye los recursos.           | necesarias para su tarea específica.     |
+|                        |                                    |                                          |
+| Ejemplo (Viajes)       | Diseñar el itinerario completo de  | Buscar exclusivamente combinaciones de   |
+|                        | 7 días en Japón con presupuesto.   | vuelos económicos en fechas exactas.     |
++------------------------+------------------------------------+------------------------------------------+
+
+¿Por qué se divide el trabajo así?
+
+-Eficiencia y Precisión: Un solo modelo intentando hacer todo a la vez suele
+cometer errores o perder el hilo (alucinaciones). Al darle a un subagente una
+sola tarea, la hace con mucha más precisión.
+
+Modularidad: Si el buscador de vuelos (Subagente A) falla o necesita
+actualizarse, puedes modificarlo o cambiarlo sin romper el resto del sistema.
+
+-Uso de herramientas específicas: Cada subagente tiene acceso solo a lo que
+necesita. El subagente de hoteles no necesita acceso a la API de las aerolíneas,
+lo que ahorra recursos computacionales y mejora la seguridad.
+
+En resumen: El agente es el director de la orquesta que sabe cuál es la meta
+final, y los subagentes son los músicos especializados en cada instrumento.
+
+Fuente
+======
+
+Gemini IA
+
 =============
 Agents skills
 =============
@@ -821,5 +900,129 @@ para analizar gráficos, diagramas técnicos y transcribir documentos complejos.
 
 Fuente
 ======
+
+Gemini IA
+
+===========================
+Guía para armar tu IA local
+===========================
+
+Guía técnica y estratégica completísima para planificar y comprar el hardware
+adecuado si quieres montar modelos de Inteligencia Artificial de forma 100%
+local.
+
+El enfoque principal es entender los compromisos técnicos (trade-offs) antes de
+gastar dinero a ciegas.
+
+Correr IA en local ya es productivo, principalmente por motivos de privacidad y
+cumplimiento regulatorio (como empresas con PCI compliance o manejo de datos
+clínicos que no pueden subir código o información a internet). El video rompe
+con el mito de "comprar lo más caro" y propone un flujo de decisión lógico:
+primero se eligen los modelos de IA según el caso de uso y luego se compra el
+hardware que encaje con sus requisitos de memoria, velocidad y concurrencia.
+
+Notas Más Importantes (Key Takeaways):
+
+1. El filtro del modelo y la memoria VRAM
+
+-Los modelos densos grandes (como Llama 70B) requieren entre 80-90 GB solo para
+cargarse. Los modelos más pequeños (como Qwen 2.5B) pueden hacer inferencia
+directo en CPU.
+
+-La VRAM de la tarjeta gráfica es el factor crítico. El modelo debe caber
+completamente en la VRAM para no destruir el rendimiento.
+
+-Ojo con el Contexto: No puedes ocupar el 100% de la VRAM con el peso del
+modelo. A mayor ventana de contexto (historial de chat enviado), más VRAM se
+consume. Herramientas agénticas de desarrollo (como OpenCode, Codex o Claude
+Code) envían system prompts masivos de entre 10,000 y 50,000 tokens, lo que
+exige dejar varios gigabytes libres en la gráfica solo para el contexto.
+
+2. El dilema de la velocidad: Ancho de Banda de Memoria (Memory Bandwidth)
+
+-El ancho de banda de la memoria define cuántos tokens por segundo genera el
+modelo (qué tan rápido se siente el chat).
+
+-Arquitecturas de Memoria Unificada (Apple Mac Studio/MacBook Pro con chips M
+Max, Nvidia Grace/Spack, o AMD Strix Halo): Tienen la gran ventaja de ofrecer
+mucha memoria (hasta 128 GB o más) sin comprar múltiples tarjetas de video. Sin
+embargo, su ancho de banda es menor al de una GPU dedicada.
+
+-Consecuencia: Correr un modelo masivo como Llama 70B en un Mac M5 Max
+funcionará por su gran capacidad de memoria, pero responderá muy lento (5 a 10
+tokens por segundo) debido al cuello de botella del ancho de banda
+
+.3. Guerra de marcas: AMD vs. NVIDIA
+
+-AMD (ej. RX 7900 XTX): Es drásticamente más barata (a menudo menos de la mitad
+del precio de su contraparte de Nvidia) ofreciendo la misma VRAM (24 GB) y un
+ancho de banda similar (~1000 GB/s). Ideal para desarrolladores independientes o
+laboratorios pequeños de hasta 3-4 personas.
+
+-NVIDIA (ej. RTX 4090/5090): Destaca exponencialmente en entornos empresariales
+de alta concurrencia gracias a la arquitectura y aceleradores nativos para
+cuantizaciones específicas (NB-FP4 y NB-FP8).
+
+4. Concurrencia y el concepto de Throughput
+
+-Nvidia, corriendo en Linux y usando el motor vLLM, escala la generación total
+de tokens (throughput) de forma masiva cuando recibe peticiones en paralelo
+(hasta 128 usuarios concurrentes).
+
+-AMD también escala en paralelo, pero tiene un techo de rendimiento mucho más
+bajo (normalmente se estanca a las 4 o 5 peticiones concurrentes).
+
+5. Ecosistema de Software Recomendado
+
+-LM Studio / Ollama: Excelentes, visuales y sencillos si te sobran recursos en
+la máquina. (Tienen un poco de overhead de interfaz).
+
+-llama.cpp: Ideal para optimizar al máximo si estás rozando el límite del
+hardware; además, soporta paralelismo básico.
+
+vLLM: El estándar obligatorio para entornos empresariales/alta concurrencia
+(hospitales, firmas de abogados, equipos grandes de desarrollo).
+
+-Optimizaciones nativas: En Linux los modelos corren más rápido que en Windows.
+Si usas Mac, es mandatorio usar la cuantización nativa MLX para ganar un ~30% de
+rendimiento [21:56].
+
+Los 5 Pasos para Armar tu Setup (Flujo de Decisión)
+
+1. Elige los modelos:
+
+Paso 1. Define qué tareas vas a realizar (programación, generación de imágenes,
+video) y qué modelos específicos (como Qwen 27B o 35B) vas a ejecutar. Decide si
+harás Hot Swapping (cambiar de modelo con latencia) o si necesitas correr varios
+en paralelo.
+
+2.Calcula la VRAM requerida:
+
+Paso 2. Suma el peso del modelo elegido en su respectiva cuantización y agrégale
+un margen generoso de Gigabytes para la ventana de contexto que pretendes usar.
+
+3.Determina la velocidad deseada:
+
+Paso 3. Revisa el Memory Bandwidth. Si buscas respuestas instantáneas
+(+100 tokens/seg), necesitas GPUs dedicadas. Si priorizas cargar modelos
+gigantes sin importar que responda lento, opta por memoria unificada
+(Mac/Strix Halo).
+
+4.Evalúa la cantidad de usuarios:
+
+Paso 4. Si la máquina es solo para ti o un equipo muy pequeño, AMD te ahorrará
+miles de dólares. Si es para una empresa con alta concurrencia de peticiones en
+paralelo, Nvidia es obligatoria.
+
+5. Elige el software y sistema operativo:
+
+Paso 5. Usa LM Studio/Ollama para comodidad local, llama.cpp para exprimir el
+hardware al límite, o vLLM para servidores corporativos. Prioriza Linux o
+cuantizaciones optimizadas como MLX en Mac.
+
+Fuentes
+=======
+
+https://www.youtube.com/watch?v=52Z8EuvLJ-c
 
 Gemini IA
