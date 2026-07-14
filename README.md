@@ -152,6 +152,11 @@ Este repositorio contiene una colección de guías, apuntes y ejemplos de códig
 - GTK
 - Flux
 
+### IA
+
+- Ollama
+- Agents skills
+
 ## 📄 Licencia
 
 Este proyecto está bajo la licencia (GNU GENERAL PUBLIC LICENSE Version 3)

@@ -10883,10 +10883,40 @@ Reinicia tu sistema o ejecuta sudo sysctl -p para aplicar los cambios.
 Una vez que hayas aumentado el límite de observadores de archivos, vuelve a
 intentar ejecutar tu aplicación y deberías evitar el error ENOSPC.
 
-Fuente
-======
+Otra solución sin reiniciar
+===========================
+
+Este es un clásico error de Linux (ENOSPC) cuando se trabaja con herramientas
+modernas de frontend como Vite, Nuxt o Rollup en proyectos grandes.
+
+El problema no es de pnpm ni de tu código, sino del subsistema inotify de
+Debian. El sistema operativo tiene un límite máximo de archivos que un usuario
+puede "observar" en tiempo real (max_user_watches) para detectar cambios y
+recargar el servidor de desarrollo (hot reload). Al estar usando pnpm, la
+estructura de enlaces simbólicos dentro de node_modules/.pnpm más los
+directorios .nuxt y dist de tu frontend han superado ese límite.
+
+Para solucionarlo en tu entorno Debian, debes incrementar este límite en el
+kernel. Sigue estos pasos:
+
+Solución Inmediata (Temporal hasta reiniciar)
+
+Para desbloquearte ya mismo sin reiniciar el equipo, aumenta el límite
+directamente en la sesión actual ejecutando en tu terminal:
+
+$ sudo sysctl fs.inotify.max_user_watches=524288
+
+$ sudo sysctl fs.inotify.max_user_queued_events=32768
+
+$ sudo sysctl fs.inotify.max_user_instances=512
+
+Luego vuelve a lanzar $ pnpm run dev y verás que arranca sin pestañear.
+
+Fuentes
+=======
 
 ChatGPT
+Gemini IA
 
 ===================================
 Finalizar la sesión actual de gnome
