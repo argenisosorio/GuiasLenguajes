@@ -1503,6 +1503,94 @@ Fuente
 
 Gemini IA
 
+========================================
+La Inferencia en Inteligencia Artificial
+========================================
+
+Es la fase en la que un modelo que ya ha sido entrenado se pone a trabajar en el
+mundo real. Consiste en pasarle datos nuevos (que el modelo nunca vio durante su
+entrenamiento) para que genere una predicción, una clasificación, una traducción
+o una respuesta.
+
+Si el entrenamiento es el proceso de "estudiar" para un examen, la inferencia es
+el momento en que "respondes las preguntas" en la vida real usando lo que
+aprendiste.
+
+Entrenamiento vs. Inferencia
+
+Para entender bien el concepto, es útil contrastarlo con la etapa previa de
+entrenamiento:
+
++------------------------+------------------------------------+------------------------------------+
+| Característica         | Entrenamiento (Training)           | Inferencia (Inference)             |
++------------------------+------------------------------------+------------------------------------+
+| Objetivo Principal     | Aprender patrones y ajustar los    | Aplicar lo aprendido para generar  |
+|                        | pesos matemáticos del modelo.      | predicciones con datos nuevos.     |
++------------------------+------------------------------------+------------------------------------+
+| Dirección del Flujo    | Bidireccional (Forward pass +      | Unidireccional (Solo Forward pass, |
+|                        | Backpropagation para corregir).    | los pesos están congelados).       |
++------------------------+------------------------------------+------------------------------------+
+| Volumen de Datos       | Masivo (giga/terabytes de datasets | Individual (un prompt, una imagen, |
+|                        | de texto, imágenes o tablas).      | un solo archivo de audio).         |
++------------------------+------------------------------------+------------------------------------+
+| Consumo de Cómputo     | Extremadamente alto (clústeres de  | Bajo/Moderado (milisegundos por    |
+|                        | GPUs/TPUs corriendo por días).     | petición, puede correr en CPUs).   |
++------------------------+------------------------------------+------------------------------------+
+| Modificación de Pesos  | Sí, cambian constantemente en cada  | No, los pesos son de "solo lectura"|
+|                        | iteración (época).                 | e inmutables.                      |
++------------------------+------------------------------------+------------------------------------+
+| Frecuencia de Ejecución| Se hace pocas veces (una sola vez  | Se ejecuta continuamente (cada vez |
+|                        | o periódicamente al actualizar).   | que un usuario hace una consulta). |
++------------------------+------------------------------------+------------------------------------+
+| Métrica Clave          | Loss (pérdida) y Accuracy (exacti- | Latencia (tiempo de respuesta) y   |
+|                        | tud) sobre el set de validación.   | costo de cómputo por consulta.     |
++------------------------+------------------------------------+------------------------------------+
+
+¿Cómo funciona la Inferencia en la práctica?
+
+Imagina un modelo entrenado para detectar spam en correos electrónicos:
+
+-Entrada (Input): Te llega un correo nuevo que dice "¡Felicidades! Has ganado un
+viaje gratis a las Bahamas, haz clic aquí".
+
+-El "Paso hacia adelante" (Forward Pass): El correo se convierte a números
+(vectores) y pasa por la red neuronal del modelo. Las neuronas realizan
+multiplicaciones matemáticas utilizando los pesos fijos que obtuvieron durante
+el entrenamiento.
+
+-Salida (Output): El modelo devuelve un resultado probabilístico: 99.2% Spam. El
+sistema de correo decide moverlo a la carpeta de correo no deseado.
+
+Todo este proceso ocurre en una fracción de segundo y es lo que llamamos hacer
+inferencia.
+
+El reto técnico de la Inferencia: Latencia y Costo
+
+En el desarrollo de software moderno, optimizar la inferencia es uno de los
+mayores desafíos de ingeniería de sistemas. Cuando millones de usuarios
+consultan un servicio de IA al mismo tiempo, necesitas que las respuestas sean
+instantáneas y baratas de procesar.
+
+Para lograrlo, se utilizan varias técnicas de optimización:
+
+-Cuantización (Quantization): Consiste en reducir la precisión matemática de los
+pesos del modelo (por ejemplo, pasar de decimales de 32 bits FP32 a enteros de
+8 bits INT8). Esto hace que el modelo sea mucho más pequeño y rápido de ejecutar
+perdiendo casi nada de precisión.
+
+-Poda (Pruning): Eliminar las conexiones o neuronas de la red que tienen pesos
+cercanos a cero y que casi no aportan a la decisión final.
+
+-Compilación de Modelos: Usar herramientas como TensorRT u ONNX para traducir la
+estructura matemática del modelo a código de máquina altamente optimizado para
+el hardware específico donde correrá (ya sea un servidor en la nube o un
+procesador en un teléfono móvil).
+
+Fuente
+======
+
+Gemini IA
+
 ---
 
 Frameworks de Orquestación
