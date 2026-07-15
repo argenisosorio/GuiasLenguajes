@@ -2,6 +2,273 @@
 Guía de IA by dM
 ================
 
+Índice de Contenidos
+====================
+
+Nivel 1: Los Fundamentos de la Inteligencia Artificial (Teoría Básica)
+
+-Machine Learning (ML) o Aprendizaje Automático
+-El Deep Learning (Aprendizaje Profundo)
+-Una Red Neuronal (o Red Neuronal Artificial)
+
+Nivel 2: Arquitectura y Funcionamiento Interno de los LLM
+
+-LLM (Large Language Models)
+-Los tokens
+-El Preentrenamiento (Pre-training)
+-La Inferencia en Inteligencia Artificial
+-Alucinación
+
+Nivel 3: Técnicas de Control, Extensión y Multimodalidad (Interacción)
+
+-Un prompt
+-Modelo multimodal
+-El RAG (Retrieval-Augmented Generation) o Generación Aumentada por Recuperación
+
+Nivel 4: Entorno Local y Hardware (Sistemas e Infraestructura)
+
+-Ollama
+-LM Studio
+-Guía para armar tu IA local
+
+Nivel 5: Paradigma de Agentes y Automatización (Sistemas Autónomos)
+
+-Agente agéntico
+-Agentes y Sub Agentes
+-Agents skills
+-¿Cómo crear una skill personalizada?
+-Plantilla Markdown lista para rellenar con una idea
+-Ejemplo real de skill.md
+
+Nivel 6: Herramientas de Desarrollo Agénticas en Acción (Aplicación Práctica)
+
+-OpenCode
+-Codex
+-Claude Code
+
+==============================================
+Machine Learning (ML) o Aprendizaje Automático
+==============================================
+
+Es una rama de la Inteligencia Artificial que permite a las computadoras
+aprender y tomar decisiones a partir de los datos, sin ser programadas
+explícitamente para cada tarea.
+
+En la programación tradicional, tú escribes reglas específicas (si ocurre X, haz
+Y) para procesar datos y obtener un resultado. En el Aprendizaje Automático, el
+flujo se invierte: le entregas al sistema los datos y los resultados esperados,
+y el algoritmo se encarga de descubrir el patrón o la regla matemática que los
+conecta.
+
+Los Tres Enfoques Principales del Aprendizaje Automático
+
+La forma en que un modelo de Machine Learning procesa la información define su
+tipo de aprendizaje. Estos enfoques se dividen principalmente en tres
+categorías:
+
+1. Aprendizaje Supervisado (Supervised Learning) El modelo se entrena con un
+conjunto de datos etiquetados. Esto significa que cada ejemplo de entrenamiento
+incluye la respuesta correcta.
+
+-Cómo funciona: Es como estudiar con un examen resuelto. El algoritmo ajusta sus
+parámetros internos para minimizar el error entre sus predicciones y las
+etiquetas reales.
+
+-Ejemplos: Clasificación de correos (Spam / No Spam) o predicción de precios de
+viviendas basándose en características como metros cuadrados y ubicación
+(regresión).
+
+2. Aprendizaje No Supervisado (Unsupervised Learning)Aquí los datos no tienen
+etiquetas ni respuestas correctas predefinidas.
+
+-Cómo funciona: El algoritmo analiza la estructura de los datos para encontrar
+patrones ocultos, similitudes o agrupaciones por su cuenta.
+
+-Ejemplos: Segmentación de clientes en una tienda según sus hábitos de compra
+(Clustering) o sistemas de recomendación que agrupan películas similares.
+
+3. Aprendizaje por Refuerzo (Reinforcement Learning)
+
+El sistema (llamado agente) aprende a interactuar con un entorno dinámico
+mediante ensayo y error.
+
+-Cómo funciona: No hay datos de entrenamiento estáticos. El agente realiza
+acciones y recibe "recompensas" por las decisiones correctas o "penalizaciones"
+por los errores, optimizando su comportamiento a lo largo del tiempo para
+maximizar la recompensa acumulada.
+
+-Ejemplos: Algoritmos que aprenden a jugar ajedrez, control de trayectorias en
+robótica o la navegación de vehículos autónomos.
+
+¿Cómo aprende un modelo? (El flujo básico)
+
+Aunque la matemática detrás puede ser compleja, el proceso de desarrollo sigue
+una secuencia lógica:
+
+-Recolección y preparación de datos: Se limpian y estructuran los datos
+históricos. Esta fase suele consumir el 80% del tiempo de un proyecto.
+
+-Entrenamiento (Training): Se alimenta un algoritmo (como una regresión lineal,
+un árbol de decisión o una red neuronal) con estos datos para que genere un
+modelo matemático.
+
+-Evaluación: Se prueba el modelo con datos nuevos que nunca ha visto antes para
+verificar su precisión y evitar el sobreajuste (aprender de memoria los datos de
+entrenamiento sin poder generalizar).
+
+-Despliegue y producción: El modelo se integra en una aplicación real para
+realizar predicciones con datos en tiempo real.
+
+=======================================
+El Deep Learning (Aprendizaje Profundo)
+=======================================
+
+Es una subrama del Aprendizaje Automático (Machine Learning) que se basa en
+entrenar redes neuronales artificiales de muchas capas (de ahí el término
+"profundo") para que aprendan a reconocer patrones complejos en los datos de
+forma automatizada.
+
+A diferencia del Machine Learning tradicional, donde los humanos deben
+identificar y programar manualmente las características relevantes que la
+computadora debe buscar (por ejemplo, decirle que busque bordes o texturas para
+identificar una foto), el Deep Learning permite que la propia red descubra esas
+características por sí misma a través de la experiencia y grandes volúmenes de
+datos.
+
+¿Cómo funciona? La analogía de las capas
+
+Imagine una red neuronal como una línea de ensamblaje dividida en capas de
+neuronas matemáticas:
+
+-Capa de entrada: Recibe los datos en bruto (por ejemplo, los píxeles de una
+imagen de un carro).
+
+-Capas ocultas (Deep): Aquí ocurre la magia.
+    -La primera capa detecta cosas simples como líneas y bordes.
+    -La segunda capa combina esas líneas para detectar formas más complejas
+    (ruedas, ventanas).
+    -La tercera capa junta las formas para reconocer estructuras completas (la
+    silueta de un carro).
+
+-Capa de salida: Entrega el resultado final ("Es un carro con un 98% de
+probabilidad").
+
+Cada neurona de la red tiene un peso matemático que se ajusta automáticamente
+mediante un proceso llamado retropropagación (backpropagation) cuando la red
+comete un error, logrando que sea más precisa con cada intento.
+
+Machine Learning vs. Deep Learning
+
++------------------------+-----------------------------------+-----------------------------------+
+| Característica         | Machine Learning Tradicional      | Deep Learning                     |
++------------------------+-----------------------------------+-----------------------------------+
+| Volumen de Datos       | Funciona bien con pocos datos.    | Requiere bases de datos masivas.  |
++------------------------+-----------------------------------+-----------------------------------+
+| Extracción de Features | Manual (identificada por humanos).| Automática (la red las descubre). |
++------------------------+-----------------------------------+-----------------------------------+
+| Tiempo de Entrenamiento| De minutos a pocas horas.         | De días a semanas.                |
++------------------------+-----------------------------------+-----------------------------------+
+| Hardware Necesario     | CPUs estándar son suficientes.    | Requiere GPUs/TPUs de alto poder. |
++------------------------+-----------------------------------+-----------------------------------+
+| Arquitectura           | Algoritmos directos (árboles,     | Redes neuronales profundas con    |
+|                        | regresiones, SVM).                | múltiples capas ocultas.          |
++------------------------+-----------------------------------+-----------------------------------+
+| Interpretabilidad      | Alta (es fácil rastrear por qué   | Baja ("Caja negra", es difícil    |
+|                        | el algoritmo tomó una decisión).  | auditar el camino matemático).    |
++------------------------+-----------------------------------+-----------------------------------+
+
+Aplicaciones reales en la actualidad
+
+El auge del Deep Learning se debe a la disponibilidad masiva de datos (Big Data)
+y al poder de procesamiento de las tarjetas gráficas modernas. Hoy en día es el
+motor detrás de:
+
+-Visión Computacional: Reconocimiento facial, diagnóstico médico por imágenes y
+los sistemas de conducción autónoma.
+
+-Procesamiento del Lenguaje Natural (PLN): Traductores automáticos, asistentes
+de voz y los Grandes Modelos de Lenguaje (como en el que estamos interactuando
+ahora).
+
+-Sistemas de recomendación: Los algoritmos que deciden qué video mostrarte en
+YouTube o qué producto sugerirte en plataformas de e-commerce.
+
+Fuente
+======
+
+Gemini IA
+
+============================================
+Una Red Neuronal (o Red Neuronal Artificial)
+============================================
+
+Es un modelo matemático y computacional inspirado en la estructura y el
+funcionamiento del cerebro humano. Su objetivo es aprender a reconocer patrones,
+procesar información y resolver problemas complejos a partir de ejemplos, en
+lugar de seguir reglas rígidas programadas a mano.
+
+La estructura básica: Los componentes
+
+Al igual que nuestro cerebro está hecho de miles de millones de neuronas
+biológicas interconectadas, una red neuronal artificial está compuesta por nodos
+interconectados organizados en capas:
+
+-Capa de entrada: Recibe los datos iniciales (por ejemplo, los valores de
+píxeles de una imagen o las variables de un archivo Excel).
+
+-Capas ocultas: Es donde se realiza el procesamiento. Puede haber una sola capa
+(en redes simples) o cientos de ellas (en Deep Learning). Cada neurona aquí toma
+los datos de la capa anterior, hace un cálculo y pasa el resultado a la
+siguiente.
+
+-Capa de salida: Devuelve el resultado final de la predicción o clasificación
+(por ejemplo, si el cliente comprará o no un producto).
+
+¿Cómo funciona una neurona artificial (Perceptrón)?
+
+Cada círculo en el diagrama de una red es una "neurona" matemática. El proceso
+que ocurre dentro de ella es simple pero potente:
+
+-Entradas: Los datos que recibe de la capa anterior.
+
+-Pesos: La importancia o "fuerza" que se le da a cada entrada. Si una entrada es
+crucial para el resultado, su peso será alto.
+
+Sesgo: Un valor que permite ajustar la sensibilidad de la neurona.
+
+Función de activación: Una fórmula matemática que decide si la neurona debe
+"activarse" y pasar información a la siguiente capa, introduciendo no linealidad
+para que la red pueda aprender patrones complejos y curvas.
+
+La neurona multiplica cada entrada por su peso, suma todo junto al sesgo, pasa
+el resultado por la función de activación y envía la señal adelante.
+
+¿Cómo aprende una Red Neuronal?
+
+Cuando una red se crea, no sabe hacer nada porque sus pesos y sesgos se
+inicializan al azar. El proceso de aprendizaje consta de dos pasos que se
+repiten millones de veces:
+
+-Propagación hacia adelante (Forward Propagation): Los datos pasan por la red,
+las neuronas hacen sus cálculos y la red genera una predicción. Al principio,
+esta predicción suele ser pésima.
+
+-Cálculo del error y Retropropagación (Backpropagation): Se compara la
+predicción de la red con el resultado real (la verdad de los datos) usando una
+función de pérdida. El error resultante se envía de regreso a través de la red
+(hacia atrás). Utilizando un algoritmo llamado Optimización por Gradiente
+Descendiente, la red ajusta ligeramente todos los pesos y sesgos para reducir el
+error en el siguiente intento.
+
+Con suficientes iteraciones (épocas de entrenamiento), la red encuentra la
+combinación exacta de pesos matemáticos que le permite resolver el problema con
+alta precisión.
+
+Fuente
+======
+
+Gemini IA
+
 LLM
 ===
 
@@ -131,6 +398,261 @@ Fuente
 
 Gemini IA
 
+==================================
+El Preentrenamiento (Pre-training)
+==================================
+
+Es la primera fase en el proceso de creación de un modelo de Inteligencia
+Artificial moderno (como un LLM, una red neuronal de visión o un transformador).
+
+Consiste en entrenar a una red neuronal gigante con un volumen masivo de datos
+no etiquetados para que aprenda las reglas básicas, la estructura y los patrones
+generales del mundo, del lenguaje o de las imágenes.
+
+En términos sencillos: es la etapa donde la IA va a la escuela primaria y
+secundaria para adquirir cultura general antes de especializarse en una tarea
+concreta.
+
+¿Cómo funciona el Preentrenamiento?
+
+Durante esta fase, el modelo se entrena bajo una modalidad llamada Aprendizaje
+Auto-Supervisado (Self-Supervised Learning). Esto significa que no necesita que
+un humano etiquete los datos manualmente (lo cual sería imposible para terabytes
+de información). En su lugar, el propio algoritmo genera sus "exámenes" a partir
+de los datos brutos.
+
+Existen dos estrategias principales para entrenar modelos de lenguaje durante
+esta etapa:
+
+-Modelado de lenguaje causal (Causal Language Modeling): Al modelo se le
+presenta una frase incompleta y debe adivinar la siguiente palabra.
+
+Ejemplo: "El lenguaje de programación más popular para IA es [Máscara]". La IA
+intenta adivinar "Python".
+
+-Modelado de lenguaje enmascarado (Masked Language Modeling): Se ocultan
+palabras aleatorias dentro de un texto y el modelo debe usar el contexto
+(izquierdo y derecho) para rellenar los huecos.
+
+Ejemplo: "El desarrollo [Máscara] se enfoca en bases de datos y lógica de
+servidor". La IA debe deducir que la palabra oculta es "backend".
+
+Al repetir este juego de adivinanzas miles de millones de veces sobre todo el
+internet (Wikipedia, libros, repositorios de código de GitHub, foros), el modelo
+desarrolla una comprensión profunda de la gramática, la lógica, el sentido común
+e incluso habilidades básicas de razonamiento y programación.
+
+¿Por qué es tan importante en la IA moderna?
+
+Antes de que se popularizara el preentrenamiento, los ingenieros de software
+tenían que entrenar modelos desde cero para cada tarea específica (un modelo
+solo para traducir, otro solo para analizar sentimientos, otro solo para
+resumir). Esto requería etiquetar miles de datos a mano y un gasto computacional
+enorme para cada proyecto.
+
+El preentrenamiento cambió las reglas del juego gracias a dos grandes ventajas:
+
+-Transferencia de Aprendizaje (Transfer Learning): Una vez que el modelo tiene
+esa "base de conocimiento general" (el modelo preentrenado o Foundation Model),
+no hay que volver a enseñarle a leer o escribir. Puedes tomar esa base y
+adaptarla a tu problema específico.
+
+-Eficiencia en Datos: Como el modelo ya "sabe" cómo funciona el mundo, solo
+necesitas un puñado de ejemplos específicos (decenas o cientos, en lugar de
+millones) para enseñarle a realizar una tarea especializada en tu empresa.
+
+El flujo completo: Del servidor al usuario
+
+El preentrenamiento es solo el punto de partida. El ciclo de vida de un modelo
+comercial o de código abierto (como Llama o GPT) suele verse así:
+
++-------------------------------------------------------------+
+| 1. PREENTRENAMIENTO (Pre-training)                          |
+|    - Objetivo: Aprender cultura general y lenguaje.         |
+|    - Datos: Terabytes de texto crudo de internet.           |
+|    - Costo: Millones de dólares en GPUs.                    |
++-------------------------------------------------------------+
+                              |
+                              v
++-------------------------------------------------------------+
+| 2. AJUSTE FINO (Fine-Tuning) / Alineación (RLHF)            |
+|    - Objetivo: Enseñar al modelo a seguir instrucciones,    |
+|      ser útil, seguro y comportarse como un asistente.      |
+|    - Datos: Conjuntos seleccionados de preguntas/respuestas. |
++-------------------------------------------------------------+
+                              |
+                              v
++-------------------------------------------------------------+
+| 3. INFERENCIA (Inference)                                   |
+|    - El modelo final respondiendo a tus prompts en producción. |
++-------------------------------------------------------------+
+
+Fuente
+======
+
+Gemini IA
+
+========================================
+La Inferencia en Inteligencia Artificial
+========================================
+
+Es la fase en la que un modelo que ya ha sido entrenado se pone a trabajar en el
+mundo real. Consiste en pasarle datos nuevos (que el modelo nunca vio durante su
+entrenamiento) para que genere una predicción, una clasificación, una traducción
+o una respuesta.
+
+Si el entrenamiento es el proceso de "estudiar" para un examen, la inferencia es
+el momento en que "respondes las preguntas" en la vida real usando lo que
+aprendiste.
+
+Entrenamiento vs. Inferencia
+
+Para entender bien el concepto, es útil contrastarlo con la etapa previa de
+entrenamiento:
+
++------------------------+------------------------------------+------------------------------------+
+| Característica         | Entrenamiento (Training)           | Inferencia (Inference)             |
++------------------------+------------------------------------+------------------------------------+
+| Objetivo Principal     | Aprender patrones y ajustar los    | Aplicar lo aprendido para generar  |
+|                        | pesos matemáticos del modelo.      | predicciones con datos nuevos.     |
++------------------------+------------------------------------+------------------------------------+
+| Dirección del Flujo    | Bidireccional (Forward pass +      | Unidireccional (Solo Forward pass, |
+|                        | Backpropagation para corregir).    | los pesos están congelados).       |
++------------------------+------------------------------------+------------------------------------+
+| Volumen de Datos       | Masivo (giga/terabytes de datasets | Individual (un prompt, una imagen, |
+|                        | de texto, imágenes o tablas).      | un solo archivo de audio).         |
++------------------------+------------------------------------+------------------------------------+
+| Consumo de Cómputo     | Extremadamente alto (clústeres de  | Bajo/Moderado (milisegundos por    |
+|                        | GPUs/TPUs corriendo por días).     | petición, puede correr en CPUs).   |
++------------------------+------------------------------------+------------------------------------+
+| Modificación de Pesos  | Sí, cambian constantemente en cada  | No, los pesos son de "solo lectura"|
+|                        | iteración (época).                 | e inmutables.                      |
++------------------------+------------------------------------+------------------------------------+
+| Frecuencia de Ejecución| Se hace pocas veces (una sola vez  | Se ejecuta continuamente (cada vez |
+|                        | o periódicamente al actualizar).   | que un usuario hace una consulta). |
++------------------------+------------------------------------+------------------------------------+
+| Métrica Clave          | Loss (pérdida) y Accuracy (exacti- | Latencia (tiempo de respuesta) y   |
+|                        | tud) sobre el set de validación.   | costo de cómputo por consulta.     |
++------------------------+------------------------------------+------------------------------------+
+
+¿Cómo funciona la Inferencia en la práctica?
+
+Imagina un modelo entrenado para detectar spam en correos electrónicos:
+
+-Entrada (Input): Te llega un correo nuevo que dice "¡Felicidades! Has ganado un
+viaje gratis a las Bahamas, haz clic aquí".
+
+-El "Paso hacia adelante" (Forward Pass): El correo se convierte a números
+(vectores) y pasa por la red neuronal del modelo. Las neuronas realizan
+multiplicaciones matemáticas utilizando los pesos fijos que obtuvieron durante
+el entrenamiento.
+
+-Salida (Output): El modelo devuelve un resultado probabilístico: 99.2% Spam. El
+sistema de correo decide moverlo a la carpeta de correo no deseado.
+
+Todo este proceso ocurre en una fracción de segundo y es lo que llamamos hacer
+inferencia.
+
+El reto técnico de la Inferencia: Latencia y Costo
+
+En el desarrollo de software moderno, optimizar la inferencia es uno de los
+mayores desafíos de ingeniería de sistemas. Cuando millones de usuarios
+consultan un servicio de IA al mismo tiempo, necesitas que las respuestas sean
+instantáneas y baratas de procesar.
+
+Para lograrlo, se utilizan varias técnicas de optimización:
+
+-Cuantización (Quantization): Consiste en reducir la precisión matemática de los
+pesos del modelo (por ejemplo, pasar de decimales de 32 bits FP32 a enteros de
+8 bits INT8). Esto hace que el modelo sea mucho más pequeño y rápido de ejecutar
+perdiendo casi nada de precisión.
+
+-Poda (Pruning): Eliminar las conexiones o neuronas de la red que tienen pesos
+cercanos a cero y que casi no aportan a la decisión final.
+
+-Compilación de Modelos: Usar herramientas como TensorRT u ONNX para traducir la
+estructura matemática del modelo a código de máquina altamente optimizado para
+el hardware específico donde correrá (ya sea un servidor en la nube o un
+procesador en un teléfono móvil).
+
+Fuente
+======
+
+Gemini IA
+
+===========
+Alucinación
+===========
+
+En Inteligencia Artificial (especialmente en los Grandes Modelos de Lenguaje o
+LLMs), una alucinación ocurre cuando el modelo genera información que es falsa,
+inventada o sin sentido, pero la presenta con absoluta confianza y un tono muy
+convincente, como si fuera un hecho real.
+
+Probablemente te hayas topado con esto: le pides a una IA que te resuelva un
+problema en Django o Vue.js, y te sugiere importar una librería o usar una
+función que parece tener todo el sentido del mundo (ej. from django.utils import
+super_auth_helper). Vas a tu entorno en Debian, intentas usarlo y resulta que
+esa función o paquete no existe. La IA lo "alucinó".
+
+¿Por qué ocurren las alucinaciones?
+
+Para entender el porqué, es clave recordar qué son realmente estos modelos por
+debajo. Los LLMs no consultan una base de datos SQL o un diccionario de verdades
+absolutas antes de responder. Son motores probabilísticos.
+
+Su único objetivo matemático es predecir cuál es el siguiente token (palabra o
+fragmento de palabra) más probable en una secuencia, basándose en los inmensos
+volúmenes de texto con los que fueron entrenados.
+
+Si la IA no tiene la información exacta, su algoritmo de predicción
+estadísticamente "rellenará los huecos" con las palabras que normalmente
+acompañan a ese contexto. El resultado es un texto gramatical y semánticamente
+perfecto, pero factualmente incorrecto.
+
+Causas principales
+
+-Datos de entrenamiento incompletos o sesgados: Si el modelo no vio suficiente
+información sobre un tema específico durante su entrenamiento, intentará
+adivinar.
+
+-Compresión de la información: Los modelos no guardan el texto exacto de la web;
+comprimen el conocimiento en "pesos" matemáticos dentro de su red neuronal. Al
+intentar reconstruir un dato específico a partir de esos pesos, la memoria puede
+fallar.
+
+-Falta de conexión a la realidad (Grounding): Por defecto, un modelo base no
+puede verificar sus propias afirmaciones contra el mundo real o buscar en
+internet para validar si lo que está diciendo es cierto hoy.
+
+¿Cómo mitigamos las alucinaciones al desarrollar software con IA?
+
+Si estás integrando IA en algún proyecto (por ejemplo, en el backend con
+Python), no puedes eliminar las alucinaciones al 100%, pero puedes reducirlas
+drásticamente con estas estrategias:
+
+-RAG (Retrieval-Augmented Generation): En lugar de depender de la "memoria" del
+modelo, primero haces una búsqueda en tu propia base de datos (tus propios
+documentos, código o manuales) y le pasas esos resultados al modelo en el
+prompt. Le dices: "Responde a la pregunta del usuario utilizando estrictamente
+este contexto".
+
+-Ajuste de la Temperatura (Temperature): Las APIs de los LLMs tienen un
+parámetro llamado temperatura que controla la aleatoriedad. Una temperatura alta
+(ej. 0.8) hace que la IA sea más creativa (ideal para escribir historias), pero
+más propensa a alucinar. Una temperatura baja (0.1 o 0.0) la hace más
+determinista y estricta, ideal para código o datos técnicos.
+
+-Ingeniería de Prompts (Prompt Engineering): Dar instrucciones de escape
+explícitas, como: "Si no sabes la respuesta o no está en el contexto
+proporcionado, responde 'No tengo suficiente información' en lugar de intentar
+adivinar".
+
+Fuente
+======
+
+Gemini IA
+
 =========
 Un prompt
 =========
@@ -186,6 +708,471 @@ Positivo. Entrada: Roto -> Salida: Negativo. Entrada: Estable -> Salida:"
 -Prompts de Cadena de Pensamiento (Chain-of-Thought): Le pides a la IA que
 explique su razonamiento paso a paso antes de darte la respuesta final, lo cual
 reduce drásticamente los errores lógicos en tareas complejas o matemáticas.
+
+Fuente
+======
+
+Gemini IA
+
+=================
+Modelo multimodal
+=================
+
+Un modelo multimodal es un tipo de inteligencia artificial capaz de procesar,
+comprender y combinar diferentes tipos de datos o "modalidades" al mismo tiempo.
+
+A diferencia de los LLMs tradicionales (que son unimodales porque solo entienden
+y generan texto), un modelo multimodal puede trabajar simultáneamente con texto,
+imágenes, audio, video y código.
+
+¿Cómo funcionan?
+
+Para entenderlo, piensa en cómo aprendemos los humanos. Nosotros no solo leemos
+texto; entendemos el mundo mirando imágenes, escuchando sonidos y observando
+videos.
+
+Un modelo multimodal imita esto unificando la información:
+
+-Entrada mixta: Recibe diferentes formatos (por ejemplo, una foto de una
+factura y un texto que dice "Súmame los totales").
+
+-Espacio vectorial común: Traduce tanto la imagen como el texto a un "idioma
+matemático interno" común, permitiendo que la IA entienda cómo se relaciona lo
+que ve con lo que lee.
+
+-Resultado: Genera una respuesta que puede ser un texto explicativo, una nueva
+imagen, un archivo de audio o código modificado.
+
+Capacidades reales: ¿Qué pueden hacer?
+
+La multimodalidad es lo que permite que las inteligencias artificiales salgan de
+la caja de texto y asistan en tareas del mundo real:
+
+-Visión Computacional y Texto: Puedes subirle el diagrama de arquitectura de una
+base de datos o una red, y pedirle que te escriba el código de configuración en
+limpio. O tomarle una foto a un error en una pantalla y preguntarle cómo
+solucionarlo.
+
+-Audio y Voz Directa: Permite hablar con la IA con voz natural, captando la
+entonación, la velocidad del habla y respondiendo en milisegundos con voz
+humana, sin necesidad de transcribir primero el audio a texto.
+
+-Análisis de Video: Puedes proporcionarle un clip de video de unos minutos y
+pedirle: "Dime en qué segundo exacto aparece el coche rojo" o "Hazme un resumen
+de lo que pasó en la reunión".
+
+Ejemplos de modelos multimodales nativos
+
+Hoy en día, los modelos más potentes se diseñan como multimodales desde su
+origen (nativo), en lugar de pegar parches de visión sobre un modelo de texto:
+
+-Gemini (Google): Diseñado desde cero para ser nativamente multimodal, lo que le
+permite procesar contextos gigantescos combinando horas de video, audio y texto
+en la misma consulta.
+
+-GPT-4o (OpenAI): Un modelo unificado que procesa texto, visión y audio en
+tiempo real con una latencia extremadamente baja.
+
+-Claude 3.5 Sonnet (Anthropic): Destaca por sus capacidades de visión avanzadas
+para analizar gráficos, diagramas técnicos y transcribir documentos complejos.
+
+Fuente
+======
+
+Gemini IA
+
+===============================================================================
+El RAG (Retrieval-Augmented Generation) o Generación Aumentada por Recuperación
+===============================================================================
+
+Es un patrón de diseño y una técnica en arquitectura de software que optimiza
+las respuestas de un Modelo de Lenguaje (LLM) conectándolo a una fuente de datos
+externa en tiempo real.
+
+La analogía clásica es la de un examen:
+
+Sin RAG (Solo el LLM): El modelo responde un examen a libro cerrado, confiando
+únicamente en lo que memorizó durante su preentrenamiento. Si el tema es muy
+específico o reciente, es propenso a inventar respuestas (alucinación).
+
+Con RAG: El modelo responde el examen a libro abierto. El sistema busca los
+documentos exactos que contienen la respuesta en tu biblioteca privada, se los
+pone en frente al LLM y le pide que redacte la respuesta basándose únicamente en
+ese material.
+
+¿Cómo funciona el flujo de RAG?
+
+El proceso se divide en dos fases principales: la preparación de los datos y
+el ciclo de consulta en tiempo real.
+
+1. Preparación de los datos (Ingesta)
+
+Antes de que el usuario pregunte algo, los documentos (PDFs, wikis, bases de
+datos SQL, código fuente) deben prepararse para que la máquina los entienda
+eficientemente:
+
+-Segmentación (Chunking): Los textos largos se dividen en fragmentos pequeños
+(de unos pocos cientos de palabras) para no saturar la memoria del modelo.
+
+-Vectorización (Embedding): Cada fragmento pasa por un modelo de embedding que
+convierte el texto en un vector numérico (una coordenada en un mapa
+multidimensional que representa el significado semántico del texto).
+
+-Base de Datos Vectorial: Esos vectores se almacenan en una base de datos
+especializada (como ChromaDB, PGVector, Pinecone o Qdrant).
+
+2. El proceso de consulta (Tiempo de ejecución)
+
+Cuando el usuario hace una pregunta, ocurre la magia tras bambalinas:
+
+1.Vectorizar la consulta:
+
+Paso 1. La pregunta del usuario se convierte a vectores utilizando el mismo
+modelo de embeddings empleado en la fase de ingesta.
+
+2.Recuperación (Retrieval):
+
+Paso 2. El sistema busca en la base de datos vectorial los fragmentos de texto
+cuyas coordenadas matemáticas sean más cercanas (similares en significado) a la
+pregunta del usuario.
+
+3.Aumentar el Prompt (Augment):
+
+Paso 3. Se construye un super-prompt inyectando el texto recuperado junto con la
+pregunta original. (Ej: "Usa este fragmento de código para responder la duda del
+usuario: [Código recuperado]. Pregunta: [Pregunta original]")
+
+4.Generación (Generation):
+
+Paso 4. El LLM lee el prompt enriquecido y redacta una respuesta coherente,
+verídica y contextualizada basándose únicamente en los datos proporcionados.
+
+¿Por qué es la arquitectura favorita de las empresas?
+
+-Mitiga las alucinaciones: Al obligar al LLM a basarse en hechos recuperados de
+un documento real, la probabilidad de que invente información cae drásticamente.
+
+-Información actualizada sin reentrenar: Reentrenar o hacer fine-tuning de un
+modelo cuesta miles de dólares y requiere días. Con RAG, si tu base de
+conocimiento cambia, solo actualizas la base de datos vectorial (lo que toma
+segundos o minutos) y el LLM inmediatamente tendrá acceso a la información más
+reciente.
+
+-Control de acceso y privacidad: Puedes filtrar los documentos que se recuperan
+según el rol o los permisos del usuario que consulta el sistema, asegurando que
+el LLM nunca lea información confidencial para la que el usuario no está
+autorizado.
+
+Fuente
+======
+
+Gemini IA
+
+======
+Ollama
+======
+
+Ollama es una aplicación gratuita de código abierto que te permite descargar y
+ejecutar Modelos de Lenguaje Grande (LLMs) directamente en tu propia
+computadora. A diferencia de ChatGPT o Claude, no depende de la nube, lo que te
+garantiza total privacidad, uso sin conexión a internet y cero costos de
+suscripción. Ollama se encarga de todo el proceso técnico complicado. Funciona
+como una especie de "Docker" o instalador simplificado para Inteligencia
+Artificial: te permite elegir de su catálogo y descargar modelos como DeepSeek,
+Llama, Mistral o Qwen con un solo comando.
+
+Adicionalmente también permite ejecutar modelos de la nube.
+
+Características principales
+===========================
+
+-Privacidad total: Tus datos y conversaciones nunca se envían a servidores
+externos.
+
+-Integración para desarrolladores: Incluye una API que permite conectar estos
+modelos de IA con programas en Python o JavaScript.
+
+-Multiplataforma: Funciona de manera nativa en Windows, macOS y Linux.
+
+Instalación y prueba
+====================
+
+1- Instalar Ollama localmente.
+
+$ curl -fsSL https://ollama.com/install.sh | sh
+
+2- Iniciar sesión con una cuenta de Google.
+
+$ ollama signin
+
+3- Ejecutar un modelo cloud.
+
+$ ollama run gemma4:cloud
+
+Esto abre en el terminal la interfaz para interacutar con el modelo, ejemplo:
+
+$ ollama run gemma4:cloud
+Connecting to 'gemma4:cloud' on 'ollama.com' ⚡
+>>> cuánto es 2 * 2?
+Thinking...
+*   Input: "cuánto es 2 * 2?" (Spanish)
+    *   Operation: Multiplication.
+    *   Numbers: 2 and 2.
+
+    *   $2 \times 2 = 4$
+
+    *   Language: Spanish (as requested by the input).
+    *   Answer: 4.
+...done thinking.
+
+2 * 2 = 4
+
+4- Funcionalidades de Ollama:
+
+$ ollama
+
+Usar ChatGPT (Primeras versiones actualizdo hasta 2024)
+=======================================================
+
+$ ollama run gpt-oss:120b-cloud
+
+Fuentes
+=======
+
+-Ollama Cloud ejecuta modelos LLM potentes gratis: https://www.youtube.com/shorts/SW87l0q0QP8
+
+-Web oficial de Ollama: https://ollama.com/
+
+-Modelos cloud: https://ollama.com/search?c=cloud
+
+=========
+LM Studio
+=========
+
+LM Studio es una aplicación de escritorio diseñada para descargar, configurar y
+ejecutar modelos de lenguaje (LLMs) de forma 100% local en tu propio ordenador.
+A diferencia de plataformas como ChatGPT o Claude, que procesan tus peticiones
+en servidores externos en la nube, LM Studio transforma tu máquina en el
+servidor. Esto significa que puedes interactuar con inteligencias artificiales
+avanzadas sin conexión a internet y con la total seguridad de que tus datos o tu
+código fuente nunca saldrán de tu disco duro.
+
+¿Qué la hace una herramienta tan utilizada?
+
+-Buscador integrado de Hugging Face: No necesitas descargar archivos
+manualmente desde terminales complejas. La aplicación incluye una barra de
+búsqueda directa conectada a Hugging Face para que encuentres e instales
+modelos en formato GGUF (un formato muy optimizado para correr en hardware de
+consumo) con un solo clic.
+
+-Servidor local compatible con OpenAI: LM Studio puede levantar un servidor web
+local en tu máquina (localhost:1234). Este servidor imita exactamente la
+estructura de la API oficial de OpenAI. Gracias a esto, puedes redirigir
+cualquier script, herramienta o extensión de desarrollo (como OpenCode o
+plugins de IDEs) para que consuma el modelo que tienes corriendo localmente en
+lugar de pagar a un proveedor externo.
+
+-Aceleración por Hardware: Detecta de forma automática la potencia de tu equipo.
+Si cuentas con una tarjeta gráfica integrada o dedicada (NVIDIA CUDA, AMD ROCm o
+chips Apple Silicon de la serie M), la aplicación distribuye la carga de trabajo
+entre la memoria de la GPU (VRAM) y la CPU para que las respuestas se generen a
+máxima velocidad.
+
+-Multiplataforma: Cuenta con soporte nativo ejecutable para sistemas operativos
+Linux, macOS y Windows, adaptándose de forma muy limpia a entornos de desarrollo
+profesionales.
+
+-Control Total de Parámetros: Te permite modificar visualmente variables
+avanzadas de la inferencia como la temperatura (creatividad), el tamaño del
+contexto de tokens, el System Prompt inicial o los hilos de procesamiento
+asignados.
+
+Es, en esencia, la herramienta definitiva para desarrolladores y entusiastas que
+quieren experimentar con modelos abiertos de última generación (como Llama,
+Mistral o Phi) manteniendo el control absoluto de su entorno de computación.
+
+Fuente
+======
+
+Gemini IA
+
+===========================
+Guía para armar tu IA local
+===========================
+
+Guía técnica y estratégica completísima para planificar y comprar el hardware
+adecuado si quieres montar modelos de Inteligencia Artificial de forma 100%
+local.
+
+El enfoque principal es entender los compromisos técnicos (trade-offs) antes de
+gastar dinero a ciegas.
+
+Correr IA en local ya es productivo, principalmente por motivos de privacidad y
+cumplimiento regulatorio (como empresas con PCI compliance o manejo de datos
+clínicos que no pueden subir código o información a internet). El video rompe
+con el mito de "comprar lo más caro" y propone un flujo de decisión lógico:
+primero se eligen los modelos de IA según el caso de uso y luego se compra el
+hardware que encaje con sus requisitos de memoria, velocidad y concurrencia.
+
+Notas Más Importantes (Key Takeaways):
+
+1. El filtro del modelo y la memoria VRAM
+
+-Los modelos densos grandes (como Llama 70B) requieren entre 80-90 GB solo para
+cargarse. Los modelos más pequeños (como Qwen 2.5B) pueden hacer inferencia
+directo en CPU.
+
+-La VRAM de la tarjeta gráfica es el factor crítico. El modelo debe caber
+completamente en la VRAM para no destruir el rendimiento.
+
+-Ojo con el Contexto: No puedes ocupar el 100% de la VRAM con el peso del
+modelo. A mayor ventana de contexto (historial de chat enviado), más VRAM se
+consume. Herramientas agénticas de desarrollo (como OpenCode, Codex o Claude
+Code) envían system prompts masivos de entre 10,000 y 50,000 tokens, lo que
+exige dejar varios gigabytes libres en la gráfica solo para el contexto.
+
+2. El dilema de la velocidad: Ancho de Banda de Memoria (Memory Bandwidth)
+
+-El ancho de banda de la memoria define cuántos tokens por segundo genera el
+modelo (qué tan rápido se siente el chat).
+
+-Arquitecturas de Memoria Unificada (Apple Mac Studio/MacBook Pro con chips M
+Max, Nvidia Grace/Spack, o AMD Strix Halo): Tienen la gran ventaja de ofrecer
+mucha memoria (hasta 128 GB o más) sin comprar múltiples tarjetas de video. Sin
+embargo, su ancho de banda es menor al de una GPU dedicada.
+
+-Consecuencia: Correr un modelo masivo como Llama 70B en un Mac M5 Max
+funcionará por su gran capacidad de memoria, pero responderá muy lento (5 a 10
+tokens por segundo) debido al cuello de botella del ancho de banda
+
+.3. Guerra de marcas: AMD vs. NVIDIA
+
+-AMD (ej. RX 7900 XTX): Es drásticamente más barata (a menudo menos de la mitad
+del precio de su contraparte de Nvidia) ofreciendo la misma VRAM (24 GB) y un
+ancho de banda similar (~1000 GB/s). Ideal para desarrolladores independientes o
+laboratorios pequeños de hasta 3-4 personas.
+
+-NVIDIA (ej. RTX 4090/5090): Destaca exponencialmente en entornos empresariales
+de alta concurrencia gracias a la arquitectura y aceleradores nativos para
+cuantizaciones específicas (NB-FP4 y NB-FP8).
+
+4. Concurrencia y el concepto de Throughput
+
+-Nvidia, corriendo en Linux y usando el motor vLLM, escala la generación total
+de tokens (throughput) de forma masiva cuando recibe peticiones en paralelo
+(hasta 128 usuarios concurrentes).
+
+-AMD también escala en paralelo, pero tiene un techo de rendimiento mucho más
+bajo (normalmente se estanca a las 4 o 5 peticiones concurrentes).
+
+5. Ecosistema de Software Recomendado
+
+-LM Studio / Ollama: Excelentes, visuales y sencillos si te sobran recursos en
+la máquina. (Tienen un poco de overhead de interfaz).
+
+-llama.cpp: Ideal para optimizar al máximo si estás rozando el límite del
+hardware; además, soporta paralelismo básico.
+
+vLLM: El estándar obligatorio para entornos empresariales/alta concurrencia
+(hospitales, firmas de abogados, equipos grandes de desarrollo).
+
+-Optimizaciones nativas: En Linux los modelos corren más rápido que en Windows.
+Si usas Mac, es mandatorio usar la cuantización nativa MLX para ganar un ~30% de
+rendimiento [21:56].
+
+Los 5 Pasos para Armar tu Setup (Flujo de Decisión)
+
+1. Elige los modelos:
+
+Paso 1. Define qué tareas vas a realizar (programación, generación de imágenes,
+video) y qué modelos específicos (como Qwen 27B o 35B) vas a ejecutar. Decide si
+harás Hot Swapping (cambiar de modelo con latencia) o si necesitas correr varios
+en paralelo.
+
+2.Calcula la VRAM requerida:
+
+Paso 2. Suma el peso del modelo elegido en su respectiva cuantización y agrégale
+un margen generoso de Gigabytes para la ventana de contexto que pretendes usar.
+
+3.Determina la velocidad deseada:
+
+Paso 3. Revisa el Memory Bandwidth. Si buscas respuestas instantáneas
+(+100 tokens/seg), necesitas GPUs dedicadas. Si priorizas cargar modelos
+gigantes sin importar que responda lento, opta por memoria unificada
+(Mac/Strix Halo).
+
+4.Evalúa la cantidad de usuarios:
+
+Paso 4. Si la máquina es solo para ti o un equipo muy pequeño, AMD te ahorrará
+miles de dólares. Si es para una empresa con alta concurrencia de peticiones en
+paralelo, Nvidia es obligatoria.
+
+5. Elige el software y sistema operativo:
+
+Paso 5. Usa LM Studio/Ollama para comodidad local, llama.cpp para exprimir el
+hardware al límite, o vLLM para servidores corporativos. Prioriza Linux o
+cuantizaciones optimizadas como MLX en Mac.
+
+Fuentes
+=======
+
+https://www.youtube.com/watch?v=52Z8EuvLJ-c
+
+Gemini IA
+
+===============
+Agente agéntico
+===============
+
+Cuando escuchas el término "agente agéntico" (o comportamiento agéntico, que
+viene del inglés agentic), se refiere a una IA que no solo responde preguntas,
+sino que tiene la capacidad de actuar por sí misma para resolver un objetivo
+complejo.
+
+Para entenderlo de forma sencilla, imagínalo como la evolución de un asistente
+pasivo a un trabajador autónomo.
+
+La diferencia claveIA Tradicional (Pasiva): Tú le dices "Hazme una función en
+Python para enviar un correo". La IA te genera el código, te lo muestra en
+pantalla, y tú tienes que copiarlo, pegarlo, configurar las librerías en tu
+máquina y ejecutarlo. Si falla, tienes que volver a copiar el error y
+preguntarle.
+
+IA Agéntica (Activa): Tú le dices "Envía este reporte mensual a los clientes por
+correo". La IA analiza la tarea, busca los archivos necesarios en tu sistema,
+escribe el script de Python, lo ejecuta ella misma, lee los errores si surgen,
+los corrige sobre la marcha, comprueba que los correos se enviaron y te avisa
+cuando terminó.
+
+¿Qué capacidades definen a un sistema agéntico?
+
+Para que un software o IA sea considerado "agéntico", debe cumplir con cuatro
+pilares fundamentales:
+
+-Autonomía y Toma de Decisiones: En lugar de seguir instrucciones paso a paso,
+tú le das una meta final (ej. "Migra esta base de datos de MySQL a PostgreSQL").
+El agente decide por sí mismo cuál es el mejor camino, qué herramientas usar y
+en qué orden hacer las tareas.
+
+-Uso de Herramientas: Puede interactuar con el mundo exterior. Un agente puede
+abrir la terminal de comandos, crear y modificar archivos locales, hacer
+búsquedas en la web, conectarse a APIs externas o incluso controlar el ratón y
+el teclado en la pantalla.
+
+-Ciclo de Razonamiento y Reflexión (Loop): No responde de golpe. El agente
+sigue un ciclo constante de: Planificar > Ejecutar > Evaluar > Corregir.
+Si ejecuta un código y el sistema le devuelve un error, el agente "lee" ese
+error, entiende qué falló, modifica su propio código y lo vuelve a intentar de
+forma independiente.
+
+-Persistencia y Memoria: Puede manejar tareas que toman minutos u horas. Guarda
+el contexto de lo que hizo hace diez pasos para saber qué dirección tomar en el
+siguiente, gestionando flujos de trabajo complejos sin perder el hilo.
+
+En resumen, decir que un software es "agéntico" significa que tiene iniciativa.
+Ya no es solo una caja de texto que genera palabras, sino una entidad de
+software diseñada para ejecutar acciones concretas en el mundo real o digital
+hasta cumplir una meta.
 
 Fuente
 ======
@@ -479,83 +1466,6 @@ Fuente
 
 Gemini IA
 
-======
-Ollama
-======
-
-Ollama es una aplicación gratuita de código abierto que te permite descargar y
-ejecutar Modelos de Lenguaje Grande (LLMs) directamente en tu propia
-computadora. A diferencia de ChatGPT o Claude, no depende de la nube, lo que te
-garantiza total privacidad, uso sin conexión a internet y cero costos de
-suscripción. Ollama se encarga de todo el proceso técnico complicado. Funciona
-como una especie de "Docker" o instalador simplificado para Inteligencia
-Artificial: te permite elegir de su catálogo y descargar modelos como DeepSeek,
-Llama, Mistral o Qwen con un solo comando.
-
-Adicionalmente también permite ejecutar modelos de la nube.
-
-Características principales
-===========================
-
--Privacidad total: Tus datos y conversaciones nunca se envían a servidores
-externos.
-
--Integración para desarrolladores: Incluye una API que permite conectar estos
-modelos de IA con programas en Python o JavaScript.
-
--Multiplataforma: Funciona de manera nativa en Windows, macOS y Linux.
-
-Instalación y prueba
-====================
-
-1- Instalar Ollama localmente.
-
-$ curl -fsSL https://ollama.com/install.sh | sh
-
-2- Iniciar sesión con una cuenta de Google.
-
-$ ollama signin
-
-3- Ejecutar un modelo cloud.
-
-$ ollama run gemma4:cloud
-
-Esto abre en el terminal la interfaz para interacutar con el modelo, ejemplo:
-
-$ ollama run gemma4:cloud
-Connecting to 'gemma4:cloud' on 'ollama.com' ⚡
->>> cuánto es 2 * 2?
-Thinking...
-*   Input: "cuánto es 2 * 2?" (Spanish)
-    *   Operation: Multiplication.
-    *   Numbers: 2 and 2.
-
-    *   $2 \times 2 = 4$
-
-    *   Language: Spanish (as requested by the input).
-    *   Answer: 4.
-...done thinking.
-
-2 * 2 = 4
-
-4- Funcionalidades de Ollama:
-
-$ ollama
-
-Usar ChatGPT (Primeras versiones actualizdo hasta 2024)
-=======================================================
-
-$ ollama run gpt-oss:120b-cloud
-
-Fuentes
-=======
-
--Ollama Cloud ejecuta modelos LLM potentes gratis: https://www.youtube.com/shorts/SW87l0q0QP8
-
--Web oficial de Ollama: https://ollama.com/
-
--Modelos cloud: https://ollama.com/search?c=cloud
-
 ========
 OpenCode
 ========
@@ -693,65 +1603,6 @@ Fuente
 
 Gemini IA
 
-===============
-Agente agéntico
-===============
-
-Cuando escuchas el término "agente agéntico" (o comportamiento agéntico, que
-viene del inglés agentic), se refiere a una IA que no solo responde preguntas,
-sino que tiene la capacidad de actuar por sí misma para resolver un objetivo
-complejo.
-
-Para entenderlo de forma sencilla, imagínalo como la evolución de un asistente
-pasivo a un trabajador autónomo.
-
-La diferencia claveIA Tradicional (Pasiva): Tú le dices "Hazme una función en
-Python para enviar un correo". La IA te genera el código, te lo muestra en
-pantalla, y tú tienes que copiarlo, pegarlo, configurar las librerías en tu
-máquina y ejecutarlo. Si falla, tienes que volver a copiar el error y
-preguntarle.
-
-IA Agéntica (Activa): Tú le dices "Envía este reporte mensual a los clientes por
-correo". La IA analiza la tarea, busca los archivos necesarios en tu sistema,
-escribe el script de Python, lo ejecuta ella misma, lee los errores si surgen,
-los corrige sobre la marcha, comprueba que los correos se enviaron y te avisa
-cuando terminó.
-
-¿Qué capacidades definen a un sistema agéntico?
-
-Para que un software o IA sea considerado "agéntico", debe cumplir con cuatro
-pilares fundamentales:
-
--Autonomía y Toma de Decisiones: En lugar de seguir instrucciones paso a paso,
-tú le das una meta final (ej. "Migra esta base de datos de MySQL a PostgreSQL").
-El agente decide por sí mismo cuál es el mejor camino, qué herramientas usar y
-en qué orden hacer las tareas.
-
--Uso de Herramientas: Puede interactuar con el mundo exterior. Un agente puede
-abrir la terminal de comandos, crear y modificar archivos locales, hacer
-búsquedas en la web, conectarse a APIs externas o incluso controlar el ratón y
-el teclado en la pantalla.
-
--Ciclo de Razonamiento y Reflexión (Loop): No responde de golpe. El agente
-sigue un ciclo constante de: Planificar > Ejecutar > Evaluar > Corregir.
-Si ejecuta un código y el sistema le devuelve un error, el agente "lee" ese
-error, entiende qué falló, modifica su propio código y lo vuelve a intentar de
-forma independiente.
-
--Persistencia y Memoria: Puede manejar tareas que toman minutos u horas. Guarda
-el contexto de lo que hizo hace diez pasos para saber qué dirección tomar en el
-siguiente, gestionando flujos de trabajo complejos sin perder el hilo.
-
-En resumen, decir que un software es "agéntico" significa que tiene iniciativa.
-Ya no es solo una caja de texto que genera palabras, sino una entidad de
-software diseñada para ejecutar acciones concretas en el mundo real o digital
-hasta cumplir una meta.
-
-Fuente
-======
-
-Gemini IA
-
 ===========
 Claude Code
 ===========
@@ -802,820 +1653,11 @@ Fuente
 
 Gemini IA
 
-=========
-LM Studio
-=========
+-----
 
-LM Studio es una aplicación de escritorio diseñada para descargar, configurar y
-ejecutar modelos de lenguaje (LLMs) de forma 100% local en tu propio ordenador.
-A diferencia de plataformas como ChatGPT o Claude, que procesan tus peticiones
-en servidores externos en la nube, LM Studio transforma tu máquina en el
-servidor. Esto significa que puedes interactuar con inteligencias artificiales
-avanzadas sin conexión a internet y con la total seguridad de que tus datos o tu
-código fuente nunca saldrán de tu disco duro.
-
-¿Qué la hace una herramienta tan utilizada?
-
--Buscador integrado de Hugging Face: No necesitas descargar archivos
-manualmente desde terminales complejas. La aplicación incluye una barra de
-búsqueda directa conectada a Hugging Face para que encuentres e instales
-modelos en formato GGUF (un formato muy optimizado para correr en hardware de
-consumo) con un solo clic.
-
--Servidor local compatible con OpenAI: LM Studio puede levantar un servidor web
-local en tu máquina (localhost:1234). Este servidor imita exactamente la
-estructura de la API oficial de OpenAI. Gracias a esto, puedes redirigir
-cualquier script, herramienta o extensión de desarrollo (como OpenCode o
-plugins de IDEs) para que consuma el modelo que tienes corriendo localmente en
-lugar de pagar a un proveedor externo.
-
--Aceleración por Hardware: Detecta de forma automática la potencia de tu equipo.
-Si cuentas con una tarjeta gráfica integrada o dedicada (NVIDIA CUDA, AMD ROCm o
-chips Apple Silicon de la serie M), la aplicación distribuye la carga de trabajo
-entre la memoria de la GPU (VRAM) y la CPU para que las respuestas se generen a
-máxima velocidad.
-
--Multiplataforma: Cuenta con soporte nativo ejecutable para sistemas operativos
-Linux, macOS y Windows, adaptándose de forma muy limpia a entornos de desarrollo
-profesionales.
-
--Control Total de Parámetros: Te permite modificar visualmente variables
-avanzadas de la inferencia como la temperatura (creatividad), el tamaño del
-contexto de tokens, el System Prompt inicial o los hilos de procesamiento
-asignados.
-
-Es, en esencia, la herramienta definitiva para desarrolladores y entusiastas que
-quieren experimentar con modelos abiertos de última generación (como Llama,
-Mistral o Phi) manteniendo el control absoluto de su entorno de computación.
-
-Fuente
-======
-
-Gemini IA
-
-=================
-Modelo multimodal
-=================
-
-Un modelo multimodal es un tipo de inteligencia artificial capaz de procesar,
-comprender y combinar diferentes tipos de datos o "modalidades" al mismo tiempo.
-
-A diferencia de los LLMs tradicionales (que son unimodales porque solo entienden
-y generan texto), un modelo multimodal puede trabajar simultáneamente con texto,
-imágenes, audio, video y código.
-
-¿Cómo funcionan?
-
-Para entenderlo, piensa en cómo aprendemos los humanos. Nosotros no solo leemos
-texto; entendemos el mundo mirando imágenes, escuchando sonidos y observando
-videos.
-
-Un modelo multimodal imita esto unificando la información:
-
--Entrada mixta: Recibe diferentes formatos (por ejemplo, una foto de una
-factura y un texto que dice "Súmame los totales").
-
--Espacio vectorial común: Traduce tanto la imagen como el texto a un "idioma
-matemático interno" común, permitiendo que la IA entienda cómo se relaciona lo
-que ve con lo que lee.
-
--Resultado: Genera una respuesta que puede ser un texto explicativo, una nueva
-imagen, un archivo de audio o código modificado.
-
-Capacidades reales: ¿Qué pueden hacer?
-
-La multimodalidad es lo que permite que las inteligencias artificiales salgan de
-la caja de texto y asistan en tareas del mundo real:
-
--Visión Computacional y Texto: Puedes subirle el diagrama de arquitectura de una
-base de datos o una red, y pedirle que te escriba el código de configuración en
-limpio. O tomarle una foto a un error en una pantalla y preguntarle cómo
-solucionarlo.
-
--Audio y Voz Directa: Permite hablar con la IA con voz natural, captando la
-entonación, la velocidad del habla y respondiendo en milisegundos con voz
-humana, sin necesidad de transcribir primero el audio a texto.
-
--Análisis de Video: Puedes proporcionarle un clip de video de unos minutos y
-pedirle: "Dime en qué segundo exacto aparece el coche rojo" o "Hazme un resumen
-de lo que pasó en la reunión".
-
-Ejemplos de modelos multimodales nativos
-
-Hoy en día, los modelos más potentes se diseñan como multimodales desde su
-origen (nativo), en lugar de pegar parches de visión sobre un modelo de texto:
-
--Gemini (Google): Diseñado desde cero para ser nativamente multimodal, lo que le
-permite procesar contextos gigantescos combinando horas de video, audio y texto
-en la misma consulta.
-
--GPT-4o (OpenAI): Un modelo unificado que procesa texto, visión y audio en
-tiempo real con una latencia extremadamente baja.
-
--Claude 3.5 Sonnet (Anthropic): Destaca por sus capacidades de visión avanzadas
-para analizar gráficos, diagramas técnicos y transcribir documentos complejos.
-
-Fuente
-======
-
-Gemini IA
-
-===========================
-Guía para armar tu IA local
-===========================
-
-Guía técnica y estratégica completísima para planificar y comprar el hardware
-adecuado si quieres montar modelos de Inteligencia Artificial de forma 100%
-local.
-
-El enfoque principal es entender los compromisos técnicos (trade-offs) antes de
-gastar dinero a ciegas.
-
-Correr IA en local ya es productivo, principalmente por motivos de privacidad y
-cumplimiento regulatorio (como empresas con PCI compliance o manejo de datos
-clínicos que no pueden subir código o información a internet). El video rompe
-con el mito de "comprar lo más caro" y propone un flujo de decisión lógico:
-primero se eligen los modelos de IA según el caso de uso y luego se compra el
-hardware que encaje con sus requisitos de memoria, velocidad y concurrencia.
-
-Notas Más Importantes (Key Takeaways):
-
-1. El filtro del modelo y la memoria VRAM
-
--Los modelos densos grandes (como Llama 70B) requieren entre 80-90 GB solo para
-cargarse. Los modelos más pequeños (como Qwen 2.5B) pueden hacer inferencia
-directo en CPU.
-
--La VRAM de la tarjeta gráfica es el factor crítico. El modelo debe caber
-completamente en la VRAM para no destruir el rendimiento.
-
--Ojo con el Contexto: No puedes ocupar el 100% de la VRAM con el peso del
-modelo. A mayor ventana de contexto (historial de chat enviado), más VRAM se
-consume. Herramientas agénticas de desarrollo (como OpenCode, Codex o Claude
-Code) envían system prompts masivos de entre 10,000 y 50,000 tokens, lo que
-exige dejar varios gigabytes libres en la gráfica solo para el contexto.
-
-2. El dilema de la velocidad: Ancho de Banda de Memoria (Memory Bandwidth)
-
--El ancho de banda de la memoria define cuántos tokens por segundo genera el
-modelo (qué tan rápido se siente el chat).
-
--Arquitecturas de Memoria Unificada (Apple Mac Studio/MacBook Pro con chips M
-Max, Nvidia Grace/Spack, o AMD Strix Halo): Tienen la gran ventaja de ofrecer
-mucha memoria (hasta 128 GB o más) sin comprar múltiples tarjetas de video. Sin
-embargo, su ancho de banda es menor al de una GPU dedicada.
-
--Consecuencia: Correr un modelo masivo como Llama 70B en un Mac M5 Max
-funcionará por su gran capacidad de memoria, pero responderá muy lento (5 a 10
-tokens por segundo) debido al cuello de botella del ancho de banda
-
-.3. Guerra de marcas: AMD vs. NVIDIA
-
--AMD (ej. RX 7900 XTX): Es drásticamente más barata (a menudo menos de la mitad
-del precio de su contraparte de Nvidia) ofreciendo la misma VRAM (24 GB) y un
-ancho de banda similar (~1000 GB/s). Ideal para desarrolladores independientes o
-laboratorios pequeños de hasta 3-4 personas.
-
--NVIDIA (ej. RTX 4090/5090): Destaca exponencialmente en entornos empresariales
-de alta concurrencia gracias a la arquitectura y aceleradores nativos para
-cuantizaciones específicas (NB-FP4 y NB-FP8).
-
-4. Concurrencia y el concepto de Throughput
-
--Nvidia, corriendo en Linux y usando el motor vLLM, escala la generación total
-de tokens (throughput) de forma masiva cuando recibe peticiones en paralelo
-(hasta 128 usuarios concurrentes).
-
--AMD también escala en paralelo, pero tiene un techo de rendimiento mucho más
-bajo (normalmente se estanca a las 4 o 5 peticiones concurrentes).
-
-5. Ecosistema de Software Recomendado
-
--LM Studio / Ollama: Excelentes, visuales y sencillos si te sobran recursos en
-la máquina. (Tienen un poco de overhead de interfaz).
-
--llama.cpp: Ideal para optimizar al máximo si estás rozando el límite del
-hardware; además, soporta paralelismo básico.
-
-vLLM: El estándar obligatorio para entornos empresariales/alta concurrencia
-(hospitales, firmas de abogados, equipos grandes de desarrollo).
-
--Optimizaciones nativas: En Linux los modelos corren más rápido que en Windows.
-Si usas Mac, es mandatorio usar la cuantización nativa MLX para ganar un ~30% de
-rendimiento [21:56].
-
-Los 5 Pasos para Armar tu Setup (Flujo de Decisión)
-
-1. Elige los modelos:
-
-Paso 1. Define qué tareas vas a realizar (programación, generación de imágenes,
-video) y qué modelos específicos (como Qwen 27B o 35B) vas a ejecutar. Decide si
-harás Hot Swapping (cambiar de modelo con latencia) o si necesitas correr varios
-en paralelo.
-
-2.Calcula la VRAM requerida:
-
-Paso 2. Suma el peso del modelo elegido en su respectiva cuantización y agrégale
-un margen generoso de Gigabytes para la ventana de contexto que pretendes usar.
-
-3.Determina la velocidad deseada:
-
-Paso 3. Revisa el Memory Bandwidth. Si buscas respuestas instantáneas
-(+100 tokens/seg), necesitas GPUs dedicadas. Si priorizas cargar modelos
-gigantes sin importar que responda lento, opta por memoria unificada
-(Mac/Strix Halo).
-
-4.Evalúa la cantidad de usuarios:
-
-Paso 4. Si la máquina es solo para ti o un equipo muy pequeño, AMD te ahorrará
-miles de dólares. Si es para una empresa con alta concurrencia de peticiones en
-paralelo, Nvidia es obligatoria.
-
-5. Elige el software y sistema operativo:
-
-Paso 5. Usa LM Studio/Ollama para comodidad local, llama.cpp para exprimir el
-hardware al límite, o vLLM para servidores corporativos. Prioriza Linux o
-cuantizaciones optimizadas como MLX en Mac.
-
-Fuentes
-=======
-
-https://www.youtube.com/watch?v=52Z8EuvLJ-c
-
-Gemini IA
-
-==============================================
-Machine Learning (ML) o Aprendizaje Automático
-==============================================
-
-Es una rama de la Inteligencia Artificial que permite a las computadoras
-aprender y tomar decisiones a partir de los datos, sin ser programadas
-explícitamente para cada tarea.
-
-En la programación tradicional, tú escribes reglas específicas (si ocurre X, haz
-Y) para procesar datos y obtener un resultado. En el Aprendizaje Automático, el
-flujo se invierte: le entregas al sistema los datos y los resultados esperados,
-y el algoritmo se encarga de descubrir el patrón o la regla matemática que los
-conecta.
-
-Los Tres Enfoques Principales del Aprendizaje Automático
-
-La forma en que un modelo de Machine Learning procesa la información define su
-tipo de aprendizaje. Estos enfoques se dividen principalmente en tres
-categorías:
-
-1. Aprendizaje Supervisado (Supervised Learning) El modelo se entrena con un
-conjunto de datos etiquetados. Esto significa que cada ejemplo de entrenamiento
-incluye la respuesta correcta.
-
--Cómo funciona: Es como estudiar con un examen resuelto. El algoritmo ajusta sus
-parámetros internos para minimizar el error entre sus predicciones y las
-etiquetas reales.
-
--Ejemplos: Clasificación de correos (Spam / No Spam) o predicción de precios de
-viviendas basándose en características como metros cuadrados y ubicación
-(regresión).
-
-2. Aprendizaje No Supervisado (Unsupervised Learning)Aquí los datos no tienen
-etiquetas ni respuestas correctas predefinidas.
-
--Cómo funciona: El algoritmo analiza la estructura de los datos para encontrar
-patrones ocultos, similitudes o agrupaciones por su cuenta.
-
--Ejemplos: Segmentación de clientes en una tienda según sus hábitos de compra
-(Clustering) o sistemas de recomendación que agrupan películas similares.
-
-3. Aprendizaje por Refuerzo (Reinforcement Learning)
-
-El sistema (llamado agente) aprende a interactuar con un entorno dinámico
-mediante ensayo y error.
-
--Cómo funciona: No hay datos de entrenamiento estáticos. El agente realiza
-acciones y recibe "recompensas" por las decisiones correctas o "penalizaciones"
-por los errores, optimizando su comportamiento a lo largo del tiempo para
-maximizar la recompensa acumulada.
-
--Ejemplos: Algoritmos que aprenden a jugar ajedrez, control de trayectorias en
-robótica o la navegación de vehículos autónomos.
-
-¿Cómo aprende un modelo? (El flujo básico)
-
-Aunque la matemática detrás puede ser compleja, el proceso de desarrollo sigue
-una secuencia lógica:
-
--Recolección y preparación de datos: Se limpian y estructuran los datos
-históricos. Esta fase suele consumir el 80% del tiempo de un proyecto.
-
--Entrenamiento (Training): Se alimenta un algoritmo (como una regresión lineal,
-un árbol de decisión o una red neuronal) con estos datos para que genere un
-modelo matemático.
-
--Evaluación: Se prueba el modelo con datos nuevos que nunca ha visto antes para
-verificar su precisión y evitar el sobreajuste (aprender de memoria los datos de
-entrenamiento sin poder generalizar).
-
--Despliegue y producción: El modelo se integra en una aplicación real para
-realizar predicciones con datos en tiempo real.
-
-El Deep Learning (Aprendizaje Profundo)
-=======================================
-
-Es una subrama del Aprendizaje Automático (Machine Learning) que se basa en
-entrenar redes neuronales artificiales de muchas capas (de ahí el término
-"profundo") para que aprendan a reconocer patrones complejos en los datos de
-forma automatizada.
-
-A diferencia del Machine Learning tradicional, donde los humanos deben
-identificar y programar manualmente las características relevantes que la
-computadora debe buscar (por ejemplo, decirle que busque bordes o texturas para
-identificar una foto), el Deep Learning permite que la propia red descubra esas
-características por sí misma a través de la experiencia y grandes volúmenes de
-datos.
-
-¿Cómo funciona? La analogía de las capas
-
-Imagine una red neuronal como una línea de ensamblaje dividida en capas de
-neuronas matemáticas:
-
--Capa de entrada: Recibe los datos en bruto (por ejemplo, los píxeles de una
-imagen de un carro).
-
--Capas ocultas (Deep): Aquí ocurre la magia.
-    -La primera capa detecta cosas simples como líneas y bordes.
-    -La segunda capa combina esas líneas para detectar formas más complejas
-    (ruedas, ventanas).
-    -La tercera capa junta las formas para reconocer estructuras completas (la
-    silueta de un carro).
-
--Capa de salida: Entrega el resultado final ("Es un carro con un 98% de
-probabilidad").
-
-Cada neurona de la red tiene un peso matemático que se ajusta automáticamente
-mediante un proceso llamado retropropagación (backpropagation) cuando la red
-comete un error, logrando que sea más precisa con cada intento.
-
-Machine Learning vs. Deep Learning
-
-+------------------------+-----------------------------------+-----------------------------------+
-| Característica         | Machine Learning Tradicional      | Deep Learning                     |
-+------------------------+-----------------------------------+-----------------------------------+
-| Volumen de Datos       | Funciona bien con pocos datos.    | Requiere bases de datos masivas.  |
-+------------------------+-----------------------------------+-----------------------------------+
-| Extracción de Features | Manual (identificada por humanos).| Automática (la red las descubre). |
-+------------------------+-----------------------------------+-----------------------------------+
-| Tiempo de Entrenamiento| De minutos a pocas horas.         | De días a semanas.                |
-+------------------------+-----------------------------------+-----------------------------------+
-| Hardware Necesario     | CPUs estándar son suficientes.    | Requiere GPUs/TPUs de alto poder. |
-+------------------------+-----------------------------------+-----------------------------------+
-| Arquitectura           | Algoritmos directos (árboles,     | Redes neuronales profundas con    |
-|                        | regresiones, SVM).                | múltiples capas ocultas.          |
-+------------------------+-----------------------------------+-----------------------------------+
-| Interpretabilidad      | Alta (es fácil rastrear por qué   | Baja ("Caja negra", es difícil    |
-|                        | el algoritmo tomó una decisión).  | auditar el camino matemático).    |
-+------------------------+-----------------------------------+-----------------------------------+
-
-Aplicaciones reales en la actualidad
-
-El auge del Deep Learning se debe a la disponibilidad masiva de datos (Big Data)
-y al poder de procesamiento de las tarjetas gráficas modernas. Hoy en día es el
-motor detrás de:
-
--Visión Computacional: Reconocimiento facial, diagnóstico médico por imágenes y
-los sistemas de conducción autónoma.
-
--Procesamiento del Lenguaje Natural (PLN): Traductores automáticos, asistentes
-de voz y los Grandes Modelos de Lenguaje (como en el que estamos interactuando
-ahora).
-
--Sistemas de recomendación: Los algoritmos que deciden qué video mostrarte en
-YouTube o qué producto sugerirte en plataformas de e-commerce.
-
-Fuente
-======
-
-Gemini IA
-
-============================================
-Una Red Neuronal (o Red Neuronal Artificial)
-============================================
-
-Es un modelo matemático y computacional inspirado en la estructura y el
-funcionamiento del cerebro humano. Su objetivo es aprender a reconocer patrones,
-procesar información y resolver problemas complejos a partir de ejemplos, en
-lugar de seguir reglas rígidas programadas a mano.
-
-La estructura básica: Los componentes
-
-Al igual que nuestro cerebro está hecho de miles de millones de neuronas
-biológicas interconectadas, una red neuronal artificial está compuesta por nodos
-interconectados organizados en capas:
-
--Capa de entrada: Recibe los datos iniciales (por ejemplo, los valores de
-píxeles de una imagen o las variables de un archivo Excel).
-
--Capas ocultas: Es donde se realiza el procesamiento. Puede haber una sola capa
-(en redes simples) o cientos de ellas (en Deep Learning). Cada neurona aquí toma
-los datos de la capa anterior, hace un cálculo y pasa el resultado a la
-siguiente.
-
--Capa de salida: Devuelve el resultado final de la predicción o clasificación
-(por ejemplo, si el cliente comprará o no un producto).
-
-¿Cómo funciona una neurona artificial (Perceptrón)?
-
-Cada círculo en el diagrama de una red es una "neurona" matemática. El proceso
-que ocurre dentro de ella es simple pero potente:
-
--Entradas: Los datos que recibe de la capa anterior.
-
--Pesos: La importancia o "fuerza" que se le da a cada entrada. Si una entrada es
-crucial para el resultado, su peso será alto.
-
-Sesgo: Un valor que permite ajustar la sensibilidad de la neurona.
-
-Función de activación: Una fórmula matemática que decide si la neurona debe
-"activarse" y pasar información a la siguiente capa, introduciendo no linealidad
-para que la red pueda aprender patrones complejos y curvas.
-
-La neurona multiplica cada entrada por su peso, suma todo junto al sesgo, pasa
-el resultado por la función de activación y envía la señal adelante.
-
-¿Cómo aprende una Red Neuronal?
-
-Cuando una red se crea, no sabe hacer nada porque sus pesos y sesgos se
-inicializan al azar. El proceso de aprendizaje consta de dos pasos que se
-repiten millones de veces:
-
--Propagación hacia adelante (Forward Propagation): Los datos pasan por la red,
-las neuronas hacen sus cálculos y la red genera una predicción. Al principio,
-esta predicción suele ser pésima.
-
--Cálculo del error y Retropropagación (Backpropagation): Se compara la
-predicción de la red con el resultado real (la verdad de los datos) usando una
-función de pérdida. El error resultante se envía de regreso a través de la red
-(hacia atrás). Utilizando un algoritmo llamado Optimización por Gradiente
-Descendiente, la red ajusta ligeramente todos los pesos y sesgos para reducir el
-error en el siguiente intento.
-
-Con suficientes iteraciones (épocas de entrenamiento), la red encuentra la
-combinación exacta de pesos matemáticos que le permite resolver el problema con
-alta precisión.
-
-Fuente
-======
-
-Gemini IA
-
-===========
-Alucinación
-===========
-
-En Inteligencia Artificial (especialmente en los Grandes Modelos de Lenguaje o
-LLMs), una alucinación ocurre cuando el modelo genera información que es falsa,
-inventada o sin sentido, pero la presenta con absoluta confianza y un tono muy
-convincente, como si fuera un hecho real.
-
-Probablemente te hayas topado con esto: le pides a una IA que te resuelva un
-problema en Django o Vue.js, y te sugiere importar una librería o usar una
-función que parece tener todo el sentido del mundo (ej. from django.utils import
-super_auth_helper). Vas a tu entorno en Debian, intentas usarlo y resulta que
-esa función o paquete no existe. La IA lo "alucinó".
-
-¿Por qué ocurren las alucinaciones?
-
-Para entender el porqué, es clave recordar qué son realmente estos modelos por
-debajo. Los LLMs no consultan una base de datos SQL o un diccionario de verdades
-absolutas antes de responder. Son motores probabilísticos.
-
-Su único objetivo matemático es predecir cuál es el siguiente token (palabra o
-fragmento de palabra) más probable en una secuencia, basándose en los inmensos
-volúmenes de texto con los que fueron entrenados.
-
-Si la IA no tiene la información exacta, su algoritmo de predicción
-estadísticamente "rellenará los huecos" con las palabras que normalmente
-acompañan a ese contexto. El resultado es un texto gramatical y semánticamente
-perfecto, pero factualmente incorrecto.
-
-Causas principales
-
--Datos de entrenamiento incompletos o sesgados: Si el modelo no vio suficiente
-información sobre un tema específico durante su entrenamiento, intentará
-adivinar.
-
--Compresión de la información: Los modelos no guardan el texto exacto de la web;
-comprimen el conocimiento en "pesos" matemáticos dentro de su red neuronal. Al
-intentar reconstruir un dato específico a partir de esos pesos, la memoria puede
-fallar.
-
--Falta de conexión a la realidad (Grounding): Por defecto, un modelo base no
-puede verificar sus propias afirmaciones contra el mundo real o buscar en
-internet para validar si lo que está diciendo es cierto hoy.
-
-¿Cómo mitigamos las alucinaciones al desarrollar software con IA?
-
-Si estás integrando IA en algún proyecto (por ejemplo, en el backend con
-Python), no puedes eliminar las alucinaciones al 100%, pero puedes reducirlas
-drásticamente con estas estrategias:
-
--RAG (Retrieval-Augmented Generation): En lugar de depender de la "memoria" del
-modelo, primero haces una búsqueda en tu propia base de datos (tus propios
-documentos, código o manuales) y le pasas esos resultados al modelo en el
-prompt. Le dices: "Responde a la pregunta del usuario utilizando estrictamente
-este contexto".
-
--Ajuste de la Temperatura (Temperature): Las APIs de los LLMs tienen un
-parámetro llamado temperatura que controla la aleatoriedad. Una temperatura alta
-(ej. 0.8) hace que la IA sea más creativa (ideal para escribir historias), pero
-más propensa a alucinar. Una temperatura baja (0.1 o 0.0) la hace más
-determinista y estricta, ideal para código o datos técnicos.
-
--Ingeniería de Prompts (Prompt Engineering): Dar instrucciones de escape
-explícitas, como: "Si no sabes la respuesta o no está en el contexto
-proporcionado, responde 'No tengo suficiente información' en lugar de intentar
-adivinar".
-
-Fuente
-======
-
-Gemini IA
-
-==================================
-El Preentrenamiento (Pre-training)
-==================================
-
-Es la primera fase en el proceso de creación de un modelo de Inteligencia
-Artificial moderno (como un LLM, una red neuronal de visión o un transformador).
-
-Consiste en entrenar a una red neuronal gigante con un volumen masivo de datos
-no etiquetados para que aprenda las reglas básicas, la estructura y los patrones
-generales del mundo, del lenguaje o de las imágenes.
-
-En términos sencillos: es la etapa donde la IA va a la escuela primaria y
-secundaria para adquirir cultura general antes de especializarse en una tarea
-concreta.
-
-¿Cómo funciona el Preentrenamiento?
-
-Durante esta fase, el modelo se entrena bajo una modalidad llamada Aprendizaje
-Auto-Supervisado (Self-Supervised Learning). Esto significa que no necesita que
-un humano etiquete los datos manualmente (lo cual sería imposible para terabytes
-de información). En su lugar, el propio algoritmo genera sus "exámenes" a partir
-de los datos brutos.
-
-Existen dos estrategias principales para entrenar modelos de lenguaje durante
-esta etapa:
-
--Modelado de lenguaje causal (Causal Language Modeling): Al modelo se le
-presenta una frase incompleta y debe adivinar la siguiente palabra.
-
-Ejemplo: "El lenguaje de programación más popular para IA es [Máscara]". La IA
-intenta adivinar "Python".
-
--Modelado de lenguaje enmascarado (Masked Language Modeling): Se ocultan
-palabras aleatorias dentro de un texto y el modelo debe usar el contexto
-(izquierdo y derecho) para rellenar los huecos.
-
-Ejemplo: "El desarrollo [Máscara] se enfoca en bases de datos y lógica de
-servidor". La IA debe deducir que la palabra oculta es "backend".
-
-Al repetir este juego de adivinanzas miles de millones de veces sobre todo el
-internet (Wikipedia, libros, repositorios de código de GitHub, foros), el modelo
-desarrolla una comprensión profunda de la gramática, la lógica, el sentido común
-e incluso habilidades básicas de razonamiento y programación.
-
-¿Por qué es tan importante en la IA moderna?
-
-Antes de que se popularizara el preentrenamiento, los ingenieros de software
-tenían que entrenar modelos desde cero para cada tarea específica (un modelo
-solo para traducir, otro solo para analizar sentimientos, otro solo para
-resumir). Esto requería etiquetar miles de datos a mano y un gasto computacional
-enorme para cada proyecto.
-
-El preentrenamiento cambió las reglas del juego gracias a dos grandes ventajas:
-
--Transferencia de Aprendizaje (Transfer Learning): Una vez que el modelo tiene
-esa "base de conocimiento general" (el modelo preentrenado o Foundation Model),
-no hay que volver a enseñarle a leer o escribir. Puedes tomar esa base y
-adaptarla a tu problema específico.
-
--Eficiencia en Datos: Como el modelo ya "sabe" cómo funciona el mundo, solo
-necesitas un puñado de ejemplos específicos (decenas o cientos, en lugar de
-millones) para enseñarle a realizar una tarea especializada en tu empresa.
-
-El flujo completo: Del servidor al usuario
-
-El preentrenamiento es solo el punto de partida. El ciclo de vida de un modelo
-comercial o de código abierto (como Llama o GPT) suele verse así:
-
-+-------------------------------------------------------------+
-| 1. PREENTRENAMIENTO (Pre-training)                          |
-|    - Objetivo: Aprender cultura general y lenguaje.         |
-|    - Datos: Terabytes de texto crudo de internet.           |
-|    - Costo: Millones de dólares en GPUs.                    |
-+-------------------------------------------------------------+
-                              |
-                              v
-+-------------------------------------------------------------+
-| 2. AJUSTE FINO (Fine-Tuning) / Alineación (RLHF)            |
-|    - Objetivo: Enseñar al modelo a seguir instrucciones,    |
-|      ser útil, seguro y comportarse como un asistente.      |
-|    - Datos: Conjuntos seleccionados de preguntas/respuestas. |
-+-------------------------------------------------------------+
-                              |
-                              v
-+-------------------------------------------------------------+
-| 3. INFERENCIA (Inference)                                   |
-|    - El modelo final respondiendo a tus prompts en producción. |
-+-------------------------------------------------------------+
-
-Fuente
-======
-
-Gemini IA
-
-===============================================================================
-El RAG (Retrieval-Augmented Generation) o Generación Aumentada por Recuperación
-===============================================================================
-
-Es un patrón de diseño y una técnica en arquitectura de software que optimiza
-las respuestas de un Modelo de Lenguaje (LLM) conectándolo a una fuente de datos
-externa en tiempo real.
-
-La analogía clásica es la de un examen:
-
-Sin RAG (Solo el LLM): El modelo responde un examen a libro cerrado, confiando
-únicamente en lo que memorizó durante su preentrenamiento. Si el tema es muy
-específico o reciente, es propenso a inventar respuestas (alucinación).
-
-Con RAG: El modelo responde el examen a libro abierto. El sistema busca los
-documentos exactos que contienen la respuesta en tu biblioteca privada, se los
-pone en frente al LLM y le pide que redacte la respuesta basándose únicamente en
-ese material.
-
-¿Cómo funciona el flujo de RAG?
-
-El proceso se divide en dos fases principales: la preparación de los datos y
-el ciclo de consulta en tiempo real.
-
-1. Preparación de los datos (Ingesta)
-
-Antes de que el usuario pregunte algo, los documentos (PDFs, wikis, bases de
-datos SQL, código fuente) deben prepararse para que la máquina los entienda
-eficientemente:
-
--Segmentación (Chunking): Los textos largos se dividen en fragmentos pequeños
-(de unos pocos cientos de palabras) para no saturar la memoria del modelo.
-
--Vectorización (Embedding): Cada fragmento pasa por un modelo de embedding que
-convierte el texto en un vector numérico (una coordenada en un mapa
-multidimensional que representa el significado semántico del texto).
-
--Base de Datos Vectorial: Esos vectores se almacenan en una base de datos
-especializada (como ChromaDB, PGVector, Pinecone o Qdrant).
-
-2. El proceso de consulta (Tiempo de ejecución)
-
-Cuando el usuario hace una pregunta, ocurre la magia tras bambalinas:
-
-1.Vectorizar la consulta:
-
-Paso 1. La pregunta del usuario se convierte a vectores utilizando el mismo
-modelo de embeddings empleado en la fase de ingesta.
-
-2.Recuperación (Retrieval):
-
-Paso 2. El sistema busca en la base de datos vectorial los fragmentos de texto
-cuyas coordenadas matemáticas sean más cercanas (similares en significado) a la
-pregunta del usuario.
-
-3.Aumentar el Prompt (Augment):
-
-Paso 3. Se construye un super-prompt inyectando el texto recuperado junto con la
-pregunta original. (Ej: "Usa este fragmento de código para responder la duda del
-usuario: [Código recuperado]. Pregunta: [Pregunta original]")
-
-4.Generación (Generation):
-
-Paso 4. El LLM lee el prompt enriquecido y redacta una respuesta coherente,
-verídica y contextualizada basándose únicamente en los datos proporcionados.
-
-¿Por qué es la arquitectura favorita de las empresas?
-
--Mitiga las alucinaciones: Al obligar al LLM a basarse en hechos recuperados de
-un documento real, la probabilidad de que invente información cae drásticamente.
-
--Información actualizada sin reentrenar: Reentrenar o hacer fine-tuning de un
-modelo cuesta miles de dólares y requiere días. Con RAG, si tu base de
-conocimiento cambia, solo actualizas la base de datos vectorial (lo que toma
-segundos o minutos) y el LLM inmediatamente tendrá acceso a la información más
-reciente.
-
--Control de acceso y privacidad: Puedes filtrar los documentos que se recuperan
-según el rol o los permisos del usuario que consulta el sistema, asegurando que
-el LLM nunca lea información confidencial para la que el usuario no está
-autorizado.
-
-Fuente
-======
-
-Gemini IA
-
-========================================
-La Inferencia en Inteligencia Artificial
-========================================
-
-Es la fase en la que un modelo que ya ha sido entrenado se pone a trabajar en el
-mundo real. Consiste en pasarle datos nuevos (que el modelo nunca vio durante su
-entrenamiento) para que genere una predicción, una clasificación, una traducción
-o una respuesta.
-
-Si el entrenamiento es el proceso de "estudiar" para un examen, la inferencia es
-el momento en que "respondes las preguntas" en la vida real usando lo que
-aprendiste.
-
-Entrenamiento vs. Inferencia
-
-Para entender bien el concepto, es útil contrastarlo con la etapa previa de
-entrenamiento:
-
-+------------------------+------------------------------------+------------------------------------+
-| Característica         | Entrenamiento (Training)           | Inferencia (Inference)             |
-+------------------------+------------------------------------+------------------------------------+
-| Objetivo Principal     | Aprender patrones y ajustar los    | Aplicar lo aprendido para generar  |
-|                        | pesos matemáticos del modelo.      | predicciones con datos nuevos.     |
-+------------------------+------------------------------------+------------------------------------+
-| Dirección del Flujo    | Bidireccional (Forward pass +      | Unidireccional (Solo Forward pass, |
-|                        | Backpropagation para corregir).    | los pesos están congelados).       |
-+------------------------+------------------------------------+------------------------------------+
-| Volumen de Datos       | Masivo (giga/terabytes de datasets | Individual (un prompt, una imagen, |
-|                        | de texto, imágenes o tablas).      | un solo archivo de audio).         |
-+------------------------+------------------------------------+------------------------------------+
-| Consumo de Cómputo     | Extremadamente alto (clústeres de  | Bajo/Moderado (milisegundos por    |
-|                        | GPUs/TPUs corriendo por días).     | petición, puede correr en CPUs).   |
-+------------------------+------------------------------------+------------------------------------+
-| Modificación de Pesos  | Sí, cambian constantemente en cada  | No, los pesos son de "solo lectura"|
-|                        | iteración (época).                 | e inmutables.                      |
-+------------------------+------------------------------------+------------------------------------+
-| Frecuencia de Ejecución| Se hace pocas veces (una sola vez  | Se ejecuta continuamente (cada vez |
-|                        | o periódicamente al actualizar).   | que un usuario hace una consulta). |
-+------------------------+------------------------------------+------------------------------------+
-| Métrica Clave          | Loss (pérdida) y Accuracy (exacti- | Latencia (tiempo de respuesta) y   |
-|                        | tud) sobre el set de validación.   | costo de cómputo por consulta.     |
-+------------------------+------------------------------------+------------------------------------+
-
-¿Cómo funciona la Inferencia en la práctica?
-
-Imagina un modelo entrenado para detectar spam en correos electrónicos:
-
--Entrada (Input): Te llega un correo nuevo que dice "¡Felicidades! Has ganado un
-viaje gratis a las Bahamas, haz clic aquí".
-
--El "Paso hacia adelante" (Forward Pass): El correo se convierte a números
-(vectores) y pasa por la red neuronal del modelo. Las neuronas realizan
-multiplicaciones matemáticas utilizando los pesos fijos que obtuvieron durante
-el entrenamiento.
-
--Salida (Output): El modelo devuelve un resultado probabilístico: 99.2% Spam. El
-sistema de correo decide moverlo a la carpeta de correo no deseado.
-
-Todo este proceso ocurre en una fracción de segundo y es lo que llamamos hacer
-inferencia.
-
-El reto técnico de la Inferencia: Latencia y Costo
-
-En el desarrollo de software moderno, optimizar la inferencia es uno de los
-mayores desafíos de ingeniería de sistemas. Cuando millones de usuarios
-consultan un servicio de IA al mismo tiempo, necesitas que las respuestas sean
-instantáneas y baratas de procesar.
-
-Para lograrlo, se utilizan varias técnicas de optimización:
-
--Cuantización (Quantization): Consiste en reducir la precisión matemática de los
-pesos del modelo (por ejemplo, pasar de decimales de 32 bits FP32 a enteros de
-8 bits INT8). Esto hace que el modelo sea mucho más pequeño y rápido de ejecutar
-perdiendo casi nada de precisión.
-
--Poda (Pruning): Eliminar las conexiones o neuronas de la red que tienen pesos
-cercanos a cero y que casi no aportan a la decisión final.
-
--Compilación de Modelos: Usar herramientas como TensorRT u ONNX para traducir la
-estructura matemática del modelo a código de máquina altamente optimizado para
-el hardware específico donde correrá (ya sea un servidor en la nube o un
-procesador en un teléfono móvil).
-
-Fuente
-======
-
-Gemini IA
-
----
+Por investigar:
 
 Frameworks de Orquestación
-
 Fine-tuning (Ajuste fino)
-
-Inferencia
-
 TPU (Tensor Processing Unit)
-
 VRAM (Video RAM)
