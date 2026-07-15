@@ -39,12 +39,15 @@ Nivel 5: Paradigma de Agentes y Automatización (Sistemas Autónomos)
 -¿Cómo crear una skill personalizada?
 -Plantilla Markdown lista para rellenar con una idea
 -Ejemplo real de skill.md
+-agent-first
 
 Nivel 6: Herramientas de Desarrollo Agénticas en Acción (Aplicación Práctica)
 
 -OpenCode
 -Codex
 -Claude Code
+-Google Antigravity
+-OpenClaw
 
 ==============================================
 Machine Learning (ML) o Aprendizaje Automático
@@ -1466,6 +1469,81 @@ Fuente
 
 Gemini IA
 
+===========
+agent-first
+===========
+
+El término agent-first (o "enfoque orientado a agentes") es un paradigma
+emergente en el desarrollo de software y el diseño de productos de Inteligencia
+Artificial que invierte el rol tradicional entre el humano y la máquina.
+
+En lugar de que la IA funcione como un simple "copiloto" o asistente reactivo
+que espera instrucciones paso a paso, en un sistema agent-first la IA es el
+actor principal que ejecuta tareas complejas de forma autónoma, mientras que el
+humano pasa a un rol de supervisor y evaluador.
+
+Este paradigma se divide principalmente en tres vertientes:
+
+1. Desarrollo de Software Agent-First (La programación del día a día)
+
+En el desarrollo de software tradicional asistido por IA (como usar las primeras
+versiones de GitHub Copilot), el flujo es: el programador escribe, la IA sugiere
+una línea, el programador la acepta o corrige y sigue programando.
+
+En el enfoque agent-first, el flujo se da vuelta por completo:
+
+-Delegación de objetivos: El programador describe una meta compleja en lenguaje
+natural (ej. "Implementa una pasarela de pago con Stripe en este proyecto y
+asegúrate de manejar errores si la tarjeta es rechazada").
+
+-Autonomía: La IA (como Claude Code o Google Antigravity) no te da el código
+para que lo copies y pegues. El agente de forma autónoma:
+  -Lee y analiza la estructura de tus archivos.
+  -Crea un plan de acción.
+  -Modifica múltiples archivos reales en tu base de código.
+  -Ejecuta comandos en la terminal para probar el código y resolver sus propios
+  errores en un ciclo continuo (loop).
+
+-Revisión final: El humano no escribe el código; simplemente revisa la propuesta
+final (Pull Request) o el resultado de las pruebas.
+
+2. Arquitectura de Sistemas Agent-First (Diseñar inteligencia antes que
+interfaces)
+
+Tradicionalmente, al crear una aplicación se diseñaban primero las bases de
+datos, las pantallas (UI) y los flujos de usuario.
+
+Bajo la arquitectura agent-first, el desarrollo se invierte:
+
+-Se diseña y valida primero cómo va a razonar la IA, cómo recuperará el contexto
+y cómo interactuará con herramientas deterministas (APIs, bases de datos).
+
+-La interfaz de usuario (pantallas, botones) pasa a un segundo plano o se vuelve
+dinámica, adaptándose a lo que el agente decida resolver en cada momento.
+
+3. Diseño de Productos Agent-First (Agentes como usuarios de tu web)
+
+Cada vez más, los "usuarios" que consumen servicios en internet no son personas
+físicas haciendo clic, sino agentes de IA trabajando en representación de
+humanos.
+
+Diseñar un producto bajo el concepto agent-first significa crear software, APIs
+y documentación técnica optimizados específicamente para que un LLM los
+descubra, entienda y ejecute de forma autónoma sin confundirse, eliminando
+fricciones visuales innecesarias.
+
+En resumen
+
+-Antes (Asistido): Humano conduce, IA asiste (copiloto).
+
+-Ahora (Agent-First): IA conduce (planifica, ejecuta herramientas, corrige
+errores), Humano supervisa y aprueba.
+
+Fuente
+======
+
+Gemini IA
+
 ========
 OpenCode
 ========
@@ -1647,6 +1725,201 @@ expandiendo sus capacidades para resolver flujos personalizados de ingeniería.
 Esencialmente, se posiciona en el ecosistema como la competencia agéntica
 directa a herramientas de desarrollo como OpenCode o OpenAI Codex, permitiendo
 delegar flujos de trabajo de principio a fin desde tu terminal u ordenador.
+
+Fuente
+======
+
+Gemini IA
+
+==================
+Google Antigravity
+==================
+
+Google Antigravity es una plataforma de desarrollo de software "orientada a
+agentes" (agent-first) creada por Google. Fue presentada a finales de 2025 junto
+con la familia de modelos Gemini 3.
+
+A diferencia de los asistentes de código tradicionales que solo autocompletan
+texto o sugieren fragmentos (como las primeras versiones de GitHub Copilot),
+Antigravity está diseñado para que delegues tareas complejas y completas a
+agentes de IA autónomos.
+
+La plataforma se compone de varias piezas clave:
+
+-Antigravity IDE: Un entorno de desarrollo basado en una versión modificada de
+VS Code. Cuenta con la clásica vista de edición de código pero incorpora un
+panel lateral donde interactúan los agentes.
+
+-Manager View (Gestor de Agentes): Funciona como un centro de control o
+"bandeja de entrada" fuera del editor. Desde aquí puedes lanzar, monitorear y
+coordinar múltiples agentes trabajando en paralelo en diferentes proyectos de
+manera asíncrona.
+
+-CLI y SDK: Permite a los desarrolladores controlar agentes mediante lenguaje
+natural desde la terminal, e incluso programar flujos agénticos personalizados
+en Python.
+
+¿Qué lo hace especial en la práctica?
+
+-Operación multisúperfice autónoma: Un agente en Antigravity no solo escribe
+código. Puede abrir la terminal para ejecutar comandos, compilar proyectos,
+leer la estructura de tu base de código y controlar un navegador web (Chrome)
+para interactuar con la interfaz de usuario, probar el comportamiento de una web
+y registrar videos o capturas del proceso para validar que todo funcione.
+
+-Sistema de Artefactos (Artifacts): En lugar de abrumarte con miles de líneas de
+logs de consola de lo que el agente hace por detrás, este genera entregables
+visuales y estructurados: planes de implementación, listas de tareas pendientes,
+diferencias de código (diffs) o grabaciones de sus pruebas. Puedes dejar
+comentarios directos sobre estos artefactos para corregir el rumbo del agente
+sin detener su ejecución.
+
+-Soporte Multimodelo: Aunque está optimizado para modelos de Google como Gemini
+3.1 Pro, te permite alternar de forma transparente con otros cerebros de la
+industria como Claude de Anthropic o variantes de código abierto de OpenAI
+(GPT-OSS).
+
+¿Qué se puede hacer hoy en día con respecto a la IA?
+
+El panorama de la Inteligencia Artificial ha madurado desde la simple
+"generación de respuestas" hacia la acción autónoma y la integración profunda.
+Hoy en día, las capacidades más destacadas de la IA se agrupan en las siguientes
+áreas:
+
+1. Desarrollo de software guiado por Agentes (Software Engineering)
+
+Ya no necesitas escribir cada línea de código. Con herramientas como Google
+Antigravity, Claude Code u OpenCode, puedes dar una instrucción abstracta en
+lenguaje natural (por ejemplo: "crea un sistema de autenticación de dos factores
+en Django usando el estilo del proyecto actual"). La IA se encargará de:
+
+-Analizar tu arquitectura completa.
+
+-Escribir el backend, las migraciones de base de datos y la vista frontend.
+
+-Escribir y ejecutar las pruebas unitarias pertinentes para verificar que todo
+compile y funcione.
+
+2. Automatización y Control del Ordenador (Computer Use)
+
+Modelos de última generación tienen la capacidad de interactuar directamente con
+interfaces de usuario humanas. Hoy puedes pedirle a un agente que:
+
+-Busque en la web información de competidores, la estructure en un Excel local,
+diseñe un gráfico en tu software de oficina y envíe un correo automatizado a tu
+equipo con las conclusiones.
+
+-Interactúe visualmente haciendo clics, desplazándose y escribiendo en cualquier
+aplicación del sistema operativo de la misma forma en que lo haría un humano.
+
+3. Análisis de Datos Masivos y RAG (Retrieval-Augmented Generation)
+
+Conectar bases de datos propietarias, miles de PDFs o la documentación interna
+de una empresa directamente a un LLM es hoy una práctica estándar en la
+industria. El modelo puede responder preguntas altamente técnicas y específicas
+buscando en tiempo real en tus bases de datos vectoriales en milisegundos,
+reduciendo a mínimos históricos las alucinaciones del modelo.
+
+4. Multimodalidad Avanzada en Tiempo Real
+
+La interacción con la IA ha dejado de ser únicamente mediante cajas de texto.
+Hoy en día puedes:
+
+-Entablar conversaciones fluidas por voz en tiempo real con latencias de
+milisegundos, donde la IA es capaz de captar tu tono de voz, velocidad y
+emociones, y responder imitando entonaciones humanas de forma nativa.
+
+-Procesar horas de video de una sola vez para pedir resúmenes, buscar momentos
+exactos o analizar fallos de seguridad en grabaciones.
+
+5. Ejecución 100% Local y Privada
+
+Gracias a herramientas como Ollama o LM Studio y la optimización de
+arquitecturas de hardware (como las memorias unificadas de Apple Silicon o las
+GPUs de NVIDIA/AMD), hoy puedes descargar modelos de lenguaje avanzados y
+ejecutarlos de manera completamente local en tu ordenador. Esto te permite con
+IA sin conexión a internet y con la absoluta seguridad de que tus datos
+confidenciales o tu código fuente nunca abandonarán tu disco duro.
+
+Fuente
+======
+
+Gemini IA
+
+========
+OpenClaw
+========
+
+Originalmente nació con el nombre de Clawdbot y luego Moltbot, es uno de los
+frameworks de código abierto más populares para crear y desplegar agentes de IA
+autónomos y personales.
+
+A diferencia de los típicos chatbots con los que conversas en una pestaña de
+navegador web, OpenClaw actúa como un sistema operativo o pasarela (gateway)
+local para tu IA. Ejecuta tareas complejas directamente en tu ordenador o
+servidor (VPS) y se conecta contigo a través de las aplicaciones de mensajería
+que ya utilizas a diario (como WhatsApp, Telegram, Slack, Discord o Signal).
+
+¿Cómo funciona y qué hace especial a OpenClaw?
+
+1. Comunicación vía Apps de Mensajería (El canal)
+
+No tienes que abrir una app especial ni una consola técnica en tu día a día.
+Simplemente le escribes o le envías un mensaje de voz a tu bot de WhatsApp o
+Telegram (ej. "¿Me confirmas si tengo reuniones mañana por la tarde y me
+reservas un espacio para estudiar?"). El agente procesará la orden y te
+responderá en el mismo chat.
+
+2. Ejecución Local y Privacidad Total (Soberanía de Datos)
+
+El software de OpenClaw (el gateway) se hospeda en tu propio hardware (tu PC,
+una Raspberry Pi, un servidor casero como ZimaBlade o un VPS privado).
+
+-Toda la configuración, el historial de chats y su memoria a largo plazo se
+guardan localmente como archivos de texto plano (Markdown y YAML), por lo que
+puedes inspeccionar todo en cualquier momento.
+
+-Es independiente del modelo (Multi-provider): Tú eliges qué "cerebro"
+conectarle. Puedes usar APIs comerciales en la nube (como Claude de Anthropic,
+GPT de OpenAI o Gemini de Google) o derivar todo el procesamiento de manera
+100% privada a un modelo que corra de forma local en tu máquina mediante Ollama
+o LM Studio.
+
+3. Es Proactivo y "Realmente hace cosas"
+
+La mayoría de las herramientas de IA son reactivas (solo responden cuando
+preguntas). OpenClaw es agéntico e independiente: puede monitorizar eventos
+24/7 en segundo plano y escribirte de manera proactiva para notificarte de algo
+importante o pedirte autorización.
+
+Por ejemplo, puede:
+
+-Ejecutar comandos de terminal (shell) en tu máquina.
+
+-Controlar navegadores web para realizar tareas o comprobar páginas web.
+
+-Leer y organizar tu bandeja de entrada de correo, gestionar tu calendario y
+mover archivos locales.
+
+-Monitorizar repositorios de GitHub, compilar software y desencadenar
+despliegues de código (deployments).
+
+4. Arquitectura de Habilidades (Skills) y el archivo SOUL.md
+
+OpenClaw es altamente modular y extensible mediante plugins llamados skills
+(como "Autopiloto de Gmail", validadores de código, etc.). Además, utiliza un
+archivo de estructura para el agente llamado SOUL.md (su "ADN" de
+instrucciones), el cual optimiza el consumo de tokens para que el agente tenga
+memoria persistente sin saturar el contexto de la IA.
+
+5. Seguridad: Human-in-the-Loop (HITL)
+
+Dado que OpenClaw tiene acceso real a tu sistema de archivos y puede ejecutar
+comandos en tu ordenador, cuenta con un modo seguro. Si el agente intenta
+realizar una acción potencialmente peligrosa o crítica (como borrar un archivo,
+mandar un email o ejecutar un comando delicado), primero te enviará un mensaje
+por Telegram o WhatsApp con un botón interactivo para que apruebes o rechaces la
+acción.
 
 Fuente
 ======
