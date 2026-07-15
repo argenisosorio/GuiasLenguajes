@@ -18,12 +18,14 @@ Nivel 2: Arquitectura y Funcionamiento Interno de los LLM
 -El Preentrenamiento (Pre-training)
 -La Inferencia en Inteligencia Artificial
 -Alucinación
+-Memoria de Sesión (Session Memory)
 
 Nivel 3: Técnicas de Control, Extensión y Multimodalidad (Interacción)
 
 -Un prompt
 -Modelo multimodal
 -El RAG (Retrieval-Augmented Generation) o Generación Aumentada por Recuperación
+-Spec-Driven Development (SDD) o Desarrollo Basado en Especificaciones
 
 Nivel 4: Entorno Local y Hardware (Sistemas e Infraestructura)
 
@@ -40,6 +42,8 @@ Nivel 5: Paradigma de Agentes y Automatización (Sistemas Autónomos)
 -Plantilla Markdown lista para rellenar con una idea
 -Ejemplo real de skill.md
 -agent-first
+-Ingeniería de Arneses (Harnesses y Guardarraíles)
+-MCP (Model Context Protocol)
 
 Nivel 6: Herramientas de Desarrollo Agénticas en Acción (Aplicación Práctica)
 
@@ -48,6 +52,11 @@ Nivel 6: Herramientas de Desarrollo Agénticas en Acción (Aplicación Práctica
 -Claude Code
 -Google Antigravity
 -OpenClaw
+
+Nivel 7: Empresas
+
+-OpenAI
+-Anthropic
 
 ==============================================
 Machine Learning (ML) o Aprendizaje Automático
@@ -656,6 +665,75 @@ Fuente
 
 Gemini IA
 
+=====================================
+La Memoria de Sesión (Session Memory)
+=====================================
+
+Es el mecanismo que le permite a un modelo de lenguaje (LLM) recordar lo que se
+ha dicho dentro de una única conversación activa o chat en curso, perdiéndolo
+por completo una vez que esa conversación se cierra, se reinicia o se crea un
+nuevo chat.
+
+Para entenderlo mejor, es útil contrastarla con los otros dos tipos de memoria
+que existen en el ecosistema de la IA:
+
+Los 3 Niveles de Memoria en la IAPara que un asistente de IA sea útil, los
+desarrolladores gestionan la información en tres "cajas" distintas:
+
++----------------------+--------------------------+------------------------+---------------------------------------+
+| Tipo de Memoria      | ¿Qué recuerda?           | ¿Cuánto dura?          | Ejemplo                               |
++----------------------+--------------------------+------------------------+---------------------------------------+
+| Memoria de Sesión    | El contexto de la        | Temporal. Desaparece   | Si dices "Estoy usando Python" y      |
+|                      | conversación actual.     | al cerrar el chat o    | pides "un bucle", recordará hacer el  |
+|                      |                          | pulsar "Nuevo Chat".   | ejemplo en Python.                    |
++----------------------+--------------------------+------------------------+---------------------------------------+
+| Memoria Persistente  | Preferencias, datos o    | Permanente. Se guarda  | Recordar que te llamas Andrey, que    |
+| (Largo Plazo)        | instrucciones clave de   | en la cuenta del       | tu entorno es Debian y que trabajas   |
+|                      | un chat a otro.          | usuario de por vida.   | en proyectos en Python.               |
++----------------------+--------------------------+------------------------+---------------------------------------+
+| Memoria de Base      | Conocimientos generales  | Fija. Solo cambia si   | Saber qué es la Ingeniería de         |
+| (Entrenamiento)      | del mundo con los que    | el modelo se actualiza | Arneses, el protocolo MCP o conceptos |
+|                      | fue entrenado el modelo. | o reentrena.           | de informática teórica.               |
++----------------------+--------------------------+------------------------+---------------------------------------+
+
+¿Cómo funciona técnicamente la Memoria de Sesión?
+
+A nivel técnico, los LLM modernos (como GPT o Claude) son "estatales por diseño"
+(stateless). Esto significa que el modelo no recuerda nada por sí mismo de una
+pregunta a otra. Cada vez que envías un mensaje, el modelo lo procesa de manera
+completamente aislada.
+
+Para simular una "conversación fluida" y crear la memoria de sesión, el arnés de
+software (la aplicación) hace un truco por detrás:
+
+[ Tu nuevo mensaje ] 
+       +
+[ El historial de los mensajes anteriores del chat ] 
+       │
+       ▼
+( Todo este "bloque" se envía junto al modelo como un único paquete )
+
+Cada vez que envías un mensaje, el cliente del chat toma tu entrada, le
+concatena el historial de lo que ya han hablado en esa sesión (hasta el límite
+del Context Window o ventana de contexto del modelo) y le envía todo el paquete
+de golpe a la IA. Para el modelo, siempre es una "primera vez", pero al leer
+todo el historial previo, responde de manera coherente con la sesión.
+
+Ventajas y Limitaciones
+
+-Privacidad: Es excelente para manejar datos sensibles de forma temporal. Al
+borrar o cerrar el chat, esa información desaparece del flujo activo.
+
+-La barrera del Contexto: Si la conversación es extremadamente larga,
+eventualmente se puede llenar la "ventana de contexto". Cuando esto ocurre, el
+arnés de la IA empieza a olvidar de forma selectiva los primeros mensajes que
+enviaste en esa misma sesión.
+
+Fuente
+======
+
+Gemini IA
+
 =========
 Un prompt
 =========
@@ -865,6 +943,118 @@ reciente.
 según el rol o los permisos del usuario que consulta el sistema, asegurando que
 el LLM nunca lea información confidencial para la que el usuario no está
 autorizado.
+
+Fuente
+======
+
+Gemini IA
+
+=====================================================================
+Spec-Driven Development (SDD) o Desarrollo Basado en Especificaciones
+=====================================================================
+
+Es una metodología de ingeniería de software donde la especificación técnica
+(el "contrato") se escribe y valida antes de codificar una sola línea de lógica
+de negocio.
+
+En lugar de que la especificación sea un aburrido documento PDF que nadie lee,
+en SDD la especificación es código ejecutable que actúa como la "fuente única de
+la verdad" (Single Source of Truth). A partir de ella se genera automáticamente
+el código, las pruebas, los mocks y la documentación.
+
+Es el estándar de oro moderno para construir APIs, microservicios y, más
+recientemente, integraciones de Inteligencia Artificial (como los servidores MCP
+de los que hablábamos antes).
+
+El Ciclo de Vida de SDD vs. Desarrollo Tradicional
+
+En el desarrollo tradicional de APIs, suele ocurrir un "teléfono roto": el
+equipo de diseño piensa una cosa, el frontend entiende otra, el backend
+implementa una tercera y el equipo de QA testea algo totalmente diferente.
+
+Con SDD, el flujo se unifica y se automatiza:
+
+               +----------------------------------+
+               |  1. DISEÑO: Escribir Spec        |
+               |     (ej: OpenAPI, gRPC, MCP)     |
+               +----------------------------------+
+                                |
+                                v
+               +----------------------------------+
+               |  2. CONTRATO: Validación formal  |
+               |     sin escribir código aún      |
+               +----------------------------------+
+                                |
+        +-----------------------+-----------------------+
+        |                                               |
+        v                                               v
++-----------------------------+                 +-----------------------------+
+| 3a. BACKEND                 |                 | 3b. FRONTEND / CLIENTE      |
+| Generación de controladores |                 | Generación de SDKs,         |
+| y types (TypeScript, Go,    |                 | clientes y Mocks para       |
+| Django, etc.)               |                 | desarrollo en paralelo      |
++-----------------------------+                 +-----------------------------+
+        |                                               |
+        +-----------------------+-----------------------+
+                                |
+                                v
+               +----------------------------------+
+               |  4. PRUEBAS: Tests de contrato   |
+               |  automatizados (ej: Schemathesis)|
+               +----------------------------------+
+
+Herramientas Clave por Ecosistema
+
+Dependiendo del área de la informática, la "especificación" se define con
+diferentes estándares abiertos:
+
+-REST APIs: OpenAPI (anteriormente Swagger). Defines endpoints, esquemas JSON de
+entrada/salida y códigos de estado en un archivo openapi.yaml.
+
+-Microservicios de Alta Performance: gRPC / Protocol Buffers (Protobuf). Defines
+servicios y mensajes en un archivo .proto.
+
+-Bases de Datos / APIs Flexibles: GraphQL. Defines el esquema de tipos y queries
+en un archivo .graphql.
+
+-Integración de IA / LLMs: Model Context Protocol (MCP) o esquemas de JSON
+Schema para Function Calling. La IA lee el esquema de la herramienta y sabe
+exactamente qué enviarle.
+
+Las 4 Ventajas que hacen que SDD valga la pena
+
+1. Desarrollo en Paralelo Verdadero
+
+Tan pronto como la especificación está escrita, el equipo de Frontend (o el
+cliente de IA) puede usar un servidor de Mocks autogenerado a partir de la Spec.
+Pueden empezar a maquetar y programar la interfaz con datos simulados exactos,
+mientras el equipo de Backend aún está configurando la base de datos.
+
+2. Generación Automática de Código (SDKs y Tipos)
+
+Herramientas como openapi-generator o prism te permiten generar automáticamente
+los tipos de TypeScript, los esquemas de validación de Pydantic
+(en Python/Django) o los clientes de API. Te ahorras miles de líneas de código
+repetitivo (boilerplate).
+
+3. El Contrato es la Ley (Contract Testing)
+
+Si el Backend cambia la respuesta de un endpoint y rompe la especificación, los
+tests de contrato fallarán inmediatamente en el CI/CD antes de llegar a
+producción. No hay sorpresas de integración.
+
+4. Documentación Siempre Al Día
+
+La documentación interactiva (como Swagger UI o Redoc) se genera directamente a
+partir de la especificación. Si actualizas el código de la Spec, la
+documentación se actualiza sola. Adiós a la documentación obsoleta.
+
+Su conexión con la IA y MCP: Cuando creas herramientas para que un LLM las use,
+estás haciendo Spec-Driven Development puro. El modelo de lenguaje no sabe qué
+hace tu backend; solo lee el inputSchema (la especificación en JSON Schema) que
+le envía el servidor. Si tu especificación es ambigua o está mal redactada, la
+IA fallará al llamarla. En la era de la IA, escribir buenas specs es tan
+importante como escribir buen código.
 
 Fuente
 ======
@@ -1547,6 +1737,162 @@ Fuente
 
 Gemini IA
 
+=================================================
+Ingeniería de Arneses (Harnesses y Guardarraíles)
+=================================================
+
+La Ingeniería de Arneses (Harness Engineering) y los Guardarraíles (Guardrails)
+representan un cambio de paradigma crucial en la era del desarrollo de software
+con Inteligencia Artificial y Agentes Autónomos.
+
+Para entenderlo de forma sencilla: si el modelo de lenguaje (como GPT o Claude)
+es el motor, la Ingeniería de Arneses es el chasis, el tablero, los retrovisores
+y la carrocería que sostienen y dirigen ese motor para que el coche no se
+estrelle.
+
+1. ¿Qué es la Ingeniería de Arneses (Harness Engineering)?
+
+En el desarrollo de software tradicional, un test harness (arnés de pruebas) es
+el entorno controlado que creas alrededor de una sección de código para probarla
+y verificarla. En la ingeniería de IA moderna, el Arnés del Agente (Agent
+Harness) es toda la infraestructura de software que envuelve al modelo de IA y
+le permite actuar en el mundo real, no solo responder preguntas en un chat. El
+modelo aporta el "razonamiento", pero el arnés aporta la "acción" y el control.
+
+El arnés se compone de cinco capas principales:
+
+-Entorno de Ejecución y Herramientas (Orquestación): Le da al modelo acceso a
+bases de datos, terminales, navegadores o APIs para realizar acciones reales.
+
+-Gestión de Contexto: Asegura que el agente reciba la información exacta en el
+momento preciso. Si no está en el arnés de contexto, el agente simplemente no
+sabe que existe.
+
+-Memoria Persistente: Como las llamadas a los LLM no tienen estado, el arnés
+guarda el historial de lo que pasó en ejecuciones anteriores para que el agente
+aprenda o recuerde decisiones del usuario.
+
+-Verificación y Evaluación: El arnés valida si el resultado de una acción fue
+exitoso (por ejemplo, si el código que escribió el agente realmente compila)
+antes de dar el paso por terminado.
+
+-Seguridad y Restricciones (Guardarraíles): Intercepta las acciones peligrosas o
+fuera de límite antes de que se ejecuten.
+
+2. ¿Qué son los Guardarraíles (Guardrails)?
+
+Los Guardarraíles son una capa específica y crítica dentro del arnés. Son
+políticas, filtros y algoritmos de control diseñados para mantener el
+comportamiento de la IA dentro de límites seguros, éticos y operativos.
+
+Funcionan en dos momentos clave:
+
+[ Entrada del Usuario ] ➔
+🛡️ [ Guardarraíl de Entrada ] ➔
+[ Modelo de IA ] ➔
+🛡️ [ Guardarraíl de Salida ] ➔
+[ Resultado Seguro ]
+
+Tipos de Guardarraíles:
+
+-Guardarraíles de Entrada (Input Guardrails): Analizan lo que entra al modelo.
+Bloquean intentos de hackeo de prompts (jailbreaks), inyecciones de código
+malicioso o lenguaje ofensivo antes de que lleguen al cerebro de la IA.
+
+-Guardarraíles de Salida (Output Guardrails): Analizan la respuesta generada por
+la IA antes de mostrársela al usuario o ejecutarla en un servidor. Filtran
+información confidencial o datos personales (PII) que la IA haya revelado por
+error, evitan alucinaciones (datos falsos) y neutralizan código que pueda dañar
+la infraestructura.
+
+-Guardarraíles Financieros y de Recursos (FinOps Guardrails): Evitan que un
+agente entre en un bucle infinito consumiendo miles de dólares en llamadas de
+API o memoria en la nube.
+
+¿Por qué es tan importante hoy en día?
+
+En lugar de gastar semanas reescribiendo prompts interminables para que la IA no
+se equivoque, los desarrolladores ahora diseñan arneses robustos. Un arnés bien
+diseñado permite que incluso un modelo de lenguaje más pequeño, rápido y
+económico rinda mejor y sea mucho más seguro en producción que el modelo más
+avanzado del mundo operando sin control. Es el puente indispensable entre un
+juguete tecnológico y un sistema de software empresarial confiable.
+
+Fuente
+======
+
+Gemini IA
+
+============================
+MCP (Model Context Protocol)
+============================
+
+Creado por Anthropic, es justamente la materialización práctica, abierta y
+estandarizada de la Ingeniería de Arneses.
+
+Si la Ingeniería de Arneses es la teoría de cómo conectar un modelo a su
+entorno, MCP es el estándar industrial de comunicación para lograrlo. Su
+objetivo es resolver un problema clásico de fragmentación: antes de MCP, si
+querías que tu modelo leyera de GitHub, tenías que escribir código de
+integración específico; si querías conectarlo a Postgres, otro código distinto;
+y si cambiabas de cliente de IA, tocaba empezar casi desde cero.
+
+MCP funciona como el estándar USB-C pero para conectar Modelos de IA (LLMs) con
+fuentes de datos y herramientas.
+
+La Arquitectura de MCP
+
+El protocolo establece un estándar de comunicación bidireccional muy claro
+basado en JSON-RPC 2.0:
+
+El sistema se divide en tres componentes principales que encajan perfectamente
+en la idea del "arnés":
+
+-El Host (La Aplicación de IA): Es el entorno de desarrollo o chat que utilizas
+(por ejemplo, Claude Desktop, Cursor, Zed o entornos personalizados) donde
+reside el LLM. El Host actúa como el orquestador principal.
+
+-El Cliente MCP (MCP Client): Es la parte del arnés dentro de tu aplicación que
+sabe cómo hablar el protocolo estandarizado. Mantiene una conexión segura y de
+confianza con los servidores.
+
+-El Servidor MCP (MCP Server): Es un microservicio ligero y especializado que
+expone recursos, plantillas o herramientas específicas. Por ejemplo, puede haber
+un servidor MCP exclusivo para interactuar con SQLite, otro para buscar en
+Google Drive, y otro para ejecutar comandos en tu terminal local de Debian.
+
+Las Tres Primitivas Clave de MCP
+
+Para que el modelo entienda su entorno y pueda actuar de forma segura, el
+protocolo estandariza la comunicación en tres capacidades fundamentales:
+
+-Recursos (Resources): Datos de solo lectura que el servidor expone al modelo.
+Pueden ser archivos locales, tablas de bases de datos, logs del sistema o
+documentación de APIs. El modelo los lee como contexto contextualizador.
+
+-Mensajes Predefinidos (Prompts): Plantillas de interacción dinámicas expuestas
+por el servidor. Ayudan al usuario y al modelo a estructurar las tareas comunes
+rápidamente (por ejemplo, "Analizar este repositorio de código").
+
+-Herramientas (Tools): Funciones ejecutables (de lectura y escritura) que el
+modelo puede decidir invocar bajo consentimiento del usuario. Aquí es donde se
+aplican los guardarraíles: una herramienta de un servidor MCP puede ser "crear
+un archivo", pero el arnés intercepta la llamada para pedir autorización
+explícita antes de ejecutar la escritura en el disco.
+
+La gran ventaja para los desarrolladores:
+
+Gracias a MCP, ya no necesitas programar integraciones monolíticas. Si creas un
+servidor MCP para conectar una base de datos interna de tu empresa, cualquier
+herramienta de desarrollo, IDE o cliente de IA compatible con el estándar MCP
+podrá usar esa base de datos de inmediato, sin necesidad de modificar el
+cliente.
+
+Fuente
+======
+
+Gemini IA
+
 ========
 OpenCode
 ========
@@ -1929,10 +2275,36 @@ Fuente
 
 Gemini IA
 
+======
+OpenAI
+======
+
+Es una empresa estadounidense de investigación y desarrollo de inteligencia
+artificial (IA), famosa por crear ChatGPT.
+
+=========
+Anthropic
+=========
+
+Anthropic es una empresa emergente estadounidense de investigación y desarrollo
+de inteligencia artificial fundada por exmiembros de OpenAI.​​ Anthropic se
+especializa en el desarrollo de sistemas de información y modelos de lenguaje,
+con una ética empresarial de uso responsable de la IA.​
+
+Fuente
+======
+
+Gemini IA
+
 -----
 
 Por investigar:
 
+Arneses (guardarraíles)
+Eitores hiper-optimizados para IA.
+
+Cursor
+Claude Desktop
 Frameworks de Orquestación
 Fine-tuning (Ajuste fino)
 TPU (Tensor Processing Unit)
