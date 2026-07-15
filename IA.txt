@@ -1956,11 +1956,65 @@ Ahora entramos a una carpeta, por ejemplo el mi_proyecto
 
 $ cd mi_proyecto
 
-Ejecutamos el comando opencode
+Ejecutamos el comando opencode dentro de la carpeta de mi_proyecto.
 
 $ opencode
 
 Este comando abrira la terminal para interacutar con el agente de OpenCode.
+
+¿Qué modelo llm está configurado en la sesión actual?
+
+Respuesta: El modelo configurado es big-pickle (ID exacto: opencode/big-pickle).
+
+De ahí en adelante puedes interactuar con el modelo para que integra cualquier
+cosa en tu código.
+
+OpenCode Zen
+============
+
+Es un servicio de acceso a modelos de Inteligencia Artificial (una pasarela o
+gateway unificado) creado por el equipo de OpenCode (un agente de programación
+de código abierto que se ejecuta directamente desde la terminal como alternativa
+a Claude Code).
+
+Para entenderlo de forma sencilla, OpenCode Zen es el "proveedor oficial" y
+recomendado de modelos para este agente, diseñado para facilitarte la vida al
+máximo si programas con IA.
+
+¿Qué problema resuelve?
+
+Cuando utilizas agentes autónomos de programación en tu terminal, encontrarte
+con respuestas inconsistentes o fallos de formato es muy común. Esto ocurre
+porque muchos proveedores de LLM configuran y optimizan sus modelos de formas
+distintas.
+
+El equipo de OpenCode soluciona esto con Zen:
+
+-Modelos validados y probados: Prueban meticulosamente qué modelos y
+combinaciones de proveedores realmente funcionan de forma óptima para tareas de
+agentes de código (las cuales requieren un uso intensivo de Function Calling y
+razonamiento estructurado).
+
+-Clave API unificada: En lugar de crear cuentas independientes en Anthropic,
+OpenAI y Google para obtener múltiples API Keys, con un solo balance en OpenCode
+Zen puedes consumir modelos de diferentes creadores (como GPT-4, Claude 3.5,
+Gemini o modelos abiertos como DeepSeek y Qwen).
+
+Modelos Gratuitos: Ofrece acceso directo a varios modelos de uso gratuito para
+que puedas probar el agente de terminal de inmediato sin gastar nada.
+
+¿Cómo funciona?
+
+OpenCode Zen funciona bajo una modalidad de pago por uso (prepago):
+
+-Te registras en su consola web (opencode.ai/zen), recargas un saldo inicia (por
+ejemplo, $20 USD) y obtienes tu API Key única.
+
+-Conectas tu terminal ejecutando el comando /connect dentro de la interfaz de
+OpenCode y seleccionando "OpenCode Zen". Aunque está pensado principalmente para
+el agente de terminal de OpenCode, la API de Zen es compatible con el estándar
+de OpenAI y Anthropic, por lo que puedes usar tu clave de Zen en cualquier otro
+agente de código de tu preferencia (como docker-agent u otros entornos locales).
 
 Fuente
 ======
