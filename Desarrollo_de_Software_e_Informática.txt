@@ -4645,6 +4645,62 @@ Fuente
 
 Gemini IA
 
+=====================
+Pruebas automatizadas
+=====================
+
+En desarrollo de software, las pruebas automatizadas consisten en el uso de
+herramientas de software y scripts para ejecutar casos de prueba sobre una
+aplicación de forma automática, sin intervención humana directa.
+
+En lugar de que un tester haga clic manualmente en cada botón de la interfaz
+para verificar que el sistema funciona, se escribe código que simula estas
+interacciones y comprueba que los resultados obtenidos coincidan con los
+esperados.
+
+Tipos principales de pruebas automatizadas
+
+-Pruebas Unitarias (Unit Tests): Verifican de forma aislada el funcionamiento de
+la unidad de código más pequeña posible, como una función o un método
+específico. Son extremadamente rápidas y ayudan a detectar errores de lógica de
+manera temprana.
+
+-Pruebas de Integración (Integration Tests): Evalúan cómo interactúan diferentes
+módulos o partes del sistema entre sí (por ejemplo, comprobar que una función se
+comunica correctamente con la base de datos o con una API externa).
+
+-Pruebas de Extremo a Extremo (E2E o End-to-End): Simulan el comportamiento de
+un usuario real de principio a fin. El script abre la aplicación, interactúa con
+la interfaz gráfica, realiza flujos completos (como un registro de usuario o una
+compra) y valida que todo el flujo funcione.
+
+Beneficios clave
+
+-Velocidad y repetibilidad: Puedes ejecutar miles de pruebas en cuestión de
+minutos cada vez que haces un cambio en el código, asegurando que nada se haya
+roto (regresión).
+
+-Integración Continua (CI/CD): Permiten automatizar el despliegue. Si una prueba
+falla en el servidor de integración, el código no se sube a producción,
+evitando que los errores lleguen al usuario final.
+
+-Documentación viva: Los propios archivos de prueba sirven como ejemplos reales
+de cómo debe comportarse el código y qué salidas se esperan de cada componente.
+
+Herramientas comunes en el ecosistema actual
+
+-Python: pytest, unittest.
+-JavaScript / TypeScript: Jest, Vitest, Playwright, Cypress.
+-PHP: PHPUnit.
+-Contenedores y entornos: Docker se utiliza frecuentemente para levantar
+entornos limpios y aislados donde correr estas suites de pruebas de forma
+idéntica en local y en servidores de CI/CD.
+
+Fuente
+======
+
+Gemini IA
+
 =============================
 TDD (Test-Driven Development)
 =============================
