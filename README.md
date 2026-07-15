@@ -154,8 +154,49 @@ Este repositorio contiene una colección de guías, apuntes y ejemplos de códig
 
 ### IA
 
+Nivel 1: Los Fundamentos de la Inteligencia Artificial (Teoría Básica)
+
+- Machine Learning (ML) o Aprendizaje Automático
+- El Deep Learning (Aprendizaje Profundo)
+- Una Red Neuronal (o Red Neuronal Artificial)
+
+Nivel 2: Arquitectura y Funcionamiento Interno de los LLM
+
+- LLM (Large Language Models)
+- Los tokens
+- El Preentrenamiento (Pre-training)
+- La Inferencia en Inteligencia Artificial
+- Alucinación
+
+Nivel 3: Técnicas de Control, Extensión y Multimodalidad (Interacción)
+
+- Un prompt
+- Modelo multimodal
+- El RAG (Retrieval-Augmented Generation) o Generación Aumentada por Recuperación
+
+Nivel 4: Entorno Local y Hardware (Sistemas e Infraestructura)
+
 - Ollama
+- LM Studio
+- Guía para armar tu IA local
+
+Nivel 5: Paradigma de Agentes y Automatización (Sistemas Autónomos)
+
+- Agente agéntico
+- Agentes y Sub Agentes
 - Agents skills
+- ¿Cómo crear una skill personalizada?
+- Plantilla Markdown lista para rellenar con una idea
+- Ejemplo real de skill.md
+- agent-first
+
+Nivel 6: Herramientas de Desarrollo Agénticas en Acción (Aplicación Práctica)
+
+- OpenCode
+- Codex
+- Claude Code
+- Google Antigravity
+- OpenClaw
 
 ## 📄 Licencia
 
