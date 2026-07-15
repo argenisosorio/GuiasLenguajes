@@ -50,6 +50,7 @@ Nivel 6: Herramientas de Desarrollo Agénticas en Acción (Aplicación Práctica
 -OpenCode
 -Codex
 -Claude Code
+-Claude Code vs. OpenCode
 -Google Antigravity
 -OpenClaw
 
@@ -2128,6 +2129,109 @@ expandiendo sus capacidades para resolver flujos personalizados de ingeniería.
 Esencialmente, se posiciona en el ecosistema como la competencia agéntica
 directa a herramientas de desarrollo como OpenCode o OpenAI Codex, permitiendo
 delegar flujos de trabajo de principio a fin desde tu terminal u ordenador.
+
+Fuente
+======
+
+Gemini IA
+
+========================
+Claude Code vs. OpenCode
+========================
+
+Este manual está diseñado para comprender las similitudes, diferencias técnicas
+y esquemas de licenciamiento entre dos de las herramientas de terminal para
+desarrollo asistido por IA más populares: Claude Code (de Anthropic) y OpenCode.
+
+1. Características Compartidas (Similitudes)
+
+Ambas plataformas están diseñadas para interactuar directamente con tu entorno
+de desarrollo y comparten una base arquitectónica muy similar para potenciar la
+productividad:
+
+-Sub-agentes: Capacidad de delegar tareas paralelas en contextos aislados para
+no saturar el hilo principal.
+
+-Reglas de Proyecto (Rules): Permiten definir archivos .md de configuración para
+establecer convenciones de código, arquitectura y patrones de diseño que la IA
+debe seguir.
+
+-Comandos de Barra (/commands): Flujos de trabajo repetibles y disparados por el
+usuario directamente desde la terminal.
+
+-Habilidades (Skills): Módulos que habilitan comportamientos basados en el
+contexto y aportan experiencia en tareas específicas.
+
+-Protocolo de Contexto de Modelo (MCP): Ambas soportan la integración de Model
+Context Protocol para conectarse con herramientas externas.
+
+-Herramientas específicas de búsqueda (Grep/Glob): A pesar de contar con acceso
+a la terminal (Bash), ambas herramientas implementan comandos nativos para
+buscar texto (grep) y patronar archivos (glob). Esto se hace por motivos de
+seguridad y validación, limitando la ejecución libre de comandos de consola
+cuando no es estrictamente necesario.
+
+2. Diferencias Clave
+
+A pesar de sus similitudes en el flujo de trabajo, existen divergencias
+importantes en cuanto a herramientas por defecto, extensibilidad y, sobre todo,
+proveedores de modelos e infraestructura de pagos.
+
+Extensibilidad de Eventos
+
+-Claude Code: Utiliza Hooks para reaccionar a eventos específicos del ciclo de
+desarrollo. Además, cuenta con Plugins, que son paquetes integrados que agrupan
+sub-agentes, reglas, comandos y habilidades listos para compartir con otros
+usuarios.
+
+-OpenCode: Utiliza Plugins directamente para reaccionar a los eventos del
+sistema (equivalente a los hooks de Claude Code).
+
+Búsqueda Web
+
+-Claude Code: Integra funciones de búsqueda web (Web Search) de forma nativa
+desde el primer momento.
+
+-OpenCode: No incluye herramientas de búsqueda web listas para usar
+(out-of-the-box).
+
+Modelos y Proveedores
+
+-Claude Code: Está acoplado al ecosistema de Anthropic. Requiere
+obligatoriamente un plan de pago con ellos.
+
+-OpenCode: Es sumamente flexible. Soporta más de 75 proveedores de Modelos de
+Lenguaje (LLMs) y permite la ejecución de modelos de código locales (por
+ejemplo, mediante Ollama).
+
+3. Matriz Comparativa
+
++-----------------------+-----------------------------+-----------------------------+
+| Característica        | Claude Code                 | OpenCode                    |
++-----------------------+-----------------------------+-----------------------------+
+| Reacción a Eventos    | Hooks                       | Plugins                     |
+| Paquetes Compartibles | Plugins (paquetes de todo)  | No definidos de igual forma |
+| Búsqueda Web Nativa   | Sí (Out-of-the-box)         | No                          |
+| Modelos Soportados    | Solo Anthropic (Claude)     | +75 proveedores y Local     |
+| Requisito de Acceso   | Plan activo de Anthropic    | API Keys de terceros o Local|
++-----------------------+-----------------------------+-----------------------------+
+
+4. Licenciamiento y Aspectos de Uso Práctico
+
+Un punto crítico al elegir entre ambas herramientas es cómo se gestiona el
+acceso y la facturación de los modelos de inteligencia artificial:
+
+-El Modelo de Suscripción de Claude Code: Funciona obligatoriamente mediante los
+planes de Anthropic. El beneficio principal de este esquema es que el usuario
+suele recibir un valor optimizado por volumen en comparación con el consumo
+directo de los endpoints de la API tradicional.
+
+-La Restricción en OpenCode: Históricamente ha existido la posibilidad de
+utilizar las credenciales y planes de Anthropic dentro de OpenCode; sin embargo,
+esta práctica viola los Términos de Servicio (ToS) de Anthropic. Recientemente,
+la compañía ha comenzado a aplicar estas políticas de forma mucho más estricta,
+limitando el uso cruzado y empujando a los usuarios de OpenCode a usar sus
+propios tokens de API o proveedores alternativos.
 
 Fuente
 ======
