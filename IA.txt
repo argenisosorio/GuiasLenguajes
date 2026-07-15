@@ -2017,6 +2017,36 @@ el agente de terminal de OpenCode, la API de Zen es compatible con el estándar
 de OpenAI y Anthropic, por lo que puedes usar tu clave de Zen en cualquier otro
 agente de código de tu preferencia (como docker-agent u otros entornos locales).
 
+LSP
+===
+
+Se refiere a Language Server Protocol (Protocolo de Servidor de Lenguaje). Es un
+estándar creado para que los editores de texto y herramientas de desarrollo se
+comuniquen con "servidores de lenguaje" externos. Esto sirve para proveer
+inteligencia de código en tiempo real (como autocompletado, detección de errores
+de tipo, definiciones y refactorizaciones).
+
+¿Por qué es tan importante el LSP dentro de OpenCode?
+
+Un agente de IA estándar lee tus archivos como si fueran texto plano. Intenta
+adivinar dónde están las funciones y si hay errores basándose en patrones de
+texto.
+
+Cuando activas LSP en OpenCode, el agente gana "superpoderes" de desarrollador
+real:
+
+-Diagnósticos en tiempo real: Si el agente genera código que rompe el tipado o
+tiene un error de sintaxis, el servidor LSP se lo notifica de inmediato antes de
+que intentes ejecutarlo.
+
+-Navegación inteligente: El agente puede usar herramientas internas como
+goToDefinition (ir a la definición) o findReferences (buscar referencias) para
+moverse de forma precisa por tu base de código en lugar de hacer búsquedas de
+texto a ciegas.
+
+-Formateo automático: El código generado se adapta automáticamente al estilo del
+proyecto usando las reglas del formateador integrado.
+
 Fuente
 ======
 
