@@ -879,3 +879,118 @@ Fuente
 ======
 
 Gemini IA
+
+=======================================
+Recuperar rama borrada que tenía una MR
+=======================================
+
+¿Qué pasa si en gitlab creo una rama de trabajo subo cambios, hago una merge
+request pero luego esa merge request no se mezcla con la rama principal sino que
+la cierro la merge request y elimino la rama de trabajo que no fue mezclada, es
+posible recuperar esa rama más adelante por algún motivo?
+
+¡Sí, totalmente! Es uno de los errores (o cambios de opinión) más comunes en
+Git, y la buena noticia es que casi nunca se pierde nada de forma definitiva en
+Git de inmediato.
+
+Aunque hayas cerrado la Merge Request (MR) en GitLab y eliminado la rama de
+trabajo tanto en GitLab (remoto) como en tu máquina (local), el código sigue
+existiendo durante un tiempo.
+
+Aquí tienes las formas de recuperarlo, ordenadas de la más fácil a la más
+avanzada:
+
+Método 1: Desde la interfaz de GitLab (El más fácil)
+
+Si cerraste la Merge Request, GitLab guarda un registro histórico de esa MR.
+Mientras el repositorio no haya sido sometido a una limpieza profunda de base de
+datos (un "garbage collection" manual por parte de los administradores), puedes
+restaurar la rama con un solo clic:
+
+1. Ve a tu proyecto en GitLab.
+
+2. En el menú de la izquierda, ve a Merge requests y haz clic en la pestaña
+Closed (Cerradas).
+
+3. Busca y abre la MR que cerraste.
+
+4. En la parte superior, justo debajo del título de la MR, verás un mensaje que
+dice algo como: "The source branch was deleted."
+
+5. Si el sistema aún conserva los datos (suele durar semanas o meses), aparecerá
+un botón al lado que dice Restore source branch (Restablecer rama de origen).
+Haz clic ahí y ¡listo!, la rama volverá a existir en GitLab.
+
+Método 2: Usar el git reflog en tu máquina local (Si habías trabajado en ella
+localmente)
+
+Si en algún momento tuviste esa rama clonada en tu computadora y realizaste
+commits en ella, tu Git local tiene un "historial de seguridad" silencioso
+llamado Reflog (registro de referencias). Este registro guarda absolutamente
+todo lo que tu cabeza (HEAD) ha apuntado, incluso en ramas borradas.
+
+Para recuperarla localmente, abre tu terminal y sigue estos pasos:
+
+1. Ver el historial interno de Git
+
+En tu terminal local, ejecuta el siguiente comando para ver el historial de
+movimientos de tu Git local:
+
+$ git reflog
+
+Verás una lista de commits y movimientos que se ve más o menos así:
+
+a1b2c3d HEAD@{0}: checkout: moving from mi-rama-borrada to main
+e5f6g7h HEAD@{1}: commit: Mi último cambio antes de cerrar la MR
+i8j9k0l HEAD@{2}: commit: Cambios iniciales
+
+2. Identificar el Commit ID, busca el último estado de tu rama
+
+Identifica el hash (los 7 caracteres alfanuméricos de la izquierda, por ejemplo,
+e5f6g7h) que corresponda al último commit que hiciste en la rama antes de
+borrarla.
+
+3 Recrear la rama desde ese commit
+
+Restaurar la rama local, crea una nueva rama (o usa el mismo nombre anterior)
+apuntando directamente a ese commit:
+
+$ git checkout -b mi-rama-recuperada e5f6g7h
+
+¡Tu rama ha vuelto a la vida en tu entorno local! Ahora solo tienes que subirla
+de nuevo a GitLab si lo necesitas (git push origin mi-rama-recuperada).
+
+Método 3: Descargar los parches desde la MR cerrada de GitLab
+
+Si por alguna razón no tienes acceso a tu Git local (por ejemplo, cambiaste de
+computadora) y el botón de restaurar rama en GitLab ya no aparece, aún hay un
+truco bajo la manga. GitLab guarda los cambios de las MRs cerradas en formato
+de texto plano (parches).
+
+1. Abre la MR cerrada en GitLab.
+
+En la barra de direcciones de tu navegador, añade .patch al final de la URL.
+Por ejemplo:
+
+URL original: [https://gitlab.com/usuario/proyecto/-/merge_requests/42](https://gitlab.com/usuario/proyecto/-/merge_requests/42)
+
+URL modificada: [https://gitlab.com/usuario/proyecto/-/merge_requests/42.patch](https://gitlab.com/usuario/proyecto/-/merge_requests/42.patch)
+
+2. Presiona Enter. Verás un archivo de texto con todos los cambios y commits.
+
+3. Puedes guardar esa página como un archivo .patch en tu computadora y aplicarlo a una rama nueva usando:
+
+$ git apply mi-archivo.patch
+
+¿Hay un límite de tiempo?
+
+En tu máquina local, los commits "huérfanos" (los que no pertenecen a ninguna
+rama activa) suelen tardar unos 30 días en ser eliminados definitivamente por el
+recolector de basura automático de Git (git gc). En GitLab remoto, el tiempo de
+retención suele ser aún mayor, por lo que casi siempre estás a tiempo de
+recuperarlo si actúas en las primeras semanas.
+
+Fuente
+======
+
+Gemini IA
