@@ -389,3 +389,77 @@ Fuente
 ======
 
 Gemini IA
+
+================================
+Comandos run dentro del proyecto
+================================
+
+¿En mi proyecto de nuxt con pnpm en que archivo puedo ver los comandos como pnpm
+run dev configurados o el lint?
+
+En un proyecto de Nuxt (o en cualquier proyecto de JavaScript/TypeScript Node.js
+que use pnpm, npm o yarn), todos estos comandos están configurados en el
+archivo package.json, específicamente dentro de la sección "scripts".
+
+Este archivo se encuentra siempre en la raíz de tu proyecto.
+
+¿Cómo se ve dentro del archivo?
+
+Si abres el archivo package.json, verás una estructura muy similar a esta:
+
+{
+  "name": "tu-proyecto-nuxt",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "nuxt": "^4.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0"
+  }
+}
+
+¿Qué significa cada parte en "scripts"?
+
+"dev": "nuxt dev": Es el comando que se ejecuta cuando escribes pnpm run dev (o
+simplemente pnpm dev). Levanta el servidor de desarrollo local de Nuxt.
+
+"lint": "eslint ." (o similar): Es el comando que se ejecuta con pnpm run lint.
+Se encarga de analizar tu código en busca de errores de estilo o de sintaxis
+usando herramientas como ESLint.
+
+"build": "nuxt build": Compila tu aplicación de Nuxt para producción.
+
+Un par de trucos útiles con pnpm:
+
+A diferencia de npm, con pnpm tienes un par de atajos muy cómodos en la terminal:
+
+1. No necesitas escribir run para la mayoría de comandos: En lugar de pnpm run
+dev o pnpm run lint, puedes escribir simplemente:
+
+$ pnpm dev
+
+$ pnpm lint
+
+2. Ver todos los comandos disponibles sin abrir el archivo:
+
+Si estás en la terminal y quieres ver rápidamente qué comandos tienes
+configurados sin tener que abrir el package.json, puedes ejecutar:
+
+$ pnpm run
+
+Esto te mostrará una lista interactiva en la terminal con todos los scripts que
+puedes lanzar.
+
+Fuente
+======
+
+Gemini IA
