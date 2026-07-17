@@ -898,3 +898,226 @@ arquitectónicamente es un error de acoplamiento.
 Mantener las consultas del ORM y las validaciones de unicidad dentro de tu
 services.py es la única manera de respetar el principio de responsabilidad
 única al 100%.
+
+====================
+Esquema de respuesta
+====================
+
+Django Ninja te permite definir el esquema de tus respuestas tanto para fines de
+validación como de documentación.
+
+Crearemos una operación que devolverá información sobre el usuario actual de
+Django.
+
+from ninja import Schema
+
+class UserSchema(Schema):
+    username: str
+    is_authenticated: bool
+    # Unauthenticated users don't have the following fields, so provide defaults.
+    email: str = None
+    first_name: str = None
+    last_name: str = None
+
+@api.get("/me", response=UserSchema)
+def me(request):
+    return request.user
+
+Esto convertirá el Userobjeto Django en un diccionario que contendrá únicamente
+los campos definidos.
+
+Múltiples tipos de respuesta
+============================
+
+Devolvamos una respuesta diferente si el usuario actual no está autenticado.
+
+class UserSchema(Schema):
+    username: str
+    email: str
+    first_name: str
+    last_name: str
+
+class Error(Schema):
+    message: str
+
+@api.get("/me", response={200: UserSchema, 403: Error})
+def me(request):
+    if not request.user.is_authenticated:
+        return 403, {"message": "Please sign in first"}
+    
+return request.user 
+
+Como puede ver, puede devolver una tupla de dos partes que se interpretará como
+el código de respuesta HTTP y los datos.
+
+Fuente
+======
+
+https://django--ninja-dev.translate.goog/tutorial/step3/?_x_tr_sl=en&_x_tr_tl=es&_x_tr_hl=es&_x_tr_pto=tc
+
+=======================================================
+Entendiendo la lógiga de Schemas de Entrada y de Salida
+=======================================================
+
+Código de ejemplo:
+
+---
+
+from ninja import Router, ModelSchema, Schema
+from django.shortcuts import get_object_or_404
+from typing import List
+from .models import Person
+
+router = Router()
+
+# --- SCHEMAS ---
+
+class PersonSchema(ModelSchema):
+    """Schema basado en el modelo para devolver datos (Output)"""
+    class Meta:
+        model = Person
+        fields = ['id', 'name', 'email', 'age', 'created_at', 'updated_at']
+
+class PersonCreateSchema(Schema):
+    """Schema para recibir datos al crear o actualizar (Input)"""
+    name: str
+    email: str
+    age: int
+
+# Crear una persona (POST)
+@router.post("/", response=PersonSchema)
+def create_person(request, data: PersonCreateSchema):
+    # .dict() convierte el esquema de Pydantic en un diccionario de Python
+    person = Person.objects.create(**data.dict())
+    return person
+
+---
+
+Explicación:
+
+Este es un flujo clásico de creación de datos utilizando Django Ninja (que
+combina la velocidad de FastAPI con el ORM de Django).
+
+Para entenderlo de forma sencilla: el decorador (response=...) define las reglas
+del juego para la salida, mientras que el return es el que entrega los datos de
+la jugada.
+
+1. ¿Qué hace @router.post("/", response=PersonSchema)?
+
+Este decorador prepara la "aduana" de salida de tu API.
+
+-Define el contrato de salida: Le dice a Django Ninja "No importa lo que
+devuelva la función de Python, al cliente final solo le vas a entregar los
+campos que están permitidos en PersonSchema (en este caso: id, name, email, age,
+created_at y updated_at).
+
+-Serialización automática: Convierte un objeto complejo de base de datos (un
+modelo de Django) a un formato estándar como JSON.
+
+-Documentación: Genera automáticamente la documentación interactiva
+(Swagger/OpenAPI), avisándole a quien consuma tu API exactamente qué estructura
+va a recibir cuando la petición sea exitosa (código HTTP 201).
+
+2. ¿Qué hace return person?
+
+Aquí es donde termina tu lógica de Python.
+
+-Devuelve el objeto de la base de datos: person es una instancia del modelo
+Person de Django recién creada.
+
+-En un Django tradicional, tendrías que transformar este objeto a un diccionario
+o usar un JsonResponse. Aquí no. Al hacer return person, le estás entregando el
+objeto directamente a Django Ninja.
+
+-Django Ninja toma este objeto person, ve que tu decorador tiene configurado
+response=PersonSchema, extrae los campos correspondientes del objeto, los
+transforma a JSON y los envía al cliente.
+
+3. El Flujo Paso a Paso (El camino de los datos)
+
+Cuando un cliente (como tu frontend) hace una petición POST para crear una
+persona, el código se ejecuta en este orden:
+
+    +---------------------------+
+    |   1. Cliente envía JSON   |
+    +---------------------------+
+                    |
+                    | [Input Data]
+                    v
++------------------------------------------+
+|  2. PersonCreateSchema valida los datos  |
++------------------------------------------+
+                    |
+                    | [Datos Limpios y Validados]
+                    v
++------------------------------------------+
+|    3. Función create_person se ejecuta   |
++------------------------------------------+
+                    |
+                    | [Convierte a Diccionario y Guarda en DB]
+                    v
++------------------------------------------+
+|         4. Person.objects.create         |
++------------------------------------------+
+                    |
+                    | [Retorna Instancia de Django]
+                    v
++------------------------------------------+
+|             5. return person             |
++------------------------------------------+
+                    |
+                    | [Filtra y Convierte a JSON]
+                    v
++------------------------------------------+
+|         6. response=PersonSchema         |
++------------------------------------------+
+                    |
+                    | [JSON Limpio]
+                    v
+    +-------------------------------+
+    |  7. Cliente recibe respuesta  |
+    +-------------------------------+
+
+1. La Petición: El cliente envía un JSON en el cuerpo de la petición:
+
+{
+    "name": "Alex",
+    "email": "alex@example.com",
+    "age": 28
+}
+
+2. La Validación de Entrada (Input): Django Ninja intercepta la petición y usa
+PersonCreateSchema para verificar que name sea un texto, email sea un texto y
+age sea un entero. Si falta algo o los tipos están mal, la API responde con un
+error 422 Unprocessable Entity automáticamente, sin siquiera tocar tu base de
+datos.
+
+3. La Ejecución: Si los datos son válidos, se ejecuta create_person. El parámetro
+data ya contiene los datos limpios.
+
+4. La Persistencia: data.dict() convierte los datos en un diccionario de Python
+({'name': 'Alex', ...}) y los asteriscos  los "desempaquetan" para pasarlos como
+argumentos a Person.objects.create(). Django guarda el registro en la base de
+datos. En este momento, la base de datos genera automáticamente el id, el
+created_at y el updated_at.
+
+5. El Retorno: Haces return person (que ya incluye el ID y las fechas que
+generó la base de datos).
+
+6. La Transformación de Salida (Output): Django Ninja atrapa ese objeto person,
+lo filtra usando las reglas de PersonSchema y lo convierte en el JSON final que
+se envía al cliente:
+
+{
+    "id": 1,
+    "name": "Alex",
+    "email": "alex@example.com",
+    "age": 28,
+    "created_at": "2026-07-15T21:42:43Z",
+    "updated_at": "2026-07-15T21:42:43Z"
+}
+
+Fuente
+======
+
+Gemini IA
