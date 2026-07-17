@@ -2417,3 +2417,135 @@ Fuente
 ======
 
 Gemini IA
+
+========
+Gitleaks
+========
+
+Gitleaks es una herramienta de seguridad de código abierto diseñada para
+detectar "secretos" (claves API, contraseñas, tokens de AWS, certificados, etc.)
+que se hayan quedado olvidados en el historial de tu repositorio de Git.
+
+En un proyecto de Django + Nuxt, donde manejas SECRET_KEY, credenciales de base
+de datos y tokens de servicios externos, es una herramienta vital para evitar
+filtraciones catastróficas.
+
+1. ¿Cómo funciona?
+
+Gitleaks escanea todo el historial de commits y los archivos actuales buscando
+patrones de texto que coincidan con llaves privadas o secretos conocidos
+mediante reglas basadas en expresiones regulares.
+
+2. Instalación
+
+Para probarlo en tu entorno local (Linux):
+
+$ sudo apt install gitleaks
+
+Si no existe el paquete en el repositorio entonces:
+
+1. Descarga e Instala Gitleaks
+
+Como Gitleaks es un binario independiente escrito en Go, la forma más limpia en
+Linux es descargar el ejecutable:
+
+# 1. Descarga el paquete para Linux 64 bits (v8.18.2)
+
+$ wget https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks_8.18.2_linux_x64.tar.gz
+
+# 2. Descomprime el archivo
+
+$ tar -zxvf gitleaks_8.18.2_linux_x64.tar.gz
+
+# 3. Muévelo a un directorio de tu PATH
+
+$ sudo mv gitleaks /usr/local/bin/
+
+# 4. Verifica la instalación
+
+$ gitleaks version
+
+3. Pruebas
+
+Ahora vamos a forzar a que de un leak, en el archvivo frontend/app/pages/index.vue
+agregar estas variables en el script del componente:
+
+const api_key = "SG.v2_random_string_that_looks_like_sendgrid_key"
+const aws_secret = "AKIAIMNO7VABCDG7IJKL"
+console.log(api_key)
+console.log(aws_secret)
+
+Ahora ejecutamos:
+
+$ gitleaks detect -v
+
+La salida fue:
+
+1:20PM INF 52 commits scanned.
+1:20PM INF scan completed in 160ms
+1:20PM INF no leaks found
+
+No hay leaks, lo que sucede es que Gitleaks, por defecto, escanea el historial
+de Git. Si creaste o editaste ese archivo index.vue pero aún no has hecho git
+add o git commit, Gitleaks no lo verá a menos que uses el comando para archivos
+sin trackear:
+
+$ gitleaks detect -v --no-git
+
+Finding:     const aws_secret = "AKIAIMNO7VABCDG7IJKL"
+Secret:      AKIAIMNO7VABCDG7IJKL
+RuleID:      aws-access-token
+Entropy:     3.646439
+File:        app/pages/index.vue
+Line:        29
+Fingerprint: app/pages/index.vue:aws-access-token:29
+
+1:22PM INF scan completed in 393ms
+1:22PM WRN leaks found: 1
+
+¡Perfecto! Gitleaks acaba de detectar tu primer "leak".
+
+Fíjate en algo interesante: detectó la clave de AWS (AKIA...), pero ignoró la de
+SendGrid (SG.v2...). Esto sucede porque la regla de AWS es muy estricta y
+precisa en Gitleaks, mientras que algunas otras requieren que el formato sea
+exacto según su base de datos de patrones.
+
+Si añadimos el código a git y hacemos commit entonces si nos va a funcionar el
+comando:
+
+$ gitleaks detect -v
+
+Finding:     const aws_secret = "AKIAIMNO7VABCDG7IJKL"
+Secret:      AKIAIMNO7VABCDG7IJKL
+RuleID:      aws-access-token
+Entropy:     3.646439
+File:        frontend/app/pages/index.vue
+Line:        29
+Commit:      aec7244e698af6ed97525e873825a0d2738f4489
+Author:      Argenis Osorio
+Email:       argenisosorio580@hotmail.com
+Date:        2026-05-12T17:25:01Z
+Fingerprint: aec7244e698af6ed97525e873825a0d2738f4489:frontend/app/pages/index.vue:aws-access-token:29
+
+1:25PM INF 53 commits scanned.
+1:25PM INF scan completed in 159ms
+1:25PM WRN leaks found: 1
+
+Integración en tu package.json
+==============================
+
+Para que sea más fácil de usar en tu flujo de Django + Nuxt, añade un script a
+tu package.json:
+
+"scripts": {
+  "security:scan": "gitleaks detect -v"
+}
+
+Ahora puedes usar simplemente:
+
+$ npm run security:scan.
+
+Fuente
+======
+
+Gemini IA
