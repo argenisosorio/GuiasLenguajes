@@ -2545,6 +2545,120 @@ Ahora puedes usar simplemente:
 
 $ npm run security:scan.
 
+=========================
+El archivo .gitleaks.toml
+=========================
+
+Es el archivo de configuración de Gitleaks, una herramienta de seguridad que
+escanea repositorios de Git para detectar y prevenir la filtración accidental de
+"secretos" (como contraseñas, claves API, tokens de acceso y certificados
+privados).
+
+Cuando ejecutas Gitleaks en tu proyecto o lo integras en tu pipeline de CI/CD,
+la herramienta busca este archivo en la raíz del repositorio para saber
+exactamente qué buscar y qué ignorar.
+
+¿Qué se define dentro de este archivo?
+
+Principalmente se utiliza para tres tareas clave:
+
+1. Crear reglas personalizadas ([[rules]])
+
+Aunque Gitleaks viene con docenas de reglas preconfiguradas para detectar
+credenciales conocidas (como las de AWS, Stripe o GitHub), puedes usar
+expresiones regulares (regex) para buscar patrones específicos de tu
+organización o sistema interno.
+
+2. Definir listas de excepciones ([allowlist])
+Sirve para evitar falsos positivos. Puedes indicarle a Gitleaks que ignore:
+
+-Archivos o rutas específicas: Por ejemplo, archivos de prueba (*_test.go) o
+carpetas de dependencias (node_modules/).
+
+-Extensiones de archivo: Ignorar imágenes o archivos .md.
+
+-Commits específicos: Si hay un commit antiguo con un falso positivo que no
+puedes borrar del historial.
+
+-Valores exactos: Cadenas de texto que parecen secretos pero son seguras (como
+tokens de prueba públicos).
+
+3. Importar configuraciones por defecto ([extend])
+
+Permite heredar la configuración base oficial de Gitleaks para no tener que
+escribir todas las reglas desde cero, añadiendo solo tus modificaciones
+personalizadas encima.
+
+Ejemplo de un archivo .gitleaks.toml básico
+
+# Extiende la configuración por defecto de Gitleaks
+useDefault = true
+
+[allowlist]
+  description = "Ignorar archivos de configuración de desarrollo local y pruebas"
+  paths = [
+    '''node_modules/''',
+    '''go.sum''',
+    '''poetry.lock'''
+  ]
+  regexes = [
+    '''xoxb-[0-9]{11}-[a-zA-Z0-9]{12}''' # Ejemplo: ignorar un patrón específico de prueba
+  ]
+
+[[rules]]
+  id = "mi-api-key-personalizada"
+  description = "Detecta claves de API internas de nuestra empresa"
+  regex = '''empresa-key-[a-zA-Z0-9]{16}'''
+  secretGroup = 0
+
+Si no incluyes este archivo en tu proyecto, Gitleaks simplemente utilizará sus
+reglas predeterminadas globales, lo cual suele ser suficiente para empezar, pero
+el archivo .gitleaks.toml es indispensable si necesitas adaptar la herramienta
+al flujo de trabajo real de tu equipo sin generar falsas alarmas de seguridad.
+
+Ejemplo real:
+
+-----
+
+[allowlist]
+description = "Ignorar las cadenas de imágenes en base64 de images.json"
+paths = [
+    '''backend/modules/registers_management/registers/fixtures/images.json'''
+]
+
+-----
+
+Este fragmento de código es una regla de exclusión (o lista de permitidos)
+dentro del archivo de configuración .gitleaks.toml.
+
+Su función es decirle a Gitleaks que ignore por completo un archivo específico
+durante los escaneos de seguridad para que no reporte posibles alertas allí.
+
+Desglosándolo paso a paso:
+
+-[allowlist]: Abre la sección de excepciones. Todo lo que definas aquí dentro
+será ignorado por la herramienta.
+
+-description = "Ignorar las cadenas de imágenes en base64 de images.json": Es
+un comentario descriptivo para los humanos. Explica que este archivo contiene
+imágenes codificadas y que ignore analizar sus cadenas.
+
+-paths = [ ... ]: Define las rutas exactas de los archivos que Gitleaks debe
+saltarse.
+
+'''backend/modules/.../images.json''': Le dice a la herramienta que no busque
+secretos (como claves API o tokens) dentro de ese archivo images.json. Los
+triples acentos (''') se usan en el formato TOML para escribir rutas con barras
+diagonales sin que causen problemas de formato.
+
+¿Por qué se hace esto?
+
+Los archivos de "fixtures" o datos de prueba (como images.json) suelen contener
+cadenas de texto largas (como imágenes codificadas en Base64 o hashes de prueba)
+que a menudo confunden a Gitleaks, haciéndole creer que son contraseñas o claves
+reales. Al añadir este archivo al allowlist, evitas que el análisis falle por
+culpa de un "falso positivo".
+
 Fuente
 ======
 

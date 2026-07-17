@@ -3836,132 +3836,119 @@ Fuente
 
 Gemini IA
 
-========
-Gitleaks
-========
+=========================
+El archivo .gitleaks.toml
+=========================
 
-Gitleaks es una herramienta de seguridad de código abierto diseñada para
-detectar "secretos" (claves API, contraseñas, tokens de AWS, certificados, etc.)
-que se hayan quedado olvidados en el historial de tu repositorio de Git.
+Es el archivo de configuración de Gitleaks, una herramienta de seguridad que
+escanea repositorios de Git para detectar y prevenir la filtración accidental de
+"secretos" (como contraseñas, claves API, tokens de acceso y certificados
+privados).
 
-En un proyecto de Django + Nuxt, donde manejas SECRET_KEY, credenciales de base
-de datos y tokens de servicios externos, es una herramienta vital para evitar
-filtraciones catastróficas.
+Cuando ejecutas Gitleaks en tu proyecto o lo integras en tu pipeline de CI/CD,
+la herramienta busca este archivo en la raíz del repositorio para saber
+exactamente qué buscar y qué ignorar.
 
-1. ¿Cómo funciona?
+¿Qué se define dentro de este archivo?
 
-Gitleaks escanea todo el historial de commits y los archivos actuales buscando
-patrones de texto que coincidan con llaves privadas o secretos conocidos
-mediante reglas basadas en expresiones regulares.
+Principalmente se utiliza para tres tareas clave:
 
-2. Instalación
+1. Crear reglas personalizadas ([[rules]])
 
-Para probarlo en tu entorno local (Linux):
+Aunque Gitleaks viene con docenas de reglas preconfiguradas para detectar
+credenciales conocidas (como las de AWS, Stripe o GitHub), puedes usar
+expresiones regulares (regex) para buscar patrones específicos de tu
+organización o sistema interno.
 
-$ sudo apt install gitleaks
+2. Definir listas de excepciones ([allowlist])
+Sirve para evitar falsos positivos. Puedes indicarle a Gitleaks que ignore:
 
-Si no existe el paquete en el repositorio entonces:
+-Archivos o rutas específicas: Por ejemplo, archivos de prueba (*_test.go) o
+carpetas de dependencias (node_modules/).
 
-1. Descarga e Instala Gitleaks
+-Extensiones de archivo: Ignorar imágenes o archivos .md.
 
-Como Gitleaks es un binario independiente escrito en Go, la forma más limpia en
-Linux es descargar el ejecutable:
+-Commits específicos: Si hay un commit antiguo con un falso positivo que no
+puedes borrar del historial.
 
-# 1. Descarga el paquete para Linux 64 bits (v8.18.2)
+-Valores exactos: Cadenas de texto que parecen secretos pero son seguras (como
+tokens de prueba públicos).
 
-$ wget https://github.com/gitleaks/gitleaks/releases/download/v8.18.2/gitleaks_8.18.2_linux_x64.tar.gz
+3. Importar configuraciones por defecto ([extend])
 
-# 2. Descomprime el archivo
+Permite heredar la configuración base oficial de Gitleaks para no tener que
+escribir todas las reglas desde cero, añadiendo solo tus modificaciones
+personalizadas encima.
 
-$ tar -zxvf gitleaks_8.18.2_linux_x64.tar.gz
+Ejemplo de un archivo .gitleaks.toml básico
 
-# 3. Muévelo a un directorio de tu PATH
+# Extiende la configuración por defecto de Gitleaks
+useDefault = true
 
-$ sudo mv gitleaks /usr/local/bin/
+[allowlist]
+  description = "Ignorar archivos de configuración de desarrollo local y pruebas"
+  paths = [
+    '''node_modules/''',
+    '''go.sum''',
+    '''poetry.lock'''
+  ]
+  regexes = [
+    '''xoxb-[0-9]{11}-[a-zA-Z0-9]{12}''' # Ejemplo: ignorar un patrón específico de prueba
+  ]
 
-# 4. Verifica la instalación
+[[rules]]
+  id = "mi-api-key-personalizada"
+  description = "Detecta claves de API internas de nuestra empresa"
+  regex = '''empresa-key-[a-zA-Z0-9]{16}'''
+  secretGroup = 0
 
-$ gitleaks version
+Si no incluyes este archivo en tu proyecto, Gitleaks simplemente utilizará sus
+reglas predeterminadas globales, lo cual suele ser suficiente para empezar, pero
+el archivo .gitleaks.toml es indispensable si necesitas adaptar la herramienta
+al flujo de trabajo real de tu equipo sin generar falsas alarmas de seguridad.
 
-3. Pruebas
+Ejemplo real:
 
-Ahora vamos a forzar a que de un leak, en el archvivo frontend/app/pages/index.vue
-agregar estas variables en el script del componente:
+-----
 
-const api_key = "SG.v2_random_string_that_looks_like_sendgrid_key"
-const aws_secret = "AKIAIMNO7VABCDG7IJKL"
-console.log(api_key)
-console.log(aws_secret)
+[allowlist]
+description = "Ignorar las cadenas de imágenes en base64 de images.json"
+paths = [
+    '''backend/modules/registers_management/registers/fixtures/images.json'''
+]
 
-Ahora ejecutamos:
+-----
 
-$ gitleaks detect -v
+Este fragmento de código es una regla de exclusión (o lista de permitidos)
+dentro del archivo de configuración .gitleaks.toml.
 
-La salida fue:
+Su función es decirle a Gitleaks que ignore por completo un archivo específico
+durante los escaneos de seguridad para que no reporte posibles alertas allí.
 
-1:20PM INF 52 commits scanned.
-1:20PM INF scan completed in 160ms
-1:20PM INF no leaks found
+Desglosándolo paso a paso:
 
-No hay leaks, lo que sucede es que Gitleaks, por defecto, escanea el historial
-de Git. Si creaste o editaste ese archivo index.vue pero aún no has hecho git
-add o git commit, Gitleaks no lo verá a menos que uses el comando para archivos
-sin trackear:
+-[allowlist]: Abre la sección de excepciones. Todo lo que definas aquí dentro
+será ignorado por la herramienta.
 
-$ gitleaks detect -v --no-git
+-description = "Ignorar las cadenas de imágenes en base64 de images.json": Es
+un comentario descriptivo para los humanos. Explica que este archivo contiene
+imágenes codificadas y que ignore analizar sus cadenas.
 
-Finding:     const aws_secret = "AKIAIMNO7VABCDG7IJKL"
-Secret:      AKIAIMNO7VABCDG7IJKL
-RuleID:      aws-access-token
-Entropy:     3.646439
-File:        app/pages/index.vue
-Line:        29
-Fingerprint: app/pages/index.vue:aws-access-token:29
+-paths = [ ... ]: Define las rutas exactas de los archivos que Gitleaks debe
+saltarse.
 
-1:22PM INF scan completed in 393ms
-1:22PM WRN leaks found: 1
+'''backend/modules/.../images.json''': Le dice a la herramienta que no busque
+secretos (como claves API o tokens) dentro de ese archivo images.json. Los
+triples acentos (''') se usan en el formato TOML para escribir rutas con barras
+diagonales sin que causen problemas de formato.
 
-¡Perfecto! Gitleaks acaba de detectar tu primer "leak".
+¿Por qué se hace esto?
 
-Fíjate en algo interesante: detectó la clave de AWS (AKIA...), pero ignoró la de
-SendGrid (SG.v2...). Esto sucede porque la regla de AWS es muy estricta y
-precisa en Gitleaks, mientras que algunas otras requieren que el formato sea
-exacto según su base de datos de patrones.
-
-Si añadimos el código a git y hacemos commit entonces si nos va a funcionar el
-comando:
-
-$ gitleaks detect -v
-
-Finding:     const aws_secret = "AKIAIMNO7VABCDG7IJKL"
-Secret:      AKIAIMNO7VABCDG7IJKL
-RuleID:      aws-access-token
-Entropy:     3.646439
-File:        frontend/app/pages/index.vue
-Line:        29
-Commit:      aec7244e698af6ed97525e873825a0d2738f4489
-Author:      Argenis Osorio
-Email:       argenisosorio580@hotmail.com
-Date:        2026-05-12T17:25:01Z
-Fingerprint: aec7244e698af6ed97525e873825a0d2738f4489:frontend/app/pages/index.vue:aws-access-token:29
-
-1:25PM INF 53 commits scanned.
-1:25PM INF scan completed in 159ms
-1:25PM WRN leaks found: 1
-
-Integración en tu package.json
-==============================
-
-Para que sea más fácil de usar en tu flujo de Django + Nuxt, añade un script a
-tu package.json:
-
-"scripts": {
-  "security:scan": "gitleaks detect -v"
-}
-
-Ahora puedes usar simplemente:
-
-$ npm run security:scan.
+Los archivos de "fixtures" o datos de prueba (como images.json) suelen contener
+cadenas de texto largas (como imágenes codificadas en Base64 o hashes de prueba)
+que a menudo confunden a Gitleaks, haciéndole creer que son contraseñas o claves
+reales. Al añadir este archivo al allowlist, evitas que el análisis falle por
+culpa de un "falso positivo".
 
 Fuente
 ======
