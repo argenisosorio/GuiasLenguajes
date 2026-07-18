@@ -53,11 +53,15 @@ Nivel 6: Herramientas de Desarrollo Agénticas en Acción (Aplicación Práctica
 -Claude Code vs. OpenCode
 -Google Antigravity
 -OpenClaw
+-Cursor
+-llama.cpp
+-Kimi Chat
 
 Nivel 7: Empresas
 
 -OpenAI
 -Anthropic
+-Mistral
 
 ==============================================
 Machine Learning (ML) o Aprendizaje Automático
@@ -2464,6 +2468,180 @@ Fuente
 Gemini IA
 
 ======
+Cursor
+======
+
+Es un editor de código diseñado específicamente para programar con Inteligencia
+Artificial. Es un fork (una bifurcación modificada) de Visual Studio Code
+(VS Code), lo que significa que se ve, se siente y funciona exactamente igual,
+permitiéndote usar todas tus extensiones, temas y atajos de teclado habituales,
+pero con modelos de IA profundamente integrados en el entorno de desarrollo.
+
+A diferencia de usar una extensión como GitHub Copilot, Cursor rediseña la
+interfaz para que la IA tenga contexto de todo tu proyecto. Sus características
+clave incluyen:
+
+-Chat con Contexto Total (Ctrl + K / Ctrl + L): Puedes abrir un chat lateral que
+entiende no solo el archivo abierto, sino todo tu repositorio. Puedes usar
+símbolos como @ para indexar carpetas específicas, archivos, documentación web
+externa o fragmentos de código concretos.
+
+-Edición en Línea: Seleccionas un bloque de código, presionas un comando y le
+pides modificaciones (ej. "Refactoriza esta función a un componente asíncrono").
+La IA te muestra un diff (comparativa de cambios) para que aceptes o rechaces
+los cambios directamente en el archivo.
+
+-Predicción de Siguiente Acción (Cursor Tab): Va más allá del autocompletado
+básico de líneas; sugiere ediciones multilínea basándose en tus cambios
+recientes y es capaz de predecir hacia dónde te vas a mover en el archivo para
+escribir el código por ti.
+
+-Auto-reparación de Errores: Cuando la terminal arroja un error de sintaxis,
+compilación o ejecución, Cursor ofrece un botón para que la IA lea el stack
+trace, busque la causa en tu código y te proponga la solución inmediata.
+
+Modelos que Utiliza
+
+No está atado a un solo proveedor. Te permite alternar entre los modelos de
+lenguaje más avanzados del mercado según lo que necesites:
+
+-Claude 3.5 Sonnet (altamente popular por su precisión lógica en programación).
+-GPT-4o y GPT-4o-mini.
+-Modelos propios de Cursor optimizados para respuestas ultrarrápidas.
+
+Es compatible con prácticamente cualquier lenguaje (Python, JavaScript,
+TypeScript, Go, C++, etc.) y se ha convertido en una de las herramientas
+estándar para desarrollo acelerado por IA.
+
+Fuente
+======
+
+Gemini IA
+
+=========
+llama.cpp
+=========
+
+Es una biblioteca de software libre escrita en C/C++ cuyo objetivo principal es
+permitir la ejecución local de Modelos de Lenguaje Grande (LLMs) con la máxima
+eficiencia y el menor consumo de recursos posible, especialmente en hardware de
+consumo común (como laptops, computadoras de escritorio o incluso dispositivos
+móviles).
+
+Fue creada originalmente por el desarrollador Georgi Gerganov en marzo de 2023,
+justo después de que Meta lanzara la primera versión de sus modelos LLaMA.
+
+Su desarrollo transformó por completo la comunidad de IA de código abierto.
+
+¿Por qué es tan importante y qué la hace especial?
+
+Cero Dependencias Pesadas:
+
+-A diferencia del ecosistema tradicional de IA en Python (que requiere instalar
+gigabytes de librerías como PyTorch, TensorFlow o CUDA), llama.cpp es una
+implementación nativa en C/C++ pura. No necesita entornos virtuales complejos ni
+configuraciones pesadas; compilas un único binario ejecutable y listo.
+
+-Optimización para CPUs (y Apple Silicon): Tradicionalmente, los LLMs
+necesitaban tarjetas gráficas (GPUs) comerciales masivas con mucha memoria VRAM
+para poder ejecutarse. llama.cpp se diseñó desde el primer día para exprimir al
+máximo los procesadores (CPUs) mediante optimizaciones de instrucciones
+vectoriales (AVX2, AVX-512 en x86) y, de forma muy destacada, ofrece soporte
+nativo de aceleración para los chips Apple Silicon (M1/M2/M3/M4) usando el
+framework Metal, logrando velocidades sorprendentes sin usar una GPU dedicada
+tradicional. También cuenta con soporte para GPUs de NVIDIA (CUDA) y AMD (ROCm).
+
+-El Ecosistema GGUF (Cuantización): llama.cpp introdujo y popularizó el formato
+de archivo GGUF (y su predecesor GGML). Este formato permite aplicar
+cuantización, una técnica matemática que reduce la precisión de los pesos del
+modelo (por ejemplo, de 16 bits flotantes a enteros de 4 u 8 bits).
+
+El beneficio: Un modelo que originalmente pesaba 15 GB y requería una GPU
+costosa pasa a pesar 4 GB, manteniendo casi el mismo nivel de inteligencia y
+permitiendo que lo ejecutes localmente en una computadora con apenas 8 GB o 16
+GB de memoria RAM común.
+
+¿Cómo encaja en el software que usas?
+
+Rara vez interactúas con llama.cpp escribiendo comandos puros en la terminal, a
+menos que estés desarrollando. En su lugar, actúa como el motor interno
+invisible (backend) que da vida a la gran mayoría de las aplicaciones populares
+de IA local que existen hoy en día:
+
+-Ollama, LM Studio, Jan o AnythingLLM utilizan llama.cpp por debajo para cargar
+los modelos GGUF y exponerlos en interfaces gráficas o APIs locales compatibles
+con OpenAI.
+
+-Muchas extensiones de editores de código (incluyendo alternativas locales en VS
+Code o herramientas similares a Cursor que se conectan a entornos locales)
+dependen de este motor para procesar tus prompts sin enviar datos a servidores
+externos.
+
+Es, en esencia, la herramienta técnica que democratizó la Inteligencia
+Artificial, permitiendo que cualquiera pueda correr un clon privado de ChatGPT
+en su propia máquina sin depender de internet ni pagar suscripciones.
+
+Fuente
+======
+
+Gemini IA
+
+=========
+Kimi Chat
+=========
+
+Es un asistente de Inteligencia Artificial desarrollado por la empresa china
+Moonshot AI, fundada en 2023 por investigadores de la Universidad de Tsinghua.
+
+Aunque en Occidente no es tan mencionada como ChatGPT o Claude, Kimi se ha
+convertido en un fenómeno masivo en China y en el ámbito técnico global debido a
+una característica muy específica: su colosal ventana de contexto (la cantidad
+de información que puede procesar y recordar en una sola conversación).
+
+Sus puntos fuertes y características clave
+
+-Soporte masivo de texto (Long Context): Kimi fue uno de los primeros modelos en
+irrumpir con la capacidad de procesar hasta 2 millones de caracteres chinos
+(equivalente a unas 200,000 palabras o varios libros enteros) en una sola
+consulta. Esto le permite analizar manuales técnicos gigantescos, contratos
+legales larguísimos o repositorios de código completos sin fragmentar la
+información.
+
+-Especialización en análisis de documentos: Está fuertemente optimizada para la
+lectura, resumen, traducción y extracción de datos desde archivos PDF, Word,
+Excel y hojas de cálculo complejas. Le puedes subir documentos financieros
+masivos y pedirle balances cruzados detallados.
+
+-Búsqueda web e investigación: Cuenta con un motor de búsqueda integrado que le
+permite navegar por internet en tiempo real para contrastar datos y dar
+respuestas actualizadas con referencias y fuentes citadas.
+
+-Enfoque en productividad y programación: Además de tareas de redacción y
+ofimática, tiene un excelente rendimiento en la generación, depuración y
+explicación de código fuente.
+
+El modelo detrás: Moonshot
+
+El motor que impulsa a este asistente es la familia de modelos Moonshot (como
+Moonshot-v1). La empresa ha enfocado toda su arquitectura e innovación en
+optimizar la memoria de los modelos de lenguaje, demostrando que retener un
+contexto ultralargo de forma eficiente y económica es vital para flujos de
+trabajo profesionales serios.
+
+¿Cómo se utiliza?
+
+Kimi está disponible principalmente a través de su versión web, aplicaciones
+móviles y extensiones de navegador. Aunque su mercado e interfaz principal están
+en China, el sistema soporta e interactúa perfectamente en múltiples idiomas,
+incluido el inglés y el español, y ofrece APIs para desarrolladores que quieran
+integrar su masiva capacidad de contexto en aplicaciones externas.
+
+Fuente
+======
+
+Gemini IA
+
+======
 OpenAI
 ======
 
@@ -2484,16 +2662,83 @@ Fuente
 
 Gemini IA
 
+=======
+Mistral
+=======
+
+Es una empresa francesa de Inteligencia Artificial fundada en mayo de 2023 por
+exinvestigadores de Meta (Llama) y Google DeepMind. Se le conoce frecuentemente
+como "el campeón europeo de la IA" y se ha consolidado como la alternativa más
+sólida frente a gigantes estadounidenses como OpenAI, Google o Anthropic.
+
+A diferencia de otras empresas que mantienen sus sistemas bajo llave (código
+cerrado), la filosofía central de Mistral AI se basa en la apertura y la
+soberanía de datos.
+
+Puntos Clave sobre Mistral AI
+
+-Modelos de Peso Abierto (Open-Weight): Distribuyen muchos de sus modelos bajo
+licencias libres (como Apache 2.0), lo que permite a desarrolladores y empresas
+descargar los archivos del modelo, modificarlos, hacerles fine-tuning (ajuste
+fino) e instalarlos de manera local o en servidores privados.
+
+-Eficiencia Extrema: Son pioneros en popularizar la arquitectura MoE (Mixture of
+Experts) en modelos abiertos (con su famosa línea Mixtral). En lugar de activar
+todo el modelo para responder una pregunta, solo activan las "partes expertas"
+necesarias, haciéndolos increíblemente rápidos y baratos de ejecutar sin perder
+precisión.
+
+-Soberanía Europea y Privacidad: Al estar basados en Francia, están diseñados
+desde cero respetando las normativas de privacidad estrictas de la Unión Europea
+(como el GDPR). Esto atrae mucho a sectores altamente regulados (banca, salud,
+gobierno) que no quieren o no pueden enviar sus datos a servidores en EE. UU.
+
+Modelos Destacados
+
+Su catálogo se divide entre soluciones comerciales (vía API en su plataforma La
+Plateforme) y modelos que puedes descargar para correr en local:
+
+-Mistral Large (ej. Mistral Large 3): Su modelo insignia de nivel de frontera.
+Compite directamente con los modelos comerciales más potentes del mercado en
+razonamiento complejo, matemáticas y capacidades multilingües nativas.
+
+-Mistral Medium y Small (ej. Small 4): Modelos optimizados para un equilibrio
+perfecto entre costo y rendimiento, ideales para tareas que requieren velocidad,
+visión por computadora, razonamiento y orquestación de agentes de IA.
+
+-Codestral / Devstral: Variantes especializadas puramente en generación,
+depuración y completado de código fuente para programadores.
+
+-Ministral (3B / 8B): Diseñados específicamente para funcionar en computación al
+borde (edge computing), es decir, para ejecutarse de forma local y eficiente
+dentro de laptops o teléfonos móviles.
+
+-Línea Vocálica (Voxtral): Modelos dedicados al procesamiento de audio y
+generación de voz de alta fidelidad (Text-to-Speech).
+
+¿Cómo se utiliza?
+
+Tienen dos canales principales para el público:
+
+-Le Chat: Es su interfaz web de chat gratuita (similar a ChatGPT) donde puedes
+interactuar directamente con sus modelos, probar sus capacidades y usar agentes
+complejos.
+
+-API y Hugging Face: Para desarrolladores, puedes consumir sus modelos mediante
+tokens pagados en su nube o ir a repositorios como Hugging Face para descargar
+las versiones abiertas y montarlas en infraestructuras propias (por ejemplo,
+usando Docker o entornos locales con Ollama).
+
+Fuente
+======
+
+Gemini IA
+
 -----
 
 Por investigar:
 
-Arneses (guardarraíles)
-Eitores hiper-optimizados para IA.
-
-Cursor
-Claude Desktop
 Frameworks de Orquestación
 Fine-tuning (Ajuste fino)
 TPU (Tensor Processing Unit)
-VRAM (Video RAM)
+Editores hiper-optimizados para IA.
