@@ -310,3 +310,35 @@ Para dejarlo corriendo permanentemente sin depender de tu PC encendida, el
 siguiente paso técnico natural sería desplegar este mismo archivo main.py en un
 servicio de alojamiento gratuito o VPS (como PythonAnywhere, Render o un
 servidor con Docker).
+
+Revocar token por expocisión
+============================
+
+Si se llega a exponer el token de alguna manera cualquier persona con este token
+puede tomar el contron de tu bot. Se sugiere revocar este token inmediatamente
+desde @BotFather en Telegram (usando el comando /revoke) y generar uno nuevo.
+
+Para evitar dejar claves sensibles directo en el código, lo mejor es cargarlas
+como variables de entorno usando python-dotenv:
+
+$ pip install python-dotenv
+
+Crea un archivo .env en la raíz del proyecto:
+
+TELEGRAM_TOKEN=tu_nuevo_token_aqui
+
+Actualiza tu script:
+
+-----
+
+import os
+import sys
+from dotenv import load_dotenv
+
+load_dotenv()
+TOKEN = os.getenv("TELEGRAM_TOKEN")
+
+if __name__ == "__main__":
+    if not TOKEN:
+        print("Error: No se encontró TELEGRAM_TOKEN en las variables de entorno.")
+        sys.exit(1)
