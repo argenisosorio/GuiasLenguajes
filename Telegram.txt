@@ -76,3 +76,237 @@ Fuente
 =======
 
 ChatGPT
+
+===================================================
+Bot de telegram para notificaciones de recordatorio
+===================================================
+
+Es posible desarrollar un bot que me envíe notificaciones com recordatorios?
+
+Sí, es totalmente posible. Para lograrlo, la arquitectura del bot necesita dos
+componentes principales:
+
+La interfaz de Telegram (Bot API): Para recibir el comando donde le indicas la
+fecha, hora y el texto del recordatorio, y para enviarte el mensaje final.
+
+Un programador de tareas en el backend (Scheduler): El bot no puede quedarse
+"esperando" congelado en el código hasta que llegue la hora. Necesita una
+librería que programe una tarea en segundo plano para que se ejecute exactamente
+en la fecha y hora indicadas.
+
+¿Cómo se implementa tecnológicamente?
+
+Si utilizas Python (una de las opciones más sencillas y populares para esto), la
+combinación ideal es:
+
+-python-telegram-bot: La librería para interactuar con Telegram.
+
+-APScheduler o el módulo JobQueue (que viene integrado dentro de
+python-telegram-bot): Te permite programar funciones para que se ejecuten en una
+fecha/hora específica (run_once).
+
+Aspectos clave a considerar para producción
+
+Persistencia (Base de Datos):
+
+-Si el servidor donde corre el bot se mece, se reinicia o se despliega de nuevo,
+los recordatorios guardados solo en memoria RAM se perderán.
+
+-Para evitar esto, conviene guardar cada recordatorio en una base de datos
+(SQLite, PostgreSQL, etc.) con su estado (pendiente/enviado). Al arrancar el
+script, este lee la base de datos y vuelve a cargar las tareas pendientes en el
+programador.
+
+Zona Horaria (Timezone):
+
+-Es crucial manejar las fechas con zona horaria (usando librerías como pytz o
+zoneinfo) para asegurarte de que la hora del servidor coincida con la hora local
+en la que deseas recibir el mensaje.
+
+Servidor donde alojarlo:
+
+-El script debe estar ejecutándose de forma continua 24/7 en un servidor o VPS
+(puedes usar plataformas como Render, Railway, PythonAnywhere, un contenedor
+Docker en VPS, etc.) para que pueda disparar el evento en el momento justo.
+
+Para probarlo de punta a punta y tenerlo 100% funcional en tu computadora de
+desarrollo, aquí tienes el paso a paso detallado desde cero.
+
+1. Requisitos previos en tu equipo
+
+Debes contar con las siguientes herramientas básicas en tu máquina:
+
+-Python 3.10 o superior instalado.
+
+-Tu cuenta de Telegram abierta (en el teléfono o en la PC).
+
+-Una terminal o consola de comandos (Bash, PowerShell o la terminal de tu IDE).
+
+2. Paso a Paso para la Configuración
+
+Paso 1: Crear el bot en Telegram y obtener el Token
+
+-Abre Telegram y busca al usuario oficial @BotFather (tiene un check azul de
+verificación).
+
+-Abre un chat con él y envía el comando /newbot.
+
+-Te pedirá un nombre para tu bot (ejemplo: Mi Recordador Bot).
+
+-Te pedirá un username único que termine en bot
+(ejemplo: mi_recordador_2026_bot).
+
+-BotFather te responderá con un mensaje de éxito que contiene el HTTP API
+Token (una cadena larga parecida a 123456789:ABCdefGhIJKlmNoPQRsTUVwxyZ).
+Guarda este token.
+
+Paso 2: Preparar el entorno de desarrollo
+
+Abre tu terminal y ejecuta los siguientes comandos para crear una carpeta de
+proyecto y su entorno virtual aislante:
+
+Crear la carpeta del proyecto y entrar a ella
+
+$ mkdir bot-recordatorio
+
+$ cd bot-recordatorio
+
+Crear entorno virtual de Python
+
+$ python3 -m venv venv
+
+Activar el entorno virtual
+
+$ source venv/bin/activate
+
+Instalar las librerías necesarias
+
+$ pip install python-telegram-bot[job-queue] pytz
+
+Nota: La extensión [job-queue] instala la librería APScheduler por detrás, la
+cual maneja los tiempos de ejecución.
+
+Paso 3: Crear el script ejecutable
+
+Dentro de la carpeta bot-recordatorio, crea un archivo llamado main.py y pega el
+código ajustado con manejo explícito de zonas horarias:
+
+-----
+
+import sys
+from datetime import datetime
+import pytz
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
+
+# Reemplaza esto con el token que te dio @BotFather
+TOKEN = "TU_TOKEN_AQUI"
+
+# Define tu zona horaria local para evitar desfasajes (ej: 'America/Caracas')
+MI_ZONA_HORARIA = pytz.timezone('America/Caracas')
+
+async def enviar_recordatorio(context: ContextTypes.DEFAULT_TYPE):
+    job = context.job
+    await context.bot.send_message(
+        chat_id=job.chat_id, 
+        text=f"⏰ **RECORDATORIO:** {job.data['mensaje']}",
+        parse_mode="Markdown"
+    )
+
+# Comando para agendar un recordatorio
+async def recordar(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    try:
+        args = context.args
+        if len(args) < 3:
+            raise ValueError("Argumentos insuficientes")
+
+        fecha_str = args[0]      # YYYY-MM-DD
+        hora_str = args[1]       # HH:MM
+        mensaje = " ".join(args[2:])
+
+        # Construir la fecha y asignarle la zona horaria
+        fecha_hora_naive = datetime.strptime(f"{fecha_str} {hora_str}", "%Y-%m-%d %H:%M")
+        fecha_hora_objetivo = MI_ZONA_HORARIA.localize(fecha_hora_naive)
+
+        # Fecha y hora actual localizada
+        ahora = datetime.now(MI_ZONA_HORARIA)
+        segundos_faltantes = (fecha_hora_objetivo - ahora).total_seconds()
+
+        if segundos_faltantes <= 0:
+            await update.message.reply_text("⚠️ La fecha u hora especificada ya transcurrió.")
+            return
+
+        # Agendar el trabajo
+        context.job_queue.run_once(
+            enviar_recordatorio,
+            when=segundos_faltantes,
+            chat_id=update.effective_chat.id,
+            data={'mensaje': mensaje}
+        )
+
+        await update.message.reply_text(
+            f"✅ Recordatorio agendado con éxito para el `{fecha_str}` a las `{hora_str}`.\n"
+            f"📌 Mensaje: *{mensaje}*",
+            parse_mode="Markdown"
+        )
+
+    except Exception:
+        await update.message.reply_text(
+            "❌ **Formato incorrecto.** Usa el comando así:\n"
+            "`/recordar AAAA-MM-DD HH:MM [Mensaje]`\n\n"
+            "Ejemplo:\n`/recordar 2026-07-20 10:30 Reunión de revisión`",
+            parse_mode="Markdown"
+        )
+
+if __name__ == "__main__":
+    if TOKEN == "TU_TOKEN_AQUI" or not TOKEN:
+        print("Error: Reemplaza 'TU_TOKEN_AQUI' por tu Token real de BotFather.")
+        sys.exit(1)
+
+    app = ApplicationBuilder().token(TOKEN).build()
+    app.add_handler(CommandHandler("recordar", recordar))
+    
+    print("🤖 Bot iniciado y escuchando eventos...")
+    app.run_polling()
+
+-----
+
+Paso 4: Probar el Bot. Arrancar el servidor local. Ejecuta el script con tu
+entorno virtual activo:
+
+$ python3 main.py
+
+Verás en consola el mensaje: 🤖 Bot iniciado y escuchando eventos...
+
+Iniciar chat con tu Bot
+
+Busca tu bot en Telegram con el username que creaste en BotFather y presiona el
+botón Iniciar (o envía el comando /start).
+
+Agendar una prueba rápida. Probar a 2 minutos del presente. Envía un mensaje con
+una hora cercana (2 o 3 minutos en el futuro) para validar la ejecución:
+
+/recordar 2026-07-20 09:55 Prueba de notificación rápida
+
+Verificar la respuesta de confirmación
+
+El bot debe responder inmediatamente con un mensaje de confirmación con check
+verde (✅ Recordatorio agendado...).
+
+Recibir la notificación
+
+En el momento exacto, al cumplirse la hora elegida, el bot te enviará
+automáticamente el mensaje programado:
+
+⏰ RECORDATORIO: Prueba de notificación rápida
+
+Consideración importante para pruebas
+
+Mientras el comando python main.py se mantenga activo en tu terminal, el bot
+responderá y disparará las alarmas. Si cierras la terminal, el proceso se
+detendrá.
+
+Para dejarlo corriendo permanentemente sin depender de tu PC encendida, el
+siguiente paso técnico natural sería desplegar este mismo archivo main.py en un
+servicio de alojamiento gratuito o VPS (como PythonAnywhere, Render o un
+servidor con Docker).
