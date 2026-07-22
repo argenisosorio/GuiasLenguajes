@@ -1121,3 +1121,68 @@ Fuente
 ======
 
 Gemini IA
+
+====================================
+Proteger endpoints con autenticación
+====================================
+
+Django Ninja proporciona varias herramientas para ayudarte a gestionar la
+autenticación y la autorización de forma fácil, rápida y estandarizada, sin
+tener que estudiar y aprender todas las especificaciones de seguridad.
+
+El concepto fundamental es que, al describir una operación de API, se puede
+definir un objeto de autenticación.
+
+from ninja import NinjaAPI
+from ninja.security import django_auth
+
+api = NinjaAPI()
+
+
+@api.get("/pets", auth=django_auth)
+def pets(request):
+    return f"Authenticated user {request.auth}"
+
+En este ejemplo, el cliente solo podrá llamar a la petsEste método se utiliza si
+emplea la autenticación de sesión de Django (la predeterminada se basa en
+cookies); de lo contrario, se devolverá un error HTTP-401.
+
+Autenticación global
+====================
+
+En caso de que necesite proteger todos los métodos de su API, puede pasar el
+authargumento al NinjaAPI constructor:
+
+from ninja import NinjaAPI, Form
+from ninja.security import HttpBearer
+
+
+class GlobalAuth(HttpBearer):
+    def authenticate(self, request, token):
+        if token == "supersecret":
+            return token
+
+
+api = NinjaAPI(auth=GlobalAuth())
+
+Autenticación de sesión de Django
+=================================
+
+Django Ninja proporciona clases de autenticación de sesión integradas que
+aprovechan el marco de sesión existente de Django:
+
+Autenticación de sesión
+
+Utiliza la autenticación de sesión predeterminada de Django: autentica a
+cualquier usuario que haya iniciado sesión.
+
+from ninja.security import SessionAuth
+
+@api.get("/protected", auth=SessionAuth())
+def protected_view(request):
+    return {"user": request.auth.username}
+
+Fuente
+======
+
+https://django-ninja.dev/guides/authentication/
