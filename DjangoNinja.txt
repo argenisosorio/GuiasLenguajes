@@ -1186,3 +1186,192 @@ Fuente
 ======
 
 https://django-ninja.dev/guides/authentication/
+
+==========================================================
+Proteger la interfaz interactiva de Swagger UI (/api/docs)
+==========================================================
+
+Por defecto, la interfaz interactiva de Swagger UI (/api/docs) y el esquema
+JSON OpenAPI (/api/openapi.json) quedan expuestos de forma pública. Para
+proteger estas rutas en Django Ninja y evitar que usuarios anónimos o no
+autorizados exploren la estructura de tu backend, existen dos formas principales
+de solucionarlo.
+
+Opción 1: Proteger Swagger globalmente usando la clase de seguridad de Ninja
+(Recomendada)
+
+Puedes indicar a NinjaAPI que aplique tu esquema de autenticación (por ejemplo,
+AuthBearer) a la propia documentación.
+
+# tu_app/api.py
+from ninja import NinjaAPI
+from .auth import AuthBearer  # Tu clase HttpBearer
+
+# Al asignar auth en la inicialización, se protegen los endpoints Y la documentación
+api = NinjaAPI(
+    title="Mi API Protegida",
+    docs_decorator=None,  # Opcional si usas decoradores estándar de Django
+    docs_url="/docs",  # La ruta de Swagger UI
+)
+
+# Si definiste auth globalmente:
+# api = NinjaAPI(auth=AuthBearer())
+
+Si deseas que la documentación requiera la sesión de superusuario/administrador
+de Django (por ejemplo, haber iniciado sesión en /admin), puedes usar el
+decorador nativo de Django user_passes_test o staff_member_required:
+
+# tu_app/api.py
+from django.contrib.admin.views.decorators import staff_member_required
+from ninja import NinjaAPI
+
+# Restringe /api/docs únicamente a usuarios staff/administradores autenticados en Django Admin
+api = NinjaAPI(
+    docs_decorator=staff_member_required
+)
+
+¿Cómo funciona?
+
+Con staff_member_required, si un usuario intenta entrar a
+[http://127.0.0.1:8000/api/docs](http://127.0.0.1:8000/api/docs) sin haber
+iniciado sesión en el panel de administración de Django (/admin), el sistema lo
+redirigirá automáticamente a la pantalla de login del admin antes de renderizar
+la interfaz de Swagger.
+
+Cambiar la ruta de /api/docs
+
+Puedes cambiar la ruta predeterminada pasando el argumento docs_url al
+instanciar NinjaAPI.
+
+Ejemplo práctico
+
+Si quieres cambiar la ruta de la documentación (por ejemplo, a /documentacion,
+/swagger, o una ruta secreta como /panel-docs-dev):
+
+# tu_app/api.py
+from django.contrib.admin.views.decorators import staff_member_required
+from ninja import NinjaAPI
+
+api = NinjaAPI(
+    docs_url="/documentacion",  # Aquí defines la nueva ruta personalizada
+    docs_decorator=staff_member_required,
+)
+
+¿Cómo quedan las URLs ahora?
+
+Asumiendo que tu archivo de URLs principal en Django incluye las rutas con el
+prefijo api/ (path("api/", api.urls)):
+
+Nueva interfaz gráfica (Swagger): http://127.0.0.1:8000/api/documentacion
+
+Esquema JSON (OpenAPI): http://127.0.0.1:8000/api/openapi.json
+
+Nota útil: Si también quisieras cambiar la ruta del archivo de especificación
+JSON (openapi.json), puedes pasar el parámetro openapi_url="/mi-esquema.json".
+
+# tu_app/api.py
+from django.contrib.admin.views.decorators import staff_member_required
+from ninja import NinjaAPI
+
+api = NinjaAPI(
+    docs_url="/documentacion",  # Aquí defines la nueva ruta personalizada
+    openapi_url="/mi-esquema.json",
+    docs_decorator=staff_member_required
+)
+
+=======================
+El archivo openapi.json
+=======================
+
+Es la "hoja de especificaciones" o el mapa técnico en formato JSON de toda tu
+API.
+
+Es un estándar abierto de la industria (OpenAPI Specification, antes conocido
+como Swagger Spec) que describe con exactitud matemática cómo funciona tu
+backend sin necesidad de leer el código fuente.
+
+1. ¿Qué contiene exactamente este archivo?
+
+Cuando entras a la URL /api/openapi.json en Django Ninja, verás un JSON estructurado que detalla:
+
+-Endpoints disponibles: Todas las rutas registradas (ej. /api/users/,
+/api/auth/login).
+
+-Métodos HTTP: GET, POST, PUT, DELETE, etc., que acepta cada ruta.
+
+-Estructura de entrada: Los parámetros esperados (query params, path params) y
+el esquema exacto del cuerpo de la petición (Request Body) que definiste en
+Pydantic.
+
+-Estructura de respuesta: Los códigos de estado HTTP (200 OK, 401 Unauthorized,
+404 Not Found) y los JSON que devuelve el servidor.
+
+-Esquemas de autenticación: Describe qué mecanismos de seguridad utiliza la API
+(Bearer Tokens, Cookies, API Keys, etc.).
+
+2. ¿Para qué sirve y por qué es importante?
+
+El archivo openapi.json no es solo informativo; es la base para múltiples
+herramientas del ecosistema de desarrollo:
+
+A. Alimenta la interfaz visual de Swagger UI / Redoc
+
+Cuando ingresas a /api/documentacion, la pantalla visual e interactiva que ves
+no está codificada a mano. Swagger lee el openapi.json en tiempo real y genera
+los botones, formularios de prueba y descripciones de manera automática.
+
+B. Pruebas y pruebas de carga automatizadas
+
+Herramientas como Postman, Insomnia o k6 pueden importar el archivo openapi.json
+para crear colecciones enteras de pruebas de integración de forma instantánea.
+
+3. Ejemplo visual de su contenido
+
+Si en Django Ninja defines este endpoint:
+
+@api.get("/users/{user_id}", response=UserSchema)
+def get_user(request, user_id: int):
+    ...
+
+El archivo openapi.json generará algo como esto de forma automática:
+
+{
+  "paths": {
+    "/api/users/{user_id}": {
+      "get": {
+        "summary": "Get User",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserSchema" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+En resumen
+
+-openapi.json es el mapa de datos en bruto que genera Django Ninja a partir de
+tus esquemas de Pydantic y tus rutas.
+
+-docs_url (/documentacion) es la interfaz gráfica (Swagger) que consume ese mapa
+JSON para que los desarrolladores puedan probar la API desde el navegador.
+
+Fuente
+======
+
+Gemini IA

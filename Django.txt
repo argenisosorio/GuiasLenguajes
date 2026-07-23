@@ -14760,6 +14760,54 @@ if not SECRET_KEY:
 # ADVERTENCIA DE SEGURIDAD: ¡no ejecute con la depuración activada en producción!
 DEBUG = os.environ.get('DEBUG')
 
+====================================
+Problema con DEBUG False usando .env
+====================================
+
+Si colocas DEBUG=False en el .env pero el sistema aún sigue en modo Desarrollo:
+
+Este es un problema de tipos muy común en Python cuando se leen variables desde
+un archivo .env o del sistema operativo.
+
+El problema ocurre porque os.environ.get('DEBUG') devuelve una cadena de texto
+(str), no un valor booleano (bool).
+
+¿Por qué sucede esto?
+
+En Python, cualquier cadena de texto no vacía se evalúa como True en un contexto
+booleano.
+
+-os.environ.get('DEBUG') retorna el texto "False".
+
+-La expresión bool("False") se evalúa como True porque la cadena tiene
+caracteres dentro.
+
+-Cuando hardcodearás DEBUG = False, estás asignando directamente un tipo bool,
+por lo que Django sí lo reconoce como falso.
+
+Debes castear/convertir explícitamente el valor leído de la variable de entorno
+a un valor booleano en Python.
+
+Conversión manual explícita (Sin instalar librerías)
+
+Puedes comparar directamente la cadena contra el texto "True" (ignorando
+mayúsculas/minúsculas):
+
+import os
+
+# Lee la variable y convierte la cadena "True" en True booleano.
+# Si la variable vale "False", "0", o no existe, resultará en False.
+DEBUG = os.environ.get('DEBUG', 'False').lower() in ('true', '1', 't')
+
+# Validación opcional para asegurar que la variable existe en el entorno
+if 'DEBUG' not in os.environ:
+    raise ValueError("Error: Debes configurar la variable DEBUG en las variables de entorno.")
+
+Fuente
+======
+
+Gemini IA
+
 ====================================================================
 Eliminar la carpeta migrations de todos los directorios del proyecto
 ====================================================================
