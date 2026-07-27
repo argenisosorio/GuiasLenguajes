@@ -4955,3 +4955,77 @@ Fuente
 ======
 
 Gemini IA
+
+=======
+Cypress
+=======
+
+Es una herramienta de automatización de pruebas de código abierto diseñada
+especialmente para la web moderna. Está construida sobre JavaScript y permite a
+los desarrolladores y equipos de QA (control de calidad) escribir pruebas para
+todo lo que corre dentro de un navegador web.
+
+A diferencia de herramientas tradicionales como Selenium, Cypress se ejecuta
+directamente dentro del mismo bucle de eventos del navegador, lo que le da
+acceso nativo al DOM (el documento de la página), a las peticiones de red y a la
+memoria de la aplicación.
+
+¿Cómo ayuda en las pruebas de software?
+
+Cypress simplifica y acelera el proceso de calidad de software mediante varias
+ventajas clave:
+
+1. Pruebas de extremo a extremo (E2E) y componentes: Permite simular la
+experiencia real del usuario: desde hacer clic en botones y llenar formularios
+hasta navegar por distintas páginas y verificar la respuesta de la interfaz.
+
+2. "Travel-in-Time" (Viaje en el tiempo): Toma captura de pantalla de cada paso
+mientras se ejecutan los tests. Cuando miras los resultados en el ejecutor
+interactivo, puedes pasar el cursor sobre cada comando para ver exactamente qué
+estaba pasando en la pantalla en ese instante.
+
+3. Esperas automáticas (Auto-waiting): Uno de los mayores dolorosos de probar
+software web son las esperas asíncronas (esperar a que un botón cargue o una
+API responda). Cypress espera automáticamente a que los elementos existan y
+estén listos antes de interactuar con ellos, eliminando la mayoría de los
+errores de sincronización.
+
+4. Control total sobre el tráfico de red (Mocking y Stubbing)"Puedes interceptar
+las peticiones HTTP que hace tu aplicación para simular respuestas del servidor,
+probar cómo reacciona tu web cuando la API falla o forzar casos de borde sin
+depender de un backend real.
+
+5. Depuración fácil en el navegador: Dado que se ejecuta dentro del navegador,
+puedes usar directamente las herramientas de desarrollo de Chrome o Firefox
+(DevTools) para inspeccionar elementos, ver la consola de JavaScript y rastrear
+errores al instante.
+
+Ejemplo rápido de código
+
+Un test sencillo en Cypress para verificar un inicio de sesión se ve así:
+
+describe('Prueba de Login', () => {
+  it('Debe permitir al usuario iniciar sesión con éxito', () => {
+    // 1. Visitar la página
+    cy.visit('https://mi-app.com/login');
+
+    // 2. Interactuar con los elementos
+    cy.get('input[name="email"]').type('usuario@ejemplo.com');
+    cy.get('input[name="password"]').type('Password123');
+    cy.get('button[type="submit"]').click();
+
+    // 3. Verificar el resultado esperado
+    cy.url().should('include', '/dashboard');
+    cy.get('.bienvenida').should('contain', 'Hola, usuario');
+  });
+});
+
+Tip: Cypress es ideal para aplicaciones SPA (Single Page Applications)
+desarrolladas en React, Vue, Angular o Svelte, ya que comparte la misma pila
+tecnológica (JavaScript/TypeScript) que la mayoría de los desarrolladores
+frontend.
+
+Fuente
+======
+
+Gemini IA
