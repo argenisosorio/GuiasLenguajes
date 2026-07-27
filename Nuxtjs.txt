@@ -3954,3 +3954,92 @@ Fuente
 ======
 
 Gemini IA
+
+==================
+tanstack vue-table
+==================
+
+Es la adaptación oficial para Vue.js (tanto Vue 2 como Vue 3) de TanStack Table
+(anteriormente conocida como React Table v8).
+
+Se trata de una librería de gestión de tablas del tipo headless (sin interfaz
+gráfica integrada).
+
+¿Qué significa que sea "Headless"?
+
+A diferencia de componentes tradicionales como Vuetify o PrimeVue, TanStack
+Table no renderiza ningún marcado HTML, CSS o componente visual por sí solo.
+
+En su lugar, te proporciona toda la lógica de negocio y el estado para manejar
+tablas complejas, mientras tú conservas el control total sobre el diseño y el
+marcado HTML (usando elementos <table> nativos o componentes de Tailwind UI,
+shadcn-vue, etc.).
+
+Características principales
+
+-Cero markup / 100% personalizable: Tú decides cómo se ve cada etiqueta <th>,
+<td> o <tr>.
+
+-Funcionalidades avanzadas ya resueltas:
+  -Ordenamiento de columnas (sorting)
+  -Filtrado global y por columna
+  -Paginación
+  -Selección de filas (row selection)
+  -Agrupación y expansión de datos
+  -Reordenamiento y ocultamiento de columnas
+
+-Reactividad nativa de Vue: Utiliza los ref y reactive de Vue 3 (Composition
+API) para sincronizar el estado de la tabla automáticamente.
+
+-Tipado estricto: Desarrollado en TypeScript para ofrecer autocompletado y
+validación de tipos al definir las columnas y los datos.
+
+Un ejemplo rápido de uso
+
+<script setup>
+import { useVueTable, getCoreRowModel, flexRender } from '@tanstack/vue-table'
+import { ref } from 'vue'
+
+const data = ref([
+  { id: 1, name: 'Ana', age: 28 },
+  { id: 2, name: 'Carlos', age: 34 },
+])
+
+const columns = [
+  { accessorKey: 'id', header: 'ID' },
+  { accessorKey: 'name', header: 'Nombre' },
+  { accessorKey: 'age', header: 'Edad' },
+]
+
+const table = useVueTable({
+  get data() { return data.value },
+  columns,
+  getCoreRowModel: getCoreRowModel(),
+})
+</script>
+
+<template>
+  <table>
+    <thead>
+      <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
+        <th v-for="header in headerGroup.headers" :key="header.id">
+          <component :is="flexRender(header.column.columnDef.header, header.getContext())" />
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="row in table.getRowModel().rows" :key="row.id">
+        <td v-for="cell in row.getVisibleCells()" :key="cell.id">
+          <component :is="flexRender(cell.column.columnDef.cell, cell.getContext())" />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</template>
+
+Fuentes
+=======
+
+Gemini IA
+
+https://tanstack.com/table/v8/docs/framework/vue/vue-table
