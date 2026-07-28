@@ -16076,3 +16076,92 @@ Fuente
 ======
 
 Gemini IA
+
+=====================================================================
+Fixture que guarde en 2 modelos a la vez (por ejemplo User y Profile)
+=====================================================================
+
+En Django, los fixtures permiten cargar múltiples modelos relacionales en un
+solo archivo y ejecutarlos en una única operación utilizando el comando
+loaddata.
+
+Arquitectura del Fixture (users_and_profiles.json)
+
+Guarda este contenido en un archivo llamado initial_data.json o
+users_and_profiles.json dentro de la carpeta fixtures/ de cualquiera de tus
+aplicaciones instaladas (por ejemplo,
+apps/users/fixtures/users_and_profiles.json):
+
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "username": "admin",
+      "email": "admin@mail.com",
+      "password": "pbkdf2_sha256$870000$g9XzK2qL$e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "first_name": "",
+      "last_name": "",
+      "is_superuser": true,
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2026-07-28T15:00:00Z"
+    }
+  },
+  {
+    "model": "profiles.profile",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "names": "admin",
+      "surnames": "admin",
+      "donor": false,
+      "not_donor": false,
+      "applicant": false,
+      "dni": "12345678",
+      "birthdate": "1979-03-12",
+      "birthplace": "Caracas",
+      "age": 46,
+      "nationality": "V",
+      "gender": "M",
+      "ocupation": 55,
+      "academic_level": "Bachillerato",
+      "phone": "04247561561",
+      "movil": "04247561561",
+      "estate_id": 3,
+      "municipality_id": 11,
+      "parish_id": 57,
+      "marital_status": "C",
+      "created_at": "2026-07-28T15:00:00Z"
+    }
+  }
+]
+
+Mapeo de conceptos clave
+
+-Relación User y Profile: En el segundo objeto (profiles.profile), el campo
+"user": 1 hace referencia a la clave primaria ("pk": 1) del primer objeto
+(auth.user). Ajusta la app de tu modelo Profile si la app no se llama profiles
+(ejemplo: "mi_app.profile").
+
+-Contraseña hash: La función bcrypt('123456') de PHP/Laravel se ha adaptado al
+estándar de hashing por defecto de Django (PBKDF2 con SHA256). El valor hash
+provisto en la propiedad password corresponde a la contraseña en texto plano
+123456.
+
+-Modelo User personalizado: Si estás utilizando un modelo de usuario
+personalizado que extiende de AbstractUser en lugar del auth.user nativo de
+Django, simplemente reemplaza "model": "auth.user" por
+"model": "tu_app.customuser".
+
+Operación de ejecución:
+
+Para cargar ambos modelos simultáneamente a la base de datos en una sola
+ejecución transaccional, ejecuta:
+
+$ python manage.py loaddata users_and_profiles
+
+Fuente
+======
+
+Gemini IA
