@@ -5029,3 +5029,382 @@ Fuente
 ======
 
 Gemini IA
+
+=========
+Turborepo
+=========
+
+es una herramienta de construcciones (build system) de alto rendimiento diseñada
+específicamente para gestionar monorepos de JavaScript y TypeScript (Next.js,
+React, Node.js, etc.).
+
+1. El Problema que Resuelve Turborepo
+
+Cuando trabajas en un monorepo sin la herramienta adecuada, te enfrentas a
+problemas de velocidad y escalabilidad:
+
+-Tiempos de espera largos: Si ejecutas npm run build, se compilan todos los
+proyectos desde cero, incluso los que no sufrieron modificaciones.
+
+-Falta de orden en dependencias: Si el Proyecto A depende del Paquete B,
+necesitas asegurar que B se compile antes que A.
+
+-Desperdicio de recursos: En entornos de CI/CD (Servidores de integración
+continua), compilar todo repetidamente cuesta tiempo y dinero.
+
+Turborepo soluciona esto agregando inteligencia al proceso de compilación.
+
+2. Características Clave de Turborepo
+
+Cacheo Inteligente (Build Cache): Turborepo rastrea los archivos, dependencias y
+comandos de cada paquete. Si nada ha cambiado desde la última vez que ejecutaste
+una tarea (como build o test), Turborepo recupera el resultado directamente de
+la caché casi instantáneamente en lugar de reejecutarlo.
+
+Grafo de Tareas y Ejecución Paralela: Turborepo analiza las interdependencias de
+tus proyectos y crea un grafo de ejecución óptimo. Ejecuta todas las tareas
+posibles en paralelo aprovechando al máximo los núcleos de tu CPU.
+
+Remote Caching (Caché Remota): Puedes compartir la caché local con todo tu
+equipo y con el servidor de producción (CI/CD) a través de servicios como
+Vercel o servidores propios. Si un compañero de equipo ya compiló una rama, tu
+máquina descargará el resultado de la caché en milisegundos.
+
+3. Ejemplo Estructural de un Monorepo con Turborepo
+
+Así luce típicamente la estructura de carpetas en un proyecto configurado con
+Turborepo:
+
+mi-monorepo/
+├── apps/
+│   ├── web/          # Aplicación Next.js
+│   ├── docs/         # Sitio de documentación
+│   └── api/          # API Backend (NestJS / Node)
+├── packages/
+│   ├── ui/           # Biblioteca de componentes UI reutilizables
+│   ├── config/       # Configuración compartida (ESLint, Prettier, Tailwind)
+│   └── tsconfig/     # Configuración base de TypeScript
+├── turbo.json        # Configuración del motor de Turborepo
+└── package.json      # Dependencias raíz y workspaces
+
+4. ¿Cómo funciona la configuración (turbo.json)?
+
+El archivo turbo.json define las dependencias entre tareas (pipelines):
+
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "dist/**"]
+    },
+    "test": {
+      "dependsOn": ["build"]
+    },
+    "lint": {},
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}
+
+"dependsOn": ["^build"]: Indica que antes de compilar la app web, Turborepo debe
+compilar primero las librerías compartidas de las que depende (ui, config, etc.)
+
+Monorepo vs Turborepo
+
+Monorepo: La estrategia o arquitectura de guardar múltiples proyectos en un
+solo repositorio.
+
+Turborepo: La herramienta que optimiza, acelera y gestiona las tareas (build,
+test, dev) dentro de ese Monorepo.
+
+Ejemplo real
+============
+
+Paso a paso para crear un proyecto básico con Turborepo usando pnpm o npm.
+
+1.Crear el proyecto con el CLI oficial:
+
+Ejecuta el comando oficial de creación de Turborepo en tu terminal:
+
+$ pnpm create turbo@latest
+
+El CLI te pedirá un par de configuraciones simples:
+
+-Directorio del proyecto: Asigna un nombre (por ejemplo: mi-turborepo).
+-Package Manager: Selecciona pnpm.
+
+2.Explorar la estructura generada
+
+Accede al proyecto recién creado:
+
+$ cd mi-turborepo
+
+Verás una estructura organizada dividida en dos carpetas principales dentro de
+apps/ y packages/:
+
+mi-turborepo/
+├── apps/
+│   ├── web/            # App principal en Next.js
+│   └── docs/           # Segunda app en Next.js
+├── packages/
+│   ├── ui/             # Librería de componentes UI compartidos
+│   ├── eslint-config/  # Reglas de linter compartidas
+│   └── typescript-config/ # Configuración TS compartida
+├── turbo.json          # Archivo de orquestación de tareas
+├── pnpm-workspace.yaml # Define los espacios de trabajo de pnpm
+└── package.json        # Configuración raíz
+
+3.Entender el archivo turbo.json:
+
+Abre turbo.json en la raíz. Este archivo le indica a Turborepo cómo ejecutar y
+almacenar en caché las tareas:
+
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!-next/cache/**", "dist/**"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}
+
+-dependsOn: ["^build"]: Asegura que antes de compilar una aplicación (p. ej.
+apps/web), se compilen primero sus dependencias en packages/.
+
+-cache: false: El entorno de desarrollo local (dev) no se almacena en caché
+porque requiere escucha constante de cambios.
+
+4.Iniciar el entorno de desarrollo
+
+Ejecuta todas las aplicaciones simultáneamente con un solo comando desde la
+raíz:
+
+$ pnpm dev
+
+Turborepo iniciará en paralelo los servidores de desarrollo de web y docs
+(normalmente en localhost:3000 y localhost:3001).
+
+5.Probar el poder del cacheo (Build)
+
+Para generar la versión de producción de todo el monorepo, ejecuta:
+
+$ pnpm build
+
+La primera vez compilará todo desde cero y tomará unos segundos.
+
+Vuelve a ejecutar el mismo comando inmediatamente:
+
+$ pnpm build
+
+Notarás la salida en consola: FULL TURBO. La ejecución se completa en
+milisegundos porque recuperó todos los binarios de la caché sin re-compilar
+ningún archivo.
+
+¿Cómo conectar un paquete interno a una app?
+
+Si deseas usar un componente de packages/ui dentro de apps/web:
+
+Revisa que apps/web/package.json incluya la dependencia local:
+
+"dependencies": {
+  "@repo/ui": "workspace:*"
+}
+
+Impórtalo directamente en la página de tu aplicación:
+
+import { Button } from "@repo/ui/button";
+
+export default function Page() {
+  return <Button appName="web">Hola Turborepo</Button>;
+}
+
+Ejemplo de turborepo + Vue 3
+============================
+
+Aunque la plantilla predeterminada de Turborepo suele venir con Next.js/React,
+puedes integrar Vue 3 (usando Vite) sin problemas.
+
+Guía rápida paso a paso para estructurar un monorepo con Vue 3 y Turborepo
+usando pnpm:
+
+1. Estructura del Monorepo
+
+Queremos una estructura donde compartamos componentes UI o configuraciones entre
+nuestras aplicaciones Vue:
+
+mi-turborepo-vue/
+├── apps/
+│   ├── web/               # App Vue 3 + Vite principal
+│   └── admin/             # Panel de administración (Vue 3 + Vite)
+├── packages/
+│   ├── ui/                # Librería de componentes Vue 3 compartidos
+│   └── typescript-config/ # Configuración base de TS
+├── turbo.json
+├── pnpm-workspace.yaml
+└── package.json
+
+2. Configurar los paquetes clave
+
+pnpm-workspace.yaml (en la raíz)
+
+Define dónde residen los paquetes de tu monorepo:
+
+YAML
+packages:
+  - "apps/*"
+  - "packages/*"
+
+packages/ui/package.json (Librería de Componentes)
+
+Este paquete expone tus componentes compartidos de Vue:
+
+{
+  "name": "@repo/ui",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*"
+  },
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "vue-tsc && vite build"
+  },
+  "dependencies": {
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "vue-tsc": "^2.0.0"
+  }
+}
+
+3. Crear un componente compartido en packages/ui
+
+packages/ui/src/MyButton.vue
+
+<script setup lang="ts">
+defineProps<{
+  label: string
+}>()
+</script>
+
+<template>
+  <button class="custom-btn" @click="$emit('click')">
+    {{ label }}
+  </button>
+</template>
+
+<style scoped>
+.custom-btn {
+  background-color: #42b883;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+</style>
+
+packages/ui/src/index.ts
+
+import MyButton from './MyButton.vue'
+export { MyButton }
+
+4. Consumir el componente en la app Vue (apps/web)
+apps/web/package.json
+
+Vincula la librería local utilizando la sintaxis workspace:*:
+
+{
+  "name": "web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@repo/ui": "workspace:*",
+    "vue": "^3.4.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.0",
+    "vite": "^5.0.0"
+  }
+}
+
+apps/web/src/App.vue
+
+Importa y usa tu componente directamente:
+
+<script setup lang="ts">
+import { MyButton } from '@repo/ui'
+
+const handleClick = () => {
+  alert('¡Botón desde @repo/ui funcionando!')
+}
+</script>
+
+<template>
+  <main>
+    <h1>Mi App Vue 3 en Turborepo</h1>
+    <MyButton label="Haz clic aquí" @click="handleClick" />
+  </main>
+</template>
+
+5. Configurar turbo.json en la raíz
+
+Asegúrate de que Turborepo conozca el ciclo de compilación de Vite y Vue:
+
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}
+
+6. Ejecutar el proyecto
+
+Instala todas las dependencias desde la raíz:
+
+$ pnpm install
+
+Arranca el entorno de desarrollo de todo el monorepo simultáneamente:
+
+$ pnpm turbo dev
+
+Para probar la compilación y la caché inteligente:
+
+$ pnpm turbo build
+
+Fuente
+======
+
+Gemini IA
