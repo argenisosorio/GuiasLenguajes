@@ -15039,12 +15039,56 @@ $ sudo apt update
 
 Instala FileZilla:
 
-$ sudo apt install filezilla -y
+$ sudo apt install filezilla
 
 Verifica la instalación:
 
 Puedes abrirlo ejecutando filezilla en la terminal o buscándolo en el menú de
 aplicaciones de tu entorno gráfico.
+
+Fuente
+======
+
+Gemini IA
+
+=================================================================
+SFTP (Secure File Transfer Protocol o SSH File Transfer Protocol)
+=================================================================
+
+Es un protocolo de red utilizado para transferir archivos de forma segura entre
+un cliente y un servidor a través de Internet.
+
+A diferencia del FTP tradicional que transmite los datos y contraseñas en
+texto plano, SFTP funciona sobre una conexión cifrada mediante SSH (Secure
+Shell). Esto garantiza que la información viaje protegida mediante cifrado de
+punto a punto.
+
+Principales características y ventajas
+======================================
+
+-Cifrado completo: Protege tanto tus credenciales de acceso como el contenido de
+los archivos durante la transferencia.
+
+-Puerto único: Utiliza por defecto el puerto 22 (el mismo de SSH), lo que
+facilita su configuración a través de firewalls y routers.
+
+-Gestión remota de archivos: No solo sirve para subir o bajar archivos; también
+permite renombra, eliminar, listar directorios y modificar permisos en el
+servidor remoto.
+
+-Integridad de datos: Verifica que los archivos no hayan sido alterados o
+corruptos durante la transmisión.
+
+¿Cómo se utiliza?
+=================
+
+Para conectarte a un servidor SFTP generalmente necesitas:
+
+Un cliente SFTP: Programas con interfaz gráfica como FileZilla, WinSCP o
+Cyberduck, o desde la consola de comandos mediante sftp usuario@servidor.com.
+
+Credenciales: Nombre de usuario y contraseña, o preferiblemente un par de llaves
+SSH (pública/privada) para autenticación sin contraseña.
 
 Fuente
 ======
