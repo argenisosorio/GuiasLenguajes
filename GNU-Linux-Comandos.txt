@@ -219,6 +219,91 @@ usado, pero en mg o gb según sea el caso.
 
 $ df -h
 
+
+El comando lsblk
+================
+
+En Linux se utiliza para listar información sobre todos los dispositivos de
+bloque (block devices) disponibles en el sistema, como discos duros, SSDs,
+unidades USB, particiones y otros dispositivos de almacenamiento.
+
+¿Qué muestra exactamente?
+
+El comando presenta una salida en forma de árbol, lo que permite visualizar de
+manera clara la jerarquía de los dispositivos y sus particiones. La información
+que suele mostrar incluye:
+
+-Nombre del dispositivo (ej: sda, nvme0n1, loop0)
+-Tamaño en formato legible (GB, MB, etc.)
+-Tipo de dispositivo (disk, part, lvm, etc.)
+-Punto de montaje (mountpoint), si está montado
+Modelo (en algunas versiones)
+-UUID (en algunas versiones)
+-Etiqueta (label)
+
+Columnas MAJ:MIN, RM y RO
+-MAJ:MIN significa Major:Minor: Números que identifican de forma única cada
+dispositivo de bloque en el kernel de Linux. El número mayor (MAJ) identifica al
+driver o controlador del dispositivo (ej: 8 para discos SCSI/SATA, 259 para
+NVMe), y el número menor (MIN) identifica al dispositivo específico dentro de
+ese driver (ej: 0 para el primer disco, 1 para su primera partición).
+
+-RM significa Removable: Indica si el dispositivo es extraíble o no. 1 = sí es
+extraíble (ej: USB, CD/DVD); 0 = no es extraíble (ej: disco duro interno, SSD).
+
+-RO significa Read-Only: Indica si el dispositivo es de solo lectura. 1 = sí, es
+de solo lectura (no se puede escribir); 0 = no, es de lectura y escritura (se
+puede escribir).
+
+Ejemplo de salida típica:
+
+$ lsblk
+
+NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+sda           8:0    0 238.5G  0 disk
+├─sda1        8:1    0   512M  0 part /boot/efi
+├─sda2        8:2    0 237.1G  0 part /
+└─sda3        8:3    0   976M  0 part [SWAP]
+nvme0n1     259:0    0 953.9G  0 disk
+└─nvme0n1p1 259:1    0 953.9G  0 part /mnt/storage
+
+Opciones más útiles:
+
+-f Muestra información del sistema de archivos (UUID, LABEL, FSTYPE)
+-m Muestra información en formato legible y con permisos
+-p Muestra la ruta completa del dispositivo
+-o Permite especificar columnas personalizadas a mostrar
+-J Salida en formato JSON (útil para scripts)
+-l Salida en formato lista (sin estructura de árbol)
+
+Ejemplos prácticos:
+
+# Mostrar todos los dispositivos con sistema de archivos
+
+$ lsblk -f
+
+# Mostrar solo ciertas columnas
+
+$ lsblk -o NAME,SIZE,MODEL,MOUNTPOINT
+
+# Mostrar en formato JSON
+
+$ lsblk -J
+
+# Mostrar con rutas completas y permisos
+
+$ lsblk -pm
+
+Nota importante: lsblk funciona leyendo el sistema de archivos /sys/block y no
+requiere permisos de superusuario para la mayoría de las consultas básicas. Sin
+embargo, para ver todos los dispositivos (incluyendo algunos virtuales o
+protegidos), puede necesitar ejecutarlo con sudo.
+
+Fuente
+======
+
+DeepSeek IA
+
 -----
 
 Muestra el espacio disponible del disco y demas dispositivos asi como el espacio
@@ -3904,6 +3989,69 @@ Copiar un imagen .iso en unidad USB
 Para hacerlo booteable, debe estar desmontado pero conectado en el puerto usb.
 
 $ cat xxxx.iso > /dev/sdxxx ; sync
+
+Ejecutar dd con parámetros de rendimiento:
+
+$ sudo dd if=/ruta/a/debian-13.iso of=/dev/sdb bs=4M status=progress conv=fdatasync
+
+-bs=4M: Escribe en bloques de 4 Megabytes (hace que sea mucho más rápido).
+
+-status=progress: Te muestra la barra de progreso de la copia.
+
+-conv=fdatasync: Asegura que los datos se hayan escrito físicamente en el
+pendrive antes de terminar.
+
+Advertencia de seguridad: Verifica 2 o 3 veces cuál es la letra de tu pendrive
+(/dev/sdb, /dev/sdc, etc.). Si por error pones /dev/sda (que suele ser tu disco
+principal), sobrescribirás todo tu sistema operativo actual.
+
+Comparativa: dd vs cat
+======================
+
+En el contexto de grabar una imagen ISO en un pendrive, dd y cat logran
+exactamente el mismo resultado final: hacer una copia bit a bit (o volcado de
+bloques) del archivo ISO hacia el dispositivo de almacenamiento USB.
+
+Ambos funcionan porque las ISOs modernas (como las de Debian) son imágenes
+híbridas (isohybrid), diseñadas para ser escritas byte por byte sobre un
+dispositivo de bloques directamente (/dev/sdX).
+
+Sin embargo, existen diferencias clave en cómo operan y qué control te dan:
+
++-----------------------+--------------------------------------+--------------------------------------+
+| Característica        | Command: dd (disk duplicate)         | Command: cat (concatenate)           |
++-----------------------+--------------------------------------+--------------------------------------+
+| Propósito principal   | Copia y conversión de datos a bajo   | Leer, concatenar y redirigir texto   |
+|                       | nivel entre dispositivos de bloques. | o flujos de datos.                   |
++-----------------------+--------------------------------------+--------------------------------------+
+| Sintaxis básica       | dd if=origen of=destino              | cat origen > destino                 |
++-----------------------+--------------------------------------+--------------------------------------+
+| Control de búfer (bs) | Sí (ej. bs=4M, optimiza la velocidad | No (usa el tamaño de búfer básico del|
+|                       | de transferencia).                   | sistema operativo).                  |
++-----------------------+--------------------------------------+--------------------------------------+
+| Barra de progreso     | Sí (mediante el parámetro            | No (permanece silencioso hasta       |
+|                       | status=progress).                    | finalizar el proceso).               |
++-----------------------+--------------------------------------+--------------------------------------+
+| Control de errores    | Sí (permite ignorar sectores         | No (se interrumpe si encuentra       |
+|                       | defectuosos con conv=noerror).       | un error de lectura).                |
++-----------------------+--------------------------------------+--------------------------------------+
+| Velocidad general     | Más rápida (al ajustar bs a 4M/8M).  | Más lenta en grandes volúmenes.      |
++-----------------------+--------------------------------------+--------------------------------------+
+| Sincronización final  | Permite conv=fdatasync para forzar   | Requiere encadenar el comando sync   |
+|                       | la escritura física en disco.        | explícitamente (cat ... && sync).    |
++-----------------------+--------------------------------------+--------------------------------------+
+
+En resumen: cat es la vía rápida y "simplista": le dice al sistema" lee este
+archivo y mándalo completo a esta unidad".dd es la herramienta especializada de
+bajo nivel: le dice al sistema "copia este archivo a esta unidad en bloques de
+4MB y muéstrame el avance en tiempo real". Por eso en la práctica, para grabar
+sistemas operativos como Debian, se prefiere dd para tener control del tiempo,
+progreso y velocidad de la copia.
+
+Fuente
+======
+
+DeepSeek IA
 
 =============================================
 Instalación de solo el sistema base de Debian
