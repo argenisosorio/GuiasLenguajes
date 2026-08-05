@@ -10249,6 +10249,9 @@ Hola@bienvenido>
 
 Cambiar el color de fondo al nombre del host, el código a utilizar sería este:
 
+# Amarillo
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;33m\]\u\[\033[01;35m\]@\[\033[01;33m\]\h\[\033[00;33m\]:\[\033[01;34m\]\w\[\033[00m\]$ '
+
 $ PS1="\u@\[\e[31;46m\]\h\[\e[m\] "
 
 Fuentes
@@ -10285,6 +10288,7 @@ git (Configurarlo, Probarlo)
 vlc player
 apache (Probar)
 postgresql (Probar)
+MariaDB
 Virtual Box (Opcional)
 rsync
 xclip
