@@ -15160,3 +15160,40 @@ Fuente
 ======
 
 Gemini IA
+
+===============================================================
+Enviar notificaciones luego de ejecución de un proceso en gnome
+===============================================================
+
+Utilizando la herramienta CLI nativa de notificaciones de escritorio:
+notify-send. Si no la tienes instalada en tu Debian 13, instálala con:
+
+$ sudo apt install libnotify-bin
+
+Comando básico, notifica al terminar con éxito, pero sale oculta en la barra:
+
+$ ffmpeg -i entrada.avi -c:v libx264 -c:a aac salida.mp4 && notify-send "FFmpeg" "Conversión finalizada con éxito"
+
+Comando recomendado (maneja éxito y error con icono de GNOME)
+
+$ ffmpeg -i entrada.avi -c:v libx264 -c:a aac salida.mp4 && notify-send -i video-x-generic "FFmpeg" "Video convertido correctamente" || notify-send -u critical -i dialog-error "FFmpeg" "Error al convertir el video"
+
+-&&: Lanza la notificación de éxito solo si el comando anterior termina sin
+errores (código de salida 0).
+
+-||: Lanza una alerta si el proceso falla o es cancelado (Ctrl + C).
+
+-i: Añade un icono del tema nativo de GNOME (video-x-generic o dialog-error).
+
+-u critical: Cambia la urgencia de la notificación para que resalte y no se
+oculte automáticamente hasta que la descartes.
+
+Notificación recomendada
+========================
+
+$ comando... && notify-send -u critical "FFmpeg" "Mensaje..."
+
+Fuente
+======
+
+Gemini IA
