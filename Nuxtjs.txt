@@ -4043,3 +4043,20 @@ Fuentes
 Gemini IA
 
 https://tanstack.com/table/v8/docs/framework/vue/vue-table
+
+=============================================================
+Mostrar el nombre de usuario truncado a 12 caracteres + '...'
+=============================================================
+
+<b class="color-white">
+  {{ 
+    user?.username 
+      ? (user.username.length > 12 ? user.username.slice(0, 12) + '...' : user.username) 
+      : 'Usuario' 
+  }}
+</b>
+
+Fuente
+======
+
+Gemini IA
