@@ -995,3 +995,37 @@ Fuente
 ======
 
 Gemini IA
+
+
+
+
+
+
+
+
+
+
+$ git push gitlab master 
+sign_and_send_pubkey: signing failed for EDXXXXX "/home/user/.ssh/id_edxxxxx" from agent: agent refused operation
+git@gitlab.com: Permission denied (publickey).
+fatal: No se pudo leer del repositorio remoto.
+
+Por favor asegúrate de que tengas los permisos de acceso correctos
+y que el repositorio exista.
+
+Solución:
+
+$ ssh-add ~/.ssh/id_edxxxx
+Enter passphrase for /home/aosorio/.ssh/id_edxxxxx: 
+Identity added: /home/aosorio/.ssh/id_edxxxxx (myemail@gmail.com)
+
+$ ssh -T git@gitlab.com
+Welcome to GitLab, @user!
+
+$ git push gitlab master 
+Enumerando objetos: 5, listo.
+
+Fuente
+======
+
+Gemini IA
