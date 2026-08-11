@@ -996,14 +996,9 @@ Fuente
 
 Gemini IA
 
-
-
-
-
-
-
-
-
+============================================
+Error de la clave ssh haciendo push a gitlab
+============================================
 
 $ git push gitlab master 
 sign_and_send_pubkey: signing failed for EDXXXXX "/home/user/.ssh/id_edxxxxx" from agent: agent refused operation
@@ -1024,6 +1019,51 @@ Welcome to GitLab, @user!
 
 $ git push gitlab master 
 Enumerando objetos: 5, listo.
+
+No tener que repetir a cada rato los pasos anteriores:
+
+Ese fallo ocurre porque la llave tiene contraseña (passphrase) y el agente
+ssh-agent no la recuerda automáticamente tras reiniciar la sesión. Para
+solucionar esto de forma permanente y que cargue tu clave al hacer git push,
+configura la carga automática mediante el cliente de SSH:
+
+Abre o crea el archivo de configuración SSH en tu terminal:
+
+$ nano ~/.ssh/config
+
+Agrega las siguientes líneas al archivo (asegúrate de colocar la ruta exacta de
+tu clave id_edxxxxx):
+
+---
+
+Host gitlab.com
+    IdentityFile ~/.ssh/id_edxxxxx
+    AddKeysToAgent yes
+
+---
+
+Guarda los cambios y dale permisos adecuados al archivo:
+
+$ chmod 600 ~/.ssh/config
+
+¿Cómo funciona esta solución?
+
+-AddKeysToAgent yes: La primera vez que ejecutes un comando git push después de
+encender la PC, la consola te pedirá la contraseña de la clave una sola vez.
+
+-A partir de ese momento, ssh-agent guardará la clave en memoria durante la
+sesión activa, por lo que no tendrás que ejecutar ssh-add ni ingresar la
+contraseña nuevamente.
+
+Opción alternativa (Quitar la contraseña de la llave)
+
+Si trabajas en una máquina personal totalmente segura y prefieres no ingresar la
+contraseña ni siquiera la primera vez al reiniciar:
+
+$ ssh-keygen -p -f ~/.ssh/id_edxxxxx
+
+Te pedirá la contraseña actual y, cuando solicite la nueva (Enter new
+passphrase), presiona Enter dos veces para dejarla en blanco.
 
 Fuente
 ======
