@@ -11073,6 +11073,40 @@ Fondo animado con gradiente
 </body>
 </html>
 
+==================================
+Fondo de div animado con gradiente
+==================================
+
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .content {
+    width: 400px;
+    height: 400px;
+    color: white;
+    font-family: sans-serif;
+    /* Creamos un degradado mucho más grande que la pantalla */
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    /* Ejecutamos la animación */
+    animation: gradient 15s ease infinite;
+  }
+</style>
+</head>
+<body>
+  <div class="content">
+    <h1>Fondo Animado Sencillo</h1>
+  </div>
+</body>
+</html>
+
 =================================================
 Fondo RGB Elegante con partículas interconectadas
 =================================================
