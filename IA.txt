@@ -26,6 +26,8 @@ Nivel 3: Técnicas de Control, Extensión y Multimodalidad (Interacción)
 -Modelo multimodal
 -El RAG (Retrieval-Augmented Generation) o Generación Aumentada por Recuperación
 -Spec-Driven Development (SDD) o Desarrollo Basado en Especificaciones
+-El archivo specs.md
+-El archivo AGENTS.md
 
 Nivel 4: Entorno Local y Hardware (Sistemas e Infraestructura)
 
@@ -1066,6 +1068,182 @@ Fuente
 
 Gemini IA
 
+===================
+El archivo specs.md
+===================
+
+En el contexto de desarrollo de software asistido por Inteligencia Artificial
+(usando herramientas como GitHub Copilot Workspace, Cursor, Aider o Devin), el
+archivo specs.md (abreviatura de specifications o especificaciones) es la
+"fuente de verdad" del proyecto en formato Markdown.
+
+Es un documento redactado en lenguaje natural pero con una estructura técnica
+clara, diseñado para explicarle a los agentes de IA qué debe hacer el software,
+qué reglas debe seguir y cómo debe comportarse, evitando que el modelo de
+lenguaje tenga que "adivinar" o genere alucinaciones.
+
+¿Para qué sirve exactamente?
+
+Cuando le pides a una IA que cree una funcionalidad, los Modelos de Lenguaje
+(LLMs) dependen del contexto. Si solo le dices "crea un sistema de usuarios", la
+IA tomará decisiones arbitrarias sobre la base de datos, la autenticación y las
+rutas.
+
+El archivo specs.md actúa como el manual de instrucciones e ingeniería para la
+IA:
+
+-Reduce la ambigüedad: Define límites claros de lo que la IA debe y no debe
+hacer.
+
+-Mantiene la consistencia: Asegura que cualquier nueva línea de código generada
+se ajuste a las reglas del proyecto.
+
+-Guía la generación de tests: Permite a los agentes de IA redactar pruebas
+automatizadas basándose en los criterios de aceptación especificados en el
+documento.
+
+Estructura típica de un specs.md: Aunque no existe un estándar rígido, un
+archivo specs.md bien diseñado suele contener:
+
+-----
+
+# Especificación del Proyecto: [Nombre de la Funcionalidad / Proyecto]
+
+## 1. Visión General (Overview)
+Breve descripción de lo que se busca construir y el objetivo principal.
+
+## 2. Requisitos Funcionales
+* **RF-01:** El usuario debe poder registrarse usando email y contraseña.
+* **RF-02:** La contraseña debe tener al menos 8 caracteres y un número.
+
+## 3. Arquitectura y Tecnologías
+* Lenguaje: TypeScript / Node.js
+* Base de datos: PostgreSQL con Prisma ORM
+* Estilo de API: RESTful
+
+## 4. Casos de Uso y Flujos (User Stories & Acceptance Criteria)
+* **Dado que** un usuario no registrado está en `/login`
+* **Cuando** introduce credenciales válidas
+* **Entonces** debe recibir un JWT y ser redirigido a `/dashboard`.
+
+## 5. Restricciones y Reglas de Negocio (Non-negotiables)
+* NO usar librerías externas para la generación de tokens (usar la API nativa de Node).
+* Toda función exportada DEBE incluir tipos de TypeScript.
+
+-----
+
+¿Cómo interactúa la IA con este archivo?
+
+-Contexto (Prompting): Antes de generar código, el sistema (o tú mismo) alimenta
+al modelo de IA con el contenido de specs.md.
+
+-Generación de Plan: La IA lee specs.md y propone una lista de pasos para
+cumplir las especificaciones.
+
+-Escritura de Código y Pruebas: La IA programa la solución y verifica que el
+código cumpla con los criterios descritos en el archivo.
+
+-Validación: Si algo no encaja con specs.md, la IA o el desarrollador pueden
+corregir el rumbo citando la especificación incumplida.
+
+En resumen: Si el código es la implementación, specs.md es el plano
+arquitectónico en lenguaje humano que la IA consulta para construirlo sin
+cometer errores de interpretación.
+
+====================
+El archivo AGENTS.md
+====================
+
+Si specs.md es el plano de QUÉ debe construir la IA, el archivo AGENTS.md (o a
+veces CLAUDE.md, .cursorrules, COPILOT.md) es el manual de operaciones sobre
+CÓMO debe comportarse el agente de IA dentro del repositorio.
+
+Mientras que specs.md cambia según la funcionalidad o el proyecto, AGENTS.md
+suele ser un archivo persistente en la raíz del proyecto diseñado para guiar el
+flujo de trabajo del agente, sus herramientas, su estilo de código y sus
+restricciones de ejecución.
+
+¿Para qué sirve exactamente AGENTS.md?
+
+Los agentes de IA modernos (como Cursor, Windsurf, Devin, Aider o agentes
+basados en LangChain/AutoGPT) no solo leen texto, sino que ejecutan comandos en
+la terminal, modifican archivos, hacen commits y corren tests.
+
+El archivo AGENTS.md actúa como las instrucciones de trabajo y seguridad para el
+agente:
+
+-Define comandos del entorno: Le enseña al agente cómo compilar el proyecto,
+correr los tests (pnpm test), o levantar el servidor de desarrollo.
+
+-Establece límites de seguridad: Le indica qué archivos nunca debe tocar (ej.
+.env, migraciones de producción) y qué comandos tiene prohibido ejecutar
+(rm -rf, git push --force).
+
+-Reglas de estilo y arquitectura: Dicta el estilo de código (comentarios,
+patrones de diseño, nombres de variables) para que el agente escriba código
+idéntico al del equipo humano.
+
+-Flujo de trabajo para tareas: Describe el algoritmo que la IA debe seguir para
+resolver un problema (ej: "Primero corre las pruebas, si fallan corrígelas,
+luego ejecuta el linter, y finalmente haz un commit").
+
+Estructura típica de un AGENTS.md: Un archivo AGENTS.md estándar para un
+proyecto suele verse así:
+
+----
+
+# Directivas para Agentes de IA
+
+## 1. Comandos de Entorno
+* **Instalar dependencias:** `pnpm install`
+* **Ejecutar tests:** `pnpm test` (o `pnpm test <ruta-archivo>` para un solo test)
+* **Linter / Formato:** `pnpm run lint` / `pnpm run format`
+* **Compilar:** `pnpm build`
+
+## 2. Reglas de Estilo de Código
+* Usa **TypeScript** estricto. Evita el uso de `any`.
+* Prefiere funciones declarativas y componentes funcionales.
+* Siempre usa comentarios JSDoc en funciones públicas.
+* Nombres de archivos en *kebab-case* (ej. `user-service.ts`).
+
+## 3. Protocolo de Trabajo (Paso a Paso)
+1. Antes de realizar un cambio, ejecuta `pnpm test` para asegurarte de que todo funciona.
+2. Escribe o modifica el código necesario para cumplir la tarea.
+3. Vuelve a ejecutar `pnpm test`. Si algo falla, **corrígelo antes de continuar**.
+4. Pasa el linter con `pnpm run lint`.
+
+## 4. Restricciones y Reglas de Seguridad
+* **NUNCA** modifiques el archivo `.env.local` ni crees secretos en código duro.
+* **NUNCA** hagas `git push` directo a la rama `main`.
+* No instales dependencias npm/pnpm nuevas sin justificarlo previamente.
+
+----
+
+Comparativa: specs.md vs AGENTS.md
+
++------------------+---------------------------------------+---------------------------------------+
+| Característica   | specs.md                              | AGENTS.md                             |
++------------------+---------------------------------------+---------------------------------------+
+| Enfoque Principal| El QUÉ (Requisitos y producto)        | El CÓMO (Procesos y comportamiento)   |
+|                  |                                       |                                       |
+| Contenido Clave  | -Requisitos funcionales (User Stories)| - Comandos de consola (pnpm test, etc)|
+|                  | -Criterios de aceptación              | - Reglas de seguridad y límites       |
+|                  | -Casos de uso y reglas de negocio     | - Guías de estilo de código y linter  |
+|                  |                                       |                                       |
+| Ciclo de Vida    | Dinámico: cambia o se crea uno nuevo  | Estático: vive en la raíz del repo y  |
+|                  | por cada feature o sprint.            | evoluciona junto con la arquitectura. |
+|                  |                                       |                                       |
+| Audiencia        | IA, Desarrolladores y Product Owners. | Agentes de IA autónomos/asistentes.   |
+|                  |                                       |                                       |
+| Ejemplo de regla | "El usuario debe poder iniciar sesión | "Ejecuta 'pnpm test' antes de hacer   |
+|                  | usando su cuenta de Google."          | un commit y no edites el archivo .env"|
++------------------+---------------------------------------+---------------------------------------+
+
+Fuente
+======
+
+Gemini IA
+
 ======
 Ollama
 ======
@@ -2078,6 +2256,18 @@ Si queremos ejecutar comando como git status y no queremos que sea la IA que lo
 haga por ti y gaste los tokens podemos escribir ! exclamación y la consola
 pasará a modo shell donde puedes ejecutar comando de Linux sin la intervención
 de la IA.
+
+Ahorro de tokens
+================
+
+-Instrucciones específicas: Si se es específico en el prompt, por ejemplo si le
+indicas a la IA en que archivo o archivos debe o va a trabajar, si le das
+indicaciones más exactas la IA no gastara tantos tokens explorando el proyecto
+por completo sino que se señira primeramente a las indicaciones que se le den.
+
+-Instrucciones en inglés: Si se usa el idioma inglés en las instrucciones
+gastará menos tokens y respondeŕa mucho más rápido que en español.
+
 
 Fuente
 ======
