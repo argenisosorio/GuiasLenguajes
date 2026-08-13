@@ -2264,6 +2264,18 @@ ese prompt en una nueva conversación.
 
 /sessions Permite cambiar entre sesiones.
 
+/compact Cuando el % del contexto está muy lleno eso puede hacer que el modelo
+pierda velocidad y consuma más tokens con cada nueva petición, este comando
+lo que hace es compactar la sesión, lo que hace es crear un resumen de todas
+las tareas y conversaciones y luego reduce a la mitad o más el % de contexto.
+
+-----
+
+$ opencode run "Crear un archivo README.md"
+
+Este archivo realiza acciones dentro del proyecto sin necesidad de acceder a la
+TUI de OpenCode.
+
 Modo shell
 ==========
 
