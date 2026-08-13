@@ -463,3 +463,134 @@ Fuente
 ======
 
 Gemini IA
+
+=========
+pnpm test
+=========
+
+Es un comando que ejecuta los tests (pruebas automatizadas) de tu proyecto de
+JavaScript o TypeScript utilizando pnpm, un gestor de paquetes alternativo a
+npm o yarn conocido por ser extremadamente rápido y eficiente con el espacio en
+disco.
+
+En realidad, pnpm test es solo un alias o un acceso directo. Lo que hace por
+detrás es buscar la instrucción test dentro del archivo package.json de tu
+proyecto y ejecutar la herramienta de pruebas que tengas configurada ahí (como
+Jest, Vitest, Mocha, Playwright, etc.).
+
+¿Cómo funciona y cómo se usa?
+
+1. La configuración básica (package.json)
+
+Para poder usar pnpm test, tu proyecto debe tener definida una secuencia de
+comandos (script) llamada "test" en su archivo package.json.
+
+Por ejemplo:
+
+{
+  "name": "mi-proyecto",
+  "scripts": {
+    "test": "vitest"
+  }
+}
+
+2. Formas comunes de ejecutarlo
+
+Ejecutar todas las pruebas: Abre la terminal en la raíz de tu proyecto y escribe:
+
+$ pnpm test
+
+O su versión corta:
+
+$ pnpm t
+
+Ejecutar un archivo de prueba específico: Puedes pasar el nombre o la ruta del
+archivo directamente:
+
+$ pnpm test src/auth.test.ts
+
+Pasar argumentos adicionales a tu framework de tests: Si quieres pasar opciones
+especiales (por ejemplo, para ver la cobertura de código o ejecutar en modo
+observación/watch), simplemente añade la bandera al final:
+
+Generar reporte de cobertura (si usas Jest/Vitest)
+
+$ pnpm test --coverage
+
+Ejemplo real sencillo
+=====================
+
+Vamos a crear un ejemplo súper sencillo desde cero en 5 pasos para que veas
+exactamente cómo funciona sin complicarte con librerías pesadas.
+
+1.Crea una carpeta e inicializa el proyecto: Abre tu terminal y ejecuta los
+siguientes comandos para crear un directorio nuevo e inicializar el archivo
+package.json:
+
+$ mkdir ejemplo-pnpm-test
+
+$ cd ejemplo-pnpm-test
+
+$ pnpm init
+
+2. Instala la herramienta de pruebas (Vitest): Usaremos Vitest por ser
+extremadamente rápido y no requerir ninguna configuración extra para funcionar:
+
+$ pnpm add -D vitest
+
+3. Crea la función y su archivo de prueba: Crea dos archivos en la raíz de la
+carpeta: math.js (El código de tu aplicación):
+
+export function sumar(a, b) {
+  return a + b;
+}
+
+math.test.js (El archivo con la prueba):
+
+import { expect, test } from 'vitest';
+import { sumar } from './math.js';
+
+test('suma 2 + 3 y devuelve 5', () => {
+  expect(sumar(2, 3)).toBe(5);
+});
+
+4. Configura el script en package.json: Abre el archivo package.json y añade la
+instrucción "test": "vitest run" dentro de la sección "scripts". Debe verse
+parecido a esto:
+
+{
+  "name": "ejemplo-pnpm-test",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^3.0.0"
+  }
+}
+
+Nota: La propiedad "type": "module" es importante para poder usar import/export
+en JavaScript.
+
+5. ¡Ejecuta pnpm test!: En tu terminal, ejecuta:
+
+$ pnpm test
+
+¿Qué verás en la terminal? Si todo salió bien, Vitest ejecutará la función
+sumar(2, 3), comprobará si da 5 y verás una salida con éxito en verde parecida a
+esta:
+✓ math.test.js (1)
+  ✓ suma 2 + 3 y devuelve 5
+
+Test Files  1 passed (1)
+  Tests  1 passed (1)
+
+Prueba cambiar la respuesta para ver un fallo: Si cambias el 5 en math.test.js
+por un 10 y vuelves a ejecutar pnpm test, verás cómo la terminal resalta en rojo
+dónde ocurrió el error.
+
+Fuente
+======
+
+Gemini IA
