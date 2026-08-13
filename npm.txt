@@ -471,3 +471,68 @@ Fuentes
 https://www.npmjs.com/package/prettier
 
 https://prettier.io/docs/install
+
+==========================
+npx (Node Package eXecute)
+==========================
+
+Es una herramienta que viene instalada automáticamente junto con Node.js y npm
+(desde la versión npm 5.2.0).
+
+Su objetivo principal es ejecutar paquetes de Node.js directamente sin necesidad
+de instalarlos globalmente en tu computadora.
+
+¿Para qué sirve y por qué es tan útil?
+
+Antes de que existiera npx, si querías usar una herramienta de línea de comandos
+en tu terminal (como la que crea aplicaciones de React), tenías que hacer dos
+cosas:
+
+-Instalarla globalmente: npm install -g create-react-app
+
+-Ejecutarla: create-react-app mi-app
+
+Esto dejaba tu computadora llena de herramientas globales que rápidamente se
+volvían obsoletas. npx resuelve este problema.
+
+Sus usos principales:
+
+1. Ejecutar paquetes sin instalarlos (Descargar, usar y borrar)
+
+Cuando usas npx nombre-del-paquete, npx descarga temporalmente el paquete a la
+memoria caché de tu sistema, ejecuta el comando y luego limpia/descarta el
+archivo descargado.
+
+# Crea una aplicación sin haber instalado 'create-react-app' previamente:
+
+$ npx create-react-app mi-proyecto
+
+# Ejecuta una herramienta de pruebas de velocidad de internet:
+
+$ npx fast-cli
+
+2. Ejecutar la última versión siempre
+
+Al no instalar la herramienta en tu computadora, cada vez que ejecutas un
+comando con npx, este busca y usa automáticamente la versión más reciente
+disponible en el registro de npm.
+
+3. Ejecutar binarios locales de tu proyecto
+
+Si tienes una librería instalada localmente en las node_modules de tu proyecto
+(por ejemplo jest o eslint), no puedes ejecutarla directamente desde la terminal
+escribiendo solo jest.
+
+npx busca el ejecutable directamente dentro del directorio node_modules/.bin de
+tu proyecto:
+
+# En lugar de escribir: ./node_modules/.bin/jest
+
+$ npx jest
+
+Diferencias principales: npm vs npx
+
+Fuente
+======
+
+Gemini IA

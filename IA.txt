@@ -26,7 +26,7 @@ Nivel 3: Técnicas de Control, Extensión y Multimodalidad (Interacción)
 -Modelo multimodal
 -El RAG (Retrieval-Augmented Generation) o Generación Aumentada por Recuperación
 -Spec-Driven Development (SDD) o Desarrollo Basado en Especificaciones
--El archivo specs.md
+-El archivo SPECS.md
 -El archivo AGENTS.md
 
 Nivel 4: Entorno Local y Hardware (Sistemas e Infraestructura)
@@ -42,7 +42,7 @@ Nivel 5: Paradigma de Agentes y Automatización (Sistemas Autónomos)
 -Agents skills
 -¿Cómo crear una skill personalizada?
 -Plantilla Markdown lista para rellenar con una idea
--Ejemplo real de skill.md
+-Ejemplo real de SKILL.md
 -agent-first
 -Ingeniería de Arneses (Harnesses y Guardarraíles)
 -MCP (Model Context Protocol)
@@ -1070,12 +1070,12 @@ Fuente
 Gemini IA
 
 ===================
-El archivo specs.md
+El archivo SPECS.md
 ===================
 
 En el contexto de desarrollo de software asistido por Inteligencia Artificial
 (usando herramientas como GitHub Copilot Workspace, Cursor, Aider o Devin), el
-archivo specs.md (abreviatura de specifications o especificaciones) es la
+archivo SPECS.md (abreviatura de specifications o especificaciones) es la
 "fuente de verdad" del proyecto en formato Markdown.
 
 Es un documento redactado en lenguaje natural pero con una estructura técnica
@@ -1090,7 +1090,7 @@ Cuando le pides a una IA que cree una funcionalidad, los Modelos de Lenguaje
 IA tomará decisiones arbitrarias sobre la base de datos, la autenticación y las
 rutas.
 
-El archivo specs.md actúa como el manual de instrucciones e ingeniería para la
+El archivo SPECS.md actúa como el manual de instrucciones e ingeniería para la
 IA:
 
 -Reduce la ambigüedad: Define límites claros de lo que la IA debe y no debe
@@ -1103,8 +1103,8 @@ se ajuste a las reglas del proyecto.
 automatizadas basándose en los criterios de aceptación especificados en el
 documento.
 
-Estructura típica de un specs.md: Aunque no existe un estándar rígido, un
-archivo specs.md bien diseñado suele contener:
+Estructura típica de un SPECS.md: Aunque no existe un estándar rígido, un
+archivo SPECS.md bien diseñado suele contener:
 
 -----
 
@@ -1136,18 +1136,18 @@ Breve descripción de lo que se busca construir y el objetivo principal.
 ¿Cómo interactúa la IA con este archivo?
 
 -Contexto (Prompting): Antes de generar código, el sistema (o tú mismo) alimenta
-al modelo de IA con el contenido de specs.md.
+al modelo de IA con el contenido de SPECS.md.
 
--Generación de Plan: La IA lee specs.md y propone una lista de pasos para
+-Generación de Plan: La IA lee SPECS.md y propone una lista de pasos para
 cumplir las especificaciones.
 
 -Escritura de Código y Pruebas: La IA programa la solución y verifica que el
 código cumpla con los criterios descritos en el archivo.
 
--Validación: Si algo no encaja con specs.md, la IA o el desarrollador pueden
+-Validación: Si algo no encaja con SPECS.md, la IA o el desarrollador pueden
 corregir el rumbo citando la especificación incumplida.
 
-En resumen: Si el código es la implementación, specs.md es el plano
+En resumen: Si el código es la implementación, SPECS.md es el plano
 arquitectónico en lenguaje humano que la IA consulta para construirlo sin
 cometer errores de interpretación.
 
@@ -1155,11 +1155,11 @@ cometer errores de interpretación.
 El archivo AGENTS.md
 ====================
 
-Si specs.md es el plano de QUÉ debe construir la IA, el archivo AGENTS.md (o a
+Si SPECS.md es el plano de QUÉ debe construir la IA, el archivo AGENTS.md (o a
 veces CLAUDE.md, .cursorrules, COPILOT.md) es el manual de operaciones sobre
 CÓMO debe comportarse el agente de IA dentro del repositorio.
 
-Mientras que specs.md cambia según la funcionalidad o el proyecto, AGENTS.md
+Mientras que SPECS.md cambia según la funcionalidad o el proyecto, AGENTS.md
 suele ser un archivo persistente en la raíz del proyecto diseñado para guiar el
 flujo de trabajo del agente, sus herramientas, su estilo de código y sus
 restricciones de ejecución.
@@ -1220,10 +1220,10 @@ proyecto suele verse así:
 
 ----
 
-Comparativa: specs.md vs AGENTS.md
+Comparativa: SPECS.md vs AGENTS.md
 
 +------------------+---------------------------------------+---------------------------------------+
-| Característica   | specs.md                              | AGENTS.md                             |
+| Característica   | SPECS.md                              | AGENTS.md                             |
 +------------------+---------------------------------------+---------------------------------------+
 | Enfoque Principal| El QUÉ (Requisitos y producto)        | El CÓMO (Procesos y comportamiento)   |
 |                  |                                       |                                       |
@@ -1651,7 +1651,7 @@ Para entender cómo funcionan y por qué son útiles en proyectos de IA, conside
 sus características clave:
 
 -Estructura estandarizada: Se organizan en directorios (carpetas) que contienen
-un archivo base (por ejemplo, skill.md), el cual incluye directrices, listas de
+un archivo base (por ejemplo, SKILL.md), el cual incluye directrices, listas de
 comprobación (checklists) y ejemplos.
 
 -Activación eficiente: A diferencia de las instrucciones de sistema (que
@@ -1682,7 +1682,7 @@ reportes financieros" o "Validar código Python").
 -Frases clave: Define qué palabras del usuario activarán semánticamente esta
 habilidad.
 
-2. Estructurar el Archivo Base (skill.md)
+2. Estructurar el Archivo Base (SKILL.md)
 
 Crea un archivo Markdown organizado con las siguientes secciones críticas:
 
@@ -1702,7 +1702,7 @@ para guiar el comportamiento.
 -Crea una carpeta exclusiva para la habilidad dentro del repositorio de tu agente
 (ej. /skills/analisis-datos/).
 
--Guarda allí el archivo skill.md junto con los scripts o plantillas
+-Guarda allí el archivo SKILL.md junto con los scripts o plantillas
 complementarias que necesite consumir.
 
 4. Configurar la Carga Semántica
@@ -1716,7 +1716,7 @@ Plantilla Markdown lista para rellenar con una idea
 ===================================================
 
 Plantilla en formato Markdown optimizada para que la IA la entienda y ejecute a
-la perfección.Copia este bloque de texto, guárdalo como skill.md y rellena los
+la perfección.Copia este bloque de texto, guárdalo como SKILL.md y rellena los
 campos entre corchetes:
 
 # [Nombre de la Skill, ej: Formateador de Reportes Ejecutivos]
@@ -1759,7 +1759,7 @@ datos para dirección".]
 "[Inserta aquí exactamente cómo quieres que la IA responda basándose en el
 formato de arriba]"
 
-Ejemplo real de skill.md
+Ejemplo real de SKILL.md
 ========================
 
 Para un desarrollador de Python, la mejor idea para una skill es una que
@@ -1845,6 +1845,12 @@ Fuente
 ======
 
 Gemini IA
+
+Página con templates de skills
+==============================
+
+En https://www.skills.sh/ puedes buscar templates de skills ya escritas y con un
+comando incorporarlas a un proyecto o copiar y pegarlas directamente.
 
 ===========
 agent-first
@@ -2254,7 +2260,9 @@ usar.
 ir a uno específico, revertir los cambios de uno de ellos o hacer un form de
 ese prompt en una nueva conversación.
 
-/theme permite cambiar de tema de OpenCode.
+/theme Permite cambiar de tema de OpenCode.
+
+/sessions Permite cambiar entre sesiones.
 
 Modo shell
 ==========
@@ -2275,13 +2283,15 @@ por completo sino que se señira primeramente a las indicaciones que se le den.
 -Instrucciones en inglés: Si se usa el idioma inglés en las instrucciones
 gastará menos tokens y respondeŕa mucho más rápido que en español.
 
+Fuentes
+=======
 
-Fuente
-======
+-Página oficial de OpenCode: https://opencode.ai/es
 
-Página oficial de OpenCode: https://opencode.ai/es
+-Gemini IA
 
-Gemini IA
+-Curso de OpenCode desde cero: Comandos, Agentes, Ahorrar tokens y más:
+https://www.youtube.com/watch?v=ZZq4TpNgnvg
 
 =====
 Codex
@@ -2954,7 +2964,6 @@ como Claude Code o Aider, la terminal se transforma en algo parecido a esto:
 │                                                                  │
 └──────────────────────────────────────────────────────────────────┘
   [Flechas ↑/↓] Seleccionar  |  [Enter] Confirmar  |  [Esc] Salir
-
 
 Fuente
 ======
