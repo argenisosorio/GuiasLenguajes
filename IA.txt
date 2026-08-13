@@ -58,6 +58,7 @@ Nivel 6: Herramientas de Desarrollo Agénticas en Acción (Aplicación Práctica
 -Cursor
 -llama.cpp
 -Kimi Chat
+-TUI
 
 Nivel 7: Empresas
 
@@ -2249,6 +2250,12 @@ Comandos
 Desde la consola si escribimos / nos listará los diferentes comandos que podemos
 usar.
 
+/timeline nos servirá para ver una lista de todos los prompts que hemos hecho,
+ir a uno específico, revertir los cambios de uno de ellos o hacer un form de
+ese prompt en una nueva conversación.
+
+/theme permite cambiar de tema de OpenCode.
+
 Modo shell
 ==========
 
@@ -2853,6 +2860,101 @@ móviles y extensiones de navegador. Aunque su mercado e interfaz principal est�
 en China, el sistema soporta e interactúa perfectamente en múltiples idiomas,
 incluido el inglés y el español, y ofrece APIs para desarrolladores que quieran
 integrar su masiva capacidad de contexto en aplicaciones externas.
+
+Fuente
+======
+
+Gemini IA
+
+===
+TUI
+===
+
+En el contexto del software y la Inteligencia Artificial, TUI significa Terminal
+User Interface (o Text-based User Interface).
+
+Es una interfaz gráfica creada enteramente con texto, símbolos y colores dentro
+de una terminal de comandos (como Bash, PowerShell, Zsh o la terminal integrada
+de VS Code/Cursor).
+
+Aunque vive dentro de la consola de texto, una TUI no es una simple línea de
+comandos (CLI) donde solo escribes texto plano; incluye elementos visuales
+interactivos como menús navegables con las flechas del teclado, cuadros de
+diálogo, tablas, pestañas y barras de progreso.
+
+¿Qué relación tiene TUI con la Inteligencia Artificial?
+
+Con la llegada de las herramientas de código asistido por IA que se ejecutan
+directamente en la terminal (como Claude Code, Aider, Ollama, Gemini CLI o
+OpenCode), las TUIs se han convertido en el estándar preferido por los
+desarrolladores por varias razones:
+
+1. Interacción en tiempo real sin salir del código: Un agente de IA en formato
+TUI te permite ver qué archivos está leyendo, qué cambios está aplicando en tu
+código, qué comandos de terminal está ejecutando (pnpm test, git status) y
+pedirte aprobación mediante botones o selecciones visuales sin que tengas que
+abrir un navegador web.
+
+2. Ligereza y velocidad: A diferencia de las aplicaciones GUI (GUI = Graphical
+User Interface) basadas en navegadores o Electron (como VS Code o la app de chat
+de ChatGPT), una TUI consume una fracción mínima de memoria RAM y CPU. Esto deja
+todo el rendimiento de la máquina libre para compilar código o ejecutar modelos
+locales (como Llama u Ollama).
+
+3. Experiencia de usuario rica en la consola: Te permite interactuar con la IA
+usando:
+
+-Colores y resaltado de sintaxis para diferenciar código de explicaciones.
+
+-Paneles divididos: En un lado ves la conversación con la IA y en el otro los
+cambios en tus archivos en tiempo real (diffs).
+
+-Barras de progreso mientras la IA genera respuestas o ejecuta tareas autónomas.
+
+Diferencias: CLI vs TUI vs GUI en IA
+
++-------------------+---------------------------+---------------------------+---------------------------+
+| Característica    | CLI (Command Line)        | TUI (Terminal User Int.)  | GUI (Graphical User Int.) |
++-------------------+---------------------------+---------------------------+---------------------------+
+| Definición        | Línea de comandos pura    | Interfaz de texto gráfica | Interfaz gráfica clásica  |
+|                   | basada en texto simple.   | e interactiva en terminal.| con ventanas y ratón.     |
+|                   |                           |                           |                           |
+| Elementos Visuales| Texto plano secuencial.   | Paneles, menús, botones   | Ventanas, iconos, Canvas, |
+|                   | Sin distribución fija.    | ASCII, barras de progreso.| imágenes y render web.    |
+|                   |                           |                           |                           |
+| Interacción       | Teclado (escribir comando | Teclado (flechas, atajos) | Ratón, gestos táctiles y  |
+|                   | y presionar Enter).       | y ratón (soporte básico). | teclado.                  |
+|                   |                           |                           |                           |
+| Consumo Recursos  | Extremadamente bajo.      | Muy bajo (ligero y alto   | Alto (usa Electron, Web,  |
+|                   |                           | rendimiento).             | aceleración por GPU).     |
+|                   |                           |                           |                           |
+| Ejemplos en IA    | - `ollama run llama3`     | - Claude Code             | - ChatGPT Web / Claude.ai |
+|                   | - `gemini "pregunta"`     | - Aider                   | - Cursor IDE              |
+|                   | - Scripts de Python/Bash  | - OpenCode                | - LM Studio               |
+|                   |                           | - Ollama TUI / OpenWebUI  | - Copilot en VS Code      |
+|                   |                           |                           |                           |
+| Casos de Uso      | Automatización, CI/CD,    | Desarrollo interactivo    | Exploración visual, chat  |
+| Ideal             | scripts y tareas rápidas. | dentro del flujo de código| casual, diagramas y uso   |
+|                   |                           | sin salir de la consola.  | no técnico.               |
++-------------------+---------------------------+---------------------------+---------------------------+
+
+Ejemplo visual de una TUI en acción: Cuando usas una herramienta de IA tipo TUI
+como Claude Code o Aider, la terminal se transforma en algo parecido a esto:
+
+┌─ Agente IA: Refactorizando math.js ──────────────────────────────┐
+│                                                                  │
+│  [+] Analizando archivo src/math.js...                           │
+│  [✓] Pruebas ejecutadas con 'pnpm test' (1/1 pasado)             │
+│                                                                  │
+│  ¿Deseas aplicar estos cambios en el repositorio?                │
+│                                                                  │
+│  > [ Sí, aplicar cambios ]                                       │
+│    [ Editar propuesta    ]                                       │
+│    [ Cancelar            ]                                       │
+│                                                                  │
+└──────────────────────────────────────────────────────────────────┘
+  [Flechas ↑/↓] Seleccionar  |  [Enter] Confirmar  |  [Esc] Salir
+
 
 Fuente
 ======
