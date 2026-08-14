@@ -15238,9 +15238,9 @@ archivo .desktop correspondiente desde el sistema a tu carpeta personal:
 
 $ cp /usr/share/applications/nombre-del-programa.desktop ~/.local/share/applications/
 
-(Si no sabes el nombre exacto del archivo, puedes listarlos ejecutando
+Si no sabes el nombre exacto del archivo, puedes listarlos ejecutando
 
-$ ls /usr/share/applications)
+$ ls /usr/share/applications
 
 2. Edita el archivo en tu carpeta personal: Abre el archivo recién copiado con
 tu editor de texto preferido:
@@ -15262,6 +15262,75 @@ Otra opción (Gráfica)
 
 Abrimos herramientas > Preferencias > Menú principal o $ alacarte en la consola
 y buscamos el programa y en propiedades cambiamos el ícono.
+
+Cambio también en Alt + tab
+===========================
+
+En este ejemplo cambiaremos el ícono de terminator: 
+
+Primero leemos el contenido del archivo de la app que queremos cambiar y
+ubicamos el nombre de ícono.
+
+$ less /usr/share/applications/terminator.desktop
+
+Icon=terminator
+
+Ahora el proceso es muy sencillo ya que conocemos el valor exacto del icono
+(Icon=terminator).
+
+Sigue estos pasos para cambiar el icono tanto en el Menú de aplicaciones como en
+el Alt + Tab / Dock:
+
+Paso 1: Copia y modifica tu archivo .desktop
+
+Copia el archivo original a tu directorio personal de usuario:
+
+$ cp /usr/share/applications/terminator.desktop ~/.local/share/applications/
+
+Abre el archivo con un editor de texto (por ejemplo nano):
+
+$ nano ~/.local/share/applications/terminator.desktop
+
+Modifica la línea Icon= para que apunte a la ruta completa de tu nuevo icono (se
+recomienda formato .png o .svg):
+
+Icon=/home/tu_usuario/Imagenes/mi-nuevo-icono.png
+
+Agrega al final de la sección [Desktop Entry] la línea StartupWMClass para
+asegurarte de que GNOME asocie correctamente la ventana abierta con este
+archivo:
+
+StartupWMClass=terminator
+
+Guarda el archivo (Ctrl + O, Enter, Ctrl + X).
+
+Paso 2: Sobrescribe el icono en el caché del tema (para el Alt + Tab)
+
+Para asegurarte de que el Alt+Tab tome el nuevo icono de forma global y no la
+imagen por defecto del sistema:
+
+Crea las carpetas del tema local de iconos si no existen:
+
+$ mkdir -p ~/.local/share/icons/hicolor/128x128/apps
+
+Copia tu nuevo icono en esa carpeta con el nombre exacto terminator.png:
+
+$ cp /ruta/a/tu-nuevo-icono.png ~/.local/share/icons/hicolor/128x128/apps/terminator.png
+
+Reconstruye el caché de iconos de tu usuario y actualiza la base de datos de
+accesos directos:
+
+$ gtk-update-icon-cache -f -t ~/.local/share/icons/hicolor && update-desktop-database ~/.local/share/applications
+
+Paso 3: Reinicia la sesión
+
+Para que GNOME Shell actualice el icono en las ventanas en ejecución y en el
+selector Alt + Tab:
+
+Cierra sesión y vuelve a iniciarla (o reinicia el sistema).
+
+Al volver a entrar, verás el icono personalizado tanto en el menú como al
+cambiar de ventana con Alt + Tab.
 
 Fuente
 ======
