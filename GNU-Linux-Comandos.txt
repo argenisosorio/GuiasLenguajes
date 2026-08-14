@@ -15220,3 +15220,50 @@ Fuente
 ======
 
 https://www.youtube.com/watch?v=OblODmvx6b4
+
+=================================================
+Cambiar íconos de programas en los menús de gnome
+=================================================
+
+En GNOME, los accesos directos e íconos de las aplicaciones se gestionan
+mediante archivos .desktop.
+
+La forma más recomendada de cambiar un ícono es copiar el archivo .desktop del
+programa a tu espacio personal (~/.local/share/applications/). De esta forma, el
+cambio se mantendrá incluso cuando el programa se actualice y no afectará a
+otros usuarios del sistema.
+
+1. Copia el archivo del programa a tu usuario: Abre la terminal y copia el
+archivo .desktop correspondiente desde el sistema a tu carpeta personal:
+
+$ cp /usr/share/applications/nombre-del-programa.desktop ~/.local/share/applications/
+
+(Si no sabes el nombre exacto del archivo, puedes listarlos ejecutando
+
+$ ls /usr/share/applications)
+
+2. Edita el archivo en tu carpeta personal: Abre el archivo recién copiado con
+tu editor de texto preferido:
+
+$ nano ~/.local/share/applications/nombre-del-programa.desktop
+
+3 .Modifica la línea Icon: Busca la línea que comienza por Icon= y reemplázala
+por la ruta absoluta a tu imagen (se recomiendan formatos .png o .svg con buen
+tamaño, por ejemplo 128x128 píxeles):
+
+Icon=/home/tu_usuario/Imagenes/mi-nuevo-icono.png
+
+4. Guarda los cambios: Guarda el archivo (en nano, presiona Ctrl + O, Enter y
+luego Ctrl + X). GNOME actualizará el ícono en el menú de aplicaciones de manera
+casi inmediata.
+
+Otra opción (Gráfica)
+=====================
+
+Abrimos herramientas > Preferencias > Menú principal o $ alacarte en la consola
+y buscamos el programa y en propiedades cambiamos el ícono.
+
+Fuente
+======
+
+Gemini IA
