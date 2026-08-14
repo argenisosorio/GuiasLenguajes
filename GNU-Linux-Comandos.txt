@@ -329,6 +329,18 @@ Saber que gestor de sesiones estoy utilizando
 
 $ cat /etc/X11/default-display-manager
 
+-----
+
+Saber qué Entorno de Escritorio usas
+
+$ echo $XDG_CURRENT_DESKTOP
+
+-----
+
+Saber si estás usando Wayland o X11 (Servidor Gráfico)
+
+$ echo $XDG_SESSION_TYPE
+
 ===========
 Memoria ram
 ===========
@@ -5021,7 +5033,7 @@ alias gitlab='echo "XXXXXX"'
 alias github='echo "XXXXXXXX"'
 alias MailHog='~/.go/bin/MailHog'
 alias ruta='echo /home/user | tee >(xclip -selection clipboard)'
-alias run_desktop='bash /home/aosorio/Descargas/run_desktop.sh &'
+alias run_desktop='bash /home/user/Descargas/run_desktop.sh &'
 alias psql='sudo su postgres && psql'
 alias kvm_deactivate='sudo rmmod kvm_intel && sudo rmmod kvm'
 alias clean_migrations='find . -type d -name "migrations" -exec rm -rf {} +'
@@ -8541,7 +8553,7 @@ $ less /var/log/crontabtasks.log
 
 Nota: Agregar etiqueta de tiempo al log:
 
-* * * * * (date +"\%Y-\%m-\%d \%H:\%M:\%S: " ; cd /home/aosorio/Documentos/Desarrollo/Laravel/sinidot/Software/sinidot_app && php artisan schedule:run) >> /var/log/crontabtasks.log 2>&1
+* * * * * (date +"\%Y-\%m-\%d \%H:\%M:\%S: " ; cd /home/user/Documentos/Desarrollo/Laravel/sinidot/Software/sinidot_app && php artisan schedule:run) >> /var/log/crontabtasks.log 2>&1
 
 Salida:
 
@@ -13264,7 +13276,7 @@ $ sudo openvpn --config /etc/openvpn/client/my-config.ovpn
 2025-04-04 11:14:57 OpenVPN 2.6.3 x86_64-pc-linux-gnu [SSL (OpenSSL)] [LZO] [LZ4] [EPOLL] [PKCS11] [MH/PKTINFO] [AEAD] [DCO]
 2025-04-04 11:14:57 library versions: OpenSSL 3.0.15 3 Sep 2024, LZO 2.10
 2025-04-04 11:14:57 DCO version: N/A
-Enter Auth Username: aosorio
+Enter Auth Username: user
 Enter Auth Password: **************
 2025-04-04 11:15:02 TCP/UDP: Preserving recently used remote address: [AF_INET]190.188.22.5:25143
 2025-04-04 11:15:02 UDPv4 link local: (not bound)
@@ -15331,6 +15343,87 @@ Cierra sesión y vuelve a iniciarla (o reinicia el sistema).
 
 Al volver a entrar, verás el icono personalizado tanto en el menú como al
 cambiar de ventana con Alt + Tab.
+
+***Nota extra, no funciono con vscode pero hay comandos interesantes:
+
+El motivo por el cual no te está funcionando en Visual Studio Code suele deberse
+a dos detalles clave de GNOME:
+
+-La sensibilidad a mayúsculas/minúsculas en StartupWMClass: VS Code suele
+reportar su clase de ventana en minúsculas (code), por lo que poner Code con
+mayúscula hace que GNOME no asocie la ventana abierta con el archivo .desktop.
+
+-El funcionamiento de Alt + Tab: El conmutador de ventanas de GNOME ignora la
+ruta absoluta asignada en Icon= y busca directamente un icono con el nombre de
+la aplicación (code.png) dentro del tema de iconos local.
+
+A continuación tienes los pasos adaptados exactamente para tu usuario (user) y
+la ruta de tu icono.
+
+Paso 1: Copiar y editar el acceso directo
+
+Copia el archivo oficial de VS Code a tu directorio local:
+
+$ cp /usr/share/applications/code.desktop ~/.local/share/applications/
+
+Abre el archivo con nano (o tu editor preferido):
+
+$ nano ~/.local/share/applications/code.desktop
+
+Modifica las líneas Icon= y StartupWMClass= asegurándote de usar minúsculas para
+la clase:
+
+Icon=/home/user/Imágenes/Logos/visual-studio-code-purple-icon.png
+StartupWMClass=code
+
+Nota: Si estás en la sección [Desktop Entry], asegúrate de actualizar el campo
+Icon= principal y que StartupWMClass esté escrito en minúsculas (code).
+
+Guarda los cambios (Ctrl + O, Enter, Ctrl + X).
+
+Paso 2: Configurar el icono para el Alt + Tab (Caché de iconos)
+
+Para que el selector de ventanas (Alt + Tab) y el Dock reconozcan el nuevo
+icono, debes copiar el archivo a las carpetas del tema local renombrándolo
+exactamente como code.png.
+
+Crea las carpetas de iconos (incluyendo alta resolución para evitar que se vea borroso):
+
+
+$ mkdir -p ~/.local/share/icons/hicolor/128x128/apps
+
+$ mkdir -p ~/.local/share/icons/hicolor/512x512/apps
+
+Copia tu icono morado a ambas carpetas con el nombre code.png:
+
+$ cp /home/user/Imágenes/Logos/visual-studio-code-purple-icon.png ~/.local/share/icons/hicolor/128x128/apps/code.png
+
+$ cp /home/user/Imágenes/Logos/visual-studio-code-purple-icon.png ~/.local/share/icons/hicolor/512x512/apps/code.png
+
+Reconstruye la caché de iconos y la base de datos de aplicaciones:
+
+$ gtk-update-icon-cache -f -t ~/.local/share/icons/hicolor && update-desktop-database ~/.local/share/applications
+
+Paso 3: Reiniciar el entorno gráfico
+
+Para aplicar los cambios:
+
+Si usas X11: Presiona Alt + F2, escribe r y presiona Enter (esto reinicia GNOME
+Shell al instante sin cerrar tus programas).
+
+Si usas Wayland: Cierra la sesión de usuario y vuelve a iniciarla.
+
+¿Cómo verificar si persiste el problema?
+
+Si tras hacer esto el icono aún no cambia en el Alt + Tab, puedes confirmar cuál
+es la clase de ventana exacta que reporta VS Code ejecutando en una terminal:
+
+$ xprop WM_CLASS
+
+Haz clic sobre la ventana de VS Code. Verás una salida similar a:
+WM_CLASS(STRING) = "code", "Code"
+
+Debes usar el primer valor que aparece en minúsculas en tu StartupWMClass=code.
 
 Fuente
 ======
