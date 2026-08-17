@@ -11496,3 +11496,31 @@ Fuente
 ======
 
 DeepSeek
+
+============================================================================
+Cambiar el tiempo de expiración del enlace de restablecimiento de contraseña
+============================================================================
+
+Se debe editar el archivo config/auth.php, específicamente la sección
+de passwords > users > expire. El valor por defecto es 60 (60 minutos).
+
+'passwords' => [
+    'users' => [
+        'provider' => 'users',
+        'table' => 'password_resets',
+        'expire' => 60,
+        'throttle' => 60,
+    ],
+],
+
+El mensaje que llega por correo se puede cambiar en resources/lang/es.json
+en la línea "This password reset link will expire in :count minutes.": "Este
+enlace de restablecimiento de contraseña expirará en :count minutos.",
+
+El template donde envía por defecto el correo es:
+resources/views/vendor/notifications/email.blade.php
+
+Fuente
+======
+
+Gemini IA
