@@ -285,6 +285,92 @@ Fuente
 
 -https://medium.com/noders/t%C3%BA-yo-y-package-json-9553929fb2e3
 
+==============================================
+Estructura básica de un package.json en Nuxt 4
+==============================================
+
+Este ejemplo sigue el estándar de los proyectos de Node.js, pero con
+configuraciones y dependencias clave optimizadas para el ecosistema Vue 3 y
+Vite.
+
+A continuación se detallan las secciones principales y su propósito en Nuxt 4:
+
+Estructura base de un package.json para Nuxt 4
+
+JSON
+
+{
+  "name": "mi-proyecto-nuxt",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "nuxt": "^4.0.0",
+    "vue": "^3.5.0",
+    "vue-router": "^4.4.0"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^0.7.0",
+    "typescript": "^5.6.0"
+  }
+}
+
+Explicación de las secciones principales
+
+-Metadatos generales:
+  -"name": Nombre interno del proyecto en minúsculas y sin espacios.
+  -"private": true: Evita que el proyecto se publique accidentalmente en el
+  registro público de npm.
+  -"type": "module": Define que el proyecto utiliza ES Modules (import / export)
+  en lugar de CommonJS (require). Es obligatorio en Nuxt 3/4.
+
+scripts (Comandos de ejecución):
+Definen los accesos directos de terminal para construir y ejecutar la
+aplicación.
+  -"dev": Inicia el servidor de desarrollo local con Hot Module Replacement
+  (HMR).
+  -"build": Compila el servidor Nitro y el cliente para producción.
+  -"generate": Compila y genera el sitio estático (SSG - Static Site
+  Generation).
+  -"preview": Levanta un servidor local para probar la compilación de producción
+  generada por build.
+  -"postinstall": Ejecuta nuxt prepare, comando que genera los tipos TypeScript
+  autogenerados de Nuxt en la carpeta .nuxt/ tras instalar dependencias.
+
+dependencies (Dependencias de producción):
+Librerías que se empaquetan y ejecutan en producción tanto en el servidor Nitro como en el navegador.
+  -nuxt: El framework principal.
+  -vue: El motor de la interfaz de usuario.
+  -vue-router: Manejo de rutas y navegación.
+  -Otras comunes: pinia, @pinia/nuxt, bootstrap, axios, etc.
+
+devDependencies (Dependencias de desarrollo):
+Herramientas necesarias únicamente para desarrollar, auditar, compilar o dar
+formato al código. No se incluyen en la versión final desplegada.
+  -Configuración de tipos y lenguaje: typescript, @types/node.
+  -Linters y formateadores: @nuxt/eslint, eslint, prettier.
+  -Herramientas de automatización: husky, lint-staged.
+
+Secciones adicionales avanzadas
+  -allowScripts: Restringe la ejecución de scripts del ciclo de vida
+  (postinstall) a dependencias específicas autorizadas por seguridad (por
+  ejemplo, compiladores binarios como esbuild).
+
+  pnpm / overrides / resolutions: Utilizado por gestores de paquetes como pnpm o
+  npm para forzar versiones específicas de sub-dependencias o resolver
+  conflictos.
+
+Fuente
+======
+
+Gemini IA
+
 ====
 Yarn
 ====
