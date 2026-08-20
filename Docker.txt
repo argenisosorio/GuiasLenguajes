@@ -214,30 +214,13 @@ Estos "Hola mundo" fueron probados en Linux Debian 13.
 Requerimientos y configuraciones del SO y la máquina
 ====================================================
 
-Tu equipo host Linux debe cumplir los siguientes requisitos generales:
+-Al menos 4 GB de RAM.
 
 -Kernel de 64 bits y CPU compatible con virtualización.
 
 -Compatibilidad con la virtualización KVM. Sigue las instrucciones de
 compatibilidad con la virtualización KVM para comprobar si los módulos del
 kernel KVM están habilitados y cómo proporcionar acceso al dispositivo KVM.
-
--QEMU debe ser la versión 5.2 o posterior. Recomendamos actualizar a la última
-versión.
-
--Sistema de inicio systemd.
-
--En muchas distribuciones de Linux, el entorno GNOME no admite iconos de la
-bandeja del sistema. Para añadir compatibilidad con los iconos de la bandeja,
-debe instalar una extensión de GNOME. Por ejemplo, AppIndicator.
-
--Al menos 4 GB de RAM.
-
--Habilite la configuración de la asignación de ID en los espacios de nombres de
-usuario; consulte Compartir archivos. Tenga en cuenta que, para Docker Desktop
-versión 4.35 y posteriores, esto ya no es necesario.
-
--Recomendado: Inicialice Pass para la gestión de credenciales.
 
 Para revisar si tienes los modulos de KVM activos corre este este comandos
 
@@ -276,14 +259,16 @@ tu sistema
 +------------+------------+-----------+--------------------------------------------------+
 
 ¿Qué significa esto?
+====================
 
-La virtualización por hardware está activada en tu sistema
+-La virtualización por hardware está activada en tu sistema.
 
-Puedes ejecutar máquinas virtuales con QEMU/KVM, VirtualBox, etc.
+-Puedes ejecutar máquinas virtuales con QEMU/KVM, VirtualBox, etc.
 
-Tu procesador Intel soporta VT-x (tecnología de virtualización)
+-Tu procesador Intel soporta VT-x (tecnología de virtualización)
 
-Notas importantes:
+Notas importantes
+=================
 
 -kvm_intel está cargado pero con 0 en la columna "Used by" - esto es normal
 porque aún no tienes máquinas virtuales ejecutándose.
@@ -325,11 +310,11 @@ EOF
 
 $ sudo apt update
 
-2. Instalar los paquetes de Docker
+2. Instalar los paquetes de Docker:
 
 $ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-3. Verificar que la instalación sea exitosa corriendo la imagen hello-world
+3. Verificar que la instalación sea exitosa corriendo la imagen hello-world:
 
 $ sudo docker run hello-world
 
@@ -347,7 +332,7 @@ Hello from Docker!
 
 -----
 
-Este mensaje indica que su instalación parece funcionar correctamente.
+Este mensaje anterior indica que su instalación parece funcionar correctamente.
 
 Para generar este mensaje, Docker realizó los siguientes pasos:
 
@@ -606,8 +591,8 @@ independiente.
 
 Este bloque levanta una base de datos PostgreSQL.
 
--image: postgres:17: No necesita un Dockerfile propio; descarga la imagen
-oficial de Postgres versión 17.
+-image: postgres:15: No necesita un Dockerfile propio; descarga la imagen
+oficial de Postgres versión 1.
 
 -environment: Aquí usa variables (como ${DB_NAME}). Docker las busca en un
 archivo llamado .env para no escribir las contraseñas reales directamente en el

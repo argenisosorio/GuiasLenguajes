@@ -16165,3 +16165,20 @@ Fuente
 ======
 
 Gemini IA
+
+===============================================
+Nota sobre migraciones con Docker en Producción
+===============================================
+
+En el archivo start.sh standar se incluye:
+
+python manage.py makemigrations person product --no-input.
+
+Nunca se debe ejecutar makemigrations automáticamente en contenedores o
+producción. Las migraciones de modelos deben crearse durante la fase de
+desarrollo e incluirse en el repositorio de Git. El contenedor únicamente debe
+ejecutar:
+
+python manage.py migrate --no-input.
+
+Ejemplo de start.sh: https://github.com/argenisosorio/Django_6_crud/tree/test/deploy-docker
