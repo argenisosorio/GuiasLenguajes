@@ -67,8 +67,8 @@ de los contenedores.
 El modelo arquitectónico básico
 ===============================
 
--Cliente de Docker: El cliente de Docker es la interfaz principal para los
 usuarios. Cuando ejecutas comandos como `docker run` o `docker build`, el
+-Cliente de Docker: El cliente de Docker es la interfaz principal para los
 cliente los traduce en solicitudes de la API REST y los envía al demonio de
 Docker.
 
@@ -126,9 +126,9 @@ de Django, instalar librerías).
 usan varios contenedores (multi-contenedor). ¿Para qué sirve? Si tu proyecto
 es más que solo Django necesitas por ejemplo:
 
--Un contenedor para PostgreSQL (Base de datos).
--Un contenedor para Django (API).
--Un contenedor para Nuxt 4 (Frontend).
+  -Un contenedor para PostgreSQL (Base de datos).
+  -Un contenedor para Django (API).
+  -Un contenedor para Nuxt 4 (Frontend).
 
 -El archivo docker-compose.yml: En lugar de ejecutar 3 comandos largos de docker
 run por separado, defines todo en un archivo YAML.
@@ -138,6 +138,11 @@ tres servicios, los conecta entre sí en una red privada y configura los
 volúmenes de datos automáticamente.
 
 -Contenedor: Es la imagen ya funcionando ya corriendo.
+
+-Makefile: En un proyecto con Docker no es un componente propio de Docker, sino
+una herramienta de automatización (GNU Make) que sirve para simplificar y atajar
+comandos largos de Docker. En lugar de escribir comandos extensos y repetitivos
+en la terminal, defines alias sencillos dentro del Makefile.
 
 Comandos básicos de Docker
 ==========================
@@ -161,6 +166,44 @@ operaciones desde el estado anterior.
 
 -Docker Login: ayuda a iniciar sesión en el registro de Docker, lo que permite
 el acceso a repositorios privados.
+
+Docker Build y Docker Compose
+=============================
+
+Al momento de intentar dockerizar un proyecto una decisión crucial a la que te
+enfrentarás es cómo compilar tus imágenes de Docker. ¿Deberías utilizar
+comandos «docker build» sin más o aprovechar «docker-compose build»? vamos a
+analizar las ventajas, los inconvenientes y los casos de uso ideales de cada
+método.
+
+La diferencia fundamental, en esencia, la elección se reduce al alcance:
+
+-Docker Build: operaciones de contenedores individuales
+
+-Docker Compose Build: orquestación de aplicaciones con múltiples contenedores
+
+Factores clave para la toma de decisiones
+=========================================
+
+Tomar en cuenta estas preguntas para elegir el enfoque adecuado:
+
+¿Cuántos servicios tiene tu aplicación?
+
+1 servicio > Docker podría ser suficiente
+
+2 o más servicios > Docker Compose es mejor
+
+2. ¿Tienen los servicios dependencias?
+
+Sí > Docker Compose se encarga de esto automáticamente
+
+3. ¿Utiliza tu equipo Docker Compose para el desarrollo?
+
+Sí > Mantén la coherencia en CI/CD
+
+4. ¿Necesitas funciones avanzadas de compilación?
+
+Compilaciones en varias etapas > Docker podría ofrecer más control
 
 ====================
 Hola mundo en Docker
@@ -406,199 +449,13 @@ Probando Docker en un proyecto de Django
 
 Este manual fue probado en en Debian 13.
 
-Requerimientos y configuraciones del SO y la máquina
-====================================================
+1. Revisar los requerimientos y configuraciones del SO y la máquina en la
+sección anterior.
 
-Tu equipo host Linux debe cumplir los siguientes requisitos generales:
-
--Kernel de 64 bits y CPU compatible con virtualización.
-
--Compatibilidad con la virtualización KVM. Sigue las instrucciones de
-compatibilidad con la virtualización KVM para comprobar si los módulos del
-kernel KVM están habilitados y cómo proporcionar acceso al dispositivo KVM.
-
--QEMU debe ser la versión 5.2 o posterior. Recomendamos actualizar a la última
-versión.
-
--Sistema de inicio systemd.
-
--En muchas distribuciones de Linux, el entorno GNOME no admite iconos de la
-bandeja del sistema. Para añadir compatibilidad con los iconos de la bandeja,
-debe instalar una extensión de GNOME. Por ejemplo, AppIndicator.
-
--Al menos 4 GB de RAM.
-
--Habilite la configuración de la asignación de ID en los espacios de nombres de
-usuario; consulte Compartir archivos. Tenga en cuenta que, para Docker Desktop
-versión 4.35 y posteriores, esto ya no es necesario.
-
--Recomendado: Inicialice Pass para la gestión de credenciales.
-
-Para revisar si tienes los modulos de KVM activos corre este este comandos
-
-$ lsmod | grep kvm
-
-En tal caso que no lo tengas activo, hay que entrar en la configuración de la
-BIOS de la PC y activa esta opción en la BIOS/UEFI de tu sistema. Busca términos
-como «Intel Virtualization Technology» (Intel VT-x) o «Extensiones de
-virtualización» en los menús de configuración de la CPU o del chipset. Una vez
-activada, puede que sea necesario apagar completamente el equipo (desenchufar el
-cable de alimentación y, en el caso de los portátiles, retirar la batería
-temporalmente si es posible) antes de reiniciarlo.
-
-Ejemplo:
-
-$ lsmod | grep kvm
-kvm_intel             380928  0
-kvm                  1146880  1 kvm_intel
-irqbypass              16384  1 kvm
-
-El comando lsmod | grep kvm te muestra que los módulos de KVM están cargados en
-tu sistema
-
-+------------+------------+-----------+--------------------------------------------------+
-| Módulo     | Tamaño     | Usado por | Significado                                      |
-+------------+------------+-----------+--------------------------------------------------+
-| kvm_intel  | 380928     | 0         | Módulo específico para procesadores Intel con    |
-|            | bytes      |           | tecnología de virtualización (VT-x)              |
-+------------+------------+-----------+--------------------------------------------------+
-| kvm        | 1146880    | 1         | Núcleo de KVM (Kernel-based Virtual Machine).    |
-|            | bytes      | (kvm_intel)| Es el módulo principal de virtualización        |
-+------------+------------+-----------+--------------------------------------------------+
-| irqbypass  | 16384      | 1         | Permite que las interrupciones pasen             |
-|            | bytes      | (kvm)     | directamente a las máquinas virtuales,           |
-|            |            |           | mejorando el rendimiento de E/S                  |
-+------------+------------+-----------+--------------------------------------------------+
-
-¿Qué significa esto?
-
-La virtualización por hardware está activada en tu sistema
-
-Puedes ejecutar máquinas virtuales con QEMU/KVM, VirtualBox, etc.
-
-Tu procesador Intel soporta VT-x (tecnología de virtualización)
-
-Notas importantes:
-
--kvm_intel está cargado pero con 0 en la columna "Used by" - esto es normal
-porque aún no tienes máquinas virtuales ejecutándose.
-
--kvm es usado por kvm_intel (relación de dependencia)
-
--irqbypass mejora el rendimiento de E/S en máquinas virtuales.
-
-Nota: El paso de lsmod | grep kvm es solo si decide usar la versión Desktop.
-
-Instalación de Docker Engine
-============================
-
-Antes de instalar Docker Engine por primera vez en un nuevo equipo host, debes
-configurar el repositorio apt de Docker. A continuación, podrás instalar y
-actualizar Docker desde el repositorio.
-
-1. Configura el repositorio apt de Docker con su firma difital:
-
-$ sudo apt update
-
-$ sudo apt install ca-certificates curl
-
-$ sudo install -m 0755 -d /etc/apt/keyrings
-
-$ sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
-
-$ sudo chmod a+r /etc/apt/keyrings/docker.asc
-
-Agrega el repositorio a las fuentes de Apt:
-
-$ sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
-Types: deb
-URIs: https://download.docker.com/linux/debian
-Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
-Components: stable
-Signed-By: /etc/apt/keyrings/docker.asc
-EOF
-
-$ sudo apt update
-
-2. Instalar los paquetes de Docker
-
-$ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+2. Instalar Docker Engine descrito en la sección anteior.
 
 3. Verificar que la instalación sea exitosa corriendo la imagen hello-world
-
-$ sudo docker run hello-world
-
-La salida del comando debe ser:
-
-$ sudo docker run hello-world
-Unable to find image 'hello-world:latest' locally
-latest: Pulling from library/hello-world
-4f55086f7dd0: Pull complete 
-d5e71e642bf5: Download complete 
-Digest: sha256:452a468a4bf985040037cb6d5392410206e47db9bf5b7278d281f94d1c2d0931
-Status: Downloaded newer image for hello-world:latest
-
-Hello from Docker!
-
------
-
-Este mensaje indica que su instalación parece funcionar correctamente.
-
-Para generar este mensaje, Docker realizó los siguientes pasos:
-
-1. El cliente de Docker contactó al demonio de Docker.
-
-2. El demonio de Docker descargó la imagen "hello-world" de Docker Hub.
-(amd64)
-
-3. El demonio de Docker creó un nuevo contenedor a partir de esa imagen, el cual
-ejecuta el ejecutable que produce la salida que está leyendo.
-
-4. El demonio de Docker transmitió esa salida al cliente de Docker, que la envió
-a su terminal.
-
-Docker Build y Docker Compose
-=============================
-
-Al configurar tu canalización de CI/CD, una decisión crucial a la que te
-enfrentarás es cómo compilar tus imágenes de Docker. ¿Deberías utilizar
-comandos «docker build» sin más o aprovechar «docker-compose build»? Tras haber
-implementado ambos enfoques en numerosos proyectos, voy a analizar las ventajas,
-los inconvenientes y los casos de uso ideales de cada método.
-
-La diferencia fundamental:
-
-En esencia, la elección se reduce al alcance:
-
--Docker Build: operaciones de contenedores individuales
-
--Docker Compose Build: orquestación de aplicaciones con múltiples contenedores
-
-Factores clave para la toma de decisiones
-=========================================
-
-Ten en cuenta estas preguntas para elegir el enfoque adecuado:
-
-¿Cuántos servicios tiene tu aplicación?
-
-1 servicio > Docker podría ser suficiente
-
-2 o más servicios > Docker Compose es mejor
-
-2. ¿Tienen los servicios dependencias?
-
-Sí > Docker Compose se encarga de esto automáticamente
-
-3. ¿Utiliza tu equipo Docker Compose para el desarrollo?
-
-Sí > Mantén la coherencia en CI/CD
-
-4. ¿Necesitas funciones avanzadas de compilación?
-
-Compilaciones en varias etapas > Docker podría ofrecer más control
-
-Prueba real con un proyecto de Django
-=====================================
+descrito en la sección anteior.
 
 En este ejemplo vamos a ejecutar un proyecto de Django con una base de datos
 de Postgresql.
@@ -659,7 +516,6 @@ COPY requirements.txt .
 #temporales.
 
 RUN pip install --no-cache-dir -r requirements.txt
-
 
 #5. Copia todo el contenido de tu proyecto actual al directorio de trabajo del
 #contenedor.
@@ -739,7 +595,7 @@ volumes:
 Si el Dockerfile era la receta para crear un solo componente, el archivo
 docker-compose.yml es el director de orquesta. Su trabajo es hacer que varios
 contenedores (en este caso, tu base de datos y tu app de Django) trabajen
-untos sin que tengas que configurarlos uno por uno.
+juntos sin que tengas que configurarlos uno por uno.
 
 Cada bloque que ves debajo de la palabra services: representa un contenedor
 independiente.
@@ -908,6 +764,8 @@ clean:
 	# Detiene todo y borra los volúmenes (¡Cuidado! Esto borra la base de datos)
 	docker compose -f $(DEV_COMPOSE_FILE) down -v
 
+-----
+
 Nota: Por estándar histórico, Make requiere estrictamente el uso de tabuladores
 (TAB), no espacios, para las indentaciones de los comandos.
 
@@ -922,20 +780,17 @@ PORT=5432
 
 -----
 
-Aclaraciones sonbre la base de datos:
+Aclaraciones sobre la base de datos:
 
-La base de datos NO debe estar creada previamente.
-
-Docker Compose + PostgreSQL se encarga de crearla automáticamente.
+La base de datos NO debe estar creada previamente, Docker Compose + PostgreSQL
+se encarga de crearla automáticamente.
 
 ¿Qué hace Docker automáticamente?
 
 Cuando usas la imagen oficial de postgres con las variables de entorno, Docker:
 
 -Crea la base de datos automáticamente si no existe
-
 -Crea el usuario automáticamente
-
 -Asigna la contraseña automáticamente
 
 yaml
@@ -1001,7 +856,7 @@ Paso 3: Construir y levantar los contenedores
 
 Opción 1: Usando Make (recomendado)
 
-$ make build
+$ sudo make build
 
 Ejecuta las instrucciones del archivo Makefile. Normalmente es un atajo para
 construir las imágenes personalizadas de tu proyecto basadas en el Dockerfile.
@@ -1009,27 +864,15 @@ construir las imágenes personalizadas de tu proyecto basadas en el Dockerfile.
 Nota: Si da un error de permission denied while trying... revisar la solución
 más abajo en la parte de errores comunes y volver acá luego.
 
-$ make up-d
-
 Levanta los servicios definidos en tu configuración. El sufijo -d (detached)
 hace que los contenedores corran en segundo plano, liberando tu terminal para
 seguir usándola.
 
+$ sudo make up-d
+
 Nota: Si da un error de Error response from daemon: ...host port
 0.0.0.0:5432/tcp: address already in use... revisar la solución más abajo en la
 parte de errores comunes y volver acá luego.
-
-Opción 2: Comandos directos
-
-$ docker compose build
-
-Lee el archivo docker-compose.yml y descarga o construye las imágenes de cada
-servicio (base de datos, Python/Django, etc.).
-
-$ docker compose up -d
-
-Crea y arranca los contenedores. Si no existen las imágenes, las construye
-primero; si ya existen, simplemente inicia los servicios.
 
 Paso 4: Verificar que todo funciona
 
@@ -1055,6 +898,45 @@ Listado rápido de los contenedores del proyecto. Te permite ver el Status
 (si están Up o si se reiniciaron por error) y qué Puertos están exponiendo.
 
 Paso 5: Acceder a la aplicación
+
+Abre tu navegador en: http://localhost:8000
+
+----
+
+Opción 2: Comandos directos
+
+$ docker compose build
+
+Lee el archivo docker-compose.yml y descarga o construye las imágenes de cada
+servicio (base de datos, Python/Django, etc.).
+
+$ docker compose up -d
+
+Crea y arranca los contenedores. Si no existen las imágenes, las construye
+primero; si ya existen, simplemente inicia los servicios.
+
+Verificar que todo funciona: Ver logs con Make
+
+$ make logs
+
+Muestra la salida por consola de lo que está ocurriendo dentro de tus
+contenedores (útil para ver errores de Django o conexiones a la base de datos).
+
+Ver logs con docker compose
+
+$ docker compose logs -f
+
+El parámetro -f (follow) mantiene la terminal "enganchada" a los logs,
+mostrándote en tiempo real lo que sucede conforme vas usando la aplicación.
+
+Ver contenedores activos
+
+$ sudo make ps
+
+Listado rápido de los contenedores del proyecto. Te permite ver el Status
+(si están Up o si se reiniciaron por error) y qué Puertos están exponiendo.
+
+Acceder a la aplicación
 
 Abre tu navegador en: http://localhost:8000
 
@@ -1157,8 +1039,8 @@ failed to bind host port 0.0.0.0:5432/tcp: address already in use
 Significa un conflicto de puertos. El error address already in use significa que
 ya hay algo ocupando el puerto 5432 en la máquina Debian.
 
-Lo más probable es que aya una instancia de PostgreSQL instalada directamente en
-el sistema operativo (fuera de Docker) y se está iniciando automáticamente.
+Lo más probable es que haya una instancia de PostgreSQL instalada directamente
+en el sistema operativo (fuera de Docker) y se está iniciando automáticamente.
 
 Identificar qué está usando el puerto:
 
@@ -1183,22 +1065,20 @@ $ sudo systemctl stop postgresql
 systemctl stop le dice al sistema operativo que apague el proceso postgres con
 PID 1689 que viste en tu comando anterior.
 
-Evita que vuelva a arrancar solo
-
-Si vas a usar Docker para tus proyectos de desarrollo, no necesitas que el
-Postgres nativo se inicie cada vez que prendes la computadora:
+Evita que vuelva a arrancar solo: Si vas a usar Docker para tus proyectos de
+desarrollo, no necesitas que el Postgres nativo se inicie cada vez que prendes
+la computadora:
 
 $ sudo systemctl disable postgresql
 
 disable quita el servicio del inicio automático, pero no desinstala nada.
 
-Levanta tu proyecto con Docker
-
-Ahora que el puerto está libre, el comando debería funcionar sin problemas:
+Levanta tu proyecto con Docker: Ahora que el puerto está libre, el comando
+debería funcionar sin problemas:
 
 $ make up-d
 
-6- Puerto 8000 ocupado luego de las pruebas o reiniciar¨
+7- Puerto 8000 ocupado luego de las pruebas o reiniciar¨
 
 $ python manage.py runserver
 
@@ -1232,6 +1112,7 @@ Ejemplo completo y funcional: https://github.com/argenisosorio/Django_6_crud/tre
 
 El archivo .dockerignore
 ========================
+
 Es fundamental para que la imagen no pese gigas innecesarios, debe contener:
 
 .git
