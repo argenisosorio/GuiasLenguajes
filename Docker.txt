@@ -438,6 +438,8 @@ La ventaja es que no importa si tu computadora tiene instalado Python 2, Python
 que definiste en el Dockerfile, garantizando que funcione igual en cualquier
 servidor.
 
+Ejemplo completo: https://github.com/argenisosorio/docker_python_hello_world
+
 Fuente
 ======
 
@@ -555,7 +557,7 @@ docker-compose.yml
 
 services:
   db:
-    image: postgres:17
+    image: postgres:15
     container_name: django_postgres
     restart: always
     environment:
@@ -903,7 +905,10 @@ Abre tu navegador en: http://localhost:8000
 
 ----
 
-Opción 2: Comandos directos
+Opción 2: En esta opción usamos comandos directos pero el resultado debe ser el
+mismo, el sistema debe quedar corriendo por la url http://localhost:8000
+
+Ejecutamos:
 
 $ docker compose build
 
@@ -943,29 +948,144 @@ Abre tu navegador en: http://localhost:8000
 Comandos útiles
 ===============
 
-1. Verificar que el contenedor de BD está corriendo
+Verificar que el contenedor de BD está corriendo
 
 $ docker compose ps
 
-2. Entrar a PostgreSQL dentro del contenedor
+-----
+
+Entrar a PostgreSQL dentro del contenedor
 
 $ docker compose exec db psql -U postgres
 
-3. Dentro de psql, listar las bases de datos
+-----
+
+Dentro de psql, listar las bases de datos
 \l
 
-4. Ver las tablas de tu BD
+-----
+
+Ver las tablas de tu BD
 \c test_django_db
 \dt
 
-5. Detener y eliminar los contenedores actuales
+-----
+
+Detener y eliminar los contenedores actuales
 
 $ docker compose down
 
-6. Levantar todo de nuevo (esto volverá a leer el settings.py corregido)
+-----
+
+Detener y eliminar únicamente un contenedor específico:
+
+Para detener y eliminar únicamente un contenedor específico sin afectar al resto
+de los servicios del entorno, puedes hacerlo mediante el nombre del servicio en
+Docker Compose o directamente con el cliente de Docker CLI.
+
+1. Usando Docker Compose (Recomendado)
+
+Debes usar el nombre del servicio definido en tu docker-compose.yml (por
+ejemplo: web o db):  Detener el servicio:
+
+$ docker compose stop <nombre_servicio>
+
+Ejemplo:
+
+$ docker compose stop web
+
+Eliminar el contenedor detenido:
+
+$ docker compose rm <nombre_servicio>
+
+Ejemplo:
+
+$ docker compose rm web
+
+Detener y eliminar en un solo paso:
+
+$ docker compose rm -s -f <nombre_servicio>
+
+Ejemplo:
+
+$ docker compose rm -s -f web
+
+La opción -s o --stop detiene el contenedor activo antes de borrarlo y -f o
+--force evita la confirmación en consola.
+
+2. Usando la CLI de Docker
+
+Si prefieres indicarlo por el nombre exacto que tiene el contenedor (el asignado
+con container_name, como django_app o django_postgres):
+
+Detener el contenedor:
+
+$ docker stop <nombre_contenedor>
+
+Ejemplo:
+
+$ docker stop django_app
+
+Eliminar el contenedor:Bashdocker rm <nombre_contenedor>
+
+Ejemplo:
+
+$ docker rm django_app
+
+Detener y eliminar forzadamente en un comando:
+
+$ docker rm -f <nombre_contenedor>
+
+Ejemplo:
+
+$ docker rm -f django_app
+
+Tip útil para tu Makefile: Puedes agregar accesos directos a tu Makefile para
+controlar servicios individuales:
+
+Makefile
+
+# Detener y eliminar únicamente el contenedor web
+rm-web:
+	docker compose rm -s -f web
+
+# Detener y eliminar únicamente el contenedor de la base de datos
+rm-db:
+	docker compose rm -s -f db
+
+-----
+
+Levantar todo de nuevo
 
 $ make up-d
 
+-----
+
+Levantar un único contenedor o servicio sin iniciar los demás
+
+Debes especificar el nombre del servicio (el nombre definido debajo de services:
+en tu docker-compose.yml, como web o db) al final del comando.
+
+1. Usando Docker Compose
+
+$ docker compose up -d <nombre_servicio>
+
+Ejemplo para levantar solo el frontend/web:
+
+$ docker compose up -d web
+
+Ejemplo para levantar solo la base de datos:
+
+$ docker compose up -d db
+
+Nota sobre dependencias: Si el servicio que intentas levantar tiene un bloque
+depends_on (como web, que depende de db), Docker Compose iniciará
+automáticamente los servicios dependientes requeridos a menos que uses la
+bandera --no-deps:
+
+$ docker compose up -d --no-deps web
+
+============================
 Errores comunes y soluciones
 ============================
 
