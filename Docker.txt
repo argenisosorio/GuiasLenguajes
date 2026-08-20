@@ -2,94 +2,6 @@
 Guía de instalación y configuración de Docker by dM
 ===================================================
 
-====================
-Hola mundo en Docker
-====================
-
-Haremos un Hola mundo con Python.
-
-Para hacer un "Hola Mundo" en Python desplegado con Docker, necesitas preparar
-tres archivos básicos en una misma carpeta: tu código Python, la lista de
-dependencias (aunque esté vacía) y las instrucciones para Docker (Dockerfile).
-
-Sigue estos pasos:
-
-1. Preparar los archivos
-
-Crea una carpeta nueva y dentro de ella crea estos tres archivos:
-
-A. app.py (El código)
-
-print("¡Hola Mundo desde Python dentro de Docker!")
-
-B. requirements.txt (Las dependencias)
-
-Como es un hola mundo simple, puedes dejar este archivo vacío, pero Docker lo
-necesita para seguir las buenas prácticas.
-
-C. Dockerfile (La receta de construcción)
-
-Dockerfile
-
-# 1. Usamos una imagen ligera de Python como base
-FROM python:3.12-slim
-
-# 2. Definimos el directorio de trabajo dentro del contenedor
-WORKDIR /app
-
-# 3. Copiamos los archivos locales al contenedor
-COPY . /app
-
-# 4. Instalamos dependencias (en este caso nada, pero es el estándar)
-RUN pip install --no-cache-dir -r requirements.txt
-
-# 5. Comando que se ejecuta al iniciar el contenedor
-CMD ["python", "app.py"]
-
-2. Construir la Imagen
-
-Abre una terminal en esa carpeta y ejecuta el siguiente comando. Esto leerá el
-Dockerfile y creará una imagen llamada hola-python:
-
-$ docker build -t hola-python .
-
-3. Ejecutar el Contenedor
-
-Una vez que la imagen esté lista, puedes "correr" un contenedor basado en esa
-imagen:
-
-$ docker run hola-python
-
-Resultado esperado en consola:
-¡Hola Mundo desde Python dentro de Docker!
-
-Conceptos clave que acabas de aplicar:
-
-Dockerfile: Es el archivo de texto con las instrucciones para montar tu entorno.
-
-Imagen: Es el "paquete" estático que contiene tu código y Python (como una foto
-de un sistema listo).
-
-Contenedor: Es la instancia viva de la imagen en ejecución.
-
------
-
-La ventaja es que no importa si tu computadora tiene instalado Python 2, Python
-3 o ninguno; al ejecutarlo con Docker, se usará exactamente la versión 3.12-slim
-que definiste en el Dockerfile, garantizando que funcione igual en cualquier
-servidor.
-
-Fuente
-======
-
-Gemini IA
-
-=======================================
-Probando Docker + un proyecto de Django
-=======================================
-
-Este manual fue probado en en Debian 13.
-
 ¿Qué es Docker?
 ===============
 
@@ -171,8 +83,8 @@ Esta interacción forma un bucle sencillo pero potente: utilizas el cliente para
 enviar comandos al demonio en el host, que puede extraer imágenes de un registro
 para ejecutarlas como contenedores.
 
-Glosario
-========
+Glosario de términos
+====================
 
 -Docker Engine: Docker Engine cuenta con un componente central, el demonio de
 Docker, que se encarga de la creación y la gestión de contenedores.
@@ -211,8 +123,8 @@ En este archivo escribes las instrucciones (instalar Python, copiar tu código
 de Django, instalar librerías).
 
 -Docker Compose: Es una herramienta de orquestación local para aplicaciones que
-usan varios contenedores (multi-contenedor). ¿Para qué sirve? Tu proyecto no es
-solo Django. Necesitas:
+usan varios contenedores (multi-contenedor). ¿Para qué sirve? Si tu proyecto
+es más que solo Django necesitas por ejemplo:
 
 -Un contenedor para PostgreSQL (Base de datos).
 -Un contenedor para Django (API).
@@ -227,14 +139,10 @@ volúmenes de datos automáticamente.
 
 -Contenedor: Es la imagen ya funcionando ya corriendo.
 
-Comandos de Docker
-==================
+Comandos básicos de Docker
+==========================
 
-Gracias a la introducción de los comandos esenciales de Docker, este se ha
-convertido en una potente herramienta para optimizar el proceso de gestión de
-contenedores. Contribuye a garantizar flujos de trabajo de desarrollo e
-implementación fluidos. A continuación se enumeran algunos de los comandos de
-Docker más utilizados:
+A continuación se enumeran algunos de los comandos de Docker más utilizados:
 
 -Docker Run: se utiliza para iniciar contenedores a partir de imágenes,
 especificando las opciones de ejecución y los comandos.
@@ -253,6 +161,12 @@ operaciones desde el estado anterior.
 
 -Docker Login: ayuda a iniciar sesión en el registro de Docker, lo que permite
 el acceso a repositorios privados.
+
+====================
+Hola mundo en Docker
+====================
+
+Estos "Hola mundo" fueron probados en Linux Debian 13.
 
 Requerimientos y configuraciones del SO y la máquina
 ====================================================
@@ -388,6 +302,8 @@ Status: Downloaded newer image for hello-world:latest
 
 Hello from Docker!
 
+-----
+
 Este mensaje indica que su instalación parece funcionar correctamente.
 
 Para generar este mensaje, Docker realizó los siguientes pasos:
@@ -403,16 +319,243 @@ ejecuta el ejecutable que produce la salida que está leyendo.
 4. El demonio de Docker transmitió esa salida al cliente de Docker, que la envió
 a su terminal.
 
-To try something more ambitious, you can run an Ubuntu container with:
+Ahora un Hola mundo con Python dentro de un contenedor
+======================================================
 
-$ docker run -it ubuntu bash
+Primero debes tener instalado Docker Engine, se instalo en el paso anterior.
 
-$ sudo systemctl status docker
+Para hacer un "Hola Mundo" en Python desplegado con Docker, necesitas preparar
+tres archivos básicos en una misma carpeta: tu código Python, la lista de
+dependencias (aunque esté vacía) y las instrucciones para Docker (Dockerfile).
 
-En algunos sistemas, es posible que esta función esté desactivada y sea
-necesario iniciarlo manualmente, si es así ejecutar:
+Sigue estos pasos:
 
-$ sudo systemctl start docker
+1. Preparar los archivos
+
+Crea una carpeta nueva y dentro de ella crea estos tres archivos:
+
+A. app.py (El código)
+
+print("¡Hola Mundo desde Python dentro de Docker!")
+
+B. requirements.txt (Las dependencias)
+
+Como es un hola mundo simple, puedes dejar este archivo vacío, pero Docker lo
+necesita para seguir las buenas prácticas.
+
+C. Dockerfile (La receta de construcción)
+
+Dockerfile
+
+# 1. Usamos una imagen ligera de Python como base
+FROM python:3.12-slim
+
+# 2. Definimos el directorio de trabajo dentro del contenedor
+WORKDIR /app
+
+# 3. Copiamos los archivos locales al contenedor
+COPY . /app
+
+# 4. Instalamos dependencias (en este caso nada, pero es el estándar)
+RUN pip install --no-cache-dir -r requirements.txt
+
+# 5. Comando que se ejecuta al iniciar el contenedor
+CMD ["python", "app.py"]
+
+2. Construir la Imagen
+
+Abre una terminal en esa carpeta y ejecuta el siguiente comando. Esto leerá el
+Dockerfile y creará una imagen llamada hola-python:
+
+$ sudo docker build -t hola-python .
+
+3. Ejecutar el Contenedor
+
+Una vez que la imagen esté lista, puedes "correr" un contenedor basado en esa
+imagen:
+
+$ sudo docker run hola-python
+
+Resultado esperado en consola:
+¡Hola Mundo desde Python dentro de Docker!
+
+Conceptos clave que acabas de aplicar:
+
+Dockerfile: Es el archivo de texto con las instrucciones para montar tu entorno.
+
+Imagen: Es el "paquete" estático que contiene tu código y Python (como una foto
+de un sistema listo).
+
+Contenedor: Es la instancia viva de la imagen en ejecución.
+
+-----
+
+La ventaja es que no importa si tu computadora tiene instalado Python 2, Python
+3 o ninguno; al ejecutarlo con Docker, se usará exactamente la versión 3.12-slim
+que definiste en el Dockerfile, garantizando que funcione igual en cualquier
+servidor.
+
+Fuente
+======
+
+Gemini IA
+
+========================================
+Probando Docker en un proyecto de Django
+========================================
+
+Este manual fue probado en en Debian 13.
+
+Requerimientos y configuraciones del SO y la máquina
+====================================================
+
+Tu equipo host Linux debe cumplir los siguientes requisitos generales:
+
+-Kernel de 64 bits y CPU compatible con virtualización.
+
+-Compatibilidad con la virtualización KVM. Sigue las instrucciones de
+compatibilidad con la virtualización KVM para comprobar si los módulos del
+kernel KVM están habilitados y cómo proporcionar acceso al dispositivo KVM.
+
+-QEMU debe ser la versión 5.2 o posterior. Recomendamos actualizar a la última
+versión.
+
+-Sistema de inicio systemd.
+
+-En muchas distribuciones de Linux, el entorno GNOME no admite iconos de la
+bandeja del sistema. Para añadir compatibilidad con los iconos de la bandeja,
+debe instalar una extensión de GNOME. Por ejemplo, AppIndicator.
+
+-Al menos 4 GB de RAM.
+
+-Habilite la configuración de la asignación de ID en los espacios de nombres de
+usuario; consulte Compartir archivos. Tenga en cuenta que, para Docker Desktop
+versión 4.35 y posteriores, esto ya no es necesario.
+
+-Recomendado: Inicialice Pass para la gestión de credenciales.
+
+Para revisar si tienes los modulos de KVM activos corre este este comandos
+
+$ lsmod | grep kvm
+
+En tal caso que no lo tengas activo, hay que entrar en la configuración de la
+BIOS de la PC y activa esta opción en la BIOS/UEFI de tu sistema. Busca términos
+como «Intel Virtualization Technology» (Intel VT-x) o «Extensiones de
+virtualización» en los menús de configuración de la CPU o del chipset. Una vez
+activada, puede que sea necesario apagar completamente el equipo (desenchufar el
+cable de alimentación y, en el caso de los portátiles, retirar la batería
+temporalmente si es posible) antes de reiniciarlo.
+
+Ejemplo:
+
+$ lsmod | grep kvm
+kvm_intel             380928  0
+kvm                  1146880  1 kvm_intel
+irqbypass              16384  1 kvm
+
+El comando lsmod | grep kvm te muestra que los módulos de KVM están cargados en
+tu sistema
+
++------------+------------+-----------+--------------------------------------------------+
+| Módulo     | Tamaño     | Usado por | Significado                                      |
++------------+------------+-----------+--------------------------------------------------+
+| kvm_intel  | 380928     | 0         | Módulo específico para procesadores Intel con    |
+|            | bytes      |           | tecnología de virtualización (VT-x)              |
++------------+------------+-----------+--------------------------------------------------+
+| kvm        | 1146880    | 1         | Núcleo de KVM (Kernel-based Virtual Machine).    |
+|            | bytes      | (kvm_intel)| Es el módulo principal de virtualización        |
++------------+------------+-----------+--------------------------------------------------+
+| irqbypass  | 16384      | 1         | Permite que las interrupciones pasen             |
+|            | bytes      | (kvm)     | directamente a las máquinas virtuales,           |
+|            |            |           | mejorando el rendimiento de E/S                  |
++------------+------------+-----------+--------------------------------------------------+
+
+¿Qué significa esto?
+
+La virtualización por hardware está activada en tu sistema
+
+Puedes ejecutar máquinas virtuales con QEMU/KVM, VirtualBox, etc.
+
+Tu procesador Intel soporta VT-x (tecnología de virtualización)
+
+Notas importantes:
+
+-kvm_intel está cargado pero con 0 en la columna "Used by" - esto es normal
+porque aún no tienes máquinas virtuales ejecutándose.
+
+-kvm es usado por kvm_intel (relación de dependencia)
+
+-irqbypass mejora el rendimiento de E/S en máquinas virtuales.
+
+Nota: El paso de lsmod | grep kvm es solo si decide usar la versión Desktop.
+
+Instalación de Docker Engine
+============================
+
+Antes de instalar Docker Engine por primera vez en un nuevo equipo host, debes
+configurar el repositorio apt de Docker. A continuación, podrás instalar y
+actualizar Docker desde el repositorio.
+
+1. Configura el repositorio apt de Docker con su firma difital:
+
+$ sudo apt update
+
+$ sudo apt install ca-certificates curl
+
+$ sudo install -m 0755 -d /etc/apt/keyrings
+
+$ sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+
+$ sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+Agrega el repositorio a las fuentes de Apt:
+
+$ sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/debian
+Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+$ sudo apt update
+
+2. Instalar los paquetes de Docker
+
+$ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+3. Verificar que la instalación sea exitosa corriendo la imagen hello-world
+
+$ sudo docker run hello-world
+
+La salida del comando debe ser:
+
+$ sudo docker run hello-world
+Unable to find image 'hello-world:latest' locally
+latest: Pulling from library/hello-world
+4f55086f7dd0: Pull complete 
+d5e71e642bf5: Download complete 
+Digest: sha256:452a468a4bf985040037cb6d5392410206e47db9bf5b7278d281f94d1c2d0931
+Status: Downloaded newer image for hello-world:latest
+
+Hello from Docker!
+
+-----
+
+Este mensaje indica que su instalación parece funcionar correctamente.
+
+Para generar este mensaje, Docker realizó los siguientes pasos:
+
+1. El cliente de Docker contactó al demonio de Docker.
+
+2. El demonio de Docker descargó la imagen "hello-world" de Docker Hub.
+(amd64)
+
+3. El demonio de Docker creó un nuevo contenedor a partir de esa imagen, el cual
+ejecuta el ejecutable que produce la salida que está leyendo.
+
+4. El demonio de Docker transmitió esa salida al cliente de Docker, que la envió
+a su terminal.
 
 Docker Build y Docker Compose
 =============================
@@ -438,21 +581,21 @@ Ten en cuenta estas preguntas para elegir el enfoque adecuado:
 
 ¿Cuántos servicios tiene tu aplicación?
 
-1 servicio → Docker podría ser suficiente
+1 servicio > Docker podría ser suficiente
 
-2 o más servicios → Docker Compose es mejor
+2 o más servicios > Docker Compose es mejor
 
 2. ¿Tienen los servicios dependencias?
 
-Sí → Docker Compose se encarga de esto automáticamente
+Sí > Docker Compose se encarga de esto automáticamente
 
 3. ¿Utiliza tu equipo Docker Compose para el desarrollo?
 
-Sí → Mantén la coherencia en CI/CD
+Sí > Mantén la coherencia en CI/CD
 
 4. ¿Necesitas funciones avanzadas de compilación?
 
-Compilaciones en varias etapas → Docker podría ofrecer más control
+Compilaciones en varias etapas > Docker podría ofrecer más control
 
 Prueba real con un proyecto de Django
 =====================================
@@ -823,7 +966,7 @@ Flujo completo (qué pasa cuando ejecutas docker compose up -d)
 | 2. Inicia web     | Django intenta conectar a la BD (usa HOST=db)    |
 +-------------------+--------------------------------------------------+
 | 3. start.sh       | Ejecuta makemigrations y migrate                 |
-|                   | → Crea las TABLAS dentro de la BD existente      |
+|                   | > Crea las TABLAS dentro de la BD existente      |
 +-------------------+--------------------------------------------------+
 | 4. runserver      | Django inicia el servidor                        |
 +-------------------+--------------------------------------------------+
