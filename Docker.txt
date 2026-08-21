@@ -526,6 +526,7 @@ CMD ["./start.sh"]
 -----
 
 ¿Cómo funciona este proceso?
+============================
 
 Para visualizarlo mejor, imagina que un Dockerfile es una receta de cocina que
 construye una computadora miniatura aislada:
@@ -767,7 +768,8 @@ PORT=5432
 
 -----
 
-Aclaraciones sobre la base de datos:
+Aclaraciones sobre la base de datos
+===================================
 
 La base de datos NO debe estar creada previamente, Docker Compose + PostgreSQL
 se encarga de crearla automáticamente.
@@ -783,11 +785,12 @@ Cuando usas la imagen oficial de postgres con las variables de entorno, Docker:
 yaml
 
 environment:
-  POSTGRES_DB: ${DB_NAME} # ← Crea esta BD
-  POSTGRES_USER: ${DB_USER} # ← Crea o usa este usuario
-  POSTGRES_PASSWORD: ${DB_PASSWORD} # ← Asigna esta contraseña
+  POSTGRES_DB: ${DB_NAME} # < Crea esta BD
+  POSTGRES_USER: ${DB_USER} # < Crea o usa este usuario
+  POSTGRES_PASSWORD: ${DB_PASSWORD} # < Asigna esta contraseña
 
 ¿Qué NO hace automáticamente?
+=============================
 
 Django necesita que las tablas estén creadas. Pero eso lo haces con:
 
@@ -798,6 +801,7 @@ $ python manage.py makemigrations person product
 $ python manage.py migrate
 
 Flujo completo (qué pasa cuando ejecutas docker compose up -d)
+==============================================================
 
 +-------------------+--------------------------------------------------+
 | Paso              | ¿Qué sucede?                                     |
@@ -859,7 +863,10 @@ $ sudo make up-d
 
 Nota: Si da un error de Error response from daemon: ...host port
 0.0.0.0:5432/tcp: address already in use... revisar la solución más abajo en la
-parte de errores comunes y volver acá luego.
+parte de errores comunes y volver acá luego o simplemente detener el servicio de
+postgres y levantar el contenedo con:
+
+$ sudo systemctl stop postgresql && sudo make up-d
 
 Paso 4: Verificar que todo funciona
 
@@ -870,12 +877,35 @@ $ make logs
 Muestra la salida por consola de lo que está ocurriendo dentro de tus
 contenedores (útil para ver errores de Django o conexiones a la base de datos).
 
-Ver logs con docker compose
+Si todo está bien se debería ver algo como esto:
+
+django_postgres  | 2026-08-21 00:16:52.832 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+django_postgres  | 2026-08-21 00:16:52.832 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+django_postgres  | 2026-08-21 00:16:52.834 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+django_postgres  | 2026-08-21 00:16:52.842 UTC [30] LOG:  database system was shut down at 2026-08-20 04:03:12 UTC
+django_postgres  | 2026-08-21 00:16:52.856 UTC [1] LOG:  database system is ready to accept connections
+django_app       | ----- Esperando a que PostgreSQL esté listo...
+django_app       | ----- ¡PostgreSQL está listo! Procediendo con las tareas de Django...
+django_app       | ----- Revisando cambios en los modelos...
+django_app       | No changes detected in apps 'person', 'product'
+django_app       | ----- Aplicando migraciones a la base de datos...
+django_app       | Operations to perform:
+django_app       |   Apply all migrations: admin, auth, contenttypes, person, product, sessions
+django_app       | Running migrations:
+django_app       |   No migrations to apply.
+django_app       | ----- Iniciando servidor Django en http://0.0.0.0:8000
+django_app       | Watching for file changes with StatReloader
+
+-----
+
+Ver logs con docker compose:
 
 $ docker compose logs -f
 
 El parámetro -f (follow) mantiene la terminal "enganchada" a los logs,
 mostrándote en tiempo real lo que sucede conforme vas usando la aplicación.
+
+-----
 
 Ver contenedores activos
 
@@ -912,7 +942,7 @@ $ make logs
 Muestra la salida por consola de lo que está ocurriendo dentro de tus
 contenedores (útil para ver errores de Django o conexiones a la base de datos).
 
-Ver logs con docker compose
+Ver logs con docker compose:
 
 $ docker compose logs -f
 
@@ -933,9 +963,25 @@ Abre tu navegador en: http://localhost:8000
 Comandos útiles
 ===============
 
-Verificar que el contenedor de BD está corriendo
+Ver logs con Make para verificar que todo funciona:
 
-$ docker compose ps
+$ make logs
+
+-----
+
+Ver logs con docker compose:
+
+$ docker compose logs -f
+
+-----
+
+Ver contenedores activos:
+
+$ sudo make ps
+
+ó
+
+docker compose ps
 
 -----
 
@@ -943,14 +989,10 @@ Entrar a PostgreSQL dentro del contenedor
 
 $ docker compose exec db psql -U postgres
 
------
-
 Dentro de psql, listar las bases de datos
 \l
 
------
-
-Ver las tablas de tu BD
+Ver las tablas de tu BD:
 \c test_django_db
 \dt
 
@@ -962,7 +1004,7 @@ $ docker compose down
 
 -----
 
-Detener y eliminar únicamente un contenedor específico:
+Detener y/o eliminar únicamente un contenedor específico:
 
 Para detener y eliminar únicamente un contenedor específico sin afectar al resto
 de los servicios del entorno, puedes hacerlo mediante el nombre del servicio en
@@ -1069,6 +1111,18 @@ automáticamente los servicios dependientes requeridos a menos que uses la
 bandera --no-deps:
 
 $ docker compose up -d --no-deps web
+
+-----
+
+Eliminar contenedores detenidos e imágenes no utilizadas:
+
+$ docker system prune -a
+
+-----
+
+Elimina volúmenes huérfanos:
+
+$ docker volume prune
 
 ============================
 Errores comunes y soluciones
