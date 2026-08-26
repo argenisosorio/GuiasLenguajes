@@ -3,6 +3,134 @@ Guía de pnpm by dM
 ==================
 
 ===========
+Instalación
+===========
+
+En esta forma de instalación usaremos nvm, que es un administrador de versiones
+para node.js, diseñado para ser instalado por el usuario e invocado por shell.
+
+Se recomienda seguir la documentación disponible desde:
+https://linuxconfig.org/how-to-install-node-js-on-ubuntu-16-04-xenial-xerus-linux-server
+pero para este manual recomendamos los siguientes pasos:
+
+Procedimiento de instalación mediante el script nativo de node **nvm** el cual
+permite más control en cuanto a la versión de **node** y **npm** a ser
+instalada.
+
+Instalar los prerequisitos del S.O. mediante el siguiente comando:
+
+$ sudo apt install build-essential libssl-dev
+
+Descargar el script de instalación más reciente mediante **curl**, para ello
+se requiere ejecutar el comando:
+
+$ sudo curl -o- https://raw.githubusercontent.com/creationix/nvm/{version}/install.sh | bash
+
+Se debe sustituir la número de versión con la más reciente publicada la
+cual se puede encontrar [aquí](https://github.com/nvm-sh/nvm/releases), ejemplo:
+
+$ sudo curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+
+Lo siguiente es configurar el acceso del nuevo script **NVM** con el siguiente
+comando:
+
+$ . ~/.profile
+
+Esto permitira acceder al comando nvm desde cualquier ruta, una vez realizada
+la configuración, se procederá a verificar el listado de versiones de **node**
+disponibles en el repositorio para lo cual se require ejecutar el comando:
+
+$ nvm ls-remote | grep -i lts
+
+Esto debe mostrar un listado de versiones de node que correspondan
+a las versiones **LTS**, ejemplo:
+
+v10.15.3   (LTS: Dubnium)
+v10.16.0   (LTS: Dubnium)
+v10.16.1   (LTS: Dubnium)
+v10.16.2   (LTS: Dubnium)
+v10.16.3   (Latest LTS: Dubnium)
+
+Ahora procedemos a la instalación de la versión de node más actualizada para lo
+cual se ejecutará el comando:
+
+$ nvm install 10.16.3
+
+Una vez instalado NodeJS comprobamos la correcta instalación con el siguiente
+comando:
+
+$ node -v
+
+Los comandos anteriores nos instalaran NodeJS y también npm, por lo cual
+comprobamos su correcta instalación con el siguiente comando:
+
+$ npm -v
+
+Usar una versión específica de node
+===================================
+
+Si se tienen varias versiones de node insaladas se pude especificar que se use
+una en esa sesión:
+
+$ nvm use 10.16.3
+
+Hacer que una versión de node sea la configurada por defecto
+============================================================
+
+$ nvm alias default 10.16.3
+
+Ya que tenemos instalado node y npm podemos instalar pnpm.
+
+Este comando intenta instalar globalmente en tu sistema la versión más reciente
+dentro de la línea v11 del gestor de paquetes pnpm usando npm.
+
+La sintaxis @latest-11 es un dist-tag (etiqueta de distribución) de npm que
+apunta a la versión estable más reciente dentro de esa rama principal
+específica.
+
+$ npm install -g pnpm@latest-11
+
+¿Cómo instalar una versión específica de pnpm?
+
+Dependiendo del método que prefieras usar, tienes las siguientes opciones:
+
+Opción 1: Usando npm (Recomendado si ya tienes Node.js)
+
+Para instalar una versión exacta, sustituye la etiqueta por el número de versión
+específico:
+
+$ npm install -g pnpm@9.15.0
+
+Si solo quieres instalar la versión más reciente de todas (la última lanzada):
+
+$ npm install -g pnpm@latest
+
+Opción 2: Usando Corepack (Incluido en Node.js)
+
+Node.js incluye de forma nativa corepack, que permite gestionar versiones de
+pnpm sin necesidad de instalarlo globalmente vía npm.
+
+1. Activa Corepack:
+
+$ corepack enable
+
+2. Prepara e instala la versión específica que necesitas:
+
+$ corepack prepare pnpm@9.15.0 --activate
+
+Opción 3: Actualizar una versión existente con el propio pnpm
+
+Si ya tienes pnpm instalado y quieres cambiar o actualizar a una versión
+específica:
+
+$ pnpm self-update 9.15.0
+
+Fuente
+======
+
+Gemini IA
+
+===========
 npm vs pnpm
 ===========
 
@@ -329,7 +457,6 @@ Gemini IA
 ========================
 Errores con node_modules
 ========================
-
 
 Antes se usaba el viejo "borrón y cuenta nueva" de npm borrando la carpeta
 node_modules. Sin embargo, la gran ventaja de haber migrado el entorno a pnpm es
