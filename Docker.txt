@@ -135,7 +135,8 @@ run por separado, defines todo en un archivo YAML.
 
 -El comando mágico: Con solo escribir docker compose up -d, Docker levanta los
 tres servicios, los conecta entre sí en una red privada y configura los
-volúmenes de datos automáticamente.
+volúmenes de datos automáticamente, lo hará en segundo plano dado que el -d
+libera la consola.
 
 -Contenedor: Es la imagen ya funcionando ya corriendo.
 
@@ -933,7 +934,8 @@ servicio (base de datos, Python/Django, etc.).
 $ docker compose up -d
 
 Crea y arranca los contenedores. Si no existen las imágenes, las construye
-primero; si ya existen, simplemente inicia los servicios.
+primero; si ya existen, simplemente inicia los servicios en segundo plano
+liberando la consola gracias a -d.
 
 Verificar que todo funciona: Ver logs con Make
 
@@ -995,11 +997,27 @@ Entrar a PostgreSQL dentro del contenedor
 
 $ docker compose exec db psql -U postgres
 
-Dentro de psql, listar las bases de datos
+Desglose del comando:
+
+-docker compose exec: Ejecuta un comando interactivo dentro de un contenedor que
+ya está corriendo.
+
+-db: El nombre del servicio definido en tu archivo docker-compose.yml (el
+contenedor de la base de datos).
+
+psql: La herramienta de línea de comandos nativa de PostgreSQL para administrar
+y realizar consultas a la base de datos.
+
+-U postgres: Especifica el usuario con el que te conectas (postgres, el
+superusuario por defecto).
+
+Ya dentro de psql puedes listar las bases de datos:
 \l
 
-Ver las tablas de tu BD:
-\c test_django_db
+Conectarse a una base de datos:
+\c nombre_bd
+
+Ver las tablas de tu la bd:
 \dt
 
 -----
