@@ -16181,3 +16181,70 @@ ejecutar:
 python manage.py migrate --no-input.
 
 Ejemplo de start.sh: https://github.com/argenisosorio/Django_6_crud/tree/test/deploy-docker
+
+===================================================
+Migración para eliminar un campo una tabla de la BD
+===================================================
+
+En Django, la forma recomendada y estándar de eliminar un campo de una tabla
+consiste en modificar tu archivo models.py y dejar que el comando de migraciones
+genere automáticamente el archivo correspondiente.
+
+1. Elimina el campo en tu modelo
+
+Abre el archivo models.py de tu aplicación y borra la línea donde está definido
+el campo que quieres eliminar (o coméntala).
+
+# mi_app/models.py
+class MiModelo(models.Model):
+    nombre = models.CharField(max_length=100)
+    # email = models.EmailField()  <-- Eliminas este campo
+
+2. Genera la migración
+
+Ejecuta el comando makemigrations en tu terminal. Django detectará la ausencia
+del campo y creará un archivo de migración con la operación RemoveField.
+
+$ python manage.py makemigrations
+
+3. Aplica la migración en la base de datos
+
+Para impactar los cambios en la base de datos y eliminar definitivamente la
+columna, ejecuta:
+
+$ python manage.py migrate
+
+Opción alternativa: Crear una migración manual vacía
+
+Si prefieres no tocar el modelo aún o necesitas escribir la migración a mano,
+puedes crear un archivo en blanco y definir la operación migrations.RemoveField:
+
+1.Genera la migración vacía:
+
+$ python manage.py makemigrations --empty mi_app
+
+2. Edita el archivo generado en la carpeta migrations/ agregando la operación:
+
+from django.db import migrations
+
+class Migration(migrations.Migration):
+    dependencies = [
+        ('mi_app', '000X_migracion_anterior'),
+    ]
+    operations = [
+        migrations.RemoveField(
+            model_name='mimodelo', # Nombre del modelo en minúsculas
+            name='email',          # Nombre del campo a eliminar
+        ),
+    ]
+
+3. Ejecuta python manage.py migrate.
+
+Advertencia: Eliminar un campo borra de forma permanente los datos almacenados
+en esa columna en la base de datos. Haz una copia de seguridad previa si estás
+trabajando en un entorno de producción.
+
+Fuente
+======
+
+Gemini IA
