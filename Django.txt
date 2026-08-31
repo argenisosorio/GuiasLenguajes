@@ -16269,14 +16269,14 @@ interconectados:
 realizar sobre un modelo (crear, leer, actualizar, borrar).
 
 -Grupos (Group): Funcionan como los Roles. Son etiquetas que agrupan a un
-conjunto de usuarios y les asignan una lista de permisos en bloque.
+conjunto de permisos y se le puden asignar a los usuarios.
 
 -Usuarios (User): Pueden tener permisos asignados directamente o heredar los
 permisos de los Grupos a los que pertenecen.
 
-[Usuario] -> Pertenece a -> [Grupo/Rol] -> Tiene asignados -> [Permisos]
-    |                                                             ^
-    +------------------------ O asignados directamente -----------+
+[Usuario] -> Pertenece a -> [Grupo] -> Tiene asignados -> [Permisos]
+    |                                                          ^
+    +--------------------- O asignados directamente -----------+
 
 2. Los Permisos por Defecto
 
@@ -16288,7 +16288,182 @@ automáticamente 4 permisos predeterminados por cada modelo:
 3. delete_<nombre_modelo> (Eliminar)
 4. view_<nombre_modelo> (Ver/Consultar)
 
+3. Verificar Permisos en el Código
+
+Django evalúa automáticamente los permisos del usuario sumando sus permisos
+individuales + los permisos de todos los grupos a los que pertenece.
+
+El formato del nombre del permiso siempre es: app_label.codename.
+
+En Vistas Basadas en Funciones (FBV) se usa el decorador @permission_required:
+
+-----
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Person
+from .forms import PersonForm
+from django.contrib.auth.decorators import permission_required
+
+
+@permission_required('person.can_add_person', raise_exception=True)
+def create_person(request):
+    if request.method == 'POST':
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('person:home')
+    else:
+        form = PersonForm()
+
+    context = {'form': form}
+    return render(request, 'person/create.html', context)
+
+
+@permission_required('person.can_delete_person', raise_exception=True)
+def delete_person(request, pk):
+    person = get_object_or_404(Person, pk=pk)
+    if request.method == 'POST':
+        person.delete()
+        return redirect('person:home')
+
+    context = {'person': person}
+    return render(request, 'person/delete.html', context)
+
+-----
+
+En Vistas Basadas en Clases (CBV) se usa el mixin PermissionRequiredMixin:
+
+-----
+
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from .models import Product
+from .forms import ProductForm
+from django.contrib.auth.mixins import PermissionRequiredMixin
+
+
+class ProductCreateView(PermissionRequiredMixin, CreateView):
+    """Display the form and create a product"""
+    model = Product
+    form_class = ProductForm
+    template_name = 'product/create.html'
+    success_url = reverse_lazy('product:home')
+
+    # Permiso requerido
+    permission_required = 'product.add_product'
+
+    # Lanza 403 HTTP Forbidden si no tiene el permiso
+    raise_exception = True
+
+
+class ProductDeleteView(PermissionRequiredMixin, DeleteView):
+    """Confirm and delete a product"""
+    model = Product
+    template_name = 'product/delete.html'
+    success_url = reverse_lazy('product:home')
+
+    # Permiso requerido
+    permission_required = 'product.delete_product'
+
+    # Lanza 403 HTTP Forbidden si no tiene el permiso
+    raise_exception = True
+
+Validación práctica de la teoría con ejemplos reales
+===================================================
+
+1. Clona el repositorio: https://github.com/argenisosorio/Django_6_crud/
+
+2. Cambia a la rama: test/users-groups-permissions
+
+3. Ejecuta las migraciones para crear la base de datos y genera un usuario
+administrador (superuser) desde la terminal.
+
+4. Inicia sesión en el panel de administración de Django
+(http://127.0.0.1:8000/admin/) con la cuenta del administrador. Si luego visitas
+http://127.0.0.1:8000/, verás el mensaje de bienvenida con el usuario
+autenticado.
+
+5. En el panel de administración, ve a la sección "Authentication and
+Authorization" > "Groups" y crea los siguientes grupos:
+
+a) Grupo "CRUD Person": Asigna los siguientes permisos (trasládalos de la
+columna izquierda a la derecha):
+
+- Person | person | Can add person
+- Person | person | Can change person
+- Person | person | Can delete person
+- Person | person | Can view person
+
+Esto otorga control total sobre el modelo Person a los miembros de este grupo.
+Haz clic en "Guardar".
+
+b) Grupo "CRUD Product": Asigna los siguientes permisos:
+
+- Product | product | Can add product
+- Product | product | Can change product
+- Product | product | Can delete product
+- Product | product | Can view product
+
+Esto otorga control total sobre el modelo Product a los miembros de este grupo.
+Haz clic en "Guardar".
+
+6. Crea dos usuarios regulares en la sección "Users" del panel de
+administración:
+
+- Usuario: test
+* Marca la casilla "is_staff" en True (para permitir el acceso al panel).
+* En la sección "Groups", asigna el grupo "CRUD Person".
+
+- Usuario: test2
+* Marca la casilla "is_staff" en True.
+* En la sección "Groups", asigna el grupo "CRUD Product".
+
+Resumen de usuarios creados:
+
+Usuario  | Grupo
+---------+--------------
+test     | CRUD Person
+test2    | CRUD Product
+
+7. Cierra la sesión del administrador e inicia sesión con el usuario "test".
+Navega a http://127.0.0.1:8000/ para verificar el saludo de bienvenida.
+
+A continuación, prueba la gestión de permisos:
+
+-Interactúa con el modelo Person en el CRUD: el sistema te permitirá realizar todas las
+operaciones.
+
+-Intenta interactuar con el modelo Product: el sistema responderá con un error
+HTTP 403 Forbidden, ya que el usuario no posee los permisos requeridos.
+
+Cierra la sesión del usuario test e inicia sesión con el usuario "test2".
+Navega a http://127.0.0.1:8000/ para verificar el saludo de bienvenida.
+
+A continuación, prueba la gestión de permisos:
+
+-Interactúa con el modelo Person en el CRUD: El sistema responderá con un error
+HTTP 403 Forbidden, ya que el usuario no posee los permisos requeridos.
+
+-Intenta interactuar con el modelo Product: El sistema te permitirá realizar
+todas las operaciones.
+
+Fuente
+======
+
+Gemini IA
+
+
+
+
+
+
+
+
+
+
+
 Permisos Personalizados (Custom Permissions)
+============================================
 
 Si los 4 permisos por defecto no son suficientes, puedes definir permisos
 propios dentro de la clase Meta de tu modelo:
@@ -16351,45 +16526,6 @@ es_editor = usuario.groups.filter(name='Editores').exists()
 
 -----
 
-4. Verificar Permisos en el Código
-
-Django evalúa automáticamente los permisos del usuario sumando sus permisos
-individuales + los permisos de todos los grupos a los que pertenece.
-
-El formato del nombre del permiso siempre es: app_label.codename.
-
-En Vistas Basadas en Funciones (FBV):
-
-Usas el decorador @permission_required:
-
------
-
-from django.contrib.auth.decorators import permission_required
-from django.shortcuts import render
-
-# El usuario debe tener este permiso (ya sea por asignación directa o por un Grupo)
-@permission_required('mi_app.can_publish', raise_exception=True)
-def publicar_articulo(request, pk):
-    # Lógica para publicar...
-    return render(request, 'publicado.html')
-
------
-
-En Vistas Basadas en Clases (CBV):
-
-Usas el mixin PermissionRequiredMixin:
-
------
-
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.views.generic import UpdateView
-from .models import Articulo
-
-class EditarArticuloView(PermissionRequiredMixin, UpdateView):
-    model = Articulo
-    permission_required = 'mi_app.change_articulo'
-    template_name = 'editar.html'
-
 -----
 
 Verificación Manual en código Python:
@@ -16425,8 +16561,3 @@ change, delete, view) y puedes crear los tuyos en la clase Meta.
 
 ¿Cómo interactúan? Los Permisos se asignan a los Grupos, y los Usuarios se
 añaden a los Grupos para heredar esos permisos de forma limpia y escalable.
-
-Fuente
-======
-
-Gemini IA
