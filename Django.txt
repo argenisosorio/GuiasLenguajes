@@ -16248,3 +16248,185 @@ Fuente
 ======
 
 Gemini IA
+
+===========================================================================
+Usuarios, Grupos/Roles, Permisos en Django (Funciones nativas sin paquetes)
+===========================================================================
+
+En Django (incluyendo Django 6), el sistema de autenticación viene integrado de
+forma nativa a través de django.contrib.auth.
+
+No existe el concepto de "Rol" como una entidad explícita en el código de
+Django: los "Roles" en Django son los Grupos (Group), y la estructura de control
+de acceso se basa en la combinación de Usuarios, Grupos y Permisos.
+
+1. ¿Cómo funcionan las piezas?
+
+El modelo de autorización nativo de Django se compone de tres elementos
+interconectados:
+
+-Permisos (Permission): Representan la acción específica que se puede o no
+realizar sobre un modelo (crear, leer, actualizar, borrar).
+
+-Grupos (Group): Funcionan como los Roles. Son etiquetas que agrupan a un
+conjunto de usuarios y les asignan una lista de permisos en bloque.
+
+-Usuarios (User): Pueden tener permisos asignados directamente o heredar los
+permisos de los Grupos a los que pertenecen.
+
+[Usuario] -> Pertenece a -> [Grupo/Rol] -> Tiene asignados -> [Permisos]
+    |                                                             ^
+    +------------------------ O asignados directamente -----------+
+
+2. Los Permisos por Defecto
+
+Cada vez que creas y migras un modelo en Django, el framework genera
+automáticamente 4 permisos predeterminados por cada modelo:
+
+1. add_<nombre_modelo> (Crear)
+2. change_<nombre_modelo> (Editar)
+3. delete_<nombre_modelo> (Eliminar)
+4. view_<nombre_modelo> (Ver/Consultar)
+
+Permisos Personalizados (Custom Permissions)
+
+Si los 4 permisos por defecto no son suficientes, puedes definir permisos
+propios dentro de la clase Meta de tu modelo:
+
+-----
+
+from django.db import models
+
+class Articulo(models.Model):
+    titulo = models.CharField(max_length=200)
+    contenido = models.TextField()
+
+    class Meta:
+        permissions = [
+            ("can_publish", "Puede publicar artículos"),
+            ("can_archive", "Puede archivar artículos"),
+        ]
+
+-----
+
+3. Creación y Gestión de Grupos (Roles)
+
+Puedes crear y administrar grupos directamente desde el Django Admin o mediante
+código en Python utilizando la API de Django.
+
+Crear un Grupo y asignarle Permisos por código:
+
+-----
+
+from django.contrib.auth.models import Group, Permission
+from django.contrib.contenttypes.models import ContentType
+from mi_app.models import Articulo
+
+# 1. Crear el Grupo (Rol)
+grupo_editor, created = Group.objects.get_or_create(name='Editores')
+
+# 2. Obtener los permisos necesarios
+content_type = ContentType.objects.get_for_model(Articulo)
+permiso_editar = Permission.objects.get(codename='change_articulo', content_type=content_type)
+permiso_publicar = Permission.objects.get(codename='can_publish', content_type=content_type)
+
+# 3. Asignar los permisos al Grupo
+grupo_editor.permissions.add(permiso_editar, permiso_publicar)
+
+-----
+
+Asignar un Usuario a un Grupo:
+
+-----
+
+from django.contrib.auth.models import User
+
+usuario = User.objects.get(username='carlos')
+
+# Agregar al usuario al grupo
+usuario.groups.add(grupo_editor)
+
+# Verificar si pertenece a un grupo
+es_editor = usuario.groups.filter(name='Editores').exists()
+
+-----
+
+4. Verificar Permisos en el Código
+
+Django evalúa automáticamente los permisos del usuario sumando sus permisos
+individuales + los permisos de todos los grupos a los que pertenece.
+
+El formato del nombre del permiso siempre es: app_label.codename.
+
+En Vistas Basadas en Funciones (FBV):
+
+Usas el decorador @permission_required:
+
+-----
+
+from django.contrib.auth.decorators import permission_required
+from django.shortcuts import render
+
+# El usuario debe tener este permiso (ya sea por asignación directa o por un Grupo)
+@permission_required('mi_app.can_publish', raise_exception=True)
+def publicar_articulo(request, pk):
+    # Lógica para publicar...
+    return render(request, 'publicado.html')
+
+-----
+
+En Vistas Basadas en Clases (CBV):
+
+Usas el mixin PermissionRequiredMixin:
+
+-----
+
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.views.generic import UpdateView
+from .models import Articulo
+
+class EditarArticuloView(PermissionRequiredMixin, UpdateView):
+    model = Articulo
+    permission_required = 'mi_app.change_articulo'
+    template_name = 'editar.html'
+
+-----
+
+Verificación Manual en código Python:
+
+Puedes usar el método has_perm() en cualquier objeto usuario:
+
+-----
+
+if request.user.has_perm('mi_app.can_publish'):
+    # Hacer algo si tiene el permiso
+    pass
+
+-----
+
+En Plantillas (Templates):
+
+Django pasa automáticamente la variable perms al contexto de la plantilla:
+
+-----
+
+{% if perms.mi_app.can_publish %}
+    <a href="{% url 'publicar' articulo.id %}">Publicar Artículo</a>
+{% endif %}
+
+-----
+
+Resumen
+
+¿Hay Permisos? Sí, nativos. Se crean 4 automáticamente por cada modelo (add,
+change, delete, view) y puedes crear los tuyos en la clase Meta.
+
+¿Hay Roles? Sí, conceptualmente los Grupos (Group) son los Roles.
+
+¿Cómo interactúan? Los Permisos se asignan a los Grupos, y los Usuarios se
+añaden a los Grupos para heredar esos permisos de forma limpia y escalable.
+
+Fuente
+======
+
+Gemini IA
