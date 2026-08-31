@@ -10,7 +10,7 @@ En esta forma de instalación usaremos nvm, que es un administrador de versiones
 para node.js, diseñado para ser instalado por el usuario e invocado por shell.
 
 Se recomienda seguir la documentación disponible desde:
-https://linuxconfig.org/how-to-install-node-js-on-ubuntu-16-04-xenial-xerus-linux-server
+
 pero para este manual recomendamos los siguientes pasos:
 
 Procedimiento de instalación mediante el script nativo de node **nvm** el cual
@@ -27,12 +27,12 @@ se requiere ejecutar el comando:
 $ sudo curl -o- https://raw.githubusercontent.com/creationix/nvm/{version}/install.sh | bash
 
 Se debe sustituir la número de versión con la más reciente publicada la
-cual se puede encontrar [aquí](https://github.com/nvm-sh/nvm/releases), ejemplo:
+cual se puede encontrar: https://github.com/nvm-sh/nvm/releases, ejemplo:
 
 $ sudo curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 
 Lo siguiente es configurar el acceso del nuevo script **NVM** con el siguiente
-comando:
+comando de la carpeta principal del usuario:
 
 $ . ~/.profile
 
@@ -40,21 +40,25 @@ Esto permitira acceder al comando nvm desde cualquier ruta, una vez realizada
 la configuración, se procederá a verificar el listado de versiones de **node**
 disponibles en el repositorio para lo cual se require ejecutar el comando:
 
+Ahora comprobamos la versión que instalamos de nvm:
+
+$ nvm --version
+
+0.34.0
+
+Ahora mostramos un listado de versiones de node que correspondan a las
+versiones **LTS**, ejemplo:
+
 $ nvm ls-remote | grep -i lts
 
-Esto debe mostrar un listado de versiones de node que correspondan
-a las versiones **LTS**, ejemplo:
+v24.18.0   (LTS: Krypton)
+v24.18.1   (LTS: Krypton)
+v24.19.0   (LTS: Krypton)
 
-v10.15.3   (LTS: Dubnium)
-v10.16.0   (LTS: Dubnium)
-v10.16.1   (LTS: Dubnium)
-v10.16.2   (LTS: Dubnium)
-v10.16.3   (Latest LTS: Dubnium)
+Ahora procedemos a la instalación de la versión de node requerida ejecutando el
+comando:
 
-Ahora procedemos a la instalación de la versión de node más actualizada para lo
-cual se ejecutará el comando:
-
-$ nvm install 10.16.3
+$ nvm install 24.19.0
 
 Una vez instalado NodeJS comprobamos la correcta instalación con el siguiente
 comando:
@@ -69,8 +73,8 @@ $ npm -v
 Usar una versión específica de node
 ===================================
 
-Si se tienen varias versiones de node insaladas se pude especificar que se use
-una en esa sesión:
+Con nvm se pueden instalar diferentes versiones de node, si tiene varias
+versiones de node instaladas se pude especificar que se use una en esa sesión:
 
 $ nvm use 10.16.3
 
@@ -79,10 +83,13 @@ Hacer que una versión de node sea la configurada por defecto
 
 $ nvm alias default 10.16.3
 
+Instalación de pnpm
+===================
+
 Ya que tenemos instalado node y npm podemos instalar pnpm.
 
-Este comando intenta instalar globalmente en tu sistema la versión más reciente
-dentro de la línea v11 del gestor de paquetes pnpm usando npm.
+El siguiente comando intenta instalar globalmente en tu sistema la versión más
+reciente dentro de la línea v11 del gestor de paquetes pnpm usando npm.
 
 La sintaxis @latest-11 es un dist-tag (etiqueta de distribución) de npm que
 apunta a la versión estable más reciente dentro de esa rama principal
@@ -125,8 +132,10 @@ específica:
 
 $ pnpm self-update 9.15.0
 
-Fuente
-======
+Fuentes
+=======
+
+https://linuxconfig.org/how-to-install-node-js-on-ubuntu-16-04-xenial-xerus-linux-server
 
 Gemini IA
 
