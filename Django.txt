@@ -16454,11 +16454,13 @@ Fuente
 
 Gemini IA
 
+============================================
 Permisos Personalizados (Custom Permissions)
 ============================================
 
-Si los 4 permisos por defecto no son suficientes, puedes definir permisos
-propios dentro de la clase Meta de tu modelo:
+Si los 4 permisos creados por defecto (add, change, delete y view) no son
+suficientes para la lógica de tu aplicación, puedes definir permisos
+personalizados dentro de la clase inner Meta de tus modelos.
 
 -----
 
@@ -16481,7 +16483,7 @@ class Person(models.Model):
 
 -----
 
-Crear una nueva migración y aplicar la nueva migración:
+Para aplicar este cambio en el sistema, genera y ejecuta las migraciones:
 
 $ python manage.py makemigrations person
 
@@ -16495,10 +16497,18 @@ Operations to perform:
 Running migrations:
   Applying person.0002_alter_person_options... OK
 
-Lo anterior quiere decir que se creó el nuevo permiso para el modelo Persona.
+Esto registrará el nuevo permiso en la base de datos para el modelo Person.
 
-Si intentamos craer un nuevo grupo o editamos alguno de los grupos veremos
-el nuevo permiso "Can list persons".
+A partir de este momento, si creas o editas un grupo en el panel de
+administración de Django, estará disponible el nuevo permiso "Can list persons".
+
+Uso con Vistas Basadas en Funciones (FBV)
+=========================================
+
+Puedes proteger tus vistas basadas en funciones utilizando el decorador
+@permission_required:
+
+-----
 
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Person
@@ -16524,7 +16534,12 @@ def home(request):
     }
     return render(request, 'person/home.html', context)
 
-y en el caso de Product con CBV:
+-----
+
+Uso con Vistas Basadas en Clases (CBV)
+======================================
+
+Para Vistas Basadas en Clases, utiliza el mixin PermissionRequiredMixin:
 
 -----
 
@@ -16576,29 +16591,28 @@ class ProductListView(PermissionRequiredMixin, ListView):
 
 -----
 
-Verificación Manual en código Python: Puedes usar el método has_perm() en
-cualquier objeto usuario:
+Verificación Manual en Código Python
+====================================
 
------
+Puedes comprobar dinámicamente si un usuario posee un permiso invocando el
+método has_perm() sobre el objeto de usuario:
 
 if request.user.has_perm('person.list_persons'):
     print("----- User has the 'person.list_persons' permission. -----")
 else:
     print("----- User does NOT have the 'person.list_persons' permission. -----")
 
------
+Verificación en Plantillas (Templates)
+======================================
 
-En Plantillas (Templates):
-
-Django pasa automáticamente la variable perms al contexto de la plantilla:
-
------
+Django inyecta automáticamente la variable perms dentro del contexto del
+template:
 
 {% if perms.mi_app.can_publish %}
-    <a href="{% url 'publicar' articulo.id %}">Publicar Artículo</a>
+    Publicar Artículo
 {% endif %}
 
-Ejemplo real:
+Ejemplo aplicado a nuestro modelo Person:
 
 {% if perms.person.list_persons %}
     Has permission to list persons.
@@ -16606,18 +16620,30 @@ Ejemplo real:
     Does NOT have permission to list persons.
 {% endif %}
 
------
+Resumen del Sistema de Permisos
+===============================
 
-Resumen
-=======
+¿Cómo funcionan los permisos?
 
-¿Hay Permisos? Sí, nativos. Se crean 4 automáticamente por cada modelo (add,
-change, delete, view) y puedes crear los tuyos en la clase Meta.
+Son nativos en Django. Por cada modelo registrado se crean automáticamente 4
+permisos por defecto (add, change, delete, view), pudiendo añadir adicionales
+dentro de la propiedad permissions en la clase Meta.
 
-¿Qué son los grupos? Son agrupaciones de permisos.
+¿Qué son los Grupos?
 
-¿Cómo interactúan? Los Permisos se asignan a los Grupos, y los Usuarios se
-añaden a los Grupos para heredar esos permisos de forma limpia y escalable.
+Son conjuntos organizados de permisos.
+
+¿Cómo interactúan?
+
+Los Permisos se asignan a los Grupos, y los Usuarios se asignan a los Grupos
+para heredar sus permisos de manera limpia, centralizada y escalable.
+
+Asignación Individual
+=====================
+
+Además de la asignación por Grupos, es posible asignar permisos puntuales a un
+usuario específico desde el panel de administración, editando el usuario en la
+sección "User permissions".
 
 Fuente
 ======
