@@ -8820,6 +8820,30 @@ $ python manage.py makemigrations
 
 $ python manage.py migrate
 
+Estos comandos pertenecen a Django y sirven para gestionar los cambios que haces
+en tu base de datos a través de tus modelos de Python:
+
+$ python manage.py makemigrations
+
+Genera los planos (instrucciones). Lee los cambios que hiciste en el archivo
+models.py (crear tablas, agregar campos, etc.) y crea archivos de migración en
+la carpeta migrations/. No altera la base de datos, solo prepara lo que se va a
+aplicar.
+
+$ python manage.py migrate
+
+Aplica los cambios en la base de datos. Toma los archivos de migración generados
+anteriormente y los ejecuta contra la base de datos real (creando o modificando
+tablas en PostgreSQL, MySQL, SQLite, etc.).
+
+El flujo habitual de trabajo:
+
+1. Modificas o creas una clase en models.py.
+
+2. Ejecutas makemigrations para empaquetar tus cambios en un archivo borrador.
+
+3. Ejecutas migrate para que esos cambios impacten tu base de datos.
+
 Tabla por defecto en Django
 ===========================
 
