@@ -1172,3 +1172,189 @@ inclusion de paquetes que no cumplan con los estándares del GNU/Linux Debian.
 Nos mostrara el resultado de las comprobaciones de lintian.
 
 $ lintian name_package_0.0.1.deb
+
+==============================================
+Creando .deb a partir de sitio html con Python
+==============================================
+
+Nota: Probado en Linux Debian 13
+
+Usar Python + PyWebView permite crear aplicaciones de escritorio usando
+tecnologías web (HTML5/CSS/JS) consumiendo el motor WebKit/WebEngine nativo del
+sistema. Esto reduce el tamaño del instalador de ~100 MB (Electron) a menos de
+5 MB.
+
+Paso 1: Crear la aplicación en Python
+
+Crea una carpeta de proyecto (mi_proyecto/) con la siguiente estructura:
+
+mi_proyecto/
+├── app.py
+└── html/
+    ├── index.html
+    └── (demás estáticos: css, js, imágenes)
+
+En app.py, define la ventana que cargará los archivos locales:
+
+-----
+
+import os
+import sys
+import webview
+
+def get_html_path():
+    # Obtiene la ruta absoluta de la carpeta 'html'
+    if getattr(sys, 'frozen', False):
+        base_dir = os.path.dirname(sys.executable)
+    else:
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(base_dir, 'html', 'index.html')
+
+if __name__ == '__main__':
+    html_file = get_html_path()
+
+    # Crea la ventana apuntando al index.html
+    window = webview.create_window(
+        title='Mi Aplicación Web',
+        url=f'file://{html_file}',
+        width=1024,
+        height=768,
+        resizable=True
+    )
+
+    # Inicia la app usando GTK/WebKit nativo en Linux
+    webview.start(gui='gtk')
+
+-----
+
+Paso 2: Crear la estructura del paquete .deb
+
+Abre la terminal en dentro del directorio del proyecto mi_proyecto/ y ejecuta
+estos comandos para crear el árbol de carpetas de Debian:
+
+$ mkdir -p miapp-deb/DEBIAN
+
+$ mkdir -p miapp-deb/opt/miapp
+
+$ mkdir -p miapp-deb/usr/share/applications
+
+$ mkdir -p miapp-deb/usr/share/icons/hicolor/128x128/apps
+
+Copia tus archivos al directorio de instalación /opt/miapp:
+
+$ cp app.py miapp-deb/opt/miapp/
+
+$ cp -r html miapp-deb/opt/miapp/
+
+Paso 3: Configurar los archivos del sistema Debian
+
+1. Archivo de control (miapp-deb/DEBIAN/control)
+
+Define las dependencias para que Debian instale automáticamente Python 3,
+PyWebView y el motor WebKit, el archivo debe tener una línea en blanco al final:
+
+-----
+
+Package: miapp-pywebview
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: all
+Depends: python3, python3-pip, python3-gi, python3-webview, libwebview-dev
+Maintainer: Tu Nombre <tu@email.com>
+Description: Aplicacion web HTML5 liviana empacada con Python PyWebView.
+
+-----
+
+2. Acceso directo al menú (miapp-deb/usr/share/applications/miapp.desktop)
+
+-----
+
+[Desktop Entry]
+Name=Mi App Liviana
+Comment=Aplicación HTML5 con PyWebView
+Exec=python3 /opt/miapp/app.py
+Icon=miapp
+Type=Application
+Terminal=false
+Categories=Education;Development;
+
+-----
+
+Paso 4: Construir e instalar el paquete
+
+Otorga permisos de ejecución al script si es necesario y construye el paquete
+.deb:
+
+$ dpkg-deb --build miapp-deb miapp-pywebview_1.0_all.deb
+
+Ejemplo de ejecución:
+
+$ dpkg-deb --build miapp-deb miapp-pywebview_1.0_all.deb
+dpkg-deb: atención: root directory miapp-deb has unusual owner or group 1000:1000
+dpkg-deb: hint: you might need to pass --root-owner-group, see <https://wiki.debian.org/Teams/Dpkg/RootlessBuilds> for further details
+dpkg-deb: atención: no se tendrá en cuenta 1 aviso sobre el/los fichero/s de control
+dpkg-deb: construyendo el paquete `miapp-pywebview' en `miapp-pywebview_1.0_all.deb'.
+
+Esto significa que el paquete se ha construido correctamente y el archivo .deb
+ya se ha generado.
+
+Los mensajes que ves son advertencias (atención), no errores fatales. Indican
+que los archivos dentro del paquete tienen como propietario a tu usuario actual
+(1000:1000) en lugar del usuario root (0:0), lo cual es completamente normal
+cuando construyes paquetes sin permisos de superusuario.
+
+Para solucionar la advertencia en futuras compilaciones e instalar tu archivo
+creado, sigue estos pasos:
+
+Evitar la advertencia al construir: Añade el parámetro --root-owner-group al comando:
+ 
+$ dpkg-deb --root-owner-group --build miapp-deb miapp-pywebview_1.0_all.deb
+
+2. Instala el paquete gestionando las dependencias necesarias:
+
+$ sudo apt update
+
+$ sudo apt install ./miapp-pywebview_1.0_all.deb
+
+Por que no utilizar dpkg para instalar?
+=======================================
+
+Utilizar apt es la opción recomendada y moderna en Debian, aunque dpkg también
+funciona.
+
+Diferencias clave y por qué es mejor usar apt:
+
+¿Por qué es mejor sudo apt install ./paquete.deb?
+
+-Gestión automática de dependencias: Si tu archivo .deb requiere paquetes
+adicionales (como python3-webview, python3-gi, etc.), apt los buscará en los
+repositorios oficiales de Debian, los descargará e instalará todo en un solo
+paso.
+
+-Sintaxis local: Requiere incluir ./ antes del nombre del archivo (o la ruta
+completa /ruta/al/paquete.deb) para que apt sepa que es un archivo local y no un
+paquete que deba buscar en internet.
+
+¿Qué pasa si usas sudo dpkg -i paquete.deb?
+
+Si usas el comando tradicional dpkg:
+
+$ sudo dpkg -i miapp-pywebview_1.0_all.deb
+
+-dpkg instala ÚNICAMENTE el archivo .deb. No sabe conectarse a internet ni
+buscar dependencias.
+
+-Si te falta alguna librería definida en el archivo control (como
+python3-webview), el comando se interrumpirá y dejará el paquete en un estado
+roto/incompleto con errores de dependencias no satisfechas.
+
+-Para corregir ese error de dependencias, tendrías que ejecutar manualmente un
+comando adicional inmediatamente después:
+
+$ sudo apt install -f
+
+Fuente
+======
+
+Gemini IA
