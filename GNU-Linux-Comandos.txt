@@ -4909,7 +4909,13 @@ Si queremos subir el archivo archivo.txt de nuestro ordenador a la carpeta
 Se especifica el archivo a copiar, luego el servidor y luego el directorio en
 el servidor donde copiaremos el archivo.
 
-$ scp archivo.txt usuario@dominio.com:/home/usuario
+Copiar a /home/usuario
+
+$ scp archivo.txt usuario@dominio.com:
+
+Copiar a un directorio específico /home/usuario/folder
+
+$ scp archivo.txt usuario@dominio.com:/home/usuario/folder
 
 ===================================
 Copiar archivos de servidor a local
