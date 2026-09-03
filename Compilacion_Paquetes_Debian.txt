@@ -1354,7 +1354,47 @@ comando adicional inmediatamente después:
 
 $ sudo apt install -f
 
+Probar tu nueva aplicación
+==========================
+
+Ya puedes lanzar tu aplicación de dos formas:
+
+Desde el Menú de Aplicaciones: Busca "Mi App Liviana" (o el nombre que
+configuraste en tu archivo .desktop) en el menú de aplicaciones de Debian bajo
+la categoría Educación o Desarrollo.
+
+Desde la Terminal:
+
+Puedes probar el inicio directamente ejecutando el comando que definiste en tu
+archivo .desktop:
+
+$ python3 /opt/miapp/app.py
+
 Proyecto completo de prueba: https://github.com/argenisosorio/mi_proyecto
+
+Cómo elimino la app instalada?
+==============================
+
+Para eliminar completamente la aplicación que acabas de instalar en tu Debian,
+ejecuta el siguiente comando en la terminal usando el nombre que le asignamos al
+paquete (miapp-pywebview):
+
+$ sudo apt remove --purge miapp-pywebview
+
+¿Qué hace este comando?
+
+-remove: Desinstala los archivos del programa (lo que se copió en /opt/miapp y
+el menú de aplicaciones).
+
+--purge: Elimina también cualquier archivo de configuración asociado al paquete.
+
+Pasos opcionales de limpieza:
+
+Si quieres eliminar las librerías o dependencias de Python que se instalaron
+automáticamente junto con tu app y que ya ningún otro programa esté utilizando,
+ejecuta:
+
+$ sudo apt autoremove
 
 Fuente
 ======
