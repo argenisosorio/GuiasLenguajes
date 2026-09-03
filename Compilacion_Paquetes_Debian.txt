@@ -1396,6 +1396,40 @@ ejecuta:
 
 $ sudo apt autoremove
 
+Si elimino mi app instalada se eliminarán las dependencias?
+===========================================================
+
+La respuesta corta es: no necesariamente se eliminan todos.
+
+Depende exclusivamente de si otros programas de tu sistema necesitan esos
+paquetes o si venían preinstalados en Debian 13.
+
+Así es como gestiona Debian cada una de esas dependencias:
+
+Lo que NO se eliminará
+
+-python3 y python3-gi: Son componentes fundamentales del sistema operativo en
+Debian (usados por herramientas de administración, instaladores y el entorno de
+escritorio). apt nunca los marcará como huérfanos ni los borrará con autoremove.
+
+Lo que SÍ podría eliminarse (con autoremove)
+
+-python3-webview (y sus dependencias secundarias como python3-bottle): Si estos
+paquetes se instalaron únicamente porque tu aplicación los pidió y ningún otro
+programa instalado en tu equipo los requiere, sudo apt autoremove los
+identificará como huérfanos y los eliminará.
+
+-gir1.2-webkit2-4.1: Se eliminará solo si ningún otro programa (como navegadores
+livianos, reproductores de música o componentes del escritorio) lo está
+utilizando. Si otra aplicación lo usa, se mantendrá intacto.
+
+¿Cómo saber qué borrará exactamente autoremove?
+
+Antes de borrar nada, cuando ejecutes sudo apt autoremove, el sistema te
+mostrará una lista detallada en la sección «Los siguientes paquetes se
+ELIMINARÁN:» y te pedirá confirmación ([S/n]). Ahí podrás verificar exactamente
+qué librerías se van a quitar antes de aceptar.
+
 Fuente
 ======
 
