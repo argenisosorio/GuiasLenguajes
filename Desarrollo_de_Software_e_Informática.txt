@@ -5440,3 +5440,53 @@ Fuente
 ======
 
 Gemini IA
+
+===================
+Transacción atómica
+===================
+
+En desarrollo de software, frameworks y bases de datos, una transacción atómica
+es una operación que se ejecuta bajo la regla del "todo o nada"
+(All-or-Nothing).
+
+El término proviene de la física (donde el átomo se consideraba la unidad
+indivisible de la materia). Aplicado a la informática, significa que una
+secuencia de múltiples acciones se agrupa y ejecuta como si fuera una sola
+unidad indivisible de trabajo.
+
+La Regla del "Todo o Nada"
+
+1- Éxito total (Commit): Si todas las operaciones que forman la transacción se
+ejecutan correctamente, los cambios se guardan de forma permanente en el
+sistema.
+
+2- Fallo parcial (Rollback): Si una sola de las operaciones falla (por un error
+de código, pérdida de conexión, violación de restricción, etc.), todas las
+operaciones anteriores realizadas en esa misma transacción se revierten
+inmediatamente, dejando el sistema en el estado exacto en el que estaba antes
+de empezar.
+
+Propiedades ACID: La atomicidad es la "A" en las siglas ACID (Atomicity,
+Consistency, Isolation, Durability), el conjunto de características que
+garantizan la fiabilidad en los sistemas de bases de datos.
+
+El Ejemplo Clásico: Una Transferencia Bancaria
+
+Imagina que quieres transferir $100 de la Cuenta A a la Cuenta B. Esta operación
+requiere dos pasos en la base de datos:
+
+-Restar $100 a la Cuenta A.
+-Sumar $100 a la Cuenta B.
+
+¿Qué pasa sin atomicidad? Si el sistema restara los $100 de la Cuenta A, pero el
+servidor sufriera una caída antes de sumárselos a la Cuenta B, los $100
+desaparecerían en la nada.
+
+¿Qué pasa con atomicidad? Ambas operaciones se envuelven en una transacción
+atómica. Si el paso 2 falla, la base de datos ejecuta un Rollback automático:
+devuelve los $100 a la Cuenta A y deja los datos intactos.
+
+Fuente
+======
+
+Gemini IA
