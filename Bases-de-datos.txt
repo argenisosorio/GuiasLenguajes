@@ -130,39 +130,112 @@ restricciones:
 -No puede haber dos filas iguales. No se permiten los duplicados.
 -Todos los datos en una columna deben ser del mismo tipo.
 
-Claves
-======
+Claves (Conceptos Generales y Tipos)
+=======================================
 
-Una clave primaria es el conjunto mínimo de columnas que identifica unívocamente
-a cada fila. La clave primaria es un identificador que va a ser siempre único
-para cada fila. Se acostumbra a poner la clave primaria como la primera columna
-de la tabla pero es más una conveniencia que una obligación. Muchas veces la
-clave primaria es numérica auto-incrementada, es decir, generada mediante una
-secuencia numérica incrementada automáticamente cada vez que se inserta una
-fila.
+Conceptos base y variaciones de claves en un modelo de datos relacional:
 
-En una tabla puede que tengamos más de una columna que puede ser clave primaria
-por sí misma. En ese caso se puede escoger una para ser la clave primaria y las
-demás claves serán claves candidatas.
+-Clave Candidata: Cualquier columna o conjunto de columnas que puede identificar
+de forma unívoca a cada fila en una tabla. Una tabla puede tener múltiples
+claves candidatas.
 
-Una clave ajena (foreign key o clave foránea) es aquella columna que existiendo
-como dependiente en una tabla, es a su vez clave primaria en otra tabla.
+-Clave Alternativa: Es una clave candidata que no fue elegida como clave
+primaria, pero que sigue identificando de forma única a cada fila.
 
-Una clave alternativa es aquella clave candidata que no ha sido seleccionada
-como clave primaria, pero que también puede identificar de forma única a una
-fila dentro de una tabla. Ejemplo: Si en una tabla clientes definimos el número
-de documento (id_cliente) como clave primaria, el número de seguro social de ese
-cliente podría ser una clave alternativa. En este caso no se usó como clave
-primaria porque es posible que no se conozca ese dato en todos los clientes.
+-Ejemplo: Si en la tabla CLIENTES se elige id_cliente como clave primaria, el
+número de Seguro Social funciona como clave alternativa (pudo no elegirse como
+primaria por si algún cliente no lo posee).
 
-Una clave compuesta es una clave que está compuesta por más de una columna.
+-Clave Compuesta: Clave formada por la unión de dos o más columnas para lograr
+identificar unívocamente una fila.
 
-La visualización de todas las posibles claves candidatas en una tabla ayudan a
-su optimización. Por ejemplo, en una tabla PERSONA podemos identificar como
-claves su DNI, o el conjunto de su nombre, apellidos, fecha de nacimiento y
-dirección. Podemos usar cualquiera de las dos opciones o incluso todas a la vez
-como clave primaria, pero es mejor en la mayoría de sistemas la elección del
-menor número de columnas como clave primaria.
+-Optimización y Elección: Identificar todas las claves candidatas ayuda a
+optimizar la base de datos (como DNI o la combinación Nombre + Apellidos +
+Fecha Nacimiento + Dirección). La regla general es elegir siempre la opción con
+el menor número de columnas posible.
+
+1. Claves Primarias (Primary Key)
+=================================
+
+El identificador principal y obligatorio de una tabla:
+
+-Definición: Es el conjunto mínimo de columnas que identifica unívocamente a
+cada fila de forma siempre única.
+
+-Elección: En una tabla con varias claves candidatas, se selecciona solo una
+para cumplir este rol.
+
+-Ubicación habitual: Por convención y facilidad de lectura, se acostumbra a
+definir como la primera columna de la tabla (no es una obligación técnica).
+
+-Generación: Frecuentemente es numérica y auto-incrementada (generada mediante
+una secuencia que aumenta automáticamente con cada nueva inserción).
+
+2. Claves Foráneas (Foreign Key / Clave Ajena)
+==============================================
+
+El vínculo de relación entre diferentes tablas:
+
+-Definición: Es una columna (o conjunto de columnas) que existe como dependiente
+en una tabla, pero que al mismo tiempo hace referencia a la clave primaria de
+otra tabla.
+
+-Propósito: Permite conectar registros de distintas tablas asegurando la
+integridad referencial de los datos.
+
+Diferencias entre Clave Primaria y Clave Foránea
+================================================
+
++--------------------------------------------------------+-------------------------------------------------------------------------+
+| Clave Primaria                                         | Clave Foránea                                                           |
++--------------------------------------------------------+-------------------------------------------------------------------------+
+| Identifica de forma única cada fila en su tabla        | Hace referencia a una clave primaria de otra tabla                      |
+| No puede tener valores nulos                           | Puede tener valores nulos (dependiendo de la regla de negocio)          |
+| Debe ser única en toda la tabla                        | Puede tener valores duplicados (varias filas pueden compartir la misma) |
+| Solo puede haber una clave primaria por tabla          | Puede haber múltiples claves foráneas en una tabla                      |
+| Su valor no debe cambiar (o hacerlo con mucha cautela) | Su valor puede actualizarse si cambia la clave primaria referenciada    |
+| Se crea con PRIMARY KEY                                | Se crea con FOREIGN KEY y REFERENCES                                    |
+| Garantiza la integridad de entidad                     | Garantiza la integridad referencial                                     |
+| Es obligatoria para cada fila                          | Es opcional (si se permite NULL)                                        |
++--------------------------------------------------------+-------------------------------------------------------------------------+
+
+Ejemplo con Tablas: Usuarios y Perfiles
+
+Tabla usuarios
+
+CREATE TABLE usuarios (
+   id_usuario INT PRIMARY KEY AUTO_INCREMENT,
+   email VARCHAR(100) UNIQUE NOT NULL,
+   nombre_usuario VARCHAR(50) UNIQUE NOT NULL,
+   fecha_registro DATE NOT NULL
+);
+
+Claves:
+-Primaria: id_usuario (numérica auto-incrementada)
+-Candidatas: email, nombre_usuario (ambas únicas)
+
+Tabla perfiles_usuario
+
+CREATE TABLE perfiles_usuario (
+   id_perfil INT PRIMARY KEY AUTO_INCREMENT,
+   id_usuario INT NOT NULL,
+   biografia TEXT,
+   avatar_url VARCHAR(255),
+   tema_preferido VARCHAR(20) DEFAULT 'claro',
+   fecha_actualizacion DATE,
+   FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
+);
+
+Claves:
+
+-Primaria: id_perfil
+-Foránea: id_usuario → referencia a usuarios(id_usuario)
+
+Fuentes
+=======
+
+DeepSeek
+Gemini IA
 
 =====
 NoSQL
