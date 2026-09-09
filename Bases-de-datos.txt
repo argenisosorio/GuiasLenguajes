@@ -754,6 +754,109 @@ Fuente
 
 ChatGPT
 
+============================
+Ejemplo de índice con Django
+============================
+
+Un índice de base de datos funciona como el índice de un libro: en lugar de leer
+todas las páginas de la tabla (Full Table Scan) para encontrar un registro, la
+base de datos consulta una estructura de datos ordenada (generalmente un árbol
+de búsqueda como un B-Tree) que la lleva directamente al resultado.
+
+Para probar su impacto práctico en Django, podemos comparar el tiempo de
+ejecución y la consulta generada al buscar con y sin índice en una tabla con
+miles de registros.
+
+1. Define el Modelo con y sin Índice:
+
+Crea los campos para comparar el comportamiento. Agrega db_index=True únicamente
+en el campo que deseas optimizar:
+
+-----
+
+from django.db import models
+
+class Cliente(models.Model):
+    # Campo SIN índice
+    email = models.EmailField()
+
+    # Campo CON índice
+    codigo_cliente = models.CharField(max_length=50, db_index=True)
+
+-----
+
+Aplica los cambios en la base de datos:
+
+$ python manage.py makemigrations
+
+$ python manage.py migrate
+
+2. Genera Datos Masivos de Prueba: Ejecuta en python manage.py shell.
+
+Sin un volumen representativo de filas, la diferencia de tiempo será
+imperceptible. Inserta 100,000 registros en un solo lote:
+
+-----
+
+import uuid
+from myapp.models import Cliente
+
+# Insertamos 100,000 clientes
+objetos = [
+    Cliente(
+        email=f"usuario_{i}@ejemplo.com",
+        codigo_cliente=str(uuid.uuid4())
+    )
+    for i in range(100000)
+]
+Cliente.objects.bulk_create(objetos)
+
+-----
+
+3. Mide el Tiempo de Consulta: Compara la velocidad entre ambos campos. Busca el
+último registro ingresado utilizando el campo sin índice y luego el campo con
+índice:
+
+-----
+
+import time
+from myapp.models import Cliente
+
+ultimo_registro = Cliente.objects.last()
+
+# 1. Búsqueda SIN índice (email)
+inicio = time.time()
+res1 = Cliente.objects.filter(email=ultimo_registro.email).first()
+tiempo_sin_indice = time.time() - inicio
+
+# 2. Búsqueda CON índice (codigo_cliente)
+inicio = time.time()
+res2 = Cliente.objects.filter(codigo_cliente=ultimo_registro.codigo_cliente).first()
+tiempo_con_indice = time.time() - inicio
+
+print(f"Sin índice: {tiempo_sin_indice:.5f} segundos")
+print(f"Con índice: {tiempo_con_indice:.5f} segundos")
+4.Inspecciona el Plan de Búsqueda (EXPLAIN):Verifica cómo la BD resuelve la consulta.Con .explain() puedes ver directamente si el motor de la base de datos hace un escaneo completo o usa el índice:Python# Muestra Scan/Sequential Scan
+print(Cliente.objects.filter(email=ultimo_registro.email).explain())
+
+# Muestra Index Scan / Index Lookup
+print(Cliente.objects.filter(codigo_cliente=ultimo_registro.codigo_cliente).explain())
+
+-----
+
+Comportamiento esperado en los resultados:
+
+-Sin índice: El motor recorre los 100,000 registros uno por uno. El tiempo
+rondará entre unos milisegundos o más según la base de datos.
+
+-Con índice: La búsqueda toma un número logarítmico de pasos ($O(\log N)$). El
+tiempo suele reducirse casi a 0.000s.
+
+Fuente
+======
+
+Gemini IA
+
 =========================
 Clúster en Bases de Datos
 =========================
