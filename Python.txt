@@ -4391,3 +4391,43 @@ Fuente
 ======
 
 Gemini IA
+
+Un UUID (Universally Unique Identifier o Identificador Único Universal) es un
+código alfanumérico de 128 bits diseñado para ser único en todo el mundo sin
+necesidad de consultar una base de datos centralizada.
+
+Su representación habitual es una cadena de 32 caracteres hexadecimales dividida
+en 5 grupos mediante guiones (8-4-4-4-12):
+c9bf9e57-1685-4c89-bafb-ff5af830be8a
+
+¿Para qué se usa en Python y Django?
+
+-Evitar colisiones: Permite generar claves primarias o nombres de archivo de
+forma segura, incluso en sistemas distribuidos.
+
+-Seguridad y privacidad: En lugar de exponer un ID secuencial autoincremental en
+una URL (/api/usuarios/5/), usas un UUID
+(/api/usuarios/c9bf9e57-1685-4c89-bafb-ff5af830be8a/). Esto evita que usuarios
+malintencionados adivinen otros registros probando números correlativos
+(/4/, /6/).
+
+1. Uso en Python (Módulo Nativo uuid)
+
+Python incluye la librería uuid por defecto. La versión más común es la v4,
+basada en números pseudoaleatorios.
+
+-----
+
+import uuid
+
+# Genera un UUID v4 aleatorio
+mi_id = uuid.uuid4()
+
+print(mi_id)         # Muestra: UUID('c9bf9e57-1685-4c89-bafb-ff5af830be8a')
+print(str(mi_id))    # Muestra como texto: "c9bf9e57-1685-4c89-bafb-ff5af830be8a"
+print(mi_id.hex)     # Muestra sin guiones: "c9bf9e5716854c89bafff5af830be8a"
+
+Fuente
+======
+
+Gemini IA
