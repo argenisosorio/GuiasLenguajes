@@ -2,1130 +2,1760 @@
 Guía de Base de Datos by dM
 ===========================
 
-================================================================================
-ÍNDICE DE CONTENIDOS - GUÍA DE BASES DE DATOS
-================================================================================
-
-MÓDULO 1: Introducción y Modelado
--------------------------------------------------------------------------------
-1. Tipos de relaciones
-   - 1 a 1
-   - 1 a varios o 1 a muchos
-   - Varios a varios o muchos a muchos
-   - Fuentes
-
-
-MÓDULO 2: Modelo Relacional y SQL Básico
--------------------------------------------------------------------------------
-1. SQL
-2. Diferencia entre integer y biginteger
-   - 1. integer (o int)
-   - 2. biginteger (o bigint)
-   - ¿Cuándo usar cada uno?
-   - Ejemplo práctico
-   - Fuente
-
-
-MÓDULO 3: Diseño de Bases de Datos
--------------------------------------------------------------------------------
-1. Normalización de bases de datos
-   - Objetivo
-2. Claves (Conceptos Generales y Tipos)
-   - Clave Candidata, Clave Alternativa, Clave Compuesta, Optimización y Elección
-   - 1. Claves Primarias (Primary Key)
-   - 2. Claves Foráneas (Foreign Key / Clave Ajena)
-   - Diferencias entre Clave Primaria y Clave Foránea
-   - Ejemplo con Tablas: Usuarios y Perfiles
-   - Fuentes
-
-
-MÓDULO 4: Garantías y Transacciones
--------------------------------------------------------------------------------
-1. ACID
-   - Definiciones (Atomicidad, Consistencia, Aislamiento, Durabilidad)
-   - Fuentes
-
-
-MÓDULO 5: Optimización de Consultas
--------------------------------------------------------------------------------
-1. Índice en una base de datos
-   - ¿Qué es un índice?
-   - ¿Cómo funcionan los índices?
-   - Tipos de índices
-   - Ventajas de los índices
-   - Desventajas de los índices
-   - Cuándo usar índices
-   - Ejemplo de índice en una base de datos
-   - Fuente
-2. Ejemplo de índice con Django
-   - 1. Define el Modelo con y sin Índice
-   - 2. Genera Datos Masivos de Prueba
-   - 3. Mide el Tiempo de Consulta
-   - 4. Inspecciona el Plan de Búsqueda (EXPLAIN)
-   - Comportamiento esperado en los resultados
-   - Fuente
-
-
-MÓDULO 6: Bases de Datos NoSQL y Comparativa
--------------------------------------------------------------------------------
-1. NoSQL
-   - Ventajas
-   - Desventajas
-2. Marcas y tipos de Bases de Datos NoSQL
-   - MongoDB
-   - Apache Cassandra
-   - Redis
-3. Tipos de Bases de Datos NoSQL
-   - Bases de datos documentales
-   - Bases de datos orientadas a grafos
-   - Bases de datos clave/valor
-   - Bases de datos multivalor
-   - Bases de datos tabulares
-   - Bases de datos de Arrays
-4. Ejemplos y casos de uso de Bases de datos NoSQL
-   - Fuentes
-
-
-MÓDULO 7: Arquitectura y Escalabilidad
--------------------------------------------------------------------------------
-1. Clúster en Bases de Datos
-   - Tipos de Clústeres en Bases de Datos
-   - PostgreSQL: Clúster de Bases de Datos
-   - Ventajas de un Clúster
-   - Ejemplo Práctico: Clúster de Alta Disponibilidad en PostgreSQL
-   - Fuente
-
-
-MÓDULO 8: Seguridad, Respaldos y Buenas Prácticas
--------------------------------------------------------------------------------
-1. DBeaver
-   - Instalación (Con snap)
-   - Cómo crear diagrama entidad relación en DBeaver
-   - Fuente
-2. Enviar un archivo de manera segura por correo usando cifrado (ej. Base de datos)
-   - 1. Comprimir y cifrar el archivo con GPG (GNU Privacy Guard)
-   - Fuente
-
-=================================
-MÓDULO 1: Introducción y Modelado
-=================================
-
-==================
-Tipos de relaciones
-==================
-
-1 a 1
-=====
-
-Aparece cuando un registro de la tabla A sólo puede relacionarse con 1 registro
-de la tabla B. Este modelo aparece en relaciones de tipo exclusivo, como por
-ejemplo Países-Banderas, ya que cada país tiene una única bandera oficial, y
-cada bandera sólo puede pertenecer a un país; otro ejemplo sería Matrículas de
-coches y Coche.
-
-1 a varios o 1 a muchos
-=======================
-
-En este caso, un registro de la tabla A puede relacionarse con varios de la
-tabla B. Es el tipo más habitual y utilizado, y existen numerosos casos; por
-ejemplo, domicilios con personas que viven en el mismo, nombre de empresa con
-sus trabajadores, proveedores con productos que sirven…
-
-Varios a varios o muchos a muchos
-=================================
-
-Se da si varios registros de A pueden relacionarse con varios de B y viceversa.
-Es quizás la menos habitual de manera formal.
-
-El ejemplo clásico, es tener dos tablas, una de actores y otra de películas, ya
-que lo habitual es que cada actor haya trabajado en varias películas, y que
-éstas estén formadas por varios actores.
-
-Fuentes
-=======
-
--https://www.luciamonterorodriguez.com/tipos-de-relaciones-en-bases-de-datos/
-
-
 ========================================
-MÓDULO 2: Modelo Relacional y SQL Básico
+ÍNDICE GENERAL DEL TEMARIO
 ========================================
 
-===
-SQL
-===
+NIVEL BÁSICO - Fundamentos e introducción desde cero
+    B1. Fundamentos teóricos de los datos
+    B2. Modelado de datos (Entidad-Relación y modelo Relacional)
+    B3. Fundamentos del lenguaje SQL (sublenguajes)
+    B4. Tipos de datos estándar
+    B5. Consultas y operaciones básicas
+
+NIVEL INTERMEDIO - Diseño avanzado, optimización y operativa
+    I1. Normalización profunda (1FN, 2FN, 3FN y FNBC)
+    I2. Agregación y funciones de agrupación
+    I3. Restricciones de integridad (constraints)
+    I4. Vistas y subconsultas
+    I5. Estrategias y estructuras de índices
+    I6. SGBD relacionales del mercado y NoSQL (comparativa)
+
+NIVEL AVANZADO - Arquitectura, rendimiento y escala
+    A1. Consultas avanzadas y analítica (window functions y CTEs)
+    A2. Lógica en el servidor de base de datos
+    A3. Control de concurrencia y aislamiento (transacciones)
+    A4. Rendimiento y diagnóstico
+    A5. Escalabilidad y alta disponibilidad
+
+BUENAS PRÁCTICAS
+    T1. Estándares de nombramiento
+    T2. Seguridad y gobernanza de datos
+    T3. Estrategias de copias de seguridad y recuperación
+    T4. Integración con el desarrollo de software
+
+ANEXO - Herramientas prácticas
+    X1. DBeaver
+    X2. Cifrado de archivos con GPG
+
+
+###############################################################################
+#
+# NIVEL BÁSICO
+# Fundamentos e introducción desde cero
+#
+###############################################################################
+
+================================================================================
+MÓDULO B1: FUNDAMENTOS TEÓRICOS DE LOS DATOS
+================================================================================
+
+----------------------------------------------------------
+1. Diferencia entre Dato, Información y Base de Datos
+----------------------------------------------------------
+
+- Dato: Es la unidad mínima de hecho bruto, sin contexto ni significado por sí
+  mismo. Ejemplo: "35", "1990-05-12", "azul". Un dato, por sí solo, no
+  responde nada todavía.
+
+- Información: Es el dato procesado, interpretado y dotado de contexto, de modo
+  que adquiere significado para quien lo usa. Ejemplo: "El cliente de id 35
+  nació el 12/05/1990". La información es dato + contexto + relevancia.
+
+- Base de Datos (BD): Es una colección organizada y persistente de datos
+  relacionados entre sí, estructurada de forma que permita almacenarla, operarla
+  y consultarla de manera eficiente. No es un simple "montón de archivos": tiene
+  un esquema, reglas de integridad y mecanismos de acceso.
+
+  Ejemplo del flujo completo:
+  - Dato: "Pedro", "lopez@mail.com", "2024-01-10".
+  - Información: "El usuario Pedro López se registró el 10/01/2024".
+  - Base de datos: la tabla usuarios (o similar) que guarda cientos de
+    registros de ese tipo, con reglas (email único, fecha obligatoria) e
+    índices para localizarlos con rapidez.
+
+----------------------------------------------------------
+2. ¿Qué es un SGBD / DBMS?
+----------------------------------------------------------
+
+- SGBD (en español) / DBMS (Database Management System, en inglés) es un
+  software cuyo propósito es gestionar, almacenar, modificar, recuperar y
+  proteger los datos de una base de datos, de forma segura y concurrente.
+
+Funciones principales de un SGBD:
+  - Definir y administrar el esquema (estructura) de los datos.
+  - Proporcionar un lenguaje de acceso (SQL) y optimizarlo (planificador de
+    consultas).
+  - Controlar el acceso concurrente de muchos usuarios (transacciones ACID).
+  - Garantizar la integridad y la seguridad de los datos.
+  - Realizar copias de seguridad y recuperación ante fallos.
+
+Ejemplos de SGBD: PostgreSQL, MySQL, MariaDB, Microsoft SQL Server, Oracle,
+SQLite.
+
+SGBD vs archivo de texto vs hoja de cálculo:
+  - Archivo de texto (.txt, .csv): Almacena datos planos sin estructura ni
+    reglas. Cada programa debe parsearlos; no hay validación, concurrencia,
+    transacciones ni consultas optimizadas. Si dos procesos escriben a la vez,
+    el archivo se corrompe.
+  - Hoja de cálculo (Excel, Sheets): Organiza datos en celdas y permite
+    fórmulas, pero es un documento, no un sistema: no maneja concurrencia
+    multiusuario, apenas aplica restricciones de integridad, no tiene SQL y
+    escala mal.
+  - SGBD: Base de datos + motor que garantiza integridad, concurrencia,
+    seguridad, transacciones, respaldo y consultas eficientes (con índices y
+    optimizador). Resumen: la diferencia entre "guardar datos" y "gestionar
+    datos".
+
+
+================================================================================
+MÓDULO B2: MODELADO DE DATOS
+================================================================================
+
+El modelado de datos es la actividad previa a crear tablas: se dibuja y define
+"qué datos existen y cómo se relacionan" ANTES de escribir ningún CREATE TABLE.
+
+----------------------------------------------------------
+1. Modelo Entidad-Relación (MER)
+----------------------------------------------------------
+
+Es un modelo conceptual, independiente del SGBD, que describe el mundo real en
+términos de entidades, atributos y relaciones.
+
+- Entidad: Objeto o concepto del mundo real distinguible de los demás. Puede
+  ser concreta (CLIENTE, PRODUCTO) o abstracta (PEDIDO, MATRÍCULA). En el DER
+  se representa con un rectángulo.
+
+- Atributo: Propiedad o característica de una entidad. En el DER se representa
+  con un óvalo unido a su entidad.
+  * Simples (o atómicos): No se pueden dividir. Ejemplo: edad.
+  * Compuestos: Se pueden descomponer en partes más pequeñas. Ejemplo:
+    dirección = calle + número + ciudad; nombre_completo = nombre + apellidos.
+  * Multivaluados: Pueden tener varios valores a la vez para una misma entidad.
+    Ejemplo: un EMPLEADO puede tener varios teléfonos. En el DER se representan
+    con un óvalo doble.
+
+- Relación: Asociación entre dos o más entidades. En el DER se representa con
+  un rombo. Tiene un nombre y una cardinalidad.
+
+Tipos de relaciones (por cardinalidad):
+  - 1 a 1 (1:1): Un registro de la tabla A solo se relaciona con un registro de
+    la tabla B y viceversa. Ejemplos: Países-Banderas (cada país tiene una
+    única bandera oficial), Matrículas-Coche.
+  - 1 a varios (1:N): Un registro de A se relaciona con varios de B, pero cada
+    registro de B se relaciona con uno solo de A. Es el tipo más habitual.
+    Ejemplos: domicilios con las personas que viven en él, empresa con sus
+    trabajadores, proveedor con los productos que sirve.
+  - Varios a varios (N:M): Varios registros de A se relacionan con varios de B y
+    viceversa. Se implementa con una tabla intermedia (tabla puente). Ejemplo
+    clásico: actores y películas (un actor trabaja en muchas películas y cada
+    película tiene varios actores).
+
+La cardinalidad mínima (opcionalidad) también importa: "cada pedido DEBE tener
+un cliente" (mínima 1) frente a "un cliente PUEDE tener pedidos" (mínima 0).
+
+----------------------------------------------------------
+2. Modelo Relacional
+----------------------------------------------------------
+
+Es la traducción del MER a una estructura entendible por los SGBD
+relacionales: tablas, filas y columnas, con tipos de datos y claves.
+
+Términos formales (y su nombre coloquial):
+  - Dominio: Conjunto de valores válidos que puede tomar un atributo (el "tipo"
+    de datos con sus restricciones). Ejemplo: dominio "edad" = enteros entre 0
+    y 120.
+  - Tupla: Cada fila de la tabla (cada registro). Las filas son "tuplas" de la
+    relación.
+  - Atributo: Cada columna de la tabla (cada campo).
+  - Grado (o aridad): Número de columnas (atributos) de una relación.
+  - Cardinalidad (de la relación como conjunto): Número de filas (tuplas).
+
+Ejemplo: la tabla usuarios tiene grado 4 (id, email, nombre, fecha) y su
+cardinalidad crece con cada INSERT.
+
+Reglas para que una tabla sea considerada una relación válida:
+  - Cada tabla debe tener un nombre único.
+  - No pueden existir dos filas idénticas (no se permiten duplicados).
+  - Todos los datos de una columna deben ser del mismo tipo (mismo dominio).
+
+----------------------------------------------------------
+3. Diferencia entre DER y Esquema de Base de Datos
+----------------------------------------------------------
+
+- Diagrama Entidad-Relación (DER): Es el diagrama del modelo conceptual. Usa
+  símbolos (rectángulos, óvalos, rombos, líneas) y describe el "qué" del
+  problema de negocio. No contiene comandos SQL ni tipos de datos definitivos.
+
+- Esquema de la Base de Datos (esquema relacional): Es la descripción lógica y
+  física de las tablas implementadas en un SGBD concreto: CREATE TABLE, tipos
+  de datos determinados, claves primarias/foráneas y restricciones. Es el
+  "cómo" se guarda.
+
+Resumen: primero se dibuja el MER/DER (diseño conceptual) y después se crea el
+esquema relacional (diseño lógico/físico). El MER es el plano; el esquema es
+la construcción.
+
+Jerarquía de diseño:
+  Modelo Conceptual (MER/DER)  ->  Modelo Lógico (esquema relacional)
+  ->  Modelo Físico (índices, particiones, almacenamiento)
+
+================================================================================
+MÓDULO B3: FUNDAMENTOS DEL LENGUAJE SQL (SUB-LENGUAJES)
+================================================================================
 
 SQL (por sus siglas en inglés Structured Query Language; en español lenguaje de
 consulta estructurada) es un lenguaje de dominio específico utilizado en
-programación, diseñado para administrar, y recuperar información de sistemas de
-gestión de bases de datos relacionales.  Una de sus principales características
-es el manejo del álgebra y el cálculo relacional para efectuar consultas con el
-fin de recuperar, de forma sencilla, información de bases de datos, así como
-realizar cambios en ellas.
+programación, diseñado para administrar y recuperar información de sistemas de
+gestión de bases de datos relacionales. Una de sus principales características
+es el manejo del álgebra y el cálculo relacional para efectuar consultas
+sencillas y realizar cambios en la base de datos. Aunque normalmente se lo
+describe como un lenguaje declarativo, también incluye elementos
+procedimentales.
 
-Originalmente basado en el álgebra relacional y en el cálculo relacional, SQL
-consiste en un lenguaje de definición de datos, un lenguaje de manipulación de
-datos y un lenguaje de control de datos. El alcance de SQL incluye la inserción
-de datos, consultas, actualizaciones y borrado, la creación y modificación de
-esquemas y el control de acceso a los datos. También el SQL a veces se describe
-como un lenguaje declarativo, también incluye elementos procesales.
+El alcance de SQL incluye la inserción de datos, consultas, actualizaciones y
+borrado, la creación y modificación de esquemas y el control de acceso a los
+datos. Se organiza en cuatro sub-lenguajes según su función:
 
-=========================================
-Diferencia hay entre integer y biginteger
-=========================================
+----------------------------------------------------------
+1. DDL - Data Definition Language (lenguaje de definición de datos)
+----------------------------------------------------------
+Define la estructura (el esquema), no los datos.
 
-La diferencia entre integer y biginteger radica en la cantidad de espacio que
-ocupan en la base de datos y el rango de valores que pueden almacenar.
+  - CREATE: Crea bases de datos, tablas, vistas, índices.
+        CREATE TABLE usuarios (id SERIAL PRIMARY KEY, email VARCHAR(100));
+  - ALTER: Modifica una estructura existente.
+        ALTER TABLE usuarios ADD COLUMN telefono VARCHAR(20);
+  - DROP: Elimina por completo una estructura (con su contenido).
+        DROP TABLE usuarios;
+  - TRUNCATE: Vacía todos los datos de una tabla conservando su estructura.
+        TRUNCATE TABLE usuarios;
+    Diferencia clave: TRUNCATE elimina todas las filas sin recorrerlas (no
+    dispara triggers y no se puede deshacer fácilmente), a diferencia de
+    DELETE, que es DML, dispara triggers y puede revertirse dentro de una
+    transacción.
 
-1. integer (o int): Tamaño en almacenamiento: 4 bytes.
+----------------------------------------------------------
+2. DML - Data Manipulation Language (lenguaje de manipulación de datos)
+----------------------------------------------------------
+Manipula el contenido (los datos dentro de las tablas).
 
-Uso común: Es el tipo de dato más común para llaves primarias (id).
+  - SELECT: Consulta / lectura de datos.
+        SELECT * FROM usuarios WHERE id = 1;
+  - INSERT: Inserta nuevas filas.
+        INSERT INTO usuarios (email) VALUES ('a@b.com');
+  - UPDATE: Modifica filas existentes.
+        UPDATE usuarios SET email = 'nuevo@b.com' WHERE id = 1;
+  - DELETE: Elimina filas (respeta la integridad referencial y dispara
+    triggers).
+        DELETE FROM usuarios WHERE id = 1;
 
-2. biginteger (o bigint): Tamaño en almacenamiento: 8 bytes.
+----------------------------------------------------------
+3. DCL - Data Control Language (lenguaje de control de datos)
+----------------------------------------------------------
+Administra los permisos de los usuarios sobre los objetos.
 
-Uso común: Para valores que requieren un rango mucho mayor, como grandes
-identificadores, conteos de visitas, o valores financieros que pueden exceder el
-rango de integer.
+  - GRANT: Otorga privilegios.
+        GRANT SELECT, INSERT ON usuarios TO aplicacion;
+  - REVOKE: Retira privilegios.
+        REVOKE UPDATE ON usuarios FROM aplicacion;
 
-¿Cuándo usar cada uno?
-======================
+----------------------------------------------------------
+4. TCL - Transaction Control Language (lenguaje de control de transacciones)
+----------------------------------------------------------
+Gestiona las transacciones (unidades de trabajo atómicas).
 
-integer: Es más eficiente en cuanto a uso de memoria y almacenamiento. Se usa
-cuando sabes que los números no serán muy grandes (como para la mayoría de las
-identificaciones de registros o conteos que no superan los dos mil millones).
+  - COMMIT: Confirma de forma definitiva los cambios de la transacción.
+  - ROLLBACK: Deshace los cambios de la transacción (vuelve al estado previo).
+  - SAVEPOINT: Punto de guardado intermedio para poder hacer ROLLBACK parcial.
 
-biginteger: Es útil cuando necesitas trabajar con números extremadamente
-grandes, como en sistemas que gestionan enormes bases de datos o cifras, como el
-número total de visitas a una página popular, cifras financieras globales, o
-sistemas que necesitan grandes valores de identificación.
-
-Ejemplo práctico:
-
-Si esperas que un id en una tabla nunca superará los dos mil millones, puedes
-usar integer.
-
-Si trabajas en un sistema donde el conteo de algo (como transacciones o
-usuarios) podría llegar a cifras astronómicas, usarías biginteger.
-
-Fuente
-======
-
-ChatGPT
+        BEGIN;
+        SAVEPOINT antes_del_error;
+        INSERT ...;                       -- si algo falla a partir de aquí:
+        ROLLBACK TO antes_del_error;      -- deshace solo desde el savepoint
+        COMMIT;                           -- confirma lo demás
 
 
-==================================
-MÓDULO 3: Diseño de Bases de Datos
-==================================
+================================================================================
+MÓDULO B4: TIPOS DE DATOS ESTÁNDAR
+================================================================================
 
-==========================================
-Normalización de bases de datos
-==========================================
+Elegir el tipo correcto de cada columna define el dominio de valores válidos y
+afecta el espacio en disco, la velocidad y la corrección de las consultas.
+
+----------------------------------------------------------
+1. Cadenas (strings)
+----------------------------------------------------------
+  - CHAR(n): Longitud fija, rellena con espacios. Útil cuando el tamaño es
+    siempre el mismo (códigos de país, DNI).
+  - VARCHAR(n): Longitud variable con un límite máximo n. El más usado para
+    textos cortos o medianos (nombres, correos).
+  - TEXT: Longitud sin límite práctico (en PostgreSQL). Para párrafos,
+    descripciones largas o contenido extenso.
+
+Regla práctica: VARCHAR para valores cortos y acotados; TEXT para contenido
+extenso; no abusar de límites arbitrarios innecesarios.
+
+----------------------------------------------------------
+2. Números
+----------------------------------------------------------
+  - INT / integer: Entero de 4 bytes. Rango aproximado de ±2.1 miles de
+    millones. El tipo más común para claves primarias (id) normales.
+  - BIGINT / biginteger: Entero de 8 bytes. Para números astronómicos: grandes
+    identificadores, conteos de visitas de sitios populares o cifras
+    financieras globales. Se usa cuando el rango de integer puede desbordarse.
+  - DECIMAL(p,s) / NUMERIC(p,s): Números exactos de precisión fija, sin errores
+    de redondeo. Indispensable para dinero. Ejemplo: NUMERIC(10,2) = 10 dígitos
+    en total, 2 decimales.
+  - FLOAT / DOUBLE / REAL: Números de punto flotante (aproximados). Son
+    rápidos pero tienen errores de redondeo. Usar para medidas científicas,
+    estadísticas; NO para dinero.
+  - SERIAL / IDENTITY / AUTO_INCREMENT: Entero auto-incrementado, habitual para
+    claves primarias (el nombre varía según el SGBD).
+
+Resumen práctico: id normal -> INT; id o suma astronómica -> BIGINT; dinero ->
+NUMERIC/DECIMAL; medidas aproximadas -> FLOAT/DOUBLE.
+
+¿Cuándo usar integer y cuándo biginteger?
+  - integer es más eficiente en memoria y almacenamiento; sirve cuando sabes
+    que los números no serán muy grandes (la mayoría de identificadores o
+    conteos que no superan los dos mil millones).
+  - biginteger es para valores extremadamente grandes: sistema que gestiona
+    enormes bases de datos o cifras, como el total de visitas de una página
+    popular, cifras financieras globales o grandes identificadores.
+
+Ejemplo práctico: si esperas que un id nunca supere los dos mil millones, usa
+integer. Si un conteo (transacciones, usuarios) puede llegar a cifras
+astronómicas, usa biginteger.
+
+----------------------------------------------------------
+3. Fechas y horas
+----------------------------------------------------------
+  - DATE: solo la fecha (año, mes y día). Ejemplo: 2024-03-15.
+  - TIME: solo la hora (sin fecha). Ejemplo: 14:30:00.
+  - TIMESTAMP: fecha + hora. Ejemplo: 2024-03-15 14:30:00.
+  - TIMESTAMP WITH TIME ZONE (TIMESTAMPTZ en PostgreSQL): fecha + hora más la
+    zona horaria. Almacena en UTC y convierte según el huso del cliente.
+
+Regla de oro: para aplicaciones multinacionales o eventos, usar TIMESTAMPTZ (no
+TIMESTAMP), porque un TIMESTAMP sin zona es ambiguo.
+  - DEFAULT CURRENT_TIMESTAMP es la forma habitual de registrar "fecha de
+    creación".
+
+----------------------------------------------------------
+4. Booleanos y NULL (la lógica tri-valor en SQL)
+----------------------------------------------------------
+  - BOOLEAN: TRUE / FALSE. Expresa condiciones del tipo sí/no (activo,
+    verificado).
+  - NULL: NO es un valor, ni un cero, ni una cadena vacía. Significa "ausencia
+    de dato" o "desconocido".
+
+Lógica tri-valor del SQL: toda comparación puede dar TRES resultados: VERDADERO,
+FALSO o DESCONOCIDO (NULL).
+
+Consecuencias importantes:
+  - NULL = NULL NO es verdadero: es DESCONOCIDO. Para comparar nulos se usa
+    IS NULL / IS NOT NULL, nunca "= NULL".
+  - En un WHERE, las filas que evalúan a DESCONOCIDO se descartan.
+  - Con OR: si una parte es TRUE, el resultado es TRUE.
+  - Con AND: si una parte es FALSE, el resultado es FALSE.
+  - Con NOT: NOT DESCONOCIDO sigue siendo DESCONOCIDO.
+
+Ejemplo clásico: SELECT * FROM usuarios WHERE telefono = NULL; NO devuelve
+nada; lo correcto es WHERE telefono IS NULL.
+
+
+================================================================================
+MÓDULO B5: CONSULTAS Y OPERACIONES BÁSICAS
+================================================================================
+
+----------------------------------------------------------
+1. Filtrado avanzado con WHERE
+----------------------------------------------------------
+  - LIKE / ILIKE: coincidencia de patrón con comodines % (cualquier cantidad de
+    caracteres) y _ (un solo carácter). ILIKE ignora mayúsculas (PostgreSQL).
+        SELECT * FROM usuarios WHERE email LIKE '%@gmail.com';
+  - IN: pertenencia a una lista de valores.
+        SELECT * FROM usuarios WHERE pais IN ('MX', 'CO', 'AR');
+  - BETWEEN: rango inclusivo (funciona para números y fechas).
+        SELECT * FROM pedidos WHERE total BETWEEN 100 AND 500;
+  - IS NULL / IS NOT NULL: detecta ausencia de valor (ver la lógica tri-valor).
+        SELECT * FROM clientes WHERE telefono IS NULL;
+  - AND / OR / NOT: combinación de condiciones.
+
+----------------------------------------------------------
+2. Ordenamiento (ORDER BY) y limitación (LIMIT / OFFSET)
+----------------------------------------------------------
+  - ORDER BY columna ASC | DESC: ordena el resultado. Con varias columnas se
+    ordena en cascada.
+        SELECT * FROM usuarios ORDER BY fecha_registro DESC;
+  - LIMIT n: devuelve solo las primeras n filas.
+  - OFFSET m: salta las primeras m filas (paginación clásica: página 1 =
+    LIMIT 10 OFFSET 0; página 2 = LIMIT 10 OFFSET 10).
+
+Advertencia de paginación: OFFSET se vuelve ineficiente en tablas enormes; el
+patrón con WHERE id > ultimo_id (keyset pagination) escala mejor.
+
+----------------------------------------------------------
+3. Combinación de tablas: JOINs
+----------------------------------------------------------
+Permiten ejecutar una consulta sobre varias tablas a la vez usando su relación
+(la base del "join").
+
+  - INNER JOIN: Solo las filas que coinciden en ambas tablas (el más usado).
+        SELECT u.nombre, p.biografia
+        FROM usuarios u
+        INNER JOIN perfiles p ON p.id_usuario = u.id;
+  - LEFT JOIN (LEFT OUTER JOIN): Todas las filas de la tabla izquierda, más las
+    coincidencias de la derecha; si no coincide, las columnas de la derecha
+    quedan NULL.
+        SELECT u.nombre, p.biografia
+        FROM usuarios u
+        LEFT JOIN perfiles p ON p.id_usuario = u.id;
+  - RIGHT JOIN (RIGHT OUTER JOIN): Lo inverso; todas las filas de la derecha.
+  - FULL OUTER JOIN: Todas las filas de ambas tablas; completa con NULL donde
+    no hay coincidencia.
+  - CROSS JOIN: Producto cartesiano: cada fila de A con cada fila de B, sin
+    condición ON. Ejemplo: combinaciones de tallas y colores.
+
+Sintaxis moderna: cuando la columna de unión se llama igual en ambas tablas se
+puede usar INNER JOIN ... USING (columna).
+
+###############################################################################
+#
+# NIVEL INTERMEDIO
+# Diseño avanzado, optimización y operativa
+#
+###############################################################################
+
+================================================================================
+MÓDULO I1: NORMALIZACIÓN PROFUNDA
+================================================================================
 
 La normalización de bases de datos es un proceso que consiste en designar y
 aplicar una serie de reglas a las relaciones obtenidas tras el paso del modelo
-entidad-relación al modelo relacional. Con objeto de minimizar la redundancia de
-datos, facilitando su gestión posterior.
-
-Objetivo
-========
-
-Las bases de datos relacionales se normalizan para:
-
--Minimizar la redundancia de los datos.
--Disminuir problemas de actualización de los datos en las tablas.
--Proteger la integridad de datos.
-
-En el modelo relacional es frecuente llamar tabla a una relación; para que una
-tabla sea considerada como una relación tiene que cumplir con algunas
-restricciones:
-
--Cada tabla debe tener su nombre único.
--No puede haber dos filas iguales. No se permiten los duplicados.
--Todos los datos en una columna deben ser del mismo tipo.
-
-Claves (Conceptos Generales y Tipos)
-=======================================
-
-Conceptos base y variaciones de claves en un modelo de datos relacional:
-
--Clave Candidata: Cualquier columna o conjunto de columnas que puede identificar
-de forma unívoca a cada fila en una tabla. Una tabla puede tener múltiples
-claves candidatas.
-
--Clave Alternativa: Es una clave candidata que no fue elegida como clave
-primaria, pero que sigue identificando de forma única a cada fila.
-
--Ejemplo: Si en la tabla CLIENTES se elige id_cliente como clave primaria, el
-número de Seguro Social funciona como clave alternativa (pudo no elegirse como
-primaria por si algún cliente no lo posee).
-
--Clave Compuesta: Clave formada por la unión de dos o más columnas para lograr
-identificar unívocamente una fila.
-
--Optimización y Elección: Identificar todas las claves candidatas ayuda a
-optimizar la base de datos (como DNI o la combinación Nombre + Apellidos +
-Fecha Nacimiento + Dirección). La regla general es elegir siempre la opción con
-el menor número de columnas posible.
-
-1. Claves Primarias (Primary Key)
-=================================
-
-El identificador principal y obligatorio de una tabla:
-
--Definición: Es el conjunto mínimo de columnas que identifica unívocamente a
-cada fila de forma siempre única.
-
--Elección: En una tabla con varias claves candidatas, se selecciona solo una
-para cumplir este rol.
-
--Ubicación habitual: Por convención y facilidad de lectura, se acostumbra a
-definir como la primera columna de la tabla (no es una obligación técnica).
-
--Generación: Frecuentemente es numérica y auto-incrementada (generada mediante
-una secuencia que aumenta automáticamente con cada nueva inserción).
-
-2. Claves Foráneas (Foreign Key / Clave Ajena)
-==============================================
-
-El vínculo de relación entre diferentes tablas:
-
--Definición: Es una columna (o conjunto de columnas) que existe como dependiente
-en una tabla, pero que al mismo tiempo hace referencia a la clave primaria de
-otra tabla.
-
--Propósito: Permite conectar registros de distintas tablas asegurando la
-integridad referencial de los datos.
-
-Diferencias entre Clave Primaria y Clave Foránea
-================================================
-
-+--------------------------------------------------------+-------------------------------------------------------------------------+
-| Clave Primaria                                         | Clave Foránea                                                           |
-+--------------------------------------------------------+-------------------------------------------------------------------------+
-| Identifica de forma única cada fila en su tabla        | Hace referencia a una clave primaria de otra tabla                      |
-| No puede tener valores nulos                           | Puede tener valores nulos (dependiendo de la regla de negocio)          |
-| Debe ser única en toda la tabla                        | Puede tener valores duplicados (varias filas pueden compartir la misma) |
-| Solo puede haber una clave primaria por tabla          | Puede haber múltiples claves foráneas en una tabla                      |
-| Su valor no debe cambiar (o hacerlo con mucha cautela) | Su valor puede actualizarse si cambia la clave primaria referenciada    |
-| Se crea con PRIMARY KEY                                | Se crea con FOREIGN KEY y REFERENCES                                    |
-| Garantiza la integridad de entidad                     | Garantiza la integridad referencial                                     |
-| Es obligatoria para cada fila                          | Es opcional (si se permite NULL)                                        |
-+--------------------------------------------------------+-------------------------------------------------------------------------+
-
-Ejemplo con Tablas: Usuarios y Perfiles
-
-Tabla usuarios
-
-CREATE TABLE usuarios (
-   id_usuario INT PRIMARY KEY AUTO_INCREMENT,
-   email VARCHAR(100) UNIQUE NOT NULL,
-   nombre_usuario VARCHAR(50) UNIQUE NOT NULL,
-   fecha_registro DATE NOT NULL
-);
-
-Claves:
--Primaria: id_usuario (numérica auto-incrementada)
--Candidatas: email, nombre_usuario (ambas únicas)
-
-Tabla perfiles_usuario
-
-CREATE TABLE perfiles_usuario (
-   id_perfil INT PRIMARY KEY AUTO_INCREMENT,
-   id_usuario INT NOT NULL,
-   biografia TEXT,
-   avatar_url VARCHAR(255),
-   tema_preferido VARCHAR(20) DEFAULT 'claro',
-   fecha_actualizacion DATE,
-   FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
-);
-
-Claves:
-
--Primaria: id_perfil
--Foránea: id_usuario → referencia a usuarios(id_usuario)
-
-Fuentes
-=======
-
-DeepSeek
-Gemini IA
-
-
-===================================
-MÓDULO 4: Garantías y Transacciones
-===================================
-
-====
-ACID
-====
-
-En bases de datos se denomina ACID a las características de los parámetros que
-permiten clasificar las transacciones de los sistemas de gestión de bases de
-datos. Cuando se dice que una acción es ACID compliant se indica -en diversos
-grados- que ésta permite realizar transacciones.
-
-En concreto, ACID es un acrónimo en inglés de Atomicity, Consistency, Isolation
-and Durability: Atomicidad, Consistencia, Aislamiento y Durabilidad, en español.
-
-Definiciones
-============
-
--Atomicidad: Si cuando una operación consiste en una serie de pasos, de los que
-o bien se ejecutan todos o ninguno, es decir, las transacciones son completas.
-
--Consistencia: (Integridad). Es la propiedad que asegura que sólo se empieza
-aquello que se puede acabar. Por lo tanto se ejecutan aquellas operaciones que
-no van a romper las reglas y directrices de Integridad de la base de datos. La
-propiedad de consistencia sostiene que cualquier transacción llevará a la base
-de datos desde un estado válido a otro también válido. "La Integridad de la Base
-de Datos nos permite asegurar que los datos son exactos y consistentes, es decir
-que estén siempre intactos, sean siempre los esperados y que de ninguna manera
-cambian ni se deformen. De esta manera podemos garantizar que la información que
-se presenta al usuario será siempre la misma."
-
--Aislamiento: Esta propiedad asegura que una operación no puede afectar a otras.
-Esto asegura que la realización de dos transacciones sobre la misma información
-sean independientes y no generen ningún tipo de error. Esta propiedad define
-cómo y cuándo los cambios producidos por una operación se hacen visibles para
-las demás operaciones concurrentes. El aislamiento puede alcanzarse en distintos
-niveles, siendo el parámetro esencial a la hora de seleccionar SGBDs.
-
--Durabilidad: (Persistencia). Esta propiedad asegura que una vez realizada la
-operación, esta persistirá y no se podrá deshacer aunque falle el sistema y que
-de esta forma los datos sobrevivan de alguna manera.
-
-Cumpliendo estos 4 requisitos un sistema gestor de bases de datos puede ser
-considerado ACID Compliant.
-
-Fuentes
-=======
-
--https://es.wikipedia.org/wiki/ACID
-
-
-===================================
-MÓDULO 5: Optimización de Consultas
-===================================
-
-===========================
-Índice en una base de datos
-===========================
-
-Es una estructura de datos que mejora la velocidad de las operaciones de
-búsqueda y consulta en una tabla. Se puede pensar en un índice como un índice
-de un libro: permite encontrar información específicaramente, sin necesidad de
-revisar cada página.
-
-¿Qué es un índice?
-==================
-
-Un índice almacena una copia ordenada de ciertos campos (columnas) de una tabla,
-junto con un puntero a la fila correspondiente en la tabla original. Esto
-permite a los sistemas de gestión de bases de datos (DBMS) localizar datos más
-rápido.
-
-¿Cómo funcionan los índices?
-============================
-
-Cuando se crea un índice, el DBMS organiza los datos del índice de forma que las
-búsquedas sean eficientes. Esto normalmente se hace utilizando estructuras de
-datos como:
-
-Árboles B (B-trees): Muy comunes, mantienen los datos en orden y permiten
-búsquedas, inserciones y eliminaciones eficientes.
-
-Hashing: Útil para búsquedas exactas, pero no para rangos.
-
-Bitmap: Se usa en bases de datos analíticas para campos con pocos valores
-distintos.
-
-Cuando realizas una consulta, el DBMS puede usar el índice en lugar de escanear
-toda la tabla para encontrar las filas correspondientes, lo que reduce
-drásticamente el tiempo de ejecución.
-
-Tipos de índices
-================
-
-Índice primario: Se basa en la clave primaria de la tabla, que debe ser única
-para cada fila.
-
-Índice único: Asegura que los valores de la columna o combinación de columnas
-indexadas sean únicos.
-
-Índice compuesto: Cubre múltiples columnas.
-
-Índice de texto completo: Diseñado para búsquedas en grandes volúmenes de texto.
-
-Índice de clúster: Ordena físicamente las filas de una tabla según el índice.
-
-Índice no agrupado (non-clustered): No afecta el orden físico de los datos, pero
-incluye punteros a los registros reales.
-
-Ventajas de los índices
-=======================
-
-Mejora del rendimiento: Hacen que las búsquedas, clasificaciones y filtros sean
-más rápidos.
-
-Optimización de consultas: Reduce el tiempo de ejecución en operaciones comunes
-como SELECT.
-
-Desventajas de los índices
-==========================
-
-Espacio adicional: Los índices ocupan espacio en disco.
-
-Impacto en escrituras: Inserciones, actualizaciones y eliminaciones son más
-lentas porque los índices deben actualizarse.
-
-Complejidad de administración: Un exceso de índices puede contrarrestar sus
-beneficios.
-
-Cuándo usar índices
-===================
-
-En columnas que se utilizan frecuentemente en consultas WHERE, JOIN, o ORDER BY.
-
-En columnas con alta cardinalidad (muchos valores únicos).
-
-No deben usarse en tablas pequeñas o columnas con pocos valores distintos, ya
-que el costo de mantenimiento puede superar el beneficio.
+entidad-relación al modelo relacional, con el objeto de minimizar la redundancia
+de datos y facilitar su gestión posterior.
+
+Objetivos de la normalización:
+  - Minimizar la redundancia de los datos.
+  - Disminuir los problemas de actualización de los datos en las tablas.
+  - Proteger la integridad de los datos.
+
+Para que una tabla pueda considerarse una relación válida debe cumplir ciertas
+restricciones: nombre único, sin filas duplicadas y columnas homogéneas (ver
+módulo B2).
+
+----------------------------------------------------------
+1. Primera Forma Normal (1FN)
+----------------------------------------------------------
+Reglas:
+  - Cada celda contiene UN SOLO valor atómico (nada de listas, arreglos o
+    grupos repetidos).
+  - No se permiten columnas multivaluadas dentro de una celda.
+
+Ejemplo NO normalizado (viola 1FN):
+  pedidos (id, cliente, productos = "Teclado, Mouse, Monitor")
+Solución 1FN: dividir en filas, un producto por fila, o crear la tabla
+intermedia pedido_producto.
+
+Una tabla en 1FN puede padecer redundancia vía dependencias parciales, que se
+resuelven en la 2FN.
+
+----------------------------------------------------------
+2. Segunda Forma Normal (2FN)
+----------------------------------------------------------
+Requiere estar en 1FN Y que NO existan dependencias parciales de la clave:
+todo atributo NO clave debe depender de la clave completa (de TODAS las
+columnas de la clave primaria), no solo de una parte.
+
+Ejemplo que viola 2FN (clave compuesta):
+  pedido_producto (id_pedido, id_producto, nombre_producto, cantidad)
+  -> nombre_producto depende solo de id_producto (parte de la clave), no de la
+     clave completa.
+Solución 2FN: separar en dos tablas:
+  productos (id_producto, nombre_producto)
+  pedido_producto (id_pedido, id_producto, cantidad)
+
+Nota: la 2FN solo aplica cuando la clave es compuesta (más de una columna).
+
+----------------------------------------------------------
+3. Tercera Forma Normal (3FN)
+----------------------------------------------------------
+Requiere estar en 2FN Y que NO existan dependencias transitivas: ningún
+atributo NO clave debe depender de otro atributo NO clave.
+
+Ejemplo que viola 3FN:
+  pedidos (id_pedido, id_cliente, nombre_cliente, ciudad_cliente)
+  -> nombre_cliente y ciudad_cliente dependen de id_cliente (que es un atributo
+     NO clave), no de id_pedido. Redundancia: el nombre del cliente se repite
+     en cada pedido.
+Solución 3FN: separar en:
+  clientes (id_cliente, nombre_cliente, ciudad_cliente)
+  pedidos  (id_pedido, id_cliente)
+
+La regla operativa popular: "todo atributo depende de la clave, de toda la
+clave y solo de la clave" (resumen de 2FN + 3FN).
+
+----------------------------------------------------------
+4. Forma Normal de Boyce-Codd (FNBC / BCNF)
+----------------------------------------------------------
+Es una versión más estricta de la 3FN. Se aplica cuando una tabla tiene claves
+candidatas solapadas (superpuestas).
+
+Regla: para TODA dependencia funcional X -> Y, el lado izquierdo X debe ser una
+SUPERCLAVE de la tabla (un conjunto de columnas que identifica unívocamente a
+la fila).
+
+Ejemplo que cumple 3FN pero NO FNBC:
+  profesores_materias (id_profesor, materia, despacho)
+  donde "un profesor tiene un solo despacho" (id_profesor -> despacho) y "cada
+  materia la imparte un solo profesor" (materia -> id_profesor). La clave es
+  (id_profesor, materia), pero materia -> id_profesor tiene como lado izquierdo
+  una columna que NO es superclave.
+Solución FNBC: separar en
+  profesores (id_profesor, despacho)
+  materias   (materia, id_profesor)
+
+En la práctica, la FNBC cubre casos poco frecuentes; la 3FN basta para la
+mayoría de los proyectos, pero conocerla evita anomalías de actualización.
+
+Importante: la aplicación es acumulativa - 1FN -> 2FN -> 3FN -> FNBC; cada
+forma exige la anterior.
+
+----------------------------------------------------------
+5. Denormalización técnica (y cuándo desnormalizar)
+----------------------------------------------------------
+Desnormalizar es reintroducir INTENCIONALMENTE redundancia (o romper 3FN) para
+GANAR velocidad de lectura, aceptando el costo de mantener esa redundancia.
+
+Cuándo conviene:
+  - Tablas de reportes / análisis con lecturas masivas.
+  - Caché precalculado de agregados (totales, contadores) que se consultan
+    millones de veces.
+  - Evitar JOINs costosos en consultas calientes de alto tráfico.
+
+Ejemplos típicos:
+  - Guardar total_pedido en la tabla pedidos aunque pueda calcularse con SUM de
+    las líneas (manteniéndolo al insertar o actualizar).
+  - Replicar nombre_cliente en pedidos para no unir siempre con clientes.
+
+Regla profesional: normalizar para escrituras; desnormalizar (de forma
+controlada y documentada) para lecturas críticas. Nunca desnormalizar "por si
+acaso": cada columna repetida debe mantenerse sincronizada.
+
+----------------------------------------------------------
+6. Claves: conceptos generales y tipos
+----------------------------------------------------------
+- Clave Candidata: cualquier columna o conjunto de columnas que identifica de
+  forma unívoca a cada fila de una tabla. Una tabla puede tener varias.
+- Clave Alternativa: una clave candidata que no fue elegida como primaria, pero
+  que sigue identificando de forma única cada fila. Ejemplo: en CLIENTES con
+  primaria id_cliente, el número de Seguro Social es clave alternativa (pudo no
+  elegirse por si algún cliente no lo posee).
+- Clave Compuesta: clave formada por la unión de dos o más columnas.
+- Clave Primaria (PK): el conjunto mínimo de columnas que identifica
+  unívocamente a cada fila. Frecuentemente es numérica, auto-incrementada y, por
+  convención, la primera columna (no es una obligación técnica). Garantiza la
+  integridad de entidad.
+- Clave Foránea (FK): columna que existe como dependiente en una tabla y
+  referencia la clave primaria de otra, conectando registros y garantizando la
+  integridad referencial.
+
+Regla de elección: entre varias claves candidatas, elegir la de menor número de
+columnas y la más estable.
+
+Tabla comparativa PK vs FK:
+  +--------------------------+-------------------------------------------+
+  | Clave Primaria           | Clave Foránea                             |
+  +--------------------------+-------------------------------------------+
+  | Identifica cada fila     | Referencia la PK de otra tabla            |
+  | No admite NULL           | Puede admitir NULL (según regla de negocio)|
+  | Única en toda la tabla   | Puede repetirse (muchas filas comparten)  |
+  | Una sola por tabla       | Varias por tabla                          |
+  | Su valor no debe cambiar | Puede actualizarse si cambia la PK        |
+  | PRIMARY KEY              | FOREIGN KEY ... REFERENCES                |
+  | Integridad de entidad    | Integridad referencial                    |
+  +--------------------------+-------------------------------------------+
+
+Ejemplo con las tablas Usuarios y Perfiles:
+  CREATE TABLE usuarios (
+     id_usuario    INT PRIMARY KEY AUTO_INCREMENT,
+     email         VARCHAR(100) UNIQUE NOT NULL,
+     nombre_usuario VARCHAR(50) UNIQUE NOT NULL,
+     fecha_registro DATE NOT NULL
+  );
+  -- Claves: primaria id_usuario; candidatas email y nombre_usuario.
+
+  CREATE TABLE perfiles_usuario (
+     id_perfil     INT PRIMARY KEY AUTO_INCREMENT,
+     id_usuario    INT NOT NULL,
+     biografia     TEXT,
+     avatar_url    VARCHAR(255),
+     tema_preferido VARCHAR(20) DEFAULT 'claro',
+     fecha_actualizacion DATE,
+     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario)
+        ON DELETE CASCADE
+  );
+  -- Claves: primaria id_perfil; foránea id_usuario -> usuarios(id_usuario).
+
+
+================================================================================
+MÓDULO I2: AGREGACIÓN Y FUNCIONES DE AGRUPACIÓN
+================================================================================
+
+----------------------------------------------------------
+1. Funciones de agregación
+----------------------------------------------------------
+Operan sobre TODAS las filas de un grupo y devuelven UN solo valor por grupo.
+Ignoran los NULL (a excepción de COUNT(*)).
+
+  - COUNT(*): número total de filas (incluye los NULL).
+    COUNT(col): filas con valor no nulo. COUNT(DISTINCT col): valores únicos.
+  - SUM(col): suma numérica.
+  - AVG(col): promedio numérico.
+  - MIN(col): valor mínimo (numérico, fecha o texto).
+  - MAX(col): valor máximo.
+
+        SELECT COUNT(*) AS total_pedidos,
+               SUM(total) AS facturado,
+               AVG(total) AS ticket_promedio,
+               MIN(total) AS minimo,
+               MAX(total) AS maximo
+        FROM pedidos;
+
+En PostgreSQL puede combinarse con FILTER (WHERE ...) para agregados
+condicionales sin subconsultas:
+  SUM(total) FILTER (WHERE estado = 'pagado')
+
+----------------------------------------------------------
+2. GROUP BY
+----------------------------------------------------------
+Divide las filas en grupos según el valor de una o varias columnas y aplica las
+agregaciones A CADA GRUPO.
+
+        SELECT pais, COUNT(*) AS usuarios, AVG(edad)
+        FROM usuarios
+        GROUP BY pais;
+
+Reglas:
+  - Toda columna del SELECT que no esté dentro de una función de agregación
+    debe aparecer en el GROUP BY.
+  - El GROUP BY actúa después de que el WHERE haya filtrado filas.
+
+----------------------------------------------------------
+3. HAVING vs WHERE (diferencia fundamental)
+----------------------------------------------------------
+  - WHERE filtra FILAS ANTES de agruparse; no puede usar funciones de
+    agregación ni alias.
+  - HAVING filtra GRUPOS DESPUÉS de agruparse; sí puede usar COUNT, SUM, etc.
+
+        SELECT pais, COUNT(*) AS usuarios
+        FROM usuarios
+        WHERE fecha_registro > '2024-01-01'   -- filtra filas primero
+        GROUP BY pais
+        HAVING COUNT(*) >= 5;                 -- filtra grupos después
+
+Orden lógico de ejecución de una consulta:
+  FROM -> WHERE -> GROUP BY -> HAVING -> SELECT -> ORDER BY -> LIMIT.
+Por eso el WHERE no "ve" los agregados calculados en el SELECT.
+
+
+================================================================================
+MÓDULO I3: RESTRICCIONES DE INTEGRIDAD (CONSTRAINTS)
+================================================================================
+
+Las restricciones son reglas impuestas por el SGBD que garantizan que los datos
+que entran cumplan las condiciones del negocio. Se declaran en el esquema.
+
+----------------------------------------------------------
+1. Constraints básicas
+----------------------------------------------------------
+  - NOT NULL: la columna no puede quedar vacía (obligatoria).
+        email VARCHAR(100) NOT NULL
+  - UNIQUE: no se permiten valores repetidos (en la mayoría de SGBD permite
+    varios NULL). Puede aplicarse a una columna o a un conjunto de columnas.
+        email VARCHAR(100) UNIQUE
+        UNIQUE (id_usuario, rol)   -- unicidad compuesta
+  - CHECK: valida una condición booleana sobre el valor insertado/modificado.
+        CHECK (edad >= 0 AND edad <= 120)
+        CHECK (fecha_fin > fecha_inicio)
+  - DEFAULT: valor que se asigna a la columna si el INSERT no la menciona.
+        tema_preferido VARCHAR(20) DEFAULT 'claro'
+        fecha_creacion TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+  - PRIMARY KEY = NOT NULL + UNIQUE (de forma implícita).
+  - FOREIGN KEY: hace referencia a otra tabla.
+
+Comandos útiles para tablas existentes:
+  ALTER TABLE ... ADD CONSTRAINT ... / DROP CONSTRAINT ...
+
+----------------------------------------------------------
+2. Acciones referenciales en claves foráneas (ON DELETE / ON UPDATE)
+----------------------------------------------------------
+Definen qué hacer con las filas dependientes cuando la fila referenciada se
+borra o se actualiza.
+
+  - ON DELETE CASCADE: al borrar la fila padre, se borran AUTOMÁTICAMENTE las
+    filas hijas. Lógico para relaciones de pertenencia estricta (el perfil de
+    un usuario, las líneas de un pedido).
+  - ON DELETE SET NULL: al borrar el padre, las FK hijas pasan a NULL (exige
+    que la columna FK permita NULL). Sirve para "desvincular pero conservar".
+  - ON DELETE RESTRICT: impide el borrado del padre si existen hijas (rechaza
+    con error; en PostgreSQL se evalúa de inmediato dentro de la misma
+    sentencia).
+  - ON DELETE NO ACTION: comportamiento por defecto; también impide el borrado,
+    con diferencias en el momento de evaluación según el SGBD (en la práctica
+    muy parecido a RESTRICT).
+  - ON UPDATE CASCADE: actualiza las FK hijas cuando cambia el valor de la PK
+    referenciada.
+
+Resumen de elección:
+  - El hijo no tiene vida propia  -> CASCADE (perfiles, detalle de pedido).
+  - El hijo debe conservarse aunque se elimine el padre  -> SET NULL.
+  - No se permite eliminar datos referenciados  -> RESTRICT / NO ACTION.
+
+        CREATE TABLE pedido_item (
+          id_pedido   INT REFERENCES pedidos(id)   ON DELETE CASCADE,
+          id_producto INT REFERENCES productos(id) ON DELETE RESTRICT
+        );
+
+================================================================================
+MÓDULO I4: VISTAS Y SUBCONSULTAS
+================================================================================
+
+----------------------------------------------------------
+1. Subconsultas (no correlacionadas vs correlacionadas)
+----------------------------------------------------------
+Una subconsulta es un SELECT anidado dentro de otra consulta (en WHERE, FROM,
+SELECT o HAVING).
+
+  - No correlacionada: se evalúa UNA sola vez, de forma independiente, y su
+    resultado no cambia por fila. Puede devolver un escalar, una lista (para
+    IN) o una tabla (en FROM).
+        SELECT * FROM pedidos
+        WHERE id_cliente IN (SELECT id FROM clientes WHERE pais = 'ES');
+
+  - Correlacionada: se evalúa UNA VEZ POR FILA de la consulta externa, porque
+    hace referencia a columnas de esa consulta externa (alias).
+        SELECT u.nombre, u.email
+        FROM usuarios u
+        WHERE EXISTS (
+          SELECT 1 FROM pedidos p
+          WHERE p.id_usuario = u.id AND p.total > 1000
+        );
+
+  EXISTS vs IN:
+  - IN: compara contra una lista de valores (cuidado con NULL: si la
+    subconsulta devuelve NULL, el IN puede no devolver nada).
+  - EXISTS: solo comprueba la EXISTENCIA de filas; es la opción más eficiente
+    para "tiene al menos un registro relacionado" y suele rendir mejor que IN
+    cuando la lista es grande.
+
+Operadores de subconsulta: IN, NOT IN, EXISTS, NOT EXISTS, y comparaciones con
+ANY / SOME / ALL:
+  - WHERE precio > ALL (SELECT precio FROM promos)  => mayor que todas.
+  - WHERE precio > ANY (SELECT precio FROM promos)  => mayor que al menos una.
+
+----------------------------------------------------------
+2. Vistas (Views)
+----------------------------------------------------------
+Una vista es una consulta SQL almacenada con nombre; se consulta como si fuera
+una tabla, pero NO guarda datos: es una "tabla virtual".
+
+  - Vista simple: sobre una sola tabla; normalmente se puede ACTUALIZAR a
+    través de ella (insertar o editar filas de la tabla subyacente).
+  - Vista materializada: GUARDA FÍSICAMENTE el resultado de la consulta. Es
+    muy rápida de leer porque no recalcula, pero los datos pueden quedar
+    desactualizados y hay que refrescarla manualmente (REFRESH MATERIALIZED
+    VIEW en PostgreSQL). Uso típico: reportes pesados y agregados
+    precalculados.
+
+        CREATE VIEW clientes_activos AS
+        SELECT id, email FROM usuarios WHERE activo = TRUE;
+
+        CREATE MATERIALIZED VIEW resumen_ventas AS
+        SELECT producto_id, SUM(cantidad) AS total
+        FROM lineas GROUP BY producto_id;
+
+Cuándo usar cada una: las vistas simples sirven para seguridad (exponer solo
+las columnas permitidas) y para reutilizar consultas; las materializadas, para
+render de analítica pesada.
+
+
+================================================================================
+MÓDULO I5: ESTRATEGIAS Y ESTRUCTURAS DE ÍNDICES
+================================================================================
+
+Un índice es una estructura de datos que mejora la velocidad de las operaciones
+de búsqueda y consulta en una tabla. Se puede pensar en un índice como el índice
+de un libro: permite encontrar información sin revisar cada página.
+
+----------------------------------------------------------
+1. Concepto y funcionamiento
+----------------------------------------------------------
+Un índice guarda una copia ORDENADA de ciertas columnas, junto con un puntero a
+la fila correspondiente en la tabla original. Cuando se ejecuta una consulta, el
+SGBD puede usar el índice en lugar de escanear toda la tabla (full table scan).
+
+Estructuras de datos usadas por los SGBD:
+  - Árboles B (B-tree): mantienen los datos en orden; ideales para búsquedas,
+    rangos, ORDER BY y agrupaciones. Es el estándar en PostgreSQL y MySQL.
+  - Hashing: búsquedas de igualdad exacta muy rápidas; no sirve para rangos.
+  - Bitmap: en bases de datos analíticas, para columnas con pocos valores
+    distintos.
+
+Sin índice, el SGBD lee TODAS las filas (lectura secuencial / escaneo
+completo). Con índice, la búsqueda requiere un número logarítmico de pasos y el
+tiempo se reduce drásticamente en tablas grandes.
+
+Ejemplo con la tabla Libros:
+  id  titulo               autor                      año
+  1   Don Quijote          Miguel de Cervantes        1605
+  2   Cien Años de Soledad Gabriel García Márquez     1967
+  3   Hamlet               William Shakespeare        1603
+  4   La Odisea            Homero                     -700
+  5   Matar a un Ruiseñor  Harper Lee                 1960
+
+  SELECT * FROM Libros WHERE autor = 'Homero';
+  CREATE INDEX idx_autor ON Libros(autor);
+
+Con el índice idx_autor (estructura ordenada), el SGBD localiza 'Homero' y
+sigue el puntero al registro, sin revisar las demás filas.
+
+Ventajas de los índices: aceleran SELECT, filtros, JOINs y ordenamientos.
+Desventajas: ocupan espacio en disco y ralentizan INSERT / UPDATE / DELETE
+porque cada escritura debe mantener los índices; un exceso de índices puede
+contrarrestar sus beneficios.
+
+Cuándo usar índices:
+  - En columnas utilizadas con frecuencia en WHERE, JOIN u ORDER BY.
+  - En columnas con alta cardinalidad (muchos valores únicos).
+  - NO en tablas pequeñas ni en columnas con pocos valores distintos.
 
 Un buen diseño de índices es clave para optimizar el rendimiento de una base de
 datos.
 
-Ejemplo de índice en una base de datos
-======================================
-
-Supongamos que tienes una base de datos para una biblioteca con una tabla
-llamada Libros:
-
-id	titulo	autor	año_publicacion
-1	Don Quijote	Miguel de Cervantes	1605
-2	Cien Años de Soledad	Gabriel García Márquez	1967
-3	Hamlet	William Shakespeare	1603
-4	La Odisea	Homero	-700
-5	Matar a un Ruiseñor	Harper Lee	1960
-
-Ahora, tienes una consulta que busca libros por el autor:
-
-SELECT * FROM Libros WHERE autor = 'Homero';
-
-Sin un índice: Si no hay un índice en la columna autor, el DBMS tiene que leer
-cada fila de la tabla y comparar el valor de autor con 'Homero'. Esto se llama
-un escaneo completo de tabla (full table scan), y puede ser muy lento si la
-tabla tiene miles o millones de filas.
-
-Creando un índice, puedes crear un índice en la columna autor:
-
-CREATE INDEX idx_autor ON Libros(autor);
-
-Este índice crea una estructura de datos ordenada basada en los valores de la
-columna autor:
-
-autor	| puntero a id
-Gabriel García Márquez	2
-Harper Lee	5
-Homero	4
-Miguel de Cervantes	1
-William Shakespeare	3
-
-Con un índice: Cuando ejecutas la misma consulta ahora:
-
-SELECT * FROM Libros WHERE autor = 'Homero';
-
-El DBMS utiliza el índice idx_autor para localizar rápidamente el valor 'Homero'
-en la estructura ordenada. Una vez que encuentra el valor, sigue el puntero al
-registro en la tabla Libros para obtener toda la fila.
-
-Resultados de rendimiento
-
-Sin índice: Tiene que revisar todas las filas, lo cual toma más tiempo.
-
-Con índice: Encuentra la fila en una fracción del tiempo, especialmente si la
-tabla es grande.
-
-Conclusión: Los índices son como atajos que el DBMS utiliza para buscar datos
-rápidamente, pero debes usarlos de forma estratégica para equilibrar el
-rendimiento de lectura y escritura.
-
-Consultar los índices en PostgreSQL, ver guía de PostgreSQL
-
-Fuente
-======
-
-ChatGPT
-
-============================
-Ejemplo de índice con Django
-============================
-
-Un índice de base de datos funciona como el índice de un libro: en lugar de leer
-todas las páginas de la tabla (Full Table Scan) para encontrar un registro, la
-base de datos consulta una estructura de datos ordenada (generalmente un árbol
-de búsqueda como un B-Tree) que la lleva directamente al resultado.
-
-Para probar su impacto práctico en Django, podemos comparar el tiempo de
-ejecución y la consulta generada al buscar con y sin índice en una tabla con
-miles de registros.
-
-1. Define el Modelo con y sin Índice:
-
-Crea los campos para comparar el comportamiento. Agrega db_index=True únicamente
-en el campo que deseas optimizar:
-
------
-
-from django.db import models
-
-class Cliente(models.Model):
-    # Campo SIN índice
-    email = models.EmailField()
-
-    # Campo CON índice
-    codigo_cliente = models.CharField(max_length=50, db_index=True)
-
------
-
-Aplica los cambios en la base de datos:
-
-$ python manage.py makemigrations
-
-$ python manage.py migrate
-
-2. Genera Datos Masivos de Prueba: Ejecuta en python manage.py shell.
-
-Sin un volumen representativo de filas, la diferencia de tiempo será
-imperceptible. Inserta 100,000 registros en un solo lote:
-
------
-
-import uuid
-from myapp.models import Cliente
-
-# Insertamos 100,000 clientes
-objetos = [
-    Cliente(
-        email=f"usuario_{i}@ejemplo.com",
-        codigo_cliente=str(uuid.uuid4())
-    )
-    for i in range(100000)
-]
-Cliente.objects.bulk_create(objetos)
-
------
-
-3. Mide el Tiempo de Consulta: Compara la velocidad entre ambos campos. Busca el
-último registro ingresado utilizando el campo sin índice y luego el campo con
-índice:
-
------
-
-import time
-from myapp.models import Cliente
-
-ultimo_registro = Cliente.objects.last()
-
-# 1. Búsqueda SIN índice (email)
-inicio = time.time()
-res1 = Cliente.objects.filter(email=ultimo_registro.email).first()
-tiempo_sin_indice = time.time() - inicio
-
-# 2. Búsqueda CON índice (codigo_cliente)
-inicio = time.time()
-res2 = Cliente.objects.filter(codigo_cliente=ultimo_registro.codigo_cliente).first()
-tiempo_con_indice = time.time() - inicio
-
-print(f"Sin índice: {tiempo_sin_indice:.5f} segundos")
-print(f"Con índice: {tiempo_con_indice:.5f} segundos")
-4.Inspecciona el Plan de Búsqueda (EXPLAIN):Verifica cómo la BD resuelve la consulta.Con .explain() puedes ver directamente si el motor de la base de datos hace un escaneo completo o usa el índice:Python# Muestra Scan/Sequential Scan
-print(Cliente.objects.filter(email=ultimo_registro.email).explain())
-
-# Muestra Index Scan / Index Lookup
-print(Cliente.objects.filter(codigo_cliente=ultimo_registro.codigo_cliente).explain())
-
------
-
-Comportamiento esperado en los resultados:
-
--Sin índice: El motor recorre los 100,000 registros uno por uno. El tiempo
-rondará entre unos milisegundos o más según la base de datos.
-
--Con índice: La búsqueda toma un número logarítmico de pasos ($O(\log N)$). El
-tiempo suele reducirse casi a 0.000s.
-
-Fuente
-======
-
-Gemini IA
-
-
-============================================
-MÓDULO 6: Bases de Datos NoSQL y Comparativa
-============================================
-
-=====
-NoSQL
-=====
-
-En informática, NoSQL (a veces llamado "no solo SQL") es una amplia clase de
-sistemas de gestión de bases de datos que difieren del modelo clásico de SGBDR
-(Sistema de Gestión de Bases de Datos Relacionales) en aspectos importantes,
-siendo el más destacado que no usan SQL como lenguaje principal de consultas.
-
-Los datos almacenados no requieren estructuras fijas como tablas, normalmente no
-soportan operaciones JOIN, ni garantizan completamente ACID (atomicidad,
-consistencia, aislamiento y durabilidad) y habitualmente escalan bien
-horizontalmente.
-
-Los sistemas NoSQL se denominan a veces "no solo SQL" para subrayar el hecho de
-que también pueden soportar lenguajes de consulta de tipo SQL.
-
-Por lo general, los investigadores académicos se refieren a este tipo de bases
-de datos como almacenamiento estructurado, término que abarca también las bases
-de datos relacionales clásicas. A menudo, las bases de datos NoSQL se clasifican
-según su forma de almacenar los datos, y comprenden categorías como clave-valor,
-las implementaciones de BigTable, bases de datos documentales, y bases de datos
-orientadas a grafos.
-
-Los sistemas de bases de datos NoSQL crecieron con las principales redes
-sociales, como Google, Amazon, Twitter y Facebook. Estas tenían que enfrentarse
-a desafíos con el tratamiento de datos que las tradicionales SGBDR no
-solucionaban. Con el crecimiento de la web en tiempo real existía una necesidad
-de proporcionar información procesada a partir de grandes volúmenes de datos que
-tenían unas estructuras horizontales más o menos similares. Estas compañías se
-dieron cuenta de que el rendimiento y sus propiedades de tiempo real eran más
-importantes que la coherencia, en la que las bases de datos relacionales
-tradicionales dedicaban una gran cantidad de tiempo de proceso.
-
-En ese sentido, a menudo, las bases de datos NoSQL están altamente optimizadas
-para las operaciones recuperar y agregar, y normalmente no ofrecen mucho más que
-la funcionalidad de almacenar los registros (p.ej. almacenamiento clave-valor).
-La pérdida de flexibilidad en tiempo de ejecución, comparado con los sistemas
-SQL clásicos, se ve compensada por ganancias significativas en escalabilidad y
-rendimiento cuando se trata con ciertos modelos de datos.
-
-Ventajas
-========
-
--Estos sistemas responden a las necesidades de escalabilidad horizontal que
-tienen cada vez más empresas.
-
--Pueden manejar enormes cantidades de datos.
-
--No generan cuellos de botella.
-
--Escalamiento sencillo.
-
--Diferentes DBs NoSQL para diferentes proyectos.
-
-Desventajas
-===========
-
--Limitaciones de Inteligencia de Negocios: Hay una o dos cuestiones acerca de
-las capacidades de BI de las bases de datos NoSQL. ¿Pueden estas bases de datos
-proporcionar la clase de minería de datos rigurosos que las empresas se utilizan
-con las SGBDRes? ¿Cuántos conocimientos de programación se necesitan para hacer
-la consulta ad hoc y análisis?. Las respuestas no son precisamente positivas.
-Las bases de datos NoSQL no tienen muchos ganchos para el uso general de
-herramientas de BI, mientras que la más simple consulta ad-hoc y análisis
-implica conocimientos de programación bastante buenos. Sin embargo, las
-soluciones están disponibles. Quest Software, por ejemplo, ha creado Toad para
-bases de datos en la nube, que proporciona capacidades de consulta ad-hoc para
-algunas bases de datos NoSQL.
-
--La falta de experiencia. La novedad de NoSQL significa que no hay una gran
-cantidad de desarrolladores y administradores que conocen la tecnología -lo que
-hace difícil a las empresas encontrar personas con los conocimientos técnicos
-apropiados. Por el contrario, el mundo SGBDR tiene miles de personas muy
-cualificadas.
-
--Problemas de compatibilidad. A diferencia de las bases de datos relacionales,
-que comparten ciertos estándares, las bases de datos NoSQL tienen pocas normas
-en común. Cada base de datos NoSQL tiene su propia API, las interfaces de
-consultas son únicas y tienen peculiaridades. Esta falta de normas significa que
-es imposible cambiar simplemente de un proveedor a otro, por si no quedara
-satisfecho con el servicio.
-
-======================================
-Marcas y tipos de Bases de Datos NoSQL
-======================================
-
-Existe una amplia variedad de Bases de Datos NoSQL que podemos utilizar e
-implementar en nuestros proyectos. Todas ellas cumplen funciones especiales con
-un excelente rendimiento. Pero debemos analizar nuestros requerimientos y
-necesidades para saber escoger cual tomaremos en cuenta para nuestro proyecto.
-
-Conozcamos algunas de las BBDD NoSQL más reconocidas en la actualidad:
-
-MongoDB
-=======
-
-Desde las Bases de datos documentales una de las favorita de los desarrolladores
-en MongoDB de 10Gen. Sus inicios se remontan a finales de 2007, pero su
-liberación en licencia opensource fue en el año 2009. Este importante gestor de
-datos NoSQL almacena documentos en un formato muy parecido al JSON a alta
-velocidad.
-
-Construido en C++ tiene un rendimiento increíble que le permite ser muy flexible
-y potente. Es ideal para proyectos en los que se requiera alto nivel de
-escalabilidad. Tiene capacidad para recibir miles de lecturas por segundo sin
-pestañear. Múltiples gestores de contenido y juegos online se benefician de sus
-propiedades.
-
-Apache Cassandra
-================
-
-ApacheCassandra nace desde como un proyecto de google. Varios procesos han
-transcurrido desde esa época, hasta que en 2010 obtuvo su graduación como
-proyecto de alto nivel en ApacheIncubator.
-
-Es una base de datos de tipo clave-valor. Cassandra es una BBDD NoSQL, está
-diseñada para almacenar cantidades gigantescas de datos y realizar
-distribuciones a través de varios nodos. Esto permite que el almacenamiento de
-datos pueda estar repartido entre diversos servidores sin un solo punto de
-fallo. La gran mayoría de nosotros tiene una cercanía con esta base de datos ya
-que es una de las herramientas esenciales de Facebook.
-
-Redis
-=====
-
-Otro importante motor de base de datos de tipo calve-valor es Redis. Esta BBDD
-NoSQL de Código abierto es patrocinada y desarrollada por RedisLabs. Su diseño
-principal está basado en el almacenamiento de tablas de hashes aunque no es
-restrictiva sólo hacia este modelo. También tiene la posibilidad de ser
-utilizada como una BBDD persistente.
-
-Tipos de Bases de Datos NoSQL
-=============================
-
-Ya conocimos algunos nombres famosos de las Bases de Datos NoSQL, pero es
-importante destacar que existe una clasificación que debemos conocer para
-entender cómo estas BBDD están construidas y nos pueden ser de utilidad. Veamos
-cuales son las principales clasificaciones:
-
-Bases de datos documentales
-===========================
-
-Una base de datos documental u orientada a documentos, es un tipo de BBDD NoSQL
-que orienta su funcionamiento a datos alojados en documentos o tiendas de
-documentos. Estas bases de datos se utilizan para almacenar, recuperar y
-administrar datos semiestructurados.
-
-Las bases de datos documentales almacenan cada uno de los registros y los datos
-asociados en un solo documento. Cada documento contiene datos semiestructurados
-que pueden ser consultados con diferentes herramientas de análisis. Estas bases
-de datos ofrecen mucha flexibilidad, escritura rápida, y consultas rápidas
-gracias a su gran capacidad de indexación. Entre las BBDD documentales más
-reconocidas encontramos la ya conocida por nosotros a MongoDb, de 10gen, y
-CouchDB, de Apache.
-
-También gozan de un gran reconocimiento en el mundo de las Bases de datos NoSQL
-la RavenDB, de Hibernating Rhinos, BaseX, djondb, eXist, SimpleDB, de Amazon,
-IBM Lotus Domino y Terrastore.
-
-Bases de datos en orientadas a grafos
-=====================================
-
-Las bases de datos orientadas a grafos son excelentes herramientas para trabajar
-datos complejos. Estas BBDD nos permiten representar los datos en estructuras de
-grafos. Esto es de gran utilidad cuando los datos que vamos a procesar tienen
-altos niveles de interrelación. Estas versátiles bases de datos, nos permite
-ejecutar consultas y almacenamiento de datos de cualquier característica sin
-siquiera preocuparnos por el volumen de los datos.
-
-Gozan de un excepcional rendimiento para responder de forma eficiente al
-análisis y consulta de volúmenes gigantescos de datos. Ofrece también una
-diversidad de métodos analíticos y de consulta que la convierten en una de las
-opciones más flexibles en NoSQL. Es bastante frecuente conseguir la
-implementación de este modelo de BBDD en estructuras web de blogs. Twitter es
-uno de los casos más relevantes donde una BBDD de Grafos está relacionada.
-
-Las Bases de Datos orientadas a grafos también tiene otras funcionalidades que
-no te puedes perder. Entre las marcas más reconocidas está nuestra ya conocida
-Neo4j, pero esta no es la única. También están las conocidas HyperGraphDB,
-InfoGrid, AllegroGraph, InfiniteGraph, Sones y DEX/Sparksee.
-
-Bases de datos clave/valor
-==========================
-
-Las bases de datos clave valor son modelos no relacionales que utilizan un
-método simple de almacenamiento de datos. Este tipo de BBDD toma los datos como
-un conjunto de pares "clave-valor" en los que las claves cumplen funciones de
-identificadores únicos.
-
-Las claves o lo valores pueden ser cualquier tipo de datos. Pueden ser objetos
-simples o complejos. Estas BBDD son altamente divisibles y brindan grandes
-capacidades de escalabilidad horizontal.
-
-Estos modelos de BBDD son uno de los preferidos de los clientes NoSQL, porque
-son simples en cuanto a funcionalidad y brindan alto rendimiento a la hora de
-ejecutar las lecturas y escrituras de datos. Ya hemos dado algunos ejemplos de
-Bases de Datos Clave Valor como Cassandra y Redis, pero es obligatorio expandir
-la lista cuando tenemos importantes BBDD como BigTable de Google, Dynamo de
-Amazon, Project Voldemort de LinkedIn, OracleNoSQL y Riak.
-
-Bases de datos multivalor
-=========================
-
-Las bases de datos multivalor son sistemas interesantes que incorporan
-diferentes características multidimensionales y NoSQL para la clasificación y
-manejo de los datos. Estas BBDD comparten significativas similitudes con los
-modelos relacionales tradicionales. Ambos esquemas contienen tablas. Pero que
-esto no te engañe, las BBDD multivalor proporcionan un esquema de trabajo menos
-rígido.
-
-Además de proporcionar mayor flexibilidad, los datos almacenados acá pueden
-contener listas de valores. Esto quiere decir que cualquier dato almacenado
-puede tener diversos valores asignados.
-
-Estas bases de datos tienen un nivel de complejidad un poco más elevado debido a
-que incorporan reglas de normalización para su diseño. Entre las BBDD multivalor
-más conocidas podemos destacar Rocket D3 DBMS, Rocket mvBase DBMS, Rocket U2
-Universe, Rocket U2 Unidata, OpenQM, Caché InterSystems, Reality, Jbase,
-OpenInsight, Extensible storage engine.
-
-Bases de datos tabulares
-========================
-
-Una BBDD tabular no es más que la estructuración de una BBDD en forma de tabla.
-
-Incorpora elementos en columnas y líneas. Cada una de las celdas genera
-intersecciones entre las columnas y las líneas. A estas intersecciones se le
-asignan una numeración única para establecer un orden eficiente de los datos.
-Están pensadas para grandes volúmenes de datos.
-
-Estas tienen la capacidad de almacenar gran cantidad de datos dispersos. Entre
-las principales DDBB de este estilo podemos conseguir a HBase de Apache que es
-utilizada para soportar el servicio de mensajería de Facebook, también a
-BigTable de Google y la versión abierta llamada LevelDB y a Hypertable.
-
-Bases de datos de Arrays
-========================
-
-Las Bases de datos arrays sirven para trabar colecciones de datos conocidas como
-raster data. Sitúan los datos en una cuadricula regular con más de dos
-dimensiones. Estas bases de datos se utilizan para representar simulaciones,
-sensores y datos estadísticos. Son capaces de manejar volúmenes de datos
-importantes ofreciendo una flexibilidad y escalabilidad.
-
-Estas bases de datos son consideradas una generación tecnológica emergente. De
-las bases de datos más destacadas que trabajan este modelo podemos mencionar a
-Oracle que ha profundizado sus trabajos en ella y SciDB, de Paradigm4.
-
-Ejemplos y casos de uso de Bases de datos NoSQL
-===============================================
-
-Como vemos las BBDD NoSQL gozan de múltiples funciones, marcas, tipos y
-ventajas. Ahora, es momento de poner más en contexto y mostrar algunos ejemplos
-de su implementación.
-
-A modo de ejemplo utilizaremos un JSON como el que conseguirás en mongoDB.
-
-Veamos:
-
-Supongamos que vamos a registrar diferentes personas en una colección
-perteneciente a una BBDD NoSQL con algunos campos especiales. Estos no
-necesariamente tienen que seguir un patrón específico como verás a continuación:
-
-{
-Nombre: «José»,
-Apellidos: «Pérez Campo»,
-Edad: 35,
-Aficiones: [«vino»,»libros»,»ciclismo»],
-Amigos: [
-{
-Nombre:»María»,
-Edad:22
-},
-{
-Nombre:»Luis»,
-Edad:28
-}
-]
-}
-
-Ahora bien, si queremos añadir a otros datos de otra persona con algunas
-características diferentes la podemos hacer sin mayor problema introduciendo lo
-siguiente:
-
-{  Nombre: "Luis",
-   Estudios: "Marketing y Publicidad",
-   Amigos:12
-}
-
-En un modelo relacional o SQL clásico esto sería imposible de hacer. Esta es una
-de las tantas ventajas de las que te hemos hablado.
-
-Esperamos que te sea de utilidad y te aventures a profundizar en el mundo de las
-BBDD.
-
-Fuentes
-=======
-
--https://es.wikipedia.org/wiki/NoSQL
--https://www.grapheverywhere.com/bases-de-datos-nosql-marcas-tipos-ventajas/
-
-
-======================================
-MÓDULO 7: Arquitectura y Escalabilidad
-======================================
-
-=========================
-Clúster en Bases de Datos
-=========================
-
-Un clúster de bases de datos implica múltiples servidores o nodos que colaboran
-para almacenar, administrar y procesar datos. Dependiendo del propósito, los
-clústeres de bases de datos pueden configurarse de varias maneras.
-
-Tipos de Clústeres en Bases de Datos:
-
--Clúster de Alta Disponibilidad:
-
-Diseñado para garantizar que la base de datos esté siempre disponible, incluso
-si hay fallas en uno o más nodos.
-
-Ejemplo: PostgreSQL con Patroni para alta disponibilidad.
-
--Clúster de Replicación:
-
-Crea copias de la base de datos en múltiples nodos para permitir consultas
-distribuidas o respaldo.
-
-Ejemplo: MySQL con Master-Slave Replication.
-
--Clúster de Particionamiento (Sharding):
-
-Los datos se distribuyen entre diferentes nodos, dividiendo la base de datos en
-partes más pequeñas (shards).
-
-Ejemplo: MongoDB con Sharding.
-
--Clúster de Almacenamiento Distribuido:
-
-Los datos se dividen y se almacenan en diferentes nodos, permitiendo escalar
-horizontalmente.
-
-Ejemplo: Apache Cassandra o Amazon Aurora.
-
-PostgreSQL: Clúster de Bases de Datos
-
-En PostgreSQL, un clúster de base de datos no implica múltiples servidores, sino
-un conjunto de bases de datos administradas por un único servidor PostgreSQL.
-Todas las bases de datos en el clúster comparten configuraciones comunes y se
-encuentran en el mismo directorio de datos.
-
-Ventajas de un Clúster
-======================
-
-Escalabilidad: Los clústeres permiten manejar mayores volúmenes de datos o
-solicitudes al agregar más nodos.
-
-Tolerancia a fallos: Si un nodo falla, otros pueden asumir su carga.
-
-Rendimiento: La distribución del trabajo reduce la sobrecarga en nodos
-individuales.
-
-Alta disponibilidad: Se garantiza que el servicio esté siempre disponible.
-
-Ejemplo Práctico: Clúster de Alta Disponibilidad en PostgreSQL
-===============================================================
-
-Un clúster de PostgreSQL puede configurarse con herramientas como:
-
-Patroni: Coordina la replicación y la conmutación por error automática.
-
-PgBouncer: Para balancear conexiones.
-
-ETCD o Consul: Usados como sistemas de orquestación.
-
-Así, el clúster puede manejar fallos automáticamente y continuar sirviendo las
-consultas sin interrupciones significativas.
+Tipos de índices (recap del nivel):
+  Índice primario (sobre la PK), índice único, índice compuesto (varias
+  columnas), índice de texto completo, índice agrupado y no agrupado.
+
+Para consultar los índices creados en PostgreSQL, ver la guía de PostgreSQL.
+
+----------------------------------------------------------
+2. Índice agrupado (Clustered) vs no agrupado (Non-Clustered)
+----------------------------------------------------------
+  - Clustered (agrupado): reordena FÍSICAMENTE las filas de la tabla según el
+    índice. La tabla ES el índice. Solo puede existir UNO (típicamente la clave
+    primaria en MySQL/InnoDB y SQL Server). Acceso rapidísimo por rango de la
+    clave, pero mover una fila implica reordenar física (escrituras más
+    costosas). Analogía: una agenda telefónica ordenada por apellido.
+  - Non-Clustered (no agrupado): es una estructura ordenada SEPARADA que apunta
+    a las filas (a través del índice agrupado o de la dirección física). Puede
+    haber muchos por tabla. No reordena la tabla. Analogía: el índice de
+    materias al final de un libro, que te lleva a la página.
+
+Nota PostgreSQL: no tiene el concepto de "clustered" como SQL Server/MySQL;
+internamente usa un HEAP (datos apilados sin orden físico) más tantos índices
+no agrupados como se quieran, y el comando CLUSTER permite reordenar la tabla
+físicamente según un índice.
+
+----------------------------------------------------------
+3. Índices parciales e índices de cobertura
+----------------------------------------------------------
+  - Índice parcial: se crea sobre un SUBCONJUNTO de filas mediante WHERE.
+    Ocupa menos espacio y acelera las consultas que siempre filtran por el
+    mismo predicado.
+        CREATE INDEX idx_pedidos_activos ON pedidos (total)
+        WHERE estado = 'activo';
+  - Índice de cobertura (Covering Index): incluye TODAS las columnas que la
+    consulta necesita, de modo que el SGBD puede responder SIN tocar la tabla
+    (Index Only Scan). En PostgreSQL se añade con INCLUDE.
+        CREATE INDEX idx_cubridor ON pedidos (id_usuario)
+        INCLUDE (total, estado);
+    Con él, SELECT total, estado WHERE id_usuario = X solo lee el índice. Las
+    columnas INCLUDE no participan en la búsqueda, pero se guardan junto a cada
+    entrada.
+
+Consideraciones: los índices de cobertura aceleran lecturas a cambio de espacio
+y escrituras más pesadas; úsalos en consultas que se ejecutan millones de veces.
+
+----------------------------------------------------------
+4. Ejemplo de índice con Django
+----------------------------------------------------------
+Un índice de base de datos funciona como el índice de un libro: en lugar de
+leer todas las páginas de la tabla (full table scan) para encontrar un
+registro, la base de datos consulta una estructura ordenada (generalmente un
+árbol B) que la lleva directamente al resultado.
+
+1. Define el modelo con y sin índice (db_index=True solo en lo que se quiere
+   optimizar):
+     from django.db import models
+     class Cliente(models.Model):
+         # Campo SIN índice
+         email = models.EmailField()
+         # Campo CON índice
+         codigo_cliente = models.CharField(max_length=50, db_index=True)
+
+   Aplica los cambios:
+     $ python manage.py makemigrations
+     $ python manage.py migrate
+
+2. Genera datos masivos de prueba (100.000 registros en manage.py shell):
+     import uuid
+     from myapp.models import Cliente
+     objetos = [
+         Cliente(email=f"usuario_{i}@ejemplo.com",
+                 codigo_cliente=str(uuid.uuid4()))
+         for i in range(100000)
+     ]
+     Cliente.objects.bulk_create(objetos)
+
+3. Mide el tiempo de consulta en ambos campos:
+     import time
+     from myapp.models import Cliente
+     ultimo = Cliente.objects.last()
+     inicio = time.time()
+     res1 = Cliente.objects.filter(email=ultimo.email).first()
+     t_sin = time.time() - inicio
+     inicio = time.time()
+     res2 = Cliente.objects.filter(codigo_cliente=ultimo.codigo_cliente).first()
+     t_con = time.time() - inicio
+     print(f"Sin índice: {t_sin:.5f} s")
+     print(f"Con índice: {t_con:.5f} s")
+
+4. Inspecciona el plan de búsqueda (EXPLAIN) para ver Scan vs Index Scan:
+     print(Cliente.objects.filter(email=ultimo.email).explain())
+     print(Cliente.objects.filter(codigo_cliente=ultimo.codigo_cliente).explain())
+
+Resultado esperado:
+  - Sin índice: el motor recorre los 100.000 registros uno por uno; el tiempo
+    tarda desde varios milisegundos en adelante según la base de datos.
+  - Con índice: la búsqueda toma un número logarítmico de pasos (O(log N)); el
+    tiempo suele reducirse prácticamente a 0.000 s.
+
+
+================================================================================
+MÓDULO I6: SGBD RELACIONALES DEL MERCADO Y NoSQL (COMPARATIVA)
+================================================================================
+
+----------------------------------------------------------
+1. SGBD relacionales principales
+----------------------------------------------------------
+  - PostgreSQL: Open source, la referencia de funciones avanzadas (window
+    functions, JSONB, extensiones, PL/pgSQL, materialized views). ACID
+    estricto, robusto y extensible. Estándar de facto para proyectos
+    empresariales.
+  - MySQL / MariaDB: Open source, muy difundido, rápido y sencillo (stack
+    LAMP/LEMP). MySQL pertenece a Oracle; MariaDB es su fork comunitario.
+    Ideal para aplicaciones web clásicas, CRUDs y CMS (WordPress).
+  - SQLite: Motor embebido SIN servidor: la base de datos es un solo archivo.
+    Cero instalación y cero red. Perfecto para apps móviles, herramientas
+    locales, prototipos o el navegador (Firefox lo usa). NO recomendado para
+    concurrencia multiusuario intensa en red.
+  - Microsoft SQL Server: Comercial de Microsoft. Excelente integración con el
+    ecosistema .NET/Windows y con BI (SSRS, SSIS); usa T-SQL.
+  - Oracle Database: Comercial y clásico del mundo empresarial. Muy potente en
+    grandes corporaciones y banca (PL/SQL, RAC, particionamiento avanzado).
+    Licenciamiento costoso y complejidad alta.
+
+Casos de uso resumidos:
+  - SQLite  -> local/móvil/embebido y arranque rápido de proyectos.
+  - PostgreSQL -> empresarial, estándar del sector, datos exigentes y análisis.
+  - MySQL/MariaDB -> web masiva clásica y stack LAMP.
+  - SQL Server -> entornos corporativos Windows/.NET.
+  - Oracle -> grandes sistemas transaccionales y banca.
+
+Criterios de comparación entre SGBD: licencia y costo, concurrencia y niveles
+de aislamiento, tipos de datos, lenguaje de procedimientos (PL/pgSQL vs T-SQL
+vs PL/SQL), herramientas y comunidad, rendimiento bajo carga.
+
+----------------------------------------------------------
+2. Bases de Datos NoSQL (comparativa con el modelo relacional)
+----------------------------------------------------------
+NoSQL (a veces llamado "no solo SQL") es una amplia clase de sistemas de
+gestión de bases de datos que difieren del modelo clásico de SGBDR en aspectos
+importantes: no usan SQL como lenguaje principal, los datos no requieren
+estructuras fijas de tablas, normalmente no soportan JOIN ni garantizan ACID
+completo, y suelen escalar horizontalmente.
+
+Crecieron con las grandes empresas de internet (Google, Amazon, Twitter,
+Facebook), que priorizaban el rendimiento en tiempo real sobre la coherencia
+estricta de los modelos relacionales.
+
+Ventajas:
+  - Escalabilidad horizontal (responden a la necesidad de las empresas de
+    escalar de forma sencilla).
+  - Manejo de enormes cantidades de datos sin cuellos de botella.
+  - Diferentes motores NoSQL adecuados a diferentes problemas.
+
+Desventajas:
+  - Limitaciones para inteligencia de negocio / minería de datos rigurosa.
+  - Escasez de profesionales con experiencia (en comparación con el mundo
+    relacional).
+  - Poca estandarización: cada motor tiene su propia API, sus consultas y sus
+    peculiaridades, por lo que migrar de un proveedor a otro es difícil.
+
+Marcas conocidas y su tipo:
+  - MongoDB: documental. Guarda documentos tipo JSON, muy flexible, pensada
+    para alta escalabilidad y miles de lecturas por segundo.
+  - Apache Cassandra: clave-valor/columnar, distribuida sin un único punto de
+    fallo (usada entre otros por Facebook); gran volumen distribuido entre
+    nodos.
+  - Redis: clave-valor en memoria (caché, colas, sesiones); también puede
+    usarse como base de datos persistente.
+  - Neo4j: orientada a grafos; excelente para datos con altos niveles de
+    interrelación (redes sociales, recomendaciones).
+  - HBase / BigTable: tabulares columnares, pensadas para datos dispersos a
+    gran escala.
+
+Tipos de bases de datos NoSQL:
+  - Documentales: cada registro vive en un documento semiestructurado (MongoDB,
+    CouchDB).
+  - Orientadas a grafos: representan datos como nodos y aristas (Neo4j,
+    HyperGraphDB).
+  - Clave/valor: pares clave-valor simples y escalables (Redis, Cassandra,
+    DynamoDB, Riak).
+  - Multivalor: esquemas flexibles con listas de valores (OpenQM, Caché).
+  - Tabulares/columnas: grandes volúmenes de datos dispersos (HBase, BigTable).
+  - De arrays: malla regular multidimensional para simulaciones, sensores y
+    datos estadísticos (SciDB).
+
+Ejemplo de flexibilidad NoSQL (MongoDB): en una misma colección "personas"
+puede haber documentos con estructura distinta:
+  { Nombre: "José", Apellidos: "Pérez Campo", Edad: 35,
+    Aficiones: ["vino", "libros", "ciclismo"],
+    Amigos: [ { Nombre: "María", Edad: 22 }, { Nombre: "Luis", Edad: 28 } ] }
+  { Nombre: "Luis", Estudios: "Marketing y Publicidad", Amigos: 12 }
+En un modelo relacional clásico esto sería imposible sin definir un esquema
+fijo; esa flexibilidad es una de las grandes ventajas de NoSQL.
+
+###############################################################################
+#
+# NIVEL AVANZADO
+# Arquitectura, rendimiento y escala
+#
+###############################################################################
+
+================================================================================
+MÓDULO A1: CONSULTAS AVANZADAS Y ANALÍTICA
+================================================================================
+
+----------------------------------------------------------
+1. Funciones de Ventana (Window Functions)
+----------------------------------------------------------
+Las funciones de ventana calculan valores sobre un "conjunto de filas
+relacionadas" con la fila actual, pero sin colapsar el resultado (a diferencia
+de GROUP BY, que devuelve una sola fila por grupo). Se usan con la cláusula
+OVER.
+
+Sintaxis general:
+  funcion_ventana() OVER (PARTITION BY columna ORDER BY columna)
+
+Partes:
+  - PARTITION BY: divide los datos en ventanas (como GROUP BY, pero manteniendo
+    todas las filas).
+  - ORDER BY dentro de OVER: ordena las filas dentro de cada partición para que
+    la función tenga un orden definido.
+
+Funciones principales:
+  - ROW_NUMBER(): asigna un número secuencial (1, 2, 3...) a cada fila dentro
+    de su partición, sin empates.
+        SELECT nombre, salario,
+               ROW_NUMBER() OVER (ORDER BY salario DESC) AS puesto
+        FROM empleados;
+  - RANK(): como ROW_NUMBER pero SÍ EMPATA: si dos filas empatan, reciben el
+    mismo rango y hay saltos (1, 2, 2, 4...).
+  - DENSE_RANK(): como RANK pero SIN saltos (1, 2, 2, 3...).
+  - LAG(columna, n): accede al valor de la fila n posiciones ANTERIORES dentro
+    de la partición.
+  - LEAD(columna, n): accede al valor de la fila n posiciones POSTERIORES.
+
+        SELECT mes, facturado,
+               LAG(facturado, 1) OVER (ORDER BY mes) AS facturado_anterior,
+               facturado - LAG(facturado, 1) OVER (ORDER BY mes) AS variacion
+        FROM reporte_mensual;
+
+Uso práctico: clasificación, ranking, cálculo de variación entre periodos,
+detección de duplicados (ROW_NUMBER() OVER (PARTITION BY col ORDER BY id)).
+
+----------------------------------------------------------
+2. Expresiones de Tabla Común - CTEs (Common Table Expressions)
+----------------------------------------------------------
+Una CTE es una consulta auxiliar definida con WITH al inicio de una consulta;
+simplifica la lectura al dividir consultas complejas en bloques con nombre.
+
+Sintaxis:
+  WITH cte_nombre AS (
+    SELECT columna, ...
+    FROM tabla
+    WHERE condicion
+  )
+  SELECT ...
+  FROM cte_nombre;
+
+  WITH clientes_activos AS (
+    SELECT id, email, nombre
+    FROM usuarios WHERE activo = TRUE
+  )
+  SELECT c.email, COUNT(p.id) AS num_pedidos
+  FROM clientes_activos c
+  INNER JOIN pedidos p ON p.id_usuario = c.id
+  GROUP BY c.email;
+
+Las CTEs pueden anidarse varias veces, creando una "línea de procesamiento"
+más legible que subconsultas anidadas en FROM.
+
+----------------------------------------------------------
+3. CTEs recursivas (para estructuras jerárquicas: árboles, categorías)
+----------------------------------------------------------
+Una CTE recursiva se llama a sí misma repetidamente hasta agotar los datos. Es
+la herramienta estándar para recorrer jerarquías (organigramas, categorías de
+producto, comentarios anidados).
+
+Ejemplo: recorrer un árbol de categorías con campo padre:
+  WITH RECURSIVE jerarquia AS (
+    -- Caso base: las categorías raíz (sin padre)
+    SELECT id, nombre, padre_id, 0 AS nivel
+    FROM categorias WHERE padre_id IS NULL
+    UNION ALL
+    -- Caso recursivo: las hijas de las ya encontradas
+    SELECT c.id, c.nombre, c.padre_id, j.nivel + 1
+    FROM categorias c
+    INNER JOIN jerarquia j ON c.padre_id = j.id
+  )
+  SELECT * FROM jerarquia ORDER BY nivel, nombre;
+
+Nota: el RECURSIVE es obligatorio en PostgreSQL y otros SGBD modernos; en
+algunos motores (MySQL 8+) funciona igual.
+
+
+================================================================================
+MÓDULO A2: LÓGICA EN EL SERVIDOR DE BASE DE DATOS
+================================================================================
+
+Los SGBD relacionales permiten ejecutar lógica de negocio directamente dentro
+del servidor, reduciendo la ida y vuelta con la aplicación.
+
+----------------------------------------------------------
+1. Procedimientos Almacenados (Stored Procedures)
+----------------------------------------------------------
+Bloques de código con nombre, guardados en la BD y ejecutables con CALL o con
+la sintaxis específica del motor. Pueden recibir parámetros IN, OUT e INOUT.
+
+PostgreSQL (PL/pgSQL):
+  CREATE OR REPLACE PROCEDURE actualizar_estado(pedido_id INT, nuevo_estado TEXT)
+  LANGUAGE plpgsql
+  AS $$
+  BEGIN
+    UPDATE pedidos SET estado = nuevo_estado WHERE id = pedido_id;
+    COMMIT;
+  END;
+  $$;
+  CALL actualizar_estado(101, 'pagado');
+
+SQL Server (T-SQL):
+  CREATE PROCEDURE sp_ActualizarEstado @PedidoId INT, @NuevoEstado NVARCHAR(20)
+  AS
+  BEGIN
+    UPDATE pedidos SET estado = @NuevoEstado WHERE id = @PedidoId;
+  END;
+  EXEC sp_ActualizarEstado 101, 'pagado';
+
+Ventajas: encapsulan lógica compleja, reducen tráfico de red, aprovechan la
+optimización del plan del motor y facilitan auditoría centralizada.
+
+----------------------------------------------------------
+2. Funciones definidas por el usuario (User-Defined Functions)
+----------------------------------------------------------
+Similar a los procedimientos pero devuelven un valor (escalar o tabla) y pueden
+usarse dentro de un SELECT.
+
+  CREATE OR REPLACE FUNCTION precio_con_iva(precio NUMERIC)
+  RETURNS NUMERIC
+  LANGUAGE SQL
+  AS $$
+    SELECT precio * 1.21;
+  $$;
+
+  SELECT nombre, precio_con_iva(precio) FROM productos;
+
+Diferencia con procedimientos: las funciones pueden invocarse dentro de SELECT,
+WHERE y expresiones; los procedimientos ejecutan acciones y no deben usarse
+dentro de una consulta.
+
+----------------------------------------------------------
+3. Disparadores (Triggers)
+----------------------------------------------------------
+Bloques de código que se ejecutan AUTOMÁTICAMENTE antes, después o en lugar
+de una operación INSERT, UPDATE o DELETE en una tabla.
+
+  CREATE OR REPLACE FUNCTION log_cambio_estado()
+  RETURNS TRIGGER
+  LANGUAGE plpgsql
+  AS $$
+  BEGIN
+    INSERT INTO auditoria(id_pedido, estado_anterior, estado_nuevo, fecha)
+    VALUES (OLD.id, OLD.estado, NEW.estado, NOW());
+    RETURN NEW;
+  END;
+  $$;
+
+  CREATE TRIGGER trg_estado_pedido
+  AFTER UPDATE OF estado ON pedidos
+  FOR EACH ROW
+  WHEN (OLD.estado IS DISTINCT FROM NEW.estado)
+  EXECUTE PROCEDURE log_cambio_estado();
+
+Eventos:
+  - BEFORE: se ejecuta ANTES de la operación; puede modificar NEW o cancelar la
+    operación con RETURN NULL.
+  - AFTER: se ejecuta DESPUÉS de que la operación fue confirmada. Ideal para
+    registros de auditoría.
+  - INSTEAD OF: reemplaza la operación en vistas que de otro modo no serían
+    actualizables.
+
+Cuándo usar triggers: auditoría, validaciones complejas, sincronización entre
+tablas, actualización de columnas derivadas. Precaución: el código dentro de
+un trigger puede ser difícil de depurar y causar efectos colaterales.
+
+
+================================================================================
+MÓDULO A3: CONTROL DE CONCURRENCIA Y AISLAMIENTO (TRANSACCIONES)
+================================================================================
+
+----------------------------------------------------------
+1. Las propiedades ACID (repaso profundo)
+----------------------------------------------------------
+Cuando se dice que un SGBD es ACID-compliant, indica que sus transacciones
+cumplen cuatro propiedades fundamentales:
+
+  - Atomicidad: cada transacción es una unidad indivisible. O bien se ejecutan
+    TODOS sus pasos, o no se ejecuta ninguno.
+  - Consistencia: antes de la transacción la BD está en un estado válido; tras
+    la transacción sigue en un estado válido (no rompe reglas de integridad).
+  - Aislamiento: una operación concurrente no puede observar los cambios
+    parciales de otra transacción en curso. El nivel de aislamiento define
+    cuándo y cómo se hacen visibles los cambios entre transacciones.
+  - Durabilidad: una vez que la transacción ha sido confirmada (COMMIT), sus
+    cambios persisten aunque falle el sistema (gracias a los registros de
+    seguridad / WAL).
+
+Cumpliendo estos cuatro requisitos, un SGBD puede considerarse ACID-compliant.
+
+----------------------------------------------------------
+2. Niveles de aislamiento de transacciones
+----------------------------------------------------------
+El estándar SQL define cuatro niveles, de menor a mayor aislamiento:
+
+  - Read Uncommitted (no Committed): puede leer datos modificados pero aún no
+    confirmados por otra transacción (permite dirty reads).
+  - Read Committed (Committed): solo lee datos confirmados. Es el nivel por
+    defecto en PostgreSQL y SQL Server. Evita dirty reads pero NO las no
+    repetibles.
+  - Repeatable Read (Repetible garantizado): una segunda lectura de la misma
+    fila dentro de la transacción devolverá SIEMPRE el mismo valor. Evita
+    dirty reads y non-repeatable reads.
+  - Serializable (Serializable): el nivel más alto. Simula que las
+    transacciones se ejecutan una detrás de otra (serial), evitando todos los
+    problemas conocidos.
+
+----------------------------------------------------------
+3. Problemas de concurrencia
+----------------------------------------------------------
+  - Dirty Read (Lectura sucia): lee un dato que otra transacción modificó pero
+    AÚN NO ha confirmado. Si esa otra transacción hace ROLLBACK, el dato
+    leído nunca existió.
+  - Non-Repeatable Read (Lectura no repetible): dentro de la misma
+    transacción, leer la misma fila dos veces produce resultados diferentes
+    porque otra transacción la actualizó y confirmó entre ambas lecturas.
+  - Phantom Read (Lectura fantasma): una segunda ejecución de la misma consulta
+    dentro de la transacción devuelve FILAS NUEVAS que aparecieron porque otra
+    transacción hizo INSERT y COMMIT.
+
+----------------------------------------------------------
+4. Mecanismos de bloqueo (Locking)
+----------------------------------------------------------
+  - Bloqueo pesimista (Pessimistic): asume que las colisiones OCURREN y bloquea
+    los registros ANTES de modificarlos. Es el mecanismo tradicional.
+      SELECT ... FOR UPDATE: bloquea las filas seleccionadas hasta el fin de la
+      transacción, impidiendo que otras transacciones las modifiquen.
+  - Bloqueo optimista (Optimistic): permite que varias transacciones lean y
+    modifiquen los datos sin bloquearlos, pero al confirmar verifica si hubo
+    conflictos (por ejemplo, usando una columna de versión o timestamp). Si
+    hubo conflicto, la transacción se reintenta. Es más eficiente en entornos
+  de lectura intensiva con pocos conflictos.
+
+  Con FOR UPDATE (PostgreSQL):
+      BEGIN;
+      SELECT * FROM pedidos WHERE id = 1 FOR UPDATE;   -- bloquea esa fila
+      UPDATE pedidos SET estado = 'pagado' WHERE id = 1;
+      COMMIT;
+
+
+================================================================================
+MÓDULO A4: RENDIMIENTO Y DIAGNÓSTICO
+================================================================================
+
+----------------------------------------------------------
+1. Lectura profunda de planes de ejecución (EXPLAIN / EXPLAIN ANALYZE)
+----------------------------------------------------------
+EXPLAIN muestra el plan que el optimizador elegiría para ejecutar la consulta,
+sin ejecutarla. EXPLAIN ANALYZE ejecuta la consulta de verdad y muestra el
+tiempo real, siendo la herramienta definitiva de diagnóstico.
+
+  EXPLAIN SELECT * FROM pedidos WHERE id_usuario = 42;
+
+Plan típico de PostgreSQL (simplificado):
+  Index Scan using idx_pedidos_usuario on pedidos
+    Index Cond: (id_usuario = 42)
+  Planning Time: 0.03 ms
+  Execution Time: 0.02 ms
+
+Tipos de acceso que conviene distinguir:
+  - Seq Scan (Sequential Scan): lee TODA la tabla. Usado cuando el optimizador
+    estima que es más barato que cualquier índice (tablas pequeñas, predicción
+    de que se devolverán muchas filas).
+  - Index Scan: usa un índice para localizar las filas y luego accede a la
+    tabla por la dirección guardada en el índice.
+  - Index Only Scan: la consulta se resuelve SIN acceder a la tabla (solo lee
+    el índice). Ocurre con índices de cobertura que contienen todas las
+    columnas necesarias.
+  - Bitmap Index Scan + Bitmap Heap Scan: combina dos pasos; útil cuando el
+    índice cumple parcialmente el predicado.
+
+Parámetros importantes en el plan:
+  - rows (estimated): estimación del optimizador sobre el número de filas.
+  - actual time (en ANALYZE): tiempo real de ejecución de ese nodo.
+  - loops: cuántas veces se ejecutó ese nodo (plan con bucle anidado, por
+    ejemplo).
+
+Regla práctica: si ves Seq Scan en una tabla grande, valora si un índice puede
+mejorarlo (columnas del WHERE con alta cardinalidad, índices parciales o de
+cobertura).
+
+----------------------------------------------------------
+2. Métricas de mantenimiento (PostgreSQL)
+----------------------------------------------------------
+  - VACUUM: libera el espacio de filas obsoletas (dead tuples) que quedan
+    después de UPDATE/DELETE. Sin él, la tabla crece indefinidamente y las
+    lecturas se degradan.
+      VACUUM;              -- liberar espacio (sin reorganizar disco)
+      VACUUM FULL;         -- reorganiza físicamente (requiere bloqueo)
+      VACUUM ANALYZE;      -- libera espacio y actualiza las estadísticas
+  - ANALYZE: actualiza las estadísticas que el optimizador usa para elegir
+    planes de ejecución. Sin ANALYZE, el optimizador puede tomar decisiones
+    erróneas basadas en datos antiguos.
+  - autovacuum: daemon de PostgreSQL que ejecuta VACUUM automáticamente; está
+    habilitado por defecto y es fundamental para mantener el rendimiento.
+  - Fragmentación de índices: tras muchas escrituras, los índices pueden
+    fragmentarse y perder eficiencia. En MySQL/InnoDB se corrige con OPTIMIZE
+    TABLE; en PostgreSQL, REINDEX.
+
+----------------------------------------------------------
+3. Pool de conexiones (connection pooling)
+----------------------------------------------------------
+Cada conexión a la BD es un proceso con memoria y recursos dedicados; abrir y
+cerrar conexiones es costoso. Un pool mantiene un conjunto de conexiones
+abiertas reutilizables.
+
+  - PgBouncer: pool ligero y ampliamente usado para PostgreSQL. Se ejecuta como
+    proxy entre la aplicación y el servidor. Modos: session (libera la conexión
+    al cerrar sesión), transaction (la devuelve al pool al terminar cada
+    transacción) y statement (el más restrictivo, sin uso práctico real).
+  - HikariCP: pool integrado en el lado de la aplicación JVM (usado por
+    Spring Boot y JDBC). No necesita proceso separado.
+
+Buena práctica: fijar un límite razonable de conexiones (no ilimitado); un
+exceso de conexiones simultáneas ralentiza el motor de base de datos.
+
+
+================================================================================
+MÓDULO A5: ESCALABILIDAD Y ALTA DISPONIBILIDAD
+================================================================================
+
+Cuando una única instancia de SGBD no alcanza el volumen o la disponibilidad
+requeridos, se recurre a estrategias de distribución y redundancia.
+
+----------------------------------------------------------
+1. Estrategias de replicación
+----------------------------------------------------------
+  - Replicación síncrona: cada escritura se confirma SOLO cuando TODOS los
+    nodos la han aceptado. Garantiza que un nodo espejo siempre tenga los
+    mismos datos (RPO = 0), pero es más lenta (depende de la latencia de red).
+    Uso: transacciones críticas donde la pérdida de datos es inaceptable.
+  - Replicación asíncrona: el nodo primario confirma la escritura y la replica
+    después, sin esperar la respuesta del espejo. Es más rápida pero un fallo
+    del primario antes de replicar puede significar pérdida de datos recientes.
+    Uso: la mayoría de los sistemas web convencionales.
+  - Replicación lógica: replicación a nivel de FILAS usando datos
+    serializados (por ejemplo, secuencias de cambios de tipo WAL convertidos a
+    SQL). Permite replicar entre distintas versiones o configuraciones.
+  - Replicación física: replicación del archivo de datos a nivel de bloque.
+    Es más rápida pero exige que ambas instancias sean idénticas.
+  - Máster-Esclavo (Primary / Replica): un nodo acepta escrituras (el
+    "primario") y uno o más espejos son de solo lectura. Si el primario falla,
+    un esclavo se promueve a primario.
+  - Multi-Máster: varios nodos aceptan escrituras simultáneamente. Más
+    complejo de gestionar porque puede haber conflictos entre escrituras
+    concurrentes en nodos distintos.
+
+----------------------------------------------------------
+2. Particionamiento de tablas
+----------------------------------------------------------
+Particionar es dividir una tabla LÓGICAMENTE en partes más pequeñas (particiones)
+que permanecen dentro de la misma base de datos, pero que el motor maneja de
+forma independiente en las búsquedas.
+
+  - Por rango (Range): cada partición cubre un rango de valores. Ideal para
+    fechas: particiones por mes o año.
+        CREATE TABLE ventas (
+          fecha DATE,
+          total NUMERIC
+        ) PARTITION BY RANGE (fecha);
+
+  - Por lista (List): cada partición contiene un conjunto explícito de valores.
+    Útil para multinacionales con partición por país.
+  - Por hash (Hash): distribuye los datos según una función hash de una columna.
+    Útil para balancear la carga sin un criterio de rango o lista claro.
+
+Ventajas del particionamiento: reduce el tamaño de los índices (cada partición
+tiene los suyos), acelera las consultas que filtran por la columna de
+partición (el optimizador descarta particiones irrelevantes) y facilita la
+limpieza de datos antiguos (DROP PARTITION).
+
+----------------------------------------------------------
+3. Patrones de Sharding
+----------------------------------------------------------
+Sharding es la distribución de datos entre múltiples INSTANCIAS DE BASE DE
+DATOS diferentes (distinto servidores), cada una con su propio esquema o datos
+diferentes (a diferencia del particionamiento, que es intra-instancia).
+
+Sharding en bases de datos relacionales:
+  - El cliente define la lógica de partición (por tenant, por región, por
+    hash de PK) y enruta las consultas al shard correcto. Cada shard es una
+    BD independiente.
+  - Complicaciones: transacciones que cruzan shards (2PC o saga pattern),
+    rebalanceo al añadir shards, resettos de schema en todos los shards.
+  - Herramientas: Vitess (MySQL), Citus (PostgreSQL extension), Citus
+    simplifica sharding nativo.
+
+Sharding en NoSQL:
+  - Nativo e interno al SGBD (MongoDB sharding, Cassandra con su hash de
+    partición). El motor maneja la distribución de forma transparente al
+    cliente.
+
+Resumen de escalabilidad:
+  Vertical (subir RAM/CPU/disco en un único nodo) -> Horizontal (añadir más
+  nodos: réplicas para lectura, sharding para escritura).
+
+----------------------------------------------------------
+4. Ejemplo de clúster de alta disponibilidad en PostgreSQL
+----------------------------------------------------------
+Un clúster de alta disponibilidad se compone de varios servidores (nodos)
+coordinados para que la BD esté siempre disponible incluso si uno falla.
+
+Herramientas típicas en PostgreSQL:
+  - Patroni: coordina la replicación automática y la conmutación por error
+    (failover) sin intervención manual.
+  - PgBalanceador (PgBouncer): gestiona el pool de conexiones entre la
+    aplicación y los nodos del clúster.
+  - ETCD o Consul: sistemas de coordinación y descubrimiento de servicios que
+    Patroni usa para elegir cuál es el nodo primario.
+
+Con Patroni + ETCD el clúster puede detectar fallos en milisegundos, promover a
+un esclavo a primario automáticamente y continuar sirviendo consultas sin
+interrupciones significativas.
+
+Los clústeres de bases de datos no siempre implican múltiples servidores: en
+PostgreSQL, un "cluster" también puede referirse al conjunto de bases de datos
+que comparten la misma configuración y directorio de datos en un único servidor.
 
 En resumen, los clústeres son fundamentales para garantizar rendimiento,
-escalabilidad y disponibilidad, tanto en computación como en bases de datos.
+escalabilidad y disponibilidad, tanto en computación general como en bases de
+datos.
 
-Fuente
-======
+###############################################################################
+#
+# BUENAS PRÁCTICAS
+# Estándares, seguridad y desarrollo de software
+#
+###############################################################################
 
-ChatGPT
+================================================================================
+MÓDULO T1: ESTÁNDARES DE NOMBRAMIENTO (NAMING CONVENTIONS)
+================================================================================
+
+Un estándar de nombramiento consistente reduce errores, facilita la revisión del
+código y hace que las bases de datos nuevos se entiendan rápido entre equipos.
+
+----------------------------------------------------------
+1. Convenciones principales
+----------------------------------------------------------
+  - snake_case: usar minúsculas y guiones bajos para tablas, columnas, índices
+    y restricciones. Ejemplo: pedido_detalle, fecha_registro.
+    (Es el estándar en PostgreSQL y Rails/Django; Oracle y SQL Server suelen
+    usar UPPER_CASE como predeterminado, pero snake_case se recomienda en
+    nuevos proyectos.)
+  - camelCase: menos común en BD; típico en Java y JavaScript. Si el equipo ya
+    usa camelCase, debe mantenerse, pero es menos legible en SQL.
+
+  - Tablas en SINGULAR: "usuario" no "usuarios". El nombre representa la
+    entidad que describe la fila, no la colección. (La alternativa plural es
+    válida si el equipo la elige explícitamente; lo importante es ser
+    consistente.)
+
+  - Clave primaria: se recomienda simplemente id o nombre_tabla_id.
+    Ejemplo: id en usuarios, id_usuario en una tabla donde la claridad lo
+    justifica.
+  - Clave foránea: se recomienda el nombre de la tabla referenciada + _id.
+    Ejemplo: usuario_id, producto_id.
+  - Índices: ix_ + nombre_tabla + columna(s). Ejemplo: ix_pedidos_usuario_id.
+
+  - Restricciones: prefijo según tipo - pk_, uq_, ck_, fk_.
+    Ejemplo: pk_pedidos, uq_usuarios_email, fk_pedidos_usuario.
+
+La clave del estándar no es la elección exacta sino la CONSISTENCIA en todo el
+equipo y en todo el proyecto a lo largo del tiempo.
 
 
-=================================================
-MÓDULO 8: Seguridad, Respaldos y Buenas Prácticas
-=================================================
+================================================================================
+MÓDULO T2: SEGURIDAD Y GOBERNANZA DE DATOS
+================================================================================
 
-=======
-DBeaver
-=======
+----------------------------------------------------------
+1. Inyección de código SQL (SQL Injection) y prevención
+----------------------------------------------------------
+La SQL injection ocurre cuando un atacante inserta comandos SQL no deseados a
+través de datos de entrada de la aplicación (formularios, parámetros de URL,
+cabeceras), y el servidor los ejecuta sin sanitizar.
 
-Es una herramienta de base de datos universal gratuita y de código abierto para
-desarrolladores y administradores de bases de datos.
+Ejemplo clásico de login:
+  -- Si el usuario escribe en el campo:  ' OR 1=1 --
+  SELECT * FROM usuarios WHERE usuario = '' OR 1=1 --' AND pass = '...';
+  Esto devuelve TODOS los usuarios sin autenticar.
 
+Prevención: CONSULTAS PREPARADAS / sentencias parametrizadas:
+  -- PostgreSQL / JDBC
+  PREPARE stmt AS SELECT * FROM usuarios WHERE usuario = $1 AND pass = $2;
+  EXECUTE stmt('admin', 'secreto');
+
+  -- Django (ya lo hace automáticamente)
+  User.objects.filter(username=username, password=password)
+
+Las consultas preparadas separan la estructura SQL de los datos, de modo que
+los datos NUNCA se interpretan como código SQL. NUNCA concatenes datos de
+usuario directamente en una cadena de consulta.
+
+----------------------------------------------------------
+2. Principio de mínimo privilegio (Gestión de usuarios y roles)
+----------------------------------------------------------
+  - Crear un usuario dedicado para cada aplicación (nunca usar el usuario
+    superadministrador).
+  - Asignar solo los permisos necesarios: SELECT, INSERT, UPDATE o DELETE sobre
+    las tablas que realmente necesita.
+  - Crear roles (GROUP en PostgreSQL) y asignar permisos a roles, no a usuarios
+    individuales.
+  - Usar GRANT y REVOKE para administrar permisos:
+        CREATE ROLE app_lectura;
+        GRANT SELECT ON TABLE pedidos TO app_lectura;
+        CREATE USER app_backend WITH PASSWORD '...';
+        GRANT app_lectura TO app_backend;
+
+----------------------------------------------------------
+3. Cifrado de datos: en tránsito (TLS/SSL) y en reposo (TDE)
+----------------------------------------------------------
+  - En tránsito (TLS/SSL): cifra la comunicación entre la aplicación y el
+    servidor de BD para evitar escuchas pasivas y MITM. En PostgreSQL se
+    configura con sslmode=verify-full en la cadena de conexión y
+    ssl = on en postgresql.conf.
+  - En reposo (TDE - Transparent Data Encryption): cifra los archivos en disco
+    para que, si alguien roba el disco o los backups, no pueda leer los datos
+    sin la clave de descifrado. SQL Server y Oracle lo soportan nativamente;
+    en PostgreSQL hay extensiones (pgcrypto) o cifrado a nivel de sistema de
+    archivos (LUKS, dm-crypt).
+
+----------------------------------------------------------
+4. Manejo de datos sensibles
+----------------------------------------------------------
+  - GDPR / protección de datos: los datos personales (nombre, email, dirección,
+    IP) tienen restricciones legales de almacenamiento y uso.
+  - Hashing de contraseñas: NUNCA almacenar contraseñas en texto plano. Usar
+    hashing con salt (bcrypt, argon2id). Nunca md5/sha simple (son rápidos de
+    rainbow table).
+  - Sanitización de logs: asegurarse de que los logs no contengan datos
+    sensibles como contraseñas, tokens de pago o números de seguridad social.
+  - Datos de prueba: en desarrollo y staging, usar datos sintéticos anonimizados,
+    nunca producción real.
+
+
+================================================================================
+MÓDULO T3: ESTRATEGIAS DE COPIAS DE SEGURIDAD Y RECUPERACIÓN
+================================================================================
+
+----------------------------------------------------------
+1. Tipos de respaldos
+----------------------------------------------------------
+  - Respaldos lógicos: exportan los datos como comandos SQL o en formato
+    estructurado. Herramientas:
+      * pg_dump (PostgreSQL): exporta esquema + datos a un archivo .sql
+      * mysqldump (MySQL/MariaDB): equivalente para MySQL.
+    Ventaja: portabilidad entre versiones y SGBD distintos. Desventaja: son más
+    lentos y pesados que los físicos.
+  - Respaldos físicos: copian los archivos del sistema de datos ( tablespaces,
+    directorios data). Son más rápidos pero menos portátiles.
+
+----------------------------------------------------------
+2. Estrategias de copia
+----------------------------------------------------------
+  - Backup completo: copia toda la base de datos cada vez. Simple, pero lento y
+    pesado a medida que crece.
+  - Backup incremental: solo copia los datos modificados desde la última copia
+    (completa o incremental). Rápido, pero la recuperación requiere todas las
+    copias (completa + todos los incrementales).
+  - Backup diferencial: copia los datos modificados desde la última copia
+    COMPLETA. La recuperación solo necesita la copia completa + la última
+    diferencial. Más rápido que un completo, más pesado que un incremental.
+
+Combinación típica: completo semanal + incremental o diario diferencial.
+
+----------------------------------------------------------
+3. Recuperación punto en el tiempo (PITR - Point-in-Time Recovery)
+----------------------------------------------------------
+PostgreSQL (y otros SGBD) registran TODOS los cambios en registros WAL
+(Write-Ahead Logging) antes de confirmarlos en disco.
+
+Con PITR se puede restaurar la base de datos a un momento EXACTO (por ejemplo:
+"2024-12-15 14:32:00"), reproduciendo los registros WAL del backup hasta ese
+punto.
+
+Flujo:
+  1. Restaurar el backup completo más reciente (base).
+  2. Reproducir los WAL (archivos de registro) desde el backup hasta el momento
+     deseado.
+  3. La BD queda en el estado exacto de ese instante.
+
+Parámetros clave en PostgreSQL:
+  - archive_command: script que envía los WAL a almacenamiento seguro (S3,
+    cinta, etc.).
+  - recovery_target_time: fecha/hora objetivo de la recuperación.
+
+PITR es la herramienta estándar para recuperarse de errores humanos (DELETE o
+UPDATE accidental) sin perder datos posteriores.
+
+
+================================================================================
+MÓDULO T4: INTEGRACIÓN CON EL DESARROLLO DE SOFTWARE
+================================================================================
+
+----------------------------------------------------------
+1. Gestión de migraciones de esquemas
+----------------------------------------------------------
+Una migración es un fichero con cambios en el esquema (CREATE TABLE, ALTER
+TABLE, etc.) que se aplica de forma versionada y reproducible.
+
+Herramientas:
+  - Flyway: usa ficheros SQL versionados (V1__create.sql, V2__alter.sql) y los
+    aplica en orden.
+  - Liquibase: usa ficheros XML, YAML o changelogs SQL; ofrece rollback
+    integrado.
+  - Migraciones nativas de ORMs:
+      * Django: makemigrations / migrate (genera Python que el ORM traduce a
+        SQL).
+      * Laravel: php artisan make:migration / php artisan migrate.
+      * Alembic (SQLAlchemy/Python).
+
+Regla clave: NUNCA editar un esquema directamente en producción sin pasar por
+una migración versionada. Cada cambio se graba como fichero en el repositorio,
+se revisa en code review y se aplica de forma automática.
+
+----------------------------------------------------------
+2. ORM vs SQL puro
+----------------------------------------------------------
+ORM (Object-Relational Mapping): capa de abstracción que mapea tablas de BD a
+objetos del código fuente (clases en Python, Java, etc.).
+
+Cuándo usar un ORM:
+  - Operaciones CRUD rutinarias (creación, lectura, actualización y borrado).
+  - Prototipos rápidos donde la velocidad de desarrollo es prioritaria.
+  - Evitar escribir SQL repetitivo y simple.
+
+Cuándo escribir SQL puro (raw SQL):
+  - Consultas complejas con múltiples JOINs, subconsultas, window functions o
+    CTEs.
+  - Optimización de rendimiento crítico.
+  - Migraciones de datos a gran escala.
+
+El problema N+1: ocurre cuando el ORM, para cargar una lista de N registros,
+ejecuta una consulta adicional por cada registro (N+1 consultas en total),
+en lugar de una sola consulta con JOIN.
+
+Ejemplo N+1 en Django:
+  for cliente in Cliente.objects.all():
+      print(cliente.pedidos.count())  -- cada vuelta hace una SELECT
+
+Solución:
+  for cliente in Cliente.objects.prefetch_related('pedidos').all():
+      print(cliente.pedidos.count())  -- 2 consultas, no 1001
+
+En general, el ORM es perfecto para la mayoría de operaciones; el SQL puro
+complementa en los puntos donde se necesita control total sobre la consulta.
+
+
+###############################################################################
+#
+# ANEXO - HERRAMIENTAS PRÁCTICAS
+#
+###############################################################################
+
+================================================================================
+MÓDULO X1: DBeAVER
+================================================================================
+
+DBeaver es una herramienta de base de datos universal, gratuita y de código
+abierto para desarrolladores y administradores de bases de datos.
+
+----------------------------------------------------------
 Instalación
-===========
+----------------------------------------------------------
+Con snap (Ubuntu/Linux):
+  $ sudo snap install dbeaver-ce
 
-Con snap:
-
-$ sudo snap install dbeaver-ce
-
-Como crear diagrama entidad relación en DBeaver
-===============================================
-
+----------------------------------------------------------
+Crear un diagrama Entidad-Relación en DBeaver
+----------------------------------------------------------
+DBeaver permite generar diagramas ER a partir de las tablas existentes en la
+base de datos conectada. Consulta la guía paso a paso en:
 https://blog.junglacode.org/gnu-linux/tips/como-crear-diagrama-entidad-relacion-en-dbeaver/
 
-Fuente
-======
+Fuente: https://dbeaver.io/about/
 
-https://dbeaver.io/about/
 
-============================================================================
-Enviar un archivo de manera segura por correo usando cifrado por ejemplo una
-base de datos
-============================================================================
+================================================================================
+MÓDULO X2: CIFRADO DE ARCHIVOS CON GPG
+================================================================================
 
-1. Comprimir y cifrar el archivo con GPG (GNU Privacy Guard)
-
-GPG es una herramienta de cifrado ampliamente utilizada y confiable. Puedes
-cifrar el archivo .sql con una contraseña o usando la clave pública del
-destinatario.
+Envío de un archivo de manera segura por correo electrónico (ejemplo: archivo
+de base de datos exportado).
 
 Pasos:
 
-1- Instalar GPG (si no lo tienes instalado):
+1. Instalar GPG (si no lo tienes):
+   $ sudo apt update && sudo apt install gnupg
 
-$ sudo apt update
+2. Comprimir y cifrar el archivo con una contraseña:
+   $ gpg -c archivo.sql
+   Esto genera archivo.sql.gpg. Se pedirá una contraseña para cifrarlo.
+   Comparte la contraseña con el destinatario por un canal seguro (llamada,
+   mensaje, etc.).
 
-$ sudo apt install gnupg
+3. Enviar el archivo cifrado por correo electrónico.
 
-Cifrar el archivo con una contraseña:
+4. Descifrar en destino:
+   $ gpg -d archivo.sql.gpg > archivo.sql
+   Se pedirá la contraseña que se usó para cifrar.
 
-$ gpg -c archivo.sql
+Nota: si se hace la prueba localmente, puede que no pida la contraseña porque
+ya está en el caché de claves de GPG. Para una prueba fiable, descifrar desde
+otra máquina.
 
-Esto generará un archivo cifrado llamado archivo.sql.gpg.
-
-Te pedirá una contraseña para cifrar el archivo. Asegúrate de compartirla con el
-destinatario de forma segura (por ejemplo, por otro medio como un mensaje de
-texto o una llamada).
-
-Enviar el archivo cifrado:
-
-Adjunta el archivo archivo.sql.gpg en el correo.
-
-Descifrar en el destino:
-
-El destinatario puede descifrar el archivo con:
-
-$ gpg -d archivo.sql.gpg > archivo.sql
-
-Se le pedirá la contraseña que usaste para cifrar.
-
-Nota: Si se hace la prueba localmente para descifrar es posible que no pida la
-contraseña ya que puede que la contraseña ya está agregada localmente por eso se
-debe probar en otra pc.
-
-Fuente
-======
-
-Deepseek
+Fuente: DeepSeek
