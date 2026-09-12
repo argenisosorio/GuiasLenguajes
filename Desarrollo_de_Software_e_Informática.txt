@@ -5490,3 +5490,47 @@ Fuente
 ======
 
 Gemini IA
+
+=====================================
+Una red elástica (Elastic Networking)
+=====================================
+
+En entornos de servidores y la nube es la capacidad de asignar, mover, escalar y
+reconfigurar interfaces de red, direcciones IP y ancho de banda de forma
+dinámica y virtual, sin necesidad de reiniciar los servidores ni modificar la
+infraestructura física.
+
+En un esquema tradicional, una tarjeta de red (NIC) y su IP están ligadas al
+hardware de una máquina. La red elástica desacopla la configuración de red del
+hardware, convirtiendo la interfaz de red en un recurso de software
+transferible.
+
+Capacidades clave:
+
+-Migración de IP y failover instantáneo: Si un servidor presenta una falla, su
+interfaz de red (con sus direcciones IP públicas y privadas) se desvincula y se
+conecta inmediatamente a un servidor de respaldo operativo.
+
+-Ajuste dinámico de capacidad: Permite incrementar o reducir el ancho de banda y
+la capacidad de procesamiento de red según los picos de tráfico en tiempo real.
+
+-Segmentación múltiple: Un solo servidor puede tener varias interfaces virtuales
+asignadas a distintas subredes (por ejemplo, una interfaz expuesta a internet
+para peticiones web y otra privada en una subred aislada para bases de datos).
+
+-Mantenimiento sin interrupciones: Permite apagar o actualizar un servidor
+redirigiendo su identidad de red a otro nodo en segundos, evitando caídas del
+servicio (downtime).
+
+Ejemplo de uso:
+
+En servicios en la nube como AWS (con sus Elastic Network Interfaces o ENI) o
+Google Cloud, si tu servidor de base de datos se queda sin memoria, no necesitas
+reconfigurar aplicaciones. Creas un servidor más potente, desconectas la
+interfaz de red elástica del servidor viejo, la conectas al nuevo y todo el
+tráfico continúa fluyendo sin cambiar IP ni registros DNS.
+
+Fuente
+======
+
+Gemini IA
