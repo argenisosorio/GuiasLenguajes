@@ -10463,7 +10463,7 @@ Gemini IA
 Relaciones sencillas en Django
 ==============================
 
-Supongamos que queremos relacionar un parsona con un producto, mientras que en
+Supongamos que queremos relacionar un persona con un producto, mientras que en
 Laravel se declaran las relaciones en el modelo con el siguiente formato:
 
 // Se declara la relación en el modelo de Personas
@@ -10487,7 +10487,13 @@ public function people()
 En Django se declara tanto la llave foránea como las relaciones en el modelo con
 el siguiente formato:
 
-product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True, blank=True, related_name='people')
+product = models.ForeignKey(
+    Product,
+    on_delete=models.SET_NULL,
+    null=True,
+    blank=True,
+    related_name='people'
+)
 
 Esta línea de código define una Relación de Clave Foránea (ForeignKey), que en
 bases de datos representa una relación 1:N (Uno a Muchos).

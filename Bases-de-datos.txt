@@ -154,6 +154,42 @@ Tipos de relaciones (por cardinalidad):
 La cardinalidad mínima (opcionalidad) también importa: "cada pedido DEBE tener
 un cliente" (mínima 1) frente a "un cliente PUEDE tener pedidos" (mínima 0).
 
+Otros ejemplos cotidianos:
+
+1 a 1 (1:1)
+===========
+
+-Un registro de A corresponde solo a un registro de B, y viceversa.
+
+-Persona y Número de Pasaporte: Una persona tiene un único pasaporte oficial, y
+ese número de pasaporte le pertenece solo a esa persona.
+
+-Usuario y Cuenta de Configuración: Un usuario de una app tiene un solo panel de
+ajustes, y ese panel de ajustes pertenece a un único usuario.
+
+1 a Muchos (1:N)
+================
+
+-Un registro de A se relaciona con varios de B, pero cada registro de B
+pertenece solo a un A.
+
+-Cliente y Facturas: Un cliente puede hacer muchas compras y tener varias
+facturas, pero cada factura pertenece a un solo cliente.
+
+-Autor y Libros: Un autor escribe muchos libros, pero un libro específico (en
+su edición original) es de un solo autor principal.
+
+Muchos a Muchos (N:M)
+=====================
+
+-Varios registros de A se relacionan con varios de B, y viceversa.
+
+-Estudiantes y Cursos: Un estudiante se inscribe en varias materias, y cada
+materia tiene inscritos a muchos estudiantes.
+
+-Canciones y Listas de Reproducción (Playlists): Una canción puede estar en
+muchas playlists diferentes, y cada playlist tiene muchas canciones.
+
 ----------------------------------------------------------
 2. Modelo Relacional
 ----------------------------------------------------------
