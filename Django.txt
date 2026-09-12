@@ -16782,3 +16782,129 @@ Fuente
 ======
 
 Gemini IA
+
+===============
+Logs con Django
+===============
+
+Django tiene un sistema de logging integrado, basado en el módulo estándar de
+Python (logging). Por defecto en desarrollo, Django no los guarda en un archivo
+físico, sino que los muestra directamente en la consola/terminal donde ejecutas
+el comando python manage.py runserver.
+
+¿Cómo configurarlos y guardarlos en un archivo?
+
+Para cambiar este comportamiento y guardar los logs en un archivo dentro de tu
+proyecto, debes añadir la configuración LOGGING en tu archivo settings.py:
+
+-----
+
+import os
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'desarrollo.log'),
+        },
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file', 'console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}
+
+-----
+
+Al interactiar con el sistema se crearan registros en el archivo desarrollo.log
+como por ejemplo:
+
+"GET / HTTP/1.1" 200 1176
+"GET /static/css/bootstrap.min.css HTTP/1.1" 200 232913
+"GET /static/js/bootstrap.bundle.min.js HTTP/1.1" 200 80421
+"GET /static/images/favicon.png HTTP/1.1" 200 30132
+"GET /create/ HTTP/1.1" 200 1516
+"POST /create/ HTTP/1.1" 302 0
+"GET / HTTP/1.1" 200 1539
+
+Niveles y Loggers más comunes:
+
+-DEBUG (detalles técnicos)
+-INFO (eventos normales)
+-WARNING (advertencias)
+-ERROR (fallos)
+
+¿Cómo escribir tus propios logs en el código?
+
+Puedes generar tus propios mensajes desde cualquier archivo de tu aplicación
+(views.py, models.py, etc.):
+
+-----
+
+import logging
+
+logger = logging.getLogger('django')
+
+def mi_vista(request):
+    logger.debug("Procesando la petición...")
+    try:
+        # Tu lógica aquí
+        pass
+    except Exception as e:
+        logger.error(f"Ocurrió un error: {e}")
+
+Otro ejemplo:
+
+-----
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Person
+from .forms import PersonForm
+import logging
+logger = logging.getLogger('django')
+
+
+def create_person(request):
+    """
+    Handle Person creation through a form.
+
+    GET: Displays an empty form for creating a new Person
+    POST: Processes the submitted form and creates a new Person
+
+    Args:
+        request (HttpRequest): The incoming HTTP request
+
+    Returns:
+        HttpResponse: Rendered form template (GET) or redirect to home (POST)
+    """
+    if request.method == 'POST':
+        form = PersonForm(request.POST)
+        if form.is_valid():
+            form.save()
+            logger.info("##### Se registro una persona #####")
+            return redirect('person:home')
+    else:
+        logger.info("##### Se cargo el formulario #####")
+        form = PersonForm()
+
+    context = {'form': form}
+    return render(request, 'person/create.html', context)
+
+-----
+
+Fuente
+======
+
+Gemini IA
