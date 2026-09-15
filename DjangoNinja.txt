@@ -1375,3 +1375,57 @@ Fuente
 ======
 
 Gemini IA
+
+=============
+@staticmethod
+=============
+
+Es un decorador nativo de Python que define un método estático dentro de una
+clase.
+
+Su función principal es indicar que la función no necesita recibir ni la
+instancia (self) ni la clase (cls) como primer parámetro, a diferencia de los
+métodos habituales.
+
+¿Para qué sirve y cómo funciona?
+
+-Comportamiento: Se comporta como una función normal y corriente, pero vive
+dentro del espacio de nombres (namespace) de la clase para mantener el código
+organizado de forma lógica.
+
+-Sin estado: No puede modificar ni acceder al estado de la instancia (no usa
+self) ni de la clase (no usa cls). Recibe solo los argumentos que le pases
+explícitamente.
+
+-Independencia: Se puede llamar tanto desde la clase (Clase.metodo()) como desde
+una instancia de ella (instancia.metodo()) sin necesidad de instanciar la clase
+previamente.
+
+Análisis de ejemplo:
+
+En el contexto de Django Ninja / Pydantic que estás utilizando:
+
+@staticmethod
+def resolve_occupation(obj: Any) -> str | None:
+    profile = getattr(obj, "profile", None)
+    if profile is None:
+        return None
+    return user_service.get_occupation_display(profile.occupation)
+
+1. Función resolver de Ninja: Django Ninja permite definir métodos dentro del
+esquema para resolver campos calculados (por ejemplo, un campo occupation en el
+Schema). Ninja busca este método para saber cómo obtener ese dato.
+
+2. ¿Por qué @staticmethod aquí? Para calcular la ocupación solo necesitas el
+objeto de usuario recibido en el argumento obj. No necesitas ninguna variable
+interna del Schema ni llamar a otros métodos del esquema via self.
+
+3. Optimización y limpieza: Al marcarlo como @staticmethod, le indicas a Python
+y a Pydantic/Ninja que este método es puro/independiente: procesa una entrada
+(obj) y devuelve una salida (str | None), delegando la lógica pesada a
+user_service.
+
+Fuente
+======
+
+Gemini IA
