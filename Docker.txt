@@ -1316,3 +1316,46 @@ Fuentes
 Fabian Palmera
 
 Deepseek IA
+
+=======================================
+Ubicación física de los datos en Docker
+=======================================
+
+En un sistema Linux, la ubicación física de los datos depende directamente del
+tipo de almacenamiento configurado al lanzar el contenedor:
+
+1. Volúmenes nombrados o anónimos (Administrados por Docker): Es la opción por
+defecto en la mayoría de implementaciones. Docker gestiona la carpeta
+automáticamente dentro del sistema de archivos del host:
+
+-Ruta en el Host (Linux): /var/lib/docker/volumes/<nombre_del_volumen>/_data
+
+-Ubicación interna en la imagen de Postgres: /var/lib/postgresql/data (o
+/var/lib/postgresql/data/pgdata dependiendo de la variable PGDATA).
+
+Nota: Requiere permisos de superusuario sudo para acceder a /var/lib/docker/).
+
+2. Bind Mounts (Montaje directo de directorio): Ocurre cuando especificas
+manualmente la ruta del sistema de archivos local en la configuración del
+contenedor o en docker-compose.yml:
+
+volumes:
+  - /home/usuario/mi_postgres_data:/var/lib/postgresql/data
+
+Ruta en el Host (Linux): La ruta exacta que hayas indicado a la izquierda de los
+dos puntos (ejemplo: /home/usuario/mi_postgres_data).
+
+Cómo verificar la ruta exacta de tus datos en ejecución:
+
+1. Obtén el nombre o ID de tu volumen ejecutando:
+
+$ docker volume ls
+
+2. Inspecciona el volumen para ver su punto de montaje (Mountpoint):
+
+$ docker volume inspect <nombre_del_volumen>
+
+Fuente
+======
+
+Gemini IA

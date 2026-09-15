@@ -13383,10 +13383,38 @@ proto udp
 # Configuración del servidor remoto:
 remote vpn.example.com 1194
 
+Verificar la validez del certificado actual
+===========================================
+
+$ openssl x509 -in /ruta/a/tu/certificado.crt -noout -dates
+
+Ejemplo:
+
+$ openssl x509 -in /etc/openvpn/client/conexion-XXXX-00000-user-config.ovpn -noout -dates
+
+Salida:
+
+notBefore=Sep 14 00:27:33 2024 GMT
+notAfter=Sep 12 00:27:33 2034 GMT
+
+El certificado en sí no está vencido (es válido desde septiembre de 2024 hasta
+septiembre de 2034).
+
+Esos dos valores definen el periodo exacto de validez del certificado SSL/TLS:
+
+notBefore (No antes de): Es la fecha y hora de emisión a partir de la cual el
+certificado empieza a ser válido (14 de septiembre de 2024 a las 00:27:33 GMT).
+Antes de ese momento, el certificado es rechazado por "no ser válido aún".
+
+notAfter (No después de): Es la fecha y hora exacta de expiración (12 de
+septiembre de 2034 a las 00:27:33 GMT). Después de este punto, el certificado
+caduca.
+
 Fuente
 ======
 
 Deepseek
+Gemini IA
 
 ===========================
 El archivo /etc/resolv.conf
