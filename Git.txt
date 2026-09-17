@@ -1360,6 +1360,27 @@ estado preparado para ser confirmados nuevamente.
 
 $ git reset --soft HEAD~
 
+-----
+
+Para revertir el commit en local manteniendo todos tus archivos e los cambios
+intactos en tu área de trabajo (untracked/modified), usa el siguiente comando:
+
+$ git reset --soft HEAD~1
+
+¿Qué hace este comando?
+
+--soft: Mantiene todas tus modificaciones. Los archivos que habías incluido en
+el commit volverán a estar en el área de preparación (staging area, listos para
+seleccionarse nuevamente).
+
+HEAD~1: Mueve el puntero de Git al commit inmediatamente anterior, deshaciendo
+el último commit ejecutado.
+
+Fuente
+======
+
+Gemini IA
+
 ============================================================================
 Hacer push a un repositorio gitlab pasando usuario y contraseña directamente
 ============================================================================
