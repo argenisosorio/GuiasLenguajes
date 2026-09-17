@@ -5534,3 +5534,58 @@ Fuente
 ======
 
 Gemini IA
+
+===============================================
+Arquitectura Servidor web + reverse proxy + TLS
+===============================================
+
+Esta arquitectura combina tres elementos fundamentales de la infraestructura de
+red para servir aplicaciones de forma segura, rápida y escalable.
+
+Componentes y roles:
+
+-Servidor web: Procesa y responde a las solicitudes de los usuarios entregando
+archivos estáticos (HTML, CSS, imágenes) o interactuando con lenguajes backend
+(Python, Node.js, PHP, Go) para generar respuestas dinámicas.
+
+-Reverse proxy (Proxy inverso): Se coloca frente a uno o varios servidores web.
+Recibe las peticiones entrantes de los clientes y las redirige hacia la
+aplicación o servicio interno correspondiente. Además de enrutar el tráfico,
+permite realizar balanceo de carga, caché de contenidos e inspección
+depeticiones.
+
+-TLS (Transport Layer Security): El sucesor moderno de SSL. Es el protocolo que
+cifra la comunicación entre el navegador del usuario y el proxy/servidor web.
+Garantiza confidencialidad, integridad de los datos y autenticación mediante
+certificados digitales (HTTPS).
+
+Cómo funciona el flujo de una petición:
+
+-Conexión cifrada (TLS): El cliente (navegador) solicita acceder a
+https://ejemplo.com. El reverse proxy intercepta la petición, valida la conexión
+cifrada TLS y responde con el certificado digital.
+
+-Enrutamiento interno: Una vez descifrado el tráfico en el proxy (proceso
+conocido como TLS Termination), el reverse proxy analiza la solicitud y la
+reenvía al servidor web o aplicación interna adecuada mediante la red local.
+
+-Respuesta al cliente: El servidor web procesa la lógica, devuelve el resultado
+al reverse proxy, y este lo reenvía cifrado de vuelta al usuario.
+
+Ventajas clave de este patrón:
+
+-Seguridad: Oculta la infraestructura interna, las direcciones IP de backend y
+la topología de la red frente a internet.
+
+-Gestión de certificados centralizada: Los certificados TLS se configuran
+únicamente en el proxy inverso (ej. Nginx, Traefik, Caddy), evitando tener que
+instalar y renovar certificados en cada microservicio o servidor web interno.
+
+-Rendimiento y escalabilidad: El proxy puede aplicar caché de archivos
+estáticos, comprimir respuestas (Gzip/Brotli) y distribuir el tráfico mediante
+balanceo de carga entre múltiples instancias del servidor web.
+
+Fuente
+======
+
+Gemini IA
