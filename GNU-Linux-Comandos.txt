@@ -12718,6 +12718,12 @@ $ ffmpeg -i entrada.mkv -vcodec libx264 -acodec aac salida.mp4
 
 ----
 
+Forzar reconversión (si hay problemas de compatibilidad) + notificación.
+
+$ ffmpeg -i entrada.mkv -vcodec libx264 -acodec aac salida.mp4 && notify-send -u critical "FFmpeg" "Conversión lista..."
+
+----
+
 Convertir solo el video (sin audio)
 
 $ ffmpeg -i entrada.mkv -vcodec copy -an salida.mp4
