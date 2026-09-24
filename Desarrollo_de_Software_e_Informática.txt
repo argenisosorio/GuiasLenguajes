@@ -5589,3 +5589,84 @@ Fuente
 ======
 
 Gemini IA
+
+Las reglas de negocio (business rules)
+
+Son las declaraciones, restricciones o políticas que definen o limitan el
+comportamiento de una organización. En el desarrollo de software, corresponden a
+la lógica real del negocio traducida a reglas concretas que el sistema debe
+validar y hacer cumplir para garantizar que los procesos operen correctamente.
+
+No dependen de la tecnología ni del lenguaje de programación; existirían dentro
+de la empresa incluso si todo se gestionara en papel.
+
+Tipos de Reglas de Negocio
+
+1. Validaciones de Datos: Condición que un dato debe cumplir antes de ser
+procesado.
+
+Ejemplo: "Un número de identificación o cédula debe ser único en el sistema."
+
+2. Derivaciones y Cálculos: Fórmulas o algoritmos específicos del dominio.
+
+Ejemplo: "El cálculo del impuesto se aplica como el 16% sobre el subtotal del
+pedido."
+
+3. Flujos de Trabajo y Permisos: Secuencias obligatorias o restricciones de
+acceso.
+
+Ejemplo: "Una solicitud de vacaciones requiere la aprobación de un supervisor si
+supera los 5 días."
+
+4. Políticas Operativas: Criterios para aplicar descuentos, penalizaciones o
+estados.
+
+Ejemplo: "Si un usuario realiza un pago dentro de los primeros 5 días del mes,
+se le otorga un 5% de descuento."
+
+Diferencia entre Regla de Negocio y Lógica Técnica
+==================================================
+
+Es común confundir las reglas de negocio con requerimientos técnicos o de
+infraestructura. La diferencia clave radica en el origen de la necesidad:
+
++------------------------------------+------------------------------------+
+| Regla de Negocio                   | Lógica Técnica / De Aplicación     |
++------------------------------------+------------------------------------+
+| Definida por el cliente o          | Definida por los desarrolladores u |
+| stakeholders del negocio.          | arquitectos de software.           |
++------------------------------------+------------------------------------+
+| Ejemplo: "Un pedido no se puede    | Ejemplo: "Enviar un correo de      |
+| procesar si el stock es cero."     | confirmación de forma asíncrona    |
+|                                    | mediante Celery tras guardar la    |
+|                                    | orden."                            |
++------------------------------------+------------------------------------+
+| Ejemplo: "El usuario queda         | Ejemplo: "Cifrar la clave del      |
+| bloqueado tras 3 intentos fallidos | usuario con bcrypt antes de        |
+| de pago."                          | guardarla en la base de datos."    |
++------------------------------------+------------------------------------+
+
+¿Dónde y Cómo se Implementan en el Código?
+==========================================
+
+Para mantener un sistema fácil de escalar y mantener, las reglas de negocio no
+deben estar dispersas en la capa de presentación (vistas/controladores) ni en la
+base de datos sin control.
+
+-Patrones Arquitectónicos: Se encapsulan dentro de la Capa de Dominio o Capa de
+Servicios (siguen principios como Clean Architecture o DDD - Domain-Driven
+Design).
+
+-Manejo de Cambios: Dado que las políticas de una organización cambian con
+frecuencia (nuevas leyes, ajustes de precios, políticas de uso), aislarlas en
+servicios o módulos dedicados evita que un cambio operativo rompa la interfaz de
+usuario o las consultas a la base de datos.
+
+-Pruebas Automatizadas: Son las candidatas principales para las pruebas
+unitarias (unit tests), ya que se deben verificar todos los escenarios posibles
+(casos borde) de la lógica operativa.
+
+Fuente
+======
+
+Gemini IA
