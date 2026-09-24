@@ -1,0 +1,559 @@
+========================
+Guía de VirtualBox by dM
+========================
+
+================================
+Instalar VirtualBox en Debian 13
+================================
+
+1- Descargar VirtualBox desde la fuente oficial
+
+Descargar el .deb desde https://www.virtualbox.org/wiki/Linux_Downloads
+
+2- Resolvemos cualquier dependencia rota
+
+$ sudo apt --fix-broken install
+
+3- Instalar paquetes necesarios para el correcto funcionamiento:
+
+$ sudo apt install linux-headers-amd64 build-essential dkms
+
+4- Instalar el pequete .deb:
+
+$ sudo dpkg -i virtualbox-7.2_7.2.6-172322~Debian~trixie_amd64.deb
+
+Si hay errores en dependencias correr de nuevo --fix-broken
+
+5- Reconstruir los módulos de VirtualBox
+
+Una vez que termine la instalación anterior, debes ejecutar el comando para
+reintentar la configuración:
+
+$ sudo /sbin/vboxconfig
+
+Error de compatibilidad con KVM
+===============================
+
+Si el VB da un erro de intefaz que dice que hay que desactivar algo de KVM y
+recompilar no se que, este error es muy específico y confirma que tu CPU (Intel)
+tiene la virtualización activada, pero otro programa la está usando y no deja
+entrar a VirtualBox.
+
+El mensaje dice: VT-x is being used by another hypervisor... Please disable the
+KVM kernel extension.
+
+En Linux, el sistema operativo trae su propio virtualizador llamado KVM, y este
+se carga automáticamente al arrancar, "secuestrando" la virtualización.
+VirtualBox y KVM no suelen llevarse bien al mismo tiempo.
+
+Aquí tienes la solución:
+Paso 1: Solución inmediata (sin reiniciar)
+
+Debemos "apagar" el módulo KVM temporalmente para liberar el procesador. Abre tu
+terminal y ejecuta:
+
+$ sudo rmmod kvm_intel
+
+$ sudo rmmod kvm
+
+Fuentes
+=======
+
+https://www.virtualbox.org/wiki/Linux_Downloads
+
+Gemini IA
+
+======================
+Desinstalar VirtualBox
+======================
+
+# apt-get remove --purge virtualbox
+
+# rm -rf VirtualBox\ VMs/
+
+# rm -rf .config/VirtualBox/
+
+Otra forma
+==========
+
+Si instaló VirtualBox a través del script de instalación, puede encontrar el
+directorio donde está instalado ejecutando
+
+$ cat /etc/vbox/vbox.cfg
+
+# VirtualBox installation directory
+INSTALL_DIR='/opt/VirtualBox'
+# VirtualBox version
+INSTALL_VER='6.1.22'
+INSTALL_REV='144080'
+# Build type and user name for logging purposes
+BUILD_TYPE='release'
+USERNAME='vbox'
+
+Luego puede ejecutar el script de desinstalación ubicado en el directorio de
+instalación. Suponiendo que esté instalado en /opt/VirtualBox, ejecute:
+
+$ sudo /opt/VirtualBox/uninstall.sh
+
+VirtualBox 6.1.22 r144080 has been removed successfully.
+
+$ sudo rm -rf /opt/VirtualBox
+
+Fuente
+======
+
+https://askubuntu.com/questions/703746/how-to-completely-remove-virtualbox
+
+============================
+Adaptadores de red virtuales
+============================
+
+Cada máquina virtual de VirtualBox puede utilizar hasta ocho adaptadores de red
+virtuales, cada uno de los cuales se denomina, a su vez, controlador de interfaz
+de red (NIC). Se pueden configurar cuatro adaptadores de red virtuales en la
+interfaz gráfica de usuario (GUI) de VirtualBox.
+
+Se puede acceder a la configuración de los adaptadores de red de VirtualBox en
+los ajustes de la máquina virtual (selecciona tu máquina virtual, pulsa
+Settings y ve a la sección Network en la ventana de ajustes de la máquina
+virtual).
+
+Allí deberías ver cuatro pestañas de adaptadores. Un adaptador de red virtual
+está habilitado de forma predeterminada después de la creación de la máquina
+virtual. Puede marcar la casilla «“Enable Network Adapter”» para habilitar el
+adaptador y desmarcarla para deshabilitarlo (esta casilla define si un
+dispositivo adaptador de red virtual está conectado a una máquina virtual o no).
+
+Haga clic en «Advanced» para ampliar los ajustes avanzados del adaptador de
+red de VirtualBox.
+
+Tipos de adaptadores de red virtuales en VirtualBox
+===================================================
+
+Un adaptador de red virtual es un dispositivo físico emulado por software. Hay
+seis tipos de adaptadores virtuales que pueden ser virtualizados por VirtualBox.
+
+-AMD PCnet-PCI II (Am79C970A). Este adaptador de red se basa en un chip de AMD y
+puede utilizarse en numerosas situaciones. En cuanto a los sistemas invitados de
+Windows, este adaptador de red puede utilizarse con versiones antiguas de
+Windows (como Windows 2000), ya que las versiones más recientes, como Windows 7,
+8 y 10, no contienen un controlador integrado para este adaptador.
+Originalmente, el dispositivo PCI «Am79C970A» contiene un único chip
+controlador de 10 Mbit y el motor DMA está integrado. Este adaptador de red
+también es compatible con la tecnología Magic Packet de AMD para el encendido
+remoto.
+
+-AMD PCnet-FAST III (Am79C973). Este adaptador de red virtualizado es compatible
+con casi todos los sistemas operativos invitados que pueden ejecutarse en
+VirtualBox. GRUB (el cargador de arranque) puede utilizar este adaptador para el
+inicio por red. Al igual que el adaptador de red anterior, este se basa en un
+chip de AMD.
+
+-Intel PRO/1000 MT Desktop (82540EM). Este adaptador funciona perfectamente con
+Windows Vista y las versiones más recientes de Windows. La mayoría de las
+distribuciones de Linux también son compatibles con este adaptador.
+
+-Intel PRO/1000 T Server (82543GC). Windows XP reconoce este adaptador sin
+necesidad de instalar controladores adicionales.
+
+-Intel PRO/1000 MT Server (82545EM). Este modelo de adaptador resulta útil para
+importar plantillas OVF desde otras plataformas y puede facilitar el proceso de
+importación.
+
+-El adaptador de red paravirtualizado (virtio-net) es un caso especial. En lugar
+de virtualizar el hardware de red compatible con la mayoría de los sistemas
+operativos, el sistema operativo invitado debe proporcionar una interfaz de
+software especial para entornos virtualizados. Este enfoque permite evitar la
+complejidad de la emulación del hardware de red y, como resultado, puede mejorar
+el rendimiento de la red.
+
+VirtualBox es compatible con los controladores de red virtIO, que son el
+estándar del sector. Los controladores de red VirtIO forman parte del proyecto
+KVM y son de código abierto. Estos controladores están disponibles para Linux
+con el núcleo 2.6.25 o posterior, y para Windows, incluidas versiones anteriores
+como Windows 2000, XP y Vista.
+
+Jumbo Las tramas
+================
+
+VirtualBox ofrece compatibilidad limitada con jumbo tramas (tramas Ethernet que
+pueden transportar paquetes con un tamaño superior a 1.500 bytes). Si necesitas
+utilizar tramas de jumbo, selecciona un adaptador de red virtual de Intel y
+configúralo para que funcione en modo puente. Los adaptadores de red virtuales
+basados en AMD no admiten tramas de jumbo. Si intentas habilitar tramas de jumbo
+para adaptadores de red virtuales basados en AMD, las tramas de jumbo se
+descartarán de forma silenciosa tanto en el tráfico de entrada como en el de
+salida. Las tramas de Jumbo están desactivadas por defecto.
+
+Modos de red de VirtualBox
+==========================
+
+VirtualBox ofrece una amplia lista de modos de red, lo que constituye una de las
+funciones más interesantes de los ajustes de red de VirtualBox. Cada adaptador
+de red virtual se puede configurar por separado para que funcione en un modo de
+red diferente. Por ejemplo, puedes establecer el modo NAT para el adaptador 1 y
+el modo Host-only para el adaptador 2. Puedes seleccionar el modo de red en el
+menú desplegable Attached to.
+
+Veamos en detalle cada uno de los modos de red de VirtualBox.
+
+No conectado
+============
+
+Se ha instalado un adaptador de red virtual en una máquina virtual, pero falta
+la conexión de red, de forma muy similar a cuando se desconecta el cable de red
+Ethernet al utilizar un adaptador de red físico. Este modo puede resultar útil
+para realizar pruebas. Por ejemplo, puede activar este modo de red durante un
+breve periodo de tiempo para simular la desconexión del cable. Al desactivar el
+modo Not Attached cambiando a otro modo de red, la conexión de red vuelve a
+estar disponible. También puedes comprobar si un cliente DHCP obtiene la
+dirección IP correctamente, si la aplicación correspondiente puede reanudar la
+descarga después de una interrupción de la conexión o una pérdida de paquetes,
+etc.
+
+En lugar de utilizar el modo de red «Not Attached», puedes utilizar cualquier
+otro modo de red sin marcar la casilla «Cable Connected». Puedes marcar o
+desmarcar la casilla cuando una máquina virtual se encuentre en estado de
+ejecución (véase la captura de pantalla anterior). No olvides hacer clic en OK
+para aplicar los cambios en la configuración de red de la máquina virtual.
+
+NAT
+===
+
+Este modo de red está habilitado de forma predeterminada para un adaptador de
+red virtual. Un sistema operativo invitado en una máquina virtual puede acceder
+a los hosts de una red de área local (LAN) física mediante un dispositivo NAT
+(traducción de direcciones de red) virtual. Se puede acceder a redes externas,
+incluida Internet, desde un sistema operativo invitado. No se puede acceder a
+una máquina invitada desde una máquina anfitriona ni desde otras máquinas de la
+red cuando se utiliza el modo «NAT» para la configuración de red de
+VirtualBox. Este modo de red predeterminado es suficiente para los usuarios que
+deseen utilizar una máquina virtual únicamente para acceder a Internet, por
+ejemplo.
+
+La dirección IP del adaptador de red de la máquina virtual se obtiene a través
+de DHCP y las direcciones IP de la red utilizadas en este modo de red no se
+pueden modificar en la interfaz gráfica de usuario. VirtualBox cuenta con un
+servidor DHCP y un motor NAT integrados. Un dispositivo NAT virtual utiliza el
+adaptador de red físico del host de VirtualBox como interfaz de red externa. La
+dirección predeterminada del servidor DHCP virtual utilizado en el modo NAT es
+10.0.2.2 (esta es también la dirección IP de la puerta de enlace predeterminada
+para una máquina virtual). La máscara de red es 255.255.255.0.
+
+Si configura los adaptadores de red de dos o más máquinas virtuales para que
+utilicen el modo «NAT», cada máquina virtual obtendrá la dirección IP 10.0.2.15
+en su propia red aislada, detrás de un dispositivo NAT virtual privado. La
+puerta de enlace predeterminada para cada máquina virtual es 10.0.2.2. En
+VirtualBox, las direcciones IP no cambian cuando se utiliza el modo «NAT».
+
+El reenvío de puertos se puede configurar directamente desde la ventana de
+ajustes de red de la máquina virtual de VirtualBox haciendo clic en el botón
+«Port forwarding» (que se ve en la captura de pantalla anterior). Detalles sobre
+cómo configurar el reenvío de puertos en los ajustes de red de VirtualBox, que
+encontrarás más abajo, después de la sección «Network Modes».
+
+Red NAT
+=======
+
+Este modo es similar al modo «NAT» que se utiliza para configurar un router. Si
+utilizas el modo «NAT Network» para varias máquinas virtuales, estas podrán
+comunicarse entre sí a través de la red. Las máquinas virtuales pueden acceder a
+otros hosts de la red física y a redes externas, incluida Internet. Ninguna
+máquina de redes externas, ni tampoco aquellas de la red física a la que está
+conectada la máquina host, puede acceder a las máquinas virtuales configuradas
+para utilizar el modo NAT Network (de forma similar a cuando se configura un
+router para acceder a Internet desde la red doméstica). No se puede acceder a la
+máquina invitada desde la máquina anfitriona cuando se utiliza el modo
+«NAT Network» (a menos que se configure el reenvío de puertos en los ajustes de
+red globales de VirtualBox). Un enrutador NAT integrado de VirtualBox utiliza un
+controlador de interfaz de red física del anfitrión de VirtualBox como interfaz
+de red externa (al igual que ocurre con el modo «NAT »).
+
+La dirección y el nombre de la red se pueden modificar en las preferencias
+globales de VirtualBox (File > Preferences). En el panel izquierdo de la ventana
+Preferences, selecciona Network para acceder a los ajustes de red globales de
+VirtualBox; a continuación, haz doble clic en tu red NAT existente para realizar
+la edición de los ajustes (también puedes añadir una nueva red o eliminar una
+existente haciendo clic en los iconos + o x ).
+
+En la pequeña ventana emergente que aparecerá, también es posible activar o
+desactivar DHCP e IPv6, así como configurar el reenvío de puertos.
+
+La dirección predeterminada de la red «NatNetwork» es 10.0.2.0/24.
+
+La IP de la puerta de enlace predeterminada es 10.0.2. 1 (la plantilla «x.x.x.1»
+se utiliza para asignar la IP de la puerta de enlace predeterminada). Por
+ejemplo, si creas una nueva red virtual para el modo NAT Network en VirtualBox y
+configuras la dirección de red 192.168.22.0/24, la dirección IP de la puerta de
+enlace en esta red será 192.168.22. 1. No es posible modificar la dirección IP
+de la puerta de enlace de la red utilizada en el modo «NAT Network» ni cambiar
+el intervalo de direcciones IP asignadas por el servidor DHCP. Del mismo modo,
+la dirección IP del servidor DHCP es 10.0.2.3 por defecto (se utiliza la
+plantilla «x.x.x.3 »).
+
+Port forwarding
+===============
+
+Es otra opción a la que se puede acceder y configurar desde esta ventana. El
+reenvío de puertos se puede utilizar para configurar el acceso desde la máquina
+anfitriona y otros hosts de la misma red física a los servicios que se ejecutan
+en el sistema operativo invitado dentro de la máquina virtual (véanse los
+detalles a continuación). Como se puede observar, las ubicaciones de los ajustes
+de reenvío de puertos para los modos NAT y NAT Network son diferentes en la
+interfaz gráfica de usuario de VirtualBox. Los ajustes de reenvío de puertos
+para el modo NAT están disponibles en VM > Settings > Network, mientras que los
+ajustes de reenvío de puertos para el modo NAT Network se pueden configurar en
+File > Preferences > Network. Esto se debe a que las reglas de reenvío de
+puertos para el modo «NAT» son individuales para cada máquina virtual, mientras
+que las reglas de reenvío de puertos para el modo «NAT Network» son comunes para
+varias máquinas virtuales cuyos adaptadores están conectados a la red NAT
+correspondiente. Consulte los detalles sobre la configuración del reenvío de
+puertos más adelante, en la sección «Port Forwarding».
+
+Adaptador puente
+================
+
+Este modo se utiliza para conectar el adaptador de red virtual de una máquina
+virtual a una red física a la que está conectado un adaptador de red físico de
+la máquina host de VirtualBox. Un adaptador de red virtual de una máquina
+virtual utiliza la interfaz de red del host para la conexión a la red. En pocas
+palabras, los paquetes de red se envían y reciben directamente desde y hacia el
+adaptador de red virtual sin enrutamiento adicional. VirtualBox utiliza un
+controlador de filtro de red especial para el modo de red «bridged» con el fin
+de filtrar los datos procedentes del adaptador de red físico del host. Este modo
+de red se puede utilizar para ejecutar servidores en máquinas virtuales a las
+que se deba poder acceder plenamente desde una red de área local física. Al
+utilizar el modo de red «bridged» en VirtualBox, se puede acceder desde una
+máquina virtual a la máquina anfitriona, a los hosts de la red física y a redes
+externas, incluida Internet. Se puede acceder a la máquina virtual desde la
+máquina anfitriona y desde otros hosts (y máquinas virtuales) conectados a la
+red física.
+
+Si dispone de varios adaptadores de red físicos en la máquina host, debe
+seleccionar el adaptador correcto en los ajustes de red de VirtualBox.
+
+Un adaptador Ethernet y un adaptador Wi-Fi. Si utiliza el modo puente para un
+adaptador de red inalámbrico, no podrá utilizar las funciones de bajo nivel de
+dicho adaptador Wi-Fi en un sistema operativo invitado. Por ejemplo, no podrá
+seleccionar redes Wi-Fi a las que conectarse, activar el modo de supervisión,
+etc. En su lugar, deberá conectarse a la red Wi-Fi de la máquina host. Si
+necesita utilizar todas las funciones del adaptador Wi-Fi en el sistema
+operativo invitado de la máquina virtual, utilice un adaptador Wi-Fi USB y la
+función «USB Pass-through», tal y como se explica en la entrada del blog sobre
+Instalación de Kali Linux en VirtualBox.
+
+En VirtualBox, la dirección IP de un adaptador de red virtual de una máquina
+virtual puede pertenecer a la misma red que la dirección IP del adaptador de red
+físico de la máquina host cuando se utiliza el bridged modo. Si hay un servidor
+DHCP en tu red física, el adaptador de red virtual de la máquina virtual
+obtendrá la dirección IP automáticamente en el modo «bridged» (si la obtención
+automática de una dirección IP está configurada en los ajustes de la interfaz de
+red del sistema operativo invitado). Por lo tanto, la puerta de enlace
+predeterminada para un adaptador de red virtual que funciona en modo puente es
+la misma que la de tu máquina host. Veamos un ejemplo sencillo con direcciones
+IP.
+
+La dirección de la red física: 10.10.10.0/24
+
+La dirección IP de la puerta de enlace predeterminada en la red física:
+10.10.10.1
+
+La dirección IP del servidor DHCP en la red física: 10.10.10.1
+
+Ajustes de IP de la máquina host: Dirección IP: 10.10.10.72; máscara de red:
+255.255.255.0; puerta de enlace predeterminada: 10.10.10.1.
+
+Ajustes de IP de la máquina invitada: dirección IP: 10.10.10.91; máscara de red:
+255.255.255.0; puerta de enlace predeterminada: 10.10.10.1.
+
+En ocasiones, es posible que te encuentres con que tienes varias puertas de
+enlace en tu red física. Puedes utilizar una máquina anfitriona para conectarte
+a las redes necesarias a través de una puerta de enlace y una máquina invitada
+para conectarte a otras redes a través de la segunda puerta de enlace. También
+puedes editar la tabla de enrutamiento de tu máquina virtual y añadir rutas para
+utilizar ambas puertas de enlace con el fin de conectarte a las redes
+correspondientes. Como puedes ver, el modo de red puente es una potente opción
+dentro de los ajustes de red de VirtualBox con numerosos usos prácticos.
+
+Promiscuous mode
+================
+
+Este modo permite que una tarjeta de red transmita todo el tráfico recibido,
+independientemente de a qué tarjeta vaya dirigido dicho tráfico. En el modo
+normal, una tarjeta de red solo recibe tramas que incluyan la dirección MAC de
+esa tarjeta concreta como dirección de destino en la cabecera. Las tramas
+dirigidas a una dirección MAC diferente a la de la tarjeta seleccionada (cuando
+el tráfico no es de difusión) se descartan en el modo normal. El promiscuous
+mode permite que un adaptador de red físico tenga varias direcciones MAC, lo que
+hace que todo el tráfico entrante pase por el adaptador de red físico de la
+máquina host y llegue al adaptador de red virtual de la máquina virtual, que
+tiene su propia dirección MAC representada en el adaptador del host, incluso si
+dicho tráfico no está dirigido al adaptador de red virtual de esa máquina
+virtual en concreto.
+
+La mayoría de los adaptadores de red inalámbricos no admiten el modo promiscuo.
+El puenteo a los adaptadores Wi-Fi se realiza de la siguiente manera: VirtualBox
+sustituye las direcciones MAC adecuadas en las cabeceras de las tramas Ethernet
+que deben entregarse al adaptador de red virtual de la máquina virtual (para ese
+tráfico debe utilizarse la dirección MAC del adaptador Wi-Fi del host). El modo
+promiscuo resulta útil para probar la red y realizar auditorías de seguridad.
+Puedes activar el modo promiscuo en los ajustes de red de VirtualBox y realizar
+la supervisión del tráfico de red con un sniffer.
+
+Existen tres opciones para utilizar el modo «promiscuous mode».
+
+-<Deny. Cualquier tráfico que no esté destinado al adaptador de red virtual de
+la máquina virtual queda oculto a esta. Esta opción está activada por defecto.
+
+-Allow VMs. Todo el tráfico queda oculto al adaptador de red de la máquina
+virtual, excepto el tráfico transmitido hacia y desde otras máquinas virtuales.
+
+-Allow All. En este modo no hay restricciones. Un adaptador de red de una
+máquina virtual puede ver todo el tráfico entrante y saliente.>
+
+El modo «Promiscuous» puede utilizarse no solo para el modo de red «Bridged »,
+sino también para los modos «NAT Network», «Internal Network» y «Host-Only
+Adapter».
+
+Red interna
+===========
+
+Las máquinas virtuales cuyos adaptadores están configurados para funcionar en el
+modo VirtualBox Internal Network están conectadas a una red virtual aislada. Las
+máquinas virtuales conectadas a esta red pueden comunicarse entre sí, pero no
+pueden comunicarse con un equipo host de VirtualBox ni con ningún otro host de
+una red física o de redes externas. No se puede acceder a las máquinas virtuales
+conectadas a la red interna desde un equipo host ni desde ningún otro
+dispositivo. La red interna de VirtualBox internal network puede utilizarse para
+simular redes reales.
+
+Por ejemplo, puedes crear tres máquinas virtuales, cada una de las cuales tiene
+un adaptador de red virtual (Adaptador 1) conectado a la red interna. Las
+direcciones IP de estos adaptadores de red se definen a partir de la subred
+utilizada para la red interna de VirtualBox (debes definir la subred
+manualmente). Una de estas máquinas virtuales (VM1) cuenta además con un segundo
+adaptador de red virtual configurado para funcionar en el modo NAT. El VM1 está
+configurado como enrutador (una de las mejores soluciones para crear un
+enrutador es instalar Linux y configurar IPTABLES, pero para empezar puedes
+utilizar soluciones de enrutamiento más sencillas en el caso de las pruebas de
+red con VirtualBox).
+
+Un VM2 y un VM3 cuyos adaptadores de red estén conectados únicamente a la red
+interna de VirtualBox pueden tener acceso a redes externas si la dirección IP
+del adaptador de red interno del VM1 se configura como puerta de enlace en los
+ajustes de red de VM2 y VM3.
+
+Configuración de red utilizada en este ejemplo:
+
+VM1. Dirección IP: 192.168.23.1 (modointernal network ); 10.0.2.15 (modoNAT ),
+puerta de enlace 10.0.2.2 (la dirección IP del dispositivo NAT integrado de
+VirtualBox).
+
+VM2. Dirección IP: 192.168.23.2 (red interna), puerta de enlace: 192.168.23.1
+
+VM3. Dirección IP: 192.168.23.3 (red interna), puerta de enlace: 192.168.23.1
+
+Subred interna de VirtualBox: 192.168.23.0/24
+
+Nota: También puede instalar este tipo de infraestructura virtual para probar
+las reglas del cortafuegos en IPTABLES antes de implementarlas en su
+infraestructura de red real, pero es preferible utilizar el modo bridged y no el
+modo NAT para el segundo adaptador de red virtual del VM1 al conectarse a o
+desde redes externas.
+
+Adaptador solo para el host
+===========================
+
+Este modo de red se utiliza para la comunicación entre un host y los invitados.
+Una máquina virtual puede comunicarse con otras máquinas virtuales conectadas a
+la red host-only y con el equipo anfitrión. El equipo anfitrión de VirtualBox
+puede acceder a todas las máquinas virtuales conectadas a la red host-only.
+
+El adaptador de red virtual de VirtualBox Host-Only se crea en el sistema
+operativo del equipo anfitrión para su uso en la red host-only. Puede editar los
+ajustes de esta red de VirtualBox accediendo a File > Host Network Manager.
+
+En nuestro caso, la dirección de red predeterminada de la red host-only es
+192.168.56.0/24 y la dirección IP del adaptador de red virtual en la máquina
+host es 192.168.56.1. Puede editar estas direcciones IP manualmente en la
+pestaña Adapter. Se puede activar o desactivar un servidor DHCP marcando la
+casilla correspondiente. En la pestaña «DHCP Server », puedes configurar la
+dirección IP del servidor DHCP, la máscara de red y el intervalo de direcciones
+IP que se asignarán a los clientes DHCP.
+
+Los adaptadores de red virtuales de las máquinas virtuales no tienen una puerta
+de enlace en sus ajustes de IP porque el modo «Host-Only» no permite conectarse
+a ningún dispositivo fuera de la red «host-only». También es posible crear más
+de un adaptador de red VirtualBox «host-only» para utilizar diferentes redes
+«host-only »; solo tienes que pulsar el botón «Create». Si ya no se necesita la
+red «solo para el host», basta con seleccionar el adaptador y pulsar Remove.
+
+Controlador genérico
+====================
+
+Este modo de red te permite tener una interfaz de red como recurso compartido.
+El usuario puede seleccionar el controlador adecuado, que se distribuye en un
+paquete de extensión o se incluye con VirtualBox.
+
+Hay dos submodos disponibles para VirtualBox Generic Driver modo - UDP Tunnel y
+VDE (Virtual Distributed Ethernet) Networking.
+
+UDP Tunnel. Las máquinas virtuales que se ejecutan en diferentes hosts pueden
+comunicarse de forma transparente utilizando una infraestructura de red
+existente.
+
+VDE Networking. Las máquinas virtuales pueden conectarse a un conmutador virtual
+distribuido en hosts Linux o FreeBSD. Es necesario compilar VirtualBox a partir
+del origen del código para utilizar las redes VDE, ya que los paquetes estándar
+de VirtualBox no incluyen esta función.
+
+Reenvío de puertos
+==================
+
+Es un proceso que consiste en interceptar el tráfico dirigido a la dirección IP
+y al puerto adecuados, además de redirigir dicho tráfico a una dirección IP y/o
+un puerto diferentes. Se pueden utilizar aplicaciones especiales en ordenadores
+y otros dispositivos de enrutamiento para configurar el reenvío de puertos. Uno
+de los usos prácticos más habituales del reenvío de puertos es permitir el
+acceso desde redes externas a determinados servicios de red que están ocultos
+tras el NAT. Después de configurar las reglas de reenvío de puertos, los
+clientes pueden acceder a los servicios correspondientes desde el exterior
+conectándose a la dirección IP externa del router (o del host) y al puerto
+especificado.
+
+Los paquetes son interceptados primero por una aplicación del router; a
+continuación, la aplicación lee la dirección IP de destino y el número de puerto
+de las cabeceras correspondientes (cabeceras de paquetes IP, cabeceras de
+segmentos TCP o UDP). Si una combinación de la dirección IP de destino y/o el
+número de puerto de las cabeceras coincide con una condición establecida en una
+regla de reenvío de puertos, la aplicación de enrutamiento reescribe la
+información de la cabecera (dirección IP y/o número de puerto) y envía un
+paquete o segmento a otra interfaz de red de acuerdo con la regla de reenvío de
+puertos.
+
+Por defecto, no es posible conectarse desde un host de VirtualBox ni desde otros
+hosts de la LAN a máquinas virtuales de VirtualBox cuyos adaptadores de red
+estén configurados para funcionar en modo «NAT» o «NAT Network », pero
+VirtualBox ofrece una función integrada de reenvío de puertos para permitir
+dicho acceso.
+
+Conclusión
+==========
+
+VirtualBox es una potente solución de virtualización que es flexible y ofrece
+una amplia gama de ajustes de red. Cada máquina virtual puede utilizar hasta
+ocho adaptadores de red virtuales, y cada adaptador de red puede emularse como
+el modelo correspondiente de los controladores de interfaz de red (NIC) reales
+de Intel y AMD. Los ajustes de los adaptadores de red de VirtualBox permiten
+cambiar la dirección MAC de cada NIC virtual, conectar o desconectar el cable de
+red virtual y seleccionar el modo de red. Los ajustes del modo de red para un
+adaptador de red virtual son una de las partes más interesantes e importantes de
+los ajustes de red de VirtualBox. Existen seis modos de red, cada uno de los
+cuales puede utilizarse para diferentes usos prácticos. El reenvío de puertos
+puede configurarse para el acceso externo a máquinas virtuales cuyos adaptadores
+de red funcionen en los modos «NAT» o «NAT Network».
+
+Fuente
+======
+
+https://www.nakivo.com/es/blog/virtualbox-network-setting-guide/

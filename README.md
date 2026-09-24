@@ -109,6 +109,7 @@ Este repositorio contiene una colección de guías, apuntes y ejemplos de códig
 - GNU/Linux Comandos
 - Windows Bash
 - Virtualización KVM
+- Virtualización con VirtualBox
 - Xen Monitor
 - Reparación de Discos Duros
 
