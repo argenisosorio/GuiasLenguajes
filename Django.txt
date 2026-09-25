@@ -2711,6 +2711,27 @@ DATABASES = {
 Generar json a partir de un modelo (dumpdata y loaddata)
 ========================================================
 
+Generar fixture json de los datos de todos los modelos y todas las aplicaciones
+===============================================================================
+
+Ejecutando dumpdata sin especificar el nombre de ninguna aplicación:
+
+$ python manage.py dumpdata --indent 4 > db.json
+
+Explicación de los parámetros:
+
+- Con formato legible (--indent): Agrega sangría para que el archivo JSON sea
+fácil de leer por un humano.
+
+-Excluir tablas del sistema (Auth, ContentTypes, Sessions):
+python manage.py dumpdata --exclude auth.permission --exclude contenttypes > db.json
+
+Para volver a importar todos esos datos en la base de datos:
+
+$ python manage.py loaddata db.json
+
+-----
+
 Generar un fichero json con los datos de los modelos de una aplicación:
 
 $ python manage.py dumpdata app_name > data.json
