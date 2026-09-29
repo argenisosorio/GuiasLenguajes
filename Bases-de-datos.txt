@@ -20,6 +20,7 @@ NIVEL INTERMEDIO - Diseño avanzado, optimización y operativa
     I4. Vistas y subconsultas
     I5. Estrategias y estructuras de índices
     I6. SGBD relacionales del mercado y NoSQL (comparativa)
+    I7. Base de datos desnormalizada
 
 NIVEL AVANZADO - Arquitectura, rendimiento y escala
     A1. Consultas avanzadas y analítica (window functions y CTEs)
@@ -1064,6 +1065,86 @@ puede haber documentos con estructura distinta:
   { Nombre: "Luis", Estudios: "Marketing y Publicidad", Amigos: 12 }
 En un modelo relacional clásico esto sería imposible sin definir un esquema
 fijo; esa flexibilidad es una de las grandes ventajas de NoSQL.
+
+
+================================================================================
+MÓDULO I7: Base de datos desnormalizada
+================================================================================
+
+Una base de datos desnormalizada (o el resultado de aplicar un proceso de
+desnormalización) es un esquema de base de datos relacional en el que se
+introduce redundancia de datos de forma deliberada para acelerar el tiempo de
+respuesta de las consultas de lectura.
+
+A diferencia de la normalización cuyo objetivo es estructurar las tablas para
+eliminar datos duplicados, ahorrar espacio y evitar anomalías de modificación
+mediante relaciones (JOINs), la desnormalización acepta cierta duplicación de
+información a cambio de no tener que unir múltiples tablas complejas cada vez
+que se leen datos.
+
+¿Para qué se usa?
+
+La desnormalización se utiliza principalmente para optimizar el rendimiento de
+lectura en escenarios donde la velocidad de respuesta es crítica o donde el
+volumen de consultas de lectura supera por mucho al de escritura.
+
+Los casos de uso más comunes son:
+
+-Sistemas con alta carga de lectura (Read-Heavy Systems): En aplicaciones web,
+APIs o plataformas con miles de usuarios concurrentes donde se leen datos
+constantemente pero se modifican poco (por ejemplo, catálogos de productos,
+feeds de redes sociales o perfiles de usuarios).
+
+-Data Warehouses y Business Intelligence (OLAP): En sistemas de analítica de
+datos se emplean esquemas desnormalizados como el Esquema en Estrella (Star
+Schema). Esto permite ejecutar consultas analíticas sobre millones de registros
+(sumas, promedios, agrupaciones por período) sin penalizar el rendimiento con
+decenas de JOINs.
+
+-Eliminación de JOINs costosos: Cuando una consulta frecuente requiere unir 4, 5
+o más tablas grandes, el costo computacional en CPU y memoria del motor de base
+de datos se dispara. Traer atributos frecuentemente consultados a una sola tabla
+elimina la necesidad de esas uniones.
+
+-Almacenamiento de valores calculados o agregados: En lugar de calcular el total
+de ventas o el promedio de calificaciones de un producto en cada petición
+ejecutando un SUM() o AVG(), se guarda dicho resultado en una columna dedicada
+que se actualiza periódicamente o mediante eventos/triggers.
+
+-Congelación de historiales o Snapshots: En sistemas de facturación o comercio
+electrónico, guardar el nombre, dirección y precio del producto directamente en
+la tabla Factura garantiza que la factura no cambie si el cliente actualiza su
+perfil o el producto cambia de precio en el futuro.
+
+Ejemplo práctico:
+
+Estructura Normalizada (3NF):
+-Ordenes: (id, fecha, cliente_id)
+-Clientes: (id, nombre, email)
+
+Para mostrar la orden con el nombre del cliente se requiere un JOIN entre
+Ordenes y Clientes.
+
+Estructura Desnormalizada: Ordenes: (id, fecha, cliente_id, cliente_nombre,
+cliente_email)
+
+Se puede consultar la orden directamente en una sola tabla sin hacer JOIN.
+
++--------------------------------------+--------------------------------------+
+| VENTAJAS (PROS)                      | DESVENTAJAS (CONTRAS)                |
++--------------------------------------+--------------------------------------+
+| - Mayor velocidad de lectura.        | - Riesgo de inconsistencia en        |
+| - Consultas SQL mas simples          |   los datos si no se sincronizan.    |
+|   (menos necesidad de JOINs).        | - Escrituras y actualizaciones       |
+| - Menor consumo de CPU y RAM         |   mas lentas y complejas.            |
+|   al no requerir uniones.            | - Mayor consumo de almacenamiento    |
+|                                      |   en disco por la redundancia.       |
++--------------------------------------+--------------------------------------+
+
+Fuente
+======
+
+Gemini IA
 
 ###############################################################################
 #
