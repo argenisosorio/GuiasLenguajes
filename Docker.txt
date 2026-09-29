@@ -145,6 +145,107 @@ una herramienta de automatización (GNU Make) que sirve para simplificar y ataja
 comandos largos de Docker. En lugar de escribir comandos extensos y repetitivos
 en la terminal, defines alias sencillos dentro del Makefile.
 
+-dockerd (Docker Daemon): Es el servicio persistente que se ejecuta en segundo
+plano en el sistema host. Se encarga de escuchar las peticiones de la API de
+Docker, gestionar las imágenes, contenedores, redes y volúmenes, y realizar el
+trabajo pesado de ejecución.
+
+-Contenedorización: Técnica de virtualización a nivel del sistema operativo que
+permite empaquetar una aplicación junto con sus dependencias y configuraciones
+en una unidad aislada (contenedor), compartiendo el mismo núcleo (kernel) del
+sistema operativo anfitrión.
+
+-Capa de Imagen (Image Layer): Cada una de las modificaciones o instrucciones
+(como RUN, COPY o ADD) definidas dentro de un Dockerfile. Docker utiliza un
+sistema de archivos en capas de solo lectura con mecanismo de copia en escritura
+(Copy-on-Write), permitiendo reutilizar capas en caché para optimizar espacio y
+acelerar la compilación.
+
+-Volumen (Docker Volume): Mecanismo preferido de almacenamiento persistente
+administrado directamente por Docker (ubicado en /var/lib/docker/volumes/).
+Permite conservar los datos generados o modificados por los contenedores,
+incluso si estos son detenidos o eliminados.
+
+-Bind Mount: Método de almacenamiento que mapea directamente un directorio o
+archivo específico de la máquina anfitriona (host) dentro del contenedor. Es
+ideal para entornos de desarrollo local, ya que permite reflejar cambios en
+tiempo real en el código sin reconstruir la imagen.
+
+-Red de Docker (Docker Network): Abstracción que permite la comunicación entre
+contenedores o entre el contenedor y el host. Por defecto, Docker incluye
+controladores de red como bridge (red interna privada), host (comparte la pila
+de red del sistema) y none (sin conectividad).
+
+-Multi-stage Build (Compilaciones en varias etapas): Técnica avanzada en
+Dockerfiles que utiliza múltiples sentencias FROM para separar el entorno de
+compilación del entorno final de ejecución. Permite copiar únicamente los
+artefactos compilados a la imagen final, reduciendo drásticamente su tamaño y
+mejorando la seguridad.
+
+-.dockerignore: Archivo de texto plano que define patrones de archivos y
+carpetas (como .git, __pycache__ o entornos virtuales) que deben ser excluidos
+del contexto de compilación (build context) para acelerar el proceso de
+construcción y evitar transferir archivos innecesarios.
+
+-CLI (Command Line Interface) de Docker: La herramienta de línea de comandos
+(docker) que permite al usuario interactuar mediante órdenes directas con el
+demonio de Docker (dockerd) a través de solicitudes a la API REST.
+
+-Orquestación de contenedores: Proceso automatizado de gestión del ciclo de vida
+de los contenedores en entornos distribuidos o de producción. Incluye tareas
+como despliegue, escalado automático, balanceo de carga, monitoreo y
+autorrecuperación (self-healing). Herramientas comunes incluyen Kubernetes,
+Docker Swarm y Docker Compose (a nivel local).
+
+-Healthcheck: Instrucción configurable en una imagen o en un archivo
+docker-compose.yml que ejecuta un comando periódico dentro del contenedor para
+verificar que la aplicación o servicio responda correctamente, y no solo que el
+proceso siga activo.
+
+-Contexto de compilación (Build Context): El conjunto local de archivos y
+directorios ubicados en la ruta enviada al demonio de Docker durante la
+ejecución de docker build. Todo lo contenido en esta ruta se evalúa para ser
+copiado a la imagen según las reglas del Dockerfile.
+
+====================================
+Diferencia entre imagen y contenedor
+====================================
+
+La diferencia principal entre una imagen y un contenedor radica en que la imagen
+es una plantilla estática de solo lectura, mientras que el contenedor es una
+instancia en ejecución de esa imagen.
+
+A continuación se detallan las diferencias clave:
+
++--------------+-------------------------------+-------------------------------+
+| Aspecto      | Imagen de Docker              | Contenedor de Docker          |
++--------------+-------------------------------+-------------------------------+
+| Definición   | Plantilla estática de solo    | Instancia viva y ejecutable   |
+|              | lectura con el código.        | en un entorno aislado.        |
++--------------+-------------------------------+-------------------------------+
+| Estado       | Inmutable (no cambia ni se    | Dinámico (iniciar, detener,   |
+|              | ejecuta sola).                | reiniciar, eliminar).         |
++--------------+-------------------------------+-------------------------------+
+| Almacén      | Capas de solo lectura.        | Capa adicional de lectura y   |
+|              |                               | escritura.                    |
++--------------+-------------------------------+-------------------------------+
+| Relación     | Funciona como la clase o      | Funciona como el objeto o     |
+|              | molde.                        | instancia.                    |
++--------------+-------------------------------+-------------------------------+
+| Comandos     | `docker build`                | `docker run`                  |
+|              | `docker pull`                 | `docker ps`                   |
+|              | `docker images`               | `docker stop`                 |
++--------------+-------------------------------+-------------------------------+
+
+Analogía rápida
+===============
+
+-La Imagen es como una receta de cocina impresa en un libro o una fotografía:
+define exactamente los ingredientes y pasos, pero no se puede comer.
+
+-El Contenedor es el platillo preparado en la mesa: es el resultado activo del
+proceso que puedes consumir, modificar o desechar al terminar.
+
 Comandos básicos de Docker
 ==========================
 
