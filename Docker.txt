@@ -126,9 +126,9 @@ de Django, instalar librerías).
 usan varios contenedores (multi-contenedor). ¿Para qué sirve? Si tu proyecto
 es más que solo Django necesitas por ejemplo:
 
-  -Un contenedor para PostgreSQL (Base de datos).
-  -Un contenedor para Django (API).
-  -Un contenedor para Nuxt 4 (Frontend).
+-Un contenedor para PostgreSQL (Base de datos).
+-Un contenedor para Django (API).
+-Un contenedor para Nuxt 4 (Frontend).
 
 -El archivo docker-compose.yml: En lugar de ejecutar 3 comandos largos de docker
 run por separado, defines todo en un archivo YAML.
@@ -161,10 +161,14 @@ sistema de archivos en capas de solo lectura con mecanismo de copia en escritura
 (Copy-on-Write), permitiendo reutilizar capas en caché para optimizar espacio y
 acelerar la compilación.
 
--Volumen (Docker Volume): Mecanismo preferido de almacenamiento persistente
-administrado directamente por Docker (ubicado en /var/lib/docker/volumes/).
-Permite conservar los datos generados o modificados por los contenedores,
-incluso si estos son detenidos o eliminados.
+-Volumen en Docker: Es un mecanismo de almacenamiento persistente administrado
+directamente por el motor de Docker para guardar y compartir datos
+independientemente del ciclo de vida de los contenedores. Por defecto, los
+archivos creados dentro de un contenedor residen en una capa de almacenamiento
+temporal (writable layer); cuando el contenedor se elimina, esos datos se
+pierden. Los volúmenes solucionan esto mapeando un directorio del contenedor
+hacia un espacio seguro administrado por Docker en la máquina anfitriona
+(usualmente bajo /var/lib/docker/volumes/).
 
 -Bind Mount: Método de almacenamiento que mapea directamente un directorio o
 archivo específico de la máquina anfitriona (host) dentro del contenedor. Es
@@ -1455,6 +1459,74 @@ $ docker volume ls
 2. Inspecciona el volumen para ver su punto de montaje (Mountpoint):
 
 $ docker volume inspect <nombre_del_volumen>
+
+Fuente
+======
+
+Gemini IA
+
+Volumen en Docker
+=================
+
+Es un mecanismo de almacenamiento persistente administrado directamente por el
+motor de Docker para guardar y compartir datos independientemente del ciclo de
+vida de los contenedores. Por defecto, los archivos creados dentro de un
+contenedor residen en una capa de almacenamiento temporal (writable layer);
+cuando el contenedor se elimina, esos datos se pierden. Los volúmenes solucionan
+esto mapeando un directorio del contenedor hacia un espacio seguro administrado
+por Docker en la máquina anfitriona (usualmente bajo /var/lib/docker/volumes/).
+
+Características clave:
+
+-Persistencia de datos: Los datos permanecen intactos aunque el contenedor se
+detenga, reinicie o elimine.
+
+-Compartición entre contenedores: Varios contenedores pueden montar el mismo
+volumen simultáneamente para leer o escribir información compartida.
+
+-Alto rendimiento: Ofrecen mayor velocidad de lectura y escritura (I/O) en
+comparación con escribir en el sistema de archivos writable del propio
+contenedor.
+
+-Gestión simplificada: Se administran directamente mediante la CLI de Docker,
+facilitando respaldos, migraciones y copias de seguridad.
+
+Comparativa de tipos de almacenamiento en Docker:
+
++------------+------------+--------------------+-------------------------------+
+| Tipo       | Admin por  | Ubicacion host     | Uso principal                 |
++------------+------------+--------------------+-------------------------------+
+| Volume     | Docker     | /var/lib/docker/   | Persistencia en produccion    |
++------------+------------+--------------------+-------------------------------+
+| Bind Mount | Usuario    | Cualquier ruta     | Desarrollo local (permite     |
+|            |            | elegida del sistema| recargar código fuente al     |
+|            |            | host (ej.          | instante).                    |
+|            |            | /home/user/app)    |                               |
++------------+------------+--------------------+-------------------------------+
+| tmpfs      | SO (RAM)   | Memoria RAM        | Datos sensibles temporales o  |
+|            |            |                    | secretos que no deben         |
+|            |            |                    | guardarse en disco.           |
++------------+------------+--------------------+-------------------------------+
+
+2. Listar e inspeccionar volúmenes existentes:
+
+$ docker volume ls
+
+$ docker volume inspect mi_volumen
+
+3. Asociar el volumen a un contenedor:
+
+# Sintaxis clásica con -v
+
+$ docker run -d --name mi_bd -v mi_volumen:/var/lib/mysql mysql
+
+# Sintaxis moderna y explícita con --mount (recomendada)
+
+$ docker run -d --name mi_bd --mount source=mi_volumen,target=/var/lib/mysql mysql
+
+4. Eliminar volúmenes sin uso:Bashdocker volume rm mi_volumen
+
+$ docker volume prune
 
 Fuente
 ======
