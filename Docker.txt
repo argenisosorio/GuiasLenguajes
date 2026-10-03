@@ -241,6 +241,31 @@ A continuación se detallan las diferencias clave:
 |              | `docker images`               | `docker stop`                 |
 +--------------+-------------------------------+-------------------------------+
 
+Diferencia entre contenedor de Docker y máquina virtual
+=======================================================
+
++--------------+-------------------------------+-------------------------------+
+| Aspecto      | Contenedor de Docker          | Máquina Virtual (VM)          |
++--------------+-------------------------------+-------------------------------+
+| Arquitectura | Virtualización a nivel de SO  | Virtualización de hardware    |
+|              | (comparte el kernel).         | (requiere Hipervisor).        |
++--------------+-------------------------------+-------------------------------+
+| Sistema Op.  | Comparte el SO anfitrión.     | Incluye un SO invitado        |
+|              |                               | completo en cada VM.          |
++--------------+-------------------------------+-------------------------------+
+| Recursos     | Muy ligero: consume MBs de    | Pesado: requiere GBs de RAM   |
+|              | RAM y CPU según demanda.      | y disco reservados.           |
++--------------+-------------------------------+-------------------------------+
+| Inicio       | Casi instantáneo (segundos).  | Lento (minutos para arrancar  |
+|              |                               | el SO completo).              |
++--------------+-------------------------------+-------------------------------+
+| Aislamiento  | Aislamiento por procesos y    | Aislamiento total a nivel de  |
+|              | namespaces del kernel.        | hardware.                     |
++--------------+-------------------------------+-------------------------------+
+| Portabilidad | Alta: corre igual en cualquier| Menor: archivos de disco      |
+|              | entorno con Docker Engine.    | grandes (GBs) y dependientes. |
++--------------+-------------------------------+-------------------------------+
+
 Analogía rápida
 ===============
 
