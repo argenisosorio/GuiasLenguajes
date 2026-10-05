@@ -1590,3 +1590,49 @@ configurada. La base de datos está completamente lista para aceptar conexiones.
 -Started (Iniciado): Significa que los contenedores (backend-django y frontend)
 fueron arrancados y sus procesos principales se están ejecutando en segundo
 plano.
+
+=====================================================
+Mensaje checkpoint del contenedor de la Base de Datos
+=====================================================
+
+sinidotv2-db-postgres     | 2026-10-05 14:55:01.302 UTC [62] LOG:  checkpoint starting: time
+sinidotv2-db-postgres     | 2026-10-05 14:55:02.720 UTC [62] LOG:  checkpoint complete: wrote 15 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=1.406 s, sync=0.005 s, total=1.418 s; sync files=11, longest=0.002 s, average=0.001 s; distance=34 kB, estimate=19653 kB; lsn=0/31151D0, redo lsn=0/3115178
+
+El último registro indica que la base de datos PostgreSQL completó con éxito un
+proceso interno de rutina llamado Checkpoint. No es un error, sino un mensaje
+informativo (LOG) totalmente normal.
+
+¿Qué es un Checkpoint?
+======================
+
+Para ser eficiente, PostgreSQL realiza los cambios (escrituras, actualizaciones,
+transacciones) primero en la memoria RAM (Shared Buffers) y en sus archivos de
+diario de transacciones (WAL - Write-Ahead Logging).
+
+Periódicamente, el motor ejecuta un Checkpoint para pasar todos esos datos
+modificados (buffers sucios) de la memoria RAM al disco físico, garantizando la
+persistencia de los datos en caso de un apagón o caída del sistema.
+
+Desglose de lo que dice el log:
+
+-checkpoint complete: El punto de control finalizó correctamente.
+
+-wrote 15 buffers (0.1%): Se escribieron a disco 15 bloques de memoria
+(aproximadamente 120 KB, un volumen muy bajo de cambios).
+
+-0 WAL file(s) added, 0 removed, 0 recycled: No hizo falta crear ni rotar
+archivos de registro WAL.
+
+-write=1.406 s, sync=0.005 s, total=1.418 s: Tardó 1.418 segundos en total
+(1.406 s escribiendo en disco y 0.005 s asegurando el volcado con fsync).
+
+-distance=34 kB: Solo se habían generado 34 kB de datos en el WAL desde el
+último checkpoint.
+
+En resumen: Es una tarea automática de mantenimiento y salud del contenedor de
+base de datos.
+
+Fuente
+======
+
+Gemini IA
