@@ -12484,6 +12484,10 @@ ChatGPT
 Reducir el tamaño o bajar el peso de un archivo de video mp4
 ============================================================
 
+Instala FFmpeg (si aún no lo tienes):
+
+$ sudo apt-get install ffmpeg
+
 $ ffmpeg -i file.mp4 -vcodec libx264 -crf 26 -preset medium -acodec aac -b:a 128k file_converted.mp4
 
 Un archivo de 2,4GB lo bajó a 1,5GB.
@@ -12492,6 +12496,32 @@ Fuente
 ======
 
 DeepSeek
+
+==========================================================================
+Reducir el tamaño o bajar el peso de un archivo de video mp4 con HandBrake
+==========================================================================
+
+HandBrake es la herramienta gráfica de conversión y compresión de video más
+popular y completa para Linux. Utiliza FFmpeg por debajo, por lo que los
+resultados serán idénticos al comando anterior.
+
+1- Instalación:
+
+$ sudo apt install handbrake
+
+2- Abre HandBrake y selecciona tu archivo file.mp4 en el botón "Abrir Fuente".
+
+3-En la pestaña Video:
+  -Calidad constante RF: 26
+
+4- Haz clic en "Iniciar".
+
+El video se guardara en la carpeta "Vídeos". Un video de 74,7MB lo bajo a 9MB.
+
+Fuente
+======
+
+Gemini IA
 
 =======================
 Conversión de MKV a MP4
