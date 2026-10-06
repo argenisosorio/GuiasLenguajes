@@ -1636,3 +1636,33 @@ Fuente
 ======
 
 Gemini IA
+
+===============================================================
+Copiar archivos de local al contenedor y del contenedor a local
+===============================================================
+
+1- Copiar archivo local a contenedor:
+
+Dentro de la carpeta del proyecto ejecutamos:
+
+$ docker compose cp archivo_local.txt nombre_servicio:/ruta/destino/
+
+[+] copy 1/1
+✔ nombre_contenedor Copied /home/user/archivo_local.txt to nombre_contenedor:/app/
+
+-----
+
+2- Copiar archivo de contenedor a local:
+
+Dentro de la carpeta del proyecto ejecutamos:
+
+$ docker cp nombre_contenedor:/app/db.sqlite3 /home/user
+Successfully copied 1.68MB (transferred 1.68MB) to /home/user
+
+Notas: Diferencias nombre de contenedor y nombre de servicio pues no son lo
+mismo.
+
+Fuente
+======
+
+Gemini IA
