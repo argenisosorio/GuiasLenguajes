@@ -1437,6 +1437,68 @@ mostrará una lista detallada en la sección «Los siguientes paquetes se
 ELIMINARÁN:» y te pedirá confirmación ([S/n]). Ahí podrás verificar exactamente
 qué librerías se van a quitar antes de aceptar.
 
+Ícono personalizado en la aplicación .deb generada
+==================================================
+
+Para que tu aplicación muestre un icono personalizado tanto en el menú de
+aplicaciones como en el lanzador de escritorio de Debian, solo debes seguir
+estos sencillos pasos adicionales:
+
+Paso único: Agregar y configurar tu icono
+
+1. Prepara tu archivo de imagen
+
+Consigue una imagen para tu icono (lo ideal es que esté en formato PNG con fondo
+transparente y un tamaño de 128px x 128px para que se vea nítida) y guárdala en
+la carpeta de tu proyecto con el nombre que prefieras, por ejemplo: miapp.png.
+
+2. Copia el icono a la estructura del paquete (.deb)
+
+En el Paso 2 de tu guía ya creaste la carpeta de destino para los iconos. Ahora
+solo debes copiar tu archivo de imagen dentro de ella usando la terminal
+(estando en la carpeta raíz mi_proyecto/):
+
+$ cp miapp.png miapp-deb/usr/share/icons/hicolor/128x128/apps/
+
+Nota importante sobre el nombre: El archivo debe llamarse exactamente igual que
+la referencia que pondrás en el siguiente archivo de configuración (por ejemplo,
+si el icono se llama miapp.png, el nombre base es miapp).
+
+3. Verifica el archivo .desktop (Paso 3.2 de tu guía)
+
+Asegúrate de que en tu archivo miapp-deb/usr/share/applications/miapp.desktop la
+línea Icon= coincida con el nombre de tu archivo de imagen (sin la extensión
+.png):
+
+Name=Mi App Liviana
+Comment=Aplicación HTML5 con PyWebView
+Exec=python3 /opt/miapp/app.py
+Icon=miapp
+Type=Application
+Terminal=false
+Categories=Education;Development;
+
+Al compilar de nuevo tu paquete con dpkg-deb --root-owner-group --build
+miapp-deb miapp-pywebview_1.0_all.deb e instalarlo, el entorno de escritorio de
+Debian (Gnome, XFCE, KDE, etc.) detectará automáticamente el icono en la ruta
+estándar de iconos (/usr/share/icons/hicolor/...) y lo mostrará en el menú.
+
+¿Quieres también que el icono aparezca en la ventana de la aplicación?
+
+Si además del menú quieres que el icono se vea en la barra de título o barra de
+tareas mientras la app está abierta con PyWebView, puedes agregarlo directamente
+en tu archivo app.py al momento de crear la ventana:
+
+# Crea la ventana apuntando al index.html incluyendo el icono
+window = webview.create_window(
+    title='Mi Aplicación Web',
+    url=f'file://{html_file}',
+    width=1024,
+    height=768,
+    resizable=True,
+    icon='html/img/favicon.png' # Ruta relativa a tu archivo de icono interno
+)
+
 Fuente
 ======
 
