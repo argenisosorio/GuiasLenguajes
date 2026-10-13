@@ -2,6 +2,8 @@
 
 Este repositorio contiene una colección de guías, apuntes y ejemplos de código sobre diversas tecnologías, frameworks, lenguajes de programación y herramientas. Está organizado para facilitar el aprendizaje y la consulta rápida.
 
+<img src="https://user-images.githubusercontent.com/74038190/212284100-561aa473-3905-4a80-b561-0d28506553ee.gif" width="100%" alt="divider" />
+
 ## 📋 Índice de Tecnologías
 
 ### Lenguajes de Programación
