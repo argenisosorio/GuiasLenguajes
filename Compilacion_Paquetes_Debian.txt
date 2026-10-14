@@ -1248,10 +1248,13 @@ $ cp -r html miapp-deb/opt/miapp/
 
 Paso 3: Configurar los archivos del sistema Debian
 
-1. Archivo de control (miapp-deb/DEBIAN/control)
+1. Crear el archivo de control (miapp-deb/DEBIAN/control)
 
-Define las dependencias para que Debian instale automáticamente Python 3,
-PyWebView y el motor WebKit, el archivo debe tener una línea en blanco al final:
+$ touch miapp-deb/DEBIAN/control
+
+Este archivo Define las dependencias para que Debian instale automáticamente
+Python 3, PyWebView y el motor WebKit, el archivo debe tener una línea en blanco
+al final:
 
 -----
 
@@ -1266,7 +1269,9 @@ Description: Aplicacion web HTML5 liviana empacada con Python PyWebView.
 
 -----
 
-2. Acceso directo al menú (miapp-deb/usr/share/applications/miapp.desktop)
+2. Crear el archivo de acceso directo al menú del SO
+
+$ touch miapp-deb/usr/share/applications/miapp.desktop
 
 -----
 
