@@ -1240,6 +1240,10 @@ $ mkdir -p miapp-deb/usr/share/applications
 
 $ mkdir -p miapp-deb/usr/share/icons/hicolor/128x128/apps
 
+Copiar el ícono de la app dentro de los archivos para el empaquetado:
+
+$ cp miapp.png miapp-deb/usr/share/icons/hicolor/128x128/apps/
+
 Copia tus archivos al directorio de instalación /opt/miapp:
 
 $ cp app.py miapp-deb/opt/miapp/
@@ -1288,8 +1292,7 @@ Categories=Education;Development;
 
 Paso 4: Construir e instalar el paquete
 
-Otorga permisos de ejecución al script si es necesario y construye el paquete
-.deb:
+Construye el paquete .deb:
 
 $ dpkg-deb --build miapp-deb miapp-pywebview_1.0_all.deb
 
