@@ -15349,3 +15349,40 @@ carpeta y ejecutamos:
 $ ./pilasbloques
 
 Se abrirá la aplicación.
+
+Instalación del paquete paquete .deb
+====================================
+
+1- Descarga la última versión desde: https://github.com/Program-AR/pilas-bloques-app/releases
+
+En este caso descargamos: pilasbloques_3.0.2_amd64.deb
+
+2- Ejecutar comando de instalación del .deb con dpkg
+
+# dpkg -i pilasbloques_3.0.2_amd64.deb
+
+Esto puede producir un error:
+
+dpkg: atención: `ldconfig' no se ha encontrado en el PATH o no es ejecutable
+dpkg: atención: `start-stop-daemon' no se ha encontrado en el PATH o no es ejecutable
+dpkg: error: no se ha encontrado 2 en el PATH o no es ejecutable
+NOTA: El PATH de root debería incluir habitualmente /usr/local/sbin, /usr/sbin y /sbin.
+
+Para solucionarlo si se produce ejecutamos:
+
+$ export PATH=$PATH:/usr/local/sbin:/usr/sbin:/sbin
+
+Ahora nuevamente ejecutamos:
+
+# dpkg -i pilasbloques_3.0.2_amd64.deb 
+
+Seleccionando el paquete pilasbloques previamente no seleccionado.
+(Leyendo la base de datos ... 293232 ficheros o directorios instalados actualmente.)
+Preparando para desempaquetar pilasbloques_3.0.2_amd64.deb ...
+Desempaquetando pilasbloques (3.0.2) ...
+Configurando pilasbloques (3.0.2) ...
+Procesando disparadores para mailcap (3.74) ...
+Procesando disparadores para desktop-file-utils (0.28-1) ...
+Procesando disparadores para gnome-menus (3.36.0-3) ...
+
+Listo ya está listo para probarse, ir submenú Educación y abrir la aplicación.
