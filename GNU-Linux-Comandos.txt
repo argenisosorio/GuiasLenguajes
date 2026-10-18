@@ -14082,6 +14082,44 @@ Fuente
 
 https://experienciasubuntu.wordpress.com/2017/03/17/formatear-pendrive-fat32-ntfs-gparted-ubuntu-16-04-y-diferentes-sabores/
 
+========================================================
+Pasos para formatear una USB con GParted (Cersión corta)
+========================================================
+
+1. Conecta tu memoria USB al puerto USB del equipo y deja que el sistema la
+reconozca.
+
+2. Abre GParted desde el menú de aplicaciones de tu sistema e introduce tu
+contraseña de administrador.
+
+3. Selecciona tu unidad USB en el selector desplegable situado en la esquina
+superior derecha (por ejemplo, /dev/sdb o /dev/sdc). Asegúrate de elegir la
+unidad correcta para evitar perder datos de otros discos.
+
+4. Desmonta las particiones si aparecen montadas: haz clic derecho sobre cada
+partición de la USB y selecciona Desmontar (Unmount).
+
+5. Crea una nueva tabla de particiones (si deseas limpiarla por completo o
+cambiar el tipo):
+	• Ve al menú superior en Dispositivo > Crear tabla de particiones... (Device >
+  Create Partition Table...).
+	• Elige gpt o msdos (MBR) según tu preferencia y haz clic en Aplicar.
+
+6. Formatea el espacio:
+	• Haz clic derecho sobre el espacio no asignado (o la partición existente) y
+  selecciona Nuevo (New).
+	• Elige el sistema de archivos que necesites (por ejemplo, FAT32, NTFS, exFAT
+  o ext4) y haz clic en Agregar (Add).
+
+7. Aplica los cambios: Haz clic en el botón con el icono de verificación verde
+(Aplicar todas las operaciones) en la barra de herramientas superior y espera a
+que termine el proceso.
+
+Fuente
+======
+
+Gemini IA
+
 ========================================
 ¿Cómo funciona un gestor de contraseñas?
 ========================================
