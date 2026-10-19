@@ -17,6 +17,7 @@ Guía de instalación y configuración de Docker by dM
   1.8 Arquitectura de Docker
   1.9 Capas de almacenamiento (Storage Drivers)
   1.10 Redes en Docker
+  1.11 Estados del ciclo de vida
 
 2. Arquitectura y conceptos clave
   2.1 Arquitectura
@@ -25,8 +26,9 @@ Guía de instalación y configuración de Docker by dM
 
 3. Primeros comandos y toma de decisiones
   3.1 Comandos básicos de Docker
-  3.2 Docker Build y Docker Compose
-  3.3 Factores clave para la toma de decisiones
+  3.2 Comandos y Flags Comunes de Docker
+  3.3 Docker Build y Docker Compose
+  3.4 Factores clave para la toma de decisiones
 
 4. Instalación
   4.1 Hola mundo en Docker (introducción)
@@ -64,14 +66,16 @@ Guía de instalación y configuración de Docker by dM
   6.14 El archivo .dockerignore
 
 7. Almacenamiento y persistencia de datos
-  7.1 Ubicación física de los datos en Docker
-  7.2 Volumen en Docker
+  7.1 Persistencia de datos en contenedores
+  7.2 Ubicación física de los datos en Docker
+  7.3 Volumen en Docker
 
 8. Operación, lectura de logs y transferencia de archivos
   8.1 Interpretación de construcción y arranque de una aplicación real con Docker
   8.2 Mensaje checkpoint del contenedor de la Base de Datos
     8.2.1 ¿Qué es un Checkpoint?
   8.3 Copiar archivos de local al contenedor y del contenedor a local
+  8.4 Monitoreo, Logging y la depuración
 
 9. Optimización de imágenes
   9.1 Imágenes Alpine vs Slim
@@ -244,11 +248,129 @@ simplicidad.
 1.10 Redes en Docker
 ====================
 
--La bridge network por defecto conecta contenedores por IP interna; el modo host
-usa la red del host sin aislamiento; none quita toda interfaz de red.
+Docker usa redes para facilitar la comunicación entre contenedores. Al crear un
+contenedor, Docker le asigna una red por defecto para que pueda comunicarse con
+otros contenedores. Docker facilita la creación y configuración de redes,
+permitiendo a los contenedores interactuar de manera más controlada.
 
--En entornos multi‑host se usan redes overlay (Swarm/Kubernetes), pero la bridge
-basta para arquitecturas simples de desarrollo.
+Las redes en Docker se definen principalmente en el archivo docker-compose.yml,
+pero también pueden ser administradas de forma independiente utilizando la línea
+de comandos de Docker.
+
+Tipos de redes en Docker
+========================
+
+Bridge (puente)
+===============
+
+Es la red predeterminada en Docker. Los contenedores se conectan entre sí en
+esta red y pueden acceder a servicios externos a través de la interfaz de red
+del host. Es ideal para entornos de desarrollo y pruebas.
+
+Uso típico: Conectar contenedores en un solo host.
+
+Comando para crear:
+
+$ docker network create --driver bridge mi_red
+
+Host
+====
+
+Utiliza la red del host directamente, sin aislamiento. Esto es útil cuando
+necesitas que los contenedores se comuniquen con la red del sistema de forma
+directa.
+
+Uso típico: Aplicaciones de alto rendimiento.
+
+Comando para crear:
+
+$ docker network create --driver host mi_red_host
+
+Overlay
+=======
+
+Permite la comunicación entre contenedores que están en diferentes hosts,
+facilitando la configuración de redes en aplicaciones distribuidas. Usualmente
+se usa en clusters de Docker (Docker Swarm o Kubernetes).
+
+Uso típico: Conexión entre contenedores en diferentes hosts.
+
+Comando para crear:
+
+$ docker network create --driver overlay mi_red_overlay
+
+None
+====
+
+El contenedor no tiene ninguna red conectada. Es útil cuando deseas que un
+contenedor no se conecte a ninguna red.
+
+Uso típico: Contenedores aislados.
+
+Comando para crear:
+
+$ docker network create --driver none mi_red_none
+
+Conexión de contenedores en diferentes redes
+============================================
+
+Cuando quieres que dos contenedores se comuniquen entre sí, puedes hacerlos
+parte de la misma red o permitirles acceder a redes externas usando el
+parámetro --network en el comando docker run.
+
+Por ejemplo, para conectar un contenedor a una red personalizada:
+
+$ docker run --network mi_red --name contenedor1 mi_imagen
+
+Comunicación entre contenedores
+===============================
+
+Si deseas que contenedores en la misma red se comuniquen entre sí, Docker
+facilita la resolución de nombres de host. En una red personalizada, los
+contenedores pueden encontrarse por el nombre del contenedor.
+
+Por ejemplo, si tienes un contenedor web y un contenedor db en la misma red:
+
+El contenedor web puede acceder al contenedor db utilizando el nombre db.
+
+Crear una red personalizada
+===========================
+
+$ docker network create red_app
+
+$ docker network ls
+
+Conectar contenedores a una red
+===============================
+
+$ docker run -d --name web1 --network red_app nginx
+
+$ docker run -d --name web2 --network red_app httpd
+
+Luego pueden comunicarse usando su nombre:
+
+$ docker exec -it web1 ping web2
+
+1.11 Estados del ciclo de vida
+==============================
+
++----------+------------------------------------------------------------------+
+| Estado   | Descripción                                                      |
++----------+------------------------------------------------------------------+
+| Created  | El contenedor se ha creado a partir de una imagen, pero no ha    |
+|          | arrancado aún.                                                   |
++----------+------------------------------------------------------------------+
+| Running  | El contenedor está en ejecución y su proceso principal corre     |
+|          | dentro.                                                          |
++----------+------------------------------------------------------------------+
+| Paused   | Todos los procesos del contenedor están congelados (SIGSTOP).    |
++----------+------------------------------------------------------------------+
+| Exited   | El contenedor terminó su ejecución y permanece en el sistema     |
+|          | hasta eliminarse manualmente.                                    |
++----------+------------------------------------------------------------------+
+| Dead     | El contenedor falló al terminar; requiere intervención manual    |
+|          | (docker rm -f) para limpiar recursos.                            |
++----------+------------------------------------------------------------------+
 
 Fuente
 ======
@@ -303,6 +425,42 @@ Docker, que se encarga de la creación y la gestión de contenedores.
 e instrucciones para instalar todas las dependencias de la aplicación y describe
 los pasos para crear una imagen image.
 
+Principales instrucciones de un Dockerfile:
+
++--------------+---------------------------------------------------------------+
+| Comando      | Descripción                                                   |
++--------------+---------------------------------------------------------------+
+| FROM         | Define la imagen base. Es obligatoria y debe ser la primera.   |
++--------------+---------------------------------------------------------------+
+| RUN          | Ejecuta comandos en el contenedor durante la construcción.    |
++--------------+---------------------------------------------------------------+
+| COPY         | Copia archivos desde el contexto al contenedor.               |
++--------------+---------------------------------------------------------------+
+| ADD          | Similar a COPY, pero permite URLs y extracción de archivos    |
+|              | comprimidos.                                                  |
++--------------+---------------------------------------------------------------+
+| CMD          | Comando por defecto al ejecutar la imagen.                    |
++--------------+---------------------------------------------------------------+
+| ENTRYPOINT   | Comando fijo que siempre se ejecuta. A menudo combinado con   |
+|              | CMD.                                                          |
++--------------+---------------------------------------------------------------+
+| WORKDIR      | Establece el directorio de trabajo dentro del contenedor.     |
++--------------+---------------------------------------------------------------+
+| ENV          | Define variables de entorno.                                  |
++--------------+---------------------------------------------------------------+
+| EXPOSE       | Documenta el puerto que usará la app (no abre el puerto).     |
++--------------+---------------------------------------------------------------+
+
+Buenas prácticas al construir Dockerfiles:
+
+-Usar imágenes base ligeras: Alpine es común si no necesitas herramientas
+completas del sistema.
+-Minimizar capas: Combina instrucciones RUN cuando sea posible.
+-Evitar instalar dependencias innecesarias.
+-Usar .dockerignore: Excluye archivos innecesarios del contexto de build.
+-Etiquetar versiones: Usa etiquetas (:1.0, :latest) de forma clara y controlada.
+-No almacenar secretos ni contraseñas en el Dockerfile.
+
 -Docker Image: Docker Image es una plantilla de solo lectura que se utiliza para
 crear contenedores y que contiene el código de la aplicación y sus
 dependencias.
@@ -340,8 +498,30 @@ es más que solo Django necesitas por ejemplo:
 -Un contenedor para Django (API).
 -Un contenedor para Nuxt 4 (Frontend).
 
+Ventajas de Docker Compose:
+
+-Define toda la aplicación en un solo archivo legible.
+-Permite levantar (up), detener (down), reconstruir (build) y escalar (scale)
+fácilmente.
+-Las redes y volúmenes se gestionan automáticamente.
+-Aumenta la reproducibilidad y portabilidad del entorno.
+
+¿Cómo funciona Docker Compose?
+
+-Se crea un archivo docker-compose.yml.
+-Se definen los servicios, redes y volúmenes necesarios.
+-Se ejecuta docker compose up para levantar toda la infraestructura.
+
 -El archivo docker-compose.yml: En lugar de ejecutar 3 comandos largos de docker
 run por separado, defines todo en un archivo YAML.
+
+Ejemplo mínimo:
+
+services:
+  web:
+    image: nginx
+    ports:
+      - "8080:80"
 
 -El comando mágico: Con solo escribir docker compose up -d, Docker levanta los
 tres servicios, los conecta entre sí en una red privada y configura los
@@ -572,7 +752,158 @@ en caso de que la imagen esté asociada a algún contenedor detenido.
 
 $ docker rmi -f image_id
 
-3.2 Docker Build y Docker Compose
+-----
+
+Crear sin arrancar
+
+$ docker create --name mi_contenedor nginx:latest
+
+-----
+
+Arrancar
+
+$ docker start mi_contenedor
+
+-----
+
+Pausar (freeze)
+
+$ docker pause mi_contenedor
+
+-----
+
+Reanudar
+
+$ docker unpause mi_contenedor
+
+-----
+
+Reiniciar
+
+$ docker restart mi_contenedor
+
+-----
+
+Detener
+
+docker stop mi_contenedor
+
+-----
+
+Listar volúmenes
+
+$ docker volume ls
+
+-----
+
+Ver detalles de un volumen
+
+$ docker volume inspect datos_app
+
+-----
+
+Eliminar volumen
+
+$ docker volume rm datos_app
+
+-----
+
+Inicia todos los servicios
+
+$ docker compose up
+
+-----
+
+Inicia en modo daemon
+
+$ docker compose up -d
+
+-----
+
+Detiene y elimina los servicios
+
+$ docker compose down
+
+-----
+
+Muestra el estado
+
+$ docker compose ps
+
+-----
+
+Muestra logs
+
+$ docker compose logs
+
+-----
+
+Reconstruye las imágenes
+
+$ docker compose build
+
+-----
+
+3.2 Comandos y Flags Comunes de Docker
+======================================
+
++---------------------+---------------------------------------------------------------+
+| Comando / Flag      | Significado                                                   |
++---------------------+---------------------------------------------------------------+
+| docker run          | Ejecuta un contenedor desde una imagen                        |
++---------------------+---------------------------------------------------------------+
+| -d                  | Ejecuta el contenedor en segundo plano (modo detached)        |
++---------------------+---------------------------------------------------------------+
+| -p <host>:<container>| Mapea puertos del host al contenedor (ej. -p 8080:80)        |
++---------------------+---------------------------------------------------------------+
+| --name <nombre>     | Asigna un nombre personalizado al contenedor                  |
++---------------------+---------------------------------------------------------------+
+| --rm                | Elimina el contenedor automáticamente al detenerse            |
++---------------------+---------------------------------------------------------------+
+| -v <host>:<container>| Monta un volumen (ej. -v $(pwd):/app)                        |
++---------------------+---------------------------------------------------------------+
+| --memory=<valor>    | Limita la memoria disponible (ej. --memory=256m)              |
++---------------------+---------------------------------------------------------------+
+| --cpus=<n>          | Limita el uso de CPU (ej. --cpus=0.5)                         |
++---------------------+---------------------------------------------------------------+
+| -e <VAR>=<valor>    | Define variables de entorno en el contenedor                  |
++---------------------+---------------------------------------------------------------+
+
+Flags Comunes de docker exec:
+
++---------------------+---------------------------------------------------------------+
+| Flag / Comando      | Significado                                                   |
++---------------------+---------------------------------------------------------------+
+| docker exec         | Ejecuta un comando dentro de un contenedor en ejecución       |
++---------------------+---------------------------------------------------------------+
+| -i                  | Modo interactivo: mantiene la entrada estándar abierta        |
++---------------------+---------------------------------------------------------------+
+| -t                  | Asigna un pseudo-TTY (terminal)                               |
++---------------------+---------------------------------------------------------------+
+| -it                 | Se combinan para entrar a una terminal interactiva            |
++---------------------+---------------------------------------------------------------+
+| bash, sh, ls, etc.  | Comandos que se ejecutan dentro del contenedor                |
++---------------------+---------------------------------------------------------------+
+
+Comandos avanzados de inspección y recursos:
+
++--------------------------------------------------------------+--------------------+
+| Comando / Ejemplo                                            | Significado        |
++--------------------------------------------------------------+--------------------+
+| docker logs mi_contenedor                                    | Logs               |
++--------------------------------------------------------------+--------------------+
+| docker exec -it mi_contenedor /bin/sh                        | Exec (acceder a    |
+|                                                              | shell dentro)      |
++--------------------------------------------------------------+--------------------+
+| docker stats mi_contenedor                                   | Stats (métricas en |
+|                                                              | tiempo real)       |
++--------------------------------------------------------------+--------------------+
+| docker run -d --name app_limit --memory=256m --cpus=0.5 nginx| Límites de         |
+|                                                              | recursos al crear  |
+|                                                              | o arrancar         |
++--------------------------------------------------------------+--------------------+
+
+3.3 Docker Build y Docker Compose
 =================================
 
 Al momento de intentar dockerizar un proyecto una decisión crucial a la que te
@@ -587,7 +918,7 @@ La diferencia fundamental, en esencia, la elección se reduce al alcance:
 
 -Docker Compose Build: orquestación de aplicaciones con múltiples contenedores
 
-3.3 Factores clave para la toma de decisiones
+3.4 Factores clave para la toma de decisiones
 =============================================
 
 Tomar en cuenta estas preguntas para elegir el enfoque adecuado:
@@ -1577,7 +1908,7 @@ Elimina volúmenes huérfanos:
 
 $ docker volume prune
 
-============================
+=================================
 6.13 Errores comunes y soluciones
 =================================
 
@@ -1744,8 +2075,20 @@ Deepseek IA
 7. Almacenamiento y persistencia de datos
 =========================================
 
-===========================================
-7.1 Ubicación física de los datos en Docker
+7.1 Persistencia de datos en contenedores
+=========================================
+
+Por defecto, los datos generados dentro de un contenedor se almacenan en el
+sistema de archivos del contenedor. Esto significa que cuando el contenedor se
+elimina, los datos también se pierden.
+
+Para resolver esto, Docker proporciona mecanismos para persistencia:
+
+-Volúmenes (volumes)
+-Bind mounts
+-tmpfs mounts
+
+7.2 Ubicación física de los datos en Docker
 ===========================================
 
 En un sistema Linux, la ubicación física de los datos depende directamente del
@@ -1787,7 +2130,7 @@ Fuente
 
 Gemini IA
 
-7.2 Volumen en Docker
+7.3 Volumen en Docker
 =====================
 
 Es un mecanismo de almacenamiento persistente administrado directamente por el
@@ -1854,6 +2197,45 @@ Fuente
 ======
 
 Gemini IA
+
+Bind Mounts
+===========
+
+Permiten montar un directorio o archivo específico del sistema de archivos del
+host dentro del contenedor.
+
+Características clave:
+
+-Ofrecen más control al usuario, ya que apuntan a una ruta exacta del host.
+
+-Muy útiles durante el desarrollo, por ejemplo, para montar el código fuente
+directamente.
+
+-No son gestionados por Docker (el usuario se encarga del contenido del
+directorio).
+
+Ejemplo de uso:
+
+$ docker run -v $(pwd)/html:/usr/share/nginx/html nginx
+
+Aquí se monta el directorio actual (html) del host al contenedor.
+
+tmpfs Mounts
+============
+
+Son volúmenes temporales que se almacenan en memoria (RAM), no en disco.
+
+Características clave:
+
+-Los datos existen solo mientras el contenedor está en ejecución.
+
+-Son ideales para datos sensibles o temporales (como credenciales en tiempo de ejecución).
+
+-No se almacenan físicamente en el sistema de archivos, desaparecen al detener el contenedor.
+
+Ejemplo de uso
+
+$ docker run --tmpfs /app/cache:rw,size=64m ubuntu
 
 =========================================================
 8. Operación, lectura de logs y transferencia de archivos
@@ -1967,6 +2349,168 @@ Fuente
 ======
 
 Gemini IA
+
+======================================
+8.4 Monitoreo, Logging y la depuración
+======================================
+
+Por qué es importante el monitoreo y la depuración?
+
+En entornos productivos o de desarrollo con múltiples contenedores, el monitoreo
+permite:
+
+-Detectar cuellos de botella y errores.
+-Evaluar consumo de recursos.
+-Anticipar fallos o degradación de servicios.
+-Tener trazabilidad de eventos mediante logs y métricas.
+
+Logging en Docker
+=================
+
+Docker captura la salida estándar (stdout y stderr) de los procesos de los
+contenedores.
+
+Comandos útiles:
+
+$ docker logs <container>
+
+$ docker logs -f <container> # sigue el log en tiempo real
+
+$ docker logs --tail 50 <container> # últimas 50 líneas
+
+Drivers de logging
+==================
+
+Docker soporta varios drivers de logging, como:
+
+json-file (por defecto)
+syslog
+journald
+fluentd
+awslogs
+gelf
+splunk
+logstash
+
+Se configuran en la ejecución del contenedor:
+
+$ docker run --log-driver=syslog nginx
+
+Depuración de contenedores
+==========================
+
+Inspección de contenedores:
+
+$ docker inspect <container>
+
+-----
+
+Acceso a contenedores en ejecución:
+
+$ docker exec -it <container> /bin/bash
+
+O si solo tiene shell básico:
+
+$ docker exec -it <container> sh
+
+-----
+
+Copiar archivos dentro o fuera del contenedor:
+
+$ docker cp <container>:/ruta/archivo ./archivo_local
+
+Monitoreo con métricas
+======================
+
+Una solución común y poderosa para monitorear contenedores es usar Prometheus
+(recolección de métricas) junto a Grafana (visualización de datos).
+
+¿Qué es Prometheus?
+
+-Herramienta de monitoreo basada en series temporales.
+-Extrae métricas a través de endpoints HTTP.
+-Guarda los datos para consulta y análisis.
+
+¿Qué es Grafana?
+
+-Plataforma de visualización y dashboards.
+-Permite integrar múltiples fuentes (Prometheus, Loki, Elastic, etc.).
+-Ideal para crear gráficos y alertas.
+
+Exporters
+=========
+
+Prometheus usa exporters para obtener métricas.
+
+Ejemplos:
+
+-node-exporter: métricas del sistema host (CPU, RAM, disco…)
+-cadvisor: métricas de contenedores Docker
+-blackbox-exporter: comprobaciones de endpoints HTTP/ICMP
+
+Observabilidad vs monitoreo
+===========================
+
+-Monitoreo: medir el estado del sistema (CPU, RAM, logs).
+-Observabilidad: capacidad para entender el comportamiento interno a partir del
+exterior (métricas, logs, trazas).
+
+Demo guiada
+===========
+
+Levantar un entorno básico de monitoreo con Prometheus, Grafana y cAdvisor
+usando Docker Compose
+
+1. ​Crear estructura del proyecto:
+
+monitoring/
+├── docker-compose.yml
+├── prometheus/
+│   └── prometheus.yml
+
+2. ​prometheus/prometheus.yml:
+
+global:
+  scrape_interval: 5s
+scrape_configs:
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+
+​3.	​docker-compose.yml:
+
+version: '3.9'
+services:
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+
+4. ​Ejecutar el entorno:
+
+$ docker compose up -d
+
+5. ​Acceder a las herramientas:
+
+Prometheus: http://localhost:9090
+Grafana: http://localhost:3000
+
+Usuario y contraseña por defecto: admin / admin
 
 ===========================
 9. Optimización de imágenes
