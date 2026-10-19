@@ -13,6 +13,10 @@ Guía de instalación y configuración de Docker by dM
   1.4 Diferencia entre imagen y contenedor
   1.5 Analogía rápida (imagen vs contenedor)
   1.6 Diferencia entre contenedor de Docker y máquina virtual
+  1.7 Aislamiento: Namespaces y cgroups
+  1.8 Arquitectura de Docker
+  1.9 Capas de almacenamiento (Storage Drivers)
+  1.10 Redes en Docker
 
 2. Arquitectura y conceptos clave
   2.1 Arquitectura
@@ -72,9 +76,12 @@ Guía de instalación y configuración de Docker by dM
 9. Optimización de imágenes
   9.1 Imágenes Alpine vs Slim
 
-===============
-¿Qué es Docker?
-===============
+========================
+1. Introducción a Docker
+========================
+
+1.1 ¿Qué es Docker?
+===================
 
 Docker es una plataforma de virtualización (o contenedorización) a nivel del
 sistema operativo, que permite a las aplicaciones compartir el núcleo del
@@ -94,15 +101,15 @@ ejecute de forma idéntica en todos los entornos.
 -A diferencia de VMware (virtualización a nivel de hardware), Docker opera a
 nivel del sistema operativo.
 
-Antes de Docker
-===============
+1.2 Antes de Docker
+===================
 
 La implementación de aplicaciones en distintos entornos solía ser complicada;
 las dependencias, las configuraciones y las variaciones entre sistemas
 operativos provocaban problemas del tipo «funciona aquí, pero no allí».
 
-La solución de Docker
-=====================
+1.3 La solución de Docker
+=========================
 
 Estandariza el entorno de ejecución al agrupar todo (aplicación + dependencias)
 en contenedores.
@@ -120,8 +127,140 @@ Docker Swarm.
 
 -Eficiencia: Se inicia en segundos y consume menos recursos del sistema.
 
-Arquitectura
-============
+========================================
+1.4 Diferencia entre imagen y contenedor
+========================================
+
+La diferencia principal entre una imagen y un contenedor radica en que la imagen
+es una plantilla estática de solo lectura, mientras que el contenedor es una
+instancia en ejecución de esa imagen.
+
+A continuación se detallan las diferencias clave:
+
++--------------+-------------------------------+-------------------------------+
+| Aspecto      | Imagen de Docker              | Contenedor de Docker          |
++--------------+-------------------------------+-------------------------------+
+| Definición   | Plantilla estática de solo    | Instancia viva y ejecutable   |
+|              | lectura con el código.        | en un entorno aislado.        |
++--------------+-------------------------------+-------------------------------+
+| Estado       | Inmutable (no cambia ni se    | Dinámico (iniciar, detener,   |
+|              | ejecuta sola).                | reiniciar, eliminar).         |
++--------------+-------------------------------+-------------------------------+
+| Almacén      | Capas de solo lectura.        | Capa adicional de lectura y   |
+|              |                               | escritura.                    |
++--------------+-------------------------------+-------------------------------+
+| Relación     | Funciona como la clase o      | Funciona como el objeto o     |
+|              | molde.                        | instancia.                    |
++--------------+-------------------------------+-------------------------------+
+| Comandos     | `docker build`                | `docker run`                  |
+|              | `docker pull`                 | `docker ps`                   |
+|              | `docker images`               | `docker stop`                 |
++--------------+-------------------------------+-------------------------------+
+
+1.5 Analogía rápida
+===================
+
+-La Imagen es como una receta de cocina impresa en un libro o una fotografía:
+define exactamente los ingredientes y pasos, pero no se puede comer.
+
+-El Contenedor es el platillo preparado en la mesa: es el resultado activo del
+proceso que puedes consumir, modificar o desechar al terminar.
+
+1.6 Diferencia entre contenedor de Docker y máquina virtual
+===========================================================
+
++--------------+-------------------------------+-------------------------------+
+| Aspecto      | Contenedor de Docker          | Máquina Virtual (VM)          |
++--------------+-------------------------------+-------------------------------+
+| Arquitectura | Virtualización a nivel de SO  | Virtualización de hardware    |
+|              | (comparte el kernel).         | (requiere Hipervisor).        |
++--------------+-------------------------------+-------------------------------+
+| Sistema Op.  | Comparte el SO anfitrión.     | Incluye un SO invitado        |
+|              |                               | completo en cada VM.          |
++--------------+-------------------------------+-------------------------------+
+| Recursos     | Muy ligero: consume MBs de    | Pesado: requiere GBs de RAM   |
+|              | RAM y CPU según demanda.      | y disco reservados.           |
++--------------+-------------------------------+-------------------------------+
+| Inicio       | Casi instantáneo (segundos).  | Lento (minutos para arrancar  |
+|              |                               | el SO completo).              |
++--------------+-------------------------------+-------------------------------+
+| Aislamiento  | Aislamiento por procesos y    | Aislamiento total a nivel de  |
+|              | namespaces del kernel.        | hardware.                     |
++--------------+-------------------------------+-------------------------------+
+| Portabilidad | Alta: corre igual en cualquier| Menor: archivos de disco      |
+|              | entorno con Docker Engine.    | grandes (GBs) y dependientes. |
++--------------+-------------------------------+-------------------------------+
+
+-Los contenedores virtualizan solo la capa de usuario y comparten el kernel del
+host; las VMs virtualizan hardware completo e incluyen un kernel invitado sobre
+un hipervisor.
+
+-Un contenedor típico pesa decenas de MB y arranca en milisegundos, mientras que
+una VM ocupa GB y tarda minutos en iniciar un SO completo.
+
+-Al no usar hipervisor, los contenedores alcanzan rendimiento cercano al nativo;
+en I/O pueden superar a VMs por un 10–20 % gracias a cgroups.
+
+-Sin embargo, las VMs ofrecen aislamiento más fuerte—útil en entornos
+multi-tenant críticos—porque cada VM trae su propio kernel aislado.
+
+1.7 Aislamiento: Namespaces y cgroups
+=====================================
+
+-Namespaces aíslan recursos del kernel (PID, network, mount, IPC, UTS, user,
+cgroup), de modo que procesos en un contenedor no ven ni afectan a los del host
+ni a otros contenedores.
+
+-El PID namespace impide que un contenedor liste procesos externos; el Network
+namespace le aporta una pila de red virtual independiente; el User namespace
+mapea root del contenedor a un usuario no‑privilegiado en el host.
+
+-Cgroups (Control Groups) regulan y limitan CPU, memoria y I/O por grupo de
+procesos; Docker crea un cgroup por contenedor que admite flags como
+--memory=512m --cpus=1.5.
+
+1.8 Arquitectura de Docker
+==========================
+
+-El Docker Daemon (dockerd) gestiona contenedores, imágenes, volúmenes y redes,
+exponiendo una API REST sobre un socket UNIX/TCP.
+
+-El Docker Client (docker CLI) traduce comandos de usuario en llamadas a la API
+del daemon; puede conectarse local o remotamente configurando DOCKER_HOST.
+
+-El Docker Registry almacena imágenes en capas compartidas; Docker Hub es el
+público por defecto, y existen opciones privadas como Harbor o AWS ECR.
+
+1.9 Capas de almacenamiento (Storage Drivers)
+=============================================
+
+-El driver overlay2 monta capas de solo‑lectura y una capa superior de
+lectura‑escritura, optimizando espacio y build times mediante copy-on-write.
+
+-Otros drivers (aufs, btrfs, devicemapper) ofrecen funcionalidades como
+snapshots o compresión, pero overlay2 es el recomendado por su rendimiento y
+simplicidad.
+
+1.10 Redes en Docker
+====================
+
+-La bridge network por defecto conecta contenedores por IP interna; el modo host
+usa la red del host sin aislamiento; none quita toda interfaz de red.
+
+-En entornos multi‑host se usan redes overlay (Swarm/Kubernetes), pero la bridge
+basta para arquitecturas simples de desarrollo.
+
+Fuente
+======
+
+Curso de Docker Básico de Coding4utech
+
+=================================
+2. Arquitectura y conceptos clave
+=================================
+
+2.1 Arquitectura
+================
 
 Se comunican a través de una API REST mediante sockets UNIX o una interfaz de
 red.
@@ -135,8 +274,8 @@ de los contenedores.
 
 -La comunicación se realiza a través de una API REST utilizando sockets o redes.
 
-El modelo arquitectónico básico
-===============================
+2.2 El modelo arquitectónico básico
+===================================
 
 usuarios. Cuando ejecutas comandos como `docker run` o `docker build`, el
 -Cliente de Docker: El cliente de Docker es la interfaz principal para los
@@ -154,8 +293,8 @@ Esta interacción forma un bucle sencillo pero potente: utilizas el cliente para
 enviar comandos al demonio en el host, que puede extraer imágenes de un registro
 para ejecutarlas como contenedores.
 
-Glosario de términos
-====================
+2.3 Glosario de términos
+========================
 
 -Docker Engine: Docker Engine cuenta con un componente central, el demonio de
 Docker, que se encarga de la creación y la gestión de contenedores.
@@ -282,95 +421,159 @@ directorios ubicados en la ruta enviada al demonio de Docker durante la
 ejecución de docker build. Todo lo contenido en esta ruta se evalúa para ser
 copiado a la imagen según las reglas del Dockerfile.
 
-====================================
-Diferencia entre imagen y contenedor
-====================================
+=========================================
+3. Primeros comandos y toma de decisiones
+=========================================
 
-La diferencia principal entre una imagen y un contenedor radica en que la imagen
-es una plantilla estática de solo lectura, mientras que el contenedor es una
-instancia en ejecución de esa imagen.
-
-A continuación se detallan las diferencias clave:
-
-+--------------+-------------------------------+-------------------------------+
-| Aspecto      | Imagen de Docker              | Contenedor de Docker          |
-+--------------+-------------------------------+-------------------------------+
-| Definición   | Plantilla estática de solo    | Instancia viva y ejecutable   |
-|              | lectura con el código.        | en un entorno aislado.        |
-+--------------+-------------------------------+-------------------------------+
-| Estado       | Inmutable (no cambia ni se    | Dinámico (iniciar, detener,   |
-|              | ejecuta sola).                | reiniciar, eliminar).         |
-+--------------+-------------------------------+-------------------------------+
-| Almacén      | Capas de solo lectura.        | Capa adicional de lectura y   |
-|              |                               | escritura.                    |
-+--------------+-------------------------------+-------------------------------+
-| Relación     | Funciona como la clase o      | Funciona como el objeto o     |
-|              | molde.                        | instancia.                    |
-+--------------+-------------------------------+-------------------------------+
-| Comandos     | `docker build`                | `docker run`                  |
-|              | `docker pull`                 | `docker ps`                   |
-|              | `docker images`               | `docker stop`                 |
-+--------------+-------------------------------+-------------------------------+
-
-Diferencia entre contenedor de Docker y máquina virtual
-=======================================================
-
-+--------------+-------------------------------+-------------------------------+
-| Aspecto      | Contenedor de Docker          | Máquina Virtual (VM)          |
-+--------------+-------------------------------+-------------------------------+
-| Arquitectura | Virtualización a nivel de SO  | Virtualización de hardware    |
-|              | (comparte el kernel).         | (requiere Hipervisor).        |
-+--------------+-------------------------------+-------------------------------+
-| Sistema Op.  | Comparte el SO anfitrión.     | Incluye un SO invitado        |
-|              |                               | completo en cada VM.          |
-+--------------+-------------------------------+-------------------------------+
-| Recursos     | Muy ligero: consume MBs de    | Pesado: requiere GBs de RAM   |
-|              | RAM y CPU según demanda.      | y disco reservados.           |
-+--------------+-------------------------------+-------------------------------+
-| Inicio       | Casi instantáneo (segundos).  | Lento (minutos para arrancar  |
-|              |                               | el SO completo).              |
-+--------------+-------------------------------+-------------------------------+
-| Aislamiento  | Aislamiento por procesos y    | Aislamiento total a nivel de  |
-|              | namespaces del kernel.        | hardware.                     |
-+--------------+-------------------------------+-------------------------------+
-| Portabilidad | Alta: corre igual en cualquier| Menor: archivos de disco      |
-|              | entorno con Docker Engine.    | grandes (GBs) y dependientes. |
-+--------------+-------------------------------+-------------------------------+
-
-Analogía rápida
-===============
-
--La Imagen es como una receta de cocina impresa en un libro o una fotografía:
-define exactamente los ingredientes y pasos, pero no se puede comer.
-
--El Contenedor es el platillo preparado en la mesa: es el resultado activo del
-proceso que puedes consumir, modificar o desechar al terminar.
-
-Comandos básicos de Docker
-==========================
+3.1 Comandos básicos de Docker
+==============================
 
 A continuación se enumeran algunos de los comandos de Docker más utilizados:
 
--Docker Run: se utiliza para iniciar contenedores a partir de imágenes,
-especificando las opciones de ejecución y los comandos.
+-----
 
--Docker Pull: Descarga las imágenes de contenedores desde un registro de
-contenedores, como Docker Hub, a la máquina local.
+Verificar que Docker esté instalado correctamente
 
--Docker ps: Ayuda a mostrar los contenedores en ejecución junto con información
-importante, como el ID del contenedor, la imagen utilizada y el estado.
+$ docker --version
 
--Docker Stop: Ayuda a detener los contenedores en ejecución, cerrando de forma
-ordenada los procesos que contienen.
+-----
 
--Docker Start: ayuda a reiniciar los contenedores detenidos, reanudando sus
-operaciones desde el estado anterior.
+Ejecutar un contenedor a partir de una imagen especificando opciones:
 
--Docker Login: ayuda a iniciar sesión en el registro de Docker, lo que permite
-el acceso a repositorios privados.
+-d: Ejecuta el contenedor en segundo plano (detached mode)
 
-Docker Build y Docker Compose
-=============================
+-p 8080:80: Redirige el puerto local 8080 al puerto 80 del contenedor
+(host:contenedor)
+
+--name mi-contenedor: Asigna un nombre personalizado al contenedor
+
+nginx: Es el nombre de la imagen a utilizar
+
+$ docker run -d -p 8080:80 --name mi-contenedor nginx
+
+Ejecutar Nginx en background, mapeando el puerto 80
+
+$ docker run -d --name web -p 80:80 nginx:latest
+
+-----
+
+Inspeccionar logs de Nginx:
+
+$ docker logs web
+
+-----
+
+Descargar una imagen desde un registro (como Docker Hub) a la máquina local,
+python:3.11-slim: Nombre de la imagen y su etiqueta (tag) de versión específica:
+
+$ docker pull python:3.11-slim
+
+Descargar la imagen oficial de Nginx
+
+$ docker pull nginx:latest
+
+-----
+
+Mostrar los contenedores en ejecución junto con su ID, imagen y estado:
+
+$ docker ps
+
+Agrega -a (all) para listar también los contenedores detenidos
+
+$ docker ps -a
+
+-----
+
+Detener los contenedores en ejecución cerrando de forma ordenada sus procesos,
+mi-contenedor: Nombre o ID del contenedor que se desea detener:
+
+$ docker stop mi-contenedor
+
+-----
+
+Reiniciar los contenedores detenidos reanudando sus operaciones anteriores,
+mi-contenedor: Nombre o ID del contenedor que se desea volver a iniciar:
+
+$ docker start mi-contenedor
+
+-----
+
+Iniciar sesión en el registro de Docker para acceder a repositorios privados:
+
+$ docker login
+
+-u mi_usuario: Especifica el nombre de usuario del registro (opcional, lo
+solicita si no se incluye)
+
+$ docker login -u mi_usuario
+
+-----
+
+Muestra información detallada del sistema, recursos del host y versión del motor
+de Docker:
+
+$ docker info
+
+-----
+
+Ver las versiones client/server:
+
+$ docker version
+
+-----
+
+El intérprete de comandos o comando que se desea ejecutar dentro (suele ser bash o sh)
+
+-i (interactive): Mantiene la entrada estándar (STDIN) abierta, permitiendo
+interactuar con el contenedor
+
+-t (tty): Asigna una terminal virtual (pseudo-TTY), necesaria para ver la
+consola interactiva
+
+mi-contenedor: Nombre o ID del contenedor en ejecución donde se ejecutará el
+comando
+
+$ docker exec -it mi-contenedor bash
+
+-----
+
+Muestra todas las imágenes descargadas o construidas localmente (repositorio,
+etiqueta, ID y tamaño):
+
+$ docker images
+
+Nota : puedes agregar -a (all) para incluir imágenes intermedias ocultas
+
+$ docker images -a
+
+-----
+
+Eliminar un contenedor:
+
+$ docker rm mi-contenedor
+
+-mi-contenedor: Nombre o ID del contenedor que se desea eliminar
+permanentemente.
+-puedes agregar -f (force) para eliminar un contenedor aunque esté en ejecución.
+
+$ docker rm -f mi-contenedor
+
+-----
+
+Eliminar una o más imágenes almacenadas localmente en la máquina:
+
+-image_id o nombre_imagen: Identificador único (ID largo o corto) o nombre con
+etiqueta de la imagen que deseas borrar
+
+$ docker rmi image_id
+
+Nota: puedes agregar el parámetro -f (force) si necesitas forzar la eliminación 
+en caso de que la imagen esté asociada a algún contenedor detenido.
+
+$ docker rmi -f image_id
+
+3.2 Docker Build y Docker Compose
+=================================
 
 Al momento de intentar dockerizar un proyecto una decisión crucial a la que te
 enfrentarás es cómo compilar tus imágenes de Docker. ¿Deberías utilizar
@@ -384,8 +587,8 @@ La diferencia fundamental, en esencia, la elección se reduce al alcance:
 
 -Docker Compose Build: orquestación de aplicaciones con múltiples contenedores
 
-Factores clave para la toma de decisiones
-=========================================
+3.3 Factores clave para la toma de decisiones
+=============================================
 
 Tomar en cuenta estas preguntas para elegir el enfoque adecuado:
 
@@ -407,14 +610,18 @@ Sí > Mantén la coherencia en CI/CD
 
 Compilaciones en varias etapas > Docker podría ofrecer más control
 
-====================
-Hola mundo en Docker
-====================
+==============
+4. Instalación
+==============
+
+========================
+4.1 Hola mundo en Docker
+========================
 
 Estos "Hola mundo" fueron probados en Linux Debian 13.
 
-Requerimientos y configuraciones del SO y la máquina
-====================================================
+4.2 Requerimientos y configuraciones del SO y la máquina
+========================================================
 
 -Al menos 4 GB de RAM.
 
@@ -460,8 +667,8 @@ tu sistema
 |            |            |           | mejorando el rendimiento de E/S                  |
 +------------+------------+-----------+--------------------------------------------------+
 
-¿Qué significa esto?
-====================
+4.2.1 ¿Qué significa esto?
+==========================
 
 -La virtualización por hardware está activada en tu sistema.
 
@@ -469,8 +676,8 @@ tu sistema
 
 -Tu procesador Intel soporta VT-x (tecnología de virtualización)
 
-Notas importantes
-=================
+4.2.2 Notas importantes
+=======================
 
 -kvm_intel está cargado pero con 0 en la columna "Used by" - esto es normal
 porque aún no tienes máquinas virtuales ejecutándose.
@@ -481,8 +688,8 @@ porque aún no tienes máquinas virtuales ejecutándose.
 
 Nota: El paso de lsmod | grep kvm es solo si decide usar la versión Desktop.
 
-Instalación de Docker Engine
-============================
+4.3 Instalación de Docker Engine
+================================
 
 Antes de instalar Docker Engine por primera vez en un nuevo equipo host, debes
 configurar el repositorio apt de Docker. A continuación, podrás instalar y
@@ -515,6 +722,13 @@ $ sudo apt update
 2. Instalar los paquetes de Docker:
 
 $ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+=======================
+5. Hola mundo en Docker
+=======================
+
+5.1 Verificación con la imagen hello-world
+==========================================
 
 3. Verificar que la instalación sea exitosa corriendo la imagen hello-world:
 
@@ -549,8 +763,8 @@ ejecuta el ejecutable que produce la salida que está leyendo.
 4. El demonio de Docker transmitió esa salida al cliente de Docker, que la envió
 a su terminal.
 
-Ahora un Hola mundo con Python dentro de un contenedor
-======================================================
+5.2 Ahora un Hola mundo con Python dentro de un contenedor
+==========================================================
 
 Primero debes tener instalado Docker Engine, se instalo en el paso anterior.
 
@@ -560,7 +774,8 @@ dependencias (aunque esté vacía) y las instrucciones para Docker (Dockerfile).
 
 Sigue estos pasos:
 
-1. Preparar los archivos
+5.2.1 Preparar los archivos
+===========================
 
 Crea una carpeta nueva y dentro de ella crea estos tres archivos:
 
@@ -592,14 +807,16 @@ RUN pip install --no-cache-dir -r requirements.txt
 # 5. Comando que se ejecuta al iniciar el contenedor
 CMD ["python", "app.py"]
 
-2. Construir la Imagen
+5.2.2 Construir la Imagen
+=========================
 
 Abre una terminal en esa carpeta y ejecuta el siguiente comando. Esto leerá el
 Dockerfile y creará una imagen llamada hola-python:
 
 $ sudo docker build -t hola-python .
 
-3. Ejecutar el Contenedor
+5.2.3 Ejecutar el Contenedor
+============================
 
 Una vez que la imagen esté lista, puedes "correr" un contenedor basado en esa
 imagen:
@@ -632,9 +849,9 @@ Fuente
 
 Gemini IA
 
-========================================
-Probando Docker en un proyecto de Django
-========================================
+===========================================
+6. Probando Docker en un proyecto de Django
+===========================================
 
 Este manual fue probado en en Debian 13.
 
@@ -649,7 +866,8 @@ descrito en la sección anteior.
 En este ejemplo vamos a ejecutar un proyecto de Django con una base de datos
 de Postgresql.
 
-Estructura de archivos necesaria para la prueba:
+6.1 Estructura de archivos necesaria para la prueba:
+====================================================
 
 mi_proyecto_django/
 ├── Dockerfile
@@ -661,8 +879,8 @@ mi_proyecto_django/
 ├── manage.py
 └── ...
 
-¿Dónde crear cada archivo?
-==========================
+6.2 ¿Dónde crear cada archivo?
+==============================
 
 +----------------------+------------------------+-----------------------+
 | Archivo              | Ubicación              | ¿Crearlo manualmente? |
@@ -680,8 +898,8 @@ mi_proyecto_django/
 | requirements.txt     | Raíz del proyecto      | Sí (si no existe)     |
 +----------------------+------------------------+-----------------------+
 
-Dockerfile
-==========
+6.3 Dockerfile
+==============
 
 #1. Define la imagen base: Usamos una versión ligera (slim) de Python 3.12.
 
@@ -727,8 +945,8 @@ CMD ["./start.sh"]
 
 -----
 
-¿Cómo funciona este proceso?
-============================
+6.3.1 ¿Cómo funciona este proceso?
+==================================
 
 Para visualizarlo mejor, imagina que un Dockerfile es una receta de cocina que
 construye una computadora miniatura aislada:
@@ -740,8 +958,8 @@ haciendo que todo sea más rápido.
 Aislamiento: Todo lo que instalas ahí dentro no afecta a tu computadora
 personal; vive solo dentro de esa "caja" (contenedor).
 
-docker-compose.yml
-==================
+6.4 docker-compose.yml
+======================
 
 services:
   db:
@@ -860,8 +1078,8 @@ Django.
 -Recursos: Si tu app crece mucho, podrías decirle a Docker que use más memoria
 para la base de datos y menos para la web, de forma separada.
 
-settings.py
-===========
+6.5 settings.py
+===============
 
 import os
 
@@ -881,8 +1099,8 @@ DATABASES = {
 Le decimos a la Django que las variables para conectarse a la base de datos las
 va a leer en el .env
 
-start.sh
-========
+6.6 start.sh
+============
 
 #!/bin/bash
 
@@ -903,8 +1121,8 @@ python manage.py migrate --no-input
 echo "----- Iniciando servidor Django en http://0.0.0.0:8000"
 python manage.py runserver 0.0.0.0:8000
 
-Makefile
-========
+6.7 Makefile
+============
 
 # Variable que define el archivo de configuración de Docker Compose a utilizar
 DEV_COMPOSE_FILE := docker-compose.yml
@@ -959,8 +1177,8 @@ clean:
 Nota: Por estándar histórico, Make requiere estrictamente el uso de tabuladores
 (TAB), no espacios, para las indentaciones de los comandos.
 
-.env
-====
+6.8 .env
+========
 
 DB_NAME=test_django_db
 DB_USER=postgres
@@ -970,8 +1188,8 @@ PORT=5432
 
 -----
 
-Aclaraciones sobre la base de datos
-===================================
+6.9 Aclaraciones sobre la base de datos
+=======================================
 
 La base de datos NO debe estar creada previamente, Docker Compose + PostgreSQL
 se encarga de crearla automáticamente.
@@ -991,8 +1209,8 @@ environment:
   POSTGRES_USER: ${DB_USER} # < Crea o usa este usuario
   POSTGRES_PASSWORD: ${DB_PASSWORD} # < Asigna esta contraseña
 
-¿Qué NO hace automáticamente?
-=============================
+6.9.1 ¿Qué NO hace automáticamente?
+===================================
 
 Django necesita que las tablas estén creadas. Pero eso lo haces con:
 
@@ -1002,8 +1220,8 @@ $ python manage.py makemigrations person product
 
 $ python manage.py migrate
 
-Flujo completo (qué pasa cuando ejecutas docker compose up -d)
-==============================================================
+6.9.2 Flujo completo (qué pasa cuando ejecutas docker compose up -d)
+====================================================================
 
 +-------------------+--------------------------------------------------+
 | Paso              | ¿Qué sucede?                                     |
@@ -1019,8 +1237,8 @@ Flujo completo (qué pasa cuando ejecutas docker compose up -d)
 | 4. runserver      | Django inicia el servidor                        |
 +-------------------+--------------------------------------------------+
 
-requirements.txt
-================
+6.10 requirements.txt
+=====================
 
 Django==6.0.0
 psycopg[binary]
@@ -1029,8 +1247,8 @@ psycopg[binary]
 
 Son requerimientos propios del proyecto de Django los define el desarrollador.
 
-Probar todo lo anterior, la prueba de fuego
-===========================================
+6.11 Probar todo lo anterior, la prueba de fuego
+================================================
 
 Paso 1: Crear los archivos
 
@@ -1047,7 +1265,8 @@ permitiría que Docker lo ejecute al iniciar el contenedor.
 
 Paso 3: Construir y levantar los contenedores
 
-Opción 1: Usando Make (recomendado)
+6.11.1 Opción 1: Usando Make (recomendado)
+==========================================
 
 $ sudo make build
 
@@ -1122,6 +1341,9 @@ Abre tu navegador en: http://localhost:8000
 
 ----
 
+6.11.2 Opción 2: Comandos directos de Docker Compose
+====================================================
+
 Opción 2: En esta opción usamos comandos directos pero el resultado debe ser el
 mismo, el sistema debe quedar corriendo por la url http://localhost:8000
 
@@ -1163,8 +1385,8 @@ Acceder a la aplicación
 
 Abre tu navegador en: http://localhost:8000
 
-Comandos útiles
-===============
+6.12 Comandos útiles
+====================
 
 Ver logs con Make para verificar que todo funciona:
 
@@ -1356,8 +1578,8 @@ Elimina volúmenes huérfanos:
 $ docker volume prune
 
 ============================
-Errores comunes y soluciones
-============================
+6.13 Errores comunes y soluciones
+=================================
 
 1- start.sh: Permission denied
 
@@ -1500,8 +1722,8 @@ $ ps -ef | grep 8000
 
 Ejemplo completo y funcional: https://github.com/argenisosorio/Django_6_crud/tree/test/deploy-docker
 
-El archivo .dockerignore
-========================
+6.14 El archivo .dockerignore
+=============================
 
 Es fundamental para que la imagen no pese gigas innecesarios, debe contener:
 
@@ -1518,9 +1740,13 @@ Fabian Palmera
 
 Deepseek IA
 
-=======================================
-Ubicación física de los datos en Docker
-=======================================
+=========================================
+7. Almacenamiento y persistencia de datos
+=========================================
+
+===========================================
+7.1 Ubicación física de los datos en Docker
+===========================================
 
 En un sistema Linux, la ubicación física de los datos depende directamente del
 tipo de almacenamiento configurado al lanzar el contenedor:
@@ -1561,8 +1787,8 @@ Fuente
 
 Gemini IA
 
-Volumen en Docker
-=================
+7.2 Volumen en Docker
+=====================
 
 Es un mecanismo de almacenamiento persistente administrado directamente por el
 motor de Docker para guardar y compartir datos independientemente del ciclo de
@@ -1629,9 +1855,13 @@ Fuente
 
 Gemini IA
 
-===========================================================================
-Interpretación de construcción y arranque de una aplicación real con Docker
-===========================================================================
+=========================================================
+8. Operación, lectura de logs y transferencia de archivos
+=========================================================
+
+===============================================================================
+8.1 Interpretación de construcción y arranque de una aplicación real con Docker
+===============================================================================
 
 ✔ Image postgres:17                  Pulled
 ✔ Network sinidot_app_default        Created
@@ -1662,9 +1892,9 @@ configurada. La base de datos está completamente lista para aceptar conexiones.
 fueron arrancados y sus procesos principales se están ejecutando en segundo
 plano.
 
-=====================================================
-Mensaje checkpoint del contenedor de la Base de Datos
-=====================================================
+=========================================================
+8.2 Mensaje checkpoint del contenedor de la Base de Datos
+=========================================================
 
 sinidotv2-db-postgres     | 2026-10-05 14:55:01.302 UTC [62] LOG:  checkpoint starting: time
 sinidotv2-db-postgres     | 2026-10-05 14:55:02.720 UTC [62] LOG:  checkpoint complete: wrote 15 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=1.406 s, sync=0.005 s, total=1.418 s; sync files=11, longest=0.002 s, average=0.001 s; distance=34 kB, estimate=19653 kB; lsn=0/31151D0, redo lsn=0/3115178
@@ -1673,8 +1903,8 @@ El último registro indica que la base de datos PostgreSQL completó con éxito 
 proceso interno de rutina llamado Checkpoint. No es un error, sino un mensaje
 informativo (LOG) totalmente normal.
 
-¿Qué es un Checkpoint?
-======================
+8.2.1 ¿Qué es un Checkpoint?
+============================
 
 Para ser eficiente, PostgreSQL realiza los cambios (escrituras, actualizaciones,
 transacciones) primero en la memoria RAM (Shared Buffers) y en sus archivos de
@@ -1708,9 +1938,9 @@ Fuente
 
 Gemini IA
 
-===============================================================
-Copiar archivos de local al contenedor y del contenedor a local
-===============================================================
+===================================================================
+8.3 Copiar archivos de local al contenedor y del contenedor a local
+===================================================================
 
 1- Copiar archivo local a contenedor:
 
@@ -1738,9 +1968,13 @@ Fuente
 
 Gemini IA
 
-=======================
-Imágenes Alpine vs Slim
-=======================
+===========================
+9. Optimización de imágenes
+===========================
+
+===========================
+9.1 Imágenes Alpine vs Slim
+===========================
 
 En el ecosistema de Docker, tanto las imágenes slim como las alpine están
 diseñadas para ser alternativas mucho más ligeras que las imágenes completas
