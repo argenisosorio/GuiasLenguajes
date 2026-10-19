@@ -1666,3 +1666,62 @@ Fuente
 ======
 
 Gemini IA
+
+=======================
+Imágenes Alpine vs Slim
+=======================
+
+En el ecosistema de Docker, tanto las imágenes slim como las alpine están
+diseñadas para ser alternativas mucho más ligeras que las imágenes completas
+(latest o por defecto). Sin embargo, tienen diferencias fundamentales en su
+arquitectura, compatibilidad y gestor de paquetes.
+
+1. Imágenes Slim (Ej. python:3.11-slim, node:20-slim)
+
+Las versiones slim están basadas en distribuciones de Debian (normalmente la
+versión estable actual).
+
+-Filosofía: Mantienen la base de Debian, pero eliminan paquetes y utilidades que
+no son estrictamente necesarios para ejecutar aplicaciones (como documentación,
+compiladores pesados y herramientas de depuración innecesarias en producción).
+
+-Librería C (C Library): Utilizan glibc (GNU C Library), que es la librería
+estándar de C utilizada por la gran mayoría de las distribuciones de Linux
+(Ubuntu, Debian, RedHat, etc.).
+
+-Gestor de paquetes: Utilizan apt / apt-get.
+
+-Compatibilidad: Altísima. Al usar glibc, cualquier paquete binario precompilado
+(como los wheels de Python con extensiones en C, o dependencias nativas de
+Node.js) funcionará sin problemas de compatibilidad.
+
+Tamaño: Moderadamente pequeño (por lo general entre 100 MB y 200 MB dependiendo
+del lenguaje).
+
+2. Imágenes Alpine (Ej. python:3.11-alpine, node:20-alpine)
+
+Las versiones alpine están basadas en Alpine Linux, una distribución orientada
+específicamente a la seguridad, la simplicidad y el minimalismo extremo.
+
+-Filosofía: Reducir al mínimo absoluto el espacio ocupado y la superficie de
+ataque de seguridad. Utilizan BusyBox para proporcionar los comandos básicos del
+sistema.
+
+-Librería C (C Library): Utilizan musl libc en lugar de glibc. musl es una
+implementación más ligera y limpia de la librería estándar de C, pero no es
+100% compatible binariamente con glibc.
+
+-Gestor de paquetes: Utilizan apk.
+
+-Compatibilidad: Puede presentar problemas o requerir pasos adicionales (como
+compilar desde el código fuente o instalar paquetes de compatibilidad como
+libc6-compat) cuando se instalan dependencias complejas que esperan glibc (por
+ejemplo, algunas librerías científicas de Python o paquetes de Node con binarios
+nativos).
+
+-Tamaño: Extremadamente pequeño (por lo general entre 40 MB y 80 MB).
+
+Fuente
+======
+
+Gemini IA
