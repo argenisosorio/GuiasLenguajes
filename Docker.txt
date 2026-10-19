@@ -2,6 +2,77 @@
 Guía de instalación y configuración de Docker by dM
 ===================================================
 
+=====================
+ÍNDICE DE CONTENIDOS
+=====================
+
+1. Introducción a Docker
+  1.1 ¿Qué es Docker?
+  1.2 Antes de Docker
+  1.3 La solución de Docker
+  1.4 Diferencia entre imagen y contenedor
+  1.5 Analogía rápida (imagen vs contenedor)
+  1.6 Diferencia entre contenedor de Docker y máquina virtual
+
+2. Arquitectura y conceptos clave
+  2.1 Arquitectura
+  2.2 El modelo arquitectónico básico
+  2.3 Glosario de términos
+
+3. Primeros comandos y toma de decisiones
+  3.1 Comandos básicos de Docker
+  3.2 Docker Build y Docker Compose
+  3.3 Factores clave para la toma de decisiones
+
+4. Instalación
+  4.1 Hola mundo en Docker (introducción)
+  4.2 Requerimientos y configuraciones del SO y la máquina
+    4.2.1 ¿Qué significa esto?
+    4.2.2 Notas importantes
+  4.3 Instalación de Docker Engine
+
+5. Hola mundo en Docker
+  5.1 Verificación con la imagen hello-world
+  5.2 Hola mundo con Python dentro de un contenedor
+    5.2.1 Preparar los archivos (app.py, requirements.txt, Dockerfile)
+    5.2.2 Construir la imagen
+    5.2.3 Ejecutar el contenedor
+
+6. Probando Docker en un proyecto de Django
+  6.1 Estructura de archivos necesaria
+  6.2 ¿Dónde crear cada archivo?
+  6.3 Dockerfile
+    6.3.1 ¿Cómo funciona este proceso?
+  6.4 docker-compose.yml
+  6.5 settings.py
+  6.6 start.sh
+  6.7 Makefile
+  6.8 .env
+  6.9 Aclaraciones sobre la base de datos
+    6.9.1 ¿Qué NO hace automáticamente?
+    6.9.2 Flujo completo (docker compose up -d)
+  6.10 requirements.txt
+  6.11 Probar todo lo anterior: la prueba de fuego
+    6.11.1 Opción 1: Usando Make (recomendado)
+    6.11.2 Opción 2: Comandos directos de Docker Compose
+  6.12 Comandos útiles
+  6.13 Errores comunes y soluciones
+  6.14 El archivo .dockerignore
+
+7. Almacenamiento y persistencia de datos
+  7.1 Ubicación física de los datos en Docker
+  7.2 Volumen en Docker
+
+8. Operación, lectura de logs y transferencia de archivos
+  8.1 Interpretación de construcción y arranque de una aplicación real con Docker
+  8.2 Mensaje checkpoint del contenedor de la Base de Datos
+    8.2.1 ¿Qué es un Checkpoint?
+  8.3 Copiar archivos de local al contenedor y del contenedor a local
+
+9. Optimización de imágenes
+  9.1 Imágenes Alpine vs Slim
+
+===============
 ¿Qué es Docker?
 ===============
 
