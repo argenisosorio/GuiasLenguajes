@@ -1,0 +1,108 @@
+======================
+Guía de Metabase by dM
+======================
+
+¿Qué es Metabase y para qué sirve?
+==================================
+
+Metabase es una herramienta de Business Intelligence (BI) de código abierto
+diseñada para democratizar el acceso a los datos dentro de cualquier
+organización. Permite que tanto perfiles técnicos como no técnicos puedan
+consultar bases de datos, crear gráficos y armar reportes interactivos sin
+complicarse la vida.
+
+¿Para qué sirve?
+================
+
+-Visualización de datos: Convierte filas y columnas de bases de datos en
+gráficos claros (líneas, barras, mapas, embudos, etc.).
+
+-Constructor de consultas visual (Query Builder): Permite a usuarios sin
+conocimientos de SQL hacer filtros, agregaciones y uniones (joins) mediante
+clics.
+
+-Editor SQL avanzado: Los analistas y desarrolladores pueden escribir consultas
+SQL o native queries directamente cuando necesiten mayor complejidad.
+
+-Paneles (Dashboards) interactivos: Permite agrupar métricas clave de negocio
+para que todo el equipo las consulte en tiempo real.
+
+-Alertas y automatizaciones: Envía notificaciones a Slack o correo electrónico
+cuando ciertas métricas alcancen un umbral determinado.
+
+¿Qué tecnologías utiliza?
+=========================
+
+Metabase está construido con un stack tecnológico moderno y robusto:
+
+-Backend: Escrito principalmente en Clojure, un lenguaje funcional moderno que
+corre sobre la Máquina Virtual de Java (JVM).
+
+-Frontend: Desarrollado con React y TypeScript, ofreciendo una interfaz de
+usuario limpia, rápida y muy fluida.
+
+-Base de datos de metadatos: Por defecto utiliza H2 (un archivo embebido ideal
+para pruebas rápidas y entornos de desarrollo), pero para entornos de producción
+se recomienda conectarla a PostgreSQL, MySQL o MariaDB.
+
+¿Cómo probarlo de manera fácil?
+===============================
+
+El método más rápido, limpio y recomendado para probar Metabase sin lidiar con
+instalaciones manuales de Java o Clojure es utilizando Docker.
+
+1- Tener Docker instalado.
+
+2- Ejecutar Metabase con un contenedor:
+
+Copia y pega este comando en tu terminal. Descargará la imagen oficial y pondrá
+a correr Metabase exponiéndolo en el puerto 3000:
+
+$ docker run -d -p 3000:3000 --name metabase metabase/metabase
+
+La salida del comando será algo como esto:
+
+Unable to find image 'metabase/metabase:latest' locally
+latest: Pulling from metabase/metabase
+e2de96513ba9: Pull complete 
+5a992c3fdecf: Pull complete 
+9e14b247280a: Pull complete 
+f99db5f04f89: Pull complete 
+d35ca26035cc: Pull complete 
+5adb22c6bb2b: Pull complete 
+0a766f641652: Pull complete 
+cd47f49df172: Pull complete 
+44136fa355b3: Already exists 
+ca5b4564ebc4: Download complete 
+Digest: sha256:af7d.......
+Status: Downloaded newer image for metabase/metabase:latest
+...............
+docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint metabase (d2501caf57b15b2e734e4e1ceb96607578264d33e50305d5261249072bc34434): Bind for 0.0.0.0:3000 failed: port is already allocated
+
+Run 'docker run --help' for more information
+
+3- Acceder y configurar:
+
+Abre tu navegador web favorito y entra a: http://127.0.0.1:3000/
+
+Verás la pantalla de bienvenida de Metabase. Sigue los pasos del asistente
+inicial para crear tu cuenta de administrador.
+
+En el proceso, te pedirá conectar una base de datos. Puedes elegir la opción de
+usar la base de datos de ejemplo (Sample Database) que Metabase incluye por
+defecto. Esto te permitirá empezar a jugar con gráficos y consultas de
+inmediato sin necesidad de configurar una base de datos externa.
+
+Si en algún momento quieres detener el contenedor, solo ejecuta
+
+
+$ docker stop metabase
+
+y para volver a iniciarlo:
+
+$ docker start metabase
+
+Fuente
+======
+
+Gemini IA
