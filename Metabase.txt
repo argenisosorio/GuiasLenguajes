@@ -95,14 +95,101 @@ inmediato sin necesidad de configurar una base de datos externa.
 
 Si en algún momento quieres detener el contenedor, solo ejecuta
 
-
 $ docker stop metabase
 
 y para volver a iniciarlo:
 
 $ docker start metabase
 
-Fuente
+Asistente de configuración
+==========================
+
+1- Configuración de una cuenta de administrador
+
+Lo primero que tendrás que hacer es configurar una cuenta de administrador. La
+cuenta que crea cuando instala Metabase por primera vez es una cuenta de
+administrador de forma predeterminada, ¡a mano! Si ha instalado Metabase en un
+servidor de producción, debe tener cuidado de recordar la contraseña de esta
+cuenta, ya que se utilizará para agregar otros usuarios, conectarse a bases de
+datos, configurar el correo electrónico y más. También puede crear cuentas de
+administrador adicionales más adelante.
+
+Por ahora, vamos a crear una cuenta para nosotros mismos para explorar Metabase.
+Escriba su información y, cuando esté listo para continuar, haga clic en el
+botón Siguiente.
+
+2- Reunir la información de su base de datos
+
+En este punto, deberá recopilar información sobre la base de datos que desea
+usar con Metabase. No podremos conectarnos a su base de datos sin ella, pero si
+desea tratar con todo esto más adelante, está bien: simplemente haga clic
+Añadiré mis datos más adelante. La metabase viene con un Base de datos de
+muestra Con el que puedes jugar para tener una idea de cómo funciona Metabase.
+
+Si está listo para conectarse, esto es lo que necesitará:
+
+El nombre de host del servidor donde vive su base de datos
+El puerto que utiliza el servidor de base de datos
+El nombre de la base de datos
+El nombre de usuario que utilizas para la base de datos
+La contraseña que utiliza para la base de datos
+
+3- Conéctate a tu base de datos
+
+Requisito Importante en PostgreSQL (pg_hba.conf y postgresql.conf)
+
+Por defecto, PostgreSQL en Linux solo escucha conexiones provenientes de
+localhost (127.0.0.1). Como Docker se conecta desde una subred virtual
+(172.17.0.x), debes asegurarte de que PostgreSQL acepte conexiones externas o
+del contenedor:
+
+Permitir que PostgreSQL escuche en todas las interfaces:
+
+En /etc/postgresql/<version>/main/postgresql.conf, asegúrate de tener:
+
+listen_addresses = '*'
+
+Permitir el acceso a la subred de Docker:
+
+En /etc/postgresql/<version>/main/pg_hba.conf, añade esta línea al final:
+
+host    all             all             172.17.0.0/16           md5
+
+Reiniciar PostgreSQL:
+
+$ sudo systemctl restart postgresql
+
+Una vez ajustado esto, prueba la conexión en Metabase y debería conectar sin
+problemas.
+
+Ahora que tiene su información de base de datos, puede conectarse a su base de
+datos. Solo sigue adelante y pon tu información en este formulario y haz clic en
+Siguiente.
+
+Si no tiene esta información a mano, la persona responsable de administrar la
+base de datos debería tenerla.
+
+Añade tus datos
+
+Nombre para mostrar
+Host
+Puerto
+Nombre de la base de datos
+Nombre de usuario
+Contraseña
+
+Vamos a conectarnos a una BD de postgres que tengamos de ejemplo.
+
+Nombre para mostrar: test_psql
+Host: 172.17.0.1
+Puerto: 5432
+Nombre de la base de datos: test
+Nombre de usuario: admin
+Contraseña: 123456
+
+Fuentes
 ======
 
 Gemini IA
+
+https://www.metabase.com/docs/v0.64/configuring-metabase/setting-up-metabase
