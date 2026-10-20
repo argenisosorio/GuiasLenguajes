@@ -76,10 +76,6 @@ cd47f49df172: Pull complete
 ca5b4564ebc4: Download complete 
 Digest: sha256:af7d.......
 Status: Downloaded newer image for metabase/metabase:latest
-...............
-docker: Error response from daemon: failed to set up container networking: driver failed programming external connectivity on endpoint metabase (d2501caf57b15b2e734e4e1ceb96607578264d33e50305d5261249072bc34434): Bind for 0.0.0.0:3000 failed: port is already allocated
-
-Run 'docker run --help' for more information
 
 3- Acceder y configurar:
 
@@ -187,8 +183,65 @@ Nombre de la base de datos: test
 Nombre de usuario: admin
 Contraseña: 123456
 
+==========================================
+Crear un nuevo filtro de ejemplo (Gráfico)
+==========================================
+
+1. Estando ya contectado a una BD.
+
+2. Ir a Colecciones > Tu colección personal > Nuevo > Pregunta.
+
+3. Seleccionamos la BD con la cual se va a trabajar y la tabla que vamos a
+filtrar.
+
+4. Vamos a crear un filtro personalizado que sea gráfico, click en "Columna
+perzonalizada", en el texto línea 1 colocar "Total" y en el nombre de la columna
+colocar Total Donantes y darle a Listo para crearla.
+
+4- En Resumir, click en "Elige una función o métrica" > Expresión personalizada
+en la línea 1 colocamos: CountIf([Donor Type] = "DN") y como nombre Donantes 
+y luego click en Listo.
+
+5- En Resumir, click en "Elige una función o métrica" > Expresión personalizada
+en la línea 1 colocamos: CountIf([Donor Type] = "ND") y como nombre Donantes 
+y luego click en Listo.
+
+6- Ahora en "Elige una columna para agrupar por" elegimos la que creamos que se
+llama Total Donantes.
+
+7- Al darle a Visualizar mostrara una tabla con el conteo de lo que escribimos
+anteriormente.
+
+8- Dar click en Visualización > Más gráficos > Barras > Listo.
+
+De esta manera ya está creado el primer gráfico.
+
+9- Darle a guardar, colocar nombre a la pregunta o al gráfico, en este caso:
+
+Donantes según Tipo
+
+Para buscar el nuevo gráfico guardado ir a Colecciones > Tu colección personal.
+
+========================
+Crear un nuevo Dashboard
+========================
+
+1- Click en Nuevo > Dashboard > Colocar el nombre > Crear.
+
+2- Añadir un gráfico > Añadir el creado antes > Guardar.
+
+===============
+Crear un filtro
+===============
+
+1- Estando en el Dashboard > Editar Dashboard > Añadir filtro o parámetro >
+Texto o Categoría > Donortype > En Etiqueta colocamos: ¿Es Donante? > Lista
+desplegabla > Varios valores > Listo > Guardar.
+
+Ahora ese filtro se puede usar sobre el gráfico que hemos creado antes.
+
 Fuentes
-======
+=======
 
 Gemini IA
 
