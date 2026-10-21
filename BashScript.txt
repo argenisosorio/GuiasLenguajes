@@ -1110,3 +1110,89 @@ Fuente
 ======
 
 Gemini IA
+
+=========================
+Manejo de errores en bash
+=========================
+
+En Bash, el comportamiento predeterminado ante un error es continuar con la
+ejecución, lo cual puede ser peligroso en tareas críticas (como respaldos,
+despliegues o manipulación de archivos).
+
+A continuación, te muestro ambos ejemplos y por qué es vital controlarlo.
+
+1. Script que NO se detiene ante un error (Comportamiento por defecto)
+
+Por defecto, si un comando falla, Bash imprime el mensaje de error en la salida
+estándar de errores (stderr), pero el script sigue ejecutando las líneas
+siguientes.
+
+-----
+
+#!/bin/bash
+
+echo "--- INICIO DEL SCRIPT (Continúa ante errores) ---"
+
+# Intentamos eliminar un archivo que NO existe (esto generará un error)
+rm /ruta/falsa/archivo_inexistente.txt
+
+# El script IGNORA el error anterior y continúa ejecutándose
+echo "¡Atención! Este mensaje se muestra a pesar de que el comando anterior falló."
+echo "Si el paso anterior era vital para crear una base de datos o mover archivos, ahora hay un estado inconsistente."
+
+echo "--- FIN DEL SCRIPT ---"
+
+-----
+
+Resultado: Verás el error del comando rm, pero aun así se imprimirán los
+mensajes posteriores. Si dependieras de que el archivo se borrara o existiera
+para el siguiente paso, podrías corromper datos o romper la lógica.
+
+2. Script que SÍ se detiene ante un error
+
+Para evitar que los errores pasen desapercibidos, se utiliza la directiva set
+-e al inicio del script (o se validan códigos de salida manualmente). Esto le
+indica a Bash que termine la ejecución de inmediato si cualquier comando
+devuelve un código de salida distinto de cero (es decir, si falla).
+
+-----
+
+#!/bin/bash
+
+# Configuramos el script para que se detenga inmediatamente si ocurre un error
+set -e
+
+echo "--- INICIO DEL SCRIPT (Se detiene ante errores) ---"
+
+# Intentamos eliminar un archivo que NO existe (esto fallará)
+rm /ruta/falsa/archivo_inexistente.txt
+
+# Esta línea NUNCA se ejecutará porque el script se abortó arriba
+echo "¡Esta línea nunca aparecerá en pantalla!"
+
+echo "--- FIN DEL SCRIPT ---"
+
+-----
+
+Resultado: El script se interrumpe justo en la línea del rm y se detiene por
+completo. El mensaje final nunca llega a imprimirse.
+
+¿Por qué es importante avisar al usuario o detener el script?
+
+-Evita daños colaterales: En scripts de administración de sistemas o respaldos,
+si un comando para desmontar un disco o copiar un directorio crítico falla y el
+script sigue corriendo, podrías sobrescribir información valiosa o dejar el
+sistema inestable.
+
+Trazabilidad y Depuración: Si un script complejo falla silenciosamente,
+encontrar dónde se rompió la cadena de operaciones se vuelve una tarea titánica.
+Detenerlo en seco con set -e (o manejando los errores con trap o condicionales
+if [ $? -ne 0 ]) aísla el problema inmediatamente.
+
+Integridad de datos: Garantiza que los prerrequisitos se cumplan paso a paso.
+Si el Paso A falla, el Paso B no tiene negocio ejecutarse.
+
+Fuente
+======
+
+Gemini IA
