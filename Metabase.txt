@@ -1,0 +1,248 @@
+======================
+Guía de Metabase by dM
+======================
+
+¿Qué es Metabase y para qué sirve?
+==================================
+
+Metabase es una herramienta de Business Intelligence (BI) de código abierto
+diseñada para democratizar el acceso a los datos dentro de cualquier
+organización. Permite que tanto perfiles técnicos como no técnicos puedan
+consultar bases de datos, crear gráficos y armar reportes interactivos sin
+complicarse la vida.
+
+¿Para qué sirve?
+================
+
+-Visualización de datos: Convierte filas y columnas de bases de datos en
+gráficos claros (líneas, barras, mapas, embudos, etc.).
+
+-Constructor de consultas visual (Query Builder): Permite a usuarios sin
+conocimientos de SQL hacer filtros, agregaciones y uniones (joins) mediante
+clics.
+
+-Editor SQL avanzado: Los analistas y desarrolladores pueden escribir consultas
+SQL o native queries directamente cuando necesiten mayor complejidad.
+
+-Paneles (Dashboards) interactivos: Permite agrupar métricas clave de negocio
+para que todo el equipo las consulte en tiempo real.
+
+-Alertas y automatizaciones: Envía notificaciones a Slack o correo electrónico
+cuando ciertas métricas alcancen un umbral determinado.
+
+¿Qué tecnologías utiliza?
+=========================
+
+Metabase está construido con un stack tecnológico moderno y robusto:
+
+-Backend: Escrito principalmente en Clojure, un lenguaje funcional moderno que
+corre sobre la Máquina Virtual de Java (JVM).
+
+-Frontend: Desarrollado con React y TypeScript, ofreciendo una interfaz de
+usuario limpia, rápida y muy fluida.
+
+-Base de datos de metadatos: Por defecto utiliza H2 (un archivo embebido ideal
+para pruebas rápidas y entornos de desarrollo), pero para entornos de producción
+se recomienda conectarla a PostgreSQL, MySQL o MariaDB.
+
+¿Cómo probarlo de manera fácil?
+===============================
+
+El método más rápido, limpio y recomendado para probar Metabase sin lidiar con
+instalaciones manuales de Java o Clojure es utilizando Docker.
+
+1- Tener Docker instalado.
+
+2- Ejecutar Metabase con un contenedor:
+
+Copia y pega este comando en tu terminal. Descargará la imagen oficial y pondrá
+a correr Metabase exponiéndolo en el puerto 3000:
+
+$ docker run -d -p 3000:3000 --name metabase metabase/metabase
+
+La salida del comando será algo como esto:
+
+Unable to find image 'metabase/metabase:latest' locally
+latest: Pulling from metabase/metabase
+e2de96513ba9: Pull complete 
+5a992c3fdecf: Pull complete 
+9e14b247280a: Pull complete 
+f99db5f04f89: Pull complete 
+d35ca26035cc: Pull complete 
+5adb22c6bb2b: Pull complete 
+0a766f641652: Pull complete 
+cd47f49df172: Pull complete 
+44136fa355b3: Already exists 
+ca5b4564ebc4: Download complete 
+Digest: sha256:af7d.......
+Status: Downloaded newer image for metabase/metabase:latest
+
+3- Acceder y configurar:
+
+Abre tu navegador web favorito y entra a: http://127.0.0.1:3000/
+
+Verás la pantalla de bienvenida de Metabase. Sigue los pasos del asistente
+inicial para crear tu cuenta de administrador.
+
+En el proceso, te pedirá conectar una base de datos. Puedes elegir la opción de
+usar la base de datos de ejemplo (Sample Database) que Metabase incluye por
+defecto. Esto te permitirá empezar a jugar con gráficos y consultas de
+inmediato sin necesidad de configurar una base de datos externa.
+
+Si en algún momento quieres detener el contenedor, solo ejecuta
+
+$ docker stop metabase
+
+y para volver a iniciarlo:
+
+$ docker start metabase
+
+Asistente de configuración
+==========================
+
+1- Configuración de una cuenta de administrador
+
+Lo primero que tendrás que hacer es configurar una cuenta de administrador. La
+cuenta que crea cuando instala Metabase por primera vez es una cuenta de
+administrador de forma predeterminada, ¡a mano! Si ha instalado Metabase en un
+servidor de producción, debe tener cuidado de recordar la contraseña de esta
+cuenta, ya que se utilizará para agregar otros usuarios, conectarse a bases de
+datos, configurar el correo electrónico y más. También puede crear cuentas de
+administrador adicionales más adelante.
+
+Por ahora, vamos a crear una cuenta para nosotros mismos para explorar Metabase.
+Escriba su información y, cuando esté listo para continuar, haga clic en el
+botón Siguiente.
+
+2- Reunir la información de su base de datos
+
+En este punto, deberá recopilar información sobre la base de datos que desea
+usar con Metabase. No podremos conectarnos a su base de datos sin ella, pero si
+desea tratar con todo esto más adelante, está bien: simplemente haga clic
+Añadiré mis datos más adelante. La metabase viene con un Base de datos de
+muestra Con el que puedes jugar para tener una idea de cómo funciona Metabase.
+
+Si está listo para conectarse, esto es lo que necesitará:
+
+El nombre de host del servidor donde vive su base de datos
+El puerto que utiliza el servidor de base de datos
+El nombre de la base de datos
+El nombre de usuario que utilizas para la base de datos
+La contraseña que utiliza para la base de datos
+
+3- Conéctate a tu base de datos
+
+Requisito Importante en PostgreSQL (pg_hba.conf y postgresql.conf)
+
+Por defecto, PostgreSQL en Linux solo escucha conexiones provenientes de
+localhost (127.0.0.1). Como Docker se conecta desde una subred virtual
+(172.17.0.x), debes asegurarte de que PostgreSQL acepte conexiones externas o
+del contenedor:
+
+Permitir que PostgreSQL escuche en todas las interfaces:
+
+En /etc/postgresql/<version>/main/postgresql.conf, asegúrate de tener:
+
+listen_addresses = '*'
+
+Permitir el acceso a la subred de Docker:
+
+En /etc/postgresql/<version>/main/pg_hba.conf, añade esta línea al final:
+
+host    all             all             172.17.0.0/16           md5
+
+Reiniciar PostgreSQL:
+
+$ sudo systemctl restart postgresql
+
+Una vez ajustado esto, prueba la conexión en Metabase y debería conectar sin
+problemas.
+
+Ahora que tiene su información de base de datos, puede conectarse a su base de
+datos. Solo sigue adelante y pon tu información en este formulario y haz clic en
+Siguiente.
+
+Si no tiene esta información a mano, la persona responsable de administrar la
+base de datos debería tenerla.
+
+Añade tus datos
+
+Nombre para mostrar
+Host
+Puerto
+Nombre de la base de datos
+Nombre de usuario
+Contraseña
+
+Vamos a conectarnos a una BD de postgres que tengamos de ejemplo.
+
+Nombre para mostrar: test_psql
+Host: 172.17.0.1
+Puerto: 5432
+Nombre de la base de datos: test
+Nombre de usuario: admin
+Contraseña: 123456
+
+==========================================
+Crear un nuevo filtro de ejemplo (Gráfico)
+==========================================
+
+1. Estando ya contectado a una BD.
+
+2. Ir a Colecciones > Tu colección personal > Nuevo > Pregunta.
+
+3. Seleccionamos la BD con la cual se va a trabajar y la tabla que vamos a
+filtrar.
+
+4. Vamos a crear un filtro personalizado que sea gráfico, click en "Columna
+perzonalizada", en el texto línea 1 colocar "Total" y en el nombre de la columna
+colocar Total Donantes y darle a Listo para crearla.
+
+4- En Resumir, click en "Elige una función o métrica" > Expresión personalizada
+en la línea 1 colocamos: CountIf([Donor Type] = "DN") y como nombre Donantes 
+y luego click en Listo.
+
+5- En Resumir, click en "Elige una función o métrica" > Expresión personalizada
+en la línea 1 colocamos: CountIf([Donor Type] = "ND") y como nombre Donantes 
+y luego click en Listo.
+
+6- Ahora en "Elige una columna para agrupar por" elegimos la que creamos que se
+llama Total Donantes.
+
+7- Al darle a Visualizar mostrara una tabla con el conteo de lo que escribimos
+anteriormente.
+
+8- Dar click en Visualización > Más gráficos > Barras > Listo.
+
+De esta manera ya está creado el primer gráfico.
+
+9- Darle a guardar, colocar nombre a la pregunta o al gráfico, en este caso:
+
+Donantes según Tipo
+
+Para buscar el nuevo gráfico guardado ir a Colecciones > Tu colección personal.
+
+========================
+Crear un nuevo Dashboard
+========================
+
+1- Click en Nuevo > Dashboard > Colocar el nombre > Crear.
+
+2- Añadir un gráfico > Añadir el creado antes > Guardar.
+
+===============
+Crear un filtro
+===============
+
+1- Estando en el Dashboard > Editar Dashboard > Añadir filtro o parámetro >
+Texto o Categoría > Donortype > En Etiqueta colocamos: ¿Es Donante? > Lista
+desplegabla > Varios valores > Listo > Guardar.
+
+Ahora ese filtro se puede usar sobre el gráfico que hemos creado antes.
+
+Fuentes
+=======
+
+Gemini IA
+
+https://www.metabase.com/docs/v0.64/configuring-metabase/setting-up-metabase

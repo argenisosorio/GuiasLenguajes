@@ -671,6 +671,14 @@ $ docker stop mi-contenedor
 
 -----
 
+Para detener todos los contenedores que están en ejecución al mismo tiempo,
+puedes combinar el comando docker stop con docker ps -q (que extrae únicamente
+los IDs de los contenedores activos):
+
+$ docker stop $(docker ps -q)
+
+-----
+
 Reiniciar los contenedores detenidos reanudando sus operaciones anteriores,
 mi-contenedor: Nombre o ID del contenedor que se desea volver a iniciar:
 
