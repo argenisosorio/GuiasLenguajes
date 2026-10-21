@@ -754,6 +754,18 @@ $ docker rmi -f image_id
 
 -----
 
+Eliminar imágenes huérfanas o no utilizadas (prune):
+
+Si quieres limpiar tu disco de todas las imágenes que no están siendo usadas por
+ningún contenedor activo ni detenido, puedes ejecutar:
+
+$ docker image prune -a
+
+(El modificador -a borrará todas las imágenes que no tengan un contenedor
+asociado actualmente, no solo las intermedias).
+
+-----
+
 Crear sin arrancar
 
 $ docker create --name mi_contenedor nginx:latest
