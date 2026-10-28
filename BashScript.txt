@@ -1196,3 +1196,62 @@ Fuente
 ======
 
 Gemini IA
+
+======================================================================
+Script para cortar un archivo mp3 en partes según tiempos específicos
+======================================================================
+
+#!/bin/bash
+
+# Script para cortar un archivo de audio en varias pistas usando ffmpeg.
+# Debe colocarse en el mismo directorio que el archivo de audio original
+# (file.mp3) y ejecutarse desde la terminal.
+# La lista de canciones y sus tiempos de inicio y fin se definen en el arreglo
+# 'tracks'.
+
+# Verificar si ffmpeg está instalado
+if ! command -v ffmpeg &> /dev/null; then
+    echo "Error: ffmpeg no está instalado. Instálalo con 'sudo apt install ffmpeg'."
+    exit 1
+fi
+
+# Nombre del archivo que contiene todas las canciones.
+INPUT="file.mp3"
+
+# Verificar si el archivo de entrada existe
+if [ ! -f "$INPUT" ]; then
+    echo "Error: No se encuentra el archivo '$INPUT' en este directorio."
+    exit 1
+fi
+
+# Lista de canciones con formato: "Nombre del archivo|Inicio|Fin"
+declare -a tracks=(
+    "01 - Counterfeit|00:00:00|00:05:35"
+    "02 - Show Me What You Got|00:05:35|00:09:27"
+    "03 - Thieves|00:09:27|00:14:21"
+    "04 - Stuck|00:14:21|00:20:20"
+    "05 - 1999|00:20:20|00:23:55"
+    "06 - Break Stuff|00:23:55|00:28:02"
+    "07 - Nookie|00:28:02|00:34:16"
+    "08 - Faith|00:34:16|00:36:47"
+)
+
+echo "Iniciando el corte de '$INPUT'..."
+
+# Iterar sobre cada pista y cortar el audio
+for track in "${tracks[@]}"; do
+    IFS='|' read -r name start end <<< "$track"
+    output_file="${name}.mp3"
+
+    echo "-> Procesando: $name [De $start a $end]"
+
+    # -ss: tiempo de inicio, -to: tiempo de fin, -c copy: copia sin recodificar (rápido y sin pérdida)
+    ffmpeg -y -i "$INPUT" -ss "$start" -to "$end" -c copy "$output_file" &> /dev/null
+done
+
+echo "¡Proceso completado con éxito! Todas las canciones han sido divididas."
+
+Fuente
+======
+
+Gemini IA
