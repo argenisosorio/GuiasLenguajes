@@ -1979,11 +1979,64 @@ Pedir contraseña root, algunas versiones basadas en Debian.
 
 $ sudo -i
 
------
+==========================================
+Diferencia entre su y su - en linux Debian
+==========================================
 
-Pedir contraseña del root.
+En Linux Debian, ambos comandos se utilizan para cambiar de usuario en la
+erminal, pero tienen una diferencia fundamental en cómo manejan las variables de
+entorno (como el PATH, la configuración de usuario y los permisos):
+
+(SuperUser / Substitute User): Cambia de usuario pero mantiene el entorno del
+usuario actual (el directorio de trabajo, las variables de entorno y la ruta de
+configuración del usuario que inició la sesión).
 
 $ su
+
+(o su --login): Realiza un inicio de sesión completo (login shell). Carga el
+entorno completo, las variables y el directorio personal ($HOME) del usuario al
+que te estás cambiando.
+
+$ su -
+
+Tabla Comparativa:
+
++--------------------+--------------------------+--------------------------+
+| Característica     | su (sin guion)           | su - (con guion)         |
++--------------------+--------------------------+--------------------------+
+| Entorno de usuario | Conserva el del usuario  | Carga el perfil del      |
+|                    | original.                | usuario de destino       |
+|                    |                          | (.bashrc, .profile, etc.)|
++--------------------+--------------------------+--------------------------+
+| Directorio de      | Se mantiene en el        | Salta automáticamente al |
+| trabajo actual     | directorio donde estabas.| directorio $HOME del     |
+|                    |                          | usuario de destino       |
+|                    |                          | (ej. /root si eres root).|
++--------------------+--------------------------+--------------------------+
+| Variable $PATH     | Hereda la del usuario    | Cambia a la ruta         |
+|                    | que ejecuta el comando.  | predeterminada del       |
+|                    |                          | usuario de destino       |
+|                    |                          | (clave para encontrar    |
+|                    |                          | comandos de admin).      |
++--------------------+--------------------------+--------------------------+
+| Uso recomendado    | Tareas rápidas donde     | Para administración del  |
+|                    | necesitas conservar la   | sistema, instalaciones o |
+|                    | ruta actual.             | evitar fallos por falta  |
+|                    |                          | de rutas de comandos.    |
++--------------------+--------------------------+--------------------------+
+
+¿Por qué es importante en Debian?
+=================================
+
+Si abres una terminal con tu usuario normal y escribes solo su para convertirte
+en root, es muy probable que al intentar ejecutar ciertos comandos de
+administración del sistema (como fdisk, iptables o comandos ubicados en /sbin o
+/usr/sbin), el sistema te responda con un error del tipo "comando no encontrado"
+(command not found).
+
+Esto ocurre porque la ruta de superusuario (/sbin) no está incluida por defecto
+en el $PATH de un usuario estándar. Al usar su -, te aseguras de cargar todas
+las rutas y configuraciones de administrador necesarias.
 
 -----
 
