@@ -629,7 +629,7 @@ En un .sql exportado con el owner nos encontramos esta sentencia donde admin es
 es el dueño original, cuando se usa --no-owner estas sentencias OWNER TO ya no
 están en el .sql:
 
-ALTER TABLE public.aplicants OWNER TO admin;
+ALTER TABLE public.name_table OWNER TO admin;
 
 Parámetro --no-acl
 ==================
@@ -1533,3 +1533,11 @@ Fuente
 ======
 
 ChatGPT
+
+====================================================
+Buscar registros diferentes de null o iguales a null
+====================================================
+
+db# SELECT id, date, created_at FROM name_table WHERE date IS NOT NULL;
+
+db# SELECT id, date, created_at FROM name_table WHERE date IS NULL;
